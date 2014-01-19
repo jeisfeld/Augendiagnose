@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.eisfeldj.augendiagnose"
+    android:versionCode="5"
+    android:versionName="0.2.3" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="de.eisfeldj.augendiagnose.Application"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.DisplayTwoActivity"
+            android:label="@string/title_activity_display_two"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneActivity"
+            android:label="@string/title_activity_display_one"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneActivityOverlay"
+            android:label="@string/title_activity_display_one"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity"
+            android:label="@string/title_activity_list_folders_for_display"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForDisplaySecondActivity"
+            android:label="@string/title_activity_list_folders_for_display_second"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.OrganizeNewPhotosActivity"
+            android:label="@string/title_activity_organize_new_photos"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForSelectActivity"
+            android:label="@string/title_dialog_list_folders_for_select"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity"
+            android:label="@string/title_activity_list_pictures_for_name"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity"
+            android:label="@string/title_activity_list_pictures_for_second_name"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity"
+            android:label="@string/title_activity_select_two_pictures"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="de.eisfeldj.augendiagnose.activities.DisplayHtmlActivity"
+            android:label="@string/title_help"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>

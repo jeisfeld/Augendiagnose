@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="html_overview">
+<![CDATA[
+<HTML>
+<BODY>
+<H1>Overview</H1>
+This App has the purpose to support the visualization of eye photographs on an Android device, in order to do medical diagnosis.
+
+<H2>Key Features</H2>
+<ul>
+<li>Organization of eye photos by name, date and side (right/left)</li>
+<li>Display of two eye photos in parallel (with full support of individual resizing), so that comparisons are possible (such as right-left comparison, earlier-later comparison, different person comparison, or comparison to an iris topography).</li>
+</ul>
+
+This is just an alpha version of the app. Further features are to come. Ideas for further features are welcome.
+
+<H2>Main activities</H2>
+
+<H3>Step 1: Organize the photos.</H3>
+
+<p>In this step, you can organize eye photos.</p>
+<p>The App expects new eye photos in an incoming folder which is preconfigued as the target folder of the Eye-Fi app. The reason behind this is that typically, the camera of the mobile device is not sufficient to capture eye photos in high quality. A more practical approach is to use an external camera which Eye-Fi SD card, which transfers the photos via WLAN to the mobile device.
+This is just the default configuration, which may be changed.</p>
+<p>In the &quot;Organize new photos&quot; activity, you see the last two photos in the incoming folder.
+(You may also select two other photos of this folder.)
+You have to specify the name of the person, the date of the photos (preselected from the photo), and the information which of the two photos shows the right eye and which the left eye.
+Then the app moves the photos into the target folder, storing the name/date/rightleft information in the file name.</p>
+
+<H3>Step 2: Visualize the photos.</H3>
+
+<p>This is the main purpose of the app, but it requires the photos to be organized via step 1.</p>
+<p>In this activity, you can select the name of a person whose eye photos you want to see.
+Then you get shown all eye photos of this person in a list sorted by date.</p>
+<p>Then you have the following possibilities:</p>
+<ul>
+<li>Show one of the photos in detail (via click on a photo).
+In this view you may also change brightness and contrast of the photo or show iris topographies as overlay.
+(Note: due to copyright, there is currently only one, German languaged iris topography delivered with the app.)</li>
+<li>Show both photos of one date (via click on a date)</li>
+<li>Show two photos of different dates (via long click on one photo and click on a second photo)</li>
+<li>Show two photos of different persons: Select one photo of this person (via long click) and then select a photo of a different person for comparison.</li>
+</ul>
+<p>Note that iris topography graphics may be organized just like eye photos - this allows to compare eye photos with iris topography graphics. Such graphics are not included in the app due to copyright reasons.</p>
+</BODY>
+</HTML>
+]]>
+    </string>
+
+</resources>

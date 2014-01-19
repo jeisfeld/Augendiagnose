@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title_folder_photos">Verzeichnis der Augenfotos</string>
+    <string name="pref_title_folder_eyefi">Eingangsverzeichnis für neue Augenfotos</string>
+    <string name="pref_title_max_bitmap_size">Maximale Bitmap-Größe (empfohlen: 2048)</string>
+    <string name="pref_title_eye_sequence_choice">Letztes Foto ist rechtes Auge</string>
+    <string name="pref_title_user_key">Nutzerschlüssel</string>
+    
+</resources>

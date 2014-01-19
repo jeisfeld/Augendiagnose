@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_folder_photos"
+        android:inputType="textCapWords"
+        android:key="@string/key_folder_photos"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_folder_photos" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_folder_eyefi"
+        android:inputType="textCapWords"
+        android:key="@string/key_folder_eyefi"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_folder_eyefi" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_max_bitmap_size"
+        android:inputType="numberDecimal"
+        android:key="@string/key_max_bitmap_size"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_max_bitmap_size" />
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <!--
+    <ListPreference
+        android:defaultValue="@string/pref_default_eye_sequence_value"
+        android:entries="@array/pref_eye_sequence_list_titles"
+        android:entryValues="@array/pref_eye_sequence_list_values"
+        android:key="eye_sequence_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_eye_sequence_list" />
+    -->
+
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_eye_sequence_value"
+        android:key="@string/key_eye_sequence_choice"
+        android:title="@string/pref_title_eye_sequence_choice" />
+    
+    <EditTextPreference
+        android:defaultValue=""
+        android:inputType="textPassword"
+        android:key="@string/key_user_key"
+        android:title="@string/pref_title_user_key" />
+
+</PreferenceScreen>

@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="list_picture_height">320dp</dimen>
+    
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Augendiagnose</string>
+
+    <string name="title_activity_display_two">Fotovergleich</string>
+    <string name="title_activity_display_one">Fotoanzeige</string>
+    <string name="title_activity_list_folders_for_display">Namen wählen</string>
+    <string name="title_activity_list_folders_for_display_second">Zweiten Namen wählen</string>
+    <string name="title_activity_organize_new_photos">Neue Fotos einordnen</string>
+    <string name="title_activity_list_pictures_for_name">Fotos wählen</string>
+    <string name="title_activity_list_pictures_for_second_name">Zweites Foto wählen</string>
+    <string name="title_activity_select_two_pictures">Zwei neue Fotos auswählen</string>
+    <string name="title_dialog_list_folders_for_select">Namen wählen</string>
+    <string name="title_dialog_change_name">Namen ändern</string>
+    <string name="title_dialog_new_name">Neuer Name</string>
+    <string name="title_dialog_error">Fehler</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_help">Hilfe</string>
+    
+    <string name="message_dialog_no_picture">Keine Fotos zum einordnen vorhanden</string>
+    <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
+    <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
+    <string name="message_dialog_folder_does_not_exist">Verzeichnis %1$s existiert nicht. Bitte überprüfen Sie die Einstellungen.</string>
+    <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>
+    <string name="message_dialog_file_already_exists">Datei %1$s existiert schon. Bitte wählen Sie einen anderen Namen oder ein anderes Datum.</string>
+    <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
+    <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
+    <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
+    <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
+    <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
+    
+    <string name="section_select_eye_orientation">Orientierung wählen</string>
+    <string name="section_select_name">Name wählen</string>
+    <string name="section_select_date">Datum wählen</string>
+    <string name="text_brightness">Helligkeit</string>
+    <string name="text_contrast">Kontrast</string>
+    
+    <string name="button_open_eyefi_app">Eye-Fi App öffnen</string>
+    <string name="button_display_pictures">Fotos anzeigen</string>
+    <string name="button_organize_new_photos">Neue Fotos einordnen</string>
+    <string name="button_ok">Anwenden</string>
+    <string name="button_back">Zurück</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_clear">Löschen</string>
+    <string name="button_switch">Tauschen</string>
+    <string name="button_other_pictures">Andere Fotos</string>
+
+    <string name="toggle_overlay_circle">Kreis</string>
+    <string name="toggle_overlay_1">IT 1</string>
+    <string name="toggle_overlay_2">IT 2</string>
+    <string name="toggle_overlay_3">IT 3</string>
+    <string name="toggle_overlay_4">IT 4</string>
+    <string name="toggle_link_overlay">Fix</string>
+    
+    <string name="content_description_right_eye">Rechtes Auge</string>
+    <string name="content_description_left_eye">Linkes Auge</string>
+    <string name="text_initializing">Ladevorgang&#8230;</string>
+    <string name="display_right_left">R-L</string>
+    <string name="display_new_name">[Neuer Name]</string>
+    <string name="hint_select_name">[Namen auswählen]</string>
+    <string name="hint_insert_name">[Neuen Namen eingeben]</string>
+    
+</resources>
