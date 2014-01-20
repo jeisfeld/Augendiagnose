@@ -257,7 +257,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param image
 	 * @param color
 	 */
-	private Bitmap changeBitmapColor(Bitmap bmp, int color) {
+	private static Bitmap changeBitmapColor(Bitmap bmp, int color) {
 		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 
 		Paint p = new Paint();
@@ -291,10 +291,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Set the brightness
 	 * 
 	 * @param brightness
-	 *            on a scale 0 to 1
+	 *            on a scale -1 to 1
 	 */
 	public void setBrightness(float brightness) {
-		mBrightness = brightness * 510 - 255;
+		mBrightness = brightness;
 		refresh(false);
 	}
 
@@ -302,10 +302,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Set the contrast
 	 * 
 	 * @param contrast
-	 *            on a scale 0 to 1
+	 *            on a positive scale 0 to infinity, 1 is unchanged.
 	 */
 	public void setContrast(float contrast) {
-		mContrast = (float) Math.pow(100, contrast) / 10;
+		mContrast = contrast;
 		refresh(false);
 	}
 
@@ -362,14 +362,19 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param bmp
 	 *            input bitmap
 	 * @param contrast
-	 *            0..10 1 is default
+	 *            0..infinity - 1 is default
 	 * @param brightness
-	 *            -255..255 0 is default
+	 *            -1..1 - 0 is default
 	 * @return new bitmap
 	 */
 	protected static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness) {
-		ColorMatrix cm = new ColorMatrix(new float[] { contrast, 0, 0, 0, brightness, 0, contrast, 0, 0, brightness, 0,
-				0, contrast, 0, brightness, 0, 0, 0, 1, 0 });
+		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness);
+
+		ColorMatrix cm = new ColorMatrix(new float[] { //
+				contrast, 0, 0, 0, offset, //
+						0, contrast, 0, 0, offset, //
+						0, 0, contrast, 0, offset, //
+						0, 0, 0, 1, 0 });
 
 		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 

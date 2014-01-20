@@ -18,6 +18,8 @@ import de.eisfeldj.augendiagnose.util.OverlayPinchImageView;
 public class DisplayOneActivityOverlay extends DisplayOneActivity {
 
 	private OverlayPinchImageView imageView;
+	private static final int CONTRAST_MAX = 5;
+	private static final int CONTRAST_DENSITY = 20;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -74,11 +76,13 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				imageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax());
+				imageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
 
 		SeekBar seekbarContrast = (SeekBar) findViewById(R.id.seekBarContrast);
+		seekbarContrast.setMax(CONTRAST_MAX * CONTRAST_DENSITY);
+		seekbarContrast.setProgress(CONTRAST_DENSITY);
 		seekbarContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -92,7 +96,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				imageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax());
+				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
 			}
 		});
 
