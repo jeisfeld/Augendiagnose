@@ -10,6 +10,8 @@ import android.widget.SeekBar;
  * Implementation of an easy vertical SeekBar
  */
 public class VerticalSeekBar extends SeekBar {
+	
+    private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
     public VerticalSeekBar(Context context) {
         super(context);
@@ -51,6 +53,17 @@ public class VerticalSeekBar extends SeekBar {
         super.onDraw(c);
     }
 
+    
+    /* (non-Javadoc)
+     * ${see_to_overridden}
+     */
+    @Override
+    public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
+    	mOnSeekBarChangeListener = l;
+        super.setOnSeekBarChangeListener(l);
+    }
+    
+    
     /* (non-Javadoc)
      * ${see_to_overridden}
      */
@@ -62,13 +75,24 @@ public class VerticalSeekBar extends SeekBar {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                onSizeChanged(getWidth(), getHeight(), 0, 0);
+                mOnSeekBarChangeListener.onStartTrackingTouch(this);
+                break;
+
             case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_UP:
                 setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
                 onSizeChanged(getWidth(), getHeight(), 0, 0);
                 break;
 
+            case MotionEvent.ACTION_UP:
+                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                onSizeChanged(getWidth(), getHeight(), 0, 0);
+                mOnSeekBarChangeListener.onStopTrackingTouch(this);
+                break;
+
             case MotionEvent.ACTION_CANCEL:
+                mOnSeekBarChangeListener.onStopTrackingTouch(this);
                 break;
         }
         return true;
