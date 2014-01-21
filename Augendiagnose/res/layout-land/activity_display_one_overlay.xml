@@ -109,12 +109,12 @@
         <ToggleButton
             android:id="@+id/toggleButtonLink"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/lock"
             android:checked="false"
             android:onClick="onToggleLinkClicked"
-            android:textOff="@string/toggle_link_overlay"
-            android:textOn="@string/toggle_link_overlay" />
+            android:textOff=""
+            android:textOn="" />
     </LinearLayout>
 
 </LinearLayout>
