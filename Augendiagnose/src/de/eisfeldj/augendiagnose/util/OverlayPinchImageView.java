@@ -29,7 +29,7 @@ import de.eisfeldj.augendiagnose.R;
  * 
  */
 public class OverlayPinchImageView extends PinchImageView {
-	private static final int OVERLAY_COUNT = 5;
+	public static final int OVERLAY_COUNT = 5;
 	private static final int OVERLAY_SIZE = 1024;
 	private static final int OVERLAY_COLOR = Color.RED;
 
@@ -140,7 +140,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Switch the status of an overlay
+	 * Change the status of an overlay
 	 * 
 	 * @param position
 	 *            number of the overlay
@@ -149,6 +149,26 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public void showOverlay(int position, boolean show) {
 		mShowOverlay[position] = show;
+		refresh(true);
+		updateScaleGestureDetector();
+	}
+
+	/**
+	 * Trigger one overlay. If it is active, it will be deactivated. If it was inactive, then it will be activated, and
+	 * the previous one will be deactivated.
+	 * 
+	 * @param position
+	 *            number of the overlay
+	 */
+	public void triggerOverlay(int position) {
+		for (int i = 0; i < mShowOverlay.length; i++) {
+			if (i == position) {
+				mShowOverlay[i] = !mShowOverlay[i];
+			}
+			else {
+				mShowOverlay[i] = false;
+			}
+		}
 		refresh(true);
 		updateScaleGestureDetector();
 	}

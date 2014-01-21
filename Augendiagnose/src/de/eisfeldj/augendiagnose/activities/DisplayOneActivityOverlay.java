@@ -21,6 +21,9 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	private static final int CONTRAST_MAX = 5;
 	private static final int CONTRAST_DENSITY = 20;
 
+	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
+	private ToggleButton[] toggleOverlayButtons;
+
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
 	 * 
@@ -55,10 +58,17 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		super.onCreate(savedInstanceState);
 		imageView = (OverlayPinchImageView) super.imageView;
 
+		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
+		toggleOverlayButtons[0] = (ToggleButton) findViewById(R.id.toggleButtonOverlayCircle);
+		toggleOverlayButtons[1] = (ToggleButton) findViewById(R.id.toggleButtonOverlay1);
+		toggleOverlayButtons[2] = (ToggleButton) findViewById(R.id.toggleButtonOverlay2);
+		toggleOverlayButtons[3] = (ToggleButton) findViewById(R.id.toggleButtonOverlay3);
+		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
+
 		if (!Application.isAuthorized()) {
-			findViewById(R.id.toggleButtonOverlay2).setEnabled(false);
-			findViewById(R.id.toggleButtonOverlay3).setEnabled(false);
-			findViewById(R.id.toggleButtonOverlay4).setEnabled(false);
+			toggleOverlayButtons[2].setEnabled(false);
+			toggleOverlayButtons[3].setEnabled(false);
+			toggleOverlayButtons[4].setEnabled(false);
 		}
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
@@ -113,8 +123,13 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	 * @param view
 	 */
 	private void onToggleOverlayClicked(View view, int position) {
-		ToggleButton button = (ToggleButton) view;
-		imageView.showOverlay(position, button.isChecked());
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			if(position != i) {
+				toggleOverlayButtons[i].setChecked(false);
+			}
+		}
+
+		imageView.triggerOverlay(position);
 	}
 
 	/**
