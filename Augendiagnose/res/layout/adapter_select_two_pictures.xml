@@ -1,6 +1,6 @@
 <de.eisfeldj.augendiagnose.util.EyeImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/imageViewSelectTwoPictures"
     android:contentDescription="@string/text_initializing"
-    android:padding="10dp"
+    android:padding="5dp"
     android:layout_width="@dimen/grid_pictures_size"
     android:layout_height="@dimen/grid_pictures_size" />

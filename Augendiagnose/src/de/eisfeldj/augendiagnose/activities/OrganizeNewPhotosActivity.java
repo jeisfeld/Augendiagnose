@@ -27,6 +27,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**
@@ -173,7 +174,6 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 */
 	private void setPicturesAndValues() {
 		File[] files;
-
 		if (inputFolder != null) {
 			// retrieve files from Input Folder
 			files = inputFolder.listFiles(new FileFilter() {
@@ -252,7 +252,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		imageRight.post(new Runnable() {
 			@Override
 			public void run() {
-				imageRight.setImageBitmap(photoRight.getImageBitmap(EyePhoto.MINI_THUMB_SIZE));
+				imageRight.setImageBitmap(photoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 				imageRight.invalidate();
 			}
 		});
@@ -260,7 +260,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		imageLeft.post(new Runnable() {
 			@Override
 			public void run() {
-				imageLeft.setImageBitmap(photoLeft.getImageBitmap(EyePhoto.MINI_THUMB_SIZE));
+				imageLeft.setImageBitmap(photoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 				imageLeft.invalidate();
 			}
 		});
@@ -355,16 +355,33 @@ public class OrganizeNewPhotosActivity extends Activity {
 			return;
 		}
 
-		if (!photoRight.moveTo(targetPhotoRight)) {
-			displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
-					targetPhotoRight.getAbsolutePath());
-			return;
+		if(inputFolder != null) {
+			// in case of input folder, move files
+			if (!photoRight.moveTo(targetPhotoRight)) {
+				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
+						targetPhotoRight.getAbsolutePath());
+				return;
+			}
+			if (!photoLeft.moveTo(targetPhotoLeft)) {
+				displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
+						targetPhotoLeft.getAbsolutePath());
+				return;
+			}
 		}
-		if (!photoLeft.moveTo(targetPhotoLeft)) {
-			displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
-					targetPhotoLeft.getAbsolutePath());
-			return;
+		else {
+			// in case of input files, copy files
+			if (!photoRight.copyTo(targetPhotoRight)) {
+				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
+						targetPhotoRight.getAbsolutePath());
+				return;
+			}
+			if (!photoLeft.copyTo(targetPhotoLeft)) {
+				displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
+						targetPhotoLeft.getAbsolutePath());
+				return;
+			}
 		}
+		
 
 		// TODO: Change IPTC settings
 

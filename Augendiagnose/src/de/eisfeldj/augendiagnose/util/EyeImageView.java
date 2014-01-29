@@ -30,7 +30,7 @@ public class EyeImageView extends ImageView {
 	 */
 	public void setEyePhoto(EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
-		setImageBitmap(eyePhoto.getImageBitmap(EyePhoto.MINI_THUMB_SIZE));
+		setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 		invalidate();
 		initialized = true;
 	}

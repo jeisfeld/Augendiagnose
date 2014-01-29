@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:columnWidth="@dimen/grid_pictures_size"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="0dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" >

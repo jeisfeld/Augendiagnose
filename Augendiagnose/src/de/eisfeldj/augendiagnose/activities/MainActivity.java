@@ -12,6 +12,7 @@ import android.view.View;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * Main activity of the application
@@ -34,7 +35,10 @@ public class MainActivity extends Activity {
 				if (imageUris != null) {
 					String[] fileNames = new String[imageUris.size()];
 					for (int i = 0; i < imageUris.size(); i++) {
-						fileNames[i] = imageUris.get(i).getPath();
+						fileNames[i] = MediaStoreUtil.getRealPathFromURI(imageUris.get(i));
+						if(fileNames[i]==null) {
+							fileNames[i] = imageUris.get(i).getPath();
+						}
 					}
 					boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 					OrganizeNewPhotosActivity.startActivity(this, fileNames,

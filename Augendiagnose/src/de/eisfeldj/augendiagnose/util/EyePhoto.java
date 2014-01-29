@@ -1,25 +1,23 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
-import android.provider.MediaStore;
 import android.util.Log;
-import de.eisfeldj.augendiagnose.Application;
 
 /**
  * Utility class to handle an eye photo, in particular regarding name policies.
  */
 public class EyePhoto {
-	public static final int MINI_THUMB_SIZE = 512;
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	private boolean formattedName = false;
 	private String path;
@@ -201,6 +199,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the date
+	 * 
 	 * @return
 	 */
 	public Date getDate() {
@@ -213,6 +212,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the date for display
+	 * 
 	 * @param calendar
 	 * @return
 	 */
@@ -220,9 +220,10 @@ public class EyePhoto {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("d. MMMM yyyy", Locale.getDefault());
 		return dateFormat.format(calendar.getTime());
 	}
-	
+
 	/**
 	 * Retrieve the file suffix
+	 * 
 	 * @return
 	 */
 	public String getSuffix() {
@@ -235,6 +236,7 @@ public class EyePhoto {
 
 	/**
 	 * Check if the file name is formatted as eye photo
+	 * 
 	 * @return
 	 */
 	public boolean isFormatted() {
@@ -243,6 +245,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the phoso as File
+	 * 
 	 * @return
 	 */
 	public File getFile() {
@@ -251,6 +254,7 @@ public class EyePhoto {
 
 	/**
 	 * Check if the file exists
+	 * 
 	 * @return
 	 */
 	public boolean exists() {
@@ -259,6 +263,7 @@ public class EyePhoto {
 
 	/**
 	 * Move the eye photo to a target path and target name (given via EyePhoto object)
+	 * 
 	 * @param target
 	 * @return
 	 */
@@ -267,7 +272,43 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Copy the eye photo to a target path and target name (given via EyePhoto object)
+	 * 
+	 * @param target
+	 * @return
+	 */
+	public boolean copyTo(EyePhoto target) {
+		FileInputStream inStream = null;
+		FileOutputStream outStream = null;
+		FileChannel inChannel = null;
+		FileChannel outChannel = null;
+		try {
+			inStream = new FileInputStream(getFile());
+			outStream = new FileOutputStream(target.getFile());
+			inChannel = inStream.getChannel();
+			outChannel = outStream.getChannel();
+			inChannel.transferTo(0, inChannel.size(), outChannel);
+		}
+		catch (Exception e) {
+			return false;
+		}
+		finally {
+			try {
+				inStream.close();
+				outStream.close();
+				inChannel.close();
+				outChannel.close();
+			}
+			catch (Exception e) {
+
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Change the name (keeping the path)
+	 * 
 	 * @param targetName
 	 * @return
 	 */
@@ -278,8 +319,7 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Set the date field with the EXIF date from the file
-	 * If not existing, use the last modified date.
+	 * Set the date field with the EXIF date from the file If not existing, use the last modified date.
 	 */
 	private void getExifDate() {
 		Date retrievedDate = null;
@@ -302,6 +342,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve a clone of this object from the absolute path
+	 * 
 	 * @return
 	 */
 	public EyePhoto cloneFromPath() {
@@ -310,14 +351,16 @@ public class EyePhoto {
 
 	/**
 	 * Return a bitmap of this photo
-	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized
+	 * 
+	 * @param maxSize
+	 *            The maximum size of this bitmap. If bigger, it will be resized
 	 * @return
 	 */
 	public Bitmap getImageBitmap(int maxSize) {
 		Bitmap bitmap = null;
 
-		if (maxSize <= MINI_THUMB_SIZE) {
-			bitmap = getThumbnail(maxSize);
+		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
+			bitmap = MediaStoreUtil.getThumbnailFromPath(getAbsolutePath(), maxSize);
 		}
 
 		if (bitmap == null) {
@@ -338,6 +381,7 @@ public class EyePhoto {
 
 	/**
 	 * Utility to retrieve the sample size for BitmapFactory.decodeFile
+	 * 
 	 * @param filepath
 	 * @param targetSize
 	 * @return
@@ -348,34 +392,6 @@ public class EyePhoto {
 		BitmapFactory.decodeFile(filepath, options);
 		int size = Math.max(options.outWidth, options.outWidth);
 		return size / targetSize;
-	}
-
-	/**
-	 * Utility to retrieve the bitmap as thumbnail via the MediaStore
-	 * @param maxSize The maximum size of this bitmap (used for selecting the sample size)
-	 * @return
-	 */
-	private Bitmap getThumbnail(int maxSize) {
-		ContentResolver resolver = Application.getAppContext().getContentResolver();
-
-		Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-				new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + " = ?",
-				new String[] { getAbsolutePath() }, MediaStore.Images.Media.DATE_ADDED + " desc");
-		imagecursor.moveToFirst();
-
-		if (!imagecursor.isAfterLast()) {
-			int imageId = imagecursor.getInt(imagecursor.getColumnIndex(MediaStore.Images.Media._ID));
-			imagecursor.close();
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = MINI_THUMB_SIZE / maxSize;
-			options.inDither = true;
-			return MediaStore.Images.Thumbnails.getThumbnail(resolver, imageId, MediaStore.Images.Thumbnails.MINI_KIND,
-					options);
-		}
-		else {
-			imagecursor.close();
-			return null;
-		}
 	}
 
 	/**
