@@ -17,7 +17,7 @@
 
     <string name="pref_title_user_key">User key</string>
     
-    <string name="key_folder_input" translatable="false">folder_eyefi</string>
+    <string name="key_folder_input" translatable="false">folder_input</string>
     <string name="key_folder_photos" translatable="false">folder_photos</string>
     <string name="key_folder_photos_remote" translatable="false">folder_photos_remote</string>
     <string name="key_max_bitmap_size" translatable="false">max_bitmap_size</string>
