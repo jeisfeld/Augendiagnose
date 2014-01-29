@@ -51,12 +51,8 @@ public class TwoImageSelectionHandler {
 	 * @param view
 	 */
 	public void highlightIfSelected(final EyeImageView view) {
-		Logger.log("SelectedView: " + selectedView);
-		Logger.log("View: " + view);
-		Logger.log("Path: " + view.getEyePhoto().getAbsolutePath());
 		if ((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
 			selectView(view);
-			Logger.log("selected");
 		}
 	}
 

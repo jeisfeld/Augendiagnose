@@ -23,9 +23,11 @@ public class SelectTwoPicturesActivity extends Activity {
 	private static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 	private static final String STRING_EXTRA_FILENAME1 = "de.eisfeldj.augendiagnose.FILENAME1";
 	private static final String STRING_EXTRA_FILENAME2 = "de.eisfeldj.augendiagnose.FILENAME2";
-	
+	private static final String STRING_EXTRA_FILENAMES = "de.eisfeldj.augendiagnose.FILENAMES";
+
 	private File folder;
-	
+	private String[] fileNames;
+
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 * 
@@ -37,7 +39,19 @@ public class SelectTwoPicturesActivity extends Activity {
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
-	
+
+	/**
+	 * Static helper method to start the activity, passing the list of files.
+	 * 
+	 * @param context
+	 * @param foldername
+	 */
+	public static void startActivity(Activity activity, String[] fileNames) {
+		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
+		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
+		activity.startActivityForResult(intent, REQUEST_CODE);
+	}
+
 	/**
 	 * Static helper method to extract the selected filenames from the activity response
 	 * 
@@ -55,51 +69,64 @@ public class SelectTwoPicturesActivity extends Activity {
 			return null;
 		}
 	}
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_two_pictures);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		folder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
-		
+
+		String folderName = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
+		if (folderName != null) {
+			folder = new File(folderName);
+		}
+		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
+
 		// Prepare the view
 		GridView gridview = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
-	    gridview.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		gridview.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 
-	    // Prepare the handler class
-	    TwoImageSelectionHandler.getInstance().setActivity(this);
-	    TwoImageSelectionHandler.getInstance().prepareViewForSelection(gridview);
+		// Prepare the handler class
+		TwoImageSelectionHandler.getInstance().setActivity(this);
+		TwoImageSelectionHandler.getInstance().prepareViewForSelection(gridview);
 	}
 
-	
 	/**
 	 * Helper method to retrieve the list of photos in the folder as EyePhoto objects
+	 * 
 	 * @return
 	 */
 	private EyePhoto[] getEyePhotos() {
-		File[] files = folder.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
+		File[] files;
+		
+		if(folder != null) {
+			// Get files from folder
+			files = folder.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
+				}
+			});
+			Arrays.sort(files, new Comparator<File>() {
+				public int compare(File f1, File f2) {
+					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+				}
+			});
+		}
+		else {
+			files = new File[fileNames.length];
+			for(int i=0; i< fileNames.length; i++) {
+				files[i] = new File(fileNames[i]);
 			}
-		});
-		Arrays.sort(files, new Comparator<File>() {
-			public int compare(File f1, File f2) {
-				return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-			}
-		});
+		}
+		
 		EyePhoto[] result = new EyePhoto[files.length];
-		for(int i=0; i<files.length; i++) {
+		for (int i = 0; i < files.length; i++) {
 			result[i] = new EyePhoto(files[i]);
 		}
 		return result;
 	}
-	
-	
-	
+
 	/**
 	 * Helper method: Return the selected filenames and finish the activity
 	 */
@@ -121,7 +148,7 @@ public class SelectTwoPicturesActivity extends Activity {
 			file1 = new File(name1);
 			file2 = new File(name2);
 		}
-		
+
 		public File file1;
 		public File file2;
 	}

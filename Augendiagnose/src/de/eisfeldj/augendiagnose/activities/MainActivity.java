@@ -1,7 +1,10 @@
 package de.eisfeldj.augendiagnose.activities;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,24 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		SettingsActivity.setDefaultSharedPreferences();
+
+		Intent intent = getIntent();
+		if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) && intent.getType() != null) {
+			// Application was started from other application by passing a list of images - open
+			// OrganizeNewPhotosActivity.
+			if (intent.getType().startsWith("image/")) {
+				ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+				if (imageUris != null) {
+					String[] fileNames = new String[imageUris.size()];
+					for (int i = 0; i < imageUris.size(); i++) {
+						fileNames[i] = imageUris.get(i).getPath();
+					}
+					boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+					OrganizeNewPhotosActivity.startActivity(this, fileNames,
+							Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
+				}
+			}
+		}
 	}
 
 	/**
@@ -55,11 +76,18 @@ public class MainActivity extends Activity {
 	 */
 	public void openEyeFiApp(View view) {
 		Intent launchIntent = getPackageManager().getLaunchIntentForPackage("fi.eye.android");
-		if(launchIntent != null) {
+		if (launchIntent != null) {
 			startActivity(launchIntent);
 		}
 		else {
-			DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed);
+			launchIntent = new Intent(Intent.ACTION_VIEW);
+			launchIntent.setData(Uri.parse("market://details?id=fi.eye.android"));
+			try {
+				startActivity(launchIntent);
+			}
+			catch (Exception e) {
+				DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed);
+			}
 		}
 	}
 
@@ -80,18 +108,18 @@ public class MainActivity extends Activity {
 	 */
 	public void organizeNewFoldersActivity(View view) {
 		boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-		OrganizeNewPhotosActivity.startActivity(this,
-				Application.getSharedPreferenceString(R.string.key_folder_eyefi),
+		OrganizeNewPhotosActivity.startActivity(this, Application.getSharedPreferenceString(R.string.key_folder_input),
 				Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 	}
 
-	
 	/**
 	 * onClick action used only for test purposes
+	 * 
 	 * @param view
 	 */
 	public void doTest(View view) {
-		DisplayOneActivityOverlay.startActivity(this, "/storage/emulated/0/Augenfotos/Schraml Sybille/Schraml Sybille 2013-08-02 re.jpg");
+		DisplayOneActivityOverlay.startActivity(this,
+				"/storage/emulated/0/Augenfotos/Schraml Sybille/Schraml Sybille 2013-08-02 re.jpg");
 	}
-	
+
 }

@@ -8,8 +8,8 @@
     <GridView
         android:id="@+id/gridViewSelectTwoPictures"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:columnWidth="100dp"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/grid_pictures_size"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"

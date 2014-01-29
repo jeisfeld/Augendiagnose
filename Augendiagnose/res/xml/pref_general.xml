@@ -12,13 +12,13 @@
         android:title="@string/pref_title_folder_photos" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_folder_eyefi"
+        android:defaultValue="@string/pref_default_folder_input"
         android:inputType="textCapWords"
-        android:key="@string/key_folder_eyefi"
+        android:key="@string/key_folder_input"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_title_folder_eyefi" />
+        android:title="@string/pref_title_folder_input" />
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_max_bitmap_size"

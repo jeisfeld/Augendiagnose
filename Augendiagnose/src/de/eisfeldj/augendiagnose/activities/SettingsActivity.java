@@ -20,7 +20,7 @@ import de.eisfeldj.augendiagnose.util.SystemUtil;
  */
 public class SettingsActivity extends Activity {
 	private static String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
-	private static int[] PATH_RESOURCES = { R.string.key_folder_eyefi, R.string.key_folder_photos,
+	private static int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos,
 			R.string.key_folder_photos_remote };
 
 	public static void startActivity(Context context) {
@@ -110,7 +110,7 @@ public class SettingsActivity extends Activity {
 
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.pref_general);
-			bindPreferenceSummaryToValue(R.string.key_folder_eyefi);
+			bindPreferenceSummaryToValue(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_photos);
 			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
 		}

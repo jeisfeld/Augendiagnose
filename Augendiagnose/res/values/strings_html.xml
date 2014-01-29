@@ -37,7 +37,7 @@ Then you get shown all eye photos of this person in a list sorted by date.</p>
 <ul>
 <li>Show one of the photos in detail (via click on a photo).
 In this view you may also change brightness and contrast of the photo or show iris topographies as overlay.
-(Note: due to copyright, there is currently only one, German languaged iris topography delivered with the app.)</li>
+(Note: due to copyright, there is currently only one iris topography delivered with the app.)</li>
 <li>Show both photos of one date (via click on a date)</li>
 <li>Show two photos of different dates (via long click on one photo and click on a second photo)</li>
 <li>Show two photos of different persons: Select one photo of this person (via long click) and then select a photo of a different person for comparison.</li>

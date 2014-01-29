@@ -203,7 +203,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private Drawable getOverlayDrawable(int position) {
 		if (overlayCache[position] == null) {
-			Logger.log("" + position);
 			int resource;
 
 			switch (position) {

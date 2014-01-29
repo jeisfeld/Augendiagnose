@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnose.activities;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -25,24 +26,28 @@ import android.widget.ImageView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming)
+ * 
+ * The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends Activity {
 
-	private static final String STRING_EXTRA_EYEFIFOLDER = "de.eisfeldj.augendiagnose.EYEFIFOLDER";
+	private static final String STRING_EXTRA_INPUTFOLDER = "de.eisfeldj.augendiagnose.INPUTFOLDER";
 	private static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
+	private static final String STRING_EXTRA_FILENAMES = "de.eisfeldj.augendiagnose.FILENAMES";
 	private static final String BOOL_EXTRA_RIGHTEYELAST = "de.eisfeldj.augendiagnose.RIGHTEYELAST";
 
-	private File eyefiFolder;
+	private File inputFolder;
 	private File parentFolder;
 	private Calendar pictureDate = Calendar.getInstance();
 	private boolean rightEyeLast;
 	private boolean hasSelectName = false;
+	private String[] fileNames;
 
 	private ImageView imageRight, imageLeft;
 	private EditText editName, editDate;
@@ -54,13 +59,30 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * if the last picture is the right or the left eye.
 	 * 
 	 * @param context
-	 * @param eyefifoldername
+	 * @param inputFolderName
+	 * @param folderName
+	 * @param rightEyeLast
+	 */
+	public static void startActivity(Context context, String inputFolderName, String folderName, boolean rightEyeLast) {
+		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
+		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
+		intent.putExtra(STRING_EXTRA_FOLDER, folderName);
+		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
+		context.startActivity(intent);
+	}
+
+	/**
+	 * Static helper method to start the activity, passing the list of files, the target folder, and a flag indicating
+	 * if the last picture is the right or the left eye.
+	 * 
+	 * @param context
+	 * @param fileNames
 	 * @param foldername
 	 * @param rightEyeLast
 	 */
-	public static void startActivity(Context context, String eyefifoldername, String foldername, boolean rightEyeLast) {
+	public static void startActivity(Context context, String[] fileNames, String foldername, boolean rightEyeLast) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
-		intent.putExtra(STRING_EXTRA_EYEFIFOLDER, eyefifoldername);
+		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
 		context.startActivity(intent);
@@ -76,13 +98,18 @@ public class OrganizeNewPhotosActivity extends Activity {
 		setContentView(R.layout.activity_organize_new_photos);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		eyefiFolder = new File(getIntent().getStringExtra(STRING_EXTRA_EYEFIFOLDER));
+		String inputFolderString = getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER);
+		if(inputFolderString != null) {
+			inputFolder = new File(getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER));
+		}
+		
 		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
 		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, true);
+		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		if (savedInstanceState != null) {
 			hasSelectName = savedInstanceState.getBoolean("hasSelectName", false);
-			if(savedInstanceState.getString("rightEyePhoto")!=null) {
+			if (savedInstanceState.getString("rightEyePhoto") != null) {
 				photoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
 				photoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
 			}
@@ -116,8 +143,8 @@ public class OrganizeNewPhotosActivity extends Activity {
 				return true;
 			}
 		});
-		
-		if(photoLeft==null || photoRight==null) {
+
+		if (photoLeft == null || photoRight == null) {
 			// initial fill
 			setPicturesAndValues();
 		}
@@ -128,44 +155,61 @@ public class OrganizeNewPhotosActivity extends Activity {
 			editDate.setText(EyePhoto.getDisplayDate(pictureDate));
 			editDate.invalidate();
 		}
-		
+
 		// Ensure that target folder exists
-		if(!parentFolder.exists()) {
+		if (!parentFolder.exists()) {
 			parentFolder.mkdirs();
 		}
 	}
-
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		TwoImageSelectionHandler.clean();
 	}
-	
+
 	/**
 	 * Helper methods to load the pictures and to preset the date (from the pictures).
 	 */
 	private void setPicturesAndValues() {
-		// List all JPG files
-		File[] files = eyefiFolder.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
-			}
-		});
+		File[] files;
 
-		if (files == null) {
-			DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_folder_does_not_exist,
-					eyefiFolder.getAbsolutePath());
-			return;
+		if (inputFolder != null) {
+			// retrieve files from Input Folder
+			files = inputFolder.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					// List only JPG files
+					return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
+				}
+			});
+
+			if (files == null) {
+				DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_folder_does_not_exist,
+						inputFolder.getAbsolutePath());
+				return;
+			}
+
+			// Sort files by date
+			Arrays.sort(files, new Comparator<File>() {
+				public int compare(File f1, File f2) {
+					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+				}
+			});
 		}
-
-		// Sort files by date
-		Arrays.sort(files, new Comparator<File>() {
-			public int compare(File f1, File f2) {
-				return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+		else {
+			ArrayList<File> fileList = new ArrayList<File>();
+			ArrayList<String> fileNameList = new ArrayList<String>();
+			for(String fileName:fileNames) {
+				File file = new File(fileName);
+				if(file.exists() && file.isFile() && fileName.toUpperCase(Locale.getDefault()).endsWith(".JPG")) {
+					fileList.add(file);
+					fileNameList.add(fileName);
+				}
 			}
-		});
+			files = fileList.toArray(new File[0]);
+			fileNames = fileNameList.toArray(new String[0]);
+		}
 
 		if (files.length > 1) {
 			EyePhoto photoLast = new EyePhoto(files[0]);
@@ -188,9 +232,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 				photoLeft = photoLast;
 				photoRight = photoLastButOne;
 			}
-			
+
 			updateImages();
-			
+
 			pictureDate.setTime(photoRight.getDate());
 			editDate.setText(EyePhoto.getDisplayDate(pictureDate));
 			editDate.invalidate();
@@ -205,20 +249,20 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * Display the two images. As these are only two thumbnails, we do this in the main thread.
 	 */
 	private void updateImages() {
-		imageRight.post(new Runnable () {
+		imageRight.post(new Runnable() {
 			@Override
 			public void run() {
 				imageRight.setImageBitmap(photoRight.getImageBitmap(EyePhoto.MINI_THUMB_SIZE));
 				imageRight.invalidate();
-			}			
+			}
 		});
 
-		imageLeft.post(new Runnable () {
+		imageLeft.post(new Runnable() {
 			@Override
 			public void run() {
 				imageLeft.setImageBitmap(photoLeft.getImageBitmap(EyePhoto.MINI_THUMB_SIZE));
 				imageLeft.invalidate();
-			}			
+			}
 		});
 	}
 
@@ -251,7 +295,12 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * @param view
 	 */
 	public void selectOtherPhotos(View view) {
-		SelectTwoPicturesActivity.startActivity(this, eyefiFolder.getAbsolutePath());
+		if(inputFolder != null) {
+			SelectTwoPicturesActivity.startActivity(this, inputFolder.getAbsolutePath());
+		}
+		else {
+			SelectTwoPicturesActivity.startActivity(this, fileNames);
+		}
 	}
 
 	/**
@@ -353,7 +402,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			break;
 		case SelectTwoPicturesActivity.REQUEST_CODE:
 			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
-			if(filePair!=null) {
+			if (filePair != null) {
 				photoRight = new EyePhoto(filePair.file1);
 				photoLeft = new EyePhoto(filePair.file2);
 				updateImages();
@@ -381,7 +430,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("hasSelectName", hasSelectName);
-		if(photoRight!=null && photoLeft!=null) {
+		if (photoRight != null && photoLeft != null) {
 			outState.putString("rightEyePhoto", photoRight.getAbsolutePath());
 			outState.putString("leftEyePhoto", photoLeft.getAbsolutePath());
 		}

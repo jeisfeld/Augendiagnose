@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,8 +31,8 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-        final EyeImageView eyeImageView = new EyeImageView(context);
-        eyeImageView.setPadding(10, 10, 10, 10);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final EyeImageView eyeImageView = (EyeImageView) inflater.inflate(R.layout.adapter_select_two_pictures, parent, false);
 
         eyeImageView.post(new Runnable() {
 			@Override
