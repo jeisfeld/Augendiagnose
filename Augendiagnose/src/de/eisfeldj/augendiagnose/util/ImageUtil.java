@@ -1,0 +1,181 @@
+package de.eisfeldj.augendiagnose.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.util.Log;
+
+
+/**
+ * Utility class for operations with images
+ */
+public abstract class ImageUtil {
+	
+	/**
+	 * Get the date field with the EXIF date from the file If not existing, use the last modified date.
+	 * @param path
+	 *            The file path of the image
+	 */
+	public static Date getExifDate(String path) {
+		Date retrievedDate = null;
+		try {
+			ExifInterface exif = new ExifInterface(path);
+			String dateString = exif.getAttribute(ExifInterface.TAG_DATETIME);
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault());
+			retrievedDate = dateFormat.parse(dateString);
+		}
+		catch (Exception e) {
+			Log.w("JE", e.toString() + "Cannot retrieve EXIF date for " + path);
+		}
+		if (retrievedDate == null) {
+			File f = new File(path);
+			retrievedDate = new Date(f.lastModified());
+		}
+		return retrievedDate;
+	}
+
+	
+	/**
+	 * Retrieve the rotation angle from the Exif data of an image
+	 * @param path
+	 *            The file path of the image
+	 * @return
+	 */
+	public static int getExifRotation(String path) {
+		int rotation = 0;
+		try {
+			ExifInterface exif = new ExifInterface(path);
+			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+			switch (orientation) {
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				rotation = 270;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				rotation = 180;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				rotation = 90;
+				break;
+			}
+		}
+		catch (Exception e) {
+		}
+		return rotation;
+	}
+	
+	/**
+	 * Return a bitmap of this photo
+	 * 
+	 * @param path
+	 *            The file path of the image
+	 * @param maxSize
+	 *            The maximum size of this bitmap. If bigger, it will be resized
+	 * @return
+	 */
+	public static Bitmap getImageBitmap(String path, int maxSize) {
+		Bitmap bitmap = null;
+
+		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
+			bitmap = MediaStoreUtil.getThumbnailFromPath(path, maxSize);
+		}
+
+		if (bitmap == null) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = getBitmapFactor(path, maxSize);
+			// options.inPurgeable = true;
+			bitmap = BitmapFactory.decodeFile(path, options);
+			if (bitmap.getWidth() > maxSize) {
+				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
+				bitmap = Bitmap.createScaledBitmap(bitmap, maxSize, targetHeight, false);
+			}
+			if (bitmap.getHeight() > maxSize) {
+				int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
+				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, maxSize, false);
+			}
+		}
+		
+		int rotation = getExifRotation(path);
+		if(rotation != 0) {
+			bitmap = rotateBitmap(bitmap, rotation);
+		}
+		
+		return bitmap;
+	}
+
+	/**
+	 * Utility to retrieve the sample size for BitmapFactory.decodeFile
+	 * 
+	 * @param filepath
+	 * @param targetSize
+	 * @return
+	 */
+	private static int getBitmapFactor(String filepath, int targetSize) {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(filepath, options);
+		int size = Math.max(options.outWidth, options.outWidth);
+		return size / targetSize;
+	}
+	
+	
+	/**
+	 * Copy a file
+	 * @param source The source file
+	 * @param target The target file
+	 * @return
+	 */
+	public static boolean copyFile(File source, File target) {
+		FileInputStream inStream = null;
+		FileOutputStream outStream = null;
+		FileChannel inChannel = null;
+		FileChannel outChannel = null;
+		try {
+			inStream = new FileInputStream(source);
+			outStream = new FileOutputStream(target);
+			inChannel = inStream.getChannel();
+			outChannel = outStream.getChannel();
+			inChannel.transferTo(0, inChannel.size(), outChannel);
+		}
+		catch (Exception e) {
+			return false;
+		}
+		finally {
+			try {
+				inStream.close();
+				outStream.close();
+				inChannel.close();
+				outChannel.close();
+			}
+			catch (Exception e) {
+
+			}
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * Rotate a bitmap
+	 * @param source The original bitmap
+	 * @param angle The rotation angle
+	 * @return
+	 */
+	public static Bitmap rotateBitmap(Bitmap source, float angle)
+	{
+	      Matrix matrix = new Matrix();
+	      matrix.postRotate(angle);
+	      return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+	}
+	
+}
