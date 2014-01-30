@@ -3,7 +3,7 @@ package de.eisfeldj.augendiagnose.util;
 /**
  * Utility class to get system information
  */
-public class SystemUtil {
+public abstract class SystemUtil {
 	/**
 	 * Verify if the app is run on BlueStacks
 	 */

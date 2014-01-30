@@ -1,18 +1,12 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.util.Log;
 
 /**
  * Utility class to handle an eye photo, in particular regarding name policies.
@@ -111,14 +105,14 @@ public class EyePhoto {
 			setSuffix(filename.substring(suffixPosition + 1));
 
 			if (!formattedName) {
-				getExifDate();
+				setDate(ImageUtil.getExifDate(getAbsolutePath()));
 			}
 		}
 		else {
 			if (suffixPosition > 0) {
 				setSuffix(filename.substring(suffixPosition + 1));
 			}
-			getExifDate();
+			setDate(ImageUtil.getExifDate(getAbsolutePath()));
 			formattedName = false;
 		}
 	}
@@ -278,32 +272,7 @@ public class EyePhoto {
 	 * @return
 	 */
 	public boolean copyTo(EyePhoto target) {
-		FileInputStream inStream = null;
-		FileOutputStream outStream = null;
-		FileChannel inChannel = null;
-		FileChannel outChannel = null;
-		try {
-			inStream = new FileInputStream(getFile());
-			outStream = new FileOutputStream(target.getFile());
-			inChannel = inStream.getChannel();
-			outChannel = outStream.getChannel();
-			inChannel.transferTo(0, inChannel.size(), outChannel);
-		}
-		catch (Exception e) {
-			return false;
-		}
-		finally {
-			try {
-				inStream.close();
-				outStream.close();
-				inChannel.close();
-				outChannel.close();
-			}
-			catch (Exception e) {
-
-			}
-		}
-		return true;
+		return ImageUtil.copyFile(getFile(), target.getFile());
 	}
 
 	/**
@@ -318,27 +287,6 @@ public class EyePhoto {
 		return moveTo(target);
 	}
 
-	/**
-	 * Set the date field with the EXIF date from the file If not existing, use the last modified date.
-	 */
-	private void getExifDate() {
-		Date retrievedDate = null;
-		try {
-			ExifInterface exif = new ExifInterface(getAbsolutePath());
-			String dateString = exif.getAttribute(ExifInterface.TAG_DATETIME);
-
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault());
-			retrievedDate = dateFormat.parse(dateString);
-		}
-		catch (Exception e) {
-			Log.w("JE", e.toString() + "Cannot retrieve EXIF date for " + getAbsolutePath());
-		}
-		if (retrievedDate == null) {
-			File f = new File(getAbsolutePath());
-			retrievedDate = new Date(f.lastModified());
-		}
-		setDate(retrievedDate);
-	}
 
 	/**
 	 * Retrieve a clone of this object from the absolute path
@@ -357,42 +305,9 @@ public class EyePhoto {
 	 * @return
 	 */
 	public Bitmap getImageBitmap(int maxSize) {
-		Bitmap bitmap = null;
-
-		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
-			bitmap = MediaStoreUtil.getThumbnailFromPath(getAbsolutePath(), maxSize);
-		}
-
-		if (bitmap == null) {
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = getBitmapFactor(getAbsolutePath(), maxSize);
-			bitmap = BitmapFactory.decodeFile(getAbsolutePath(), options);
-			if (bitmap.getWidth() > maxSize) {
-				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
-				bitmap = Bitmap.createScaledBitmap(bitmap, maxSize, targetHeight, false);
-			}
-			if (bitmap.getHeight() > maxSize) {
-				int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
-				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, maxSize, false);
-			}
-		}
-		return bitmap;
+		return ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
 	}
 
-	/**
-	 * Utility to retrieve the sample size for BitmapFactory.decodeFile
-	 * 
-	 * @param filepath
-	 * @param targetSize
-	 * @return
-	 */
-	private int getBitmapFactor(String filepath, int targetSize) {
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(filepath, options);
-		int size = Math.max(options.outWidth, options.outWidth);
-		return size / targetSize;
-	}
 
 	/**
 	 * Compare two bitmaps for equality (by path)

@@ -79,7 +79,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mOverlayX = mBitmap.getWidth() / 2;
 			mOverlayY = mBitmap.getHeight() / 2;
 
-			mBitmapSmall = mEyePhoto.getImageBitmap(512);
+			mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 		}
 
 		mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);

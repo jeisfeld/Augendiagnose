@@ -62,10 +62,10 @@ public class PinchImageView extends ImageView {
 	 */
 	public void setImage(String pathName) {
 		if (!pathName.equals(mPathName)) {
-			mBitmap = new EyePhoto(pathName).getImageBitmap(maxBitmapSize);
+			mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
 			mPathName = pathName;
 		}
-
+		
 		super.setImageBitmap(mBitmap);
 		doInitialScaling();
 	}
@@ -86,6 +86,9 @@ public class PinchImageView extends ImageView {
 		doInitialScaling();
 	}
 
+	/**
+	 * Scale the image to fit into the view
+	 */
 	protected void doInitialScaling() {
 		if (!initialized) {
 			mPosX = 0;
