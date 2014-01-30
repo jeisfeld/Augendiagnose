@@ -26,6 +26,8 @@ Dies ist nur die Standardkonfiguration - es kann auch ein anderes Eingangsverzei
 <p>In der Aktivit&auml;t &quot;Neue Fotos einordnen&quot; sehen Sie die letzten zwei Fotos des Eingangsverzeichnisses. (Sie k&ouml;nnen auch zwei andere Fotos aus diesem Verzeichnis ausw&auml;hlen.)
 Zu diesen zwei Fotos geben Sie den Namen der Person an, sowie das Datum der Aufnahme (dieses ist vorselektiert), und die Information, welches der beiden Fotos das rechte Auge zeigt und welches das linke.
 Anschlie&szlig;end verschiebt die App diese beiden Fotos in das Zielverzeichnis und benennt sie um - der neue Dateiname enth&auml;lt Namen, Datum und die &quot;Rechts-Links-Information&quot;.</p>
+<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und an die Augendiagnose-App senden. Dann k&ouml;nnen Sie diese Fotos in der App einordnen.
+In diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis gel&ouml;scht.</p>
 
 <H3>Schritt 2: Betrachten der Fotos</H3>
 

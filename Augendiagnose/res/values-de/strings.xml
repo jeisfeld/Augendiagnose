@@ -18,7 +18,7 @@
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
     
-    <string name="message_dialog_no_picture">Keine Fotos zum einordnen vorhanden</string>
+    <string name="message_dialog_no_picture">Keine Fotopaare zum einordnen vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_folder_does_not_exist">Verzeichnis %1$s existiert nicht. Bitte überprüfen Sie die Einstellungen.</string>

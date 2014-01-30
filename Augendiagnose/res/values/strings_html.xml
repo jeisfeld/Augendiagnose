@@ -27,6 +27,7 @@ This is just the default configuration, which may be changed.</p>
 (You may also select two other photos of this folder.)
 You have to specify the name of the person, the date of the photos (preselected from the photo), and the information which of the two photos shows the right eye and which the left eye.
 Then the app moves the photos into the target folder, storing the name/date/rightleft information in the file name.</p>
+<p>As an alternative to the regular input folder, you may select two photos in a file browser or photo app and send these photos to the Eye Diagnosis app. Then you can organize these photos in the app. In this case, the photos will not be deleted from their old location.</p>
 
 <H3>Step 2: Visualize the photos.</H3>
 
