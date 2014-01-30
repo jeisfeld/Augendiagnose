@@ -12,6 +12,7 @@ import android.view.View;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -30,20 +31,21 @@ public class MainActivity extends Activity {
 		if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) && intent.getType() != null) {
 			// Application was started from other application by passing a list of images - open
 			// OrganizeNewPhotosActivity.
-			if (intent.getType().startsWith("image/")) {
-				ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-				if (imageUris != null) {
-					String[] fileNames = new String[imageUris.size()];
-					for (int i = 0; i < imageUris.size(); i++) {
-						fileNames[i] = MediaStoreUtil.getRealPathFromURI(imageUris.get(i));
-						if(fileNames[i]==null) {
-							fileNames[i] = imageUris.get(i).getPath();
+			ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+			if (imageUris != null) {
+				ArrayList<String> fileNames = new ArrayList<String>();
+				for (int i = 0; i < imageUris.size(); i++) {
+					if (ImageUtil.getMimeType(imageUris.get(i)).startsWith("image/")) {
+						String fileName = MediaStoreUtil.getRealPathFromURI(imageUris.get(i));
+						if (fileName == null) {
+							fileName = imageUris.get(i).getPath();
 						}
+						fileNames.add(fileName);
 					}
-					boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-					OrganizeNewPhotosActivity.startActivity(this, fileNames,
-							Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 				}
+				boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[0]),
+						Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 			}
 		}
 	}

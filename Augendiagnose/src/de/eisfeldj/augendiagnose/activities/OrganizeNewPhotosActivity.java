@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -16,6 +15,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -27,6 +27,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
@@ -178,9 +179,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 			// retrieve files from Input Folder
 			files = inputFolder.listFiles(new FileFilter() {
 				@Override
-				public boolean accept(File pathname) {
-					// List only JPG files
-					return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
+				public boolean accept(File file) {
+					Uri uri = Uri.fromFile(file);
+					return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
 				}
 			});
 
@@ -202,7 +203,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			ArrayList<String> fileNameList = new ArrayList<String>();
 			for(String fileName:fileNames) {
 				File file = new File(fileName);
-				if(file.exists() && file.isFile() && fileName.toUpperCase(Locale.getDefault()).endsWith(".JPG")) {
+				if(file.exists() && file.isFile()) {
 					fileList.add(file);
 					fileNameList.add(fileName);
 				}

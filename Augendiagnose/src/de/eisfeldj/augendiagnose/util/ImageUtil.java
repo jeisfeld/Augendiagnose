@@ -8,20 +8,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.util.Log;
-
+import android.webkit.MimeTypeMap;
+import de.eisfeldj.augendiagnose.Application;
 
 /**
  * Utility class for operations with images
  */
 public abstract class ImageUtil {
-	
+
 	/**
 	 * Get the date field with the EXIF date from the file If not existing, use the last modified date.
+	 * 
 	 * @param path
 	 *            The file path of the image
 	 */
@@ -44,9 +48,9 @@ public abstract class ImageUtil {
 		return retrievedDate;
 	}
 
-	
 	/**
 	 * Retrieve the rotation angle from the Exif data of an image
+	 * 
 	 * @param path
 	 *            The file path of the image
 	 * @return
@@ -73,7 +77,7 @@ public abstract class ImageUtil {
 		}
 		return rotation;
 	}
-	
+
 	/**
 	 * Return a bitmap of this photo
 	 * 
@@ -104,12 +108,12 @@ public abstract class ImageUtil {
 				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, maxSize, false);
 			}
 		}
-		
+
 		int rotation = getExifRotation(path);
-		if(rotation != 0) {
+		if (rotation != 0) {
 			bitmap = rotateBitmap(bitmap, rotation);
 		}
-		
+
 		return bitmap;
 	}
 
@@ -127,12 +131,14 @@ public abstract class ImageUtil {
 		int size = Math.max(options.outWidth, options.outWidth);
 		return size / targetSize;
 	}
-	
-	
+
 	/**
 	 * Copy a file
-	 * @param source The source file
-	 * @param target The target file
+	 * 
+	 * @param source
+	 *            The source file
+	 * @param target
+	 *            The target file
 	 * @return
 	 */
 	public static boolean copyFile(File source, File target) {
@@ -163,19 +169,42 @@ public abstract class ImageUtil {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Rotate a bitmap
-	 * @param source The original bitmap
-	 * @param angle The rotation angle
+	 * 
+	 * @param source
+	 *            The original bitmap
+	 * @param angle
+	 *            The rotation angle
 	 * @return
 	 */
-	public static Bitmap rotateBitmap(Bitmap source, float angle)
-	{
-	      Matrix matrix = new Matrix();
-	      matrix.postRotate(angle);
-	      return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+	public static Bitmap rotateBitmap(Bitmap source, float angle) {
+		Matrix matrix = new Matrix();
+		matrix.postRotate(angle);
+		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
 	}
-	
+
+	/**
+	 * Get Mime type from URI
+	 * 
+	 * @param uri
+	 *            The URI
+	 * @return
+	 */
+	public static String getMimeType(Uri uri) {
+		ContentResolver contentResolver = Application.getAppContext().getContentResolver();
+		String mimeType = contentResolver.getType(uri);
+		if (mimeType == null) {
+			String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+			if (extension.equalsIgnoreCase("jpg")) {
+				mimeType = "image/jpeg";
+			}
+			else {
+				mimeType = "unknown";
+			}
+		}
+		return mimeType;
+	}
+
 }
