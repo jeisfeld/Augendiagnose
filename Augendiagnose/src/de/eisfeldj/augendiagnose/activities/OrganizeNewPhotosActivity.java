@@ -383,6 +383,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 			}
 		}
 		
+		targetPhotoRight.addToMediaStore();
+		targetPhotoLeft.addToMediaStore();
+		
 
 		// TODO: Change IPTC settings
 

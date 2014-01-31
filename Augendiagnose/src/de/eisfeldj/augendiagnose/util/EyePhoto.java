@@ -289,6 +289,14 @@ public class EyePhoto {
 
 
 	/**
+	 * Add the photo to the media store
+	 */
+	public void addToMediaStore() {
+		MediaStoreUtil.addPictureToMediaStore(getAbsolutePath());
+	}
+	
+	
+	/**
 	 * Retrieve a clone of this object from the absolute path
 	 * 
 	 * @return

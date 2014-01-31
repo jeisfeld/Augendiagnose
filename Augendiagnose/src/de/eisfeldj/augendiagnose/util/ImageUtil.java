@@ -99,6 +99,10 @@ public abstract class ImageUtil {
 			options.inSampleSize = getBitmapFactor(path, maxSize);
 			// options.inPurgeable = true;
 			bitmap = BitmapFactory.decodeFile(path, options);
+			if (bitmap == null) {
+				// cannot create bitmap - return dummy
+				return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+			}
 			if (bitmap.getWidth() > maxSize) {
 				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
 				bitmap = Bitmap.createScaledBitmap(bitmap, maxSize, targetHeight, false);
@@ -197,10 +201,8 @@ public abstract class ImageUtil {
 		String mimeType = contentResolver.getType(uri);
 		if (mimeType == null) {
 			String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
-			if (extension.equalsIgnoreCase("jpg")) {
-				mimeType = "image/jpeg";
-			}
-			else {
+			mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+			if (mimeType == null) {
 				mimeType = "unknown";
 			}
 		}

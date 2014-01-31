@@ -1,6 +1,9 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.io.File;
+
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,7 +33,7 @@ public abstract class MediaStoreUtil {
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			return null;
 		}
 		finally {
@@ -70,6 +73,18 @@ public abstract class MediaStoreUtil {
 			imagecursor.close();
 			return null;
 		}
+	}
+
+	/**
+	 * Add a picture to the media store (via scanning)
+	 * @param path
+	 */
+	public static void addPictureToMediaStore(String path) {
+		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		File file = new File(path);
+		Uri contentUri = Uri.fromFile(file);
+		mediaScanIntent.setData(contentUri);
+		Application.getAppContext().sendBroadcast(mediaScanIntent);
 	}
 
 }
