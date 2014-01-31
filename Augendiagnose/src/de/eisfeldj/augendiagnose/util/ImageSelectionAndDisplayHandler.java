@@ -48,7 +48,7 @@ public class ImageSelectionAndDisplayHandler {
 	public void setSecondActivity(ListPicturesForSecondNameActivity activity) {
 		this.secondActivity = activity;
 	}
-	
+
 	/**
 	 * Clean all references
 	 */
@@ -63,10 +63,10 @@ public class ImageSelectionAndDisplayHandler {
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
 		// Ensure that selected view stays selected after rotating device
-		if((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
+		if ((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
-		
+
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -78,12 +78,13 @@ public class ImageSelectionAndDisplayHandler {
 					DisplayOneActivityOverlay.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else {
-					DisplayTwoActivity.startActivity(activity, getSelectedImagePath(), view.getEyePhoto().getAbsolutePath());
+					DisplayTwoActivity.startActivity(activity, getSelectedImagePath(), view.getEyePhoto()
+							.getAbsolutePath());
 					cleanSelectedView();
 				}
 			}
 		});
-		
+
 		view.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {

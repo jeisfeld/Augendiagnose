@@ -124,7 +124,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	 */
 	private void onToggleOverlayClicked(View view, int position) {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
-			if(position != i) {
+			if (position != i) {
 				toggleOverlayButtons[i].setChecked(false);
 			}
 		}

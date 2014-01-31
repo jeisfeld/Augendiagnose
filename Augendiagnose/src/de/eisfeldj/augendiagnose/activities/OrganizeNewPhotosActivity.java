@@ -99,10 +99,10 @@ public class OrganizeNewPhotosActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String inputFolderString = getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER);
-		if(inputFolderString != null) {
+		if (inputFolderString != null) {
 			inputFolder = new File(getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER));
 		}
-		
+
 		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
 		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, true);
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
@@ -193,9 +193,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 		else {
 			ArrayList<File> fileList = new ArrayList<File>();
 			ArrayList<String> fileNameList = new ArrayList<String>();
-			for(String fileName:fileNames) {
+			for (String fileName : fileNames) {
 				File file = new File(fileName);
-				if(file.exists() && file.isFile()) {
+				if (file.exists() && file.isFile()) {
 					fileList.add(file);
 					fileNameList.add(fileName);
 				}
@@ -288,7 +288,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * @param view
 	 */
 	public void selectOtherPhotos(View view) {
-		if(inputFolder != null) {
+		if (inputFolder != null) {
 			SelectTwoPicturesActivity.startActivity(this, inputFolder.getAbsolutePath());
 		}
 		else {
@@ -348,7 +348,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			return;
 		}
 
-		if(inputFolder != null) {
+		if (inputFolder != null) {
 			// in case of input folder, move files
 			if (!photoRight.moveTo(targetPhotoRight)) {
 				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
@@ -374,10 +374,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 				return;
 			}
 		}
-		
+
 		targetPhotoRight.addToMediaStore();
 		targetPhotoLeft.addToMediaStore();
-		
 
 		// TODO: Change IPTC settings
 

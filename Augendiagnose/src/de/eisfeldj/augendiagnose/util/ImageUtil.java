@@ -213,13 +213,13 @@ public abstract class ImageUtil {
 
 	/**
 	 * Retrieves a dummy bitmap (for the case that an image file is not readable)
+	 * 
 	 * @return
 	 */
 	public static Bitmap getDummyBitmap() {
 		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.bad_file_format);
 	}
-	
-	
+
 	/**
 	 * File filter class to identify image files
 	 */
@@ -229,7 +229,7 @@ public abstract class ImageUtil {
 			Uri uri = Uri.fromFile(file);
 			return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
 		}
-		
+
 	}
-	
+
 }

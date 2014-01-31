@@ -19,17 +19,17 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	public ListPicturesForNameArrayAdapter(Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	protected int getLayout() {
 		return R.layout.adapter_list_pictures_for_name;
 	}
-	
+
 	@Override
 	protected void prepareViewForSelection(EyeImageView view) {
 		ImageSelectionAndDisplayHandler.getInstance().prepareViewForFirstSelection(view);
 	}
-	
+
 	/**
 	 * When clicking on date, display the two pictures of that date
 	 */

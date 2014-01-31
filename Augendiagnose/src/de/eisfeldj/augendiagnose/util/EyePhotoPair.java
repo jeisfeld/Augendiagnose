@@ -58,4 +58,13 @@ public class EyePhotoPair {
 		return dateString;
 	}
 
+	/**
+	 * Return information if the object contains both eyes
+	 * 
+	 * @return
+	 */
+	public boolean isComplete() {
+		return leftEye != null && rightEye != null;
+	}
+
 }

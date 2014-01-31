@@ -73,7 +73,8 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 	}
 
 	/**
-	 * When getting the response from the picture selection, return the name of the selected picture and finish the activity.
+	 * When getting the response from the picture selection, return the name of the selected picture and finish the
+	 * activity.
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -287,15 +287,13 @@ public class EyePhoto {
 		return moveTo(target);
 	}
 
-
 	/**
 	 * Add the photo to the media store
 	 */
 	public void addToMediaStore() {
 		MediaStoreUtil.addPictureToMediaStore(getAbsolutePath());
 	}
-	
-	
+
 	/**
 	 * Retrieve a clone of this object from the absolute path
 	 * 
@@ -315,7 +313,6 @@ public class EyePhoto {
 	public Bitmap getImageBitmap(int maxSize) {
 		return ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
 	}
-
 
 	/**
 	 * Compare two bitmaps for equality (by path)

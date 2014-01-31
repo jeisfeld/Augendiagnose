@@ -26,7 +26,8 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	private String preselectedName;
 
 	/**
-	 * Static helper method to start the activity, passing the path of the folder and a potentially preselected new name.
+	 * Static helper method to start the activity, passing the path of the folder and a potentially preselected new
+	 * name.
 	 * 
 	 * @param context
 	 * @param foldername
@@ -101,8 +102,8 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	}
 
 	/**
-	 * Extension of the name change listener, taking care of the fact that the first item of the
-	 * list has been added as "new name" selector.
+	 * Extension of the name change listener, taking care of the fact that the first item of the list has been added as
+	 * "new name" selector.
 	 */
 	private class RenameOnLongClickListener extends ListFoldersBaseActivity.RenameOnLongClickListener {
 		@Override
@@ -117,9 +118,9 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	}
 
 	/**
-	 * On item click, either return the selected file (if the click is not on the first entry)
-	 * Or display a dialog for entering a new name.
-	 *
+	 * On item click, either return the selected file (if the click is not on the first entry) Or display a dialog for
+	 * entering a new name.
+	 * 
 	 */
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
@@ -148,9 +149,8 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	}
 
 	/**
-	 * Dialog fragment to enter a new name.
-	 * The fragment allows to pass a preselected name which will be displayed on start.
-	 * It has a "clear" button that allows to clean the entered name.
+	 * Dialog fragment to enter a new name. The fragment allows to pass a preselected name which will be displayed on
+	 * start. It has a "clear" button that allows to clean the entered name.
 	 */
 	public static class EnterNameDialogFragment extends DialogFragment {
 		@Override

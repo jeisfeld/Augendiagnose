@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.

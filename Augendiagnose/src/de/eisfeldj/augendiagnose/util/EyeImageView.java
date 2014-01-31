@@ -36,9 +36,10 @@ public class EyeImageView extends ImageView {
 		invalidate();
 		initialized = true;
 	}
-	
+
 	/**
 	 * Retrieve the eyePhoto object
+	 * 
 	 * @return
 	 */
 	public EyePhoto getEyePhoto() {
@@ -54,6 +55,7 @@ public class EyeImageView extends ImageView {
 
 	/**
 	 * Check if it is initialized
+	 * 
 	 * @return
 	 */
 	public boolean isInitialized() {

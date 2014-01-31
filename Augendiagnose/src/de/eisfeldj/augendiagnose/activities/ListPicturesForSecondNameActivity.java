@@ -8,8 +8,8 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 import de.eisfeldj.augendiagnose.util.ListPicturesForSecondNameArrayAdapter;
 
 /**
- * Activity to display the pictures in an eye photo folder (in pairs)
- * This is for the selection of a second picture for display.
+ * Activity to display the pictures in an eye photo folder (in pairs) This is for the selection of a second picture for
+ * display.
  */
 public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseActivity {
 	public static final int REQUEST_CODE = 3;
@@ -18,7 +18,9 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	public static final String STRING_EXTRA_FILEPATH = "de.eisfeldj.augendiagnose.FILEPATH";
 
 	/**
-	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current folder.
+	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
+	 * folder.
+	 * 
 	 * @param activity
 	 * @param parentFolder
 	 * @param name
@@ -53,7 +55,7 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 		super.onCreate(savedInstanceState);
 
 		listview.setAdapter(new ListPicturesForSecondNameArrayAdapter(this, eyePhotoPairs));
-		
+
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setSecondActivity(this);
 	}

@@ -47,7 +47,8 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	protected abstract void prepareViewForSelection(EyeImageView view);
 
 	/**
-	 * Fill the display of the view (date and pictures) Details on selection are handled within the ImageSelectionAndDisplayHandler class
+	 * Fill the display of the view (date and pictures) Details on selection are handled within the
+	 * ImageSelectionAndDisplayHandler class
 	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {

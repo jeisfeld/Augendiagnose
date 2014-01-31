@@ -18,8 +18,8 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
- * Base activity to display the pictures in an eye photo folder (in pairs)
- * Abstract class - child classes determine the detailed actions.
+ * Base activity to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
+ * detailed actions.
  */
 public abstract class ListPicturesForNameBaseActivity extends Activity {
 	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
@@ -44,12 +44,12 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
 
 		listview = (ListView) findViewById(R.id.listViewForName);
-		
+
 		// prevent highlighting
 		listview.setCacheColorHint(Color.TRANSPARENT);
 		listview.setSelector(new StateListDrawable());
 	}
-	
+
 	/**
 	 * Abstract method to be overriden - should return the view to be used for display.
 	 */
@@ -57,7 +57,9 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 
 	/**
 	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
-	 * @param the folder where the photos are located.
+	 * 
+	 * @param the
+	 *            folder where the photos are located.
 	 * @return
 	 */
 	private EyePhotoPair[] createEyePhotoList(File folder) {
@@ -87,7 +89,15 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 
 		}
 
-		EyePhotoPair[] eyePhotoPairs = eyePhotoMap.values().toArray(new EyePhotoPair[0]);
+		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
+		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>();
+		for (Date date : eyePhotoMap.keySet()) {
+			if (eyePhotoMap.get(date).isComplete()) {
+				eyePhotoMap2.put(date, eyePhotoMap.get(date));
+			}
+		}
+
+		EyePhotoPair[] eyePhotoPairs = eyePhotoMap2.values().toArray(new EyePhotoPair[0]);
 
 		return eyePhotoPairs;
 	}

@@ -65,7 +65,7 @@ public class PinchImageView extends ImageView {
 			mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
 			mPathName = pathName;
 		}
-		
+
 		super.setImageBitmap(mBitmap);
 		doInitialScaling();
 	}
@@ -94,7 +94,7 @@ public class PinchImageView extends ImageView {
 			mPosX = 0;
 			mPosY = 0;
 			mScaleFactor = 1f;
-			if (getHeight() > 100 && getWidth() > 100) {
+			if (getHeight() > 0 && getWidth() > 0) {
 				final float heightFactor = 1f * getHeight() / mBitmap.getHeight();
 				final float widthFactor = 1f * getWidth() / mBitmap.getWidth();
 				mScaleFactor = Math.min(widthFactor, heightFactor);

@@ -13,12 +13,13 @@ import de.eisfeldj.augendiagnose.util.PinchImageView;
 public class DisplayTwoActivity extends Activity {
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
-	
+
 	private String file1, file2;
 	private PinchImageView imageView1, imageView2;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
+	 * 
 	 * @param context
 	 * @param filename1
 	 * @param filename2
@@ -29,7 +30,6 @@ public class DisplayTwoActivity extends Activity {
 		intent.putExtra(STRING_EXTRA_FILE2, filename2);
 		context.startActivity(intent);
 	}
-
 
 	/**
 	 * Build the screen on creation
@@ -59,13 +59,13 @@ public class DisplayTwoActivity extends Activity {
 				public void run() {
 					imageView1.setImage(file1);
 				}
-			});			
+			});
 			imageView2.post(new Runnable() {
 				@Override
 				public void run() {
 					imageView2.setImage(file2);
 				}
-			});			
+			});
 		}
 	}
 

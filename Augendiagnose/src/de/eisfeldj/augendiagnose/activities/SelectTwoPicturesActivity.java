@@ -97,8 +97,8 @@ public class SelectTwoPicturesActivity extends Activity {
 	 */
 	private EyePhoto[] getEyePhotos() {
 		File[] files;
-		
-		if(folder != null) {
+
+		if (folder != null) {
 			// Get files from folder
 			files = folder.listFiles(new ImageUtil.ImageFileFilter());
 			Arrays.sort(files, new Comparator<File>() {
@@ -109,11 +109,11 @@ public class SelectTwoPicturesActivity extends Activity {
 		}
 		else {
 			files = new File[fileNames.length];
-			for(int i=0; i< fileNames.length; i++) {
+			for (int i = 0; i < fileNames.length; i++) {
 				files[i] = new File(fileNames[i]);
 			}
 		}
-		
+
 		EyePhoto[] result = new EyePhoto[files.length];
 		for (int i = 0; i < files.length; i++) {
 			result[i] = new EyePhoto(files[i]);

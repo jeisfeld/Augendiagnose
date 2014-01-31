@@ -77,6 +77,7 @@ public abstract class MediaStoreUtil {
 
 	/**
 	 * Add a picture to the media store (via scanning)
+	 * 
 	 * @param path
 	 */
 	public static void addPictureToMediaStore(String path) {
