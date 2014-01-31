@@ -222,7 +222,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo2_l;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				overlayCache[position] = getResources().getDrawable(resource);
 				break;
 			case 3:
 				if (mEyePhoto.getRightLeft().equals(EyePhoto.RightLeft.RIGHT)) {
@@ -231,7 +231,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo3_l;
 				}
-				overlayCache[position] = getResources().getDrawable(resource);
+				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;
 			case 4:
 				if (mEyePhoto.getRightLeft().equals(EyePhoto.RightLeft.RIGHT)) {
