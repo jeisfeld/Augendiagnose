@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.R;
 
 /**
  * Utility class for operations with images
@@ -101,7 +103,7 @@ public abstract class ImageUtil {
 			bitmap = BitmapFactory.decodeFile(path, options);
 			if (bitmap == null) {
 				// cannot create bitmap - return dummy
-				return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+				return getDummyBitmap();
 			}
 			if (bitmap.getWidth() > maxSize) {
 				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
@@ -209,4 +211,25 @@ public abstract class ImageUtil {
 		return mimeType;
 	}
 
+	/**
+	 * Retrieves a dummy bitmap (for the case that an image file is not readable)
+	 * @return
+	 */
+	public static Bitmap getDummyBitmap() {
+		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.bad_file_format);
+	}
+	
+	
+	/**
+	 * File filter class to identify image files
+	 */
+	public static class ImageFileFilter implements FileFilter {
+		@Override
+		public boolean accept(File file) {
+			Uri uri = Uri.fromFile(file);
+			return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
+		}
+		
+	}
+	
 }

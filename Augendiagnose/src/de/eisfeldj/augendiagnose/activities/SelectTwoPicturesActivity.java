@@ -1,10 +1,8 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +10,7 @@ import android.os.Bundle;
 import android.widget.GridView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.SelectTwoPicturesArrayAdapter;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
@@ -101,12 +100,7 @@ public class SelectTwoPicturesActivity extends Activity {
 		
 		if(folder != null) {
 			// Get files from folder
-			files = folder.listFiles(new FileFilter() {
-				@Override
-				public boolean accept(File pathname) {
-					return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
-				}
-			});
+			files = folder.listFiles(new ImageUtil.ImageFileFilter());
 			Arrays.sort(files, new Comparator<File>() {
 				public int compare(File f1, File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());

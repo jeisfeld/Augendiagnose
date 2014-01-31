@@ -1,7 +1,6 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -15,7 +14,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -177,13 +175,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		File[] files;
 		if (inputFolder != null) {
 			// retrieve files from Input Folder
-			files = inputFolder.listFiles(new FileFilter() {
-				@Override
-				public boolean accept(File file) {
-					Uri uri = Uri.fromFile(file);
-					return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
-				}
-			});
+			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
 				DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_folder_does_not_exist,

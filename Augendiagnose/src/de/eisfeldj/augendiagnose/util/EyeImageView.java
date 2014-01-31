@@ -29,6 +29,8 @@ public class EyeImageView extends ImageView {
 	 * @param eyePhoto
 	 */
 	public void setEyePhoto(EyePhoto eyePhoto) {
+		Logger.log("A " + eyePhoto);
+		Logger.log("B " + eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 		this.eyePhoto = eyePhoto;
 		setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 		invalidate();

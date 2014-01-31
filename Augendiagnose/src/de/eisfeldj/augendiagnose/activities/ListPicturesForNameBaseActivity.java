@@ -1,9 +1,7 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,6 +15,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
  * Base activity to display the pictures in an eye photo folder (in pairs)
@@ -64,12 +63,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 	private EyePhotoPair[] createEyePhotoList(File folder) {
 		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
 
-		File[] files = folder.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isFile() && pathname.getName().toUpperCase(Locale.getDefault()).endsWith(".JPG");
-			}
-		});
+		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
 
 		for (File f : files) {
 			EyePhoto eyePhoto = new EyePhoto(f);

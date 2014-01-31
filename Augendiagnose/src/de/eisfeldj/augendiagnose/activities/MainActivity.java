@@ -118,14 +118,4 @@ public class MainActivity extends Activity {
 				Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 	}
 
-	/**
-	 * onClick action used only for test purposes
-	 * 
-	 * @param view
-	 */
-	public void doTest(View view) {
-		DisplayOneActivityOverlay.startActivity(this,
-				"/storage/emulated/0/Augenfotos/Schraml Sybille/Schraml Sybille 2013-08-02 re.jpg");
-	}
-
 }
