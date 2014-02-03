@@ -37,6 +37,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	private float mOverlayX, mOverlayY;
 	private float mOverlayScaleFactor;
+	private float mLastOverlayScaleFactor;
 
 	private boolean[] mShowOverlay = new boolean[OVERLAY_COUNT];
 	private boolean mLocked = false;
@@ -76,6 +77,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 			// initial position of overlay
 			mOverlayScaleFactor = size / OVERLAY_SIZE;
+			mLastOverlayScaleFactor = mOverlayScaleFactor;
 			mOverlayX = mBitmap.getWidth() / 2;
 			mOverlayY = mBitmap.getHeight() / 2;
 
@@ -360,6 +362,15 @@ public class OverlayPinchImageView extends PinchImageView {
 			final float dy = y0 - mLastTouchY0;
 			mOverlayX += dx / mScaleFactor;
 			mOverlayY += dy / mScaleFactor;
+			if (mOverlayScaleFactor != mLastOverlayScaleFactor) {
+				// When resizing, then position also changes
+				final float changeFactor = mOverlayScaleFactor / mLastOverlayScaleFactor;
+				final float pinchX = (x0 - getWidth() / 2) / mScaleFactor + mPosX;
+				final float pinchY = (y0 - getHeight() / 2) / mScaleFactor + mPosY;
+				mOverlayX = pinchX + (mOverlayX - pinchX) * changeFactor;
+				mOverlayY = pinchY + (mOverlayY - pinchY) * changeFactor;
+				mLastOverlayScaleFactor = mOverlayScaleFactor;
+			}
 			mLastTouchX0 = x0;
 			mLastTouchY0 = y0;
 		}
