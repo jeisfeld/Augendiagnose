@@ -82,7 +82,7 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
-		directoryListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, folderNames);
+		directoryListAdapter = new ArrayAdapter<String>(this, R.layout.adapter_list_names, folderNames);
 		setListAdapter(directoryListAdapter);
 	}
 

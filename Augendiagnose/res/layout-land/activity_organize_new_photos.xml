@@ -51,6 +51,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_weight="3"
                 android:gravity="fill_vertical|center_horizontal"
                 android:onClick="doNothing"
@@ -83,6 +84,7 @@
     <Space style="@style/Space" />
 
     <LinearLayout
+        style="@style/Subactivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >

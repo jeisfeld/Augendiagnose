@@ -1,0 +1,10 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+    <dimen name="buttons_main_margin">60dp</dimen>
+    <dimen name="grid_pictures_size">180dp</dimen>
+    <dimen name="list_picture_height">160dp</dimen>
+    <dimen name="list_second_picture_height">140dp</dimen>
+
+</resources>
