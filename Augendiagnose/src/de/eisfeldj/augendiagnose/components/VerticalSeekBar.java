@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
 import android.content.Context;
 import android.graphics.Canvas;

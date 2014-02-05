@@ -16,14 +16,14 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <de.eisfeldj.augendiagnose.util.EyeImageView
+    <de.eisfeldj.augendiagnose.components.EyeImageView
         android:id="@+id/imageListRight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp" />
 
-    <de.eisfeldj.augendiagnose.util.EyeImageView
+    <de.eisfeldj.augendiagnose.components.EyeImageView
         android:id="@+id/imageListLeft"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

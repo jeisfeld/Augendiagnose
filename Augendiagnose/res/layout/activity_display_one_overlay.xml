@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".activities.DisplayOneActivityOverlay" >
 
-    <de.eisfeldj.augendiagnose.util.OverlayPinchImageView
+    <de.eisfeldj.augendiagnose.components.OverlayPinchImageView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mainImage"
         android:layout_width="match_parent"

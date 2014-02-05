@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.ListPicturesForSecondNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
-import de.eisfeldj.augendiagnose.util.ListPicturesForSecondNameArrayAdapter;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) This is for the selection of a second picture for

@@ -5,6 +5,7 @@ import de.eisfeldj.augendiagnose.activities.DisplayOneActivityOverlay;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
+import de.eisfeldj.augendiagnose.components.EyeImageView;
 
 /**
  * A class handling the selection of up to two pictures for display, and the display of these pictures

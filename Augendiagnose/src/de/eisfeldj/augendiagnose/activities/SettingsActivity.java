@@ -12,7 +12,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.PinchImageView;
+import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**

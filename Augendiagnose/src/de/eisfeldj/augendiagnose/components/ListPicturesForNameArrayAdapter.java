@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
 import android.content.Context;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
+import de.eisfeldj.augendiagnose.util.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
  * Array adapter class to display an eye photo pair in a list (initial display)

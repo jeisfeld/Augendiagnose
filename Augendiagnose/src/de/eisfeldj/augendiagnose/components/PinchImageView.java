@@ -1,5 +1,6 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

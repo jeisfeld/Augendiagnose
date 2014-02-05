@@ -8,7 +8,7 @@ import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.OverlayPinchImageView;
+import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 
 /**
  * Variant of DisplayOneActivity that includes overlay handling

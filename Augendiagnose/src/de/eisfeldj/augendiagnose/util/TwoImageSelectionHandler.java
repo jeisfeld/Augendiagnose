@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity;
+import de.eisfeldj.augendiagnose.components.EyeImageView;
 
 /**
  * A class handling the selection two pictures, returning the pictures

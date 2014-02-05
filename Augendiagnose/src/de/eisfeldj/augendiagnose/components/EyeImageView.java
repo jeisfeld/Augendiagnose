@@ -1,5 +1,7 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
+import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;

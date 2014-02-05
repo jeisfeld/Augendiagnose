@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 
 /**
  * Array adapter class to display an eye photo pair in a list.

@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.components;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.PinchImageView;
+import de.eisfeldj.augendiagnose.components.PinchImageView;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves)

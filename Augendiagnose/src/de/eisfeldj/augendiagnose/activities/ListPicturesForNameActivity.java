@@ -8,8 +8,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
-import de.eisfeldj.augendiagnose.util.ListPicturesForNameArrayAdapter;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed

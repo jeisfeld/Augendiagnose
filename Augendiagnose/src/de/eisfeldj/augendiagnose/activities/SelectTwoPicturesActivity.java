@@ -9,9 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.GridView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.SelectTwoPicturesArrayAdapter;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
-import de.eisfeldj.augendiagnose.util.SelectTwoPicturesArrayAdapter;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**
