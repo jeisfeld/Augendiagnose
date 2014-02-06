@@ -66,7 +66,6 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
 
 		if (!Application.isAuthorized()) {
-			toggleOverlayButtons[2].setEnabled(false);
 			toggleOverlayButtons[3].setEnabled(false);
 			toggleOverlayButtons[4].setEnabled(false);
 		}
