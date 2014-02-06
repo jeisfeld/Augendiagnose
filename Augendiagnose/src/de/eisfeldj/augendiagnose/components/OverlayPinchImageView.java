@@ -444,6 +444,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mOverlayX = bundle.getFloat("mOverlayX");
 			this.mOverlayY = bundle.getFloat("mOverlayY");
 			this.mOverlayScaleFactor = bundle.getFloat("mOverlayScaleFactor");
+			mLastOverlayScaleFactor = mOverlayScaleFactor;
 			this.mShowOverlay = bundle.getBooleanArray("mShowOverlay");
 			this.mLocked = bundle.getBoolean("mLocked");
 			this.mBrightness = bundle.getFloat("mBrightness");
