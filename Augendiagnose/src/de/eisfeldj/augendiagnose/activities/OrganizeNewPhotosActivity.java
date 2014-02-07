@@ -171,7 +171,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.only_help, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 	
 	/**
@@ -182,9 +182,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_organize_photos);
-			break;
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 	
 	

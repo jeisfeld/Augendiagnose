@@ -37,16 +37,16 @@ public class SettingsActivity extends Activity {
 		// Display the fragment as the main content.
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 	}
-	
+
 	/**
 	 * Inflate options menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.only_help, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	/**
 	 * Handle menu actions
 	 */
@@ -55,9 +55,9 @@ public class SettingsActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
-			break;
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**

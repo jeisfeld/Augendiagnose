@@ -28,16 +28,16 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
-	
+
 	/**
 	 * Inflate options menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.only_help, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	/**
 	 * Handle menu actions
 	 */
@@ -46,9 +46,9 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
-			break;
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

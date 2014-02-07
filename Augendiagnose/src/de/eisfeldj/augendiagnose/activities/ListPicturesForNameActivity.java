@@ -56,9 +56,9 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.only_help, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	/**
 	 * Handle menu actions
 	 */
@@ -67,11 +67,11 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
-			break;
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	protected int getContentView() {
 		return R.layout.activity_list_pictures_for_name;
