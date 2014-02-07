@@ -100,4 +100,14 @@ public class Application extends android.app.Application {
 		String userKey = getSharedPreferenceString(R.string.key_user_key);
 		return userKey.equals("Schnurpsi");
 	}
+	
+	/**
+	 * Get a resource string
+	 * @param resource
+	 * @return
+	 */
+	public static String getResourceString(int resourceId) {
+		return getAppContext().getResources().getString(resourceId);
+	}
+	
 }

@@ -9,6 +9,7 @@ import java.util.Locale;
 import android.graphics.Bitmap;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 
 /**
@@ -41,6 +42,10 @@ public class EyePhoto {
 	public EyePhoto(File file) {
 		setPath(file.getParent());
 		setFilename(file.getName());
+
+		if (filename != getFilename()) {
+			new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+		}
 	}
 
 	/**
@@ -370,16 +375,16 @@ public class EyePhoto {
 		public String toShortString() {
 			switch (this) {
 			case LEFT:
-				return "li";
+				return Application.getResourceString(R.string.file_infix_left);
 			case RIGHT:
-				return "re";
+				return Application.getResourceString(R.string.file_infix_right);
 			default:
 				return null;
 			}
 		}
 
 		public static RightLeft fromShortString(String shortString) {
-			if (shortString != null && shortString.startsWith("r")) {
+			if (shortString != null && (shortString.startsWith("r") || shortString.startsWith("R"))) {
 				return RIGHT;
 			}
 			else {
