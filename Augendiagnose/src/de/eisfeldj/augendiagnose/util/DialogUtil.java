@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
 /**
@@ -25,8 +27,10 @@ public abstract class DialogUtil {
 	 */
 	public static void displayError(final Activity activity, int resource, Object... args) {
 		DisplayErrorDialogFragment fragment = new DisplayErrorDialogFragment();
+		String message = String.format(activity.getString(resource), args);
+		Log.w(Application.TAG, message);
 		Bundle bundle = new Bundle();
-		bundle.putString("message", String.format(activity.getString(resource), args));
+		bundle.putString("message", message);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayErrorDialogFragment.class.toString());
 	}
@@ -43,8 +47,10 @@ public abstract class DialogUtil {
 	 */
 	public static void displayErrorAndReturn(final Activity activity, int resource, Object... args) {
 		DisplayErrorDialogAndReturnFragment fragment = new DisplayErrorDialogAndReturnFragment();
+		String message = String.format(activity.getString(resource), args);
+		Log.w(Application.TAG, message);
 		Bundle bundle = new Bundle();
-		bundle.putString("message", String.format(activity.getString(resource), args));
+		bundle.putString("message", message);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayErrorDialogAndReturnFragment.class.toString());
 	}

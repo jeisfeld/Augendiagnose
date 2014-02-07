@@ -137,6 +137,7 @@ public class SettingsActivity extends Activity {
 			bindPreferenceSummaryToValue(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_photos);
 			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
+			bindPreferenceSummaryToValue(R.string.key_store_option);
 		}
 
 		/**

@@ -7,24 +7,40 @@ import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
 
-public class XmpParser {
+/**
+ * Helper class to handle XML data in a JPEG file
+ */
+public class XmpHandler {
 	private static final String NS_DC = "http://purl.org/dc/elements/1.1/";
 	private static final String NS_MP1 = "http://ns.microsoft.com/photo/1.0/";
 	private static final String NS_MP2 = "http://ns.microsoft.com/photo/1.2/";
 	private static final String NS_MPRI = "http://ns.microsoft.com/photo/1.2/t/RegionInfo#";
 	private static final String NS_MPREG = "http://ns.microsoft.com/photo/1.2/t/Region#";
 	private static final String NS_EXIF = "http://ns.adobe.com/exif/1.0/";
+
+	// The custom namespace
 	private static final String NS_JE = "http://ns.jeisfeld.de/augenfotos/1.0/";
+
+	// Items from the custom namespace
+	public static final String ITEM_TITLE = "title";
+	public static final String ITEM_DESCRIPTION = "description";
+	public static final String ITEM_SUBJECT = "subject";
+	public static final String ITEM_COMMENT = "comment";
+	public static final String ITEM_PERSON = "person";
+	public static final String ITEM_X_CENTER = "xCenter";
+	public static final String ITEM_Y_CENTER = "yCenter";
+	public static final String ITEM_OVERLAY_SCALE_FACTOR = "overlayScaleFactor";
+
 	private static boolean prepared = false;
 
 	private XMPMeta xmpMeta;
 
 	/**
-	 * Create an XmpParser from an xmp String
+	 * Create an XmpHandler from an xmp String
 	 * 
 	 * @param xmpString
 	 */
-	public XmpParser(String xmpString) {
+	public XmpHandler(String xmpString) {
 		prepareRegistry();
 		try {
 			xmpMeta = XMPMetaFactory.parseFromString(xmpString);
@@ -52,6 +68,21 @@ public class XmpParser {
 			}
 			catch (XMPException e) {
 			}
+		}
+	}
+
+	/**
+	 * Get an item from the custom namespace
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public String getJeItem(String item) {
+		try {
+			return xmpMeta.getPropertyString(NS_JE, item);
+		}
+		catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -141,6 +172,29 @@ public class XmpParser {
 	}
 
 	/**
+	 * Set an entry in the custom namespace
+	 * 
+	 * @param item
+	 * @param value
+	 * @throws XMPException
+	 */
+	public void setJeItem(String item, String value) throws XMPException {
+		if (value != null) {
+			xmpMeta.setProperty(NS_JE, item, value);
+		}
+	}
+
+	/**
+	 * Delete an entry from the custom namespace
+	 * 
+	 * @param item
+	 * @throws XMPException
+	 */
+	public void removeJeItem(String item) throws XMPException {
+		xmpMeta.deleteProperty(NS_JE, item);
+	}
+
+	/**
 	 * Set an entry in the DC namespace
 	 * 
 	 * @param item
@@ -148,7 +202,7 @@ public class XmpParser {
 	 * @throws XMPException
 	 */
 	private void setDcItem(String item, String value) throws XMPException {
-		if(value != null) {
+		if (value != null) {
 			if (xmpMeta.doesArrayItemExist(NS_DC, item, 1)) {
 				xmpMeta.setArrayItem(NS_DC, item, 1, value);
 			}
@@ -164,7 +218,7 @@ public class XmpParser {
 	 * @return
 	 * @throws XMPException
 	 */
-	public void setTitle(String title) throws XMPException {
+	public void setDcTitle(String title) throws XMPException {
 		setDcItem("title", title);
 	}
 
@@ -174,7 +228,7 @@ public class XmpParser {
 	 * @return
 	 * @throws XMPException
 	 */
-	public void setDescription(String description) throws XMPException {
+	public void setDcDescription(String description) throws XMPException {
 		setDcItem("description", description);
 	}
 
@@ -184,7 +238,7 @@ public class XmpParser {
 	 * @return
 	 * @throws XMPException
 	 */
-	public void setSubject(String subject) throws XMPException {
+	public void setDcSubject(String subject) throws XMPException {
 		setDcItem("subject", subject);
 	}
 
@@ -195,7 +249,7 @@ public class XmpParser {
 	 * @throws XMPException
 	 */
 	public void setUserComment(String userComment) throws XMPException {
-		if(userComment != null) {
+		if (userComment != null) {
 			if (xmpMeta.doesArrayItemExist(NS_EXIF, "UserComment", 1)) {
 				xmpMeta.setArrayItem(NS_EXIF, "UserComment", 1, userComment);
 			}
@@ -211,8 +265,8 @@ public class XmpParser {
 	 * @return
 	 * @throws XMPException
 	 */
-	public void setPerson(String name) throws XMPException {
-		if(name != null) {
+	public void setMicrosoftPerson(String name) throws XMPException {
+		if (name != null) {
 			String path = "RegionInfo"
 					+ XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1)
 					+ XMPPathFactory.composeStructFieldPath(NS_MPREG, "PersonDisplayName");

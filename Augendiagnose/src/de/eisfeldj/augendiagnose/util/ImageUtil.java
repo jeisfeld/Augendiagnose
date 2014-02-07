@@ -41,7 +41,7 @@ public abstract class ImageUtil {
 			retrievedDate = dateFormat.parse(dateString);
 		}
 		catch (Exception e) {
-			Log.w("JE", e.toString() + "Cannot retrieve EXIF date for " + path);
+			Log.w(Application.TAG, e.toString() + "Cannot retrieve EXIF date for " + path);
 		}
 		if (retrievedDate == null) {
 			File f = new File(path);
@@ -103,6 +103,7 @@ public abstract class ImageUtil {
 			bitmap = BitmapFactory.decodeFile(path, options);
 			if (bitmap == null) {
 				// cannot create bitmap - return dummy
+				Log.w(Application.TAG, "Cannoot create bitmap from path " + path + " - return dummy bitmap");
 				return getDummyBitmap();
 			}
 			if (bitmap.getWidth() > maxSize) {
@@ -160,6 +161,8 @@ public abstract class ImageUtil {
 			inChannel.transferTo(0, inChannel.size(), outChannel);
 		}
 		catch (Exception e) {
+			Log.e(Application.TAG,
+					"Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
 			return false;
 		}
 		finally {

@@ -13,6 +13,7 @@ import android.view.WindowManager;
  */
 public class Application extends android.app.Application {
 	private static Context context;
+	public static final String TAG = "de.eisfeldj.augendiagnose.Application";
 
 	public void onCreate() {
 		super.onCreate();

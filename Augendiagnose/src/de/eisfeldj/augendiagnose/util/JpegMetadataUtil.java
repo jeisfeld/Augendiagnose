@@ -24,7 +24,13 @@ import org.apache.commons.imaging.util.IoUtils;
 
 import com.adobe.xmp.XMPException;
 
-public abstract class ImageTaggingUtil {
+import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.R;
+
+/**
+ * Helper clase to retrieve and save metadata in a JPEG file
+ */
+public abstract class JpegMetadataUtil {
 
 	/**
 	 * Log all Exif data of the file
@@ -63,7 +69,7 @@ public abstract class ImageTaggingUtil {
 	 */
 	public static void printAllXmpData(final File imageFile) throws ImageReadException, IOException, XMPException {
 		final String xmpString = Imaging.getXmpXml(imageFile);
-		Logger.log(new XmpParser(xmpString).getXmpString());
+		Logger.log(new XmpHandler(xmpString).getXmpString());
 	}
 
 	/**
@@ -96,7 +102,14 @@ public abstract class ImageTaggingUtil {
 
 		// Retrieve XMP data
 		String xmpString = Imaging.getXmpXml(imageFile);
-		XmpParser parser = new XmpParser(xmpString);
+		XmpHandler parser = new XmpHandler(xmpString);
+
+		// Some fields can be filled only from custom data
+		result.setXCenter(parser.getJeItem(XmpHandler.ITEM_X_CENTER));
+		result.setYCenter(parser.getJeItem(XmpHandler.ITEM_Y_CENTER));
+		result.setOverlayScaleFactor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR));
+
+		// For standard fields, use custom data only if there is no other data.
 		result.description = parser.getDescription();
 		result.subject = parser.getSubject();
 		result.person = parser.getPerson();
@@ -130,6 +143,23 @@ public abstract class ImageTaggingUtil {
 		catch (Exception e) {
 		}
 
+		// If fields are still null, try to get them from custom XMP
+		if (result.description == null) {
+			result.description = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
+		}
+		if (result.subject == null) {
+			result.subject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
+		}
+		if (result.person == null) {
+			result.person = parser.getJeItem(XmpHandler.ITEM_PERSON);
+		}
+		if (result.title == null) {
+			result.title = parser.getJeItem(XmpHandler.ITEM_TITLE);
+		}
+		if (result.comment == null) {
+			result.comment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
+		}
+
 		return result;
 	}
 
@@ -137,11 +167,7 @@ public abstract class ImageTaggingUtil {
 	 * Change metadata of the image
 	 * 
 	 * @param jpegImageFileName
-	 * @param title
-	 * @param description
-	 * @param subject
-	 * @param comment
-	 * @param person
+	 * @param metadata
 	 * @throws IOException
 	 * @throws ImageReadException
 	 * @throws ImageWriteException
@@ -149,9 +175,14 @@ public abstract class ImageTaggingUtil {
 	 */
 	public static void changeMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
-		checkJpeg(jpegImageFileName);
-		changeXmpMetadata(jpegImageFileName, metadata);
-		changeExifMetadata(jpegImageFileName, metadata);
+		if (changeJpegAllowed()) {
+			checkJpeg(jpegImageFileName);
+			changeXmpMetadata(jpegImageFileName, metadata);
+
+			if (changeExifAllowed()) {
+				changeExifMetadata(jpegImageFileName, metadata);
+			}
+		}
 	}
 
 	/**
@@ -168,7 +199,6 @@ public abstract class ImageTaggingUtil {
 		}
 
 		OutputStream os = null;
-		boolean canThrow = false;
 		try {
 			TiffOutputSet outputSet = null;
 
@@ -214,15 +244,20 @@ public abstract class ImageTaggingUtil {
 			os = new BufferedOutputStream(os);
 
 			new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			
+			IoUtils.closeQuietly(true, os);
 
-			canThrow = true;
+			if(!jpegImageFile.delete()) {
+				throw new IOException("Failed to delete file " + jpegImageFileName);
+			}
+
+			if(!tempFile.renameTo(jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
+			}
 		}
 		finally {
-			IoUtils.closeQuietly(canThrow, os);
+			IoUtils.closeQuietly(false, os);
 		}
-
-		jpegImageFile.delete();
-		tempFile.renameTo(jpegImageFile);
 
 	}
 
@@ -240,31 +275,67 @@ public abstract class ImageTaggingUtil {
 		}
 
 		OutputStream os = null;
-		boolean canThrow = false;
 		try {
 			final String xmpString = Imaging.getXmpXml(jpegImageFile);
 
-			XmpParser parser = new XmpParser(xmpString);
+			XmpHandler parser = new XmpHandler(xmpString);
 
-			parser.setTitle(metadata.title);
-			parser.setDescription(metadata.description);
-			parser.setSubject(metadata.subject);
-			parser.setUserComment(metadata.comment);
-			parser.setPerson(metadata.person);
+			if (changeExifAllowed()) {
+				// Change standard fields only if EXIF allowed
+				parser.setDcTitle(metadata.title);
+				parser.setDcDescription(metadata.description);
+				parser.setDcSubject(metadata.subject);
+				parser.setUserComment(metadata.comment);
+				parser.setMicrosoftPerson(metadata.person);
+			}
+
+			parser.setJeItem(XmpHandler.ITEM_TITLE, metadata.title);
+			parser.setJeItem(XmpHandler.ITEM_DESCRIPTION, metadata.description);
+			parser.setJeItem(XmpHandler.ITEM_SUBJECT, metadata.subject);
+			parser.setJeItem(XmpHandler.ITEM_COMMENT, metadata.comment);
+			parser.setJeItem(XmpHandler.ITEM_PERSON, metadata.person);
+			parser.setJeItem(XmpHandler.ITEM_X_CENTER, metadata.getXCenterString());
+			parser.setJeItem(XmpHandler.ITEM_Y_CENTER, metadata.getYCenterString());
+			parser.setJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR, metadata.getOverlayScaleFactorString());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);
 
 			new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
 
-			canThrow = true;
+			IoUtils.closeQuietly(true, os);
+			
+			if(!jpegImageFile.delete()) {
+				throw new IOException("Failed to delete file " + jpegImageFileName);
+			}
+
+			if(!tempFile.renameTo(jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
+			}
 		}
 		finally {
-			IoUtils.closeQuietly(canThrow, os);
+			IoUtils.closeQuietly(false, os);
 		}
+	}
 
-		jpegImageFile.delete();
-		tempFile.renameTo(jpegImageFile);
+	/**
+	 * Check if the settings allow a change of the JPEG
+	 * 
+	 * @return
+	 */
+	private static boolean changeJpegAllowed() {
+		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
+		return storeOption > 0;
+	}
+
+	/**
+	 * Check if the settings allow a change of the EXIF data
+	 * 
+	 * @return
+	 */
+	private static boolean changeExifAllowed() {
+		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
+		return storeOption == 2;
 	}
 
 	/**
@@ -276,19 +347,78 @@ public abstract class ImageTaggingUtil {
 		public String subject = null;
 		public String comment = null;
 		public String person = null;
+		public Float xCenter = null;
+		public Float yCenter = null;
+		public Float overlayScaleFactor = null;
 
 		public Metadata() {
 
 		}
 
-		public Metadata(String title, String description, String subject, String comment, String person) {
+		public Metadata(String title, String description, String subject, String comment, String person,
+				Float xPosition, Float yPosition, Float scaleFactor) {
 			this.title = title;
 			this.description = description;
 			this.subject = subject;
 			this.comment = comment;
 			this.person = person;
+			this.xCenter = xPosition;
+			this.yCenter = yPosition;
+			this.overlayScaleFactor = scaleFactor;
 		}
-		
+
+		public boolean hasCoordinates() {
+			return xCenter != null && yCenter != null && overlayScaleFactor != null;
+		}
+
+		public void setXCenter(String value) {
+			xCenter = Float.parseFloat(value);
+		}
+
+		public void setXCenter(float value) {
+			xCenter = Float.valueOf(value);
+		}
+
+		public float getXCenter() {
+			return xCenter.floatValue();
+		}
+
+		public String getXCenterString() {
+			return xCenter == null ? null : xCenter.toString();
+		}
+
+		public void setYCenter(String value) {
+			yCenter = Float.parseFloat(value);
+		}
+
+		public void setYCenter(float value) {
+			yCenter = Float.valueOf(value);
+		}
+
+		public float getYCenter() {
+			return yCenter.floatValue();
+		}
+
+		public String getYCenterString() {
+			return yCenter == null ? null : yCenter.toString();
+		}
+
+		public void setOverlayScaleFactor(String value) {
+			overlayScaleFactor = Float.parseFloat(value);
+		}
+
+		public void setOverlayScaleFactor(float value) {
+			overlayScaleFactor = Float.valueOf(value);
+		}
+
+		public float getOverlayScaleFactor() {
+			return overlayScaleFactor.floatValue();
+		}
+
+		public String getOverlayScaleFactorString() {
+			return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
+		}
+
 		@Override
 		public String toString() {
 			StringBuffer str = new StringBuffer();
@@ -297,6 +427,9 @@ public abstract class ImageTaggingUtil {
 			str.append("Subject: " + subject + "\n");
 			str.append("Comment: " + comment + "\n");
 			str.append("Person: " + person + "\n");
+			str.append("X-Position: " + xCenter + "\n");
+			str.append("Y-Position: " + yCenter + "\n");
+			str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
 			return str.toString();
 		}
 

@@ -28,23 +28,18 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_max_bitmap_size" />
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <!--
-    <ListPreference
-        android:defaultValue="@string/pref_default_eye_sequence_value"
-        android:entries="@array/pref_eye_sequence_list_titles"
-        android:entryValues="@array/pref_eye_sequence_list_values"
-        android:key="eye_sequence_list"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_eye_sequence_list" />
-    -->
-
     <CheckBoxPreference
         android:defaultValue="@string/pref_default_eye_sequence_value"
         android:key="@string/key_eye_sequence_choice"
         android:title="@string/pref_title_eye_sequence_choice" />
-    
+    <ListPreference
+        android:defaultValue="@string/pref_default_store_options"
+        android:entries="@array/pref_list_titles_store_options"
+        android:entryValues="@array/pref_list_values_store_options"
+        android:key="@string/key_store_option"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_store_options" />
     <EditTextPreference
         android:defaultValue=""
         android:inputType="textPassword"

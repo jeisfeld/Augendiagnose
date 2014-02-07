@@ -16,12 +16,26 @@
     <string name="pref_default_eye_sequence_value" translatable="false">false</string>
 
     <string name="pref_title_user_key">User key</string>
+        
+    <string name="pref_title_store_options">Save additional data in jpeg</string>
+    <string name="pref_default_store_options" translatable="false">2</string>
+    <string-array name="pref_list_titles_store_options">
+        <item>Store in EXIF</item>
+        <item>Store in custom fields</item>
+        <item>Don\'t store data in images</item>
+    </string-array>
+    <string-array name="pref_list_values_store_options">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
     
     <string name="key_folder_input" translatable="false">folder_input</string>
     <string name="key_folder_photos" translatable="false">folder_photos</string>
     <string name="key_folder_photos_remote" translatable="false">folder_photos_remote</string>
     <string name="key_max_bitmap_size" translatable="false">max_bitmap_size</string>
     <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
+    <string name="key_store_option" translatable="false">store_option</string>
     <string name="key_user_key" translatable="false">user_key</string>
     
     

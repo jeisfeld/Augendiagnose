@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
+import android.util.Log;
+import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 
 /**
  * Utility class to handle an eye photo, in particular regarding name policies.
@@ -312,6 +315,38 @@ public class EyePhoto {
 	 */
 	public Bitmap getImageBitmap(int maxSize) {
 		return ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
+	}
+
+	/**
+	 * Get the metadata stored in the file
+	 * 
+	 * @return
+	 */
+	public Metadata getImageMetadata() {
+		try {
+			return JpegMetadataUtil.getMetadata(getAbsolutePath());
+		}
+		catch (Exception e) {
+			Log.w(Application.TAG, "Failed to retrieve metadata from file " + getAbsolutePath(), e);
+			return null;
+		}
+	}
+
+	/**
+	 * Store the metadata in the file
+	 * 
+	 * @param metadata
+	 * @return true if successful
+	 */
+	public boolean storeImageMetadata(Metadata metadata) {
+		try {
+			JpegMetadataUtil.changeMetadata(getAbsolutePath(), metadata);
+			return true;
+		}
+		catch (Exception e) {
+			Log.e(Application.TAG, "Failed to store metadata for file " + getAbsolutePath(), e);
+			return false;
+		}
 	}
 
 	/**
