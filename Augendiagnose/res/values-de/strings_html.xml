@@ -3,46 +3,83 @@
 
     <string name="html_overview">
 <![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
+<HEAD>
+<TITLE>Augendiagnose - &Uuml;bersicht</TITLE>
+</HEAD>
 <BODY>
-<H1>&Uuml;bersicht</H1>
-Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu vergleichen, im Rahmen der medizinischen Augendiagnose.
+	<H2>Augendiagnose - &Uuml;bersicht</H2>
+	Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu
+	vergleichen, im Rahmen der medizinischen Augendiagnose.
 
-<H2>Funktionalit&auml;ten</H2>
-<ul>
-<li>Organisation von Augenfotos nach Name, Datum und K&ouml;rperseite (rechts/links)</li>
-<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalit&auml;t), so dass man zwei Fotos vergleichen kann (z.B. Vergleich rechts-links, Vergleich fr&uuml;her-sp&auml;ter, Vergleich zweier Personen, oder Vergleich eines Fotos mit einer Iristopographie).</li>
-</ul>
+	<H3>Funktionalit&auml;ten</H3>
+	<ul>
+		<li>Organisation von Augenfotos nach Name, Datum und K&ouml;rperseite
+			(rechts/links)</li>
+		<li>Gleichzeigige Anzeige zweier Fotos (mit voller
+			Zoom-Funktionalit&auml;t), so dass man zwei Fotos vergleichen kann (z.B.
+			Vergleich rechts-links, Vergleich fr&uuml;her-sp&auml;ter, Vergleich zweier
+			Personen, oder Vergleich eines Fotos mit einer Iristopographie).</li>
+	</ul>
 
-Diese Applikation ist noch im Alpha-Stadium - weitere Funktionalit&auml;ten sind geplant. W&uuml;nsche f&uuml;r weitere Funktionen k&ouml;nnen Sie mir gerne mitteilen. 
+	Diese Applikation ist noch im Alpha-Stadium - weitere Funktionalit&auml;ten
+	sind geplant. W&uuml;nsche f&uuml;r weitere Funktionen k&ouml;nnen Sie mir
+	gerne mitteilen.
 
-<H2>Aktivit&auml;ten</H2>
+	<H3>Aktivit&auml;ten</H3>
 
-<H3>Schritt 1: Organisation der Fotos</H3>
+	<H4>Schritt 1: Organisation der Fotos</H4>
 
-<p>In diesem Schritt k&ouml;nnen Sie Ihre Augenfotos organisieren.</p>
-<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das Zielverzeichnis der Eye-Fi App. Diese Vorkonfiguration hat folgenden Grund: Eine Smartphone-Kamera ist typischerweise nicht ausreichend, um hochwertige Augenfotografien zu machen. Daher wird eine externe Kamera ben&ouml;tigt. Der einfachste Weg, die Fotos von einer externen Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte, die die Fotos per WiFi auf das Smartphone schickt.
-Dies ist nur die Standardkonfiguration - es kann auch ein anderes Eingangsverzeichnis konfiguriert werden.</p>
-<p>In der Aktivit&auml;t &quot;Neue Fotos einordnen&quot; sehen Sie die letzten zwei Fotos des Eingangsverzeichnisses. (Sie k&ouml;nnen auch zwei andere Fotos aus diesem Verzeichnis ausw&auml;hlen.)
-Zu diesen zwei Fotos geben Sie den Namen der Person an, sowie das Datum der Aufnahme (dieses ist vorselektiert), und die Information, welches der beiden Fotos das rechte Auge zeigt und welches das linke.
-Anschlie&szlig;end verschiebt die App diese beiden Fotos in das Zielverzeichnis und benennt sie um - der neue Dateiname enth&auml;lt Namen, Datum und die &quot;Rechts-Links-Information&quot;.</p>
-<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und an die Augendiagnose-App senden. Dann k&ouml;nnen Sie diese Fotos in der App einordnen.
-In diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis gel&ouml;scht.</p>
+	<p>In diesem Schritt k&ouml;nnen Sie Ihre Augenfotos organisieren.</p>
+	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses
+		ist Vorkunfiguriert als das Zielverzeichnis der Eye-Fi App. Diese
+		Vorkonfiguration hat folgenden Grund: Eine Smartphone-Kamera ist
+		typischerweise nicht ausreichend, um hochwertige Augenfotografien zu machen.
+		Daher wird eine externe Kamera ben&ouml;tigt. Der einfachste Weg, die Fotos
+		von einer externen Kamera auf das Smartphone zu bekommen, ist die Nutzung
+		einer Eye-Fi SD-Karte, die die Fotos per WiFi auf das Smartphone schickt. Dies
+		ist nur die Standardkonfiguration - es kann auch ein anderes
+		Eingangsverzeichnis konfiguriert werden.</p>
+	<p>In der Aktivit&auml;t "Neue Fotos einordnen" sehen Sie die letzten zwei
+		Fotos des Eingangsverzeichnisses. (Sie k&ouml;nnen auch zwei andere Fotos aus
+		diesem Verzeichnis ausw&auml;hlen.) Zu diesen zwei Fotos geben Sie den Namen
+		der Person an, sowie das Datum der Aufnahme (dieses ist vorselektiert), und
+		die Information, welches der beiden Fotos das rechte Auge zeigt und welches
+		das linke. Anschlie&szlig;end verschiebt die App diese beiden Fotos in das
+		Zielverzeichnis und benennt sie um - der neue Dateiname enth&auml;lt Namen,
+		Datum und die "Rechts-Links-Information".</p>
+	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie
+		auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und
+		an die Augendiagnose-App senden. Dann k&ouml;nnen Sie diese Fotos in der App
+		einordnen. In diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis
+		gel&ouml;scht.</p>
+	<H4>Schritt 2: Betrachten der Fotos</H4>
 
-<H3>Schritt 2: Betrachten der Fotos</H3>
-
-<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige Organisation &uuml;ber Schritt 1 voraus.</p>
-<p>In dieser Aktivit&auml;t k&ouml;nnen Sie aus einer Liste den Namen der Person ausw&auml;hlen, dessen Fotos Sie betrachten wollen. Daraufhin sehen Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
-<p>Anschlie&szlig;end haben Sie folgende M&ouml;glichkeiten:</p>
-<ul>
-<li>Detailansicht eines Fotos (durch Klick auf dieses Foto).
-In dieser Ansicht k&ouml;nnen Sie auch Helligkeit und Kontrast &auml;ndern und Iristopographien als Overlay anzeigen.
-(Hinweis: aus Urheberrechtsgr&uuml;nden werden aktuell nur zwei selbstgefertigte Iristopographie-Overlays mit der App geliefert.)
-<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das Datum)</li>
-<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen Klick auf ein Foto und anschlie&szlig;enden Klick auf ein anderes Foto)</li>
-<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie erst einen langen Klick auf ein Foto, und w&auml;hlen Sie dann ein Foto einer zweiten Person aus.</li>
-</ul>
-<p>Mit Hilfe dieser Funktionalit&auml;t k&ouml;nnen Sie auch ein Augenfoto mit einer Iristopographie vergleichen. Hierzu m&uuml;ssen Sie nur die Grafiken von Iristopographien genauso organisieren wie Augenfotos. Aus Urheberrechts-Gr&uuml;nden liefert die App keine Iristopographien mit.</p>
+	<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige
+		Organisation &uuml;ber Schritt 1 voraus.</p>
+	<p>In dieser Aktivit&auml;t k&ouml;nnen Sie aus einer Liste den Namen der
+		Person ausw&auml;hlen, dessen Fotos Sie betrachten wollen. Daraufhin sehen Sie
+		eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
+	<p>Anschlie&szlig;end haben Sie folgende M&ouml;glichkeiten:</p>
+	<ul>
+		<li>Detailansicht eines Fotos (durch Klick auf dieses Foto). In dieser
+			Ansicht k&ouml;nnen Sie auch Helligkeit und Kontrast &auml;ndern und
+			Iristopographien als Overlay anzeigen. (Hinweis: aus
+			Urheberrechtsgr&uuml;nden werden aktuell nur zwei selbstgefertigte
+			Iristopographie-Overlays mit der App geliefert.)
+		<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das
+			Datum)</li>
+		<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen
+			Klick auf ein Foto und anschlie&szlig;enden Klick auf ein anderes Foto)</li>
+		<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie
+			erst einen langen Klick auf ein Foto, und w&auml;hlen Sie dann ein Foto einer
+			zweiten Person aus.</li>
+	</ul>
+	<p>Mit Hilfe dieser Funktionalit&auml;t k&ouml;nnen Sie auch ein Augenfoto
+		mit einer Iristopographie vergleichen. Hierzu m&uuml;ssen Sie nur die Grafiken
+		von Iristopographien genauso organisieren wie Augenfotos. Aus
+		Urheberrechts-Gr&uuml;nden liefert die App keine Iristopographien mit.</p>
 </BODY>
 </HTML>
 ]]>
