@@ -3,6 +3,8 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -48,6 +50,28 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 	}
 
+	/**
+	 * Inflate options menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.only_help, menu);
+		return true;
+	}
+	
+	/**
+	 * Handle menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_help:
+			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
+			break;
+		}
+		return true;
+	}
+	
 	@Override
 	protected int getContentView() {
 		return R.layout.activity_list_pictures_for_name;

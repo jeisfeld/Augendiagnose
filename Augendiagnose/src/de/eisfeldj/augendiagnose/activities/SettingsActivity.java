@@ -10,6 +10,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
@@ -34,6 +36,28 @@ public class SettingsActivity extends Activity {
 
 		// Display the fragment as the main content.
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+	}
+	
+	/**
+	 * Inflate options menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.only_help, menu);
+		return true;
+	}
+	
+	/**
+	 * Handle menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_help:
+			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
+			break;
+		}
+		return true;
 	}
 
 	/**

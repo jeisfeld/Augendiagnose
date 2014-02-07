@@ -3,85 +3,207 @@
 
     <string name="html_overview">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-<HEAD>
-<TITLE>Augendiagnose - &Uuml;bersicht</TITLE>
-</HEAD>
-<BODY>
-	<H2>Augendiagnose - &Uuml;bersicht</H2>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Augendiagnose - &Uuml;bersicht</title>
+</head>
+<body>
+	<h2>Augendiagnose - &Uuml;bersicht</h2>
+
 	Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu
 	vergleichen, im Rahmen der medizinischen Augendiagnose.
 
-	<H3>Funktionalit&auml;ten</H3>
+	<h3>Funktionalit&auml;ten</h3>
+
 	<ul>
 		<li>Organisation von Augenfotos nach Name, Datum und K&ouml;rperseite
 			(rechts/links)</li>
+
 		<li>Gleichzeigige Anzeige zweier Fotos (mit voller
 			Zoom-Funktionalit&auml;t), so dass man zwei Fotos vergleichen kann (z.B.
 			Vergleich rechts-links, Vergleich fr&uuml;her-sp&auml;ter, Vergleich zweier
 			Personen, oder Vergleich eines Fotos mit einer Iristopographie).</li>
+
+		<li>&Auml;nderung von Helligkeit und Kontrast eines Augenfotos bei der
+			Anzeige, und Anzeige des Fotos mit einer eingeblendeten Iristopographie (als
+			Overlay)</li>
 	</ul>
 
 	Diese Applikation ist noch im Alpha-Stadium - weitere Funktionalit&auml;ten
 	sind geplant. W&uuml;nsche f&uuml;r weitere Funktionen k&ouml;nnen Sie mir
 	gerne mitteilen.
 
-	<H3>Aktivit&auml;ten</H3>
+	<h3>Aktivit&auml;ten</h3>
 
-	<H4>Schritt 1: Organisation der Fotos</H4>
+	<h4>Schritt 1: Organisation der Fotos</h4>
 
 	<p>In diesem Schritt k&ouml;nnen Sie Ihre Augenfotos organisieren.</p>
+
 	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses
-		ist Vorkunfiguriert als das Zielverzeichnis der Eye-Fi App. Diese
-		Vorkonfiguration hat folgenden Grund: Eine Smartphone-Kamera ist
-		typischerweise nicht ausreichend, um hochwertige Augenfotografien zu machen.
-		Daher wird eine externe Kamera ben&ouml;tigt. Der einfachste Weg, die Fotos
-		von einer externen Kamera auf das Smartphone zu bekommen, ist die Nutzung
-		einer Eye-Fi SD-Karte, die die Fotos per WiFi auf das Smartphone schickt. Dies
-		ist nur die Standardkonfiguration - es kann auch ein anderes
-		Eingangsverzeichnis konfiguriert werden.</p>
-	<p>In der Aktivit&auml;t "Neue Fotos einordnen" sehen Sie die letzten zwei
-		Fotos des Eingangsverzeichnisses. (Sie k&ouml;nnen auch zwei andere Fotos aus
-		diesem Verzeichnis ausw&auml;hlen.) Zu diesen zwei Fotos geben Sie den Namen
-		der Person an, sowie das Datum der Aufnahme (dieses ist vorselektiert), und
-		die Information, welches der beiden Fotos das rechte Auge zeigt und welches
-		das linke. Anschlie&szlig;end verschiebt die App diese beiden Fotos in das
-		Zielverzeichnis und benennt sie um - der neue Dateiname enth&auml;lt Namen,
-		Datum und die "Rechts-Links-Information".</p>
+		ist Vorkunfiguriert als das Zielverzeichnis der Eye-Fi App, kann aber
+		&uuml;ber die Einstellungen ge&auml;ndert werden.</p>
+
+	<p>In der Aktivit&auml;t "Neue Fotos einordnen" k&ouml;nnen Sie neue
+		Augenfotos aus dem Eingangsverzeichnis einer Person und einem Datum zuordnen
+		und so f&uuml;r die App vorbereiten. Dabei werden die Fotos Umbenannt und in
+		das Augenfoto-Verzeichnis verschoben.</p>
+
 	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie
 		auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und
 		an die Augendiagnose-App senden. Dann k&ouml;nnen Sie diese Fotos in der App
 		einordnen. In diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis
 		gel&ouml;scht.</p>
-	<H4>Schritt 2: Betrachten der Fotos</H4>
+
+	<h4>Schritt 2: Betrachten der Fotos</h4>
 
 	<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige
 		Organisation &uuml;ber Schritt 1 voraus.</p>
+
+	<p>In dieser Aktivit&auml;t k&ouml;nnen Sie</p>
+
+	<ul>
+		<li>Ein Foto im Detail Anschauen. Dabei k&ouml;nnen Sie auch Helligkeit
+			und Kontrast &auml;ndern und Iristopographien als Overlay anzeigen.</li>
+
+		<li>Zwei Fotos vergleichen (und dabei unabh&auml;ngig voneinander zoomen).</li>
+	</ul>
+
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_settings">
+<![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Augendiagnose - Einstellungen</title>
+</head>
+<body>
+	<h2>Augendiagnose - Einstellungen</h2>
+
+	Die Applikation erm&ouml;glicht fogende Einstellungen:
+
+	<h3>Verzeichnis der Augenfotos</h3>
+
+	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet.
+
+	<h3>Eingangsverzeichnis f&uuml;r neue Augenfotos</h3>
+
+	Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert. Als
+	Standard ist hier das EyeFi-Verzeichnis gesetzt. Es kann aber ein beliebiges
+	anderes Verzeichnis gew&auml;hlt werden (z.B. das Kamera-Verzeichnis).
+
+	<h3>Maximale Bitmap-Gr&ouml;&szlig;e</h3>
+
+	Dies ist die Gr&ouml;&szlig;e, auf die Fotos zur Anzeige herunterskaliert
+	werden. Dies ist n&ouml;tig, um Speicherplatz zu sparen. Als Standard ist hier
+	2048 eingestellt. Auf speicherarmen Ger&auml;ten muss evtl. ein kleinerer Wert
+	(z.B. 1024) konfiguriert werden. Zu gro&szlig;e Werte k&ouml;nnen zu
+	Abst&uuml;rzen f&uuml;hren.
+
+	<h3>Letztes Foto ist rechtes Auge</h3>
+
+	Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge
+	ist. Standardm&auml;&szlig;ig ist hier das linke Auge gew&auml;hlt (unter der
+	Annahme, dass Sie zuerst das rechte, und dann das linke Auge fotografiert
+	haben).
+
+	<h3>Nutzerschl&uuml;ssel</h3>
+
+	Ein Nutzerkennwort, das die Freigabe zus&auml;tzlicher Funktionalit&auml;ten
+	erm&ouml;glicht.
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_organize_photos">
+<![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Augendiagnose - Fotos organisieren</title>
+</head>
+<body>
+	<h2>Organisation der Fotos</h2>
+
+	<p>Hier k&ouml;nnen Sie Ihre Augenfotos organisieren.</p>
+
+	<p>Es werden die beiden letzten Fotos aus dem Eingangsverzeichnis
+		angezeigt.</p>
+
+	<p>Mit dem Button "Tauschen" k&ouml;nnen Sie die beiden Fotos tauschen.</p>
+
+	<p>Mit dem Button "Andere Fotos" k&ouml;nnen Sie zwei andere Fotos aus dem
+		Eingangsverzeichnis ausw&auml;hlen.</p>
+
+	<p>Unter "Name w&auml;hlen" k&ouml;nnen Sie den Namen der Person festlegen,
+		zu der die Augen geh&ouml;ren. Hier k&ouml;nnen Sie entweder einen vorhandenen
+		Namen ausw&auml;hlen oder einen neuen Namen eingeben.</p>
+
+	<p>Unter "Datum w&auml;hlen" k&ouml;nnen Sie das Datum w&auml;hlen, dem die
+		Fotos zugeordnet sind. Hier ist das Aufnahmedatum vorausgew&auml;hlt. Sie
+		k&ouml;nnen aber auch ein anderes Datum w&auml;hlen. Dies ist insbesondere
+		dann n&ouml;tig, wenn es schon Fotos dieses Nutzers von diesem Datum gibt -
+		die App erlaubt nur ein Augenpaar einer Person zu einem Datum.</p>
+
+	<p>Mit dem Button "Anwenden" k&ouml;nnen Sie das gew&auml;hlte Paar
+		Augenfotos in das Augenfoto-Verzeichnis verschieben. Die Fotos werden zur
+		angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem
+		Programm anschlie&szlig;end zur Verf&uuml;gung.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_display_photos">
+<![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Augendiagnose - Fotos betrachten</title>
+</head>
+<body>
+	<h2>Betrachten der Fotos</h2>
+
 	<p>In dieser Aktivit&auml;t k&ouml;nnen Sie aus einer Liste den Namen der
 		Person ausw&auml;hlen, dessen Fotos Sie betrachten wollen. Daraufhin sehen Sie
 		eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
+
 	<p>Anschlie&szlig;end haben Sie folgende M&ouml;glichkeiten:</p>
+
 	<ul>
 		<li>Detailansicht eines Fotos (durch Klick auf dieses Foto). In dieser
 			Ansicht k&ouml;nnen Sie auch Helligkeit und Kontrast &auml;ndern und
 			Iristopographien als Overlay anzeigen. (Hinweis: aus
 			Urheberrechtsgr&uuml;nden werden aktuell nur zwei selbstgefertigte
-			Iristopographie-Overlays mit der App geliefert.)
+			Iristopographie-Overlays mit der App geliefert.)</li>
+
 		<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das
 			Datum)</li>
+
 		<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen
 			Klick auf ein Foto und anschlie&szlig;enden Klick auf ein anderes Foto)</li>
+
 		<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie
 			erst einen langen Klick auf ein Foto, und w&auml;hlen Sie dann ein Foto einer
 			zweiten Person aus.</li>
 	</ul>
+
 	<p>Mit Hilfe dieser Funktionalit&auml;t k&ouml;nnen Sie auch ein Augenfoto
 		mit einer Iristopographie vergleichen. Hierzu m&uuml;ssen Sie nur die Grafiken
 		von Iristopographien genauso organisieren wie Augenfotos. Aus
 		Urheberrechts-Gr&uuml;nden liefert die App keine Iristopographien mit.</p>
-</BODY>
-</HTML>
+</body>
+</html>
 ]]>
     </string>
 

@@ -3,10 +3,13 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
@@ -24,6 +27,28 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
+	}
+	
+	/**
+	 * Inflate options menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.only_help, menu);
+		return true;
+	}
+	
+	/**
+	 * Handle menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_help:
+			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
+			break;
+		}
+		return true;
 	}
 
 	@Override

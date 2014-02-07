@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -162,6 +164,30 @@ public class OrganizeNewPhotosActivity extends Activity {
 		}
 	}
 
+	
+	/**
+	 * Inflate options menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.only_help, menu);
+		return true;
+	}
+	
+	/**
+	 * Handle menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_help:
+			DisplayHtmlActivity.startActivity(this, R.string.html_organize_photos);
+			break;
+		}
+		return true;
+	}
+	
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

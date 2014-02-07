@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Open the settings screen
+	 * Handle menu actions
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
