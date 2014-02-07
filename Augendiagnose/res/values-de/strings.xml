@@ -57,8 +57,8 @@
     <string name="text_initializing">Ladevorgang&#8230;</string>
     <string name="display_right_left">R-L</string>
     <string name="display_new_name">[Neuer Name]</string>
-    <string name="file_infix_right">re</string>
-    <string name="file_infix_left">li</string>
+    <string name="file_infix_right">rechts</string>
+    <string name="file_infix_left">links</string>
     <string name="hint_select_name">[Namen auswählen]</string>
     <string name="hint_insert_name">[Neuen Namen eingeben]</string>
     

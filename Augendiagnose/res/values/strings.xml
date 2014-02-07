@@ -57,8 +57,8 @@
     <string name="text_initializing">Initializing&#8230;</string>
     <string name="display_right_left">R-L</string>
     <string name="display_new_name">[Create new name]</string>
-    <string name="file_infix_right">r</string>
-    <string name="file_infix_left">l</string>
+    <string name="file_infix_right">right</string>
+    <string name="file_infix_left">left</string>
     <string name="hint_select_name">[Select name]</string>
     <string name="hint_insert_name">[Enter new name]</string>
 
