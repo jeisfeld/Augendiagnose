@@ -45,6 +45,7 @@ public class EyePhoto {
 
 		if (filename != getFilename()) {
 			new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+			addToMediaStore();
 		}
 	}
 
@@ -270,7 +271,13 @@ public class EyePhoto {
 	 * @return
 	 */
 	public boolean moveTo(EyePhoto target) {
-		return getFile().renameTo(target.getFile());
+		if (getFile().renameTo(target.getFile())) {
+			target.addToMediaStore();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -280,7 +287,13 @@ public class EyePhoto {
 	 * @return
 	 */
 	public boolean copyTo(EyePhoto target) {
-		return ImageUtil.copyFile(getFile(), target.getFile());
+		if (ImageUtil.copyFile(getFile(), target.getFile())) {
+			target.addToMediaStore();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
