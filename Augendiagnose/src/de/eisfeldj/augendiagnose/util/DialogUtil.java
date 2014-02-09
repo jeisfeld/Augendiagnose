@@ -28,7 +28,7 @@ public abstract class DialogUtil {
 	public static void displayError(final Activity activity, int resource, Object... args) {
 		DisplayErrorDialogFragment fragment = new DisplayErrorDialogFragment();
 		String message = String.format(activity.getString(resource), args);
-		Log.w(Application.TAG, message);
+		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
 		bundle.putString("message", message);
 		fragment.setArguments(bundle);
@@ -48,7 +48,7 @@ public abstract class DialogUtil {
 	public static void displayErrorAndReturn(final Activity activity, int resource, Object... args) {
 		DisplayErrorDialogAndReturnFragment fragment = new DisplayErrorDialogAndReturnFragment();
 		String message = String.format(activity.getString(resource), args);
-		Log.w(Application.TAG, message);
+		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
 		bundle.putString("message", message);
 		fragment.setArguments(bundle);

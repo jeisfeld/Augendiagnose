@@ -11,6 +11,11 @@ public class Logger {
 	 * Make a log entry
 	 */
 	public static void log(String output) {
-		Log.i(Application.TAG, output);
+		if(output == null) {
+			Log.i(Application.TAG, "null");
+		}
+		else {
+			Log.i(Application.TAG, output);
+		}
 	}
 }

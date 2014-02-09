@@ -1,11 +1,21 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import android.util.Log;
+
+import com.adobe.xmp.XMPDateTime;
+import com.adobe.xmp.XMPDateTimeFactory;
 import com.adobe.xmp.XMPException;
 import com.adobe.xmp.XMPMeta;
 import com.adobe.xmp.XMPMetaFactory;
 import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
+
+import de.eisfeldj.augendiagnose.Application;
 
 /**
  * Helper class to handle XML data in a JPEG file
@@ -30,6 +40,8 @@ public class XmpHandler {
 	public static final String ITEM_X_CENTER = "xCenter";
 	public static final String ITEM_Y_CENTER = "yCenter";
 	public static final String ITEM_OVERLAY_SCALE_FACTOR = "overlayScaleFactor";
+	public static final String ITEM_ORGANIZE_DATE = "organizeDate";
+	public static final String ITEM_RIGHT_LEFT = "rightLeft";
 
 	private static boolean prepared = false;
 
@@ -42,10 +54,23 @@ public class XmpHandler {
 	 */
 	public XmpHandler(String xmpString) {
 		prepareRegistry();
+		
+		if(xmpString == null) {
+			Log.w(Application.TAG, "xmpString is null ");
+			xmpMeta = XMPMetaFactory.create();
+			return;
+		}
+		
 		try {
+			xmpString = xmpString.trim();
+			int i = xmpString.lastIndexOf("<");
+			if(i>0 && xmpString.substring(i).startsWith("<?xpacket end")) {
+				xmpString = xmpString.substring(0,i);
+			}
 			xmpMeta = XMPMetaFactory.parseFromString(xmpString);
 		}
 		catch (Exception e) {
+			Log.w(Application.TAG, "Error when parsing XMP Data ", e);
 			xmpMeta = XMPMetaFactory.create();
 		}
 	}
@@ -85,6 +110,22 @@ public class XmpHandler {
 			return null;
 		}
 	}
+	
+	/**
+	 * Get a date item from the custom namespace
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public Date getJeDate(String item) {
+		try {
+			XMPDateTime dateTime = xmpMeta.getPropertyDate(NS_JE, item);
+			return dateTime.getCalendar().getTime();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
 
 	/**
 	 * Get an item from the DC namespace
@@ -106,7 +147,7 @@ public class XmpHandler {
 	 * 
 	 * @return
 	 */
-	public String getTitle() {
+	public String getDcTitle() {
 		return getDcItem("title");
 	}
 
@@ -115,7 +156,7 @@ public class XmpHandler {
 	 * 
 	 * @return
 	 */
-	public String getDescription() {
+	public String getDcDescription() {
 		return getDcItem("description");
 	}
 
@@ -124,7 +165,7 @@ public class XmpHandler {
 	 * 
 	 * @return
 	 */
-	public String getSubject() {
+	public String getDcSubject() {
 		return getDcItem("subject");
 	}
 
@@ -147,7 +188,7 @@ public class XmpHandler {
 	 * 
 	 * @return
 	 */
-	public String getPerson() {
+	public String getMicrosoftPerson() {
 		try {
 			String path = "RegionInfo"
 					+ XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1)
@@ -184,6 +225,23 @@ public class XmpHandler {
 		}
 	}
 
+	
+	/**
+	 * Set a date entry in the custom namespace
+	 * 
+	 * @param item
+	 * @param date
+	 * @throws XMPException
+	 */
+	public void setJeDate(String item, Date date) throws XMPException {
+		if (date != null) {
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			XMPDateTime xmpDate = XMPDateTimeFactory.createFromCalendar(calendar);
+			xmpMeta.setPropertyDate(NS_JE, item, xmpDate);
+		}
+	}
+	
 	/**
 	 * Delete an entry from the custom namespace
 	 * 

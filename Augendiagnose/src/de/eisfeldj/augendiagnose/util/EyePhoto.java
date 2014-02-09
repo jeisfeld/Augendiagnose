@@ -13,14 +13,14 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 
 /**
- * Utility class to handle an eye photo, in particular regarding name policies.
+ * Utility class to handle an eye photo, in particular regarding personName policies.
  */
 public class EyePhoto {
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	private boolean formattedName = false;
 	private String path;
 	private String filename;
-	private String name;
+	private String personName;
 	private Date date;
 	private RightLeft rightLeft;
 	private String suffix;
@@ -45,7 +45,6 @@ public class EyePhoto {
 
 		if (filename != getFilename()) {
 			new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
-			addToMediaStore();
 		}
 	}
 
@@ -54,8 +53,8 @@ public class EyePhoto {
 	 * 
 	 * @param path
 	 *            The file path
-	 * @param name
-	 *            The person name
+	 * @param personName
+	 *            The person personName
 	 * @param date
 	 *            The date
 	 * @param rightLeft
@@ -65,7 +64,7 @@ public class EyePhoto {
 	 */
 	public EyePhoto(String path, String name, Date date, RightLeft rightLeft, String suffix) {
 		setPath(path);
-		setName(name);
+		setPersonName(name);
 		setDate(date);
 		setRightLeft(rightLeft);
 		setSuffix(suffix);
@@ -79,7 +78,7 @@ public class EyePhoto {
 	 */
 	public String getFilename() {
 		if (formattedName) {
-			return getName() + " " + getDateString(DATE_FORMAT) + " " + getRightLeft().toShortString() + "."
+			return getPersonName() + " " + getDateString(DATE_FORMAT) + " " + getRightLeft().toShortString() + "."
 					+ getSuffix();
 		}
 		else {
@@ -97,7 +96,7 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Set the filename (extracting from it the person name, the date and the left/right property)
+	 * Set the filename (extracting from it the person personName, the date and the left/right property)
 	 * 
 	 * @param filename
 	 */
@@ -108,9 +107,9 @@ public class EyePhoto {
 		int datePosition = filename.lastIndexOf(' ', rightLeftPosition - 1);
 
 		if (datePosition > 0) {
-			setName(filename.substring(0, datePosition));
+			setPersonName(filename.substring(0, datePosition));
 			formattedName = setDateString(filename.substring(datePosition + 1, rightLeftPosition), DATE_FORMAT);
-			setRightLeft(RightLeft.fromShortString(filename.substring(rightLeftPosition + 1, suffixPosition)));
+			setRightLeft(RightLeft.fromString(filename.substring(rightLeftPosition + 1, suffixPosition)));
 			setSuffix(filename.substring(suffixPosition + 1));
 
 			if (!formattedName) {
@@ -153,21 +152,21 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the person name (use getFilename for the file name)
+	 * Retrieve the person personName (use getFilename for the file personName)
 	 * 
 	 * @return
 	 */
-	public String getName() {
-		return name;
+	public String getPersonName() {
+		return personName;
 	}
 
-	private void setName(String name) {
+	private void setPersonName(String name) {
 		if (name == null) {
-			this.name = null;
+			this.personName = null;
 
 		}
 		else {
-			this.name = name.trim();
+			this.personName = name.trim();
 		}
 	}
 
@@ -238,7 +237,7 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Check if the file name is formatted as eye photo
+	 * Check if the file personName is formatted as eye photo
 	 * 
 	 * @return
 	 */
@@ -265,46 +264,34 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Move the eye photo to a target path and target name (given via EyePhoto object)
+	 * Move the eye photo to a target path and target personName (given via EyePhoto object)
 	 * 
 	 * @param target
 	 * @return
 	 */
 	public boolean moveTo(EyePhoto target) {
-		if (getFile().renameTo(target.getFile())) {
-			target.addToMediaStore();
-			return true;
-		}
-		else {
-			return false;
-		}
+		return getFile().renameTo(target.getFile());
 	}
 
 	/**
-	 * Copy the eye photo to a target path and target name (given via EyePhoto object)
+	 * Copy the eye photo to a target path and target personName (given via EyePhoto object)
 	 * 
 	 * @param target
 	 * @return
 	 */
 	public boolean copyTo(EyePhoto target) {
-		if (ImageUtil.copyFile(getFile(), target.getFile())) {
-			target.addToMediaStore();
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ImageUtil.copyFile(getFile(), target.getFile());
 	}
 
 	/**
-	 * Change the name (keeping the path)
+	 * Change the personName renaming the file (keeping the path)
 	 * 
 	 * @param targetName
 	 * @return
 	 */
-	public boolean changeName(String targetName) {
+	public boolean changePersonName(String targetName) {
 		EyePhoto target = cloneFromPath();
-		target.setName(targetName);
+		target.setPersonName(targetName);
 		return moveTo(target);
 	}
 
@@ -366,6 +353,24 @@ public class EyePhoto {
 			return false;
 		}
 	}
+	
+	/**
+	 * Store person, date and rightLeft in the metadata
+	 * @return
+	 */
+	public boolean storeDefaultMetadata() {
+		Metadata metadata = getImageMetadata();
+		if(metadata == null) {
+			metadata = new Metadata();
+		}
+		metadata.person = getPersonName();
+		metadata.organizeDate = getDate();
+		metadata.rightLeft = getRightLeft();
+		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
+		
+		return storeImageMetadata(metadata);
+	}
+	
 
 	/**
 	 * Compare two bitmaps for equality (by path)
@@ -395,9 +400,31 @@ public class EyePhoto {
 				return null;
 			}
 		}
+		
+		public String toString() {
+			switch (this) {
+			case LEFT:
+				return "LEFT";
+			case RIGHT:
+				return "RIGHT";
+			default:
+				return null;
+			}
+		}
 
-		public static RightLeft fromShortString(String shortString) {
-			if (shortString != null && (shortString.startsWith("r") || shortString.startsWith("R"))) {
+		public String getTitleSuffix() {
+			switch (this) {
+			case LEFT:
+				return Application.getResourceString(R.string.suffix_title_left);
+			case RIGHT:
+				return Application.getResourceString(R.string.suffix_title_right);
+			default:
+				return null;
+			}
+		}
+		
+		public static RightLeft fromString(String rightLeftString) {
+			if (rightLeftString != null && (rightLeftString.startsWith("r") || rightLeftString.startsWith("R"))) {
 				return RIGHT;
 			}
 			else {

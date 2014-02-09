@@ -400,9 +400,21 @@ public class OrganizeNewPhotosActivity extends Activity {
 				return;
 			}
 		}
+		
+		if (!targetPhotoRight.storeDefaultMetadata()) {
+			displayError(R.string.message_dialog_failed_to_store_metadata, photoRight.getAbsolutePath(),
+					targetPhotoRight.getAbsolutePath());
+			return;
+		}
+		if (!targetPhotoLeft.storeDefaultMetadata()) {
+			displayError(R.string.message_dialog_failed_to_store_metadata, photoLeft.getAbsolutePath(),
+					targetPhotoLeft.getAbsolutePath());
+			return;
+		}
 
-		// TODO: Store metadata
-
+		targetPhotoRight.addToMediaStore();
+		targetPhotoLeft.addToMediaStore();
+		
 		finish();
 	}
 

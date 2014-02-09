@@ -27,6 +27,7 @@
     <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_folder">Failed to rename folder %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
+    <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
     
@@ -59,6 +60,8 @@
     <string name="display_new_name">[Create new name]</string>
     <string name="file_infix_right">right</string>
     <string name="file_infix_left">left</string>
+    <string name="suffix_title_right">Right Eye</string>
+    <string name="suffix_title_left">Left Eye</string>
     <string name="hint_select_name">[Select name]</string>
     <string name="hint_insert_name">[Enter new name]</string>
 

@@ -132,7 +132,7 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 				DialogUtil.displayError(this, R.string.message_dialog_unformatted_file, oldFolder.getAbsolutePath());
 				continue;
 			}
-			if (!source.changeName(newFileName)) {
+			if (!source.changePersonName(newFileName)) {
 				DialogUtil.displayError(this, R.string.message_dialog_failed_to_rename_file,
 						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
 			}

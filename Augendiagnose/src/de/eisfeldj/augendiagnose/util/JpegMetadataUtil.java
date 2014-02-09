@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -14,6 +15,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpRewriter;
+import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
@@ -22,10 +24,13 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
+import android.util.Log;
+
 import com.adobe.xmp.XMPException;
 
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 
 /**
  * Helper clase to retrieve and save metadata in a JPEG file
@@ -108,12 +113,14 @@ public abstract class JpegMetadataUtil {
 		result.setXCenter(parser.getJeItem(XmpHandler.ITEM_X_CENTER));
 		result.setYCenter(parser.getJeItem(XmpHandler.ITEM_Y_CENTER));
 		result.setOverlayScaleFactor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR));
+		result.organizeDate = parser.getJeDate(XmpHandler.ITEM_ORGANIZE_DATE);
+		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 
 		// For standard fields, use custom data only if there is no other data.
-		result.description = parser.getDescription();
-		result.subject = parser.getSubject();
-		result.person = parser.getPerson();
-		result.title = parser.getTitle();
+		result.description = parser.getDcDescription();
+		result.subject = parser.getDcSubject();
+		result.person = parser.getMicrosoftPerson();
+		result.title = parser.getDcTitle();
 		result.comment = parser.getUserComment();
 
 		// Retrieve EXIF data
@@ -128,19 +135,27 @@ public abstract class JpegMetadataUtil {
 				tiffImageMetadata = (TiffImageMetadata) metadata;
 			}
 
-			String title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION).getStringValue();
-			String comment = tiffImageMetadata.findField(ExifTagConstants.EXIF_TAG_USER_COMMENT).getStringValue();
+			TiffField title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
+			TiffField comment = tiffImageMetadata.findField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
+			TiffField comment2 = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
+			TiffField subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
+
 			if (title != null) {
-				result.title = title;
+				result.title = title.getStringValue().trim();
 			}
-			if (comment != null) {
-				result.comment = comment;
+			if (comment != null && comment.getStringValue().trim().length() > 0) {
+				result.comment = comment.getStringValue().trim();
 			}
-			if (result.subject == null) {
-				result.subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT).getStringValue();
+			if (comment2 != null && comment2.getStringValue().trim().length() > 0) {
+				// XPComment takes precedence if existing
+				result.comment = comment2.getStringValue().trim();
+			}
+			if (result.subject == null && subject != null) {
+				result.subject = subject.getStringValue().trim();
 			}
 		}
 		catch (Exception e) {
+			Log.w(Application.TAG, "Error when retrieving Exif data", e);
 		}
 
 		// If fields are still null, try to get them from custom XMP
@@ -231,6 +246,7 @@ public abstract class JpegMetadataUtil {
 
 			if (metadata.comment != null) {
 				rootDirectory.removeField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
+				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, metadata.comment);
 				exifDirectory.removeField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
 				exifDirectory.add(ExifTagConstants.EXIF_TAG_USER_COMMENT, metadata.comment);
 			}
@@ -244,14 +260,14 @@ public abstract class JpegMetadataUtil {
 			os = new BufferedOutputStream(os);
 
 			new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
-			
+
 			IoUtils.closeQuietly(true, os);
 
-			if(!jpegImageFile.delete()) {
+			if (!jpegImageFile.delete()) {
 				throw new IOException("Failed to delete file " + jpegImageFileName);
 			}
 
-			if(!tempFile.renameTo(jpegImageFile)) {
+			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
 			}
 		}
@@ -297,6 +313,8 @@ public abstract class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_X_CENTER, metadata.getXCenterString());
 			parser.setJeItem(XmpHandler.ITEM_Y_CENTER, metadata.getYCenterString());
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR, metadata.getOverlayScaleFactorString());
+			parser.setJeDate(XmpHandler.ITEM_ORGANIZE_DATE, metadata.organizeDate);
+			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);
@@ -304,12 +322,12 @@ public abstract class JpegMetadataUtil {
 			new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
 
 			IoUtils.closeQuietly(true, os);
-			
-			if(!jpegImageFile.delete()) {
+
+			if (!jpegImageFile.delete()) {
 				throw new IOException("Failed to delete file " + jpegImageFileName);
 			}
 
-			if(!tempFile.renameTo(jpegImageFile)) {
+			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
 			}
 		}
@@ -350,13 +368,15 @@ public abstract class JpegMetadataUtil {
 		public Float xCenter = null;
 		public Float yCenter = null;
 		public Float overlayScaleFactor = null;
+		public Date organizeDate = null;
+		public RightLeft rightLeft = null;
 
 		public Metadata() {
 
 		}
 
 		public Metadata(String title, String description, String subject, String comment, String person,
-				Float xPosition, Float yPosition, Float scaleFactor) {
+				Float xPosition, Float yPosition, Float scaleFactor, Date organizeDate, RightLeft rightLeft) {
 			this.title = title;
 			this.description = description;
 			this.subject = subject;
@@ -365,6 +385,8 @@ public abstract class JpegMetadataUtil {
 			this.xCenter = xPosition;
 			this.yCenter = yPosition;
 			this.overlayScaleFactor = scaleFactor;
+			this.organizeDate = organizeDate;
+			this.rightLeft = rightLeft;
 		}
 
 		public boolean hasCoordinates() {
@@ -372,7 +394,7 @@ public abstract class JpegMetadataUtil {
 		}
 
 		public void setXCenter(String value) {
-			xCenter = Float.parseFloat(value);
+			xCenter = value == null ? null : Float.parseFloat(value);
 		}
 
 		public void setXCenter(float value) {
@@ -388,7 +410,7 @@ public abstract class JpegMetadataUtil {
 		}
 
 		public void setYCenter(String value) {
-			yCenter = Float.parseFloat(value);
+			yCenter = value == null ? null : Float.parseFloat(value);
 		}
 
 		public void setYCenter(float value) {
@@ -404,7 +426,7 @@ public abstract class JpegMetadataUtil {
 		}
 
 		public void setOverlayScaleFactor(String value) {
-			overlayScaleFactor = Float.parseFloat(value);
+			overlayScaleFactor = value == null ? null : Float.parseFloat(value);
 		}
 
 		public void setOverlayScaleFactor(float value) {
@@ -419,6 +441,14 @@ public abstract class JpegMetadataUtil {
 			return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
 		}
 
+		public void setRightLeft(String value) {
+			rightLeft = value == null ? null : RightLeft.fromString(value);
+		}
+
+		public String getRightLeftString() {
+			return rightLeft == null ? null : rightLeft.toString();
+		}
+
 		@Override
 		public String toString() {
 			StringBuffer str = new StringBuffer();
@@ -430,6 +460,8 @@ public abstract class JpegMetadataUtil {
 			str.append("X-Position: " + xCenter + "\n");
 			str.append("Y-Position: " + yCenter + "\n");
 			str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
+			str.append("OrganizeDate: " + organizeDate + "\n");
+			str.append("RightLeft: " + rightLeft + "\n");
 			return str.toString();
 		}
 
