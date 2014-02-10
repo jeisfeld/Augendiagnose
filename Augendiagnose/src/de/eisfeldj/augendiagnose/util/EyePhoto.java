@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
@@ -296,7 +295,8 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Add the photo to the media store
+	 * Add the photo to the media store. Must be used carefully - may lead to failures if the photo is later
+	 * moved away again.
 	 */
 	public void addToMediaStore() {
 		MediaStoreUtil.addPictureToMediaStore(getAbsolutePath());
@@ -328,13 +328,7 @@ public class EyePhoto {
 	 * @return
 	 */
 	public Metadata getImageMetadata() {
-		try {
-			return JpegMetadataUtil.getMetadata(getAbsolutePath());
-		}
-		catch (Exception e) {
-			Log.w(Application.TAG, "Failed to retrieve metadata from file " + getAbsolutePath(), e);
-			return null;
-		}
+		return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
 	}
 
 	/**
@@ -343,15 +337,8 @@ public class EyePhoto {
 	 * @param metadata
 	 * @return true if successful
 	 */
-	public boolean storeImageMetadata(Metadata metadata) {
-		try {
-			JpegMetadataUtil.changeMetadata(getAbsolutePath(), metadata);
-			return true;
-		}
-		catch (Exception e) {
-			Log.e(Application.TAG, "Failed to store metadata for file " + getAbsolutePath(), e);
-			return false;
-		}
+	public void storeImageMetadata(Metadata metadata) {
+		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
 	}
 	
 	/**
@@ -370,13 +357,13 @@ public class EyePhoto {
 	 * Store person, date and rightLeft in the metadata
 	 * @return
 	 */
-	public boolean storeDefaultMetadata() {
+	public void storeDefaultMetadata() {
 		Metadata metadata = getImageMetadata();
 		if(metadata == null) {
 			metadata = new Metadata();
 		}
 		updateMetadataWithDefaults(metadata);
-		return storeImageMetadata(metadata);
+		storeImageMetadata(metadata);
 	}
 	
 

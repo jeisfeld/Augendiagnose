@@ -210,7 +210,8 @@ public abstract class JpegMetadataUtil {
 		File tempFile = new File(tempFileName);
 
 		if (tempFile.exists()) {
-			throw new IOException("tempFile " + tempFileName + " already exists");
+			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
+			tempFile.delete();
 		}
 
 		OutputStream os = null;
@@ -263,9 +264,11 @@ public abstract class JpegMetadataUtil {
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!jpegImageFile.delete()) {
-				throw new IOException("Failed to delete file " + jpegImageFileName);
-			}
+//			if (SystemUtil.isBlueStacks()) {
+//				if (!jpegImageFile.delete()) {
+//					throw new IOException("Failed to delete file " + jpegImageFileName);
+//				}
+//			}
 
 			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
@@ -287,7 +290,8 @@ public abstract class JpegMetadataUtil {
 		File tempFile = new File(tempFileName);
 
 		if (tempFile.exists()) {
-			throw new IOException("tempFile " + tempFileName + " already exists");
+			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
+			tempFile.delete();
 		}
 
 		OutputStream os = null;
@@ -323,9 +327,11 @@ public abstract class JpegMetadataUtil {
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!jpegImageFile.delete()) {
-				throw new IOException("Failed to delete file " + jpegImageFileName);
-			}
+//			if (SystemUtil.isBlueStacks()) {
+//				if (!jpegImageFile.delete()) {
+//					throw new IOException("Failed to delete file " + jpegImageFileName);
+//				}
+//			}
 
 			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
