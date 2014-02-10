@@ -84,7 +84,7 @@ public abstract class JpegMetadataUtil {
 	 * @throws IOException
 	 * @throws ImageReadException
 	 */
-	private static void checkJpeg(String jpegImageFileName) throws IOException, ImageReadException {
+	protected static void checkJpeg(String jpegImageFileName) throws IOException, ImageReadException {
 		File file = new File(jpegImageFileName);
 		String mimeType = Imaging.getImageInfo(file).getMimeType();
 		if (!mimeType.equals("image/jpeg")) {
@@ -397,14 +397,6 @@ public abstract class JpegMetadataUtil {
 			xCenter = value == null ? null : Float.parseFloat(value);
 		}
 
-		public void setXCenter(float value) {
-			xCenter = Float.valueOf(value);
-		}
-
-		public float getXCenter() {
-			return xCenter.floatValue();
-		}
-
 		public String getXCenterString() {
 			return xCenter == null ? null : xCenter.toString();
 		}
@@ -413,28 +405,12 @@ public abstract class JpegMetadataUtil {
 			yCenter = value == null ? null : Float.parseFloat(value);
 		}
 
-		public void setYCenter(float value) {
-			yCenter = Float.valueOf(value);
-		}
-
-		public float getYCenter() {
-			return yCenter.floatValue();
-		}
-
 		public String getYCenterString() {
 			return yCenter == null ? null : yCenter.toString();
 		}
 
 		public void setOverlayScaleFactor(String value) {
 			overlayScaleFactor = value == null ? null : Float.parseFloat(value);
-		}
-
-		public void setOverlayScaleFactor(float value) {
-			overlayScaleFactor = Float.valueOf(value);
-		}
-
-		public float getOverlayScaleFactor() {
-			return overlayScaleFactor.floatValue();
 		}
 
 		public String getOverlayScaleFactorString() {

@@ -20,9 +20,11 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
@@ -54,6 +56,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mContrast = 1f;
 
 	private Bitmap mBitmapSmall;
+	
+	public ToggleButton mLockButton;
 
 	public OverlayPinchImageView(Context context) {
 		this(context, null, 0);
@@ -73,28 +77,38 @@ public class OverlayPinchImageView extends PinchImageView {
 	@Override
 	public void setImage(String pathName) {
 		mEyePhoto = new EyePhoto(pathName);
-		
+
 		try {
-			Logger.log("A\n" + mEyePhoto.getImageMetadata().toString());
-			// JpegMetadataUtil.printAllExifData(mEyePhoto.getFile());
+			Logger.log("Image metadata for " + pathName + "\n" + mEyePhoto.getImageMetadata().toString());
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			Logger.log(e.toString());
 		}
-		
+
 		if (!pathName.equals(mPathName)) {
-			mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 			mPathName = pathName;
-
-			float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
-
-			// initial position of overlay
-			mOverlayScaleFactor = size / OVERLAY_SIZE;
-			mLastOverlayScaleFactor = mOverlayScaleFactor;
-			mOverlayX = mBitmap.getWidth() / 2;
-			mOverlayY = mBitmap.getHeight() / 2;
-
+			mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 			mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
+			Metadata metadata = mEyePhoto.getImageMetadata();
+			
+			if(metadata != null && metadata.hasCoordinates()) {
+				mOverlayX = metadata.xCenter;
+				mOverlayY = metadata.yCenter;
+				mOverlayScaleFactor = metadata.overlayScaleFactor;
+				lockOverlay(true, false);
+				if(mLockButton!=null) {
+					mLockButton.setChecked(true);
+				}
+			}
+			else {
+				float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
+
+				// initial position of overlay
+				mOverlayScaleFactor = size / OVERLAY_SIZE;
+				mOverlayX = mBitmap.getWidth() / 2;
+				mOverlayY = mBitmap.getHeight() / 2;
+			}
+			mLastOverlayScaleFactor = mOverlayScaleFactor;
 		}
 
 		mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -193,9 +207,24 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * 
 	 * @param lock
 	 */
-	public void lockOverlay(boolean lock) {
+	public void lockOverlay(boolean lock, boolean store) {
 		this.mLocked = lock;
 		updateScaleGestureDetector();
+
+		if(lock && store) {
+			Metadata metadata = mEyePhoto.getImageMetadata();
+			if (metadata != null) {
+				if(metadata.rightLeft==null) {
+					// If image did not yet pass metadata setting, do it now.
+					mEyePhoto.updateMetadataWithDefaults(metadata);
+				}
+				
+				metadata.xCenter = mOverlayX;
+				metadata.yCenter = mOverlayY;
+				metadata.overlayScaleFactor = mOverlayScaleFactor;
+				mEyePhoto.storeImageMetadata(metadata);
+			}
+		}
 	}
 
 	/**

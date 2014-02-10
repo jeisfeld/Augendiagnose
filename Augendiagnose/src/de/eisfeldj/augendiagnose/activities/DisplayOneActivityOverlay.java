@@ -65,6 +65,8 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		toggleOverlayButtons[3] = (ToggleButton) findViewById(R.id.toggleButtonOverlay3);
 		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
 
+		imageView.mLockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
+		
 		if (!Application.isAuthorized()) {
 			toggleOverlayButtons[3].setEnabled(false);
 			toggleOverlayButtons[4].setEnabled(false);
@@ -183,7 +185,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	 */
 	public void onToggleLinkClicked(View view) {
 		ToggleButton button = (ToggleButton) view;
-		imageView.lockOverlay(button.isChecked());
+		imageView.lockOverlay(button.isChecked(), true);
 	}
 
 }

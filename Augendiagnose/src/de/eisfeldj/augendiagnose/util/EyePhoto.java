@@ -355,6 +355,18 @@ public class EyePhoto {
 	}
 	
 	/**
+	 * Update metadata object with default metadata, based on the file name.
+	 * @return
+	 */
+	public void updateMetadataWithDefaults(Metadata metadata) {
+		metadata.person = getPersonName();
+		metadata.organizeDate = getDate();
+		metadata.rightLeft = getRightLeft();
+		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
+	}
+	
+	
+	/**
 	 * Store person, date and rightLeft in the metadata
 	 * @return
 	 */
@@ -363,11 +375,7 @@ public class EyePhoto {
 		if(metadata == null) {
 			metadata = new Metadata();
 		}
-		metadata.person = getPersonName();
-		metadata.organizeDate = getDate();
-		metadata.rightLeft = getRightLeft();
-		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
-		
+		updateMetadataWithDefaults(metadata);
 		return storeImageMetadata(metadata);
 	}
 	
