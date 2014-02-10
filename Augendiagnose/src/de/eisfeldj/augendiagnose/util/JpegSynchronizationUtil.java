@@ -149,6 +149,3 @@ public abstract class JpegSynchronizationUtil {
 
 }
 
-// TODO: try one-step renaming without prior delete
-
-// TODO: shift usage of existing getMetadata/storeMetadata calls, in particular from EyePhoto.java

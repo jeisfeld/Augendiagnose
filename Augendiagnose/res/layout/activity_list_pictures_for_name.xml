@@ -23,16 +23,16 @@
         android:layout_alignParentBottom="true"
         android:onClick="selectDifferentPictureActivity"
         android:text="@string/button_other_pictures"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/listViewForName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="fill_parent"
         android:layout_below="@id/textTitleName"
+        android:layout_above="@id/buttonSelectAdditionalPicture"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp" >
+        android:layout_marginBottom="8dp" >
     </ListView>
 
 </RelativeLayout>

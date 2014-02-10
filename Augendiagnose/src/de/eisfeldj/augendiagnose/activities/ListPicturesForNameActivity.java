@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
@@ -82,38 +80,15 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 */
 	public void activateButtonAdditionalPictures() {
 		buttonAdditionalPictures.setVisibility(View.VISIBLE);
-
-		RelativeLayout.LayoutParams oldParams = (RelativeLayout.LayoutParams) listview.getLayoutParams();
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.BELOW, R.id.textTitleName);
-		params.addRule(RelativeLayout.ABOVE, R.id.buttonSelectAdditionalPicture);
-		params.setMargins(oldParams.leftMargin, oldParams.topMargin, oldParams.rightMargin, oldParams.bottomMargin);
-		listview.setLayoutParams(params);
-
 		listview.invalidate();
-
-		buttonAdditionalPictures.bringToFront();
-		buttonAdditionalPictures.invalidate();
 	}
 
 	/**
 	 * Undisplay the button "additional pictures" if photo selection has been removed.
 	 */
 	public void deactivateButtonAdditionalPictures() {
-		buttonAdditionalPictures.setVisibility(View.INVISIBLE);
-
-		RelativeLayout.LayoutParams oldParams = (RelativeLayout.LayoutParams) listview.getLayoutParams();
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.BELOW, R.id.textTitleName);
-		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		params.setMargins(oldParams.leftMargin, oldParams.topMargin, oldParams.rightMargin, oldParams.bottomMargin);
-		listview.setLayoutParams(params);
-
+		buttonAdditionalPictures.setVisibility(View.GONE);
 		listview.invalidate();
-
-		buttonAdditionalPictures.invalidate();
 	}
 
 	/**
