@@ -119,6 +119,13 @@ public class SettingsActivity extends Activity {
 			}
 		}
 
+		// Delta setting for storeOption - required after upgrade to version 0.3
+		String storeOption = Application.getSharedPreferenceString(R.string.key_store_option);
+		if (storeOption == null || storeOption.length() == 0) {
+			Application.setSharedPreferenceString(R.string.key_store_option,
+					Application.getAppContext().getString(R.string.pref_default_store_options));
+		}
+
 		// Inform PinchImageView about maxBitmapSize
 		PinchImageView.setMaxBitmapSize(Integer.parseInt(Application
 				.getSharedPreferenceString(R.string.key_max_bitmap_size)));

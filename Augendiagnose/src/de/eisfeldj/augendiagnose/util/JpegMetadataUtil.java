@@ -264,12 +264,6 @@ public abstract class JpegMetadataUtil {
 
 			IoUtils.closeQuietly(true, os);
 
-//			if (SystemUtil.isBlueStacks()) {
-//				if (!jpegImageFile.delete()) {
-//					throw new IOException("Failed to delete file " + jpegImageFileName);
-//				}
-//			}
-
 			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
 			}
@@ -326,12 +320,6 @@ public abstract class JpegMetadataUtil {
 			new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
 
 			IoUtils.closeQuietly(true, os);
-
-//			if (SystemUtil.isBlueStacks()) {
-//				if (!jpegImageFile.delete()) {
-//					throw new IOException("Failed to delete file " + jpegImageFileName);
-//				}
-//			}
 
 			if (!tempFile.renameTo(jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);

@@ -25,7 +25,6 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
-import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -77,13 +76,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	@Override
 	public void setImage(String pathName) {
 		mEyePhoto = new EyePhoto(pathName);
-
-		try {
-			Logger.log("Image metadata for " + pathName + "\n" + mEyePhoto.getImageMetadata().toString());
-		}
-		catch (Exception e) {
-			Logger.log(e.toString());
-		}
 
 		if (!pathName.equals(mPathName)) {
 			mPathName = pathName;
