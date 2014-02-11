@@ -87,9 +87,10 @@ public class OverlayPinchImageView extends PinchImageView {
 
 			if (metadata != null && metadata.hasCoordinates()) {
 				mHasCoordinates = true;
-				mOverlayX = metadata.xCenter;
-				mOverlayY = metadata.yCenter;
-				mOverlayScaleFactor = metadata.overlayScaleFactor;
+				mOverlayX = metadata.xCenter * mBitmap.getWidth();
+				mOverlayY = metadata.yCenter * mBitmap.getHeight();
+				mOverlayScaleFactor = metadata.overlayScaleFactor * Math.max(mBitmap.getHeight(), mBitmap.getWidth())
+						/ OVERLAY_SIZE;
 				lockOverlay(true, false);
 				if (mLockButton != null) {
 					mLockButton.setChecked(true);
@@ -229,9 +230,10 @@ public class OverlayPinchImageView extends PinchImageView {
 					mEyePhoto.updateMetadataWithDefaults(metadata);
 				}
 
-				metadata.xCenter = mOverlayX;
-				metadata.yCenter = mOverlayY;
-				metadata.overlayScaleFactor = mOverlayScaleFactor;
+				metadata.xCenter = mOverlayX / mBitmap.getWidth();
+				metadata.yCenter = mOverlayY / mBitmap.getHeight();
+				metadata.overlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
+						* OVERLAY_SIZE;
 				mEyePhoto.storeImageMetadata(metadata);
 			}
 		}
