@@ -55,8 +55,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mContrast = 1f;
 
 	private Bitmap mBitmapSmall;
-	
+
 	public ToggleButton mLockButton;
+	private boolean mHasCoordinates = false;
 
 	public OverlayPinchImageView(Context context) {
 		this(context, null, 0);
@@ -78,17 +79,19 @@ public class OverlayPinchImageView extends PinchImageView {
 		mEyePhoto = new EyePhoto(pathName);
 
 		if (!pathName.equals(mPathName)) {
+			mHasCoordinates = false;
 			mPathName = pathName;
 			mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 			mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 			Metadata metadata = mEyePhoto.getImageMetadata();
-			
-			if(metadata != null && metadata.hasCoordinates()) {
+
+			if (metadata != null && metadata.hasCoordinates()) {
+				mHasCoordinates = true;
 				mOverlayX = metadata.xCenter;
 				mOverlayY = metadata.yCenter;
 				mOverlayScaleFactor = metadata.overlayScaleFactor;
 				lockOverlay(true, false);
-				if(mLockButton!=null) {
+				if (mLockButton != null) {
 					mLockButton.setChecked(true);
 				}
 			}
@@ -108,6 +111,21 @@ public class OverlayPinchImageView extends PinchImageView {
 		doInitialScaling();
 		updateScaleGestureDetector();
 		refresh(true);
+	}
+
+	@Override
+	protected void doInitialScaling() {
+		if (!initialized && mHasCoordinates) {
+			mPosX = mOverlayX;
+			mPosY = mOverlayY;
+			mScaleFactor = 1f;
+			if (getHeight() > 0 && getWidth() > 0) {
+				final float size = Math.min(getHeight(), getWidth());
+				mScaleFactor = size / (OVERLAY_SIZE * mOverlayScaleFactor);
+				initialized = true;
+			}
+		}
+		super.doInitialScaling();
 	}
 
 	/**
@@ -203,14 +221,14 @@ public class OverlayPinchImageView extends PinchImageView {
 		this.mLocked = lock;
 		updateScaleGestureDetector();
 
-		if(lock && store) {
+		if (lock && store) {
 			Metadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				if(metadata.rightLeft==null) {
+				if (metadata.rightLeft == null) {
 					// If image did not yet pass metadata setting, do it now.
 					mEyePhoto.updateMetadataWithDefaults(metadata);
 				}
-				
+
 				metadata.xCenter = mOverlayX;
 				metadata.yCenter = mOverlayY;
 				metadata.overlayScaleFactor = mOverlayScaleFactor;
