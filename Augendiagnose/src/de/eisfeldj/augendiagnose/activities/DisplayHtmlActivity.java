@@ -9,6 +9,7 @@ import de.eisfeldj.augendiagnose.R;
 
 public class DisplayHtmlActivity extends Activity {
 
+	private static final String STYLE = "<style type=\"text/css\">body{color: #fff}</style>";
 	private static final String STRING_EXTRA_RESOURCE = "de.eisfeldj.augendiagnose.RESOURCE";
 
 	/**
@@ -32,8 +33,11 @@ public class DisplayHtmlActivity extends Activity {
 		int resource = getIntent().getIntExtra(STRING_EXTRA_RESOURCE, -1);
 
 		WebView webView = (WebView) findViewById(R.id.webViewDisplayHtml);
-
-		webView.loadData(getString(resource), "text/html", "UTF-8");
+		webView.setBackgroundColor(0x00000000);
+		String html = getString(resource);
+		int index = html.indexOf("</head>");
+		html = html.substring(0, index) + STYLE + html.substring(index);
+		webView.loadData(html, "text/html", "UTF-8");
 	}
 
 }
