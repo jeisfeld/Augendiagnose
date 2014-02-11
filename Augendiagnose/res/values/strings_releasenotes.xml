@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_title">Release Notes</string>
+    <string name="releasenotes_changes">Latest Changes</string>
+    <string name="releasenotes_release">Release</string>
+    <string name="button_dont_show">Do not show again</string>
+    <string name="button_show_later">Show again</string>
+    <string name="releasenotes_current_remark">
+<![CDATA[
+<h3>Important Note:</h3><p>The app stores information (like iris position or comments) directly
+in the JPG image files. This has the advantage that all such information is still available if you
+copy the pictures from one device to another one. To some extent, information like comments
+will be even available when viewing the files in MS Windows.</p>
+
+<p>However, this kind of storage imposes a small risk. It may happen that on some devices, or for 
+pictures from some cameras, it may happen that storing information in the JPG fails, or possibly
+even destroys the JPG file. Therefore, it is recommended that you keep backups of your JPG files
+when using the app for the first time with a new device or with a new camera.</p>
+
+<p>Please inform me if such problems appear.</p>
+]]>
+    </string>
+
+    <string-array name="releasenotes_version_names" translatable="false">
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.2.1</item>
+        <item>0.2.2</item>
+        <item>0.2.3</item>
+        <item>0.2.4</item>
+        <item>0.2.5</item>
+        <item>0.2.6</item>
+        <item>0.2.7</item>
+        <item>0.2.8</item>
+        <item>0.2.9</item>
+        <item>0.2.10</item>
+        <item>0.3</item>
+    </string-array>
+    <string-array name="releasenotes_version_notes">
+        <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
+        <item>Added basic overlay functionality.</item>
+        <item>Minor fixes.</item>
+        <item>Added custom overlay.</item>
+        <item>Added selection of alternative photos when organizing.</item>
+        <item>Improved mapping of brightness/contrast.</item>
+        <item>Various minor improvements and fixes.</item>
+        <item>Added English version of overlay.</item>
+        <item>Enabled starting the App from outside with a set of images</item>
+        <item>Enable non-JPG images. Consider EXIF orientation of image.</item>
+        <item>Added a second custom overlay. Improved overlay pinching. Corrected some display issues.</item>
+        <item>Added various help screens.</item>
+        <item>Enabled storage of Overlay position within JPG file.</item>
+    </string-array>
+
+</resources>

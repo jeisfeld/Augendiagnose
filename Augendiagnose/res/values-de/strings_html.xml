@@ -68,9 +68,24 @@
 		<li>Ein Foto im Detail Anschauen. Dabei k&ouml;nnen Sie auch Helligkeit
 			und Kontrast &auml;ndern und Iristopographien als Overlay anzeigen.</li>
 
-		<li>Zwei Fotos vergleichen (und dabei unabh&auml;ngig voneinander zoomen).</li>
+		<li>Zwei Fotos vergleichen (und dabei unabh&auml;ngig voneinander
+			zoomen).</li>
 	</ul>
 
+	<h3>Datenspeicherung</h3>
+
+	<p>Die App speichert Informationen (wie Irisposition oder Kommentare)
+		direkt in den JPG-Bilddateien. Dies hat den Vorteil, dass alle Informationen
+		auch dann noch verf&uuml;gbar sind, wenn Sie die Fotos auf ein anderes
+		Ger&auml;t kopieren. Zum Teil sind die Informationen (wie Kommentare) sogar
+		unter Windows verf&uuml;gbar.</p>
+
+	<p>Diese Form der Speicherung birgt leider auch Risiken. Es k&ouml;nnte
+		sein, dass f&uuml;r spezielle Smartphones/Tablets oder f&uuml;r spezielle
+		Kameras die Speicherung der Informationen in den JPG-Dateien nicht
+		funktioniert, und vielleicht sogar die Dateien zerst&ouml;rt. Daher empfehle
+		ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App zum
+		ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
 </body>
 </html>
 ]]>
@@ -95,9 +110,16 @@
 
 	<h3>Eingangsverzeichnis f&uuml;r neue Augenfotos</h3>
 
-	Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert. Als
-	Standard ist hier das EyeFi-Verzeichnis gesetzt. Es kann aber ein beliebiges
-	anderes Verzeichnis gew&auml;hlt werden (z.B. das Kamera-Verzeichnis).
+	<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert.
+		Als Standard ist hier das Zielverzeichnis der Eye-Fi-App gesetzt. Es kann aber
+		ein beliebiges anderes Verzeichnis gew&auml;hlt werden (z.B. das
+		Kamera-Verzeichnis).</p>
+
+	<p>Hintergrund zur Eye-Fi-App: Eine Smartphone-Kamera ist typischerweise
+		nicht ausreichend, um hochwertige Augenfotografien zu machen. Daher wird eine
+		externe Kamera ben&ouml;tigt. Der einfachste Weg, die Fotos von einer externen
+		Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte,
+		die die Fotos per WiFi auf das Smartphone schickt.</p>
 
 	<h3>Maximale Bitmap-Gr&ouml;&szlig;e</h3>
 
@@ -113,6 +135,24 @@
 	ist. Standardm&auml;&szlig;ig ist hier das linke Auge gew&auml;hlt (unter der
 	Annahme, dass Sie zuerst das rechte, und dann das linke Auge fotografiert
 	haben).
+
+	<h3>Speichern von Daten in JPG-Dateien</h3>
+
+	Hier k&ouml;nnen Sie einschr&auml;nken, inwieweit die App Daten in den
+	JPG-Dateien speichert.
+
+	<ul>
+		<li>Speichern in EXIF (empfohlen): Die Applikation speichert
+			verf&uuml;gbare Informationen in der JPG-Datei, auch in Standardfeldern, die
+			z.B. in Windows sichtbar sind.</li>
+
+		<li>Speichern in Extra-Feldern: Die Applikation speichert Informationen
+			in der JPG-Datei, aber nur in neuen Feldern.</li>
+
+		<li>Nicht in Fotos speichern: Die Applikation speichert keine
+			Informationen in Fotos. (Dann stehen nur Teile der Funktionalit&auml;t der
+			App zur Verf&uuml;gng.)</li>
+	</ul>
 
 	<h3>Nutzerschl&uuml;ssel</h3>
 
@@ -183,9 +223,8 @@
 	<ul>
 		<li>Detailansicht eines Fotos (durch Klick auf dieses Foto). In dieser
 			Ansicht k&ouml;nnen Sie auch Helligkeit und Kontrast &auml;ndern und
-			Iristopographien als Overlay anzeigen. (Hinweis: aus
-			Urheberrechtsgr&uuml;nden werden aktuell nur zwei selbstgefertigte
-			Iristopographie-Overlays mit der App geliefert.)</li>
+			Iristopographien als Overlay anzeigen. Die relative Position des Overlays
+			k&ouml;nnen Sie speichern.</li>
 
 		<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das
 			Datum)</li>

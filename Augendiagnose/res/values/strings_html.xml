@@ -64,6 +64,21 @@
 
 		<li>Display two photos for comparison (and pinch them independently).</li>
 	</ul>
+
+	<h3>Data storage</h3>
+
+	<p>The app stores information (like iris position or comments) directly in
+		the JPG image files. This has the advantage that all such information is still
+		available if you copy the pictures from one device to another one. To some
+		extent, information like comments will be even available when viewing the
+		files in MS Windows.</p>
+
+	<p>However, this kind of storage imposes a small risk. It may happen that
+		on some devices, or for pictures from some cameras, it may happen that storing
+		information in the JPG fails, or possibly even destroys the JPG file.
+		Therefore, it is recommended that you keep backups of your JPG files at least
+		when using the app for the first time with a new device or with a new camera.</p>
+
 </body>
 </html>
 ]]>
@@ -89,8 +104,16 @@
 	<h3>Input folder for new eye photos</h3>
 
 	This is the folder, from which the app imports new eye photos. By default, this
-	is the EyeFi folder. However, you can configure here any other folder, such as
-	the camera folder.
+	is the target folder of the Eye-Fi app. However, you can configure here any
+	other folder, such as the camera folder.
+
+	<p>This is the folder, from which the app imports new eye photos. By
+		default, this is the target folder of the Eye-Fi app. However, you can
+		configure here any other folder, such as the camera folder.</p>
+	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile
+		device is not sufficient to capture eye photos in high quality. A more
+		practical approach is to use an external camera which Eye-Fi SD card, which
+		transfers the photos via WLAN to the mobile device.</p>
 
 	<h3>Max Bitmap size</h3>
 
@@ -104,6 +127,19 @@
 	Here you can define if the last photo is the right or the left eye. By default
 	this is the left eye (which means that you made first a photo of the right eye
 	and then of the left eye).
+
+	<h3>Save additional data in jpeg</h3>
+
+	Here you can limit the storage of data in the JPG files by the app.
+
+	<ul>
+		<li>Store in EXIF (recommended): The app stores relevant information in
+			the JPG file, even in standard fields which are visible in Windows.</li>
+		<li>Store in custom fields: The app stores information in the JPG file,
+			but only in separate fields.</li>
+		<li>Do&apos;t store data in images: The app does not store information in JPG
+			files. (This limits the functionality of the app.)</li>
+	</ul>
 
 	<h3>User key</h3>
 
@@ -167,8 +203,8 @@
 	<ul>
 		<li>Show one of the photos in detail (via click on a photo). In this view
 			you may also change brightness and contrast of the photo or show iris
-			topographies as overlay. (Note: due to copyright, there are currently only
-			two self-made iris topographies delivered with the app.)</li>
+			topographies as overlay. You can store the relative position of the
+			overlay on the eye photo.</li>
 
 		<li>Show both photos of one date (via click on a date)</li>
 

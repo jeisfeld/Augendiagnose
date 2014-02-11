@@ -48,6 +48,20 @@ public class MainActivity extends Activity {
 						Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 			}
 		}
+
+		if (Intent.ACTION_MAIN.equals(intent.getAction()) && savedInstanceState == null) {
+			// When starting from launcher, check if started the first time in this version. If yes, display release notes.
+			String storedVersionString = Application.getSharedPreferenceString(R.string.key_internal_stored_version);
+			if (storedVersionString == null || storedVersionString.length() == 0) {
+				storedVersionString = "10";
+			}
+			int storedVersion = Integer.parseInt(storedVersionString);
+			int currentVersion = Application.getVersion();
+
+			if (storedVersion < currentVersion) {
+				DialogUtil.displayReleaseNotes(this, storedVersion + 1, currentVersion);
+			}
+		}
 	}
 
 	/**

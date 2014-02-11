@@ -38,5 +38,6 @@
     <string name="key_store_option" translatable="false">store_option</string>
     <string name="key_user_key" translatable="false">user_key</string>
     
+    <string name="key_internal_stored_version" translatable="false">stored_version</string>
     
 </resources>

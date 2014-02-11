@@ -3,8 +3,11 @@ package de.eisfeldj.augendiagnose;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Point;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -100,14 +103,31 @@ public class Application extends android.app.Application {
 		String userKey = getSharedPreferenceString(R.string.key_user_key);
 		return userKey.equals("Schnurpsi");
 	}
-	
+
 	/**
 	 * Get a resource string
+	 * 
 	 * @param resource
 	 * @return
 	 */
 	public static String getResourceString(int resourceId) {
 		return getAppContext().getResources().getString(resourceId);
 	}
-	
+
+	/**
+	 * Retrieve the version number of the app
+	 * @return
+	 */
+	public static int getVersion() {
+		PackageInfo pInfo;
+		try {
+			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			return pInfo.versionCode;
+		}
+		catch (NameNotFoundException e) {
+			Log.e(TAG, "Did not find application version", e);
+			return 0;
+		}
+	}
+
 }

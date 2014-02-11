@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import de.eisfeldj.augendiagnose.Application;
@@ -56,6 +57,60 @@ public abstract class DialogUtil {
 	}
 
 	/**
+	 * Display an error and stop the activity - return to parent activity.
+	 * 
+	 * @param activity
+	 *            the current activity
+	 * @param resource
+	 *            the error message
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayReleaseNotes(final Activity activity, String message) {
+		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("message", message);
+		fragment.setArguments(bundle);
+		fragment.show(activity.getFragmentManager(), DisplayReleaseNotesFragment.class.toString());
+	}
+
+	/**
+	 * Display an error and stop the activity - return to parent activity.
+	 * 
+	 * @param activity
+	 *            the current activity
+	 * @param resource
+	 *            the error message
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayReleaseNotes(final Activity activity, int fromVersion, int toVersion) {
+		StringBuffer message = new StringBuffer(activity.getString(R.string.releasenotes_current_remark));
+		if (message.length() > 0) {
+			message.append("<h3>");
+			message.append(activity.getString(R.string.releasenotes_changes));
+			message.append("</h3>");
+		}
+		String[] names = activity.getResources().getStringArray(R.array.releasenotes_version_names);
+		String[] notes = activity.getResources().getStringArray(R.array.releasenotes_version_notes);
+		for (int i = toVersion; i >= fromVersion; i--) {
+			message.append("<h5>");
+			message.append(activity.getString(R.string.releasenotes_release));
+			message.append(" ");
+			message.append(names[i - 1]);
+			message.append("</h5><p>");
+			message.append(notes[i - 1]);
+			message.append("</p>");
+		}
+
+		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("message", message.toString());
+		fragment.setArguments(bundle);
+		fragment.show(activity.getFragmentManager(), DisplayReleaseNotesFragment.class.toString());
+	}
+
+	/**
 	 * Fragment to display an error and go back to the current activity
 	 */
 	public static class DisplayErrorDialogFragment extends DialogFragment {
@@ -100,6 +155,35 @@ public abstract class DialogUtil {
 								return true;
 							}
 							return false;
+						}
+					});
+			return builder.create();
+		}
+	}
+
+	/**
+	 * Fragment to display an error and stop the activity - return to parent activity.
+	 */
+	public static class DisplayReleaseNotesFragment extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			String message = getArguments().getString("message");
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle(R.string.releasenotes_title) //
+					.setMessage(Html.fromHtml(message)) //
+					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							int version = Application.getVersion();
+							Application.setSharedPreferenceString(R.string.key_internal_stored_version,
+									Integer.toString(version));
+							dialog.dismiss();
 						}
 					});
 			return builder.create();
