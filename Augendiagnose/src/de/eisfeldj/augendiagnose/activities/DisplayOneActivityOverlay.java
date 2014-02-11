@@ -69,7 +69,9 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		
 		if (!Application.isAuthorized()) {
 			toggleOverlayButtons[3].setEnabled(false);
+			toggleOverlayButtons[3].setVisibility(View.GONE);
 			toggleOverlayButtons[4].setEnabled(false);
+			toggleOverlayButtons[4].setVisibility(View.GONE);
 		}
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
