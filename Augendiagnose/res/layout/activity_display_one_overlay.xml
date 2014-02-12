@@ -61,7 +61,7 @@
         <ToggleButton
             android:id="@+id/toggleButtonOverlayCircle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
             android:onClick="onToggleOverlay0Clicked"
@@ -71,7 +71,7 @@
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
             android:onClick="onToggleOverlay1Clicked"
@@ -81,7 +81,7 @@
         <ToggleButton
             android:id="@+id/toggleButtonOverlay2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
             android:onClick="onToggleOverlay2Clicked"
@@ -91,7 +91,7 @@
         <ToggleButton
             android:id="@+id/toggleButtonOverlay3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
             android:onClick="onToggleOverlay3Clicked"
@@ -101,7 +101,7 @@
         <ToggleButton
             android:id="@+id/toggleButtonOverlay4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
             android:onClick="onToggleOverlay4Clicked"
@@ -110,8 +110,9 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonLink"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/lock"
             android:checked="false"
             android:onClick="onToggleLinkClicked"

@@ -137,7 +137,7 @@
 			the JPG file, even in standard fields which are visible in Windows.</li>
 		<li>Store in custom fields: The app stores information in the JPG file,
 			but only in separate fields.</li>
-		<li>Do&apos;t store data in images: The app does not store information in JPG
+		<li>Don&apos;t store data in images: The app does not store information in JPG
 			files. (This limits the functionality of the app.)</li>
 	</ul>
 

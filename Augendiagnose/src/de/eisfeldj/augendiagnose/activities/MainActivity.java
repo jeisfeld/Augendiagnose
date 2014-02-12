@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
 				DialogUtil.displayReleaseNotes(this, storedVersion + 1, currentVersion);
 			}
 		}
+	
 	}
 
 	/**

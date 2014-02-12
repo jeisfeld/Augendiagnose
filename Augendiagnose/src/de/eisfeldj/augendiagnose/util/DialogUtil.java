@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
@@ -34,6 +36,22 @@ public abstract class DialogUtil {
 		bundle.putString("message", message);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayErrorDialogFragment.class.toString());
+	}
+
+	/**
+	 * Display an error just as toast
+	 * 
+	 * @param activity
+	 *            the current activity
+	 * @param resource
+	 *            the error message
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayErrorAsToast(final Context context, int resource, Object... args) {
+		String message = String.format(context.getString(resource), args);
+		Log.w(Application.TAG, "Toast message: " + message);
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
 	/**

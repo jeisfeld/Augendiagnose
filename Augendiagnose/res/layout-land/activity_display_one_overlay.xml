@@ -60,7 +60,7 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlayCircle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
@@ -70,7 +70,7 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
@@ -80,7 +80,7 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
@@ -90,7 +90,7 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
@@ -100,7 +100,7 @@
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
@@ -111,7 +111,8 @@
         <ToggleButton
             android:id="@+id/toggleButtonLink"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@drawable/lock"
             android:checked="false"
             android:onClick="onToggleLinkClicked"
