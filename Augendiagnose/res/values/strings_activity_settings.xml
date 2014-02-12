@@ -24,7 +24,7 @@
         <item>Store in custom fields</item>
         <item>Don\'t store data in images</item>
     </string-array>
-    <string-array name="pref_list_values_store_options">
+    <string-array name="pref_list_values_store_options" translatable="false">
         <item>2</item>
         <item>1</item>
         <item>0</item>
