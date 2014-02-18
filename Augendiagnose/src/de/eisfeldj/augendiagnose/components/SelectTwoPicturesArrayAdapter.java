@@ -34,9 +34,8 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final EyeImageView eyeImageView = (EyeImageView) inflater.inflate(R.layout.adapter_select_two_pictures, parent,
-				false);
+		final EyeImageView eyeImageView = (EyeImageView) LayoutInflater.from(context).inflate(
+				R.layout.adapter_select_two_pictures, parent, false);
 
 		eyeImageView.post(new Runnable() {
 			@Override

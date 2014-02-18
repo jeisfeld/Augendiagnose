@@ -59,8 +59,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			rowView = convertView;
 		}
 		else {
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(getLayout(), parent, false);
+			rowView = LayoutInflater.from(context).inflate(getLayout(), parent, false);
 			cacheRange.putIntoRange(position);
 		}
 
