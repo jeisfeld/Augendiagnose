@@ -25,6 +25,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
+import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -78,52 +79,77 @@ public class OverlayPinchImageView extends PinchImageView {
 	public void setImage(String pathName) {
 		mEyePhoto = new EyePhoto(pathName);
 
-		if (!pathName.equals(mPathName)) {
+		if (!pathName.equals(mPathName) || mBitmap == null) {
 			mHasCoordinates = false;
 			mPathName = pathName;
-			mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
-			mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
-			Metadata metadata = mEyePhoto.getImageMetadata();
+			mBitmap = null;
+			final long time = System.currentTimeMillis();
+			Logger.log("Initiating thread " + time);
 
-			if (metadata != null && metadata.hasCoordinates()) {
-				mHasCoordinates = true;
-				mOverlayX = metadata.xCenter * mBitmap.getWidth();
-				mOverlayY = metadata.yCenter * mBitmap.getHeight();
-				mOverlayScaleFactor = metadata.overlayScaleFactor * Math.max(mBitmap.getHeight(), mBitmap.getWidth())
-						/ OVERLAY_SIZE;
-				lockOverlay(true, false);
-				if (mLockButton != null) {
-					mLockButton.setChecked(true);
+			// Do image loading in separate thread
+			new Thread() {
+				@Override
+				public void run() {
+					Logger.log("Starting thread " + time);
+					mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
+					mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
+					final Metadata metadata = mEyePhoto.getImageMetadata();
+
+					post(new Runnable() {
+						@Override
+						public void run() {
+							if (metadata != null && metadata.hasCoordinates()) {
+								mHasCoordinates = true;
+								mOverlayX = metadata.xCenter * mBitmap.getWidth();
+								mOverlayY = metadata.yCenter * mBitmap.getHeight();
+								mOverlayScaleFactor = metadata.overlayScaleFactor
+										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
+								lockOverlay(true, false);
+								if (mLockButton != null) {
+									mLockButton.setChecked(true);
+								}
+							}
+							else {
+								float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
+
+								// initial position of overlay
+								mOverlayScaleFactor = size / OVERLAY_SIZE;
+								mOverlayX = mBitmap.getWidth() / 2;
+								mOverlayY = mBitmap.getHeight() / 2;
+							}
+							mLastOverlayScaleFactor = mOverlayScaleFactor;
+
+							mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(),
+									Bitmap.Config.ARGB_8888);
+							mCanvas = new Canvas(mCanvasBitmap);
+							doInitialScaling();
+							updateScaleGestureDetector();
+							refresh(true);
+						}
+					});
 				}
-			}
-			else {
-				float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
-
-				// initial position of overlay
-				mOverlayScaleFactor = size / OVERLAY_SIZE;
-				mOverlayX = mBitmap.getWidth() / 2;
-				mOverlayY = mBitmap.getHeight() / 2;
-			}
-			mLastOverlayScaleFactor = mOverlayScaleFactor;
+			}.start();
+		}
+		else {
+			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+			mCanvas = new Canvas(mCanvasBitmap);
+			doInitialScaling();
+			updateScaleGestureDetector();
+			refresh(true);
 		}
 
-		mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-		mCanvas = new Canvas(mCanvasBitmap);
-		doInitialScaling();
-		updateScaleGestureDetector();
-		refresh(true);
 	}
 
 	@Override
 	protected void doInitialScaling() {
-		if (!initialized && mHasCoordinates) {
+		if (!mInitialized && mHasCoordinates) {
 			mPosX = mOverlayX;
 			mPosY = mOverlayY;
 			mScaleFactor = 1f;
 			if (getHeight() > 0 && getWidth() > 0) {
 				final float size = Math.min(getHeight(), getWidth());
 				mScaleFactor = size / (OVERLAY_SIZE * mOverlayScaleFactor);
-				initialized = true;
+				mInitialized = true;
 			}
 		}
 		super.doInitialScaling();
@@ -131,9 +157,11 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Update the bitmap with the correct set of overlays
+	 * 
+	 * @param strict indicates if full resolution is required
 	 */
 	public void refresh(boolean strict) {
-		if (mCanvas == null) {
+		if (mCanvas == null || !mInitialized) {
 			return;
 		}
 		// Determine overlays to be shown
@@ -222,7 +250,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		this.mLocked = lock;
 		updateScaleGestureDetector();
 
-		if (lock && store) {
+		if (lock && store && mInitialized) {
 			Metadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
 				if (metadata.rightLeft == null) {

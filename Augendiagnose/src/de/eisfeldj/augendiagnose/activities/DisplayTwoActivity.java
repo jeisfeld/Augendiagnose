@@ -53,19 +53,8 @@ public class DisplayTwoActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) {
-			// populate bitmaps in separate thread, so that screen keeps fluid.
-			imageView1.post(new Runnable() {
-				@Override
-				public void run() {
-					imageView1.setImage(file1);
-				}
-			});
-			imageView2.post(new Runnable() {
-				@Override
-				public void run() {
-					imageView2.setImage(file2);
-				}
-			});
+			imageView1.setImage(file1);
+			imageView2.setImage(file2);
 		}
 	}
 

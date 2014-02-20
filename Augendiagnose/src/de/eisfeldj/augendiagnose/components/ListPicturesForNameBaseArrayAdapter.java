@@ -71,10 +71,9 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		if (!imageListRight.isInitialized()) {
 			// Prevent duplicate initialization in case of multiple parallel calls - will happen in dialog
 			imageListRight.setInitialized();
-			imageListRight.post(new Runnable() {
+			imageListRight.setEyePhoto(eyePhotoPairs[position].getRightEye(), new Runnable() {
 				@Override
 				public void run() {
-					imageListRight.setEyePhoto(eyePhotoPairs[position].getRightEye());
 					prepareViewForSelection(imageListRight);
 				}
 			});
@@ -82,10 +81,9 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		final EyeImageView imageListLeft = (EyeImageView) rowView.findViewById(R.id.imageListLeft);
 		if (!imageListLeft.isInitialized()) {
 			imageListLeft.setInitialized();
-			imageListLeft.post(new Runnable() {
+			imageListLeft.setEyePhoto(eyePhotoPairs[position].getLeftEye(), new Runnable() {
 				@Override
 				public void run() {
-					imageListLeft.setEyePhoto(eyePhotoPairs[position].getLeftEye());
 					prepareViewForSelection(imageListLeft);
 				}
 			});

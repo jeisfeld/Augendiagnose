@@ -63,8 +63,6 @@ public class TwoImageSelectionHandler {
 	 * @param view
 	 */
 	public void prepareViewForSelection(final GridView view) {
-		// TODO: Ensure that selected view stays selected after rotating device
-
 		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

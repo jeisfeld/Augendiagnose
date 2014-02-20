@@ -36,11 +36,9 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final EyeImageView eyeImageView = (EyeImageView) LayoutInflater.from(context).inflate(
 				R.layout.adapter_select_two_pictures, parent, false);
-
-		eyeImageView.post(new Runnable() {
+		eyeImageView.setEyePhoto(eyePhotos[position], new Runnable() {
 			@Override
 			public void run() {
-				eyeImageView.setEyePhoto(eyePhotos[position]);
 				TwoImageSelectionHandler.getInstance().highlightIfSelected(eyeImageView);
 			}
 		});

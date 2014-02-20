@@ -81,18 +81,12 @@ public class DisplayOneActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) {
-			// populate bitmaps in separate thread, so that screen keeps fluid.
-			imageView.post(new Runnable() {
-				@Override
-				public void run() {
-					if (type == TYPE_FILERESOURCE) {
-						imageView.setImage(fileResource);
-					}
-					else {
-						imageView.setImage(file);
-					}
-				}
-			});
+			if (type == TYPE_FILERESOURCE) {
+				imageView.setImage(fileResource);
+			}
+			else {
+				imageView.setImage(file);
+			}
 		}
 	}
 

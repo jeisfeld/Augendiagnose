@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.components;
 
-import de.eisfeldj.augendiagnose.util.ImageUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,13 +10,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
  * A view for displaying an image, allowing moving and resizing with pinching
  */
 public class PinchImageView extends ImageView {
 	protected static final int INVALID_POINTER_ID = -1;
-	protected boolean initialized = false;
+	protected boolean mInitialized = false;
 
 	/**
 	 * These are the relative positions of the Bitmap which are displayed in center. (These are maintained when
@@ -61,14 +61,28 @@ public class PinchImageView extends ImageView {
 	 * @param pathName
 	 *            The pathname of the image
 	 */
-	public void setImage(String pathName) {
+	public void setImage(final String pathName) {
 		if (!pathName.equals(mPathName)) {
-			mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
-			mPathName = pathName;
+			// populate bitmaps in separate thread, so that screen keeps fluid.
+			new Thread() {
+				@Override
+				public void run() {
+					mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
+					mPathName = pathName;
+					post(new Runnable() {
+						@Override
+						public void run() {
+							PinchImageView.super.setImageBitmap(mBitmap);
+							doInitialScaling();
+						}
+					});
+				}
+			}.start();
 		}
-
-		super.setImageBitmap(mBitmap);
-		doInitialScaling();
+		else {
+			super.setImageBitmap(mBitmap);
+			doInitialScaling();
+		}
 	}
 
 	/**
@@ -77,21 +91,37 @@ public class PinchImageView extends ImageView {
 	 * @param pathName
 	 *            The image resource id
 	 */
-	public void setImage(int imageResource) {
+	public void setImage(final int imageResource) {
 		if (imageResource != mImageResource) {
+			new Thread() {
+				@Override
+				public void run() {
+					mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
+					mImageResource = imageResource;
+					post(new Runnable() {
+						@Override
+						public void run() {
+							PinchImageView.super.setImageBitmap(mBitmap);
+							doInitialScaling();
+						}
+					});
+				}
+			}.start();
 			mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
 			mImageResource = imageResource;
 		}
+		else {
+			super.setImageBitmap(mBitmap);
+			doInitialScaling();
+		}
 
-		super.setImageBitmap(mBitmap);
-		doInitialScaling();
 	}
 
 	/**
 	 * Scale the image to fit into the view
 	 */
 	protected void doInitialScaling() {
-		if (!initialized) {
+		if (!mInitialized) {
 			mPosX = 0;
 			mPosY = 0;
 			mScaleFactor = 1f;
@@ -102,7 +132,7 @@ public class PinchImageView extends ImageView {
 				mPosX = mBitmap.getWidth() / 2;
 				mPosY = mBitmap.getHeight() / 2;
 			}
-			initialized = true;
+			mInitialized = true;
 		}
 		mLastScaleFactor = mScaleFactor;
 		setMatrix();
@@ -252,6 +282,7 @@ public class PinchImageView extends ImageView {
 		bundle.putString("mPathName", this.mPathName);
 		bundle.putInt("mImageResource", this.mImageResource);
 		bundle.putParcelable("mBitmap", mBitmap);
+		bundle.putBoolean("mInitialized", mInitialized);
 		return bundle;
 	}
 
@@ -265,7 +296,7 @@ public class PinchImageView extends ImageView {
 			this.mPathName = bundle.getString("mPathName");
 			this.mImageResource = bundle.getInt("mImageResource");
 			this.mBitmap = bundle.getParcelable("mBitmap");
-			initialized = true;
+			this.mInitialized = bundle.getBoolean("mInitialized");
 			state = bundle.getParcelable("instanceState");
 		}
 		super.onRestoreInstanceState(state);

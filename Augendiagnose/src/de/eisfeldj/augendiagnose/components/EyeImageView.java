@@ -1,10 +1,10 @@
 package de.eisfeldj.augendiagnose.components;
 
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * A view for displaying an image.
@@ -30,11 +30,26 @@ public class EyeImageView extends ImageView {
 	 * 
 	 * @param eyePhoto
 	 */
-	public void setEyePhoto(EyePhoto eyePhoto) {
+	public void setEyePhoto(final EyePhoto eyePhoto, final Runnable postActivities) {
 		this.eyePhoto = eyePhoto;
-		setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
-		invalidate();
-		initialized = true;
+		// Fill pictures in separate thread, for performance reasons
+		new Thread() {
+			@Override
+			public void run() {
+				eyePhoto.precalculateImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
+				post(new Runnable() {
+					@Override
+					public void run() {
+						setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+						invalidate();
+						initialized = true;
+						if(postActivities != null) {
+							postActivities.run();
+						}
+					}
+				});
+			}
+		}.start();
 	}
 
 	/**
@@ -47,14 +62,14 @@ public class EyeImageView extends ImageView {
 	}
 
 	/**
-	 * Mark as initialized to prevent double initialization
+	 * Mark as mInitialized to prevent double initialization
 	 */
 	public void setInitialized() {
 		initialized = true;
 	}
 
 	/**
-	 * Check if it is initialized
+	 * Check if it is mInitialized
 	 * 
 	 * @return
 	 */

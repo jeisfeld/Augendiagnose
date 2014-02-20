@@ -164,7 +164,6 @@ public class OrganizeNewPhotosActivity extends Activity {
 		}
 	}
 
-	
 	/**
 	 * Inflate options menu
 	 */
@@ -173,7 +172,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		getMenuInflater().inflate(R.menu.only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	/**
 	 * Handle menu actions
 	 */
@@ -186,8 +185,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -265,24 +263,14 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * Display the two images. As these are only two thumbnails, we do this in the main thread.
+	 * Display the two images. As these are only two thumbnails, we do this in the main thread. Separate thread may lead
+	 * to issues when returning from SelectTwoImages after orientation change
 	 */
 	private void updateImages() {
-		imageRight.post(new Runnable() {
-			@Override
-			public void run() {
-				imageRight.setImageBitmap(photoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
-				imageRight.invalidate();
-			}
-		});
-
-		imageLeft.post(new Runnable() {
-			@Override
-			public void run() {
-				imageLeft.setImageBitmap(photoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
-				imageLeft.invalidate();
-			}
-		});
+		imageRight.setImageBitmap(photoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+		imageRight.invalidate();
+		imageLeft.setImageBitmap(photoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+		imageLeft.invalidate();
 	}
 
 	/**
@@ -400,10 +388,10 @@ public class OrganizeNewPhotosActivity extends Activity {
 				return;
 			}
 		}
-		
+
 		targetPhotoRight.storeDefaultMetadata();
 		targetPhotoLeft.storeDefaultMetadata();
-		
+
 		targetPhotoRight.addToMediaStore();
 		targetPhotoLeft.addToMediaStore();
 

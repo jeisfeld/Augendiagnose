@@ -36,7 +36,8 @@ when using the app for the first time with a new device or with a new camera.</p
         <item>0.2.9</item>
         <item>0.2.10</item>
         <item>0.3</item>
-    </string-array>
+        <item>0.3.1</item>
+        </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
         <item>Added basic overlay functionality.</item>
@@ -51,6 +52,7 @@ when using the app for the first time with a new device or with a new camera.</p
         <item>Added a second custom overlay. Improved overlay pinching. Corrected some display issues.</item>
         <item>Added various help screens.</item>
         <item>Enabled storage of Overlay position within JPG file.</item>
-    </string-array>
+        <item>Added one more (Italian) overlay. Bugfixes.</item>
+        </string-array>
 
 </resources>

@@ -37,6 +37,7 @@ Kamera benutzen.</p>
         <item>Neues Overlay. Verbessertes Zooming des Overlays. Verbesserte Darstellung.</item>
         <item>Hilfeseiten für die wichtigsten Aktivitäten hinzugefügt.</item>
         <item>Die Overlay-Position wird in den Bilddateien gespeichert.</item>
-    </string-array>
+        <item>Ein weiteres (italienisches) Overlay. Bugfixes.</item>
+        </string-array>
 
 </resources>

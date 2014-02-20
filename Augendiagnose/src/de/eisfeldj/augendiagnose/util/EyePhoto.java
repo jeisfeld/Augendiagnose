@@ -23,6 +23,8 @@ public class EyePhoto {
 	private Date date;
 	private RightLeft rightLeft;
 	private String suffix;
+	private Bitmap cachedBitmap;
+	private int cachedSize;
 
 	/**
 	 * Create the EyePhoto, giving a filename
@@ -295,8 +297,8 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Add the photo to the media store. Must be used carefully - may lead to failures if the photo is later
-	 * moved away again.
+	 * Add the photo to the media store. Must be used carefully - may lead to failures if the photo is later moved away
+	 * again.
 	 */
 	public void addToMediaStore() {
 		MediaStoreUtil.addPictureToMediaStore(getAbsolutePath());
@@ -312,6 +314,18 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Calculate a bitmap of this photo and store it for later retrieval.
+	 * 
+	 * @param maxSize
+	 */
+	public synchronized void precalculateImageBitmap(int maxSize) {
+		if (maxSize != cachedSize || cachedBitmap == null) {
+			cachedBitmap = ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
+			cachedSize = maxSize;
+		}
+	}
+
+	/**
 	 * Return a bitmap of this photo
 	 * 
 	 * @param maxSize
@@ -319,7 +333,8 @@ public class EyePhoto {
 	 * @return
 	 */
 	public Bitmap getImageBitmap(int maxSize) {
-		return ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
+		precalculateImageBitmap(maxSize);
+		return cachedBitmap;
 	}
 
 	/**
@@ -340,9 +355,10 @@ public class EyePhoto {
 	public void storeImageMetadata(Metadata metadata) {
 		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
 	}
-	
+
 	/**
 	 * Update metadata object with default metadata, based on the file name.
+	 * 
 	 * @return
 	 */
 	public void updateMetadataWithDefaults(Metadata metadata) {
@@ -351,21 +367,20 @@ public class EyePhoto {
 		metadata.rightLeft = getRightLeft();
 		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
 	}
-	
-	
+
 	/**
 	 * Store person, date and rightLeft in the metadata
+	 * 
 	 * @return
 	 */
 	public void storeDefaultMetadata() {
 		Metadata metadata = getImageMetadata();
-		if(metadata == null) {
+		if (metadata == null) {
 			metadata = new Metadata();
 		}
 		updateMetadataWithDefaults(metadata);
 		storeImageMetadata(metadata);
 	}
-	
 
 	/**
 	 * Compare two bitmaps for equality (by path)
@@ -395,7 +410,7 @@ public class EyePhoto {
 				return null;
 			}
 		}
-		
+
 		public String toString() {
 			switch (this) {
 			case LEFT:
@@ -417,7 +432,7 @@ public class EyePhoto {
 				return null;
 			}
 		}
-		
+
 		public static RightLeft fromString(String rightLeftString) {
 			if (rightLeftString != null && (rightLeftString.startsWith("r") || rightLeftString.startsWith("R"))) {
 				return RIGHT;
