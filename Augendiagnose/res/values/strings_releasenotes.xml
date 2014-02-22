@@ -61,7 +61,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added a second custom overlay. Improved overlay pinching. Corrected some display issues.</item>
         <item>Added various help screens.</item>
         <item>Enabled storage of Overlay position within JPG file.</item>
-        <item>Added one more (Italian) overlay. Bugfixes.</item>
+        <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
         </string-array>
 
 </resources>

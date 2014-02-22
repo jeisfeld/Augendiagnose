@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +14,19 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  * Array adapter class to display an eye photo pair in a list.
  */
 public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
-	protected final Context context;
+	protected final Activity activity;
 
 	protected EyePhoto[] eyePhotos;
 
-	public SelectTwoPicturesArrayAdapter(Context context, EyePhoto[] eyePhotos) {
-		super(context, R.layout.text_view_initializing, eyePhotos);
-		this.context = context;
+	public SelectTwoPicturesArrayAdapter(Activity activity, EyePhoto[] eyePhotos) {
+		super(activity, R.layout.text_view_initializing, eyePhotos);
+		this.activity = activity;
 		this.eyePhotos = eyePhotos;
 	}
 
 	public SelectTwoPicturesArrayAdapter(Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
-		this.context = context;
+		this.activity = (Activity) context;
 	}
 
 	/**
@@ -34,9 +35,9 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		final EyeImageView eyeImageView = (EyeImageView) LayoutInflater.from(context).inflate(
+		final EyeImageView eyeImageView = (EyeImageView) LayoutInflater.from(activity).inflate(
 				R.layout.adapter_select_two_pictures, parent, false);
-		eyeImageView.setEyePhoto(eyePhotos[position], new Runnable() {
+		eyeImageView.setEyePhoto(activity, eyePhotos[position], new Runnable() {
 			@Override
 			public void run() {
 				TwoImageSelectionHandler.getInstance().highlightIfSelected(eyeImageView);

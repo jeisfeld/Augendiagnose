@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -30,14 +31,14 @@ public class EyeImageView extends ImageView {
 	 * 
 	 * @param eyePhoto
 	 */
-	public void setEyePhoto(final EyePhoto eyePhoto, final Runnable postActivities) {
+	public void setEyePhoto(final Activity activity, final EyePhoto eyePhoto, final Runnable postActivities) {
 		this.eyePhoto = eyePhoto;
 		// Fill pictures in separate thread, for performance reasons
 		new Thread() {
 			@Override
 			public void run() {
 				eyePhoto.precalculateImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
-				post(new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));

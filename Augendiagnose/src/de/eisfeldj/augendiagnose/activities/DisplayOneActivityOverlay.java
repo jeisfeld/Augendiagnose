@@ -69,8 +69,6 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		imageView.mLockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
 		
 		if (!Application.isAuthorized()) {
-			toggleOverlayButtons[3].setEnabled(false);
-			toggleOverlayButtons[3].setVisibility(View.GONE);
 			toggleOverlayButtons[4].setEnabled(false);
 			toggleOverlayButtons[4].setVisibility(View.GONE);
 			toggleOverlayButtons[5].setEnabled(false);

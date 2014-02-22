@@ -306,6 +306,15 @@ public class OverlayPinchImageView extends PinchImageView {
 				break;
 			case 3:
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
+					resource = R.drawable.overlay_topo5_r;
+				}
+				else {
+					resource = R.drawable.overlay_topo5_l;
+				}
+				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				break;
+			case 4:
+				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					resource = R.drawable.overlay_topo3_r;
 				}
 				else {
@@ -313,21 +322,12 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;
-			case 4:
+			case 5:
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					resource = R.drawable.overlay_topo4_r;
 				}
 				else {
 					resource = R.drawable.overlay_topo4_l;
-				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
-				break;
-			case 5:
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo5_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo5_l;
 				}
 				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;

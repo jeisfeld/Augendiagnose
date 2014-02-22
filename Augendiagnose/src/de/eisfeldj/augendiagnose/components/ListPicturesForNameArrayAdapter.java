@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,8 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  */
 public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArrayAdapter {
 
-	public ListPicturesForNameArrayAdapter(Context context, EyePhotoPair[] eyePhotoPairs) {
-		super(context, eyePhotoPairs);
+	public ListPicturesForNameArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
+		super(activity, eyePhotoPairs);
 	}
 
 	public ListPicturesForNameArrayAdapter(Context context) {
@@ -44,7 +45,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 			@Override
 			public void onClick(View v) {
 				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedView();
-				DisplayTwoActivity.startActivity(ListPicturesForNameArrayAdapter.this.context, eyePhotoPairs[position]
+				DisplayTwoActivity.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
 						.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye().getAbsolutePath());
 
 			}

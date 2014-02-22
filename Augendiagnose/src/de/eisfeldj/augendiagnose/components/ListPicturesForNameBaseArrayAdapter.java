@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
  * Array adapter class to display an eye photo pair in a list.
  */
 public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<EyePhotoPair> {
-	protected final Context context;
+	protected final Activity activity;
 
 	/**
 	 * Keep up to 25 rows in memory before reusing views.
@@ -22,15 +23,15 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 
 	protected EyePhotoPair[] eyePhotoPairs;
 
-	public ListPicturesForNameBaseArrayAdapter(Context context, EyePhotoPair[] eyePhotoPairs) {
-		super(context, R.layout.text_view_initializing, eyePhotoPairs);
-		this.context = context;
+	public ListPicturesForNameBaseArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
+		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
+		this.activity = activity;
 		this.eyePhotoPairs = eyePhotoPairs;
 	}
 
 	public ListPicturesForNameBaseArrayAdapter(Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
-		this.context = context;
+		this.activity = (Activity) context;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			rowView = convertView;
 		}
 		else {
-			rowView = LayoutInflater.from(context).inflate(getLayout(), parent, false);
+			rowView = LayoutInflater.from(activity).inflate(getLayout(), parent, false);
 			cacheRange.putIntoRange(position);
 		}
 
@@ -71,7 +72,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		if (!imageListRight.isInitialized()) {
 			// Prevent duplicate initialization in case of multiple parallel calls - will happen in dialog
 			imageListRight.setInitialized();
-			imageListRight.setEyePhoto(eyePhotoPairs[position].getRightEye(), new Runnable() {
+			imageListRight.setEyePhoto(activity, eyePhotoPairs[position].getRightEye(), new Runnable() {
 				@Override
 				public void run() {
 					prepareViewForSelection(imageListRight);
@@ -81,7 +82,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		final EyeImageView imageListLeft = (EyeImageView) rowView.findViewById(R.id.imageListLeft);
 		if (!imageListLeft.isInitialized()) {
 			imageListLeft.setInitialized();
-			imageListLeft.setEyePhoto(eyePhotoPairs[position].getLeftEye(), new Runnable() {
+			imageListLeft.setEyePhoto(activity, eyePhotoPairs[position].getLeftEye(), new Runnable() {
 				@Override
 				public void run() {
 					prepareViewForSelection(imageListLeft);
