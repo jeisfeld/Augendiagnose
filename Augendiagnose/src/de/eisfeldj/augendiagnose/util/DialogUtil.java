@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.Toast;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
@@ -169,17 +168,15 @@ public abstract class DialogUtil {
 						public void onClick(DialogInterface dialog, int id) {
 							getActivity().finish();
 						}
-					}).setOnKeyListener(new DialogInterface.OnKeyListener() {
-						@Override
-						public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-							if (keyCode == KeyEvent.KEYCODE_BACK) {
-								getActivity().finish();
-								return true;
-							}
-							return false;
-						}
 					});
+
 			return builder.create();
+		}
+		
+		@Override
+		public void onDismiss(DialogInterface dialog) {
+			super.onDismiss(dialog);
+			getActivity().finish();
 		}
 	}
 
