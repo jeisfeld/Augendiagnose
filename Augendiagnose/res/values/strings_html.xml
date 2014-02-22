@@ -97,10 +97,6 @@
 
 	The application allows the following settings:
 
-	<h3>Eye Photo Folder</h3>
-
-	This is the folder in which the app manages the eye photos.
-
 	<h3>Input folder for new eye photos</h3>
 
 	This is the folder, from which the app imports new eye photos. By default, this
@@ -114,6 +110,10 @@
 		device is not sufficient to capture eye photos in high quality. A more
 		practical approach is to use an external camera which Eye-Fi SD card, which
 		transfers the photos via WLAN to the mobile device.</p>
+
+	<h3>Eye Photo Folder</h3>
+
+	This is the folder in which the app manages the eye photos.
 
 	<h3>Max Bitmap size</h3>
 

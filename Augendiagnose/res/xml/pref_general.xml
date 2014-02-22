@@ -3,15 +3,6 @@
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_folder_photos"
-        android:inputType="textCapWords"
-        android:key="@string/key_folder_photos"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_folder_photos" />
-    <EditTextPreference
-        android:capitalize="words"
         android:defaultValue="@string/pref_default_folder_input"
         android:inputType="textCapWords"
         android:key="@string/key_folder_input"
@@ -19,6 +10,15 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_folder_input" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_folder_photos"
+        android:inputType="textCapWords"
+        android:key="@string/key_folder_photos"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_folder_photos" />
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_max_bitmap_size"

@@ -6,21 +6,30 @@
     <string name="releasenotes_release">Release</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
-    <string name="releasenotes_current_remark">
+
+    <string name="releasenotes_first_usage">
 <![CDATA[
-<h3>Important Note:</h3><p>The app stores information (like iris position or comments) directly
-in the JPG image files. This has the advantage that all such information is still available if you
+<h3>Information for new users:</h3>
+
+<p>The purpose of this app is the organization and display of eye photos. On first usage, you need
+to do the following:</p>
+<p>1. Define an incoming folder for new eye photos and copy all your existing eye photos into this folder</p>
+<p>2. Configure this folder as &quot;Input folder&quot; in the settings (first entry).</p>
+<p>3. Assign these photos to persons and dates and shift them to the app&apos;s eye photo folder, using the &quot;Organize new photos&quot; functionality.</p>
+<p>After this preparation, you can use the &quot;Display photos&quot; functionality to view and analyze your photos.</p>
+
+<p><b>Important remark:</b> This app modifies your JPG files in a non-destructive way, in order to store metadata within
+the files. This has the advantage that all such information is still available if you
 copy the pictures from one device to another one. To some extent, information like comments
-will be even available when viewing the files in MS Windows.</p>
-
-<p>However, this kind of storage imposes a small risk. It may happen that on some devices, or for 
-pictures from some cameras, it may happen that storing information in the JPG fails, or possibly
+will be even available when viewing the files in MS Windows. However, this kind of storage imposes a small risk.
+It may happen that on some devices, or for 
+pictures from some cameras, storing information in the JPG fails, or possibly
 even destroys the JPG file. Therefore, it is recommended that you keep backups of your JPG files
-when using the app for the first time with a new device or with a new camera.</p>
-
-<p>Please inform me if such problems appear.</p>
+when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
+    
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>

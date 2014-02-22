@@ -104,10 +104,6 @@
 
 	Die Applikation erm&ouml;glicht fogende Einstellungen:
 
-	<h3>Verzeichnis der Augenfotos</h3>
-
-	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet.
-
 	<h3>Eingangsverzeichnis f&uuml;r neue Augenfotos</h3>
 
 	<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert.
@@ -120,6 +116,10 @@
 		externe Kamera ben&ouml;tigt. Der einfachste Weg, die Fotos von einer externen
 		Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte,
 		die die Fotos per WiFi auf das Smartphone schickt.</p>
+
+	<h3>Verzeichnis der Augenfotos</h3>
+
+	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet.
 
 	<h3>Maximale Bitmap-Gr&ouml;&szlig;e</h3>
 

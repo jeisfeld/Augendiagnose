@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose;
 
+import de.eisfeldj.augendiagnose.util.EncryptionUtil;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -101,7 +102,7 @@ public class Application extends android.app.Application {
 	 */
 	public static boolean isAuthorized() {
 		String userKey = getSharedPreferenceString(R.string.key_user_key);
-		return userKey.equals("Schnurpsi");
+		return EncryptionUtil.validateUserKey(userKey);
 	}
 
 	/**

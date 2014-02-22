@@ -6,22 +6,33 @@
     <string name="releasenotes_release">Version</string>
     <string name="button_dont_show">Nicht mehr zeigen</string>
     <string name="button_show_later">Erneut zeigen</string>
-    <string name="releasenotes_current_remark">
+    
+    <string name="releasenotes_first_usage">
 <![CDATA[
-<h3>Wichtiger Hinweis:</h3><p>Ab Version 0.3 speichert die App Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien.
+<h3>Hinweis für neue Nutzer:</h3>
+
+<p>Diese App dient der Organisation und Anzeige von Augenfotos.
+Vor der ersten Benutzung sind folgende Schritte erforderlich:</p>
+<p>1. Legen Sie ein Eingangsverzeichnis für neue Augenfotos fest, und kopieren Sie ihre vorhandenen
+Augenfotos in dieses Verzeichnis.</p>
+<p>2. Konfigurieren Sie dieses Eingangsverzeichnis in den Einstellungen (erster Eintrag).</p>
+<p>3. Nutzen Sie die Funktion &quot;Neue Fotos einordnen&quot;, um Ihre Fotos Personen und Daten zuzuordnen und die Fotos
+in das Augenfoto-Verzeichnis der App zu verschieben.</p>
+<p>Nach dieser Vorbereitung können Sie die Funktion &quot;Fotos anzeigen&quot; nutzen, um Ihre Fotos zu analysieren.</p>
+
+<p><b>Wichtiger Hinweis:</b> Die App verändert Ihre JPG-Bilddateien, um Informationen (wie Irisposition
+oder Kommentare) direkt in den Bilddateien zu speichern.
 Dies hat den Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos
 auf ein anderes Gerät kopieren. Zum Teil sind die Informationen (wie Kommentare) sogar unter
-Windows verfügbar.</p>
-
-<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets
+Windows verfügbar. Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets
 oder für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert,
 und vielleicht sogar die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie
 vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen
-Kamera benutzen.</p>
-
-<p>Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
+Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
+    
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>

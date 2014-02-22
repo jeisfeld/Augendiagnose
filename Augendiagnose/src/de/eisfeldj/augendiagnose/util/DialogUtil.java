@@ -93,22 +93,26 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Display an error and stop the activity - return to parent activity.
+	 * Display release notes
 	 * 
 	 * @param activity
-	 *            the current activity
-	 * @param resource
-	 *            the error message
-	 * @param args
-	 *            arguments for the error message
+	 *            the triggering activity
+	 * @param firstStart
+	 *            indicates that the app is started for the first time
+	 * @param fromVersion
+	 *            first version from which to show release notes
+	 * @param toVersion
+	 *            last version to which to show release notes
 	 */
-	public static void displayReleaseNotes(final Activity activity, int fromVersion, int toVersion) {
-		StringBuffer message = new StringBuffer(activity.getString(R.string.releasenotes_current_remark));
-		if (message.length() > 0) {
-			message.append("<h3>");
-			message.append(activity.getString(R.string.releasenotes_changes));
-			message.append("</h3>");
+	public static void displayReleaseNotes(final Activity activity, boolean firstStart, int fromVersion, int toVersion) {
+		StringBuffer message = new StringBuffer();
+		if(firstStart) {
+			message.append(activity.getString(R.string.releasenotes_first_usage));
 		}
+		message.append(activity.getString(R.string.releasenotes_current_remark));
+		message.append("<h3>");
+		message.append(activity.getString(R.string.releasenotes_changes));
+		message.append("</h3>");
 		String[] names = activity.getResources().getStringArray(R.array.releasenotes_version_names);
 		String[] notes = activity.getResources().getStringArray(R.array.releasenotes_version_notes);
 		for (int i = toVersion; i >= fromVersion; i--) {
