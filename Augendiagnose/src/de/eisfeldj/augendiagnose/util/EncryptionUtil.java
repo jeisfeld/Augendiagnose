@@ -19,8 +19,8 @@ public class EncryptionUtil {
 	private static MessageDigest messageDigest;
 	private static final String DUMMY_HASH = "dummy";
 	private static final int HASH_LENGTH = 8;
-	
-	private static final String SPECIAL_KEY="Schnurpsi";
+
+	private static final String SPECIAL_KEY = "Schnurpsi";
 
 	static {
 		try {
@@ -31,46 +31,50 @@ public class EncryptionUtil {
 			cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
 
 			messageDigest = MessageDigest.getInstance("MD5");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			Log.e(Application.TAG, "Failed to initialize EncryptionUtil");
 		}
 	}
 
 	/**
 	 * Utility method to test generation and validation of a user key
+	 * 
 	 * @param name
 	 */
 	public static void test(String name) {
 		String key = createUserKey(name);
-		Logger.log("Key: " + key + ". Verified: " + validateUserKey(key));
+		Log.i(Application.TAG, "Key: " + key + ". Verified: " + validateUserKey(key));
 	}
 
 	/**
 	 * Validate a user key
+	 * 
 	 * @param key
 	 * @return
 	 */
 	public static boolean validateUserKey(String key) {
-		if(key==null || key.length()==0) {
+		if (key == null || key.length() == 0) {
 			return false;
 		}
-		if(key.equals(SPECIAL_KEY)) {
+		if (key.equals(SPECIAL_KEY)) {
 			return true;
 		}
-		
+
 		int index = key.lastIndexOf('-');
-		if(index>0) {
+		if (index > 0) {
 			String name = key.substring(0, index);
-			String hash = key.substring(index+1);
+			String hash = key.substring(index + 1);
 			return createCryptoHash(name).equals(hash);
 		}
 		else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Generate a user key, which is a concatenation of user name and hash.
+	 * 
 	 * @param input
 	 * @return
 	 */
@@ -80,19 +84,22 @@ public class EncryptionUtil {
 
 	/**
 	 * Create a cryptographic hash from a username
+	 * 
 	 * @param input
 	 * @return
 	 */
 	private static String createCryptoHash(String input) {
 		try {
 			return convertBase64(createHash(encrypt(input))).substring(0, HASH_LENGTH);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return DUMMY_HASH;
 		}
 	}
 
 	/**
 	 * Create a hash value from an input
+	 * 
 	 * @param input
 	 * @return
 	 * @throws NoSuchAlgorithmException
@@ -103,6 +110,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Do base 64 encoding of a message
+	 * 
 	 * @param bytes
 	 * @return
 	 */
@@ -112,6 +120,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Encrypt a String using DES
+	 * 
 	 * @param input
 	 * @return
 	 * @throws BadPaddingException

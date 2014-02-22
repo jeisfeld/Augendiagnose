@@ -59,7 +59,7 @@ public abstract class JpegMetadataUtil {
 		List<TiffImageMetadata.Item> items = (List<TiffImageMetadata.Item>) tiffImageMetadata.getItems();
 
 		for (TiffImageMetadata.Item item : items) {
-			Logger.log(item.getTiffField().toString());
+			Log.i(Application.TAG, item.getTiffField().toString());
 		}
 
 	}
@@ -74,7 +74,7 @@ public abstract class JpegMetadataUtil {
 	 */
 	public static void printAllXmpData(final File imageFile) throws ImageReadException, IOException, XMPException {
 		final String xmpString = Imaging.getXmpXml(imageFile);
-		Logger.log(new XmpHandler(xmpString).getXmpString());
+		Log.i(Application.TAG, new XmpHandler(xmpString).getXmpString());
 	}
 
 	/**

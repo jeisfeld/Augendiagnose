@@ -64,6 +64,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		toggleOverlayButtons[2] = (ToggleButton) findViewById(R.id.toggleButtonOverlay2);
 		toggleOverlayButtons[3] = (ToggleButton) findViewById(R.id.toggleButtonOverlay3);
 		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
+		toggleOverlayButtons[5] = (ToggleButton) findViewById(R.id.toggleButtonOverlay5);
 
 		imageView.mLockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
 		
@@ -72,6 +73,8 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 			toggleOverlayButtons[3].setVisibility(View.GONE);
 			toggleOverlayButtons[4].setEnabled(false);
 			toggleOverlayButtons[4].setVisibility(View.GONE);
+			toggleOverlayButtons[5].setEnabled(false);
+			toggleOverlayButtons[5].setVisibility(View.GONE);
 		}
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
@@ -178,6 +181,15 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	 */
 	public void onToggleOverlay4Clicked(View view) {
 		onToggleOverlayClicked(view, 4);
+	}
+
+	/**
+	 * onClick action for Button to toggle display of Overlay 5
+	 * 
+	 * @param view
+	 */
+	public void onToggleOverlay5Clicked(View view) {
+		onToggleOverlayClicked(view, 5);
 	}
 
 	/**

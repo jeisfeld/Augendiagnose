@@ -25,7 +25,6 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
-import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -35,7 +34,7 @@ import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
  * 
  */
 public class OverlayPinchImageView extends PinchImageView {
-	public static final int OVERLAY_COUNT = 5;
+	public static final int OVERLAY_COUNT = 6;
 	private static final int OVERLAY_SIZE = 1024;
 	private static final int OVERLAY_COLOR = Color.RED;
 
@@ -83,14 +82,11 @@ public class OverlayPinchImageView extends PinchImageView {
 			mHasCoordinates = false;
 			mPathName = pathName;
 			mBitmap = null;
-			final long time = System.currentTimeMillis();
-			Logger.log("Initiating thread " + time);
 
 			// Do image loading in separate thread
 			new Thread() {
 				@Override
 				public void run() {
-					Logger.log("Starting thread " + time);
 					mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 					mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 					final Metadata metadata = mEyePhoto.getImageMetadata();
@@ -323,6 +319,15 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				else {
 					resource = R.drawable.overlay_topo4_l;
+				}
+				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				break;
+			case 5:
+				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
+					resource = R.drawable.overlay_topo5_r;
+				}
+				else {
+					resource = R.drawable.overlay_topo5_l;
 				}
 				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;

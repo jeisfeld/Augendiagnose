@@ -64,9 +64,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
+            android:drawableBottom="@drawable/ic_circle"
+            android:textSize="0pt"
             android:onClick="onToggleOverlay0Clicked"
-            android:textOff="@string/toggle_overlay_circle"
-            android:textOn="@string/toggle_overlay_circle" />
+            android:textOff=""
+            android:textOn="" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
@@ -107,6 +109,16 @@
             android:onClick="onToggleOverlay4Clicked"
             android:textOff="@string/toggle_overlay_4"
             android:textOn="@string/toggle_overlay_4" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="false"
+            android:onClick="onToggleOverlay5Clicked"
+            android:textOff="@string/toggle_overlay_5"
+            android:textOn="@string/toggle_overlay_5" />
 
         <ToggleButton
             android:id="@+id/toggleButtonLink"
