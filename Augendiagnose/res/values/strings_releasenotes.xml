@@ -46,6 +46,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.2.10</item>
         <item>0.3</item>
         <item>0.3.1</item>
+        <item>0.3.2</item>
         </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -62,6 +63,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added various help screens.</item>
         <item>Enabled storage of Overlay position within JPG file.</item>
         <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
+        <item>Bugfixes.</item>
         </string-array>
 
 </resources>

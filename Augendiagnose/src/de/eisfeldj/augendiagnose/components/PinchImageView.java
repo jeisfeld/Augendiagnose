@@ -166,8 +166,8 @@ public class PinchImageView extends ImageView {
 	public boolean onTouchEvent(MotionEvent ev) {
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
-		final int action = ev.getAction();
-		switch (action & MotionEvent.ACTION_MASK) {
+		final int action = ev.getActionMasked();
+		switch (action) {
 		case MotionEvent.ACTION_DOWN: {
 			mLastTouchX = ev.getX();
 			mLastTouchY = ev.getY();
@@ -176,7 +176,7 @@ public class PinchImageView extends ImageView {
 		}
 		case MotionEvent.ACTION_POINTER_DOWN: {
 			if (ev.getPointerCount() == 2) {
-				final int pointerIndex = (ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+				final int pointerIndex = (ev.getActionIndex());
 				mActivePointerId2 = ev.getPointerId(pointerIndex);
 				mLastTouchX0 = (ev.getX(pointerIndex) + mLastTouchX) / 2;
 				mLastTouchY0 = (ev.getY(pointerIndex) + mLastTouchY) / 2;
@@ -195,7 +195,7 @@ public class PinchImageView extends ImageView {
 			break;
 		}
 		case MotionEvent.ACTION_POINTER_UP: {
-			final int pointerIndex = (ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+			final int pointerIndex = (ev.getActionIndex());
 			final int pointerId = ev.getPointerId(pointerIndex);
 			if (pointerId == mActivePointerId) {
 				// This was our active pointer going up. Choose a new active pointer and adjust accordingly.
