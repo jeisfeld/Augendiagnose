@@ -17,6 +17,7 @@
     <string name="title_dialog_error">Fehler</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
+    <string name="title_edit_comment">Kommentar bearbeiten</string>
     
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>

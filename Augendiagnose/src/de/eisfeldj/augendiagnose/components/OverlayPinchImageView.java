@@ -424,10 +424,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param ev
 	 */
 	@Override
-	protected void handlePointerMove(MotionEvent ev) {
+	protected boolean handlePointerMove(MotionEvent ev) {
 		if (pinchAll()) {
-			super.handlePointerMove(ev);
-			return;
+			return super.handlePointerMove(ev);
 		}
 
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
@@ -479,6 +478,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		refresh(false);
+		return true;
 	}
 
 	/**

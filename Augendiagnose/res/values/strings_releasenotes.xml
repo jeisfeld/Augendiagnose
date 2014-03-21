@@ -63,7 +63,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added various help screens.</item>
         <item>Enabled storage of Overlay position within JPG file.</item>
         <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
-        <item>Bugfixes.</item>
+        <item>Centered eyes in two-image view. Bugfixes.</item>
         </string-array>
 
 </resources>

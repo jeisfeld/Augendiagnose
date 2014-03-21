@@ -18,6 +18,7 @@ import de.eisfeldj.augendiagnose.util.ImageUtil;
 public class PinchImageView extends ImageView {
 	protected static final int INVALID_POINTER_ID = -1;
 	protected boolean mInitialized = false;
+	protected boolean mHasMoved = false;
 
 	/**
 	 * These are the relative positions of the Bitmap which are displayed in center. (These are maintained when
@@ -169,6 +170,7 @@ public class PinchImageView extends ImageView {
 		final int action = ev.getActionMasked();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN: {
+			mHasMoved = false;
 			mLastTouchX = ev.getX();
 			mLastTouchY = ev.getY();
 			mActivePointerId = ev.getPointerId(0);
@@ -184,11 +186,13 @@ public class PinchImageView extends ImageView {
 			break;
 		}
 		case MotionEvent.ACTION_MOVE: {
-			handlePointerMove(ev);
+			boolean moved = handlePointerMove(ev);
+			mHasMoved = mHasMoved || moved;
 			break;
 		}
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL: {
+			mHasMoved = false;
 			mActivePointerId = INVALID_POINTER_ID;
 			mActivePointerId2 = INVALID_POINTER_ID;
 			finishPointerMove(ev);
@@ -213,7 +217,26 @@ public class PinchImageView extends ImageView {
 			break;
 		}
 		}
-		return true;
+
+		if (isLongClickable()) {
+			return super.onTouchEvent(ev);
+		}
+		else {
+			return true;
+		}
+	}
+
+	/**
+	 * Perform long click only if no move has happened
+	 */
+	@Override
+	public boolean performLongClick() {
+		if (!mHasMoved) {
+			return super.performLongClick();
+		}
+		else {
+			return true;
+		}
 	}
 
 	/**
@@ -230,7 +253,8 @@ public class PinchImageView extends ImageView {
 	 * 
 	 * @param ev
 	 */
-	protected void handlePointerMove(MotionEvent ev) {
+	protected boolean handlePointerMove(MotionEvent ev) {
+		boolean moved = false;
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
 		final float x = ev.getX(pointerIndex);
 		final float y = ev.getY(pointerIndex);
@@ -257,15 +281,21 @@ public class PinchImageView extends ImageView {
 				mPosX = mPosX + (x0 - getWidth() / 2) * (changeFactor - 1) / mScaleFactor;
 				mPosY = mPosY + (y0 - getHeight() / 2) * (changeFactor - 1) / mScaleFactor;
 				mLastScaleFactor = mScaleFactor;
+				moved = true;
 			}
 			mLastTouchX0 = x0;
 			mLastTouchY0 = y0;
 		}
-		mLastTouchX = x;
-		mLastTouchY = y;
+
+		if (x != mLastTouchX || y != mLastTouchY) {
+			mLastTouchX = x;
+			mLastTouchY = y;
+			moved = true;
+		}
 
 		setMatrix();
 		invalidate();
+		return moved;
 	}
 
 	/**

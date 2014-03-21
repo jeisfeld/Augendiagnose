@@ -3,6 +3,9 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -67,7 +70,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		toggleOverlayButtons[5] = (ToggleButton) findViewById(R.id.toggleButtonOverlay5);
 
 		imageView.mLockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
-		
+
 		if (!Application.isAuthorized()) {
 			toggleOverlayButtons[4].setEnabled(false);
 			toggleOverlayButtons[4].setVisibility(View.GONE);
@@ -113,6 +116,8 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
 			}
 		});
+		
+		registerForContextMenu(imageView);
 
 	}
 
@@ -198,6 +203,16 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	public void onToggleLinkClicked(View view) {
 		ToggleButton button = (ToggleButton) view;
 		imageView.lockOverlay(button.isChecked(), true);
+	}
+
+	/**
+	 * Create the context menu
+	 */
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.context_display_one, menu);
 	}
 
 }

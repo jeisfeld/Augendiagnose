@@ -17,6 +17,7 @@
     <string name="title_dialog_error">Error</string>
     <string name="title_settings">Settings</string>
     <string name="title_help">Help</string>
+    <string name="title_edit_comment">Edit comment</string>
     
     <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
     <string name="message_dialog_select_name">Please select a name</string>
