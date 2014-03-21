@@ -154,7 +154,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Update the bitmap with the correct set of overlays
 	 * 
-	 * @param strict indicates if full resolution is required
+	 * @param strict
+	 *            indicates if full resolution is required
 	 */
 	public void refresh(boolean strict) {
 		if (mCanvas == null || !mInitialized) {
@@ -463,6 +464,20 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		mLastTouchX = x;
 		mLastTouchY = y;
+
+		if (mOverlayX < 0) {
+			mOverlayX = 0;
+		}
+		if (mOverlayY < 0) {
+			mOverlayY = 0;
+		}
+		if (mOverlayX > mBitmap.getWidth()) {
+			mOverlayX = mBitmap.getWidth();
+		}
+		if (mOverlayY > mBitmap.getHeight()) {
+			mOverlayY = mBitmap.getHeight();
+		}
+
 		refresh(false);
 	}
 
