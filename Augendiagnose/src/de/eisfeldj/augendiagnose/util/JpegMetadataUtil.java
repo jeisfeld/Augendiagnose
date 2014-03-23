@@ -115,6 +115,8 @@ public abstract class JpegMetadataUtil {
 		result.setOverlayScaleFactor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR));
 		result.organizeDate = parser.getJeDate(XmpHandler.ITEM_ORGANIZE_DATE);
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
+		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
+		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
 
 		// For standard fields, use custom data only if there is no other data.
 		result.description = parser.getDcDescription();
@@ -313,6 +315,8 @@ public abstract class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR, metadata.getOverlayScaleFactorString());
 			parser.setJeDate(XmpHandler.ITEM_ORGANIZE_DATE, metadata.organizeDate);
 			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
+			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
+			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);
@@ -364,13 +368,16 @@ public abstract class JpegMetadataUtil {
 		public Float overlayScaleFactor = null;
 		public Date organizeDate = null;
 		public RightLeft rightLeft = null;
+		public Float brightness = null;
+		public Float contrast = null;
 
 		public Metadata() {
 
 		}
 
 		public Metadata(String title, String description, String subject, String comment, String person,
-				Float xPosition, Float yPosition, Float scaleFactor, Date organizeDate, RightLeft rightLeft) {
+				Float xPosition, Float yPosition, Float scaleFactor, Date organizeDate, RightLeft rightLeft,
+				Float brightness, Float contrast) {
 			this.title = title;
 			this.description = description;
 			this.subject = subject;
@@ -381,10 +388,16 @@ public abstract class JpegMetadataUtil {
 			this.overlayScaleFactor = scaleFactor;
 			this.organizeDate = organizeDate;
 			this.rightLeft = rightLeft;
+			this.brightness = brightness;
+			this.contrast = contrast;
 		}
 
 		public boolean hasCoordinates() {
 			return xCenter != null && yCenter != null && overlayScaleFactor != null;
+		}
+
+		public boolean hasBrightnessContrast() {
+			return brightness != null && contrast != null;
 		}
 
 		public void setXCenter(String value) {
@@ -419,6 +432,23 @@ public abstract class JpegMetadataUtil {
 			return rightLeft == null ? null : rightLeft.toString();
 		}
 
+		public void setBrightness(String value) {
+			brightness = value == null ? null : Float.parseFloat(value);
+		}
+
+		public String getBrightnessString() {
+			return brightness == null ? null : brightness.toString();
+		}
+
+
+		public void setContrast(String value) {
+			contrast = value == null ? null : Float.parseFloat(value);
+		}
+
+		public String getContrastString() {
+			return contrast == null ? null : contrast.toString();
+		}
+		
 		@Override
 		public String toString() {
 			StringBuffer str = new StringBuffer();
@@ -432,6 +462,8 @@ public abstract class JpegMetadataUtil {
 			str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
 			str.append("OrganizeDate: " + organizeDate + "\n");
 			str.append("RightLeft: " + rightLeft + "\n");
+			str.append("Brightness: " + brightness + "\n");
+			str.append("Contrast: " + contrast + "\n");
 			return str.toString();
 		}
 

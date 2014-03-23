@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_edit_comment">Kommentar bearbeiten</string>
+    <string name="menu_store_brightness">Helligkeit/Kontrast speichern</string>
+    <string name="menu_reset_brightness">Helligkeit/Kontrast zurücksetzen</string>
+    <string name="menu_delete_overlay_position">Overlay-Position löschen</string>
+    
+</resources>

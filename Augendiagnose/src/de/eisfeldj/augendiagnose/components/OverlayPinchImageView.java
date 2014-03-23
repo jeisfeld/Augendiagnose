@@ -20,7 +20,6 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
@@ -56,8 +55,9 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	private Bitmap mBitmapSmall;
 
-	public ToggleButton mLockButton;
 	private boolean mHasCoordinates = false;
+
+	private GuiElementUpdater guiElementUpdater;
 
 	public OverlayPinchImageView(Context context) {
 		this(context, null, 0);
@@ -101,18 +101,23 @@ public class OverlayPinchImageView extends PinchImageView {
 								mOverlayScaleFactor = metadata.overlayScaleFactor
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 								lockOverlay(true, false);
-								if (mLockButton != null) {
-									mLockButton.setChecked(true);
+								if (guiElementUpdater != null) {
+									guiElementUpdater.setLockChecked(true);
 								}
 							}
 							else {
-								float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
-
 								// initial position of overlay
-								mOverlayScaleFactor = size / OVERLAY_SIZE;
-								mOverlayX = mBitmap.getWidth() / 2;
-								mOverlayY = mBitmap.getHeight() / 2;
+								resetOverlayPosition(false);
 							}
+							if (metadata != null && metadata.hasBrightnessContrast()) {
+								mBrightness = metadata.brightness.floatValue();
+								mContrast = metadata.contrast.floatValue();
+								if (guiElementUpdater != null) {
+									guiElementUpdater.updateSeekbarBrightness(mBrightness);
+									guiElementUpdater.updateSeekbarContrast(mContrast);
+								}
+							}
+
 							mLastOverlayScaleFactor = mOverlayScaleFactor;
 
 							mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(),
@@ -261,6 +266,34 @@ public class OverlayPinchImageView extends PinchImageView {
 						* OVERLAY_SIZE;
 				mEyePhoto.storeImageMetadata(metadata);
 			}
+		}
+	}
+
+	/**
+	 * Reset the overlay position
+	 */
+	public void resetOverlayPosition(boolean store) {
+		float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
+		mOverlayScaleFactor = size / OVERLAY_SIZE;
+		mOverlayX = mBitmap.getWidth() / 2;
+		mOverlayY = mBitmap.getHeight() / 2;
+		if (store && mInitialized) {
+			Metadata metadata = mEyePhoto.getImageMetadata();
+			if (metadata != null) {
+				metadata.xCenter = null;
+				metadata.yCenter = null;
+				metadata.overlayScaleFactor = null;
+				mEyePhoto.storeImageMetadata(metadata);
+			}
+		}
+
+		mLocked = false;
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			mShowOverlay[i] = false;
+		}
+		if (guiElementUpdater != null) {
+			guiElementUpdater.setLockChecked(false);
+			guiElementUpdater.resetOverlays();
 		}
 	}
 
@@ -419,6 +452,36 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Store brightness and contrast in the image metadata
+	 * 
+	 * @param delete
+	 *            delete brightness and contrast from metadata.
+	 */
+	public void storeBrightnessContrast(boolean delete) {
+		if (mInitialized) {
+			Metadata metadata = mEyePhoto.getImageMetadata();
+			if (metadata != null) {
+				if (delete) {
+					metadata.brightness = null;
+					metadata.contrast = null;
+					mBrightness = 0;
+					mContrast = 1;
+					if (guiElementUpdater != null) {
+						guiElementUpdater.updateSeekbarBrightness(mBrightness);
+						guiElementUpdater.updateSeekbarContrast(mContrast);
+					}
+				}
+				else {
+					metadata.brightness = mBrightness;
+					metadata.contrast = mContrast;
+				}
+
+				mEyePhoto.storeImageMetadata(metadata);
+			}
+		}
+	}
+
+	/**
 	 * Utility method to make the calculations in case of a pointer move Overridden to handle zooming of overlay
 	 * 
 	 * @param ev
@@ -567,5 +630,45 @@ public class OverlayPinchImageView extends PinchImageView {
 			invalidate();
 			return true;
 		}
+	}
+
+	/**
+	 * Set the reference that allows GUI updates.
+	 * 
+	 * @param updater
+	 */
+	public void setGuiElementUpdater(GuiElementUpdater updater) {
+		guiElementUpdater = updater;
+	}
+
+	/**
+	 * Interface that allows the view to update GUI elements from the activity holding the view.
+	 */
+	public interface GuiElementUpdater {
+		/**
+		 * Set the checked status of the lock button
+		 * 
+		 * @param checked
+		 */
+		public void setLockChecked(boolean checked);
+
+		/**
+		 * Update the brightness bar
+		 * 
+		 * @param brightness
+		 */
+		public void updateSeekbarBrightness(float brightness);
+
+		/**
+		 * Update the contrast bar
+		 * 
+		 * @param contrast
+		 */
+		public void updateSeekbarContrast(float contrast);
+
+		/**
+		 * Reset the overlays
+		 */
+		public void resetOverlays();
 	}
 }

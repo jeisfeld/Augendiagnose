@@ -42,6 +42,8 @@ public class XmpHandler {
 	public static final String ITEM_OVERLAY_SCALE_FACTOR = "overlayScaleFactor";
 	public static final String ITEM_ORGANIZE_DATE = "organizeDate";
 	public static final String ITEM_RIGHT_LEFT = "rightLeft";
+	public static final String ITEM_BRIGHTNESS = "brightness";
+	public static final String ITEM_CONTRAST = "contrast";
 
 	private static boolean prepared = false;
 
@@ -222,6 +224,9 @@ public class XmpHandler {
 	public void setJeItem(String item, String value) throws XMPException {
 		if (value != null) {
 			xmpMeta.setProperty(NS_JE, item, value);
+		}
+		else {
+			removeJeItem(item);
 		}
 	}
 

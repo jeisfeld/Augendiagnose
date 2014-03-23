@@ -6,19 +6,21 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
+import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
 
 /**
  * Variant of DisplayOneActivity that includes overlay handling
  * 
  * @author Joerg
  */
-public class DisplayOneActivityOverlay extends DisplayOneActivity {
+public class DisplayOneActivityOverlay extends DisplayOneActivity implements GuiElementUpdater {
 
 	private OverlayPinchImageView imageView;
 	private static final int CONTRAST_MAX = 5;
@@ -26,6 +28,10 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 
 	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
 	private ToggleButton[] toggleOverlayButtons;
+
+	private ToggleButton lockButton;
+	private SeekBar seekbarBrightness;
+	private SeekBar seekbarContrast;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -60,6 +66,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		imageView = (OverlayPinchImageView) super.imageView;
+		imageView.setGuiElementUpdater(this);
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
 		toggleOverlayButtons[0] = (ToggleButton) findViewById(R.id.toggleButtonOverlayCircle);
@@ -69,7 +76,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
 		toggleOverlayButtons[5] = (ToggleButton) findViewById(R.id.toggleButtonOverlay5);
 
-		imageView.mLockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
+		lockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
 
 		if (!Application.isAuthorized()) {
 			toggleOverlayButtons[4].setEnabled(false);
@@ -79,7 +86,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		}
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
-		SeekBar seekbarBrightness = (SeekBar) findViewById(R.id.seekBarBrightness);
+		seekbarBrightness = (SeekBar) findViewById(R.id.seekBarBrightness);
 		seekbarBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -97,7 +104,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 			}
 		});
 
-		SeekBar seekbarContrast = (SeekBar) findViewById(R.id.seekBarContrast);
+		seekbarContrast = (SeekBar) findViewById(R.id.seekBarContrast);
 		seekbarContrast.setMax(CONTRAST_MAX * CONTRAST_DENSITY);
 		seekbarContrast.setProgress(CONTRAST_DENSITY);
 		seekbarContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -116,7 +123,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
 			}
 		});
-		
+
 		registerForContextMenu(imageView);
 
 	}
@@ -213,6 +220,53 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
+	}
+
+	/**
+	 * Handle items in the context menu
+	 */
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_edit_comment:
+			// TODO
+			return true;
+		case R.id.action_store_brightness:
+			imageView.storeBrightnessContrast(false);
+			return true;
+		case R.id.action_reset_brightness:
+			imageView.storeBrightnessContrast(true);
+			return true;
+		case R.id.action_delete_overlay_position:
+			imageView.resetOverlayPosition(true);
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
+
+	@Override
+	public void setLockChecked(boolean checked) {
+		lockButton.setChecked(checked);
+	}
+
+	@Override
+	public void updateSeekbarBrightness(float brightness) {
+		float progress = (brightness + 1) * seekbarBrightness.getMax() / 2;
+		seekbarBrightness.setProgress(Float.valueOf(progress).intValue());
+	}
+
+	@Override
+	public void updateSeekbarContrast(float contrast) {
+		float progress = contrast * CONTRAST_DENSITY;
+		seekbarContrast.setProgress(Float.valueOf(progress).intValue());
+	}
+
+	@Override
+	public void resetOverlays() {
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			toggleOverlayButtons[i].setChecked(false);
+		}
 	}
 
 }
