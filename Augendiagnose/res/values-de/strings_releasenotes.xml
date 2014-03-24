@@ -6,7 +6,6 @@
     <string name="releasenotes_release">Version</string>
     <string name="button_dont_show">Nicht mehr zeigen</string>
     <string name="button_show_later">Erneut zeigen</string>
-    
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Hinweis für neue Nutzer:</h3>
@@ -31,7 +30,6 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    
     <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_notes">
@@ -49,7 +47,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Hilfeseiten für die wichtigsten Aktivitäten hinzugefügt.</item>
         <item>Die Overlay-Position wird in den Bilddateien gespeichert.</item>
         <item>Ein weiteres (italienisches) Overlay. Startinformation für neue Nutzer. Bugfixes.</item>
-        <item>Zentrierung der Augen bei Ansicht zweier Fotos. Speicherung von Helligkeit und Kontrast. Bugfixes.</item>
-        </string-array>
+        <item>Kontextmenü bei Fotoansicht: Speicherung von Helligkeit und Kontrast. Bearbeitung von Bildkommentaren. Kleinere Verbesserungen.</item>
+    </string-array>
 
 </resources>

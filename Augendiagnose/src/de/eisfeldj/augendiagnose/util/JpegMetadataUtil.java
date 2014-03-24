@@ -24,6 +24,8 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPException;
@@ -357,7 +359,7 @@ public abstract class JpegMetadataUtil {
 	/**
 	 * Helper class for storing the metadata to be written into the file
 	 */
-	public static class Metadata {
+	public static class Metadata implements Parcelable {
 		public String title = null;
 		public String description = null;
 		public String subject = null;
@@ -424,6 +426,14 @@ public abstract class JpegMetadataUtil {
 			return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
 		}
 
+		private long getOrganizeDateLong() {
+			return organizeDate == null ? 0 : organizeDate.getTime();
+		}
+
+		private void setOrganizeDateFromLong(long timestamp) {
+			organizeDate = timestamp == 0 ? null : new Date(timestamp);
+		}
+
 		public void setRightLeft(String value) {
 			rightLeft = value == null ? null : RightLeft.fromString(value);
 		}
@@ -440,7 +450,6 @@ public abstract class JpegMetadataUtil {
 			return brightness == null ? null : brightness.toString();
 		}
 
-
 		public void setContrast(String value) {
 			contrast = value == null ? null : Float.parseFloat(value);
 		}
@@ -448,7 +457,7 @@ public abstract class JpegMetadataUtil {
 		public String getContrastString() {
 			return contrast == null ? null : contrast.toString();
 		}
-		
+
 		@Override
 		public String toString() {
 			StringBuffer str = new StringBuffer();
@@ -467,6 +476,51 @@ public abstract class JpegMetadataUtil {
 			return str.toString();
 		}
 
+		@Override
+		public int describeContents() {
+			return 0;
+		}
+
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			dest.writeString(title);
+			dest.writeString(description);
+			dest.writeString(subject);
+			dest.writeString(comment);
+			dest.writeString(person);
+			dest.writeString(getXCenterString());
+			dest.writeString(getYCenterString());
+			dest.writeString(getOverlayScaleFactorString());
+			dest.writeLong(getOrganizeDateLong());
+			dest.writeString(getRightLeftString());
+			dest.writeString(getBrightnessString());
+			dest.writeString(getContrastString());
+		}
+
+		public static final Parcelable.Creator<Metadata> CREATOR = new Parcelable.Creator<Metadata>() {
+			@Override
+			public Metadata createFromParcel(Parcel in) {
+				Metadata metadata = new Metadata();
+				metadata.title = in.readString();
+				metadata.description = in.readString();
+				metadata.subject = in.readString();
+				metadata.comment = in.readString();
+				metadata.person = in.readString();
+				metadata.setXCenter(in.readString());
+				metadata.setYCenter(in.readString());
+				metadata.setOverlayScaleFactor(in.readString());
+				metadata.setOrganizeDateFromLong(in.readLong());
+				metadata.setRightLeft(in.readString());
+				metadata.setBrightness(in.readString());
+				metadata.setContrast(in.readString());
+				return metadata;
+			}
+
+			@Override
+			public Metadata[] newArray(int size) {
+				return new Metadata[size];
+			}
+		};
 	}
 
 }

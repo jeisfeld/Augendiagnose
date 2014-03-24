@@ -6,7 +6,6 @@
     <string name="releasenotes_release">Release</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
-
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Information for new users:</h3>
@@ -28,7 +27,6 @@ even destroys the JPG file. Therefore, it is recommended that you keep backups o
 when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
-    
     <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_names" translatable="false">
@@ -47,7 +45,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.3</item>
         <item>0.3.1</item>
         <item>0.3.2</item>
-        </string-array>
+    </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
         <item>Added basic overlay functionality.</item>
@@ -63,7 +61,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added various help screens.</item>
         <item>Enabled storage of Overlay position within JPG file.</item>
         <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
-        <item>Centered eyes in two-image view. Allowed storage of contrast and brightness. Bugfixes.</item>
-        </string-array>
+        <item>Added context menu in image view. Allowed storage of contrast and brightness. Alloed editing of image comments. Minor improvements.</item>
+    </string-array>
 
 </resources>

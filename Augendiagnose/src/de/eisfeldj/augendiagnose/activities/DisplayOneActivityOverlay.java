@@ -229,7 +229,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_edit_comment:
-			// TODO
+			EditCommentActivity.startActivity(this, imageView.getMetadata().comment);
 			return true;
 		case R.id.action_store_brightness:
 			imageView.storeBrightnessContrast(false);
@@ -245,6 +245,23 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 		}
 	}
 
+	/**
+	 * When getting the response from the name selection, update the name field in the display.
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case EditCommentActivity.REQUEST_CODE:
+			if(resultCode == RESULT_OK) {
+				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
+				imageView.storeComment(comment.toString());
+			}
+		}
+	}
+	
+	
+	// Implementation of GuiElementUpdater
+	
 	@Override
 	public void setLockChecked(boolean checked) {
 		lockButton.setChecked(checked);

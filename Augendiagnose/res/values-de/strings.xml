@@ -17,6 +17,7 @@
     <string name="title_dialog_error">Fehler</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
+    <string name="title_edit_comment">Bildkommentar bearbeiten</string>
     
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
@@ -64,5 +65,6 @@
     <string name="suffix_title_left">Linkes Auge</string>
     <string name="hint_select_name">[Namen auswählen]</string>
     <string name="hint_insert_name">[Neuen Namen eingeben]</string>
+    <string name="hint_edit_comment">[Bildkommentar eingeben]</string>
     
 </resources>

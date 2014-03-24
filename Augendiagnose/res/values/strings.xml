@@ -6,7 +6,7 @@
     <string name="title_activity_display_two">Compare Photos</string>
     <string name="title_activity_display_one">Display Photo</string>
     <string name="title_activity_list_folders_for_display">Select Name</string>
-    <string name="title_activity_list_folders_for_display_second">Select Name for second picture</string>
+    <string name="title_activity_list_folders_for_display_second">Select Name for Second Picture</string>
     <string name="title_activity_organize_new_photos">Organize New Photos</string>
     <string name="title_activity_list_pictures_for_name">Select Pictures</string>
     <string name="title_activity_list_pictures_for_second_name">Select Second Picture</string>
@@ -17,6 +17,7 @@
     <string name="title_dialog_error">Error</string>
     <string name="title_settings">Settings</string>
     <string name="title_help">Help</string>
+    <string name="title_edit_comment">Edit Image Comment</string>
     
     <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
     <string name="message_dialog_select_name">Please select a name</string>
@@ -64,5 +65,6 @@
     <string name="suffix_title_left">Left Eye</string>
     <string name="hint_select_name">[Select name]</string>
     <string name="hint_insert_name">[Enter new name]</string>
-
+    <string name="hint_edit_comment">[Enter image comment]</string>
+    
 </resources>
