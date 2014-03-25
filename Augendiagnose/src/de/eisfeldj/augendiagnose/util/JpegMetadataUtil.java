@@ -119,13 +119,28 @@ public abstract class JpegMetadataUtil {
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
+		result.description = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
+		result.subject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
+		result.person = parser.getJeItem(XmpHandler.ITEM_PERSON);
+		result.title = parser.getJeItem(XmpHandler.ITEM_TITLE);
+		result.comment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
 
 		// For standard fields, use custom data only if there is no other data.
-		result.description = parser.getDcDescription();
-		result.subject = parser.getDcSubject();
-		result.person = parser.getMicrosoftPerson();
-		result.title = parser.getDcTitle();
-		result.comment = parser.getUserComment();
+		if(result.description == null) {
+			result.description = parser.getDcDescription();
+		}
+		if(result.subject == null) {
+			result.subject = parser.getDcSubject();
+		}
+		if(result.person == null) {
+			result.person = parser.getMicrosoftPerson();
+		}
+		if(result.title == null) {
+			result.title = parser.getDcTitle();
+		}
+		if(result.comment == null) {
+			result.comment = parser.getUserComment();
+		}
 
 		// Retrieve EXIF data
 		try {
@@ -144,17 +159,22 @@ public abstract class JpegMetadataUtil {
 			TiffField comment2 = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
 			TiffField subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
 
-			if (title != null) {
+			// EXIF data have precedence only if saving EXIF is allowed
+			if (title != null && (changeExifAllowed() || result.title == null)) {
 				result.title = title.getStringValue().trim();
 			}
+			String exifComment = null;
 			if (comment != null && comment.getStringValue().trim().length() > 0) {
-				result.comment = comment.getStringValue().trim();
+				exifComment = comment.getStringValue().trim();
 			}
 			if (comment2 != null && comment2.getStringValue().trim().length() > 0) {
 				// XPComment takes precedence if existing
-				result.comment = comment2.getStringValue().trim();
+				exifComment = comment2.getStringValue().trim();
 			}
-			if (result.subject == null && subject != null) {
+			if (exifComment != null && (changeExifAllowed() || result.comment == null)) {
+				result.comment = exifComment;
+			}
+			if (result.subject == null && subject != null && (changeExifAllowed() || result.subject == null)) {
 				result.subject = subject.getStringValue().trim();
 			}
 		}
@@ -341,7 +361,7 @@ public abstract class JpegMetadataUtil {
 	 * 
 	 * @return
 	 */
-	private static boolean changeJpegAllowed() {
+	public static boolean changeJpegAllowed() {
 		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
 		return storeOption > 0;
 	}

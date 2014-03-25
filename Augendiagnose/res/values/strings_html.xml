@@ -60,7 +60,8 @@
 
 	<ul>
 		<li>Show one of the photos in detail. Here you can also change brightness
-			and contrast of the photo or show iris topographies as overlay.</li>
+			and contrast of the photo, show iris topographies as overlay, or write
+			a comment to a photo.</li>
 
 		<li>Display two photos for comparison (and pinch them independently).</li>
 	</ul>
@@ -106,6 +107,7 @@
 	<p>This is the folder, from which the app imports new eye photos. By
 		default, this is the target folder of the Eye-Fi app. However, you can
 		configure here any other folder, such as the camera folder.</p>
+
 	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile
 		device is not sufficient to capture eye photos in high quality. A more
 		practical approach is to use an external camera which Eye-Fi SD card, which
@@ -135,10 +137,13 @@
 	<ul>
 		<li>Store in EXIF (recommended): The app stores relevant information in
 			the JPG file, even in standard fields which are visible in Windows.</li>
+
 		<li>Store in custom fields: The app stores information in the JPG file,
-			but only in separate fields.</li>
-		<li>Don&apos;t store data in images: The app does not store information in JPG
-			files. (This limits the functionality of the app.)</li>
+			but only in separate fields. Standard fields remain unchanged; the data
+			exchange with Windows is not possible.</li>
+
+		<li>Don&amp;apos;t store data in images: The app does not store
+			information in JPG files. (This limits the functionality of the app.)</li>
 	</ul>
 
 	<h3>User key</h3>
@@ -201,10 +206,7 @@
 	<p>Then you have the following possibilities:</p>
 
 	<ul>
-		<li>Show one of the photos in detail (via click on a photo). In this view
-			you may also change brightness and contrast of the photo or show iris
-			topographies as overlay. You can store the relative position of the
-			overlay on the eye photo.</li>
+		<li>Show one of the photos in detail (via click on a photo).</li>
 
 		<li>Show both photos of one date (via click on a date)</li>
 
@@ -219,6 +221,23 @@
 	<p>Note that iris topography graphics may be organized just like eye photos
 		- this allows to compare eye photos with iris topography graphics. Such
 		graphics are not included in the app due to copyright reasons.</p>
+
+	<h3>Further options in the detail view</h3>
+
+	<p>In the detail view of one photo, you have the following further
+		possibilities:</p>
+
+	<ul>
+		<li>Change of brightness and contrast via sliders</li>
+
+		<li>Display of iris topographies as overlay, adaption of the overlay to
+			the iris and storage of overlay position (lock button)</li>
+
+		<li>Store the selected settings of brightness and contrast (via context
+			menu - long click on photo)</li>
+
+		<li>Change the comment of the photo (via context menu)</li>
+	</ul>
 </body>
 </html>
 ]]>

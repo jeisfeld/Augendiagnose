@@ -14,6 +14,7 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
+import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
  * Variant of DisplayOneActivity that includes overlay handling
@@ -124,7 +125,9 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 			}
 		});
 
-		registerForContextMenu(imageView);
+		if(JpegMetadataUtil.changeJpegAllowed()) {
+			registerForContextMenu(imageView);
+		}
 
 	}
 
