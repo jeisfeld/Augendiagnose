@@ -4,7 +4,7 @@ import de.eisfeldj.augendiagnose.Application;
 import android.util.Log;
 
 /**
- * Utility class for debugging
+ * Utility class for debugging - git test
  */
 public class Logger {
 	/**
