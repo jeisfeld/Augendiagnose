@@ -1,18 +1,22 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.lang.reflect.Field;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
-import de.eisfeldj.augendiagnose.Application;
 import android.util.Base64;
 import android.util.Log;
+import de.eisfeldj.augendiagnose.Application;
 
+@SuppressWarnings("unchecked")
 public class EncryptionUtil {
 
 	private static Cipher cipherEncrypt;
@@ -20,20 +24,39 @@ public class EncryptionUtil {
 	private static final String DUMMY_HASH = "dummy";
 	private static final int HASH_LENGTH = 8;
 
-	private static final String SPECIAL_KEY = "Schnurpsi";
+	private static List<String> SPECIAL_KEYS = new ArrayList<String>();
+	private static String KEY = "";
+	private static boolean initialized = false;
 
 	static {
-		try {
-			String ALGORITHM = "DES";
-			cipherEncrypt = Cipher.getInstance(ALGORITHM);
-			String keyString = "bvQ+f3MqUu8=";
-			Key symKey = new SecretKeySpec(Base64.decode(keyString, Base64.DEFAULT), ALGORITHM);
-			cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
+		boolean foundPrivateConstants = false;
 
-			messageDigest = MessageDigest.getInstance("MD5");
+		try {
+			// Looking for a class PrivateConstants with fields SPECIAL_KEYS and KEY_STRING - not in repository
+			Class<?> privateConstants = Class.forName("de.eisfeldj.augendiagnose.util.PrivateConstants");
+			Field specialKeys = privateConstants.getDeclaredField("SPECIAL_KEYS");
+			SPECIAL_KEYS = (List<String>) specialKeys.get(null);
+			Field key = privateConstants.getDeclaredField("KEY_STRING");
+			KEY = (String) key.get(null);
+			foundPrivateConstants = true;
 		}
 		catch (Exception e) {
-			Log.e(Application.TAG, "Failed to initialize EncryptionUtil");
+			Log.e(Application.TAG, "Did not find PrivateConstants", e);
+		}
+
+		if (foundPrivateConstants) {
+			try {
+				String ALGORITHM = "DES";
+				cipherEncrypt = Cipher.getInstance(ALGORITHM);
+				Key symKey = new SecretKeySpec(Base64.decode(KEY, Base64.DEFAULT), ALGORITHM);
+				cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
+
+				messageDigest = MessageDigest.getInstance("MD5");
+				initialized = true;
+			}
+			catch (Exception e) {
+				Log.e(Application.TAG, "Failed to initialize EncryptionUtil", e);
+			}
 		}
 	}
 
@@ -54,10 +77,10 @@ public class EncryptionUtil {
 	 * @return
 	 */
 	public static boolean validateUserKey(String key) {
-		if (key == null || key.length() == 0) {
+		if (key == null || key.length() == 0 || !initialized) {
 			return false;
 		}
-		if (key.equals(SPECIAL_KEY)) {
+		if (SPECIAL_KEYS.contains(key)) {
 			return true;
 		}
 
