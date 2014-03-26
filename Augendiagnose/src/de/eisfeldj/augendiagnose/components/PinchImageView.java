@@ -177,6 +177,7 @@ public class PinchImageView extends ImageView {
 			break;
 		}
 		case MotionEvent.ACTION_POINTER_DOWN: {
+			mHasMoved = true;
 			if (ev.getPointerCount() == 2) {
 				final int pointerIndex = (ev.getActionIndex());
 				mActivePointerId2 = ev.getPointerId(pointerIndex);
