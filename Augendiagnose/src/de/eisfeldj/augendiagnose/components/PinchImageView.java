@@ -64,11 +64,15 @@ public class PinchImageView extends ImageView {
 	 * 
 	 * @param pathName
 	 *            The pathname of the image
+	 * @param activity
+	 *            The triggering activity (required for bitmap caching)
+	 * @param cacheIndex
+	 *            A unique index of the view in the activity
 	 */
-	public void setImage(final String pathName, Activity activity, int index) {
+	public void setImage(final String pathName, Activity activity, int cacheIndex) {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
-				index);
+				cacheIndex);
 		mBitmap = retainFragment.bitmap;
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
@@ -98,13 +102,17 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Fill with an image from image resource, making the image fit into the view.
 	 * 
-	 * @param pathName
+	 * @param imageResource
 	 *            The image resource id
+	 * @param activity
+	 *            The triggering activity (required for bitmap caching)
+	 * @param cacheIndex
+	 *            A unique index of the view in the activity	 
 	 */
-	public void setImage(final int imageResource, Activity activity, int index) {
+	public void setImage(final int imageResource, Activity activity, int cacheIndex) {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
-				index);
+				cacheIndex);
 		mBitmap = retainFragment.bitmap;
 
 		if (mBitmap == null || imageResource != mImageResource) {

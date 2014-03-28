@@ -75,14 +75,21 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Fill with an image, initializing the overlay position
+	 * Fill with an image, initializing from metadata
+	 * 
+	 * @param pathName
+	 *            The pathname of the image
+	 * @param activity
+	 *            The triggering activity (required for bitmap caching)
+	 * @param cacheIndex
+	 *            A unique index of the view in the activity	 
 	 */
 	@Override
-	public void setImage(String pathName, Activity activity, int index) {
+	public void setImage(String pathName, Activity activity, int cacheIndex) {
 		mEyePhoto = new EyePhoto(pathName);
 
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
-				index);
+				cacheIndex);
 		mBitmap = retainFragment.bitmap;
 		mBitmapSmall = retainFragment.bitmapSmall;
 
