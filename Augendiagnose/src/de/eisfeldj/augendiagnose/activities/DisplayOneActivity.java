@@ -82,10 +82,10 @@ public class DisplayOneActivity extends Activity {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) {
 			if (type == TYPE_FILERESOURCE) {
-				imageView.setImage(fileResource);
+				imageView.setImage(fileResource, this, 1);
 			}
 			else {
-				imageView.setImage(file);
+				imageView.setImage(file, this, 1);
 			}
 		}
 	}

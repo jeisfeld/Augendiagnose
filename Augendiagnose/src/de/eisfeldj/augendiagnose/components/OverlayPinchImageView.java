@@ -2,6 +2,8 @@ package de.eisfeldj.augendiagnose.components;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -76,10 +78,15 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Fill with an image, initializing the overlay position
 	 */
 	@Override
-	public void setImage(String pathName) {
+	public void setImage(String pathName, Activity activity, int index) {
 		mEyePhoto = new EyePhoto(pathName);
 
-		if (!pathName.equals(mPathName) || mBitmap == null) {
+		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
+				index);
+		mBitmap = retainFragment.bitmap;
+		mBitmapSmall = retainFragment.bitmapSmall;
+
+		if (mBitmap == null || !pathName.equals(mPathName)) {
 			mHasCoordinates = false;
 			mPathName = pathName;
 			mBitmap = null;
@@ -91,6 +98,8 @@ public class OverlayPinchImageView extends PinchImageView {
 					mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 					mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 					mMetadata = mEyePhoto.getImageMetadata();
+					retainFragment.bitmap = mBitmap;
+					retainFragment.bitmapSmall = mBitmapSmall;
 
 					post(new Runnable() {
 						@Override
@@ -615,7 +624,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		bundle.putBoolean("mLocked", this.mLocked);
 		bundle.putFloat("mBrightness", this.mBrightness);
 		bundle.putFloat("mContrast", this.mContrast);
-		bundle.putParcelable("mBitmapSmall", mBitmapSmall);
 		bundle.putParcelable("mMetadata", mMetadata);
 		return bundle;
 	}
@@ -632,7 +640,6 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mLocked = bundle.getBoolean("mLocked");
 			this.mBrightness = bundle.getFloat("mBrightness");
 			this.mContrast = bundle.getFloat("mContrast");
-			this.mBitmapSmall = bundle.getParcelable("mBitmapSmall");
 			this.mMetadata = bundle.getParcelable("mMetadata");
 			state = bundle.getParcelable("instanceState");
 		}
@@ -692,4 +699,26 @@ public class OverlayPinchImageView extends PinchImageView {
 		 */
 		public void resetOverlays();
 	}
+
+	/**
+	 * Helper fragment to retain the bitmap on configuration change
+	 */
+	protected static class RetainFragment extends PinchImageView.RetainFragment {
+		private static final String TAG = "RetainFragment";
+		public Bitmap bitmapSmall;
+
+		public RetainFragment() {
+		}
+
+		public static RetainFragment findOrCreateRetainFragment(FragmentManager fm, int index) {
+			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
+			if (fragment == null) {
+				fragment = new RetainFragment();
+				fm.beginTransaction().add(fragment, TAG + index).commit();
+			}
+			return fragment;
+		}
+
+	}
+
 }

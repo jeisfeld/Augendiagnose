@@ -53,8 +53,8 @@ public class DisplayTwoActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) {
-			imageView1.setImage(file1);
-			imageView2.setImage(file2);
+			imageView1.setImage(file1, this, 1);
+			imageView2.setImage(file2, this, 2);
 		}
 	}
 

@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,13 +65,19 @@ public class PinchImageView extends ImageView {
 	 * @param pathName
 	 *            The pathname of the image
 	 */
-	public void setImage(final String pathName) {
-		if (!pathName.equals(mPathName)) {
+	public void setImage(final String pathName, Activity activity, int index) {
+		// retrieve bitmap from cache if possible
+		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
+				index);
+		mBitmap = retainFragment.bitmap;
+
+		if (mBitmap == null || !pathName.equals(mPathName)) {
 			// populate bitmaps in separate thread, so that screen keeps fluid.
 			new Thread() {
 				@Override
 				public void run() {
 					mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
+					retainFragment.bitmap = mBitmap;
 					mPathName = pathName;
 					post(new Runnable() {
 						@Override
@@ -92,12 +101,18 @@ public class PinchImageView extends ImageView {
 	 * @param pathName
 	 *            The image resource id
 	 */
-	public void setImage(final int imageResource) {
-		if (imageResource != mImageResource) {
+	public void setImage(final int imageResource, Activity activity, int index) {
+		// retrieve bitmap from cache if possible
+		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
+				index);
+		mBitmap = retainFragment.bitmap;
+
+		if (mBitmap == null || imageResource != mImageResource) {
 			new Thread() {
 				@Override
 				public void run() {
 					mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
+					retainFragment.bitmap = mBitmap;
 					mImageResource = imageResource;
 					post(new Runnable() {
 						@Override
@@ -312,7 +327,6 @@ public class PinchImageView extends ImageView {
 		bundle.putFloat("mPosY", this.mPosY);
 		bundle.putString("mPathName", this.mPathName);
 		bundle.putInt("mImageResource", this.mImageResource);
-		bundle.putParcelable("mBitmap", mBitmap);
 		bundle.putBoolean("mInitialized", mInitialized);
 		return bundle;
 	}
@@ -326,7 +340,6 @@ public class PinchImageView extends ImageView {
 			this.mPosY = bundle.getFloat("mPosY");
 			this.mPathName = bundle.getString("mPathName");
 			this.mImageResource = bundle.getInt("mImageResource");
-			this.mBitmap = bundle.getParcelable("mBitmap");
 			this.mInitialized = bundle.getBoolean("mInitialized");
 			state = bundle.getParcelable("instanceState");
 		}
@@ -346,4 +359,31 @@ public class PinchImageView extends ImageView {
 			return true;
 		}
 	}
+
+	/**
+	 * Helper fragment to retain the bitmap on configuration change
+	 */
+	protected static class RetainFragment extends Fragment {
+		private static final String TAG = "RetainFragment";
+		public Bitmap bitmap;
+
+		public RetainFragment() {
+		}
+
+		public static RetainFragment findOrCreateRetainFragment(FragmentManager fm, int index) {
+			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
+			if (fragment == null) {
+				fragment = new RetainFragment();
+				fm.beginTransaction().add(fragment, TAG + index).commit();
+			}
+			return fragment;
+		}
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setRetainInstance(true);
+		}
+	}
+
 }
