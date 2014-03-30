@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Augendiagnose</string>
-
+    
     <string name="title_activity_display_two">Fotovergleich</string>
     <string name="title_activity_display_one">Fotoanzeige</string>
     <string name="title_activity_list_folders_for_display">Namen wählen</string>
@@ -28,13 +28,17 @@
     <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
     <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_change_date">Datumsänderung der Foros von %1$s vom %2$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
+    <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
     
     <string name="section_select_eye_orientation">Orientierung wählen</string>
     <string name="section_select_name">Name wählen</string>
     <string name="section_select_date">Datum wählen</string>
+    
     <string name="text_brightness">Helligkeit</string>
     <string name="text_contrast">Kontrast</string>
     
@@ -46,6 +50,7 @@
     <string name="button_cancel">Abbrechen</string>
     <string name="button_clear">Löschen</string>
     <string name="button_switch">Tauschen</string>
+    <string name="button_delete">Löschen</string>
     <string name="button_other_pictures">Andere Fotos</string>
     
     <string name="toggle_overlay_1">IT 1</string>
@@ -66,5 +71,5 @@
     <string name="hint_select_name">[Namen auswählen]</string>
     <string name="hint_insert_name">[Neuen Namen eingeben]</string>
     <string name="hint_edit_comment">[Bildkommentar eingeben]</string>
-    
+
 </resources>

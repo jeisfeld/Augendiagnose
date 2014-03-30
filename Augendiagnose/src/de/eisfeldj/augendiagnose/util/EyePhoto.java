@@ -265,6 +265,15 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Delete the eye photo from the file system
+	 * 
+	 * @return
+	 */
+	public boolean delete() {
+		return getFile().delete();
+	}
+
+	/**
 	 * Move the eye photo to a target path and target personName (given via EyePhoto object)
 	 * 
 	 * @param target
@@ -294,6 +303,20 @@ public class EyePhoto {
 		EyePhoto target = cloneFromPath();
 		target.setPersonName(targetName);
 		return moveTo(target);
+		// TODO: update metadata
+	}
+
+	/**
+	 * Change the date renaming the file (keeping the path)
+	 * 
+	 * @param newDate
+	 * @return
+	 */
+	public boolean changeDate(Date newDate) {
+		EyePhoto target = cloneFromPath();
+		target.setDate(newDate);
+		return moveTo(target);
+		// TODO: update metadata
 	}
 
 	/**

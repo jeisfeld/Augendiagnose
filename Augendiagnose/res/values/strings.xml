@@ -28,13 +28,17 @@
     <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_folder">Failed to rename folder %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Failed to delete the photos of %1$s from %2$s</string>
+    <string name="message_dialog_failed_to_change_date">Failed to change date for photos of %1$s from %2$s</string>
     <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
+    <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     
     <string name="section_select_eye_orientation">Select Eye Orientation</string>
     <string name="section_select_name">Select Name</string>
     <string name="section_select_date">Select Date</string>
+    
     <string name="text_brightness">Brightness</string>
     <string name="text_contrast">Contrast</string>
     
@@ -46,6 +50,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_clear">Clear</string>
     <string name="button_switch">Switch</string>
+    <string name="button_delete">Delete</string>
     <string name="button_other_pictures">Other Pictures</string>
     
     <string name="toggle_overlay_1">IT 1</string>
@@ -66,5 +71,5 @@
     <string name="hint_select_name">[Select name]</string>
     <string name="hint_insert_name">[Enter new name]</string>
     <string name="hint_edit_comment">[Enter image comment]</string>
-    
+
 </resources>

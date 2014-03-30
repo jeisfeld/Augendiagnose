@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnose.components;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -14,6 +17,8 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  * Array adapter class to display an eye photo pair in a list (initial display)
  */
 public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArrayAdapter {
+
+	private Map<TextView, Integer> positionMap = new HashMap<TextView, Integer>();
 
 	public ListPicturesForNameArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
@@ -50,7 +55,22 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 
 			}
 		});
+
+		positionMap.put(textView, position);
+
+		textView.setOnCreateContextMenuListener(activity);
+
 		return rowView;
+	}
+
+	/**
+	 * Retrieve the row corresponding to a TextView displaying the date
+	 * 
+	 * @param view
+	 * @return
+	 */
+	public int getRow(TextView view) {
+		return positionMap.get(view);
 	}
 
 }

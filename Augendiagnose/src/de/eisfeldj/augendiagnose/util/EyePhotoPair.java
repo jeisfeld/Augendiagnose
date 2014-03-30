@@ -67,4 +67,23 @@ public class EyePhotoPair {
 		return leftEye != null && rightEye != null;
 	}
 
+	/**
+	 * Delete the eye photo pair
+	 * 
+	 * @return
+	 */
+	public boolean delete() {
+		return rightEye.delete() && leftEye.delete();
+	}
+
+	/**
+	 * Change the date of the eye photo pair
+	 * 
+	 * @param newDate
+	 * @return
+	 */
+	public boolean changeDate(Date newDate) {
+		return rightEye.changeDate(newDate) && leftEye.changeDate(newDate);
+	}
+
 }

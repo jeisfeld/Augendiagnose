@@ -26,6 +26,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
 
 	protected String parentFolder;
+	protected String name;
 
 	protected ListView listview;
 	protected EyePhotoPair[] eyePhotoPairs;
@@ -35,7 +36,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(getContentView());
 
-		String name = getIntent().getStringExtra(STRING_EXTRA_NAME);
+		name = getIntent().getStringExtra(STRING_EXTRA_NAME);
 		parentFolder = getIntent().getStringExtra(STRING_EXTRA_PARENTFOLDER);
 
 		TextView headerNameView = (TextView) findViewById(R.id.textTitleName);
@@ -62,7 +63,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 	 *            folder where the photos are located.
 	 * @return
 	 */
-	private EyePhotoPair[] createEyePhotoList(File folder) {
+	protected EyePhotoPair[] createEyePhotoList(File folder) {
 		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
