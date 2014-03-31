@@ -9,6 +9,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -18,7 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
@@ -208,21 +209,32 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 			final ListPicturesForNameActivity activity = (ListPicturesForNameActivity) getActivity();
 			final EyePhotoPair pairToDelete = activity.eyePhotoPairs[position];
 
-			DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-				public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
-					activity.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-					boolean success = pairToDelete.changeDate(new Date(activity.pictureDate.getTimeInMillis()));
-					activity.updateEyePhotoPairs();
+			final DatePickerDialog dialog = new DatePickerDialog(getActivity(), null, year, month, date);
 
-					if (!success) {
-						DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date, pairToDelete
-								.getLeftEye().getPersonName(), pairToDelete.getDateDisplayString("dd.MM.yyyy"));
+			// Workaround due to Android bug
+			dialog.setCancelable(true);
+			dialog.setCanceledOnTouchOutside(true);
+			dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.button_cancel), (OnClickListener) null);
+			dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.button_ok), //
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int which) {
+							int yearSelected = dialog.getDatePicker().getYear();
+							int monthOfYear = dialog.getDatePicker().getMonth();
+							int dayOfMonth = dialog.getDatePicker().getDayOfMonth();
 
-					}
-				}
-			};
-			DatePickerDialog dialog = new DatePickerDialog(getActivity(), dateSetListener, year, month, date);
-			dialog.setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok), dialog);
+							activity.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
+							boolean success = pairToDelete.changeDate(new Date(activity.pictureDate.getTimeInMillis()));
+							activity.updateEyePhotoPairs();
+
+							if (!success) {
+								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date,
+										pairToDelete.getLeftEye().getPersonName(),
+										pairToDelete.getDateDisplayString("dd.MM.yyyy"));
+							}
+						}
+					});
+
 			return dialog;
 		}
 	}

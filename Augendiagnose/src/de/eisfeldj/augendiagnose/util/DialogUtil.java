@@ -254,7 +254,7 @@ public abstract class DialogUtil {
 					"listener");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.title_dialog_error) //
+			builder.setTitle(R.string.title_dialog_confirmation) //
 					.setMessage(message) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {

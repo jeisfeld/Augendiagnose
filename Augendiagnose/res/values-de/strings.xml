@@ -15,6 +15,7 @@
     <string name="title_dialog_change_name">Namen ändern</string>
     <string name="title_dialog_new_name">Neuer Name</string>
     <string name="title_dialog_error">Fehler</string>
+    <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
     <string name="title_edit_comment">Bildkommentar bearbeiten</string>
@@ -29,7 +30,7 @@
     <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
-    <string name="message_dialog_failed_to_change_date">Datumsänderung der Foros von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_change_date">Datumsänderung der Fotos von %1$s vom %2$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
