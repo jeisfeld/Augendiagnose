@@ -46,7 +46,8 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.3.1</item>
         <item>0.3.2</item>
         <item>0.3.3</item>
-    </string-array>
+        <item>0.3.4</item>
+        </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
         <item>Added basic overlay functionality.</item>
@@ -64,6 +65,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
         <item>Added context menu in image view. Allowed storage of contrast and brightness. Allowed editing of image comments. Minor improvements.</item>
         <item>Enabled to delete photos and change dates via context menu. Minor improvements and bugfixes.</item>
-    </string-array>
+        <item>TODO</item>
+        </string-array>
 
 </resources>
