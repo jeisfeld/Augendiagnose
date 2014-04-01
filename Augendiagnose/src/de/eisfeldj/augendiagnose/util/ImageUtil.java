@@ -99,9 +99,19 @@ public abstract class ImageUtil {
 			// options.inPurgeable = true;
 			bitmap = BitmapFactory.decodeFile(path, options);
 			if (bitmap == null) {
-				// cannot create bitmap - return dummy
-				Log.w(Application.TAG, "Cannot create bitmap from path " + path + " - return dummy bitmap");
-				return getDummyBitmap();
+				// cannot create bitmap - try once more in case that the image was just in process of saving metadata
+				try {
+					Thread.sleep(50);
+				}
+				catch (InterruptedException e) {
+				}
+				bitmap = BitmapFactory.decodeFile(path, options);
+
+				if (bitmap == null) {
+					// cannot create bitmap - return dummy
+					Log.w(Application.TAG, "Cannot create bitmap from path " + path + " - return dummy bitmap");
+					return getDummyBitmap();
+				}
 			}
 			if (bitmap.getWidth() > maxSize) {
 				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
