@@ -46,11 +46,6 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 	}
 
 	@Override
-	protected void setOnItemLongClickListener() {
-		// do not support renaming here
-	}
-
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// getActionBar().setDisplayHomeAsUpEnabled(true);

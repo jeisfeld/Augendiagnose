@@ -7,5 +7,6 @@
     <string name="menu_delete_overlay_position">Delete overlay position</string>
     <string name="menu_delete_images">Delete images</string>
     <string name="menu_change_date">Change date</string>
-
+    <string name="menu_change_name">Change name</string>
+    
 </resources>

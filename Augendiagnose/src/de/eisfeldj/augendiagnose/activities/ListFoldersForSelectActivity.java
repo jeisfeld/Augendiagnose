@@ -39,6 +39,15 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
 
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		getListView().setOnItemLongClickListener(new RenameOnLongClickListener());
+	}
+
+	
 	/**
 	 * Static helper method to extract the name of the selected folder (= person name) from the activity response
 	 * 
@@ -55,11 +64,6 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 		else {
 			return "";
 		}
-	}
-
-	@Override
-	protected void setOnItemLongClickListener() {
-		getListView().setOnItemLongClickListener(new RenameOnLongClickListener());
 	}
 
 	@Override

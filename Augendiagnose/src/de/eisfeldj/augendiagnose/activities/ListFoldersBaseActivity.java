@@ -42,14 +42,8 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
 		createList();
 
-		setOnItemLongClickListener();
 		setOnItemClickListener();
 	}
-
-	/**
-	 * Listener for a long click on a list item
-	 */
-	protected abstract void setOnItemLongClickListener();
 
 	/**
 	 * Listener for a shore click on a list item
@@ -140,6 +134,30 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 	}
 
 	/**
+	 * Delete a folder in the list, including all photos
+	 * 
+	 * @param index
+	 * @param newFileName
+	 */
+	protected void deleteFolder(int index) {
+		File folder = folders[index];
+
+		// delete folder and ensure that list is refreshed
+		String[] children = folder.list();
+		for (int i = 0; i < children.length; i++) {
+			new File(folder, children[i]).delete();
+		}
+		boolean success = folder.delete();
+		directoryListAdapter.clear();
+		createList();
+		directoryListAdapter.notifyDataSetChanged();
+		if (!success) {
+			DialogUtil.displayError(this, R.string.message_dialog_failed_to_delete_folder, folder.getAbsolutePath());
+			return;
+		}
+	}
+
+	/**
 	 * Listener for a long click on a list item, which allows to change the name. Shows a dialog to enter the new name.
 	 */
 	protected class RenameOnLongClickListener implements OnItemLongClickListener {
@@ -147,25 +165,7 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, final long rowId) {
-			final ListFoldersBaseActivity activity = ListFoldersBaseActivity.this;
-			final EditText input = new EditText(activity);
-			input.setText(((TextView) view).getText());
-
-			new AlertDialog.Builder(activity) //
-					.setTitle(R.string.title_dialog_change_name) //
-					.setView(input) //
-					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.dismiss();
-						}
-					}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							renameFolderAndFiles((int) rowId, input.getText().toString());
-						}
-					}).show();
-
+			showChangeNameDialog(((TextView) view).getText(), (int) rowId);
 			return true;
 		}
 
@@ -178,6 +178,32 @@ public abstract class ListFoldersBaseActivity extends ListActivity {
 			}
 		}
 
+	}
+
+	/**
+	 * Show the dialog to change the selected name
+	 * 
+	 * @param input
+	 * @param rowId
+	 */
+	protected void showChangeNameDialog(final CharSequence inputText, final int rowId) {
+		final EditText input = new EditText(this);
+		input.setText(inputText);
+
+		new AlertDialog.Builder(this) //
+				.setTitle(R.string.title_dialog_change_name) //
+				.setView(input) //
+				.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						renameFolderAndFiles((int) rowId, input.getText().toString());
+					}
+				}).show();
 	}
 
 }
