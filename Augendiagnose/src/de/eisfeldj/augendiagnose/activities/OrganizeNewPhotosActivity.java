@@ -24,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
@@ -154,7 +155,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			// only load predefined images
 			updateImages();
 			pictureDate.setTime(photoRight.getDate());
-			editDate.setText(EyePhoto.getDisplayDate(pictureDate));
+			editDate.setText(DateUtil.getDisplayDate(pictureDate));
 			editDate.invalidate();
 		}
 
@@ -253,7 +254,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			updateImages();
 
 			pictureDate.setTime(photoRight.getDate());
-			editDate.setText(EyePhoto.getDisplayDate(pictureDate));
+			editDate.setText(DateUtil.getDisplayDate(pictureDate));
 			editDate.invalidate();
 		}
 		else {
@@ -495,7 +496,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 				public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
 					activity.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-					activity.editDate.setText(EyePhoto.getDisplayDate(activity.pictureDate));
+					activity.editDate.setText(DateUtil.getDisplayDate(activity.pictureDate));
 					activity.editDate.invalidate();
 				}
 			};

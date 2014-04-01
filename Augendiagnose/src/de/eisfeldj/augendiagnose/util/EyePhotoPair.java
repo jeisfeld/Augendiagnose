@@ -1,8 +1,6 @@
 package de.eisfeldj.augendiagnose.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Utility class to handle a pair of eye photos (right and left)
@@ -52,10 +50,7 @@ public class EyePhotoPair {
 	 * @return
 	 */
 	public String getDateDisplayString(String format) {
-		String dateString = null;
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
-		dateString = dateFormat.format(getDate());
-		return dateString;
+		return DateUtil.format(getDate(), format);
 	}
 
 	/**

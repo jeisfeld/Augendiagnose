@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
+import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
@@ -59,6 +60,10 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (dismiss) {
+			return;
+		}
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		buttonAdditionalPictures = (Button) findViewById(R.id.buttonSelectAdditionalPicture);
@@ -224,13 +229,15 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 							int dayOfMonth = dialog.getDatePicker().getDayOfMonth();
 
 							activity.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-							boolean success = pairToDelete.changeDate(new Date(activity.pictureDate.getTimeInMillis()));
+							Date newDate = new Date(activity.pictureDate.getTimeInMillis());
+							boolean success = pairToDelete.changeDate(newDate);
 							activity.updateEyePhotoPairs();
 
 							if (!success) {
 								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date,
 										pairToDelete.getLeftEye().getPersonName(),
-										pairToDelete.getDateDisplayString("dd.MM.yyyy"));
+										pairToDelete.getDateDisplayString("dd.MM.yyyy"),
+										DateUtil.format(newDate, "dd.MM.yyyy"));
 							}
 						}
 					});

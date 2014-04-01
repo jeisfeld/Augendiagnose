@@ -27,6 +27,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 
 	protected String parentFolder;
 	protected String name;
+	protected boolean dismiss = false;
 
 	protected ListView listview;
 	protected EyePhotoPair[] eyePhotoPairs;
@@ -43,6 +44,12 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 		headerNameView.setText(name);
 
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
+
+		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
+			DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_no_photos_for_name, name);
+			dismiss = true;
+			return;
+		}
 
 		listview = (ListView) findViewById(R.id.listViewForName);
 

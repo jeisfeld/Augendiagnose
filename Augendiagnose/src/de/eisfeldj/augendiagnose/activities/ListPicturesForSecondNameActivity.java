@@ -53,6 +53,9 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (dismiss) {
+			return;
+		}
 
 		listview.setAdapter(new ListPicturesForSecondNameArrayAdapter(this, eyePhotoPairs));
 

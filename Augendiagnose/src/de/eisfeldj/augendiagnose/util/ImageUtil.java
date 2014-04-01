@@ -5,9 +5,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -37,8 +35,7 @@ public abstract class ImageUtil {
 			ExifInterface exif = new ExifInterface(path);
 			String dateString = exif.getAttribute(ExifInterface.TAG_DATETIME);
 
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault());
-			retrievedDate = dateFormat.parse(dateString);
+			retrievedDate = DateUtil.parse(dateString, "yyyy:MM:dd HH:mm:ss");
 		}
 		catch (Exception e) {
 			Log.w(Application.TAG, e.toString() + " - Cannot retrieve EXIF date for " + path);

@@ -1,8 +1,6 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -177,10 +175,7 @@ public class EyePhoto {
 	 * @return
 	 */
 	public String getDateString(String format) {
-		String dateString = null;
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
-		dateString = dateFormat.format(getDate());
-		return dateString;
+		return DateUtil.format(getDate(), format);
 	}
 
 	/**
@@ -191,8 +186,7 @@ public class EyePhoto {
 	 */
 	private boolean setDateString(String dateString, String format) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
-			setDate(dateFormat.parse(dateString));
+			setDate(DateUtil.parse(dateString, format));
 			return true;
 		}
 		catch (Exception e) {
@@ -211,17 +205,6 @@ public class EyePhoto {
 
 	private void setDate(Date date) {
 		this.date = date;
-	}
-
-	/**
-	 * Retrieve the date for display
-	 * 
-	 * @param calendar
-	 * @return
-	 */
-	public static String getDisplayDate(Calendar calendar) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("d. MMMM yyyy", Locale.getDefault());
-		return dateFormat.format(calendar.getTime());
 	}
 
 	/**
@@ -280,6 +263,11 @@ public class EyePhoto {
 	 * @return
 	 */
 	public boolean moveTo(EyePhoto target) {
+		if (target.getFile().exists()) {
+			// do not allow overwriting
+			return false;
+		}
+
 		return getFile().renameTo(target.getFile());
 	}
 
@@ -290,6 +278,11 @@ public class EyePhoto {
 	 * @return
 	 */
 	public boolean copyTo(EyePhoto target) {
+		if (target.getFile().exists()) {
+			// do not allow overwriting
+			return false;
+		}
+
 		return ImageUtil.copyFile(getFile(), target.getFile());
 	}
 

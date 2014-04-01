@@ -21,6 +21,7 @@
     <string name="title_edit_comment">Edit Image Comment</string>
     
     <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
+    <string name="message_dialog_no_photos_for_name">No eye photos available for %1$s</string>
     <string name="message_dialog_select_name">Please select a name</string>
     <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>
     <string name="message_dialog_folder_does_not_exist">Folder %1$s does not exist. Please check the settings.</string>
@@ -30,7 +31,7 @@
     <string name="message_dialog_failed_to_rename_folder">Failed to rename folder %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Failed to delete the photos of %1$s from %2$s</string>
-    <string name="message_dialog_failed_to_change_date">Failed to change date for photos of %1$s from %2$s</string>
+    <string name="message_dialog_failed_to_change_date">Could not change date for photos of %1$s from %2$s to %3$s</string>
     <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>

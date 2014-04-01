@@ -21,6 +21,7 @@
     <string name="title_edit_comment">Bildkommentar bearbeiten</string>
     
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
+    <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_folder_does_not_exist">Verzeichnis %1$s existiert nicht. Bitte überprüfen Sie die Einstellungen.</string>
@@ -30,7 +31,7 @@
     <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
-    <string name="message_dialog_failed_to_change_date">Datumsänderung der Fotos von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
