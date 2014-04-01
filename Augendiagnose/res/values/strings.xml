@@ -37,7 +37,7 @@
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
-    <string name="message_dialog_confirm_delete_folder">Do you really want to delete the photos of %1$s?</string>
+    <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
     
     <string name="section_select_eye_orientation">Select Eye Orientation</string>
     <string name="section_select_name">Select Name</string>

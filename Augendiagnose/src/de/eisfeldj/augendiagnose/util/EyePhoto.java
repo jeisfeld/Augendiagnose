@@ -295,8 +295,22 @@ public class EyePhoto {
 	public boolean changePersonName(String targetName) {
 		EyePhoto target = cloneFromPath();
 		target.setPersonName(targetName);
-		return moveTo(target);
-		// TODO: update metadata
+		boolean success = moveTo(target);
+
+		if (success) {
+			// update metadata
+			Metadata metadata = target.getImageMetadata();
+			if (metadata == null) {
+				metadata = new Metadata();
+				target.updateMetadataWithDefaults(metadata);
+			}
+			if (metadata.person == null || metadata.person.length() == 0 || metadata.person.equals(getPersonName())) {
+				metadata.person = targetName;
+			}
+			target.storeImageMetadata(metadata);
+		}
+
+		return success;
 	}
 
 	/**
@@ -308,8 +322,20 @@ public class EyePhoto {
 	public boolean changeDate(Date newDate) {
 		EyePhoto target = cloneFromPath();
 		target.setDate(newDate);
-		return moveTo(target);
-		// TODO: update metadata
+		boolean success = moveTo(target);
+
+		if (success) {
+			// update metadata
+			Metadata metadata = target.getImageMetadata();
+			if (metadata == null) {
+				metadata = new Metadata();
+				target.updateMetadataWithDefaults(metadata);
+			}
+			metadata.organizeDate = newDate;
+			target.storeImageMetadata(metadata);
+		}
+
+		return success;
 	}
 
 	/**

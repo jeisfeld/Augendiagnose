@@ -82,6 +82,13 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 */
 	public void updateEyePhotoPairs() {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
+		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
+			if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
+				DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_no_photos_for_name, name);
+				return;
+			}
+		}
+
 		adapter = new ListPicturesForNameArrayAdapter(this, eyePhotoPairs);
 		listview.setAdapter(adapter);
 	}

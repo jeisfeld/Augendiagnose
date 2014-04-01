@@ -18,6 +18,7 @@
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
     <string name="title_edit_comment">Bildkommentar bearbeiten</string>
+    
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
@@ -35,12 +36,15 @@
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
-    <string name="message_dialog_confirm_delete_folder">Wollen Sie die Fotos von %1$s wirklich löschen?</string>
+    <string name="message_dialog_confirm_delete_folder">Wollen Sie %1$s wirklich mit allen Fotos löschen?</string>
+    
     <string name="section_select_eye_orientation">Orientierung wählen</string>
     <string name="section_select_name">Name wählen</string>
     <string name="section_select_date">Datum wählen</string>
+    
     <string name="text_brightness">Helligkeit</string>
     <string name="text_contrast">Kontrast</string>
+    
     <string name="button_open_eyefi_app">Eye-Fi App öffnen</string>
     <string name="button_display_pictures">Fotos anzeigen</string>
     <string name="button_organize_new_photos">Neue Fotos einordnen</string>
@@ -51,11 +55,13 @@
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_other_pictures">Andere Fotos</string>
+    
     <string name="toggle_overlay_1">IT 1</string>
     <string name="toggle_overlay_2">IT 2</string>
     <string name="toggle_overlay_3">IT 3</string>
     <string name="toggle_overlay_4">IT 4</string>
     <string name="toggle_overlay_5">IT 5</string>
+    
     <string name="content_description_right_eye">Rechtes Auge</string>
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>
