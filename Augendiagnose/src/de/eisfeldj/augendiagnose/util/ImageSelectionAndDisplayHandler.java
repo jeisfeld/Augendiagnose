@@ -6,6 +6,7 @@ import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 
 /**
  * A class handling the selection of up to two pictures for display, and the display of these pictures
@@ -13,6 +14,7 @@ import de.eisfeldj.augendiagnose.components.EyeImageView;
 public class ImageSelectionAndDisplayHandler {
 	private EyeImageView selectedView = null;
 	private ListPicturesForNameActivity activity = null;
+	private ListPicturesForNameFragment fragment = null;
 	private ListPicturesForSecondNameActivity secondActivity = null;
 	private static ImageSelectionAndDisplayHandler singleton;
 
@@ -39,6 +41,7 @@ public class ImageSelectionAndDisplayHandler {
 	 */
 	public void setActivity(ListPicturesForNameActivity activity) {
 		this.activity = activity;
+		this.fragment = (ListPicturesForNameFragment) activity.fragment;
 	}
 
 	/**
@@ -139,7 +142,7 @@ public class ImageSelectionAndDisplayHandler {
 		if (selectedView != null) {
 			highlightSelectedView(false);
 			selectedView = null;
-			activity.deactivateButtonAdditionalPictures();
+			fragment.deactivateButtonAdditionalPictures();
 		}
 	}
 
@@ -151,7 +154,7 @@ public class ImageSelectionAndDisplayHandler {
 	private void selectView(EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
-		activity.activateButtonAdditionalPictures();
+		fragment.activateButtonAdditionalPictures();
 	}
 
 	/**

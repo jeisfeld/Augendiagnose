@@ -1,113 +1,40 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import java.io.File;
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
-
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.View;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 
 /**
  * Base activity to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
  * detailed actions.
  */
 public abstract class ListPicturesForNameBaseActivity extends Activity {
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
-
-	protected String parentFolder;
-	protected String name;
-	protected boolean dismiss = false;
-
-	protected ListView listview;
-	protected EyePhotoPair[] eyePhotoPairs;
+	public ListPicturesForNameBaseFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(getContentView());
 
-		name = getIntent().getStringExtra(STRING_EXTRA_NAME);
-		parentFolder = getIntent().getStringExtra(STRING_EXTRA_PARENTFOLDER);
+		setContentView(R.layout.activity_one_frame);
 
-		TextView headerNameView = (TextView) findViewById(R.id.textTitleName);
-		headerNameView.setText(name);
+		fragment = getFragment();
 
-		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
-
-		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_no_photos_for_name, name);
-			dismiss = true;
-			return;
-		}
-
-		listview = (ListView) findViewById(R.id.listViewForName);
-
-		// prevent highlighting
-		listview.setCacheColorHint(Color.TRANSPARENT);
-		listview.setSelector(new StateListDrawable());
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 	}
 
 	/**
-	 * Abstract method to be overriden - should return the view to be used for display.
+	 * Factory method to retrieve the fragment
 	 */
-	protected abstract int getContentView();
+	protected abstract ListPicturesForNameBaseFragment getFragment();
 
 	/**
-	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
+	 * onClick action for Button "additional pictures"
 	 * 
-	 * @param the
-	 *            folder where the photos are located.
-	 * @return
+	 * @param view
 	 */
-	protected EyePhotoPair[] createEyePhotoList(File folder) {
-		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
-
-		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
-
-		for (File f : files) {
-			EyePhoto eyePhoto = new EyePhoto(f);
-
-			if (!eyePhoto.isFormatted()) {
-				DialogUtil.displayError(this, R.string.message_dialog_unformatted_file, f.getAbsolutePath());
-			}
-			else {
-				Date date = eyePhoto.getDate();
-
-				if (eyePhotoMap.containsKey(date)) {
-					EyePhotoPair eyePhotoPair = eyePhotoMap.get(date);
-					eyePhotoPair.setEyePhoto(eyePhoto);
-				}
-				else {
-					EyePhotoPair eyePhotoPair = new EyePhotoPair();
-					eyePhotoPair.setEyePhoto(eyePhoto);
-					eyePhotoMap.put(date, eyePhotoPair);
-				}
-			}
-
-		}
-
-		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>();
-		for (Date date : eyePhotoMap.keySet()) {
-			if (eyePhotoMap.get(date).isComplete()) {
-				eyePhotoMap2.put(date, eyePhotoMap.get(date));
-			}
-		}
-
-		EyePhotoPair[] eyePhotoPairs = eyePhotoMap2.values().toArray(new EyePhotoPair[0]);
-
-		return eyePhotoPairs;
+	public void selectDifferentPictureActivity(View view) {
+		ListFoldersForDisplaySecondActivity.startActivity(this, fragment.parentFolder);
 	}
-
 }

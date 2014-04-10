@@ -3,8 +3,8 @@ package de.eisfeldj.augendiagnose.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.components.ListPicturesForSecondNameArrayAdapter;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForSecondNameFragment;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
@@ -33,6 +33,14 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	}
 
 	/**
+	 * Get the fragment displayed in the activity
+	 */
+	@Override
+	protected ListPicturesForNameBaseFragment getFragment() {
+		return new ListPicturesForSecondNameFragment();
+	}
+
+	/**
 	 * Static helper method to extract the name of the selected file from the activity response
 	 * 
 	 * @param resultCode
@@ -53,18 +61,9 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (dismiss) {
-			return;
-		}
-
-		listview.setAdapter(new ListPicturesForSecondNameArrayAdapter(this, eyePhotoPairs));
 
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setSecondActivity(this);
 	}
 
-	@Override
-	protected int getContentView() {
-		return R.layout.activity_list_pictures_for_second_name;
-	}
 }
