@@ -29,6 +29,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 		fragment.setParameters(parentFolder, name);
 
 		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		getFragmentManager().executePendingTransactions();
 	}
 
 	/**

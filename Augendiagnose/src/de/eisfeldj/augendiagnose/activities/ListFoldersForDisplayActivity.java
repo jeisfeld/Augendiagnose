@@ -41,10 +41,12 @@ public class ListFoldersForDisplayActivity extends Activity {
 		if (Application.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);
 			getFragmentManager().beginTransaction().replace(R.id.fragment_list, fragment).commit();
+			getFragmentManager().executePendingTransactions();
 		}
 		else {
 			setContentView(R.layout.activity_fragments_single);
 			getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+			getFragmentManager().executePendingTransactions();
 		}
 
 	}
@@ -93,6 +95,7 @@ public class ListFoldersForDisplayActivity extends Activity {
 				transaction.addToBackStack(null);
 			}
 			transaction.commit();
+			getFragmentManager().executePendingTransactions();
 		}
 		else {
 			ListPicturesForNameActivity.startActivity(this, parentFolder, name);

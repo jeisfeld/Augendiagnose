@@ -36,6 +36,7 @@ public class ListFoldersForDisplaySecondActivity extends Activity {
 		ListFoldersForDisplaySecondFragment fragment = new ListFoldersForDisplaySecondFragment();
 
 		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		getFragmentManager().executePendingTransactions();
 	}
 
 	

@@ -39,6 +39,7 @@ public class ListFoldersForSelectActivity extends Activity {
 		ListFoldersForSelectFragment fragment = new ListFoldersForSelectFragment();
 
 		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		getFragmentManager().executePendingTransactions();
 	}
 
 	/**
