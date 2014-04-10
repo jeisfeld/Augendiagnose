@@ -22,8 +22,8 @@ import de.eisfeldj.augendiagnose.util.ImageUtil;
  * detailed actions.
  */
 public abstract class ListPicturesForNameBaseFragment extends Fragment {
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
+	private static final String STRING_NAME = "de.eisfeldj.augendiagnose.NAME";
+	private static final String STRING_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
 
 	public String parentFolder;
 	protected String name;
@@ -32,12 +32,28 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	protected ListView listview;
 	protected EyePhotoPair[] eyePhotoPairs;
 
+	/**
+	 * Return an instance of the fragment and initialize it with parentFolder and name
+	 * @param parentFolder
+	 * @param name
+	 * @return
+	 */
+	public void setParameters(String parentFolder, String name) {
+		Bundle args = new Bundle();
+		args.putString(STRING_PARENTFOLDER, parentFolder);
+		args.putString(STRING_NAME, name);
+		
+		setArguments(args);
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Bundle args = getArguments();
 
-		name = getActivity().getIntent().getStringExtra(STRING_EXTRA_NAME);
-		parentFolder = getActivity().getIntent().getStringExtra(STRING_EXTRA_PARENTFOLDER);
+		name = args.getString(STRING_NAME);
+		parentFolder = args.getString(STRING_PARENTFOLDER);
 	}
 	
 	@Override

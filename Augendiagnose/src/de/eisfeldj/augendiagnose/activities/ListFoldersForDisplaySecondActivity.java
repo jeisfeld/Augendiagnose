@@ -1,8 +1,10 @@
 package de.eisfeldj.augendiagnose.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
 
@@ -10,7 +12,7 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
  * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture
  * for display.
  */
-public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity {
+public class ListFoldersForDisplaySecondActivity extends Activity {
 	private static final String STRING_EXTRA_FILEPATH = "de.eisfeldj.augendiagnose.FILEPATH";
 
 	/**
@@ -21,18 +23,21 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 	 */
 	public static void startActivity(Context context, String foldername) {
 		Intent intent = new Intent(context, ListFoldersForDisplaySecondActivity.class);
-		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(ListFoldersBaseFragment.STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
-
-	/**
-	 * Get the fragment displayed in the activity
-	 */
 	@Override
-	protected ListFoldersBaseFragment getFragment() {
-		return new ListFoldersForDisplaySecondFragment();
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_fragments_single);
+
+		ListFoldersForDisplaySecondFragment fragment = new ListFoldersForDisplaySecondFragment();
+
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 	}
+
 	
 	/**
 	 * Static helper method to extract the name of the selected file from the activity response
@@ -50,12 +55,6 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 		else {
 			return "";
 		}
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**

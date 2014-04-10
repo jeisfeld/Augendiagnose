@@ -125,7 +125,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 			}
 		});
 
-		if(JpegMetadataUtil.changeJpegAllowed()) {
+		if (JpegMetadataUtil.changeJpegAllowed()) {
 			registerForContextMenu(imageView);
 		}
 
@@ -255,16 +255,15 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case EditCommentActivity.REQUEST_CODE:
-			if(resultCode == RESULT_OK) {
+			if (resultCode == RESULT_OK) {
 				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
 				imageView.storeComment(comment.toString());
 			}
 		}
 	}
-	
-	
+
 	// Implementation of GuiElementUpdater
-	
+
 	@Override
 	public void setLockChecked(boolean checked) {
 		lockButton.setChecked(checked);

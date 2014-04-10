@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnose.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForSelectFragment;
 
@@ -10,7 +11,7 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForSelectFragment;
  * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a name for
  * ordering new pictures. (The folder names equal the person names.)
  */
-public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
+public class ListFoldersForSelectActivity extends Activity {
 	public static final int REQUEST_CODE = 1;
 	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
 	public static final String STRING_EXTRA_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
@@ -24,17 +25,20 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	 */
 	public static void startActivity(Activity activity, String foldername, String preselectedName) {
 		Intent intent = new Intent(activity, ListFoldersForSelectActivity.class);
-		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(ListFoldersBaseFragment.STRING_EXTRA_FOLDER, foldername);
 		intent.putExtra(STRING_EXTRA_PRESELECTED_NAME, preselectedName);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
 
-	/**
-	 * Get the fragment displayed in the activity
-	 */
 	@Override
-	protected ListFoldersBaseFragment getFragment() {
-		return new ListFoldersForSelectFragment();
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_fragments_single);
+
+		ListFoldersForSelectFragment fragment = new ListFoldersForSelectFragment();
+
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 	}
 
 	/**

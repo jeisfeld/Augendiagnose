@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -117,6 +118,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the version number of the app
+	 * 
 	 * @return
 	 */
 	public static int getVersion() {
@@ -129,6 +131,16 @@ public class Application extends android.app.Application {
 			Log.e(TAG, "Did not find application version", e);
 			return 0;
 		}
+	}
+
+	/**
+	 * Determine if the device is a tablet (i.e. it has a large screen).
+	 * 
+	 * @param context
+	 *            The calling context.
+	 */
+	public static boolean isTablet() {
+		return (getAppContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
 }

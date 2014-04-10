@@ -1,8 +1,10 @@
 package de.eisfeldj.augendiagnose.util;
 
+import android.app.Activity;
 import android.view.View;
 import de.eisfeldj.augendiagnose.activities.DisplayOneActivityOverlay;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
+import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
@@ -13,7 +15,7 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
  */
 public class ImageSelectionAndDisplayHandler {
 	private EyeImageView selectedView = null;
-	private ListPicturesForNameActivity activity = null;
+	private Activity activity = null;
 	private ListPicturesForNameFragment fragment = null;
 	private ListPicturesForSecondNameActivity secondActivity = null;
 	private static ImageSelectionAndDisplayHandler singleton;
@@ -35,13 +37,23 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Set the activity for first selection
+	 * Set the activity for first selection (mobile design)
 	 * 
 	 * @param activity
 	 */
 	public void setActivity(ListPicturesForNameActivity activity) {
 		this.activity = activity;
 		this.fragment = (ListPicturesForNameFragment) activity.fragment;
+	}
+
+	/**
+	 * Set the activity for first selection (tablet design)
+	 * 
+	 * @param activity
+	 */
+	public void setActivity(ListFoldersForDisplayActivity activity) {
+		this.activity = activity;
+		this.fragment = null;
 	}
 
 	/**
@@ -142,7 +154,10 @@ public class ImageSelectionAndDisplayHandler {
 		if (selectedView != null) {
 			highlightSelectedView(false);
 			selectedView = null;
-			fragment.deactivateButtonAdditionalPictures();
+			
+			if(fragment != null) {
+				fragment.deactivateButtonAdditionalPictures();
+			}
 		}
 	}
 
@@ -154,7 +169,10 @@ public class ImageSelectionAndDisplayHandler {
 	private void selectView(EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
-		fragment.activateButtonAdditionalPictures();
+		
+		if(fragment != null) {
+			fragment.activateButtonAdditionalPictures();
+		}
 	}
 
 	/**

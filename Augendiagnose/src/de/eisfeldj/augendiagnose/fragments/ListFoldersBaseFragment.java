@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
@@ -28,6 +27,7 @@ import de.eisfeldj.augendiagnose.util.EyePhoto;
  * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseFragment extends ListFragment {
+	public static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
 
 	protected File parentFolder;
@@ -39,7 +39,7 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		parentFolder = new File(getActivity().getIntent().getStringExtra(ListFoldersBaseActivity.STRING_EXTRA_FOLDER));
+		parentFolder = new File(getActivity().getIntent().getStringExtra(STRING_EXTRA_FOLDER));
 		createList();
 	}
 

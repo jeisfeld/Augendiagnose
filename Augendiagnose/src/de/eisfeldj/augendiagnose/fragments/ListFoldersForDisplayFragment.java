@@ -12,7 +12,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity;
+import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
@@ -46,8 +46,9 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			ListFoldersForDisplayFragment fragment = ListFoldersForDisplayFragment.this;
-			ListPicturesForNameActivity.startActivity(fragment.getActivity(), fragment.parentFolder.getAbsolutePath(),
-					((TextView) view).getText().toString());
+
+			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(
+					fragment.parentFolder.getAbsolutePath(), ((TextView) view).getText().toString());
 		}
 	}
 
