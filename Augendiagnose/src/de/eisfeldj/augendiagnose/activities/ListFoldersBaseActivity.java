@@ -1,209 +1,33 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 
 /**
  * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
-public abstract class ListFoldersBaseActivity extends ListActivity {
-	protected static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
-	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
-
-	protected File parentFolder;
-	protected List<String> folderNames = new ArrayList<String>();
-	private File[] folders;
-	protected ArrayAdapter<String> directoryListAdapter;
+public abstract class ListFoldersBaseActivity extends Activity {
+	public static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
+	
+	protected ListFoldersBaseFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
-		createList();
+		setContentView(R.layout.activity_one_frame);
 
-		setOnItemClickListener();
+		fragment = getFragment();
+
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 	}
 
 	/**
-	 * Listener for a shore click on a list item
+	 * Factory method to retrieve the fragment
 	 */
-	protected abstract void setOnItemClickListener();
-
-	/**
-	 * Fill the list of subfolders and create the list adapter
-	 */
-	protected void createList() {
-		folders = parentFolder.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isDirectory();
-			}
-		});
-
-		if (folders == null) {
-			DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_folder_does_not_exist,
-					parentFolder.getAbsolutePath());
-			return;
-		}
-
-		Arrays.sort(folders, new Comparator<File>() {
-			public int compare(File f1, File f2) {
-				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
-			}
-		});
-		folderNames.clear();
-		for (File f : folders) {
-			folderNames.add(f.getName());
-		}
-		directoryListAdapter = new ArrayAdapter<String>(this, R.layout.adapter_list_names, folderNames);
-		setListAdapter(directoryListAdapter);
-	}
-
-	/**
-	 * Helper method to return the name of the file for sorting
-	 * 
-	 * @param f
-	 *            The file
-	 * @return The name for Sorting
-	 */
-	private String getFilenameForSorting(File f) {
-		String name = f.getName().toUpperCase(Locale.getDefault());
-		if (FOLDERS_TOP.contains(name)) {
-			return "1" + name;
-		}
-		else {
-			return "2" + name;
-		}
-	}
-
-	/**
-	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy)
-	 * 
-	 * @param index
-	 * @param newFileName
-	 */
-	protected void renameFolderAndFiles(int index, String newFileName) {
-		File oldFolder = folders[index];
-		File newFolder = new File(oldFolder.getParent(), newFileName.trim());
-
-		// rename folder and ensure that list is refreshed
-		boolean success = oldFolder.renameTo(newFolder);
-		directoryListAdapter.clear();
-		createList();
-		directoryListAdapter.notifyDataSetChanged();
-		if (!success) {
-			DialogUtil.displayError(this, R.string.message_dialog_failed_to_rename_folder, oldFolder.getAbsolutePath(),
-					newFolder.getAbsolutePath());
-			return;
-		}
-
-		// rename files in this folder
-		File[] files = newFolder.listFiles();
-		for (File f : files) {
-			EyePhoto source = new EyePhoto(f.getAbsolutePath());
-			if (!source.isFormatted()) {
-				DialogUtil.displayError(this, R.string.message_dialog_unformatted_file, oldFolder.getAbsolutePath());
-				continue;
-			}
-			if (!source.changePersonName(newFileName)) {
-				DialogUtil.displayError(this, R.string.message_dialog_failed_to_rename_file,
-						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
-			}
-		}
-	}
-
-	/**
-	 * Delete a folder in the list, including all photos
-	 * 
-	 * @param index
-	 * @param newFileName
-	 */
-	protected void deleteFolder(int index) {
-		File folder = folders[index];
-
-		// delete folder and ensure that list is refreshed
-		String[] children = folder.list();
-		for (int i = 0; i < children.length; i++) {
-			new File(folder, children[i]).delete();
-		}
-		boolean success = folder.delete();
-		directoryListAdapter.clear();
-		createList();
-		directoryListAdapter.notifyDataSetChanged();
-		if (!success) {
-			DialogUtil.displayError(this, R.string.message_dialog_failed_to_delete_folder, folder.getAbsolutePath());
-			return;
-		}
-	}
-
-	/**
-	 * Listener for a long click on a list item, which allows to change the name. Shows a dialog to enter the new name.
-	 */
-	protected class RenameOnLongClickListener implements OnItemLongClickListener {
-		private AlertDialog dialog;
-
-		@Override
-		public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, final long rowId) {
-			showChangeNameDialog(((TextView) view).getText(), (int) rowId);
-			return true;
-		}
-
-		public void closeDialog() {
-			try {
-				dialog.dismiss();
-			}
-			catch (Exception e) {
-
-			}
-		}
-
-	}
-
-	/**
-	 * Show the dialog to change the selected name
-	 * 
-	 * @param input
-	 * @param rowId
-	 */
-	protected void showChangeNameDialog(final CharSequence inputText, final int rowId) {
-		final EditText input = new EditText(this);
-		input.setText(inputText);
-
-		new AlertDialog.Builder(this) //
-				.setTitle(R.string.title_dialog_change_name) //
-				.setView(input) //
-				.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.dismiss();
-					}
-				}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						renameFolderAndFiles((int) rowId, input.getText().toString());
-					}
-				}).show();
-	}
+	protected abstract ListFoldersBaseFragment getFragment();
 
 }

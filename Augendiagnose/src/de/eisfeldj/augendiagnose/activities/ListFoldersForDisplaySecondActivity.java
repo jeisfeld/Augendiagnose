@@ -3,10 +3,8 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture
@@ -27,6 +25,15 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 		context.startActivity(intent);
 	}
 
+
+	/**
+	 * Get the fragment displayed in the activity
+	 */
+	@Override
+	protected ListFoldersBaseFragment getFragment() {
+		return new ListFoldersForDisplaySecondFragment();
+	}
+	
 	/**
 	 * Static helper method to extract the name of the selected file from the activity response
 	 * 
@@ -51,22 +58,6 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 		// getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	protected void setOnItemClickListener() {
-		getListView().setOnItemClickListener(new ShowContentsOnClickListener());
-	}
-
-	/**
-	 * Item click listener showing the pictures of the selected folder (in eye photo pairs) for selection of a picture.
-	 */
-	private class ShowContentsOnClickListener implements OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			ListFoldersForDisplaySecondActivity activity = ListFoldersForDisplaySecondActivity.this;
-			ListPicturesForSecondNameActivity.startActivity(activity, activity.parentFolder.getAbsolutePath(),
-					((TextView) view).getText().toString());
-		}
-	}
-
 	/**
 	 * When getting the response from the picture selection, return the name of the selected picture and finish the
 	 * activity.
@@ -84,4 +75,5 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 			break;
 		}
 	}
+
 }
