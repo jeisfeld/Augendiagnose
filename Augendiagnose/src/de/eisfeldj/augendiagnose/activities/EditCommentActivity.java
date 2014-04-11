@@ -3,19 +3,18 @@ package de.eisfeldj.augendiagnose.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
+import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentCallback;
 
-public class EditCommentActivity extends Activity {
+/**
+ * Activity to add the comment of a picture
+ */
+public class EditCommentActivity extends Activity implements EditCommentCallback {
 
 	private static final String STRING_EXTRA_TEXT = "de.eisfeldj.augendiagnose.TEXT";
 	private static final String STRING_RESULT_TEXT = "de.eisfeldj.augendiagnose.RESULTTEXT";
 	public static final int REQUEST_CODE = 1;
-
-	private EditText editText;
 
 	/**
 	 * Static helper method to start the activity, passing the old value of the text
@@ -32,47 +31,24 @@ public class EditCommentActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_comment);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 		String text = getIntent().getStringExtra(STRING_EXTRA_TEXT);
 
-		editText = (EditText) findViewById(R.id.input_edit_comment);
-		editText.setText(text);
+		setContentView(R.layout.activity_fragments_single);
 
-		editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-				}
-			}
-		});
+		EditCommentFragment fragment = new EditCommentFragment();
+		fragment.setParameters(text);
 
-		final Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
-		buttonCancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				returnResult(editText.getText().toString(), false);
-			}
-		});
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		getFragmentManager().executePendingTransactions();
+	}
 
-		final Button buttonClear = (Button) findViewById(R.id.buttonClear);
-		buttonClear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				editText.setText("");
-			}
-		});
-
-		final Button buttonOk = (Button) findViewById(R.id.buttonOk);
-		buttonOk.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				returnResult(editText.getText().toString(), true);
-			}
-		});
-
+	/**
+	 * Helper method: Process the updated comment returned from the fragment
+	 */
+	public void processUpdatedComment(String text, boolean success) {
+		returnResult(text, success);
 	}
 
 	/**
