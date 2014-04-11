@@ -7,7 +7,7 @@ import android.widget.TextView;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
 
 /**
- * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture
+ * Fragment to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture
  * for display.
  */
 public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment {

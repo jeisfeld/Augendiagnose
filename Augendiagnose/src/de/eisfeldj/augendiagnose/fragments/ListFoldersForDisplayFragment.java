@@ -18,7 +18,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.Con
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
- * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
+ * Fragment to display the list of subfolders of the eye photo folder with the goal to display them after selection.
  */
 public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 

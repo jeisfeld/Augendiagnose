@@ -8,7 +8,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForSecondNameArrayAdapter;
 
 /**
- * Activity to display the pictures in an eye photo folder (in pairs) This is for the selection of a second picture for
+ * Fragment to display the pictures in an eye photo folder (in pairs) This is for the selection of a second picture for
  * display.
  */
 public class ListPicturesForSecondNameFragment extends ListPicturesForNameBaseFragment {

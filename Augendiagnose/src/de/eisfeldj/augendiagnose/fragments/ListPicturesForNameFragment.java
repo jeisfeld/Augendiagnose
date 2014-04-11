@@ -29,7 +29,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.Con
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 
 /**
- * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
+ * Fragment to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
  * directly, or another folder can be selected for a second picture.
  */
 public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment {

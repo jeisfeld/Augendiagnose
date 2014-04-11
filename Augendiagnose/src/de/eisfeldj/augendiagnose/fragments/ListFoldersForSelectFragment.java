@@ -15,7 +15,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersForSelectActivity;
 
 /**
- * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a name for
+ * Fragment to display the list of subfolders of the eye photo folder as dialog with the goal to select a name for
  * ordering new pictures. (The folder names equal the person names.)
  */
 public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
@@ -24,7 +24,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	private String preselectedName;
 
 	/**
-	 * Return an instance of the fragment and initialize it with parentFolder and preselectedName
+	 * Initialize the fragment with parentFolder and preselectedName
 	 * 
 	 * @param parentFolder
 	 * @param preselectedName

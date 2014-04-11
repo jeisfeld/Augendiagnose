@@ -18,7 +18,7 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
- * Base activity to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
+ * Base fragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
  * detailed actions.
  */
 public abstract class ListPicturesForNameBaseFragment extends Fragment {
@@ -33,7 +33,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	protected EyePhotoPair[] eyePhotoPairs;
 
 	/**
-	 * Return an instance of the fragment and initialize it with parentFolder and name
+	 * Initialize the fragment with parentFolder and name
 	 * @param parentFolder
 	 * @param name
 	 * @return

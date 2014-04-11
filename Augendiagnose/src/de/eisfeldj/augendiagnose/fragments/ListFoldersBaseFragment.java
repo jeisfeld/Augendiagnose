@@ -23,7 +23,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
 /**
- * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
+ * Base fragment to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseFragment extends ListFragment {
@@ -36,7 +36,7 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 	protected ArrayAdapter<String> directoryListAdapter;
 
 	/**
-	 * Return an instance of the fragment and initialize it with parentFolder
+	 * Initialize the fragment with parentFolder
 	 * 
 	 * @param parentFolder
 	 * @return

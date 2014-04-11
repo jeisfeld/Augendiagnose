@@ -6,7 +6,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Base Activity to display the list of subfolders of the eye photo folder
+ * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
+ * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseActivity extends Activity {
 	protected static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
