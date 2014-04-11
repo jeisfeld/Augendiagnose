@@ -34,6 +34,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 
 	/**
 	 * Initialize the fragment with parentFolder and name
+	 * 
 	 * @param parentFolder
 	 * @param name
 	 * @return
@@ -42,20 +43,20 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		Bundle args = new Bundle();
 		args.putString(STRING_PARENTFOLDER, parentFolder);
 		args.putString(STRING_NAME, name);
-		
+
 		setArguments(args);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		Bundle args = getArguments();
 
 		name = args.getString(STRING_NAME);
 		parentFolder = args.getString(STRING_PARENTFOLDER);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -78,7 +79,6 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		listview.setSelector(new StateListDrawable());
 	}
 
-
 	/**
 	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
 	 * 
@@ -90,6 +90,10 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
+
+		if (files == null) {
+			return new EyePhotoPair[0];
+		}
 
 		for (File f : files) {
 			EyePhoto eyePhoto = new EyePhoto(f);

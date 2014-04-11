@@ -20,8 +20,10 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
+import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
@@ -154,6 +156,14 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
 			}
 		}
+
+		// In two-pane mode, refresh right pane
+		if (getActivity() instanceof ListFoldersForDisplayActivity && Application.isTablet()) {
+			ListFoldersForDisplayActivity activity = (ListFoldersForDisplayActivity) getActivity();
+			activity.popBackStack();
+			activity.listPicturesForName(newFileName);
+		}
+
 	}
 
 	/**
@@ -228,9 +238,17 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 			final CharSequence inputText = getArguments().getCharSequence("inputText");
 			final int rowId = getArguments().getInt("rowId");
 
-			final EditText input = new EditText(getActivity());
-			input.setText(inputText);
-
+			// This is a workaround - better solution might be a layout.
+			// If the EditText is always recreated, then the content will be lost on orientation change.
+			EditText input0;
+			input0 = (EditText) getActivity().findViewById(R.id.editName);
+			if(input0 == null) {
+				input0 = new EditText(getActivity());
+				input0.setText(inputText);
+				input0.setId(R.id.editName);
+			}
+			final EditText input = input0;
+			
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()) //
 					.setTitle(R.string.title_dialog_change_name) //
 					.setView(input) //

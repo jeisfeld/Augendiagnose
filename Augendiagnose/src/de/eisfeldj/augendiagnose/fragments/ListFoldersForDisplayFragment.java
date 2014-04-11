@@ -45,10 +45,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			ListFoldersForDisplayFragment fragment = ListFoldersForDisplayFragment.this;
-
-			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(
-					fragment.parentFolder.getAbsolutePath(), ((TextView) view).getText().toString());
+			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(((TextView) view).getText().toString());
 		}
 	}
 
@@ -61,35 +58,41 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		CharSequence name = ((TextView) info.targetView).getText();
-		final int position = info.position;
+		if (item.getGroupId() == R.id.menugroup_name_list) {
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+			CharSequence name = ((TextView) info.targetView).getText();
+			final int position = info.position;
 
-		switch (item.getItemId()) {
-		case R.id.action_change_name:
-			showChangeNameDialog(name, position);
-			return true;
-		case R.id.action_delete_images:
-			ConfirmDeleteDialogListener listener = new ConfirmDeleteDialogListener() {
-				private static final long serialVersionUID = -90397353402300863L;
+			switch (item.getItemId()) {
+			case R.id.action_change_name:
+				showChangeNameDialog(name, position);
+				return true;
+			case R.id.action_delete_images:
+				ConfirmDeleteDialogListener listener = new ConfirmDeleteDialogListener() {
+					private static final long serialVersionUID = -90397353402300863L;
 
-				@Override
-				public void onDialogPositiveClick(DialogFragment dialog) {
-					deleteFolder(position);
-				}
+					@Override
+					public void onDialogPositiveClick(DialogFragment dialog) {
+						deleteFolder(position);
+					}
 
-				@Override
-				public void onDialogNegativeClick(DialogFragment dialog) {
-					// Do nothing
-				}
-			};
+					@Override
+					public void onDialogNegativeClick(DialogFragment dialog) {
+						// Do nothing
+					}
+				};
 
-			DialogUtil.displayDeleteConfirmationMessage(getActivity(), listener,
-					R.string.message_dialog_confirm_delete_folder, name);
-			return true;
-		default:
+				DialogUtil.displayDeleteConfirmationMessage(getActivity(), listener,
+						R.string.message_dialog_confirm_delete_folder, name);
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+			}
+		}
+		else {
 			return super.onContextItemSelected(item);
 		}
+
 	}
 
 }

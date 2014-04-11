@@ -8,13 +8,14 @@ import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPicturesForNameFragmentHolder;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
  * directly, or another folder can be selected for a second picture.
  */
-public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity {
+public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity implements ListPicturesForNameFragmentHolder {
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
@@ -70,6 +71,19 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	// implementation of ListPicturesForNameFragmentHolder
+
+	@Override
+	public ListPicturesForNameFragment getListPicturesForNameFragment() {
+		return (ListPicturesForNameFragment) fragment;
+	}
+
+
+	@Override
+	public void setListPicturesForNameFragment(ListPicturesForNameFragment fragment) {
+		this.fragment = fragment;
 	}
 
 
