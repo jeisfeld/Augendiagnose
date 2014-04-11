@@ -20,9 +20,9 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 public class SelectTwoPicturesActivity extends Activity {
 	public static final int REQUEST_CODE = 2;
 	private static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
-	private static final String STRING_EXTRA_FILENAME1 = "de.eisfeldj.augendiagnose.FILENAME1";
-	private static final String STRING_EXTRA_FILENAME2 = "de.eisfeldj.augendiagnose.FILENAME2";
 	private static final String STRING_EXTRA_FILENAMES = "de.eisfeldj.augendiagnose.FILENAMES";
+	private static final String STRING_RESULT_FILENAME1 = "de.eisfeldj.augendiagnose.FILENAME1";
+	private static final String STRING_RESULT_FILENAME2 = "de.eisfeldj.augendiagnose.FILENAME2";
 
 	private File folder;
 	private String[] fileNames;
@@ -62,7 +62,7 @@ public class SelectTwoPicturesActivity extends Activity {
 	public static FilePair getResult(int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
-			return new FilePair(res.getString(STRING_EXTRA_FILENAME1), res.getString(STRING_EXTRA_FILENAME2));
+			return new FilePair(res.getString(STRING_RESULT_FILENAME1), res.getString(STRING_RESULT_FILENAME2));
 		}
 		else {
 			return null;
@@ -126,8 +126,8 @@ public class SelectTwoPicturesActivity extends Activity {
 	 */
 	public void returnResult(String filename1, String filename2) {
 		Bundle resultData = new Bundle();
-		resultData.putCharSequence(STRING_EXTRA_FILENAME1, filename1);
-		resultData.putCharSequence(STRING_EXTRA_FILENAME2, filename2);
+		resultData.putCharSequence(STRING_RESULT_FILENAME1, filename1);
+		resultData.putCharSequence(STRING_RESULT_FILENAME2, filename2);
 		Intent intent = new Intent();
 		intent.putExtras(resultData);
 		setResult(RESULT_OK, intent);

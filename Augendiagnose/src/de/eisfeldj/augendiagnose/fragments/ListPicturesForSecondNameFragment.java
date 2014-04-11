@@ -12,8 +12,6 @@ import de.eisfeldj.augendiagnose.components.ListPicturesForSecondNameArrayAdapte
  * display.
  */
 public class ListPicturesForSecondNameFragment extends ListPicturesForNameBaseFragment {
-	public static final String STRING_EXTRA_FILEPATH = "de.eisfeldj.augendiagnose.FILEPATH";
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_second_name, container, false);

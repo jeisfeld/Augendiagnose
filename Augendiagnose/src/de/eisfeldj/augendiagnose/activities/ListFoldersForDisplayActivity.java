@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplayFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
@@ -17,7 +15,7 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 /**
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
  */
-public class ListFoldersForDisplayActivity extends Activity {
+public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
@@ -27,7 +25,7 @@ public class ListFoldersForDisplayActivity extends Activity {
 	 */
 	public static void startActivity(Context context, String foldername) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
-		intent.putExtra(ListFoldersBaseFragment.STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
@@ -37,6 +35,7 @@ public class ListFoldersForDisplayActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		ListFoldersForDisplayFragment fragment = new ListFoldersForDisplayFragment();
+		setFragmentParameters(fragment);
 
 		if (Application.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);
@@ -44,11 +43,8 @@ public class ListFoldersForDisplayActivity extends Activity {
 			getFragmentManager().executePendingTransactions();
 		}
 		else {
-			setContentView(R.layout.activity_fragments_single);
-			getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-			getFragmentManager().executePendingTransactions();
+			displayOnFullScreen(fragment);
 		}
-
 	}
 
 	/**
@@ -85,11 +81,12 @@ public class ListFoldersForDisplayActivity extends Activity {
 	public void listPicturesForName(String parentFolder, String name) {
 		if (Application.isTablet()) {
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
-			
+
 			ListPicturesForNameFragment fragment = new ListPicturesForNameFragment();
 			fragment.setParameters(parentFolder, name);
-			
-			FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragment_detail, fragment);
+
+			FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragment_detail,
+					fragment);
 			if (findViewById(R.id.listViewForName) != null) {
 				// if right pane is filled, then add it to the back stack
 				transaction.addToBackStack(null);

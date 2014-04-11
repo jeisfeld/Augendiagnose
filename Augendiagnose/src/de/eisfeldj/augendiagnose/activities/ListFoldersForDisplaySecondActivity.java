@@ -1,20 +1,15 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture
  * for display.
  */
-public class ListFoldersForDisplaySecondActivity extends Activity {
-	private static final String STRING_EXTRA_FILEPATH = "de.eisfeldj.augendiagnose.FILEPATH";
-
+public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity {
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
 	 * 
@@ -23,7 +18,7 @@ public class ListFoldersForDisplaySecondActivity extends Activity {
 	 */
 	public static void startActivity(Context context, String foldername) {
 		Intent intent = new Intent(context, ListFoldersForDisplaySecondActivity.class);
-		intent.putExtra(ListFoldersBaseFragment.STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
@@ -31,31 +26,9 @@ public class ListFoldersForDisplaySecondActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_fragments_single);
-
 		ListFoldersForDisplaySecondFragment fragment = new ListFoldersForDisplaySecondFragment();
-
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		getFragmentManager().executePendingTransactions();
-	}
-
-	
-	/**
-	 * Static helper method to extract the name of the selected file from the activity response
-	 * 
-	 * @param resultCode
-	 * @param data
-	 *            The activity response
-	 * @return
-	 */
-	public static String getResult(int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			Bundle res = data.getExtras();
-			return res.getString(STRING_EXTRA_FILEPATH);
-		}
-		else {
-			return "";
-		}
+		setFragmentParameters(fragment);
+		displayOnFullScreen(fragment);
 	}
 
 	/**
@@ -66,11 +39,7 @@ public class ListFoldersForDisplaySecondActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case ListPicturesForSecondNameActivity.REQUEST_CODE:
-			Bundle resultData = new Bundle();
-			resultData.putString(STRING_EXTRA_FILEPATH, ListPicturesForSecondNameActivity.getResult(resultCode, data));
-			Intent intent = new Intent();
-			intent.putExtras(resultData);
-			setResult(RESULT_OK, intent);
+			// When picture is selected, close also the list of names
 			finish();
 			break;
 		}

@@ -11,8 +11,8 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
  * detailed actions.
  */
 public abstract class ListPicturesForNameBaseActivity extends Activity {
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
+	protected static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
+	protected static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
 
 	public ListPicturesForNameBaseFragment fragment;
 

@@ -12,6 +12,7 @@ import de.eisfeldj.augendiagnose.R;
 public class EditCommentActivity extends Activity {
 
 	private static final String STRING_EXTRA_TEXT = "de.eisfeldj.augendiagnose.TEXT";
+	private static final String STRING_RESULT_TEXT = "de.eisfeldj.augendiagnose.RESULTTEXT";
 	public static final int REQUEST_CODE = 1;
 
 	private EditText editText;
@@ -35,19 +36,19 @@ public class EditCommentActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 		String text = getIntent().getStringExtra(STRING_EXTRA_TEXT);
-		
+
 		editText = (EditText) findViewById(R.id.input_edit_comment);
 		editText.setText(text);
-		
+
 		editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-		    @Override
-		    public void onFocusChange(View v, boolean hasFocus) {
-		        if (hasFocus) {
-		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		        }
-		    }
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+				}
+			}
 		});
-		
+
 		final Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
 		buttonCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -79,10 +80,10 @@ public class EditCommentActivity extends Activity {
 	 */
 	public void returnResult(String text, boolean success) {
 		Bundle resultData = new Bundle();
-		resultData.putCharSequence(STRING_EXTRA_TEXT, text);
+		resultData.putCharSequence(STRING_RESULT_TEXT, text);
 		Intent intent = new Intent();
 		intent.putExtras(resultData);
-		if(success) {
+		if (success) {
 			setResult(RESULT_OK, intent);
 		}
 		else {
@@ -90,7 +91,7 @@ public class EditCommentActivity extends Activity {
 		}
 		finish();
 	}
-	
+
 	/**
 	 * Static helper method to extract the name of the selected folder (= person name) from the activity response
 	 * 
@@ -102,7 +103,7 @@ public class EditCommentActivity extends Activity {
 	public static CharSequence getResult(int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
-			return res.getCharSequence(STRING_EXTRA_TEXT);
+			return res.getCharSequence(STRING_RESULT_TEXT);
 		}
 		else {
 			return null;

@@ -19,7 +19,24 @@ import de.eisfeldj.augendiagnose.activities.ListFoldersForSelectActivity;
  * ordering new pictures. (The folder names equal the person names.)
  */
 public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
+	private static final String STRING_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
+
 	private String preselectedName;
+
+	/**
+	 * Return an instance of the fragment and initialize it with parentFolder and preselectedName
+	 * 
+	 * @param parentFolder
+	 * @param preselectedName
+	 * @return
+	 */
+	public void setParameters(String parentFolder, String preselectedName) {
+		Bundle args = new Bundle();
+		args.putString(STRING_FOLDER, parentFolder);
+		args.putString(STRING_PRESELECTED_NAME, preselectedName);
+
+		setArguments(args);
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -38,8 +55,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	@Override
 	protected void createList() {
 		super.createList();
-		preselectedName = getActivity().getIntent().getStringExtra(
-				ListFoldersForSelectActivity.STRING_EXTRA_PRESELECTED_NAME);
+		preselectedName = getArguments().getString(STRING_PRESELECTED_NAME);
 		if (preselectedName == null || preselectedName.length() == 0) {
 			folderNames.add(0, getString(R.string.display_new_name));
 		}

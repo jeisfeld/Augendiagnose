@@ -13,9 +13,6 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  */
 public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseActivity {
 	public static final int REQUEST_CODE = 3;
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
-	public static final String STRING_EXTRA_FILEPATH = "de.eisfeldj.augendiagnose.FILEPATH";
 
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
@@ -38,24 +35,6 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	@Override
 	protected ListPicturesForNameBaseFragment getFragment() {
 		return new ListPicturesForSecondNameFragment();
-	}
-
-	/**
-	 * Static helper method to extract the name of the selected file from the activity response
-	 * 
-	 * @param resultCode
-	 * @param data
-	 *            The activity response
-	 * @return
-	 */
-	public static String getResult(int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			Bundle res = data.getExtras();
-			return res.getString(STRING_EXTRA_FILEPATH);
-		}
-		else {
-			return "";
-		}
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import de.eisfeldj.augendiagnose.util.EyePhoto;
  * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseFragment extends ListFragment {
-	public static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
+	protected static final String STRING_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
 
 	protected File parentFolder;
@@ -35,11 +35,26 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 	private File[] folders;
 	protected ArrayAdapter<String> directoryListAdapter;
 
+	/**
+	 * Return an instance of the fragment and initialize it with parentFolder
+	 * 
+	 * @param parentFolder
+	 * @return
+	 */
+	public void setParameters(String parentFolder) {
+		Bundle args = new Bundle();
+		args.putString(STRING_FOLDER, parentFolder);
+
+		setArguments(args);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		parentFolder = new File(getActivity().getIntent().getStringExtra(STRING_EXTRA_FOLDER));
+
+		Bundle args = getArguments();
+		parentFolder = new File(args.getString(STRING_FOLDER));
+
 		createList();
 	}
 
@@ -48,7 +63,7 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		setOnItemClickListener();
 	}
-	
+
 	/**
 	 * Listener for a shore click on a list item
 	 */

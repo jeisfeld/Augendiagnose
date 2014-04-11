@@ -15,9 +15,6 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  * directly, or another folder can be selected for a second picture.
  */
 public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity {
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	private static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
-
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.

@@ -3,7 +3,6 @@ package de.eisfeldj.augendiagnose.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForSelectFragment;
 
@@ -11,10 +10,12 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForSelectFragment;
  * Activity to display the list of subfolders of the eye photo folder as dialog with the goal to select a name for
  * ordering new pictures. (The folder names equal the person names.)
  */
-public class ListFoldersForSelectActivity extends Activity {
+public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	public static final int REQUEST_CODE = 1;
-	private static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
-	public static final String STRING_EXTRA_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
+	private static final String STRING_RESULT_NAME = "de.eisfeldj.augendiagnose.NAME";
+	private static final String STRING_EXTRA_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
+
+	private String preselectedName;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder and a potentially preselected new
@@ -25,7 +26,7 @@ public class ListFoldersForSelectActivity extends Activity {
 	 */
 	public static void startActivity(Activity activity, String foldername, String preselectedName) {
 		Intent intent = new Intent(activity, ListFoldersForSelectActivity.class);
-		intent.putExtra(ListFoldersBaseFragment.STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		intent.putExtra(STRING_EXTRA_PRESELECTED_NAME, preselectedName);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
@@ -34,12 +35,21 @@ public class ListFoldersForSelectActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_fragments_single);
+		preselectedName = getIntent().getStringExtra(STRING_EXTRA_PRESELECTED_NAME);
 
 		ListFoldersForSelectFragment fragment = new ListFoldersForSelectFragment();
+		setFragmentParameters(fragment);
+		displayOnFullScreen(fragment);
+	}
 
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		getFragmentManager().executePendingTransactions();
+	/**
+	 * Populate the fragment with parameters
+	 * 
+	 * @param fragment
+	 */
+	@Override
+	protected void setFragmentParameters(ListFoldersBaseFragment fragment) {
+		((ListFoldersForSelectFragment) fragment).setParameters(parentFolder, preselectedName);
 	}
 
 	/**
@@ -53,7 +63,7 @@ public class ListFoldersForSelectActivity extends Activity {
 	public static CharSequence getResult(int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
-			return res.getCharSequence(STRING_EXTRA_NAME);
+			return res.getCharSequence(STRING_RESULT_NAME);
 		}
 		else {
 			return "";
@@ -65,7 +75,7 @@ public class ListFoldersForSelectActivity extends Activity {
 	 */
 	public void returnResult(CharSequence result) {
 		Bundle resultData = new Bundle();
-		resultData.putCharSequence(STRING_EXTRA_NAME, result);
+		resultData.putCharSequence(STRING_RESULT_NAME, result);
 		Intent intent = new Intent();
 		intent.putExtras(resultData);
 		setResult(Activity.RESULT_OK, intent);
