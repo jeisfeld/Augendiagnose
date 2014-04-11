@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
@@ -208,23 +211,44 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 	 * @param rowId
 	 */
 	protected void showChangeNameDialog(final CharSequence inputText, final int rowId) {
-		final EditText input = new EditText(getActivity());
-		input.setText(inputText);
+		DisplayChangeNameFragment fragment = new DisplayChangeNameFragment();
+		Bundle bundle = new Bundle();
+		bundle.putCharSequence("inputText", inputText);
+		bundle.putInt("rowId", rowId);
+		fragment.setArguments(bundle);
+		fragment.show(getActivity().getFragmentManager(), DisplayChangeNameFragment.class.toString());
+	}
 
-		new AlertDialog.Builder(getActivity()) //
-				.setTitle(R.string.title_dialog_change_name) //
-				.setView(input) //
-				.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.dismiss();
-					}
-				}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						renameFolderAndFiles((int) rowId, input.getText().toString());
-					}
-				}).show();
+	/**
+	 * Fragment to display an error and stop the activity - return to parent activity.
+	 */
+	public static class DisplayChangeNameFragment extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final CharSequence inputText = getArguments().getCharSequence("inputText");
+			final int rowId = getArguments().getInt("rowId");
+
+			final EditText input = new EditText(getActivity());
+			input.setText(inputText);
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()) //
+					.setTitle(R.string.title_dialog_change_name) //
+					.setView(input) //
+					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
+							activity.fragment.renameFolderAndFiles((int) rowId, input.getText().toString());
+						}
+					});
+
+			return builder.create();
+		}
 	}
 
 }

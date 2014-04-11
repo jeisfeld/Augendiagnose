@@ -3,6 +3,8 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
 
 /**
@@ -10,6 +12,8 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
  * for display.
  */
 public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity {
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
 	 * 
@@ -26,9 +30,15 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		ListFoldersForDisplaySecondFragment fragment = new ListFoldersForDisplaySecondFragment();
-		setFragmentParameters(fragment);
-		displayOnFullScreen(fragment);
+		setContentView(R.layout.activity_fragments_single);
+
+		fragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+
+		if (fragment == null) {
+			fragment = new ListFoldersForDisplaySecondFragment();
+			setFragmentParameters(fragment);
+			displayOnFullScreen(fragment, FRAGMENT_TAG);
+		}
 	}
 
 	/**

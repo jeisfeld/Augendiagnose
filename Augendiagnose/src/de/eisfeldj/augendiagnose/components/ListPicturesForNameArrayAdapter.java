@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
+import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
@@ -19,9 +20,12 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArrayAdapter {
 
 	private Map<TextView, Integer> positionMap = new HashMap<TextView, Integer>();
+	private ListPicturesForNameFragment fragment;
 
-	public ListPicturesForNameArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
+	public ListPicturesForNameArrayAdapter(Activity activity, ListPicturesForNameFragment fragment,
+			EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
+		this.fragment = fragment;
 	}
 
 	public ListPicturesForNameArrayAdapter(Context context) {
@@ -58,7 +62,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 
 		positionMap.put(textView, position);
 
-		textView.setOnCreateContextMenuListener(activity);
+		textView.setOnCreateContextMenuListener(fragment);
 
 		return rowView;
 	}

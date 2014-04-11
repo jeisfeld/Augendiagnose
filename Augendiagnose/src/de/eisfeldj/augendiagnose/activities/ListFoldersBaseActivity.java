@@ -13,6 +13,7 @@ public abstract class ListFoldersBaseActivity extends Activity {
 	protected static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 
 	protected String parentFolder;
+	public ListFoldersBaseFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,8 @@ public abstract class ListFoldersBaseActivity extends Activity {
 	 * 
 	 * @param fragment
 	 */
-	protected void displayOnFullScreen(ListFoldersBaseFragment fragment) {
-		setContentView(R.layout.activity_fragments_single);
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+	protected void displayOnFullScreen(ListFoldersBaseFragment fragment, String tag) {
+		getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, tag).commit();
 		getFragmentManager().executePendingTransactions();
 	}
 

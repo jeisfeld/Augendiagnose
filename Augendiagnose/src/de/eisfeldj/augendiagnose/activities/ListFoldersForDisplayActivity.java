@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplayFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
@@ -16,6 +17,7 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
  */
 public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
@@ -32,19 +34,30 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		ListFoldersForDisplayFragment fragment = new ListFoldersForDisplayFragment();
-		setFragmentParameters(fragment);
 
 		if (Application.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);
-			getFragmentManager().beginTransaction().replace(R.id.fragment_list, fragment).commit();
-			getFragmentManager().executePendingTransactions();
 		}
 		else {
-			displayOnFullScreen(fragment);
+			setContentView(R.layout.activity_fragments_single);
 		}
+
+		fragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+
+		if (fragment == null) {
+			fragment = new ListFoldersForDisplayFragment();
+			setFragmentParameters(fragment);
+
+			if (Application.isTablet()) {
+				getFragmentManager().beginTransaction().replace(R.id.fragment_list, fragment, FRAGMENT_TAG).commit();
+				getFragmentManager().executePendingTransactions();
+			}
+			else {
+				displayOnFullScreen(fragment, FRAGMENT_TAG);
+			}
+		}
+
 	}
 
 	/**

@@ -15,6 +15,7 @@ public class EditCommentActivity extends Activity implements EditCommentCallback
 	private static final String STRING_EXTRA_TEXT = "de.eisfeldj.augendiagnose.TEXT";
 	private static final String STRING_RESULT_TEXT = "de.eisfeldj.augendiagnose.RESULTTEXT";
 	public static final int REQUEST_CODE = 1;
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
 	 * Static helper method to start the activity, passing the old value of the text
@@ -37,11 +38,13 @@ public class EditCommentActivity extends Activity implements EditCommentCallback
 
 		setContentView(R.layout.activity_fragments_single);
 
-		EditCommentFragment fragment = new EditCommentFragment();
-		fragment.setParameters(text);
+		if(getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+			EditCommentFragment fragment = new EditCommentFragment();
+			fragment.setParameters(text);
 
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		getFragmentManager().executePendingTransactions();
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().executePendingTransactions();
+		}
 	}
 
 	/**

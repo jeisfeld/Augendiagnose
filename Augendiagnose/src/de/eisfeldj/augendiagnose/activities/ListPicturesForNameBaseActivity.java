@@ -13,23 +13,28 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 public abstract class ListPicturesForNameBaseActivity extends Activity {
 	protected static final String STRING_EXTRA_NAME = "de.eisfeldj.augendiagnose.NAME";
 	protected static final String STRING_EXTRA_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	public ListPicturesForNameBaseFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		String name = getIntent().getStringExtra(STRING_EXTRA_NAME);
 		String parentFolder = getIntent().getStringExtra(STRING_EXTRA_PARENTFOLDER);
 
 		setContentView(R.layout.activity_fragments_single);
 
-		fragment = createFragment();
-		fragment.setParameters(parentFolder, name);
+		fragment = (ListPicturesForNameBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		getFragmentManager().executePendingTransactions();
+		if (fragment == null) {
+			fragment = createFragment();
+			fragment.setParameters(parentFolder, name);
+
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().executePendingTransactions();
+		}
 	}
 
 	/**

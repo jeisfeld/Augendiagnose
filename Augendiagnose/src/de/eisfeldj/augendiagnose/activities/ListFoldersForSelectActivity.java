@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnose.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForSelectFragment;
 
@@ -14,6 +15,7 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 	public static final int REQUEST_CODE = 1;
 	private static final String STRING_RESULT_NAME = "de.eisfeldj.augendiagnose.NAME";
 	private static final String STRING_EXTRA_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	private String preselectedName;
 
@@ -37,9 +39,15 @@ public class ListFoldersForSelectActivity extends ListFoldersBaseActivity {
 
 		preselectedName = getIntent().getStringExtra(STRING_EXTRA_PRESELECTED_NAME);
 
-		ListFoldersForSelectFragment fragment = new ListFoldersForSelectFragment();
-		setFragmentParameters(fragment);
-		displayOnFullScreen(fragment);
+		setContentView(R.layout.activity_fragments_single);
+
+		fragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+
+		if (fragment == null) {
+			fragment = new ListFoldersForSelectFragment();
+			setFragmentParameters(fragment);
+			displayOnFullScreen(fragment, FRAGMENT_TAG);
+		}
 	}
 
 	/**

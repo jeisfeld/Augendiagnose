@@ -54,7 +54,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 		buttonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), eyePhotoPairs);
+		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, eyePhotoPairs);
 		listview.setAdapter(adapter);
 	}
 	
@@ -72,7 +72,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			}
 		}
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), eyePhotoPairs);
+		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, eyePhotoPairs);
 		listview.setAdapter(adapter);
 	}
 

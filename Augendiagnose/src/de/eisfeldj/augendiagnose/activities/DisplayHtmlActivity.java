@@ -10,6 +10,7 @@ import de.eisfeldj.augendiagnose.fragments.DisplayHtmlFragment;
 public class DisplayHtmlActivity extends Activity {
 
 	private static final String STRING_EXTRA_RESOURCE = "de.eisfeldj.augendiagnose.RESOURCE";
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
 	 * Static helper method to start the activity, passing the resource holding the HTML as string
@@ -32,11 +33,13 @@ public class DisplayHtmlActivity extends Activity {
 
 		setContentView(R.layout.activity_fragments_single);
 
-		DisplayHtmlFragment fragment = new DisplayHtmlFragment();
-		fragment.setParameters(resource);
+		if(getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+			DisplayHtmlFragment fragment = new DisplayHtmlFragment();
+			fragment.setParameters(resource);
 
-		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		getFragmentManager().executePendingTransactions();
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().executePendingTransactions();
+		}
 	}
 
 }
