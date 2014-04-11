@@ -77,6 +77,7 @@ public class PinchImageView extends ImageView {
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
 			// populate bitmaps in separate thread, so that screen keeps fluid.
+			// This also ensures that this happens only after view is visible and sized.
 			new Thread() {
 				@Override
 				public void run() {

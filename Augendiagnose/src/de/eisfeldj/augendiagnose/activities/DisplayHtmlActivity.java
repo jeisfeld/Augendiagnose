@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.fragments.DisplayHtmlFragment;
 
 public class DisplayHtmlActivity extends Activity {
 
-	private static final String STYLE = "<style type=\"text/css\">body{color: #fff}</style>";
 	private static final String STRING_EXTRA_RESOURCE = "de.eisfeldj.augendiagnose.RESOURCE";
 
 	/**
@@ -27,17 +26,17 @@ public class DisplayHtmlActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display_html);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		int resource = getIntent().getIntExtra(STRING_EXTRA_RESOURCE, -1);
 
-		WebView webView = (WebView) findViewById(R.id.webViewDisplayHtml);
-		webView.setBackgroundColor(0x00000000);
-		String html = getString(resource);
-		int index = html.indexOf("</head>");
-		html = html.substring(0, index) + STYLE + html.substring(index);
-		webView.loadData(html, "text/html", "UTF-8");
+		setContentView(R.layout.activity_fragments_single);
+
+		DisplayHtmlFragment fragment = new DisplayHtmlFragment();
+		fragment.setParameters(resource);
+
+		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		getFragmentManager().executePendingTransactions();
 	}
 
 }

@@ -25,7 +25,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 
 		setContentView(R.layout.activity_fragments_single);
 
-		fragment = getFragment();
+		fragment = createFragment();
 		fragment.setParameters(parentFolder, name);
 
 		getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
@@ -35,7 +35,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 	/**
 	 * Factory method to retrieve the fragment
 	 */
-	protected abstract ListPicturesForNameBaseFragment getFragment();
+	protected abstract ListPicturesForNameBaseFragment createFragment();
 
 	/**
 	 * onClick action for Button "additional pictures"

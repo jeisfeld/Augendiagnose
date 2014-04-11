@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.components.PinchImageView;
+import de.eisfeldj.augendiagnose.fragments.DisplayTwoFragment;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves)
@@ -14,8 +14,9 @@ public class DisplayTwoActivity extends Activity {
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
 
-	private String file1, file2;
-	private PinchImageView imageView1, imageView2;
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+	
+	private DisplayTwoFragment fragment;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
@@ -37,25 +38,32 @@ public class DisplayTwoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display_two);
 
-		file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
-		file2 = getIntent().getStringExtra(STRING_EXTRA_FILE2);
+		String file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
+		String file2 = getIntent().getStringExtra(STRING_EXTRA_FILE2);
 
-		imageView1 = (PinchImageView) findViewById(R.id.mainImage1);
-		imageView2 = (PinchImageView) findViewById(R.id.mainImage2);
-	}
+		setContentView(R.layout.activity_fragments_single);
+		
+		fragment = (DisplayTwoFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-	/**
-	 * Creating the bitmaps only after creation, so that the views have already determined size.
-	 */
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		if (hasFocus) {
-			imageView1.setImage(file1, this, 1);
-			imageView2.setImage(file2, this, 2);
+		if (fragment == null) {
+			fragment = new DisplayTwoFragment();
+			fragment.setParameters(file1, file2);
+
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().executePendingTransactions();
 		}
 	}
+	
+	/**
+	 * Workaround to ensure that all views have restored status before images are re-initialized
+	 */
+	@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+		if(hasFocus) {
+			fragment.initializeImages();
+		}
+    }
+	
 
 }

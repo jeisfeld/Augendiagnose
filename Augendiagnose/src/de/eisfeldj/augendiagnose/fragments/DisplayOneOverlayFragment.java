@@ -1,27 +1,28 @@
-package de.eisfeldj.augendiagnose.activities;
+package de.eisfeldj.augendiagnose.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.EditCommentActivity;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
- * Variant of DisplayOneActivity that includes overlay handling
+ * Variant of DisplayOneFragment that includes overlay handling
  * 
  * @author Joerg
  */
-public class DisplayOneActivityOverlay extends DisplayOneActivity implements GuiElementUpdater {
+public class DisplayOneOverlayFragment extends DisplayOneFragment implements GuiElementUpdater {
 
 	private OverlayPinchImageView imageView;
 	private static final int CONTRAST_MAX = 5;
@@ -35,49 +36,31 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	private SeekBar seekbarContrast;
 
 	/**
-	 * Static helper method to start the activity, passing the path of the picture.
-	 * 
-	 * @param context
-	 * @param filename
-	 */
-	public static void startActivity(Context context, String filename) {
-		Intent intent = new Intent(context, DisplayOneActivityOverlay.class);
-		intent.putExtra(STRING_EXTRA_FILE, filename);
-		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILENAME);
-		context.startActivity(intent);
-	}
-
-	/**
-	 * Static helper method to start the activity, passing the path of the picture.
-	 * 
-	 * @param context
-	 * @param filename
-	 */
-	public static void startActivity(Context context, int fileResource) {
-		Intent intent = new Intent(context, DisplayOneActivityOverlay.class);
-		intent.putExtra(STRING_EXTRA_FILERESOURCE, fileResource);
-		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILERESOURCE);
-		context.startActivity(intent);
-	}
-
-	/**
-	 * Build the screen on creation
+	 * Inflate View
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_display_one_overlay, container, false);
+	}
+
+	/**
+	 * Update data from view
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		imageView = (OverlayPinchImageView) super.imageView;
 		imageView.setGuiElementUpdater(this);
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
-		toggleOverlayButtons[0] = (ToggleButton) findViewById(R.id.toggleButtonOverlayCircle);
-		toggleOverlayButtons[1] = (ToggleButton) findViewById(R.id.toggleButtonOverlay1);
-		toggleOverlayButtons[2] = (ToggleButton) findViewById(R.id.toggleButtonOverlay2);
-		toggleOverlayButtons[3] = (ToggleButton) findViewById(R.id.toggleButtonOverlay3);
-		toggleOverlayButtons[4] = (ToggleButton) findViewById(R.id.toggleButtonOverlay4);
-		toggleOverlayButtons[5] = (ToggleButton) findViewById(R.id.toggleButtonOverlay5);
+		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
+		toggleOverlayButtons[1] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay1);
+		toggleOverlayButtons[2] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay2);
+		toggleOverlayButtons[3] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay3);
+		toggleOverlayButtons[4] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay4);
+		toggleOverlayButtons[5] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay5);
 
-		lockButton = (ToggleButton) findViewById(R.id.toggleButtonLink);
+		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
 		if (!Application.isAuthorized()) {
 			toggleOverlayButtons[4].setEnabled(false);
@@ -87,7 +70,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 		}
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
-		seekbarBrightness = (SeekBar) findViewById(R.id.seekBarBrightness);
+		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
 		seekbarBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -105,7 +88,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 			}
 		});
 
-		seekbarContrast = (SeekBar) findViewById(R.id.seekBarContrast);
+		seekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
 		seekbarContrast.setMax(CONTRAST_MAX * CONTRAST_DENSITY);
 		seekbarContrast.setProgress(CONTRAST_DENSITY);
 		seekbarContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -128,12 +111,6 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 		if (JpegMetadataUtil.changeJpegAllowed()) {
 			registerForContextMenu(imageView);
 		}
-
-	}
-
-	@Override
-	protected int getContentView() {
-		return R.layout.activity_display_one_overlay;
 	}
 
 	/**
@@ -141,7 +118,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	 * 
 	 * @param view
 	 */
-	private void onToggleOverlayClicked(View view, int position) {
+	public void onToggleOverlayClicked(View view, int position) {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			if (position != i) {
 				toggleOverlayButtons[i].setChecked(false);
@@ -149,60 +126,6 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 		}
 
 		imageView.triggerOverlay(position);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 1
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay0Clicked(View view) {
-		onToggleOverlayClicked(view, 0);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 1
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay1Clicked(View view) {
-		onToggleOverlayClicked(view, 1);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 2
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay2Clicked(View view) {
-		onToggleOverlayClicked(view, 2);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 3
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay3Clicked(View view) {
-		onToggleOverlayClicked(view, 3);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 4
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay4Clicked(View view) {
-		onToggleOverlayClicked(view, 4);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 5
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay5Clicked(View view) {
-		onToggleOverlayClicked(view, 5);
 	}
 
 	/**
@@ -221,7 +144,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
 	}
 
@@ -232,7 +155,7 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_edit_comment:
-			EditCommentActivity.startActivity(this, imageView.getMetadata().comment);
+			EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
 			return true;
 		case R.id.action_store_brightness:
 			imageView.storeBrightnessContrast(false);
@@ -249,17 +172,12 @@ public class DisplayOneActivityOverlay extends DisplayOneActivity implements Gui
 	}
 
 	/**
-	 * When getting the response from the name selection, update the name field in the display.
+	 * Store the comment in the image
+	 * 
+	 * @param comment
 	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case EditCommentActivity.REQUEST_CODE:
-			if (resultCode == RESULT_OK) {
-				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
-				imageView.storeComment(comment.toString());
-			}
-		}
+	public void storeComment(String comment) {
+		imageView.storeComment(comment);
 	}
 
 	// Implementation of GuiElementUpdater

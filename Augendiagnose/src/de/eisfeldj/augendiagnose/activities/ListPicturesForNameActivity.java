@@ -35,7 +35,7 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 * Get the fragment displayed in the activity
 	 */
 	@Override
-	protected ListPicturesForNameBaseFragment getFragment() {
+	protected ListPicturesForNameBaseFragment createFragment() {
 		return new ListPicturesForNameFragment();
 	}
 

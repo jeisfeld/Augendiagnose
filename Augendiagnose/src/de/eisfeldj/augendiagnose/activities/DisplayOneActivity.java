@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.components.PinchImageView;
+import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
 
 /**
  * Activity to display one photo on full screen
@@ -19,10 +19,8 @@ public class DisplayOneActivity extends Activity {
 	protected static final int TYPE_FILENAME = 1;
 	protected static final int TYPE_FILERESOURCE = 2;
 
-	protected int type;
-	protected int fileResource;
-	protected String file;
-	protected PinchImageView imageView;
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+	protected DisplayOneFragment fragment;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -56,38 +54,45 @@ public class DisplayOneActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(getContentView());
 
-		type = getIntent().getIntExtra(STRING_EXTRA_TYPE, -1);
-		file = getIntent().getStringExtra(STRING_EXTRA_FILE);
-		fileResource = getIntent().getIntExtra(STRING_EXTRA_FILERESOURCE, -1);
+		int type = getIntent().getIntExtra(STRING_EXTRA_TYPE, -1);
+		String file = getIntent().getStringExtra(STRING_EXTRA_FILE);
+		int fileResource = getIntent().getIntExtra(STRING_EXTRA_FILERESOURCE, -1);
 
-		imageView = (PinchImageView) findViewById(R.id.mainImage);
-	}
+		setContentView(R.layout.activity_fragments_single);
 
-	/**
-	 * Get the content view resource
-	 * 
-	 * @return
-	 */
-	protected int getContentView() {
-		return R.layout.activity_display_one;
-	}
+		fragment = (DisplayOneFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-	/**
-	 * Creating the bitmaps only after creation, so that the views have already determined size.
-	 */
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		if (hasFocus) {
-			if (type == TYPE_FILERESOURCE) {
-				imageView.setImage(fileResource, this, 1);
+		if (fragment == null) {
+			fragment = createFragment();
+			if (type == TYPE_FILENAME) {
+				fragment.setParameters(file);
 			}
 			else {
-				imageView.setImage(file, this, 1);
+				fragment.setParameters(fileResource);
 			}
+
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().executePendingTransactions();
 		}
 	}
 
+	/**
+	 * Factory method to return the fragment
+	 * 
+	 * @return
+	 */
+	protected DisplayOneFragment createFragment() {
+		return new DisplayOneFragment();
+	}
+
+	/**
+	 * Workaround to ensure that all views have restored status before images are re-initialized
+	 */
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (hasFocus) {
+			fragment.initializeImages();
+		}
+	}
 }
