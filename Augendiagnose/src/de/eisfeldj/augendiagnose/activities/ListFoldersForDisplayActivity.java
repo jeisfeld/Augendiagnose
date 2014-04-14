@@ -65,6 +65,9 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 				}
 
 				getFragmentManager().executePendingTransactions();
+				
+				// In tablet view, different title is more appropriate
+				setTitle(getString(R.string.title_activity_list_pictures_for_name));
 			}
 			else {
 				displayOnFullScreen(fragment, FRAGMENT_TAG);
