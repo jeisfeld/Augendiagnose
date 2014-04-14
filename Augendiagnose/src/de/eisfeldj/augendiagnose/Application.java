@@ -97,6 +97,18 @@ public class Application extends android.app.Application {
 	}
 
 	/**
+	 * Set a Boolean shared preference
+	 * 
+	 * @param preferenceId
+	 * @param b
+	 */
+	public static void setSharedPreferenceBoolean(int preferenceId, boolean b) {
+		Editor editor = getSharedPreferences().edit();
+		editor.putBoolean(context.getString(preferenceId), b);
+		editor.commit();
+	}
+
+	/**
 	 * Check if the application has an authorized user key
 	 * 
 	 * @return

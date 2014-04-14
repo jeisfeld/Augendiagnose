@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnose.activities;
 
+import java.io.File;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -56,6 +58,12 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 
 			if (Application.isTablet()) {
 				getFragmentManager().beginTransaction().add(R.id.fragment_list, fragment, FRAGMENT_TAG).commit();
+
+				String defaultName = Application.getSharedPreferenceString(R.string.key_internal_last_name);
+				if (defaultName.length() > 0 && new File(parentFolder, defaultName).exists()) {
+					listPicturesForName(defaultName);
+				}
+
 				getFragmentManager().executePendingTransactions();
 			}
 			else {
@@ -116,6 +124,10 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		else {
 			ListPicturesForNameActivity.startActivity(this, parentFolder, name);
 		}
+
+		// Store the name so that it may be opened automatically next time
+		Application.setSharedPreferenceString(R.string.key_internal_last_name, name);
+		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 	}
 
 	/**

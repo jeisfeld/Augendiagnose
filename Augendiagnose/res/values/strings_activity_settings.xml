@@ -39,5 +39,7 @@
     <string name="key_user_key" translatable="false">user_key</string>
     
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
+    <string name="key_internal_last_name" translatable="false">last_name</string>
+    <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
     
 </resources>

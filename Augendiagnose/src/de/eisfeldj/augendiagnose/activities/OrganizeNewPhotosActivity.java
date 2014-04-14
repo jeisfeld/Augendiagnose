@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
@@ -396,6 +397,10 @@ public class OrganizeNewPhotosActivity extends Activity {
 		targetPhotoRight.addToMediaStore();
 		targetPhotoLeft.addToMediaStore();
 
+		// Store the name so that it may be opened automatically
+		Application.setSharedPreferenceString(R.string.key_internal_last_name, name);
+		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
+
 		finish();
 	}
 
@@ -414,7 +419,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * When getting the response from the name selection, update the name field in the display.
+	 * Handle the result of a called activity - either the selection of the name or the selection of two pictures
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
