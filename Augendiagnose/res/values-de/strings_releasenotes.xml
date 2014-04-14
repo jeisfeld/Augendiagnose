@@ -49,7 +49,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Ein weiteres (italienisches) Overlay. Startinformation für neue Nutzer. Bugfixes.</item>
         <item>Kontextmenü bei Fotoansicht: Speicherung von Helligkeit und Kontrast. Bearbeitung von Bildkommentaren. Kleinere Verbesserungen.</item>
         <item>Löschen von Fotos und Änderung des Datums ist über Kontextmenü möglich. Kleinere Verbesserungen und Bugfixes.</item>
-        <item>Einführung eines gesonderten Designs für Tablets.</item>
+        <item>Einführung eines gesonderten Designs für Tablets - Liste der Namen und Liste der Bilder werden gleichzeitig angezeigt.</item>
         </string-array>
 
 </resources>
