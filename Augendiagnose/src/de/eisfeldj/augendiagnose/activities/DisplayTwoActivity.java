@@ -1,16 +1,17 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+//require support library because nested fragments are natively supported only from API version 17.
+import android.support.v4.app.FragmentActivity;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayTwoFragment;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves)
  */
-public class DisplayTwoActivity extends Activity {
+public class DisplayTwoActivity extends FragmentActivity {
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
 
@@ -44,14 +45,14 @@ public class DisplayTwoActivity extends Activity {
 
 		setContentView(R.layout.activity_fragments_single);
 		
-		fragment = (DisplayTwoFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		fragment = (DisplayTwoFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
 		if (fragment == null) {
 			fragment = new DisplayTwoFragment();
 			fragment.setParameters(file1, file2);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
-			getFragmentManager().executePendingTransactions();
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getSupportFragmentManager().executePendingTransactions();
 		}
 	}
 	

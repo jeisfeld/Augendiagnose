@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:baselineAligned="false"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <de.eisfeldj.augendiagnose.components.OverlayPinchImageView
-        android:id="@+id/mainImage1"
+    <FrameLayout
+        android:id="@+id/fragment_image1"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="2dp"
-        android:layout_weight="1.0"
-        android:height="0dp" />
+        android:layout_weight="1" />
 
-    <de.eisfeldj.augendiagnose.components.OverlayPinchImageView
-        android:id="@+id/mainImage2"
+    <FrameLayout
+        android:id="@+id/fragment_image2"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
-        android:layout_weight="1.0"
-        android:height="0dp" />
+        android:layout_weight="1" />
 
 </LinearLayout>

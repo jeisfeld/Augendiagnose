@@ -1,9 +1,10 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+// require support library because nested fragments are natively supported only from API version 17.
+import android.support.v4.app.FragmentActivity;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
 
@@ -12,7 +13,7 @@ import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
  * 
  * @author Joerg
  */
-public class DisplayOneActivity extends Activity {
+public class DisplayOneActivity extends FragmentActivity {
 	protected static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	protected static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
 	protected static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
@@ -61,19 +62,19 @@ public class DisplayOneActivity extends Activity {
 
 		setContentView(R.layout.activity_fragments_single);
 
-		fragment = (DisplayOneFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		fragment = (DisplayOneFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
 		if (fragment == null) {
 			fragment = createFragment();
 			if (type == TYPE_FILENAME) {
-				fragment.setParameters(file);
+				fragment.setParameters(file, 1);
 			}
 			else {
-				fragment.setParameters(fileResource);
+				fragment.setParameters(fileResource, 1);
 			}
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
-			getFragmentManager().executePendingTransactions();
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getSupportFragmentManager().executePendingTransactions();
 		}
 	}
 

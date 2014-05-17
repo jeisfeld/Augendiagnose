@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.fragments;
 
-import android.app.Fragment;
+//require support library because nested fragments are natively supported only from API version 17.
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,25 +18,29 @@ public class DisplayOneFragment extends Fragment {
 	protected static final String STRING_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	protected static final String STRING_FILE = "de.eisfeldj.augendiagnose.FILE";
 	protected static final String STRING_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
+	protected static final String STRING_IMAGEINDEX = "de.eisfeldj.augendiagnose.IMAGEINDEX";
 	protected static final int TYPE_FILENAME = 1;
 	protected static final int TYPE_FILERESOURCE = 2;
 
 	protected int type;
 	protected int fileResource;
 	protected String file;
+	protected int imageIndex;
 	protected PinchImageView imageView;
 
 	/**
 	 * Initialize the fragment with the file name
 	 * 
 	 * @param text
+	 * @param imageIndex The index of the view (required if there are multiple such fragments)
 	 * @return
 	 */
-	public void setParameters(String file) {
+	public void setParameters(String file, int imageIndex) {
 		Bundle args = new Bundle();
 		args.putString(STRING_FILE, file);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
-
+		args.putInt(STRING_IMAGEINDEX, imageIndex);
+		
 		setArguments(args);
 	}
 
@@ -43,12 +48,14 @@ public class DisplayOneFragment extends Fragment {
 	 * Initialize the fragment with the file resource
 	 * 
 	 * @param text
+	 * @param imageIndex The index of the view (required if there are multiple such fragments)
 	 * @return
 	 */
-	public void setParameters(int fileResource) {
+	public void setParameters(int fileResource, int imageIndex) {
 		Bundle args = new Bundle();
 		args.putInt(STRING_FILERESOURCE, fileResource);
 		args.putInt(STRING_TYPE, TYPE_FILERESOURCE);
+		args.putInt(STRING_IMAGEINDEX, imageIndex);
 
 		setArguments(args);
 	}
@@ -63,6 +70,7 @@ public class DisplayOneFragment extends Fragment {
 		type = getArguments().getInt(STRING_TYPE, -1);
 		file = getArguments().getString(STRING_FILE);
 		fileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
+		imageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
 	}
 
 	/**
@@ -88,10 +96,10 @@ public class DisplayOneFragment extends Fragment {
 	 */
 	public void initializeImages() {
 		if (type == TYPE_FILERESOURCE) {
-			imageView.setImage(fileResource, getActivity(), 1);
+			imageView.setImage(fileResource, getActivity(), imageIndex);
 		}
 		else {
-			imageView.setImage(file, getActivity(), 1);
+			imageView.setImage(file, getActivity(), imageIndex);
 		}
 	}
 }
