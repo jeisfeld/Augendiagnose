@@ -58,7 +58,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	private Bitmap mBitmapSmall;
 	private Metadata mMetadata;
 
-	private boolean mHasCoordinates = false;
+	private boolean mHasOverlayPosition = false;
+	private boolean mHasViewPosition = false;
 
 	private GuiElementUpdater guiElementUpdater;
 
@@ -82,7 +83,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param activity
 	 *            The triggering activity (required for bitmap caching)
 	 * @param cacheIndex
-	 *            A unique index of the view in the activity	 
+	 *            A unique index of the view in the activity
 	 */
 	@Override
 	public void setImage(String pathName, Activity activity, int cacheIndex) {
@@ -94,7 +95,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		mBitmapSmall = retainFragment.bitmapSmall;
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
-			mHasCoordinates = false;
+			mHasOverlayPosition = false;
 			mPathName = pathName;
 			mBitmap = null;
 
@@ -111,8 +112,8 @@ public class OverlayPinchImageView extends PinchImageView {
 					post(new Runnable() {
 						@Override
 						public void run() {
-							if (mMetadata != null && mMetadata.hasCoordinates()) {
-								mHasCoordinates = true;
+							if (mMetadata != null && mMetadata.hasOverlayPosition()) {
+								mHasOverlayPosition = true;
 								mOverlayX = mMetadata.xCenter * mBitmap.getWidth();
 								mOverlayY = mMetadata.yCenter * mBitmap.getHeight();
 								mOverlayScaleFactor = mMetadata.overlayScaleFactor
@@ -125,6 +126,12 @@ public class OverlayPinchImageView extends PinchImageView {
 							else {
 								// initial position of overlay
 								resetOverlayPosition(false);
+							}
+							if (mMetadata != null && mMetadata.hasViewPosition()) {
+								mHasViewPosition = true;
+								mPosX = mMetadata.xPosition;
+								mPosY = mMetadata.yPosition;
+								mScaleFactor = mMetadata.zoomFactor;
 							}
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
 								mBrightness = mMetadata.brightness.floatValue();
@@ -160,7 +167,15 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	@Override
 	protected void doInitialScaling() {
-		if (!mInitialized && mHasCoordinates) {
+		// If available, use stored position
+		if (!mInitialized && mHasViewPosition) {
+			mPosX = mMetadata.xPosition;
+			mPosY = mMetadata.yPosition;
+			mScaleFactor = mMetadata.zoomFactor;
+			mInitialized = true;
+		}
+		// Otherwise, if available, use overlay position
+		if (!mInitialized && mHasOverlayPosition) {
 			mPosX = mOverlayX;
 			mPosY = mOverlayY;
 			mScaleFactor = 1f;
@@ -170,6 +185,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mInitialized = true;
 			}
 		}
+		// Otherwise, use default (set if mInitialized = false)
 		super.doInitialScaling();
 	}
 
@@ -473,25 +489,52 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            delete brightness and contrast from metadata.
 	 */
 	public void storeBrightnessContrast(boolean delete) {
-		if (mInitialized) {
-			if (mMetadata != null) {
-				if (delete) {
-					mMetadata.brightness = null;
-					mMetadata.contrast = null;
-					mBrightness = 0;
-					mContrast = 1;
-					if (guiElementUpdater != null) {
-						guiElementUpdater.updateSeekbarBrightness(mBrightness);
-						guiElementUpdater.updateSeekbarContrast(mContrast);
-					}
+		if (mInitialized && mMetadata != null) {
+			if (delete) {
+				mMetadata.brightness = null;
+				mMetadata.contrast = null;
+				mBrightness = 0;
+				mContrast = 1;
+				if (guiElementUpdater != null) {
+					guiElementUpdater.updateSeekbarBrightness(mBrightness);
+					guiElementUpdater.updateSeekbarContrast(mContrast);
 				}
-				else {
-					mMetadata.brightness = mBrightness;
-					mMetadata.contrast = mContrast;
-				}
-
-				mEyePhoto.storeImageMetadata(mMetadata);
 			}
+			else {
+				mMetadata.brightness = mBrightness;
+				mMetadata.contrast = mContrast;
+			}
+
+			mEyePhoto.storeImageMetadata(mMetadata);
+		}
+	}
+
+	/**
+	 * Store position and zoom in the image metadata
+	 * 
+	 * @param delete
+	 *            delete position and zoom from metadata.
+	 */
+	public void storePositionZoom(boolean delete) {
+		if (mInitialized && mMetadata != null) {
+			if (delete) {
+				mHasViewPosition = false;
+				mMetadata.xPosition = null;
+				mMetadata.yPosition = null;
+				mMetadata.zoomFactor = null;
+
+				// Reset to original view size
+				mInitialized = false;
+				doInitialScaling();
+			}
+			else {
+				mHasViewPosition = true;
+				mMetadata.xPosition = mPosX;
+				mMetadata.yPosition = mPosY;
+				mMetadata.zoomFactor = mScaleFactor;
+			}
+
+			mEyePhoto.storeImageMetadata(mMetadata);
 		}
 	}
 

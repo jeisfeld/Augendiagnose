@@ -163,6 +163,12 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		case R.id.action_reset_brightness:
 			imageView.storeBrightnessContrast(true);
 			return true;
+		case R.id.action_store_position:
+			imageView.storePositionZoom(false);
+			return true;
+		case R.id.action_reset_position:
+			imageView.storePositionZoom(true);
+			return true;
 		case R.id.action_delete_overlay_position:
 			imageView.resetOverlayPosition(true);
 			return true;

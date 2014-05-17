@@ -111,19 +111,24 @@ public abstract class JpegMetadataUtil {
 		String xmpString = Imaging.getXmpXml(imageFile);
 		XmpHandler parser = new XmpHandler(xmpString);
 
-		// Some fields can be filled only from custom data
+		// Standard fields are pre-filled with custom data
+		result.title = parser.getJeItem(XmpHandler.ITEM_TITLE);
+		result.description = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
+		result.subject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
+		result.comment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
+		result.person = parser.getJeItem(XmpHandler.ITEM_PERSON);
+
 		result.setXCenter(parser.getJeItem(XmpHandler.ITEM_X_CENTER));
 		result.setYCenter(parser.getJeItem(XmpHandler.ITEM_Y_CENTER));
 		result.setOverlayScaleFactor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR));
+		result.setXPosition(parser.getJeItem(XmpHandler.ITEM_X_POSITION));
+		result.setYPosition(parser.getJeItem(XmpHandler.ITEM_Y_POSITION));
+		result.setZoomFactor(parser.getJeItem(XmpHandler.ITEM_ZOOM_FACTOR));
 		result.organizeDate = parser.getJeDate(XmpHandler.ITEM_ORGANIZE_DATE);
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
-		result.description = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
-		result.subject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
-		result.person = parser.getJeItem(XmpHandler.ITEM_PERSON);
-		result.title = parser.getJeItem(XmpHandler.ITEM_TITLE);
-		result.comment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
+
 
 		// For standard fields, use custom data only if there is no other data.
 		if(result.description == null) {
@@ -332,9 +337,13 @@ public abstract class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_SUBJECT, metadata.subject);
 			parser.setJeItem(XmpHandler.ITEM_COMMENT, metadata.comment);
 			parser.setJeItem(XmpHandler.ITEM_PERSON, metadata.person);
+
 			parser.setJeItem(XmpHandler.ITEM_X_CENTER, metadata.getXCenterString());
 			parser.setJeItem(XmpHandler.ITEM_Y_CENTER, metadata.getYCenterString());
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_SCALE_FACTOR, metadata.getOverlayScaleFactorString());
+			parser.setJeItem(XmpHandler.ITEM_X_POSITION, metadata.getXPositionString());
+			parser.setJeItem(XmpHandler.ITEM_Y_POSITION, metadata.getYPositionString());
+			parser.setJeItem(XmpHandler.ITEM_ZOOM_FACTOR, metadata.getZoomFactorString());
 			parser.setJeDate(XmpHandler.ITEM_ORGANIZE_DATE, metadata.organizeDate);
 			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
 			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
@@ -388,6 +397,9 @@ public abstract class JpegMetadataUtil {
 		public Float xCenter = null;
 		public Float yCenter = null;
 		public Float overlayScaleFactor = null;
+		public Float xPosition = null;
+		public Float yPosition = null;
+		public Float zoomFactor = null;
 		public Date organizeDate = null;
 		public RightLeft rightLeft = null;
 		public Float brightness = null;
@@ -397,25 +409,12 @@ public abstract class JpegMetadataUtil {
 
 		}
 
-		public Metadata(String title, String description, String subject, String comment, String person,
-				Float xPosition, Float yPosition, Float scaleFactor, Date organizeDate, RightLeft rightLeft,
-				Float brightness, Float contrast) {
-			this.title = title;
-			this.description = description;
-			this.subject = subject;
-			this.comment = comment;
-			this.person = person;
-			this.xCenter = xPosition;
-			this.yCenter = yPosition;
-			this.overlayScaleFactor = scaleFactor;
-			this.organizeDate = organizeDate;
-			this.rightLeft = rightLeft;
-			this.brightness = brightness;
-			this.contrast = contrast;
+		public boolean hasOverlayPosition() {
+			return xCenter != null && yCenter != null && overlayScaleFactor != null;
 		}
 
-		public boolean hasCoordinates() {
-			return xCenter != null && yCenter != null && overlayScaleFactor != null;
+		public boolean hasViewPosition() {
+			return xPosition != null && yPosition != null && zoomFactor != null;
 		}
 
 		public boolean hasBrightnessContrast() {
@@ -446,6 +445,30 @@ public abstract class JpegMetadataUtil {
 			return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
 		}
 
+		public void setXPosition(String value) {
+			xPosition = value == null ? null : Float.parseFloat(value);
+		}
+
+		public String getXPositionString() {
+			return xPosition == null ? null : xPosition.toString();
+		}
+
+		public void setYPosition(String value) {
+			yPosition = value == null ? null : Float.parseFloat(value);
+		}
+
+		public String getYPositionString() {
+			return yPosition == null ? null : yPosition.toString();
+		}
+
+		public void setZoomFactor(String value) {
+			zoomFactor = value == null ? null : Float.parseFloat(value);
+		}
+
+		public String getZoomFactorString() {
+			return zoomFactor == null ? null : zoomFactor.toString();
+		}
+		
 		private long getOrganizeDateLong() {
 			return organizeDate == null ? 0 : organizeDate.getTime();
 		}

@@ -40,6 +40,9 @@ public class XmpHandler {
 	public static final String ITEM_X_CENTER = "xCenter";
 	public static final String ITEM_Y_CENTER = "yCenter";
 	public static final String ITEM_OVERLAY_SCALE_FACTOR = "overlayScaleFactor";
+	public static final String ITEM_X_POSITION = "xPosition";
+	public static final String ITEM_Y_POSITION = "yPosition";
+	public static final String ITEM_ZOOM_FACTOR = "zoomFactor";
 	public static final String ITEM_ORGANIZE_DATE = "organizeDate";
 	public static final String ITEM_RIGHT_LEFT = "rightLeft";
 	public static final String ITEM_BRIGHTNESS = "brightness";

@@ -4,6 +4,8 @@
     <string name="menu_edit_comment">Kommentar bearbeiten</string>
     <string name="menu_store_brightness">Helligkeit/Kontrast speichern</string>
     <string name="menu_reset_brightness">Helligkeit/Kontrast zurücksetzen</string>
+    <string name="menu_store_position">Zoom/Position speichern</string>
+    <string name="menu_reset_position">Zoom/Position zurücksetzen</string>
     <string name="menu_delete_overlay_position">Overlay-Position löschen</string>
     <string name="menu_delete_images">Fotos löschen</string>
     <string name="menu_change_date">Datum ändern</string>

@@ -4,9 +4,11 @@
     <string name="menu_edit_comment">Edit comment</string>
     <string name="menu_store_brightness">Store brightness/contrast</string>
     <string name="menu_reset_brightness">Reset brightness/contrast</string>
+    <string name="menu_store_position">Store zoom/position</string>
+    <string name="menu_reset_position">Reset zoom/position</string>
     <string name="menu_delete_overlay_position">Delete overlay position</string>
     <string name="menu_delete_images">Delete images</string>
     <string name="menu_change_date">Change date</string>
     <string name="menu_change_name">Change name</string>
-    
+
 </resources>

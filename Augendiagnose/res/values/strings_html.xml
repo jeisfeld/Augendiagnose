@@ -246,6 +246,8 @@
 		<li>Store the selected settings of brightness and contrast (via context
 			menu - long click on photo)</li>
 
+		<li>Store the position and zoom (via context menu)</li>
+
 		<li>Change the comment of the photo (via context menu)</li>
 	</ul>
 </body>
