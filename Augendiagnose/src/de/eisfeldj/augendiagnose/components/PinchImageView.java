@@ -108,7 +108,7 @@ public class PinchImageView extends ImageView {
 	 * @param activity
 	 *            The triggering activity (required for bitmap caching)
 	 * @param cacheIndex
-	 *            A unique index of the view in the activity	 
+	 *            A unique index of the view in the activity
 	 */
 	public void setImage(final int imageResource, Activity activity, int cacheIndex) {
 		// retrieve bitmap from cache if possible
@@ -143,6 +143,29 @@ public class PinchImageView extends ImageView {
 	}
 
 	/**
+	 * Return the natural scale factor that fits the image into the view
+	 * 
+	 * @return
+	 */
+	protected float getNaturalScaleFactor() {
+		float heightFactor = 1f * getHeight() / mBitmap.getHeight();
+		float widthFactor = 1f * getWidth() / mBitmap.getWidth();
+		return Math.min(widthFactor, heightFactor);
+	}
+
+	/**
+	 * Return an orientation independent scale factor that fits the smaller image dimension into the smaller view
+	 * dimension
+	 * 
+	 * @return
+	 */
+	protected float getOrientationIndependentScaleFactor() {
+		float viewSize = Math.min(getWidth(), getHeight());
+		float imageSize = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
+		return 1f * viewSize / imageSize;
+	}
+
+	/**
 	 * Scale the image to fit into the view
 	 */
 	protected void doInitialScaling() {
@@ -151,9 +174,7 @@ public class PinchImageView extends ImageView {
 			mPosY = 0;
 			mScaleFactor = 1f;
 			if (getHeight() > 0 && getWidth() > 0) {
-				final float heightFactor = 1f * getHeight() / mBitmap.getHeight();
-				final float widthFactor = 1f * getWidth() / mBitmap.getWidth();
-				mScaleFactor = Math.min(widthFactor, heightFactor);
+				mScaleFactor = getNaturalScaleFactor();
 				mPosX = mBitmap.getWidth() / 2;
 				mPosY = mBitmap.getHeight() / 2;
 			}

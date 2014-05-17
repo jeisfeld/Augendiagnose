@@ -171,7 +171,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (!mInitialized && mHasViewPosition) {
 			mPosX = mMetadata.xPosition;
 			mPosY = mMetadata.yPosition;
-			mScaleFactor = mMetadata.zoomFactor;
+			mScaleFactor = mMetadata.zoomFactor * getOrientationIndependentScaleFactor();
 			mInitialized = true;
 		}
 		// Otherwise, if available, use overlay position
@@ -531,7 +531,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mHasViewPosition = true;
 				mMetadata.xPosition = mPosX;
 				mMetadata.yPosition = mPosY;
-				mMetadata.zoomFactor = mScaleFactor;
+				mMetadata.zoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
