@@ -1,7 +1,6 @@
 package de.eisfeldj.augendiagnose.fragments;
 
-//require support library because nested fragments are natively supported only from API version 17.
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,8 @@ public class DisplayOneFragment extends Fragment {
 	 * Initialize the fragment with the file name
 	 * 
 	 * @param text
-	 * @param imageIndex The index of the view (required if there are multiple such fragments)
+	 * @param imageIndex
+	 *            The index of the view (required if there are multiple such fragments)
 	 * @return
 	 */
 	public void setParameters(String file, int imageIndex) {
@@ -40,7 +40,7 @@ public class DisplayOneFragment extends Fragment {
 		args.putString(STRING_FILE, file);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
 		args.putInt(STRING_IMAGEINDEX, imageIndex);
-		
+
 		setArguments(args);
 	}
 
@@ -48,7 +48,8 @@ public class DisplayOneFragment extends Fragment {
 	 * Initialize the fragment with the file resource
 	 * 
 	 * @param text
-	 * @param imageIndex The index of the view (required if there are multiple such fragments)
+	 * @param imageIndex
+	 *            The index of the view (required if there are multiple such fragments)
 	 * @return
 	 */
 	public void setParameters(int fileResource, int imageIndex) {
