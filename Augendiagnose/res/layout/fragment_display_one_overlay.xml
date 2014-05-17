@@ -65,10 +65,9 @@
             android:layout_weight="1"
             android:checked="false"
             android:drawableBottom="@drawable/ic_circle"
-            android:textSize="0pt"
-            android:onClick="onToggleOverlay0Clicked"
             android:textOff=""
-            android:textOn="" />
+            android:textOn=""
+            android:textSize="0pt" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
@@ -76,7 +75,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
-            android:onClick="onToggleOverlay1Clicked"
             android:textOff="@string/toggle_overlay_1"
             android:textOn="@string/toggle_overlay_1" />
 
@@ -86,7 +84,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
-            android:onClick="onToggleOverlay2Clicked"
             android:textOff="@string/toggle_overlay_2"
             android:textOn="@string/toggle_overlay_2" />
 
@@ -96,7 +93,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
-            android:onClick="onToggleOverlay3Clicked"
             android:textOff="@string/toggle_overlay_3"
             android:textOn="@string/toggle_overlay_3" />
 
@@ -106,7 +102,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
-            android:onClick="onToggleOverlay4Clicked"
             android:textOff="@string/toggle_overlay_4"
             android:textOn="@string/toggle_overlay_4" />
 
@@ -116,7 +111,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="false"
-            android:onClick="onToggleOverlay5Clicked"
             android:textOff="@string/toggle_overlay_5"
             android:textOn="@string/toggle_overlay_5" />
 
@@ -127,7 +121,6 @@
             android:layout_weight="1"
             android:background="@drawable/lock"
             android:checked="false"
-            android:onClick="onToggleLinkClicked"
             android:textOff=""
             android:textOn="" />
     </LinearLayout>

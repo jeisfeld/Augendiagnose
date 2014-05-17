@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -68,6 +69,24 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 			toggleOverlayButtons[5].setEnabled(false);
 			toggleOverlayButtons[5].setVisibility(View.GONE);
 		}
+
+		// Initialize the onClick listeners for the buttons
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			final int index = i;
+			toggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onToggleOverlayClicked(v, index);
+				}
+			});
+		}
+
+		lockButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onToggleLinkClicked(v);
+			}
+		});
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);

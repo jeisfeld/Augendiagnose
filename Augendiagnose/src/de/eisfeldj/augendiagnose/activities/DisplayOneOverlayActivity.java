@@ -2,7 +2,6 @@ package de.eisfeldj.augendiagnose.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneOverlayFragment;
 
@@ -51,69 +50,6 @@ public class DisplayOneOverlayActivity extends DisplayOneActivity {
 
 	private DisplayOneOverlayFragment getFragment() {
 		return (DisplayOneOverlayFragment) fragment;
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 1
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay0Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 0);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 1
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay1Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 1);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 2
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay2Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 2);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 3
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay3Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 3);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 4
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay4Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 4);
-	}
-
-	/**
-	 * onClick action for Button to toggle display of Overlay 5
-	 * 
-	 * @param view
-	 */
-	public void onToggleOverlay5Clicked(View view) {
-		getFragment().onToggleOverlayClicked(view, 5);
-	}
-
-	/**
-	 * onClick action for Button to switch link between overlay and image
-	 * 
-	 * @param view
-	 */
-	public void onToggleLinkClicked(View view) {
-		getFragment().onToggleLinkClicked(view);
 	}
 
 	/**
