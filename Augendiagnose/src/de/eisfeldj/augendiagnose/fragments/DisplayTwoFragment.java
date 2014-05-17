@@ -96,7 +96,7 @@ public class DisplayTwoFragment extends Fragment {
 	 * @return
 	 */
 	protected DisplayOneFragment createFragment() {
-		return new DisplayOneOverlayFragment();
+		return new DisplayOneOverlayFragmentHalfscreen();
 	}
 
 }
