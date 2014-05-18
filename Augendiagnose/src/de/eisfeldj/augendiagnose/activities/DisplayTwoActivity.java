@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneOverlayFragmentHalfscreen;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves)
  */
-public class DisplayTwoActivity extends Activity {
+public class DisplayTwoActivity extends Activity implements ContextMenuReferenceHolder {
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
 
@@ -19,6 +20,8 @@ public class DisplayTwoActivity extends Activity {
 	private static final String FRAGMENT_IMAGE2_TAG = "FRAGMENT_IMAGE2_TAG";
 
 	private DisplayOneFragment fragmentImage1, fragmentImage2;
+
+	private Object contextMenuReference;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
@@ -86,6 +89,26 @@ public class DisplayTwoActivity extends Activity {
 			fragmentImage1.initializeImages();
 			fragmentImage2.initializeImages();
 		}
+	}
+
+	/**
+	 * Store a reference to the context menu holder
+	 * 
+	 * @param o
+	 */
+	@Override
+	public void setContextMenuReference(Object o) {
+		contextMenuReference = o;
+	}
+
+	/**
+	 * Retrieve a reference to the context menu holder
+	 * 
+	 * @return
+	 */
+	@Override
+	public Object getContextMenuReference() {
+		return contextMenuReference;
 	}
 
 }

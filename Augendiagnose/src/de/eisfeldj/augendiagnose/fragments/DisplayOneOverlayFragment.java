@@ -14,6 +14,7 @@ import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.EditCommentActivity;
+import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
@@ -165,6 +166,9 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
+
+		// need to store reference, because onContextItemSelected will be called on all fragments
+		((ContextMenuReferenceHolder) getActivity()).setContextMenuReference(this);
 	}
 
 	/**
@@ -172,27 +176,34 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	 */
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_edit_comment:
-			EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
-			return true;
-		case R.id.action_store_brightness:
-			imageView.storeBrightnessContrast(false);
-			return true;
-		case R.id.action_reset_brightness:
-			imageView.storeBrightnessContrast(true);
-			return true;
-		case R.id.action_store_position:
-			imageView.storePositionZoom(false);
-			return true;
-		case R.id.action_reset_position:
-			imageView.storePositionZoom(true);
-			return true;
-		case R.id.action_delete_overlay_position:
-			imageView.resetOverlayPosition(true);
-			return true;
-		default:
-			return super.onContextItemSelected(item);
+		Object contextMenuReference = ((ContextMenuReferenceHolder) getActivity()).getContextMenuReference();
+
+		if (contextMenuReference == this) {
+			switch (item.getItemId()) {
+			case R.id.action_edit_comment:
+				EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
+				return true;
+			case R.id.action_store_brightness:
+				imageView.storeBrightnessContrast(false);
+				return true;
+			case R.id.action_reset_brightness:
+				imageView.storeBrightnessContrast(true);
+				return true;
+			case R.id.action_store_position:
+				imageView.storePositionZoom(false);
+				return true;
+			case R.id.action_reset_position:
+				imageView.storePositionZoom(true);
+				return true;
+			case R.id.action_delete_overlay_position:
+				imageView.resetOverlayPosition(true);
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+			}
+		}
+		else {
+			return false;
 		}
 	}
 

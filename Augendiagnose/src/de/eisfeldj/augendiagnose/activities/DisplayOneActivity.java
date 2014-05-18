@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
 
 /**
@@ -12,7 +13,7 @@ import de.eisfeldj.augendiagnose.fragments.DisplayOneFragment;
  * 
  * @author Joerg
  */
-public class DisplayOneActivity extends Activity {
+public class DisplayOneActivity extends Activity implements ContextMenuReferenceHolder {
 	protected static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	protected static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
 	protected static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
@@ -21,6 +22,8 @@ public class DisplayOneActivity extends Activity {
 
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 	protected DisplayOneFragment fragment;
+
+	private Object contextMenuReference;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -72,8 +75,7 @@ public class DisplayOneActivity extends Activity {
 				fragment.setParameters(fileResource, 1);
 			}
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG)
-					.commit();
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
 			getFragmentManager().executePendingTransactions();
 		}
 	}
@@ -95,5 +97,25 @@ public class DisplayOneActivity extends Activity {
 		if (hasFocus) {
 			fragment.initializeImages();
 		}
+	}
+
+	/**
+	 * Store a reference to the context menu holder
+	 * 
+	 * @param o
+	 */
+	@Override
+	public void setContextMenuReference(Object o) {
+		contextMenuReference = o;
+	}
+
+	/**
+	 * Retrieve a reference to the context menu holder
+	 * 
+	 * @return
+	 */
+	@Override
+	public Object getContextMenuReference() {
+		return contextMenuReference;
 	}
 }
