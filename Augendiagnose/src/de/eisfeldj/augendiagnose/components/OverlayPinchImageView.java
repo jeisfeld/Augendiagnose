@@ -169,8 +169,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	protected void doInitialScaling() {
 		// If available, use stored position
 		if (!mInitialized && mHasViewPosition) {
-			mPosX = mMetadata.xPosition;
-			mPosY = mMetadata.yPosition;
+			mPosX = mMetadata.xPosition * mBitmap.getWidth();
+			mPosY = mMetadata.yPosition * mBitmap.getHeight();
 			mScaleFactor = mMetadata.zoomFactor * getOrientationIndependentScaleFactor();
 			mInitialized = true;
 		}
@@ -529,8 +529,8 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 			else {
 				mHasViewPosition = true;
-				mMetadata.xPosition = mPosX;
-				mMetadata.yPosition = mPosY;
+				mMetadata.xPosition = mPosX / mBitmap.getWidth();
+				mMetadata.yPosition = mPosY / mBitmap.getHeight();
 				mMetadata.zoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
 			}
 
