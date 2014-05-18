@@ -24,8 +24,7 @@ public class PinchImageView extends ImageView {
 	protected boolean mHasMoved = false;
 
 	/**
-	 * These are the relative positions of the Bitmap which are displayed in center of the screen.
-	 * Range: [0,1]
+	 * These are the relative positions of the Bitmap which are displayed in center of the screen. Range: [0,1]
 	 */
 	protected float mPosX, mPosY;
 	protected float mScaleFactor = 1.f;
@@ -206,6 +205,10 @@ public class PinchImageView extends ImageView {
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
+		if (mBitmap == null) {
+			return super.onTouchEvent(ev);
+		}
+
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
 		final int action = ev.getActionMasked();
@@ -316,7 +319,7 @@ public class PinchImageView extends ImageView {
 			final float dx = x0 - mLastTouchX0;
 			final float dy = y0 - mLastTouchY0;
 			mPosX -= dx / mScaleFactor / mBitmap.getWidth();
-			mPosY -= dy / mScaleFactor /mBitmap.getHeight();
+			mPosY -= dy / mScaleFactor / mBitmap.getHeight();
 			if (mScaleFactor != mLastScaleFactor) {
 				// When resizing, then position also changes
 				final float changeFactor = mScaleFactor / mLastScaleFactor;
