@@ -109,6 +109,28 @@ public class Application extends android.app.Application {
 	}
 
 	/**
+	 * Retrieve an integer shared preference
+	 * 
+	 * @param preferenceId
+	 * @return
+	 */
+	public static int getSharedPreferenceInt(int preferenceId, int defaultValue) {
+		return getSharedPreferences().getInt(context.getString(preferenceId), defaultValue);
+	}
+
+	/**
+	 * Set an integer shared preference
+	 * 
+	 * @param preferenceId
+	 * @param i
+	 */
+	public static void setSharedPreferenceInt(int preferenceId, int i) {
+		Editor editor = getSharedPreferences().edit();
+		editor.putInt(context.getString(preferenceId), i);
+		editor.commit();
+	}
+
+	/**
 	 * Check if the application has an authorized user key
 	 * 
 	 * @return

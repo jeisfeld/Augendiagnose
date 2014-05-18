@@ -28,16 +28,14 @@ public class DisplayOneOverlayFragmentHalfscreen extends DisplayOneOverlayFragme
 	}
 
 	/**
-	 * Update data from view
+	 * Return the level from which on the utilities are shown. 1 means: don't show. 2 means: show only on full screen. 3
+	 * means: show always.
+	 * 
+	 * @return
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-		if (!Application.isTablet()) {
-			showUtilities(false);
-		}
-
+	protected int getShowUtilitiesLimitLevel() {
+		return 3;
 	}
 
 }

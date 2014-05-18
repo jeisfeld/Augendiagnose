@@ -58,6 +58,15 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState != null) {
+			showUtilities = savedInstanceState.getBoolean("showUtilities");
+		}
+		else {
+			showUtilities = getDefaultShowUtilities();
+		}
+		showUtilities(showUtilities);
+
 		imageView = (OverlayPinchImageView) super.imageView;
 		imageView.setGuiElementUpdater(this);
 
@@ -173,9 +182,9 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
-		
+
 		// update text to show/hide utilities
-		if(! showUtilities) {
+		if (!showUtilities) {
 			MenuItem item = menu.findItem(R.id.action_show_hide_utilities);
 			item.setTitle(R.string.menu_show_utilities);
 		}
@@ -249,7 +258,68 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 		}
+		getView().findViewById(R.id.fragment_display_one_overlay).invalidate();
+		updateDefaultShowUtilities(show);
 		showUtilities = show;
+	}
+
+	/**
+	 * Get information if utilies should be shown according to default
+	 */
+	protected boolean getDefaultShowUtilities() {
+		int level = getDefaultShowUtilitiesValue();
+
+		return level >= getShowUtilitiesLimitLevel();
+	}
+
+	/**
+	 * Return the level from which on the utilities are shown. 1 means: don't show. 2 means: show only on full screen. 3
+	 * means: show always.
+	 * 
+	 * @return
+	 */
+	protected int getShowUtilitiesLimitLevel() {
+		return 2;
+	}
+
+	/**
+	 * Get the value of indicating if utilities should be shown.
+	 * 
+	 * 1 means: don't show. 2 means: show only on full screen. 3 means: show always.
+	 * 
+	 * @return
+	 */
+	protected int getDefaultShowUtilitiesValue() {
+		int level = Application.getSharedPreferenceInt(R.string.key_internal_show_utilities, -1);
+
+		if (level == -1) {
+			// call this method only if no value is set
+			level = Application.isTablet() ? 3 : 2;
+		}
+
+		return level;
+	}
+
+	/**
+	 * Update default for showing utilities
+	 */
+	protected void updateDefaultShowUtilities(boolean show) {
+		int level = getDefaultShowUtilitiesValue();
+
+		if (show && level < getShowUtilitiesLimitLevel()) {
+			level = getShowUtilitiesLimitLevel();
+		}
+		if (!show && level >= getShowUtilitiesLimitLevel()) {
+			level = getShowUtilitiesLimitLevel() - 1;
+		}
+
+		Application.setSharedPreferenceInt(R.string.key_internal_show_utilities, level);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean("showUtilities", showUtilities);
 	}
 
 	// Implementation of GuiElementUpdater
