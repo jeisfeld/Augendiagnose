@@ -24,8 +24,8 @@ public class PinchImageView extends ImageView {
 	protected boolean mHasMoved = false;
 
 	/**
-	 * These are the relative positions of the Bitmap which are displayed in center. (These are maintained when
-	 * recreating the view after rotating device)
+	 * These are the relative positions of the Bitmap which are displayed in center of the screen.
+	 * Range: [0,1]
 	 */
 	protected float mPosX, mPosY;
 	protected float mScaleFactor = 1.f;
@@ -150,7 +150,8 @@ public class PinchImageView extends ImageView {
 	protected float getNaturalScaleFactor() {
 		float heightFactor = 1f * getHeight() / mBitmap.getHeight();
 		float widthFactor = 1f * getWidth() / mBitmap.getWidth();
-		return Math.min(widthFactor, heightFactor);
+		float result = Math.min(widthFactor, heightFactor);
+		return result == 0 ? 1f : result;
 	}
 
 	/**
@@ -170,14 +171,9 @@ public class PinchImageView extends ImageView {
 	 */
 	protected void doInitialScaling() {
 		if (!mInitialized) {
-			mPosX = 0;
-			mPosY = 0;
-			mScaleFactor = 1f;
-			if (getHeight() > 0 && getWidth() > 0) {
-				mScaleFactor = getNaturalScaleFactor();
-				mPosX = mBitmap.getWidth() / 2;
-				mPosY = mBitmap.getHeight() / 2;
-			}
+			mPosX = 0.5f;
+			mPosY = 0.5f;
+			mScaleFactor = getNaturalScaleFactor();
 			mInitialized = true;
 		}
 		mLastScaleFactor = mScaleFactor;
@@ -199,7 +195,7 @@ public class PinchImageView extends ImageView {
 	 */
 	private void setMatrix() {
 		Matrix matrix = new Matrix();
-		matrix.setTranslate(-mPosX, -mPosY);
+		matrix.setTranslate(-mPosX * mBitmap.getWidth(), -mPosY * mBitmap.getHeight());
 		matrix.postScale(mScaleFactor, mScaleFactor);
 		matrix.postTranslate(getWidth() / 2, getHeight() / 2);
 		setImageMatrix(matrix);
@@ -309,8 +305,8 @@ public class PinchImageView extends ImageView {
 			// Only move if the ScaleGestureDetector isn't processing a gesture.
 			final float dx = x - mLastTouchX;
 			final float dy = y - mLastTouchY;
-			mPosX -= dx / mScaleFactor;
-			mPosY -= dy / mScaleFactor;
+			mPosX -= dx / mScaleFactor / mBitmap.getWidth();
+			mPosY -= dy / mScaleFactor / mBitmap.getHeight();
 		}
 		else {
 			// When resizing, move according to the center of the two pinch points
@@ -319,13 +315,13 @@ public class PinchImageView extends ImageView {
 			final float y0 = (ev.getY(pointerIndex2) + y) / 2;
 			final float dx = x0 - mLastTouchX0;
 			final float dy = y0 - mLastTouchY0;
-			mPosX -= dx / mScaleFactor;
-			mPosY -= dy / mScaleFactor;
+			mPosX -= dx / mScaleFactor / mBitmap.getWidth();
+			mPosY -= dy / mScaleFactor /mBitmap.getHeight();
 			if (mScaleFactor != mLastScaleFactor) {
 				// When resizing, then position also changes
 				final float changeFactor = mScaleFactor / mLastScaleFactor;
-				mPosX = mPosX + (x0 - getWidth() / 2) * (changeFactor - 1) / mScaleFactor;
-				mPosY = mPosY + (y0 - getHeight() / 2) * (changeFactor - 1) / mScaleFactor;
+				mPosX = mPosX + (x0 - getWidth() / 2) * (changeFactor - 1) / mScaleFactor / mBitmap.getWidth();
+				mPosY = mPosY + (y0 - getHeight() / 2) * (changeFactor - 1) / mScaleFactor / mBitmap.getHeight();
 				mLastScaleFactor = mScaleFactor;
 				moved = true;
 			}

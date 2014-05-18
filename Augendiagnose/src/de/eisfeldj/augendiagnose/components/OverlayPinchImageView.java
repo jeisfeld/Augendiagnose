@@ -41,6 +41,10 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	private Drawable[] overlayCache = new Drawable[OVERLAY_COUNT];
 
+	/**
+	 * These are the relative positions of the overlay center on the bitmap.
+	 * Range: [0,1]
+	 */
 	private float mOverlayX, mOverlayY;
 	private float mOverlayScaleFactor;
 	private float mLastOverlayScaleFactor;
@@ -114,8 +118,8 @@ public class OverlayPinchImageView extends PinchImageView {
 						public void run() {
 							if (mMetadata != null && mMetadata.hasOverlayPosition()) {
 								mHasOverlayPosition = true;
-								mOverlayX = mMetadata.xCenter * mBitmap.getWidth();
-								mOverlayY = mMetadata.yCenter * mBitmap.getHeight();
+								mOverlayX = mMetadata.xCenter;
+								mOverlayY = mMetadata.yCenter;
 								mOverlayScaleFactor = mMetadata.overlayScaleFactor
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 								lockOverlay(true, false);
@@ -129,9 +133,6 @@ public class OverlayPinchImageView extends PinchImageView {
 							}
 							if (mMetadata != null && mMetadata.hasViewPosition()) {
 								mHasViewPosition = true;
-								mPosX = mMetadata.xPosition;
-								mPosY = mMetadata.yPosition;
-								mScaleFactor = mMetadata.zoomFactor;
 							}
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
 								mBrightness = mMetadata.brightness.floatValue();
@@ -169,8 +170,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	protected void doInitialScaling() {
 		// If available, use stored position
 		if (!mInitialized && mHasViewPosition) {
-			mPosX = mMetadata.xPosition * mBitmap.getWidth();
-			mPosY = mMetadata.yPosition * mBitmap.getHeight();
+			mPosX = mMetadata.xPosition;
+			mPosY = mMetadata.yPosition;
 			mScaleFactor = mMetadata.zoomFactor * getOrientationIndependentScaleFactor();
 			mInitialized = true;
 		}
@@ -228,10 +229,11 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		// position overlays
 		for (int i = 1; i < mLayerDrawable.getNumberOfLayers(); i++) {
-			mLayerDrawable.setLayerInset(i, (int) (mOverlayX - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
-					(int) (mOverlayY - OVERLAY_SIZE / 2 * mOverlayScaleFactor), //
-					(int) (width - mOverlayX - OVERLAY_SIZE / 2 * mOverlayScaleFactor), //
-					(int) (height - mOverlayY - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
+			mLayerDrawable.setLayerInset(i, (int) (mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2
+					* mOverlayScaleFactor), (int) (mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2
+					* mOverlayScaleFactor), //
+					(int) (width - mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor), //
+					(int) (height - mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
 		}
 
 		mLayerDrawable.setBounds(0, 0, width, height);
@@ -292,8 +294,8 @@ public class OverlayPinchImageView extends PinchImageView {
 					mEyePhoto.updateMetadataWithDefaults(mMetadata);
 				}
 
-				mMetadata.xCenter = mOverlayX / mBitmap.getWidth();
-				mMetadata.yCenter = mOverlayY / mBitmap.getHeight();
+				mMetadata.xCenter = mOverlayX;
+				mMetadata.yCenter = mOverlayY;
 				mMetadata.overlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
 						* OVERLAY_SIZE;
 				mEyePhoto.storeImageMetadata(mMetadata);
@@ -307,8 +309,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	public void resetOverlayPosition(boolean store) {
 		float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
 		mOverlayScaleFactor = size / OVERLAY_SIZE;
-		mOverlayX = mBitmap.getWidth() / 2;
-		mOverlayY = mBitmap.getHeight() / 2;
+		mOverlayX = 0.5f;
+		mOverlayY = 0.5f;
 		if (store && mInitialized) {
 			if (mMetadata != null) {
 				mMetadata.xCenter = null;
@@ -529,8 +531,8 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 			else {
 				mHasViewPosition = true;
-				mMetadata.xPosition = mPosX / mBitmap.getWidth();
-				mMetadata.yPosition = mPosY / mBitmap.getHeight();
+				mMetadata.xPosition = mPosX;
+				mMetadata.yPosition = mPosY;
 				mMetadata.zoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
 			}
 
@@ -557,8 +559,8 @@ public class OverlayPinchImageView extends PinchImageView {
 			// Only move if the ScaleGestureDetector isn't processing a gesture.
 			final float dx = x - mLastTouchX;
 			final float dy = y - mLastTouchY;
-			mOverlayX += dx / mScaleFactor;
-			mOverlayY += dy / mScaleFactor;
+			mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+			mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
 		}
 		else {
 			// When resizing, move according to the center of the two pinch points
@@ -567,13 +569,13 @@ public class OverlayPinchImageView extends PinchImageView {
 			final float y0 = (ev.getY(pointerIndex2) + y) / 2;
 			final float dx = x0 - mLastTouchX0;
 			final float dy = y0 - mLastTouchY0;
-			mOverlayX += dx / mScaleFactor;
-			mOverlayY += dy / mScaleFactor;
+			mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+			mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
 			if (mOverlayScaleFactor != mLastOverlayScaleFactor) {
 				// When resizing, then position also changes
 				final float changeFactor = mOverlayScaleFactor / mLastOverlayScaleFactor;
-				final float pinchX = (x0 - getWidth() / 2) / mScaleFactor + mPosX;
-				final float pinchY = (y0 - getHeight() / 2) / mScaleFactor + mPosY;
+				final float pinchX = (x0 - getWidth() / 2) / mScaleFactor / mBitmap.getWidth() + mPosX;
+				final float pinchY = (y0 - getHeight() / 2) / mScaleFactor / mBitmap.getHeight() + mPosY;
 				mOverlayX = pinchX + (mOverlayX - pinchX) * changeFactor;
 				mOverlayY = pinchY + (mOverlayY - pinchY) * changeFactor;
 				mLastOverlayScaleFactor = mOverlayScaleFactor;
@@ -590,11 +592,11 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mOverlayY < 0) {
 			mOverlayY = 0;
 		}
-		if (mOverlayX > mBitmap.getWidth()) {
-			mOverlayX = mBitmap.getWidth();
+		if (mOverlayX > 1) {
+			mOverlayX = 1f;
 		}
-		if (mOverlayY > mBitmap.getHeight()) {
-			mOverlayY = mBitmap.getHeight();
+		if (mOverlayY > 1) {
+			mOverlayY = 1f;
 		}
 
 		refresh(false);
