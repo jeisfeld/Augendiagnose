@@ -37,6 +37,8 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	private SeekBar seekbarBrightness;
 	private SeekBar seekbarContrast;
 
+	private boolean showUtilities = true;
+
 	/**
 	 * Inflate View
 	 */
@@ -171,6 +173,12 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
+		
+		// update text to show/hide utilities
+		if(! showUtilities) {
+			MenuItem item = menu.findItem(R.id.action_show_hide_utilities);
+			item.setTitle(R.string.menu_show_utilities);
+		}
 
 		// need to store reference, because onContextItemSelected will be called on all fragments
 		((ContextMenuReferenceHolder) getActivity()).setContextMenuReference(this);
@@ -185,6 +193,9 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 
 		if (contextMenuReference == this) {
 			switch (item.getItemId()) {
+			case R.id.action_show_hide_utilities:
+				showUtilities(!showUtilities);
+				return true;
 			case R.id.action_edit_comment:
 				EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
 				return true;
@@ -219,6 +230,26 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	 */
 	public void storeComment(String comment) {
 		imageView.storeComment(comment);
+	}
+
+	/**
+	 * Show or hide the utilities (overlay bar, scrollbars)
+	 * 
+	 * @param show
+	 *            If true, the utilities will be shown, otherwise hidden.
+	 */
+	protected void showUtilities(boolean show) {
+		if (show) {
+			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+		}
+		else {
+			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
+			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
+			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+		}
+		showUtilities = show;
 	}
 
 	// Implementation of GuiElementUpdater

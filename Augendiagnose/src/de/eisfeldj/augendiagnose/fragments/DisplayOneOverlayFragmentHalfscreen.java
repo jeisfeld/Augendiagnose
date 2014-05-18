@@ -35,10 +35,7 @@ public class DisplayOneOverlayFragmentHalfscreen extends DisplayOneOverlayFragme
 		super.onActivityCreated(savedInstanceState);
 
 		if (!Application.isTablet()) {
-			// hide extra bars
-			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
-			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
-			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+			showUtilities(false);
 		}
 
 	}

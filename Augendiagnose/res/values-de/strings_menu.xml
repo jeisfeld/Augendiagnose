@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="menu_show_utilities">Hilfsmittel anzeigen</string>
+    <string name="menu_hide_utilities">Hilfsmittel verbergen</string>
     <string name="menu_edit_comment">Kommentar bearbeiten</string>
     <string name="menu_store_brightness">Helligkeit/Kontrast speichern</string>
     <string name="menu_reset_brightness">Helligkeit/Kontrast zurücksetzen</string>
