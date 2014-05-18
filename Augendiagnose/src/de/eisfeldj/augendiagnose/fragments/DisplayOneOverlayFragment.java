@@ -203,7 +203,9 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		if (contextMenuReference == this) {
 			switch (item.getItemId()) {
 			case R.id.action_show_hide_utilities:
-				showUtilities(!showUtilities);
+				boolean newShowUtilities = !showUtilities;
+				showUtilities(newShowUtilities);
+				updateDefaultShowUtilities(newShowUtilities);
 				return true;
 			case R.id.action_edit_comment:
 				EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
@@ -259,7 +261,6 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 		}
 		getView().findViewById(R.id.fragment_display_one_overlay).invalidate();
-		updateDefaultShowUtilities(show);
 		showUtilities = show;
 	}
 
