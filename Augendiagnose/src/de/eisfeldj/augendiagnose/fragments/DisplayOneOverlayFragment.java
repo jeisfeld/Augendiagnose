@@ -42,7 +42,12 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_display_one_overlay, container, false);
+		if (Application.isLandscape()) {
+			return inflater.inflate(R.layout.fragment_display_one_overlay_landscape, container, false);
+		}
+		else {
+			return inflater.inflate(R.layout.fragment_display_one_overlay_portrait, container, false);
+		}
 	}
 
 	/**

@@ -19,7 +19,12 @@ public class DisplayOneOverlayFragmentHalfscreen extends DisplayOneOverlayFragme
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_display_one_overlay_halfscreen, container, false);
+		if (Application.isLandscape()) {
+			return inflater.inflate(R.layout.fragment_display_one_overlay_portrait, container, false);
+		}
+		else {
+			return inflater.inflate(R.layout.fragment_display_one_overlay_landscape, container, false);
+		}
 	}
 
 	/**

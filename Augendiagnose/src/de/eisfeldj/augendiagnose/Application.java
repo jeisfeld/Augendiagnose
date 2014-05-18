@@ -155,4 +155,21 @@ public class Application extends android.app.Application {
 		return (getAppContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
+	/**
+	 * Determine if the screen is shown in landscape mode (i.e. width > height)
+	 * 
+	 * @param context
+	 *            The calling context.
+	 */
+	public static boolean isLandscape() {
+		// use screen width as criterion rather than getRotation
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		return width > height;
+	}
+
 }
