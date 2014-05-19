@@ -48,22 +48,4 @@ public class DisplayOneOverlayActivity extends DisplayOneActivity {
 		return fragment;
 	}
 
-	private DisplayOneOverlayFragment getFragment() {
-		return (DisplayOneOverlayFragment) fragment;
-	}
-
-	/**
-	 * When getting the response from the comment update, update the name field in the display.
-	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case EditCommentActivity.REQUEST_CODE:
-			if (resultCode == RESULT_OK) {
-				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
-				getFragment().storeComment(comment.toString());
-			}
-		}
-	}
-
 }

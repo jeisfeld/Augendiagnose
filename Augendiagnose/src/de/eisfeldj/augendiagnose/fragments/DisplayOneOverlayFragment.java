@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnose.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -211,7 +213,7 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 				updateDefaultShowUtilities(newShowUtilities);
 				return true;
 			case R.id.action_edit_comment:
-				EditCommentActivity.startActivity(getActivity(), imageView.getMetadata().comment);
+				EditCommentActivity.startActivity(getActivity(), this, imageView.getMetadata().comment);
 				return true;
 			case R.id.action_store_brightness:
 				imageView.storeBrightnessContrast(false);
@@ -324,6 +326,20 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", showUtilities);
+	}
+
+	/**
+	 * When getting the response from the comment update, update the name field in the display.
+	 */
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case EditCommentActivity.REQUEST_CODE:
+			if (resultCode == Activity.RESULT_OK) {
+				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
+				storeComment(comment.toString());
+			}
+		}
 	}
 
 	// Implementation of GuiElementUpdater

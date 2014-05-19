@@ -1,6 +1,8 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
@@ -18,15 +20,16 @@ public class EditCommentActivity extends Activity implements EditCommentCallback
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
-	 * Static helper method to start the activity, passing the old value of the text
+	 * Static helper method to start the activity from a fragment, passing the old value of the text
 	 * 
 	 * @param context
+	 * @param fragment
 	 * @param resource
 	 */
-	public static void startActivity(Activity activity, String text) {
-		Intent intent = new Intent(activity, EditCommentActivity.class);
+	public static void startActivity(Context context, Fragment fragment, String text) {
+		Intent intent = new Intent(context, EditCommentActivity.class);
 		intent.putExtra(STRING_EXTRA_TEXT, text);
-		activity.startActivityForResult(intent, REQUEST_CODE);
+		fragment.startActivityForResult(intent, REQUEST_CODE);
 	}
 
 	@Override
