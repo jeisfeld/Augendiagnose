@@ -183,10 +183,13 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
 
-		// update text to show/hide utilities
 		if (!showUtilities) {
+			// update text to show/hide utilities
 			MenuItem item = menu.findItem(R.id.action_show_hide_utilities);
+
 			item.setTitle(R.string.menu_show_utilities);
+			// Hide store/reset actions when utilities are not shown
+			menu.removeGroup(R.id.group_store_reset);
 		}
 
 		// need to store reference, because onContextItemSelected will be called on all fragments
