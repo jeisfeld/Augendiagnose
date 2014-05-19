@@ -57,11 +57,11 @@
     <string name="button_delete">Delete</string>
     <string name="button_other_pictures">Other Pictures</string>
     
-    <string name="toggle_overlay_1">IT 1</string>
-    <string name="toggle_overlay_2">IT 2</string>
-    <string name="toggle_overlay_3">IT 3</string>
-    <string name="toggle_overlay_4">IT 4</string>
-    <string name="toggle_overlay_5">IT 5</string>
+    <string name="toggle_overlay_1">T1</string>
+    <string name="toggle_overlay_2">T2</string>
+    <string name="toggle_overlay_3">T3</string>
+    <string name="toggle_overlay_4">T4</string>
+    <string name="toggle_overlay_5">T5</string>
     
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
