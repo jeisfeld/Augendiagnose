@@ -48,6 +48,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.3.3</item>
         <item>0.4</item>
         <item>0.4.1</item>
+        <item>0.4.2</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -68,6 +69,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled to delete photos and change dates via context menu. Minor improvements and bugfixes.</item>
         <item>Introduced special design for tablets - merged list of names with list of photos per name</item>
         <item>Allowed storage of image position and zoom. Enablement of overlays and scrollbars in two-image view.</item>
+        <item>TODO.</item>
     </string-array>
 
 </resources>
