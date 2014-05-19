@@ -42,9 +42,10 @@
 	<p>The App expects new eye photos in an input folder which is preconfigued
 		as the target folder of the Eye-Fi app, but can be changed via the settings.</p>
 
-	<p>In the "Organize new photos" activity, you can assign new eye photos
-		from the input folder to a person and a date and prepare them in this way for
-		the app. Then the photos will be renamed and moved to the eye photo folder.</p>
+	<p>In the &quot;Organize new photos&quot; activity, you can assign new eye
+		photos from the input folder to a person and a date and prepare them in this
+		way for the app. Then the photos will be renamed and moved to the eye photo
+		folder.</p>
 
 	<p>As an alternative, you may select two photos in a file browser or photo
 		app and send these photos to the Eye Diagnosis app. Then you can organize
@@ -60,8 +61,8 @@
 
 	<ul>
 		<li>Show one of the photos in detail. Here you can also change brightness
-			and contrast of the photo, show iris topographies as overlay, or write
-			a comment to a photo.</li>
+			and contrast of the photo, show iris topographies as overlay, or write a
+			comment to a photo.</li>
 
 		<li>Display two photos for comparison (and pinch them independently).</li>
 	</ul>
@@ -79,7 +80,6 @@
 		information in the JPG fails, or possibly even destroys the JPG file.
 		Therefore, it is recommended that you keep backups of your JPG files at least
 		when using the app for the first time with a new device or with a new camera.</p>
-
 </body>
 </html>
 ]]>
@@ -169,20 +169,24 @@
 
 	<p>The two last steps of the input folder are displayed.</p>
 
-	<p>With the button "Switch" you can exchange the two photos.</p>
+	<p>With the button &quot;Switch&quot; you can exchange the two photos.</p>
 
-	<p>With the button "Other Photos", you can select two different photos from the input folder.</p>
+	<p>With the button &quot;Other Photos&quot;, you can select two different
+		photos from the input folder.</p>
 
-	<p>At "Select Name" you can set the name of the person from which the eye photos are taken.
-	Here you can either select an existing name or enter a new name.</p>
+	<p>At &quot;Select Name&quot; you can set the name of the person from which
+		the eye photos are taken. Here you can either select an existing name or enter
+		a new name.</p>
 
-	<p>At "Select Date" you can select the date on which the photos are listed.
-	Typically this is the capture date of the photos, which is preselected. However, you may
-	select a different date. This is necessary in particular, if you want to keep more than one eye pair
-	of a person from one date - the app allows only one photo pair per day and person.</p>
+	<p>At &quot;Select Date&quot; you can select the date on which the photos
+		are listed. Typically this is the capture date of the photos, which is
+		preselected. However, you may select a different date. This is necessary in
+		particular, if you want to keep more than one eye pair of a person from one
+		date - the app allows only one photo pair per day and person.</p>
 
-	<p>With the buton "OK" you can move the selected eye photo pair to the eye photo folder.
-	The photos are attached to the given name and date and can then be used by the app.</p>
+	<p>With the buton &quot;OK&quot; you can move the selected eye photo pair
+		to the eye photo folder. The photos are attached to the given name and date
+		and can then be used by the app.</p>
 </body>
 </html>
 ]]>
@@ -234,7 +238,7 @@
 
 	<h3>Further options in the detail view</h3>
 
-	<p>In the detail view of one photo, you have the following further
+	<p>In the detail view (one or two photos), you have the following further
 		possibilities:</p>
 
 	<ul>
@@ -250,6 +254,9 @@
 
 		<li>Change the comment of the photo (via context menu)</li>
 	</ul>
+
+	<p>These features may be enabled or disabled via the context menu (long
+		click on photo) at &quot;Show/Hide utilities&quot;.</p>
 </body>
 </html>
 ]]>

@@ -46,10 +46,10 @@
 		ist Vorkunfiguriert als das Zielverzeichnis der Eye-Fi App, kann aber
 		&uuml;ber die Einstellungen ge&auml;ndert werden.</p>
 
-	<p>In der Aktivit&auml;t "Neue Fotos einordnen" k&ouml;nnen Sie neue
-		Augenfotos aus dem Eingangsverzeichnis einer Person und einem Datum zuordnen
-		und so f&uuml;r die App vorbereiten. Dabei werden die Fotos Umbenannt und in
-		das Augenfoto-Verzeichnis verschoben.</p>
+	<p>In der Aktivit&auml;t &quot;Neue Fotos einordnen&quot; k&ouml;nnen Sie
+		neue Augenfotos aus dem Eingangsverzeichnis einer Person und einem Datum
+		zuordnen und so f&uuml;r die App vorbereiten. Dabei werden die Fotos Umbenannt
+		und in das Augenfoto-Verzeichnis verschoben.</p>
 
 	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie
 		auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und
@@ -66,8 +66,8 @@
 
 	<ul>
 		<li>Ein Foto im Detail Anschauen. Dabei k&ouml;nnen Sie auch Helligkeit
-			und Kontrast &auml;ndern, Iristopographien als Overlay anzeigen oder
-			einen Kommentar zu einem Foto schreiben.</li>
+			und Kontrast &auml;ndern, Iristopographien als Overlay anzeigen oder einen
+			Kommentar zu einem Foto schreiben.</li>
 
 		<li>Zwei Fotos vergleichen (und dabei unabh&auml;ngig voneinander
 			zoomen).</li>
@@ -181,23 +181,25 @@
 	<p>Es werden die beiden letzten Fotos aus dem Eingangsverzeichnis
 		angezeigt.</p>
 
-	<p>Mit dem Button "Tauschen" k&ouml;nnen Sie die beiden Fotos tauschen.</p>
+	<p>Mit dem Button &quot;Tauschen&quot; k&ouml;nnen Sie die beiden Fotos
+		tauschen.</p>
 
-	<p>Mit dem Button "Andere Fotos" k&ouml;nnen Sie zwei andere Fotos aus dem
-		Eingangsverzeichnis ausw&auml;hlen.</p>
+	<p>Mit dem Button &quot;Andere Fotos&quot; k&ouml;nnen Sie zwei andere
+		Fotos aus dem Eingangsverzeichnis ausw&auml;hlen.</p>
 
-	<p>Unter "Name w&auml;hlen" k&ouml;nnen Sie den Namen der Person festlegen,
-		zu der die Augen geh&ouml;ren. Hier k&ouml;nnen Sie entweder einen vorhandenen
-		Namen ausw&auml;hlen oder einen neuen Namen eingeben.</p>
+	<p>Unter &quot;Name w&auml;hlen&quot; k&ouml;nnen Sie den Namen der Person
+		festlegen, zu der die Augen geh&ouml;ren. Hier k&ouml;nnen Sie entweder einen
+		vorhandenen Namen ausw&auml;hlen oder einen neuen Namen eingeben.</p>
 
-	<p>Unter "Datum w&auml;hlen" k&ouml;nnen Sie das Datum w&auml;hlen, dem die
-		Fotos zugeordnet sind. Hier ist das Aufnahmedatum vorausgew&auml;hlt. Sie
-		k&ouml;nnen aber auch ein anderes Datum w&auml;hlen. Dies ist insbesondere
-		dann n&ouml;tig, wenn es schon Fotos dieses Nutzers von diesem Datum gibt -
-		die App erlaubt nur ein Augenpaar einer Person zu einem Datum.</p>
+	<p>Unter &quot;Datum w&auml;hlen&quot; k&ouml;nnen Sie das Datum
+		w&auml;hlen, dem die Fotos zugeordnet sind. Hier ist das Aufnahmedatum
+		vorausgew&auml;hlt. Sie k&ouml;nnen aber auch ein anderes Datum w&auml;hlen.
+		Dies ist insbesondere dann n&ouml;tig, wenn es schon Fotos dieses Nutzers von
+		diesem Datum gibt - die App erlaubt nur ein Augenpaar einer Person zu einem
+		Datum.</p>
 
-	<p>Mit dem Button "Anwenden" k&ouml;nnen Sie das gew&auml;hlte Paar
-		Augenfotos in das Augenfoto-Verzeichnis verschieben. Die Fotos werden zur
+	<p>Mit dem Button &quot;Anwenden&quot; k&ouml;nnen Sie das gew&auml;hlte
+		Paar Augenfotos in das Augenfoto-Verzeichnis verschieben. Die Fotos werden zur
 		angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem
 		Programm anschlie&szlig;end zur Verf&uuml;gung.</p>
 </body>
@@ -254,7 +256,7 @@
 
 	<h3>Weitere Optionen in der Detailansicht</h3>
 
-	<p>In der Detailansicht eines Fotos bestehen noch folgende
+	<p>In der Detailansicht (von einem oder zwei Fotos) bestehen noch folgende
 		M&ouml;glichkeiten:</p>
 
 	<ul>
@@ -271,6 +273,10 @@
 
 		<li>&Auml;ndern der Beschreibung des Fotos (&uuml;bers Kontextmen&uuml;)</li>
 	</ul>
+
+	<p>Die zugeh&ouml;rigen Tools k&ouml;nnen im Kontextmen&uuml; (lange auf
+		das Foto klicken) &uuml;ber die Option &quot;Hilfsmittel
+		anzeigen/verbergen&quot; aktiviert oder deaktiviert werden.</p>
 </body>
 </html>
 ]]>
