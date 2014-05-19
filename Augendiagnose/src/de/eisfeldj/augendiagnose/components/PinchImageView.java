@@ -205,10 +205,6 @@ public class PinchImageView extends ImageView {
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
-		if (mBitmap == null) {
-			return super.onTouchEvent(ev);
-		}
-
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
 		final int action = ev.getActionMasked();
@@ -231,8 +227,11 @@ public class PinchImageView extends ImageView {
 			break;
 		}
 		case MotionEvent.ACTION_MOVE: {
-			boolean moved = handlePointerMove(ev);
-			mHasMoved = mHasMoved || moved;
+			// Prevent NullPointerException if bitmap is not yet loaded
+			if (mBitmap != null) {
+				boolean moved = handlePointerMove(ev);
+				mHasMoved = mHasMoved || moved;
+			}
 			break;
 		}
 		case MotionEvent.ACTION_UP:
