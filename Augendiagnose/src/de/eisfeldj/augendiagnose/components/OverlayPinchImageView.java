@@ -203,8 +203,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		// Determine overlays to be shown
 		ArrayList<Integer> overlayPositions = new ArrayList<Integer>();
 
-		if (mEyePhoto.getRightLeft() != null) {
-			// Only if right/left is clear, add overlays
+		if (canHandleOverlays()) {
 			for (int i = 0; i < mShowOverlay.length; i++) {
 				if (mShowOverlay[i]) {
 					overlayPositions.add(i);
@@ -247,6 +246,15 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		super.setImageBitmap(mCanvasBitmap);
 		invalidate();
+	}
+
+	/**
+	 * Get information if the view can handle overlays
+	 * 
+	 * @return
+	 */
+	public boolean canHandleOverlays() {
+		return mEyePhoto != null && mEyePhoto.getRightLeft() != null;
 	}
 
 	/**

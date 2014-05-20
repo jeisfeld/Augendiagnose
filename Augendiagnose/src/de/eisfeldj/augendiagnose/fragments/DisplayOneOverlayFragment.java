@@ -342,6 +342,18 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		}
 	}
 
+	/**
+	 * After initializing images, make image specific layout changes
+	 */
+	@Override
+	public void initializeImages() {
+		super.initializeImages();
+
+		if (!imageView.canHandleOverlays()) {
+			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+		}
+	}
+
 	// Implementation of GuiElementUpdater
 
 	@Override
