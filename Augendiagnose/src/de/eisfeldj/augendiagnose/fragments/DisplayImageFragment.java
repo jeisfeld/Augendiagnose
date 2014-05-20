@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -24,7 +25,18 @@ import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
  * 
  * @author Joerg
  */
-public class DisplayOneOverlayFragment extends DisplayOneFragment implements GuiElementUpdater {
+public class DisplayImageFragment extends Fragment implements GuiElementUpdater {
+	protected static final String STRING_TYPE = "de.eisfeldj.augendiagnose.TYPE";
+	protected static final String STRING_FILE = "de.eisfeldj.augendiagnose.FILE";
+	protected static final String STRING_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
+	protected static final String STRING_IMAGEINDEX = "de.eisfeldj.augendiagnose.IMAGEINDEX";
+	protected static final int TYPE_FILENAME = 1;
+	protected static final int TYPE_FILERESOURCE = 2;
+
+	protected int type;
+	protected int fileResource;
+	protected String file;
+	protected int imageIndex;
 
 	private OverlayPinchImageView imageView;
 	private static final int CONTRAST_MAX = 5;
@@ -40,15 +52,62 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	private boolean showUtilities = true;
 
 	/**
+	 * Initialize the fragment with the file name
+	 * 
+	 * @param text
+	 * @param imageIndex
+	 *            The index of the view (required if there are multiple such fragments)
+	 * @return
+	 */
+	public void setParameters(String file, int imageIndex) {
+		Bundle args = new Bundle();
+		args.putString(STRING_FILE, file);
+		args.putInt(STRING_TYPE, TYPE_FILENAME);
+		args.putInt(STRING_IMAGEINDEX, imageIndex);
+
+		setArguments(args);
+	}
+
+	/**
+	 * Initialize the fragment with the file resource
+	 * 
+	 * @param text
+	 * @param imageIndex
+	 *            The index of the view (required if there are multiple such fragments)
+	 * @return
+	 */
+	public void setParameters(int fileResource, int imageIndex) {
+		Bundle args = new Bundle();
+		args.putInt(STRING_FILERESOURCE, fileResource);
+		args.putInt(STRING_TYPE, TYPE_FILERESOURCE);
+		args.putInt(STRING_IMAGEINDEX, imageIndex);
+
+		setArguments(args);
+	}
+
+	/**
+	 * Retrieve parameters
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		type = getArguments().getInt(STRING_TYPE, -1);
+		file = getArguments().getString(STRING_FILE);
+		fileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
+		imageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
+	}
+
+	/**
 	 * Inflate View
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
-			return inflater.inflate(R.layout.fragment_display_one_overlay_landscape, container, false);
+			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
 		else {
-			return inflater.inflate(R.layout.fragment_display_one_overlay_portrait, container, false);
+			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}
 	}
 
@@ -67,7 +126,7 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 		}
 		showUtilities(showUtilities);
 
-		imageView = (OverlayPinchImageView) super.imageView;
+		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		imageView.setGuiElementUpdater(this);
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
@@ -327,11 +386,15 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	}
 
 	/**
-	 * After initializing images, make image specific layout changes
+	 * Initialize images - to be called after the views have restored instance state
 	 */
-	@Override
 	public void initializeImages() {
-		super.initializeImages();
+		if (type == TYPE_FILERESOURCE) {
+			imageView.setImage(fileResource, getActivity(), imageIndex);
+		}
+		else {
+			imageView.setImage(file, getActivity(), imageIndex);
+		}
 
 		if (!imageView.canHandleOverlays()) {
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);

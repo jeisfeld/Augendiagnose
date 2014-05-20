@@ -43,7 +43,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneOverlayActivity"
+            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneActivity"
             android:label="@string/title_activity_display_one"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >

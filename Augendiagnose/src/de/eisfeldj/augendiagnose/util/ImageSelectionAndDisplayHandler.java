@@ -2,7 +2,7 @@ package de.eisfeldj.augendiagnose.util;
 
 import android.app.Activity;
 import android.view.View;
-import de.eisfeldj.augendiagnose.activities.DisplayOneOverlayActivity;
+import de.eisfeldj.augendiagnose.activities.DisplayOneActivity;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
 import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity;
@@ -87,11 +87,11 @@ public class ImageSelectionAndDisplayHandler {
 			@Override
 			public void onClick(View v) {
 				if (selectedView == null) {
-					DisplayOneOverlayActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
+					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else if (selectedView == view) {
 					cleanSelectedView();
-					DisplayOneOverlayActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
+					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else {
 					DisplayTwoActivity.startActivity(activity, getSelectedImagePath(), view.getEyePhoto()

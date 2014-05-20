@@ -102,7 +102,7 @@ public class EditCommentFragment extends Fragment {
 		 * @param text
 		 *            the old value of the text
 		 */
-		public void startEditComment(DisplayOneOverlayFragment fragment, String text);
+		public void startEditComment(DisplayImageFragment fragment, String text);
 
 		/**
 		 * Process the updated comment returned from the fragment

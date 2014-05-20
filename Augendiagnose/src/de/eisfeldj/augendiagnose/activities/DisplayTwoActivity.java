@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
-import de.eisfeldj.augendiagnose.fragments.DisplayOneOverlayFragment;
-import de.eisfeldj.augendiagnose.fragments.DisplayOneOverlayFragmentHalfscreen;
+import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
+import de.eisfeldj.augendiagnose.fragments.DisplayImageFragmentHalfscreen;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 
@@ -25,12 +25,12 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 
 	private View viewFragmentImage1, viewFragmentImage2, viewFragmentEdit, viewLayoutMain;
 
-	private DisplayOneOverlayFragment fragmentImage1, fragmentImage2;
+	private DisplayImageFragment fragmentImage1, fragmentImage2;
 	private EditCommentFragment fragmentEdit;
 
 	// Required to differentiate between "current fragment" and "other fragment" when editing picture comment
 	private View viewFragmentOther;
-	private DisplayOneOverlayFragment fragmentThis;
+	private DisplayImageFragment fragmentThis;
 
 	private Object contextMenuReference;
 
@@ -60,7 +60,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 
 		setContentView(R.layout.activity_display_two);
 
-		fragmentImage1 = (DisplayOneOverlayFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
+		fragmentImage1 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
 		if (fragmentImage1 == null) {
 			fragmentImage1 = createFragment();
 			fragmentImage1.setParameters(file1, 1);
@@ -69,7 +69,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 					.commit();
 		}
 
-		fragmentImage2 = (DisplayOneOverlayFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
+		fragmentImage2 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
 		if (fragmentImage2 == null) {
 			fragmentImage2 = createFragment();
 			fragmentImage2.setParameters(file2, 2);
@@ -113,8 +113,8 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 	 * 
 	 * @return
 	 */
-	protected DisplayOneOverlayFragment createFragment() {
-		return new DisplayOneOverlayFragmentHalfscreen();
+	protected DisplayImageFragment createFragment() {
+		return new DisplayImageFragmentHalfscreen();
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 	// implementation of interface EditCommentStarterActivity
 
 	@Override
-	public void startEditComment(DisplayOneOverlayFragment fragment, String text) {
+	public void startEditComment(DisplayImageFragment fragment, String text) {
 		if (fragment == fragmentImage1) {
 			viewFragmentOther = viewFragmentImage2;
 			fragmentThis = fragmentImage1;

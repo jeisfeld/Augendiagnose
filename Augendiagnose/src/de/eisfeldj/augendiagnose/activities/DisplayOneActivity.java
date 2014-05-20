@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
-import de.eisfeldj.augendiagnose.fragments.DisplayOneOverlayFragment;
+import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 
@@ -16,18 +16,17 @@ import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarte
  * 
  * @author Joerg
  */
-public class DisplayOneOverlayActivity extends Activity implements EditCommentStarterActivity,
-		ContextMenuReferenceHolder {
-	protected static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
-	protected static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
-	protected static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
-	protected static final int TYPE_FILENAME = 1;
-	protected static final int TYPE_FILERESOURCE = 2;
+public class DisplayOneActivity extends Activity implements EditCommentStarterActivity, ContextMenuReferenceHolder {
+	private static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
+	private static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
+	private static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
+	private static final int TYPE_FILENAME = 1;
+	private static final int TYPE_FILERESOURCE = 2;
 
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 	private static final String FRAGMENT_EDIT_TAG = "FRAGMENT_EDIT_TAG";
 
-	protected DisplayOneOverlayFragment fragmentImage;
+	private DisplayImageFragment fragmentImage;
 	private EditCommentFragment fragmentEdit;
 	private View viewFragmentEdit, viewLayoutMain;
 
@@ -40,7 +39,7 @@ public class DisplayOneOverlayActivity extends Activity implements EditCommentSt
 	 * @param filename
 	 */
 	public static void startActivity(Context context, String filename) {
-		Intent intent = new Intent(context, DisplayOneOverlayActivity.class);
+		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE, filename);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILENAME);
 		context.startActivity(intent);
@@ -53,7 +52,7 @@ public class DisplayOneOverlayActivity extends Activity implements EditCommentSt
 	 * @param filename
 	 */
 	public static void startActivity(Context context, int fileResource) {
-		Intent intent = new Intent(context, DisplayOneOverlayActivity.class);
+		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILERESOURCE, fileResource);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILERESOURCE);
 		context.startActivity(intent);
@@ -72,10 +71,10 @@ public class DisplayOneOverlayActivity extends Activity implements EditCommentSt
 
 		setContentView(R.layout.activity_display_one);
 
-		fragmentImage = (DisplayOneOverlayFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		fragmentImage = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
 		if (fragmentImage == null) {
-			fragmentImage = createFragment();
+			fragmentImage = new DisplayImageFragment();
 			if (type == TYPE_FILENAME) {
 				fragmentImage.setParameters(file, 1);
 			}
@@ -97,15 +96,6 @@ public class DisplayOneOverlayActivity extends Activity implements EditCommentSt
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
 			viewFragmentEdit.setVisibility(fragmentEditVisibility);
 		}
-	}
-
-	/**
-	 * Factory method to return the fragment
-	 * 
-	 * @return
-	 */
-	protected DisplayOneOverlayFragment createFragment() {
-		return new DisplayOneOverlayFragment();
 	}
 
 	/**
@@ -149,7 +139,7 @@ public class DisplayOneOverlayActivity extends Activity implements EditCommentSt
 	// implementation of interface EditCommentStarterActivity
 
 	@Override
-	public void startEditComment(DisplayOneOverlayFragment fragment, String text) {
+	public void startEditComment(DisplayImageFragment fragment, String text) {
 		fragmentEdit = new EditCommentFragment();
 		fragmentEdit.setParameters(text);
 

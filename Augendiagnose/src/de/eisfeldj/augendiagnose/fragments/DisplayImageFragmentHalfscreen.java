@@ -8,11 +8,11 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
 /**
- * Variant of DisplayOneOverlayFragment that is intended for a half screen
+ * Variant of DisplayImageFragment that is intended for a half screen
  * 
  * @author Joerg
  */
-public class DisplayOneOverlayFragmentHalfscreen extends DisplayOneOverlayFragment {
+public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 
 	/**
 	 * Inflate View
@@ -20,10 +20,10 @@ public class DisplayOneOverlayFragmentHalfscreen extends DisplayOneOverlayFragme
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
-			return inflater.inflate(R.layout.fragment_display_one_overlay_portrait, container, false);
+			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}
 		else {
-			return inflater.inflate(R.layout.fragment_display_one_overlay_landscape, container, false);
+			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
 	}
 
