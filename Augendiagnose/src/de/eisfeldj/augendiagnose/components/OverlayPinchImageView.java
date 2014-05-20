@@ -42,8 +42,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	private Drawable[] overlayCache = new Drawable[OVERLAY_COUNT];
 
 	/**
-	 * These are the relative positions of the overlay center on the bitmap.
-	 * Range: [0,1]
+	 * These are the relative positions of the overlay center on the bitmap. Range: [0,1]
 	 */
 	private float mOverlayX, mOverlayY;
 	private float mOverlayScaleFactor;
@@ -117,6 +116,7 @@ public class OverlayPinchImageView extends PinchImageView {
 						@Override
 						public void run() {
 							if (mMetadata != null && mMetadata.hasOverlayPosition()) {
+								// stored position of overlay
 								mHasOverlayPosition = true;
 								mOverlayX = mMetadata.xCenter;
 								mOverlayY = mMetadata.yCenter;
@@ -202,9 +202,13 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		// Determine overlays to be shown
 		ArrayList<Integer> overlayPositions = new ArrayList<Integer>();
-		for (int i = 0; i < mShowOverlay.length; i++) {
-			if (mShowOverlay[i]) {
-				overlayPositions.add(i);
+
+		if (mEyePhoto.getRightLeft() != null) {
+			// Only if right/left is clear, add overlays
+			for (int i = 0; i < mShowOverlay.length; i++) {
+				if (mShowOverlay[i]) {
+					overlayPositions.add(i);
+				}
 			}
 		}
 
@@ -214,6 +218,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			modBitmap = changeBitmapContrastBrightness(mBitmap, mContrast, mBrightness);
 		}
 		else {
+			// for performance reasons, use only low resolution bitmap while pinching
 			modBitmap = changeBitmapContrastBrightness(mBitmapSmall, mContrast, mBrightness);
 		}
 		layers[0] = new BitmapDrawable(getResources(), modBitmap);
@@ -613,6 +618,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Update contrast and brightness of a bitmap
+	 * 
 	 * @param bmp
 	 *            input bitmap
 	 * @param contrast
