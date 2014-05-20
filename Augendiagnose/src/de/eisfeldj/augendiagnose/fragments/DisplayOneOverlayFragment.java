@@ -1,7 +1,5 @@
 package de.eisfeldj.augendiagnose.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -15,10 +13,10 @@ import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.activities.EditCommentActivity;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
+import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
@@ -213,7 +211,7 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 				updateDefaultShowUtilities(newShowUtilities);
 				return true;
 			case R.id.action_edit_comment:
-				EditCommentActivity.startActivity(getActivity(), this, imageView.getMetadata().comment);
+				((EditCommentStarterActivity) getActivity()).startEditComment(this, imageView.getMetadata().comment);
 				return true;
 			case R.id.action_store_brightness:
 				imageView.storeBrightnessContrast(false);
@@ -326,20 +324,6 @@ public class DisplayOneOverlayFragment extends DisplayOneFragment implements Gui
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", showUtilities);
-	}
-
-	/**
-	 * When getting the response from the comment update, update the name field in the display.
-	 */
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case EditCommentActivity.REQUEST_CODE:
-			if (resultCode == Activity.RESULT_OK) {
-				CharSequence comment = EditCommentActivity.getResult(resultCode, data);
-				storeComment(comment.toString());
-			}
-		}
 	}
 
 	/**

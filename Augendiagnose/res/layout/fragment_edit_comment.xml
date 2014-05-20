@@ -9,7 +9,7 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentTop="true" >
 
         <Button
             android:id="@+id/buttonCancel"
@@ -37,8 +37,8 @@
         android:id="@+id/input_edit_comment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/buttonRow"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/buttonRow"
+        android:layout_alignParentBottom="true"
         android:gravity="top"
         android:hint="@string/hint_edit_comment"
         android:inputType="textMultiLine" >

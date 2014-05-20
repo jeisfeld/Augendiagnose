@@ -66,7 +66,7 @@ public class EditCommentFragment extends Fragment {
 		buttonCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditCommentCallback activity = (EditCommentCallback) getActivity();
+				EditCommentStarterActivity activity = (EditCommentStarterActivity) getActivity();
 				activity.processUpdatedComment(editText.getText().toString(), false);
 			}
 		});
@@ -83,7 +83,7 @@ public class EditCommentFragment extends Fragment {
 		buttonOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditCommentCallback activity = (EditCommentCallback) getActivity();
+				EditCommentStarterActivity activity = (EditCommentStarterActivity) getActivity();
 				activity.processUpdatedComment(editText.getText().toString(), true);
 			}
 		});
@@ -93,7 +93,20 @@ public class EditCommentFragment extends Fragment {
 	/**
 	 * Interface that must be implemented by the activity triggering this fragment
 	 */
-	public interface EditCommentCallback {
+	public interface EditCommentStarterActivity {
+		/**
+		 * Process the updated comment returned from the fragment
+		 * 
+		 * @param fragment
+		 *            the fragment starting the activity
+		 * @param text
+		 *            the old value of the text
+		 */
+		public void startEditComment(DisplayOneOverlayFragment fragment, String text);
+
+		/**
+		 * Process the updated comment returned from the fragment
+		 */
 		public void processUpdatedComment(String text, boolean success);
 	}
 

@@ -43,15 +43,6 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneActivity"
-            android:label="@string/title_activity_display_one"
-            android:parentActivityName=".activities.MainActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
-        <activity
             android:name="de.eisfeldj.augendiagnose.activities.DisplayOneOverlayActivity"
             android:label="@string/title_activity_display_one"
             android:parentActivityName=".activities.MainActivity"
@@ -127,15 +118,6 @@
             android:name="de.eisfeldj.augendiagnose.activities.DisplayHtmlActivity"
             android:label="@string/title_help"
             android:parentActivityName=".activities.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
-        <activity
-            android:name="de.eisfeldj.augendiagnose.activities.EditCommentActivity"
-            android:label="@string/title_edit_comment"
-            android:parentActivityName=".activities.MainActivity"
-            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />

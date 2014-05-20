@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_display_two_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
@@ -12,6 +13,14 @@
         android:layout_height="match_parent"
         android:layout_marginRight="2dp"
         android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/fragment_edit"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="2dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/fragment_image2"

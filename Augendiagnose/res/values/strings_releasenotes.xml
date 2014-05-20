@@ -69,7 +69,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled to delete photos and change dates via context menu. Minor improvements and bugfixes.</item>
         <item>Introduced special design for tablets - merged list of names with list of photos per name</item>
         <item>Allowed storage of image position and zoom. Enablement of overlays and scrollbars in two-image view.</item>
-        <item>TODO.</item>
+        <item>While editing the comment, the image is still shown.</item>
     </string-array>
 
 </resources>
