@@ -10,6 +10,7 @@ import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
+import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling
@@ -87,7 +88,7 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 		}
 
 		viewFragmentEdit = findViewById(R.id.fragment_edit);
-		viewLayoutMain = findViewById(R.id.layout_display_one_main);
+		viewLayoutMain = findViewById(android.R.id.content);
 
 		// Restore in case of orientation change
 		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
@@ -96,6 +97,8 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
 			viewFragmentEdit.setVisibility(fragmentEditVisibility);
 		}
+		
+		AndroidBug5497Workaround.assistActivity(this);
 	}
 
 	/**

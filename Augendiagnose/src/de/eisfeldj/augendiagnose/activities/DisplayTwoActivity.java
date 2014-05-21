@@ -83,7 +83,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 		viewFragmentImage1 = findViewById(R.id.fragment_image1);
 		viewFragmentImage2 = findViewById(R.id.fragment_image2);
 		viewFragmentEdit = findViewById(R.id.fragment_edit);
-		viewLayoutMain = findViewById(R.id.layout_display_two_main);
+		viewLayoutMain = findViewById(android.R.id.content);
 
 		// Restore in case of orientation change
 		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
