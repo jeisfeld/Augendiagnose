@@ -401,6 +401,19 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		}
 	}
 
+	/**
+	 * Trigger redrawing of the imageView from outside
+	 */
+	public void requestLayout() {
+		imageView.post(new Runnable() {
+			@Override
+			public void run() {
+				imageView.requestLayout();
+				imageView.invalidate();
+			}
+		});
+	}
+
 	// Implementation of GuiElementUpdater
 
 	@Override

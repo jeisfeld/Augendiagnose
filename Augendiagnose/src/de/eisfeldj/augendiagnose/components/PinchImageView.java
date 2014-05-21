@@ -21,6 +21,10 @@ import de.eisfeldj.augendiagnose.util.ImageUtil;
 public class PinchImageView extends ImageView {
 	protected static final int INVALID_POINTER_ID = -1;
 	protected boolean mInitialized = false;
+
+	/**
+	 * Field used to check if a gesture was moving the image (then no context menu will appear)
+	 */
 	protected boolean mHasMoved = false;
 
 	/**
@@ -176,7 +180,7 @@ public class PinchImageView extends ImageView {
 			mInitialized = true;
 		}
 		mLastScaleFactor = mScaleFactor;
-		setMatrix();
+		requestLayout();
 		invalidate();
 	}
 
@@ -198,6 +202,17 @@ public class PinchImageView extends ImageView {
 		matrix.postScale(mScaleFactor, mScaleFactor);
 		matrix.postTranslate(getWidth() / 2, getHeight() / 2);
 		setImageMatrix(matrix);
+	}
+
+	/**
+	 * Override invalidate to reposition the image
+	 */
+	@Override
+	public void requestLayout() {
+		super.requestLayout();
+		if (mBitmap != null) {
+			setMatrix();
+		}
 	}
 
 	/**

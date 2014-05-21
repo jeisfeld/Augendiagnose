@@ -194,6 +194,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 		viewFragmentOther.setVisibility(View.VISIBLE);
 		viewFragmentEdit.setVisibility(View.GONE);
 		viewLayoutMain.invalidate();
+		fragmentThis.requestLayout();
 	}
 
 }

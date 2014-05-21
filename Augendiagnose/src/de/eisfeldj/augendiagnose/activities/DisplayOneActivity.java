@@ -161,5 +161,6 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 
 		viewFragmentEdit.setVisibility(View.GONE);
 		viewLayoutMain.invalidate();
+		fragmentImage.requestLayout();
 	}
 }
