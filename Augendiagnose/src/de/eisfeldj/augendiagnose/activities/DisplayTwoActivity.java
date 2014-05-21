@@ -11,11 +11,14 @@ import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragmentHalfscreen;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
+import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
+import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround.ActivityWithExplicitLayoutTrigger;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves)
  */
-public class DisplayTwoActivity extends Activity implements ContextMenuReferenceHolder, EditCommentStarterActivity {
+public class DisplayTwoActivity extends Activity implements ContextMenuReferenceHolder, EditCommentStarterActivity,
+		ActivityWithExplicitLayoutTrigger {
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
 
@@ -106,6 +109,9 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 				fragmentThis = fragmentImage1;
 			}
 		}
+
+		// ensure that layout is refreshed if view gets resized
+		AndroidBug5497Workaround.assistActivity(this);
 	}
 
 	/**
@@ -179,7 +185,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 
 		viewFragmentOther.setVisibility(View.GONE);
 		viewFragmentEdit.setVisibility(View.VISIBLE);
-		viewLayoutMain.invalidate();
+		requestLayout();
 	}
 
 	@Override
@@ -193,8 +199,16 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 
 		viewFragmentOther.setVisibility(View.VISIBLE);
 		viewFragmentEdit.setVisibility(View.GONE);
+		requestLayout();
+	}
+
+	// implemenation of interface ActivityWithExplicitLayoutTrigger
+
+	@Override
+	public void requestLayout() {
 		viewLayoutMain.invalidate();
-		fragmentThis.requestLayout();
+		fragmentImage1.requestLayout();
+		fragmentImage2.requestLayout();
 	}
 
 }

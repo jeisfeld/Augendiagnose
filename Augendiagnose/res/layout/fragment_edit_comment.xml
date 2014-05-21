@@ -9,13 +9,15 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentBottom="true" >
 
         <Button
             android:id="@+id/buttonCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingLeft="0px"
+            android:paddingRight="0px"
             android:text="@string/button_cancel" />
 
         <Button
@@ -30,6 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingLeft="0px"
+            android:paddingRight="0px"
             android:text="@string/button_ok" />
     </LinearLayout>
 
@@ -37,8 +41,8 @@
         android:id="@+id/input_edit_comment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/buttonRow"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/buttonRow"
+        android:layout_alignParentTop="true"
         android:gravity="top"
         android:hint="@string/hint_edit_comment"
         android:inputType="textMultiLine" >

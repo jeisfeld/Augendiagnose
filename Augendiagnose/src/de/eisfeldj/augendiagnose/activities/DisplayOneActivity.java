@@ -11,13 +11,15 @@ import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
+import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround.ActivityWithExplicitLayoutTrigger;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling
  * 
  * @author Joerg
  */
-public class DisplayOneActivity extends Activity implements EditCommentStarterActivity, ContextMenuReferenceHolder {
+public class DisplayOneActivity extends Activity implements EditCommentStarterActivity, ContextMenuReferenceHolder,
+		ActivityWithExplicitLayoutTrigger {
 	private static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	private static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
 	private static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
@@ -97,7 +99,8 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
 			viewFragmentEdit.setVisibility(fragmentEditVisibility);
 		}
-		
+
+		// ensure that layout is refreshed if view gets resized
 		AndroidBug5497Workaround.assistActivity(this);
 	}
 
@@ -150,7 +153,7 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 		getFragmentManager().executePendingTransactions();
 
 		viewFragmentEdit.setVisibility(View.VISIBLE);
-		viewLayoutMain.invalidate();
+		requestLayout();
 	}
 
 	@Override
@@ -163,6 +166,13 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 		getFragmentManager().executePendingTransactions();
 
 		viewFragmentEdit.setVisibility(View.GONE);
+		requestLayout();
+	}
+
+	// implemenation of interface ActivityWithExplicitLayoutTrigger
+
+	@Override
+	public void requestLayout() {
 		viewLayoutMain.invalidate();
 		fragmentImage.requestLayout();
 	}
