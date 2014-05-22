@@ -251,6 +251,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 			menu.removeGroup(R.id.group_store_reset);
 		}
 
+		if (((DisplayImageActivity) getActivity()).isEditingComment()) {
+			// Do not allow duplicate selection of "edit comment"
+			menu.removeItem(R.id.action_edit_comment);
+		}
+
 		// need to store reference, because onContextItemSelected will be called on all fragments
 		((ContextMenuReferenceHolder) getActivity()).setContextMenuReference(this);
 	}

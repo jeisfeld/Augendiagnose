@@ -121,4 +121,13 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 		return contextMenuReference;
 	}
 
+	/**
+	 * Get information if the EditCommentFragment is active
+	 * 
+	 * @return
+	 */
+	public boolean isEditingComment() {
+		return fragmentEdit != null;
+	}
+
 }
