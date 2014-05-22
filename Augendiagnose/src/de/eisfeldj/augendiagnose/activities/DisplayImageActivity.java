@@ -99,6 +99,20 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 		viewFragmentEdit.setVisibility(View.GONE);
 	}
 
+	/**
+	 * If in editing mode, just remove the editing frame when pressing back
+	 */
+	@Override
+	public void onBackPressed() {
+		if (isEditingComment()) {
+			hideEditFragment();
+			requestLayout();
+		}
+		else {
+			super.onBackPressed();
+		}
+	}
+
 	// implementation of interface ContactMenuReferenceHolder
 
 	/**
