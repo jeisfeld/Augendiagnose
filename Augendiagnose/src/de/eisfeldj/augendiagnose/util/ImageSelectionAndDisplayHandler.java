@@ -86,6 +86,11 @@ public class ImageSelectionAndDisplayHandler {
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (activity == null) {
+					// Prevent NullPointerException
+					return;
+				}
+
 				if (selectedView == null) {
 					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
@@ -154,8 +159,8 @@ public class ImageSelectionAndDisplayHandler {
 		if (selectedView != null) {
 			highlightSelectedView(false);
 			selectedView = null;
-			
-			if(fragment != null) {
+
+			if (fragment != null) {
 				fragment.deactivateButtonAdditionalPictures();
 			}
 		}
@@ -169,8 +174,8 @@ public class ImageSelectionAndDisplayHandler {
 	private void selectView(EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
-		
-		if(fragment != null) {
+
+		if (fragment != null) {
 			fragment.activateButtonAdditionalPictures();
 		}
 	}

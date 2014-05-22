@@ -65,7 +65,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 				}
 
 				getFragmentManager().executePendingTransactions();
-				
+
 				// In tablet view, different title is more appropriate
 				setTitle(getString(R.string.title_activity_list_pictures_for_name));
 			}
@@ -74,6 +74,10 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			}
 		}
 
+		if (Application.isTablet()) {
+			// Associate image display to this activity
+			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
+		}
 	}
 
 	/**
@@ -109,8 +113,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 */
 	public void listPicturesForName(String name) {
 		if (Application.isTablet()) {
-			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
-
 			listPicturesFragment = new ListPicturesForNameFragment();
 			listPicturesFragment.setParameters(parentFolder, name);
 
