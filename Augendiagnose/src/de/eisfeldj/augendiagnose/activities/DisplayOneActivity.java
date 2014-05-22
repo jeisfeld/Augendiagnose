@@ -162,6 +162,7 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 			fragmentImage.storeComment(text);
 		}
 
+		fragmentEdit.hideKeyboard();
 		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
 		getFragmentManager().executePendingTransactions();
 

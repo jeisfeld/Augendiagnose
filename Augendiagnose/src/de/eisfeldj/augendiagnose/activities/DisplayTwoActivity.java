@@ -194,6 +194,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 			fragmentThis.storeComment(text);
 		}
 
+		fragmentEdit.hideKeyboard();
 		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
 		getFragmentManager().executePendingTransactions();
 

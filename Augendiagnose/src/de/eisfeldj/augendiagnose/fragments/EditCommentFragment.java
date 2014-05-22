@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.KeyboardUtil;
 
 /**
  * Fragment to add the comment of a picture
@@ -88,6 +89,13 @@ public class EditCommentFragment extends Fragment {
 			}
 		});
 
+	}
+
+	/**
+	 * Hide the soft keyboard triggered from this fragment
+	 */
+	public void hideKeyboard() {
+		KeyboardUtil.hideKeyboard(getActivity(), editText);
 	}
 
 	/**
