@@ -17,7 +17,6 @@
     <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
-    <string name="title_edit_comment">Bildkommentar bearbeiten</string>
     
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
