@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
@@ -87,6 +88,10 @@ public class DisplayOneActivity extends DisplayImageActivity {
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
 			viewFragmentEdit.setVisibility(fragmentEditVisibility);
+
+			if (fragmentEditVisibility == View.VISIBLE) {
+				fragmentEditedImage = fragmentImage;
+			}
 		}
 
 		// ensure that layout is refreshed if view gets resized
