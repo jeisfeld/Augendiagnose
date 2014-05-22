@@ -49,7 +49,8 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4</item>
         <item>0.4.1</item>
         <item>0.4.2</item>
-    </string-array>
+        <item>0.4.3</item>
+        </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
         <item>Added basic overlay functionality.</item>
@@ -70,6 +71,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Introduced special design for tablets - merged list of names with list of photos per name</item>
         <item>Allowed storage of image position and zoom. Enablement of overlays and scrollbars in two-image view.</item>
         <item>While editing the comment, the image is still shown. Bugfixes.</item>
-    </string-array>
+        <item>TODO</item>
+        </string-array>
 
 </resources>

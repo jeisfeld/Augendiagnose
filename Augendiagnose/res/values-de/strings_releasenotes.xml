@@ -52,6 +52,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Einführung eines gesonderten Designs für Tablets - Liste der Namen und Liste der Bilder werden gleichzeitig angezeigt.</item>
         <item>Speicherung von Position und Zoom. Overlays und Helligkeit/Kontrast können jetzt auch in der Ansicht zweier Bilder angezeigt und verändert werden.</item>
         <item>Das Foto wird jetzt angezeigt, während der Kommentar bearbeitet wird. Bugfixes.</item>
-    </string-array>
+        <item>TODO</item>
+        </string-array>
 
 </resources>
