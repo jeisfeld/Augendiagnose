@@ -1,25 +1,19 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
-import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
-import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround.ActivityWithExplicitLayoutTrigger;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling
  * 
  * @author Joerg
  */
-public class DisplayOneActivity extends Activity implements EditCommentStarterActivity, ContextMenuReferenceHolder,
-		ActivityWithExplicitLayoutTrigger {
+public class DisplayOneActivity extends DisplayImageActivity {
 	private static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	private static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
 	private static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
@@ -27,13 +21,8 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 	private static final int TYPE_FILERESOURCE = 2;
 
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
-	private static final String FRAGMENT_EDIT_TAG = "FRAGMENT_EDIT_TAG";
 
 	private DisplayImageFragment fragmentImage;
-	private EditCommentFragment fragmentEdit;
-	private View viewFragmentEdit, viewLayoutMain;
-
-	private Object contextMenuReference;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -105,75 +94,11 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 	}
 
 	/**
-	 * Workaround to ensure that all views have restored status before images are re-initialized
+	 * Initialize the images
 	 */
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		if (hasFocus) {
-			fragmentImage.initializeImages();
-		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt("fragmentEditVisibility", viewFragmentEdit.getVisibility());
-	}
-
-	// implementation of interface ContactMenuReferenceHolder
-
-	/**
-	 * Store a reference to the context menu holder
-	 * 
-	 * @param o
-	 */
-	@Override
-	public void setContextMenuReference(Object o) {
-		contextMenuReference = o;
-	}
-
-	/**
-	 * Retrieve a reference to the context menu holder
-	 * 
-	 * @return
-	 */
-	@Override
-	public Object getContextMenuReference() {
-		return contextMenuReference;
-	}
-
-	// implementation of interface EditCommentStarterActivity
-
-	@Override
-	public void startEditComment(DisplayImageFragment fragment, String text) {
-		// Do not create duplicate edit fragments
-		if (fragmentEdit != null) {
-			return;
-		}
-
-		fragmentEdit = new EditCommentFragment();
-		fragmentEdit.setParameters(text);
-
-		getFragmentManager().beginTransaction().add(R.id.fragment_edit, fragmentEdit, FRAGMENT_EDIT_TAG).commit();
-		getFragmentManager().executePendingTransactions();
-
-		viewFragmentEdit.setVisibility(View.VISIBLE);
-		requestLayout();
-	}
-
-	@Override
-	public void processUpdatedComment(String text, boolean success) {
-		if (success) {
-			fragmentImage.storeComment(text);
-		}
-
-		fragmentEdit.hideKeyboard();
-		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
-		getFragmentManager().executePendingTransactions();
-		fragmentEdit = null;
-
-		viewFragmentEdit.setVisibility(View.GONE);
-		requestLayout();
+	protected void initializeImages() {
+		fragmentImage.initializeImages();
 	}
 
 	// implemenation of interface ActivityWithExplicitLayoutTrigger

@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
 import de.eisfeldj.augendiagnose.util.KeyboardUtil;
 
 /**
@@ -67,7 +68,7 @@ public class EditCommentFragment extends Fragment {
 		buttonCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditCommentStarterActivity activity = (EditCommentStarterActivity) getActivity();
+				DisplayImageActivity activity = (DisplayImageActivity) getActivity();
 				activity.processUpdatedComment(editText.getText().toString(), false);
 			}
 		});
@@ -84,7 +85,7 @@ public class EditCommentFragment extends Fragment {
 		buttonOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditCommentStarterActivity activity = (EditCommentStarterActivity) getActivity();
+				DisplayImageActivity activity = (DisplayImageActivity) getActivity();
 				activity.processUpdatedComment(editText.getText().toString(), true);
 			}
 		});
@@ -96,26 +97,6 @@ public class EditCommentFragment extends Fragment {
 	 */
 	public void hideKeyboard() {
 		KeyboardUtil.hideKeyboard(getActivity(), editText);
-	}
-
-	/**
-	 * Interface that must be implemented by the activity triggering this fragment
-	 */
-	public interface EditCommentStarterActivity {
-		/**
-		 * Process the updated comment returned from the fragment
-		 * 
-		 * @param fragment
-		 *            the fragment starting the activity
-		 * @param text
-		 *            the old value of the text
-		 */
-		public void startEditComment(DisplayImageFragment fragment, String text);
-
-		/**
-		 * Process the updated comment returned from the fragment
-		 */
-		public void processUpdatedComment(String text, boolean success);
 	}
 
 }

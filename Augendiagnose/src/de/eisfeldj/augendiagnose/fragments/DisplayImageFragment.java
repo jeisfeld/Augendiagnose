@@ -14,10 +14,10 @@ import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
-import de.eisfeldj.augendiagnose.fragments.EditCommentFragment.EditCommentStarterActivity;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
@@ -270,7 +270,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 				updateDefaultShowUtilities(newShowUtilities);
 				return true;
 			case R.id.action_edit_comment:
-				((EditCommentStarterActivity) getActivity()).startEditComment(this, imageView.getMetadata().comment);
+				((DisplayImageActivity) getActivity()).startEditComment(this, imageView.getMetadata().comment);
 				return true;
 			case R.id.action_store_brightness:
 				imageView.storeBrightnessContrast(false);
