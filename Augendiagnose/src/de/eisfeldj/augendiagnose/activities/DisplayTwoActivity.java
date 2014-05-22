@@ -168,6 +168,11 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 
 	@Override
 	public void startEditComment(DisplayImageFragment fragment, String text) {
+		// Do not create duplicate edit fragments
+		if (fragmentEdit != null) {
+			return;
+		}
+
 		if (fragment == fragmentImage1) {
 			viewFragmentOther = viewFragmentImage2;
 			fragmentThis = fragmentImage1;
@@ -197,6 +202,7 @@ public class DisplayTwoActivity extends Activity implements ContextMenuReference
 		fragmentEdit.hideKeyboard();
 		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
 		getFragmentManager().executePendingTransactions();
+		fragmentEdit = null;
 
 		viewFragmentOther.setVisibility(View.VISIBLE);
 		viewFragmentEdit.setVisibility(View.GONE);

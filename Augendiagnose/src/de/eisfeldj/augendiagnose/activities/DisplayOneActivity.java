@@ -146,6 +146,11 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 
 	@Override
 	public void startEditComment(DisplayImageFragment fragment, String text) {
+		// Do not create duplicate edit fragments
+		if (fragmentEdit != null) {
+			return;
+		}
+
 		fragmentEdit = new EditCommentFragment();
 		fragmentEdit.setParameters(text);
 
@@ -165,6 +170,7 @@ public class DisplayOneActivity extends Activity implements EditCommentStarterAc
 		fragmentEdit.hideKeyboard();
 		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
 		getFragmentManager().executePendingTransactions();
+		fragmentEdit = null;
 
 		viewFragmentEdit.setVisibility(View.GONE);
 		requestLayout();
