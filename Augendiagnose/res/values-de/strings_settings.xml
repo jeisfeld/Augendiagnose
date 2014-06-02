@@ -4,6 +4,7 @@
 
     <!-- Strings related to Settings -->
     <string name="pref_title_folder_photos">Verzeichnis der Augenfotos</string>
+    <string name="pref_default_folder_photos">__ext_storage__/Augenfotos</string>
     <string name="pref_title_folder_input">Eingangsverzeichnis für neue Fotos</string>
     <string name="pref_title_max_bitmap_size">Maximale Bitmap-Größe</string>
     <string name="pref_title_eye_sequence_choice">Letztes Foto ist rechtes Auge</string>

@@ -4,7 +4,7 @@
 
     <!-- Strings related to Settings -->
     <string name="pref_title_folder_photos">Eye Photo Folder</string>
-    <string name="pref_default_folder_photos" translatable="false">__ext_storage__/Augenfotos</string>
+    <string name="pref_default_folder_photos">__ext_storage__/EyePhotos</string>
     <string name="pref_title_folder_input">Input folder for new eye photos</string>
     <string name="pref_default_folder_input" translatable="false">__ext_storage__/Eye-Fi</string>
     <string name="pref_title_max_bitmap_size">Max Bitmap size</string>
