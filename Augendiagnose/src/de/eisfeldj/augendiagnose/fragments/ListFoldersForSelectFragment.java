@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +24,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	private static final String STRING_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
 
 	private String preselectedName;
+	private TextView headerView;
 
 	/**
 	 * Initialize the fragment with parentFolder and preselectedName
@@ -46,7 +49,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 
 	@Override
 	protected void setOnItemClickListener() {
-		listView.setOnItemClickListener(new ShowContentsOnClickListener());
+		listView.setOnItemClickListener(new ReturnNameOnClickListener());
 	}
 
 	/**
@@ -54,15 +57,21 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	 */
 	@Override
 	protected void createList() {
+		// Header needs to be added before setting adapter
+		headerView = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.adapter_list_names, null);
+		listView.addHeaderView(headerView);
+
 		super.createList();
+
 		preselectedName = getArguments().getString(STRING_PRESELECTED_NAME);
 		if (preselectedName == null || preselectedName.length() == 0) {
-			folderNames.add(0, getString(R.string.display_new_name));
+			headerView.setText(getString(R.string.display_new_name));
 		}
 		else {
-			folderNames.add(0, "[" + preselectedName + "]");
+			headerView.setText("[" + preselectedName + "]");
 		}
 
+		headerView.setOnClickListener(new EnterNewNameOnClickListener());
 	}
 
 	@Override
@@ -72,50 +81,37 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	}
 
 	/**
-	 * Extension of the name change listener, taking care of the fact that the first item of the list has been added as
-	 * "new name" selector.
+	 * On header click, display a dialog for entering a new name.
 	 */
-	private class RenameOnLongClickListener extends ListFoldersBaseFragment.RenameOnLongClickListener {
+	private class EnterNewNameOnClickListener implements OnClickListener {
 		@Override
-		public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, final long rowId) {
-			if (position == 0) {
-				return true;
+		public void onClick(View view) {
+			final ListFoldersForSelectFragment fragment = ListFoldersForSelectFragment.this;
+			final EditText input = new EditText(fragment.getActivity());
+			if (preselectedName != null && preselectedName.length() > 0) {
+				input.setText(preselectedName);
 			}
 			else {
-				return super.onItemLongClick(parent, view, position - 1, rowId - 1);
+				input.setHint(getString(R.string.hint_insert_name));
 			}
+
+			EnterNameDialogFragment enterNameFragment = new EnterNameDialogFragment();
+			Bundle bundle = new Bundle();
+			bundle.putString("preselectedName", preselectedName);
+			enterNameFragment.setArguments(bundle);
+			enterNameFragment.show(getFragmentManager(), EnterNameDialogFragment.class.toString());
 		}
 	}
 
 	/**
-	 * On item click, either return the selected file (if the click is not on the first entry) Or display a dialog for
-	 * entering a new name.
+	 * On item click, return the selected file
 	 * 
 	 */
-	private class ShowContentsOnClickListener implements OnItemClickListener {
+	private class ReturnNameOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			if (position == 0) {
-				final ListFoldersForSelectFragment fragment = ListFoldersForSelectFragment.this;
-				final EditText input = new EditText(fragment.getActivity());
-				if (preselectedName != null && preselectedName.length() > 0) {
-					input.setText(preselectedName);
-				}
-				else {
-					input.setHint(getString(R.string.hint_insert_name));
-				}
-
-				EnterNameDialogFragment enterNameFragment = new EnterNameDialogFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString("preselectedName", preselectedName);
-				enterNameFragment.setArguments(bundle);
-				enterNameFragment.show(getFragmentManager(), EnterNameDialogFragment.class.toString());
-			}
-			else {
-				ListFoldersForSelectActivity activity = (ListFoldersForSelectActivity) getActivity();
-				activity.returnResult(((TextView) view).getText());
-			}
-
+			ListFoldersForSelectActivity activity = (ListFoldersForSelectActivity) getActivity();
+			activity.returnResult(((TextView) view).getText());
 		}
 	}
 

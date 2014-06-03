@@ -14,6 +14,8 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +83,24 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		listView = (ListView) getView().findViewById(R.id.listViewNames);
 		createList();
 
+		EditText editText = (EditText) getView().findViewById(R.id.searchName);
+		editText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				directoryListAdapter.getFilter().filter(s.toString());
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// do nothing
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// do nothing
+			}
+		});
+
 		setOnItemClickListener();
 	}
 
@@ -117,6 +137,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		}
 		directoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
 		listView.setAdapter(directoryListAdapter);
+		listView.setTextFilterEnabled(true);
 	}
 
 	/**

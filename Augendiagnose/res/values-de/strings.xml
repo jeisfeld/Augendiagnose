@@ -71,6 +71,7 @@
     <string name="suffix_title_right">Rechtes Auge</string>
     <string name="suffix_title_left">Linkes Auge</string>
     <string name="hint_select_name">[Namen auswählen]</string>
+    <string name="hint_search_name">[Namen suchen]</string>
     <string name="hint_insert_name">[Neuen Namen eingeben]</string>
     <string name="hint_edit_comment">[Bildkommentar eingeben]</string>
 

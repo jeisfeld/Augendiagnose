@@ -8,11 +8,9 @@
 
     <EditText
         android:id="@+id/searchName"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_select_name"
+        android:hint="@string/hint_search_name"
         android:inputType="textPersonName" />
 
     <ListView
