@@ -11,14 +11,17 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
@@ -31,13 +34,15 @@ import de.eisfeldj.augendiagnose.util.EyePhoto;
  * Base fragment to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
-public abstract class ListFoldersBaseFragment extends ListFragment {
+public abstract class ListFoldersBaseFragment extends Fragment {
 	protected static final String STRING_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
 
 	protected File parentFolder;
 	protected List<String> folderNames = new ArrayList<String>();
 	private File[] folders;
+
+	protected ListView listView;
 	protected ArrayAdapter<String> directoryListAdapter;
 
 	/**
@@ -59,18 +64,28 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 
 		Bundle args = getArguments();
 		parentFolder = new File(args.getString(STRING_FOLDER));
+	}
 
-		createList();
+	/**
+	 * Inflate View
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_list_names, container, false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		listView = (ListView) getView().findViewById(R.id.listViewNames);
+		createList();
+
 		setOnItemClickListener();
 	}
 
 	/**
-	 * Listener for a shore click on a list item
+	 * Listener for a short click on a list item
 	 */
 	protected abstract void setOnItemClickListener();
 
@@ -101,7 +116,7 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 			folderNames.add(f.getName());
 		}
 		directoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
-		setListAdapter(directoryListAdapter);
+		listView.setAdapter(directoryListAdapter);
 	}
 
 	/**
@@ -242,13 +257,13 @@ public abstract class ListFoldersBaseFragment extends ListFragment {
 			// If the EditText is always recreated, then the content will be lost on orientation change.
 			EditText input0;
 			input0 = (EditText) getActivity().findViewById(R.id.editName);
-			if(input0 == null) {
+			if (input0 == null) {
 				input0 = new EditText(getActivity());
 				input0.setText(inputText);
 				input0.setId(R.id.editName);
 			}
 			final EditText input = input0;
-			
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()) //
 					.setTitle(R.string.title_dialog_change_name) //
 					.setView(input) //

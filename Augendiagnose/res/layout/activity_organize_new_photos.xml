@@ -93,8 +93,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_select_name"
-            android:inputType="textPersonName" >
-        </EditText>
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <Space style="@style/Space" />
@@ -116,8 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" >
-        </EditText>
+            android:inputType="date" />
     </LinearLayout>
 
     <Space style="@style/Space" />

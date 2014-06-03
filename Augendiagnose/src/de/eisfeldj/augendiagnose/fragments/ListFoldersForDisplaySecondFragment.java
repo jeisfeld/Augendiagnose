@@ -13,7 +13,7 @@ import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
 public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment {
 	@Override
 	protected void setOnItemClickListener() {
-		getListView().setOnItemClickListener(new ShowContentsOnClickListener());
+		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
 	/**

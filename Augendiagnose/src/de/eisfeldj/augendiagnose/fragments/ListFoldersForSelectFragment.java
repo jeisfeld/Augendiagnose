@@ -41,12 +41,12 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getListView().setOnItemLongClickListener(new RenameOnLongClickListener());
+		listView.setOnItemLongClickListener(new RenameOnLongClickListener());
 	}
 
 	@Override
 	protected void setOnItemClickListener() {
-		getListView().setOnItemClickListener(new ShowContentsOnClickListener());
+		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroy();
-		((RenameOnLongClickListener) getListView().getOnItemLongClickListener()).closeDialog();
+		((RenameOnLongClickListener) listView.getOnItemLongClickListener()).closeDialog();
 	}
 
 	/**
