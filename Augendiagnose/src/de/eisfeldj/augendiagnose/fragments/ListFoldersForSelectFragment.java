@@ -58,8 +58,10 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	@Override
 	protected void createList() {
 		// Header needs to be added before setting adapter
-		headerView = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.adapter_list_names, null);
-		listView.addHeaderView(headerView);
+		if (listView.getHeaderViewsCount() == 0) {
+			headerView = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.adapter_list_names, null);
+			listView.addHeaderView(headerView);
+		}
 
 		super.createList();
 

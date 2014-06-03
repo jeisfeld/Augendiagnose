@@ -266,7 +266,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Fragment to display an error and stop the activity - return to parent activity.
+	 * Fragment to change the name
 	 */
 	public static class DisplayChangeNameFragment extends DialogFragment {
 		@Override
