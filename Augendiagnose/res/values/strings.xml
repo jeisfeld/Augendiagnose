@@ -54,6 +54,7 @@
     <string name="button_clear">Clear</string>
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
+    <string name="button_select">Select</string>
     <string name="button_other_pictures">Other Pictures</string>
     
     <string name="toggle_overlay_1">T1</string>
@@ -66,14 +67,13 @@
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>
     <string name="display_right_left">R-L</string>
-    <string name="display_new_name">[Create new name]</string>
     <string name="file_infix_right">right</string>
     <string name="file_infix_left">left</string>
     <string name="suffix_title_right">Right Eye</string>
     <string name="suffix_title_left">Left Eye</string>
     <string name="hint_select_name">[Select name]</string>
     <string name="hint_search_name">[Search name]</string>
-    <string name="hint_insert_name">[Enter new name]</string>
+    <string name="hint_insert_name">[Enter name]</string>
     <string name="hint_edit_comment">[Enter image comment]</string>
 
 </resources>

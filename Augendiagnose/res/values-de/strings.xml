@@ -53,6 +53,7 @@
     <string name="button_clear">Löschen</string>
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
+    <string name="button_select">Wählen</string>
     <string name="button_other_pictures">Andere Fotos</string>
     
     <string name="toggle_overlay_1">T1</string>
@@ -65,14 +66,13 @@
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>
     <string name="display_right_left">R-L</string>
-    <string name="display_new_name">[Neuer Name]</string>
     <string name="file_infix_right">rechts</string>
     <string name="file_infix_left">links</string>
     <string name="suffix_title_right">Rechtes Auge</string>
     <string name="suffix_title_left">Linkes Auge</string>
     <string name="hint_select_name">[Namen auswählen]</string>
     <string name="hint_search_name">[Namen suchen]</string>
-    <string name="hint_insert_name">[Neuen Namen eingeben]</string>
+    <string name="hint_insert_name">[Namen eingeben]</string>
     <string name="hint_edit_comment">[Bildkommentar eingeben]</string>
 
 </resources>

@@ -45,6 +45,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	private File[] folders;
 
 	protected ListView listView;
+	protected EditText editText;
 	protected ArrayAdapter<String> directoryListAdapter;
 
 	/**
@@ -83,7 +84,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		listView = (ListView) getView().findViewById(R.id.listViewNames);
 		createList();
 
-		EditText editText = (EditText) getView().findViewById(R.id.searchName);
+		editText = (EditText) getView().findViewById(R.id.searchName);
 		editText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
