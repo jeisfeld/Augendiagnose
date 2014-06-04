@@ -19,6 +19,8 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	private static final String STRING_PRESELECTED_NAME = "de.eisfeldj.augendiagnose.PRESELECTED_NAME";
 	private static int IME_ACTION = EditorInfo.IME_ACTION_DONE;
 
+	private String preselectedName;
+
 	/**
 	 * Initialize the fragment with parentFolder and preselectedName
 	 * 
@@ -35,12 +37,21 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		Bundle args = getArguments();
+		preselectedName = args.getString(STRING_PRESELECTED_NAME);
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		listView.setOnItemLongClickListener(new RenameOnLongClickListener());
 
 		editText.setHint(R.string.hint_insert_name);
 		editText.setImeActionLabel(getString(R.string.button_select), IME_ACTION);
+		editText.setText(preselectedName);
 		editText.requestFocus();
 		editText.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
