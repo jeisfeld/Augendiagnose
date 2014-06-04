@@ -12,7 +12,6 @@
     <string name="title_activity_select_two_pictures">Zwei neue Fotos auswählen</string>
     <string name="title_dialog_list_folders_for_select">Namen wählen</string>
     <string name="title_dialog_change_name">Namen ändern</string>
-    <string name="title_dialog_new_name">Neuer Name</string>
     <string name="title_dialog_error">Fehler</string>
     <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_settings">Einstellungen</string>

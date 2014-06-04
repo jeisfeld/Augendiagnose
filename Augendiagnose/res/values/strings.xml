@@ -13,7 +13,6 @@
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
     <string name="title_dialog_list_folders_for_select">Select Name</string>
     <string name="title_dialog_change_name">Change Name</string>
-    <string name="title_dialog_new_name">New Name</string>
     <string name="title_dialog_error">Error</string>
     <string name="title_dialog_confirmation">Confirmation</string>
     <string name="title_settings">Settings</string>
