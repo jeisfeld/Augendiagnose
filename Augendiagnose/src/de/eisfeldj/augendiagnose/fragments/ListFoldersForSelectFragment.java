@@ -50,7 +50,7 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 		listView.setOnItemLongClickListener(new RenameOnLongClickListener());
 
 		editText.setHint(R.string.hint_insert_name);
-		editText.setImeActionLabel(getString(R.string.button_select), IME_ACTION);
+		editText.setImeActionLabel(null, IME_ACTION);
 		editText.setText(preselectedName);
 		editText.requestFocus();
 		editText.setOnEditorActionListener(new OnEditorActionListener() {
