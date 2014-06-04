@@ -56,7 +56,9 @@ public class ListFoldersForSelectFragment extends ListFoldersBaseFragment {
 		editText.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == IME_ACTION) {
+				// End either with "done" on soft keyboard, or with enter on physical keyboard
+				if (actionId == IME_ACTION
+						|| (event != null && event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 					ListFoldersForSelectActivity activity = (ListFoldersForSelectActivity) getActivity();
 					activity.returnResult(v.getText().toString().trim());
 				}
