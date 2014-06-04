@@ -60,12 +60,11 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_name_list) {
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-			CharSequence name = ((TextView) info.targetView).getText();
-			final int position = info.position;
+			final CharSequence name = ((TextView) info.targetView).getText();
 
 			switch (item.getItemId()) {
 			case R.id.action_change_name:
-				showChangeNameDialog(name, position);
+				showChangeNameDialog(name, name);
 				return true;
 			case R.id.action_delete_images:
 				ConfirmDeleteDialogListener listener = new ConfirmDeleteDialogListener() {
@@ -73,7 +72,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 
 					@Override
 					public void onDialogPositiveClick(DialogFragment dialog) {
-						deleteFolder(position);
+						deleteFolder(name.toString());
 					}
 
 					@Override

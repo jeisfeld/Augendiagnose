@@ -161,12 +161,12 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy)
 	 * 
-	 * @param index
+	 * @param oldFileName
 	 * @param newFileName
 	 */
-	protected void renameFolderAndFiles(int index, String newFileName) {
-		File oldFolder = folders[index];
-		File newFolder = new File(oldFolder.getParent(), newFileName.trim());
+	protected void renameFolderAndFiles(String oldFileName, String newFileName) {
+		File oldFolder = new File(parentFolder, oldFileName.trim());
+		File newFolder = new File(parentFolder, newFileName.trim());
 
 		// rename folder and ensure that list is refreshed
 		boolean success = oldFolder.renameTo(newFolder);
@@ -206,11 +206,10 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Delete a folder in the list, including all photos
 	 * 
-	 * @param index
-	 * @param newFileName
+	 * @param name
 	 */
-	protected void deleteFolder(int index) {
-		File folder = folders[index];
+	protected void deleteFolder(String name) {
+		File folder = new File(parentFolder, name.trim());
 
 		// delete folder and ensure that list is refreshed
 		String[] children = folder.list();
@@ -236,7 +235,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, final long rowId) {
-			showChangeNameDialog(((TextView) view).getText(), (int) rowId);
+			CharSequence name = ((TextView) view).getText();
+			showChangeNameDialog(name, name);
 			return true;
 		}
 
@@ -254,14 +254,16 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Show the dialog to change the selected name
 	 * 
-	 * @param input
-	 * @param rowId
+	 * @param oldName
+	 *            The old name to be renamed
+	 * @param inputText
+	 *            The name to be initially displayed
 	 */
-	protected void showChangeNameDialog(final CharSequence inputText, final int rowId) {
+	protected void showChangeNameDialog(final CharSequence oldName, final CharSequence inputText) {
 		DisplayChangeNameFragment fragment = new DisplayChangeNameFragment();
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence("inputText", inputText);
-		bundle.putInt("rowId", rowId);
+		bundle.putCharSequence("oldName", oldName);
 		fragment.setArguments(bundle);
 		fragment.show(getActivity().getFragmentManager(), DisplayChangeNameFragment.class.toString());
 	}
@@ -273,7 +275,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final CharSequence inputText = getArguments().getCharSequence("inputText");
-			final int rowId = getArguments().getInt("rowId");
+			final CharSequence oldName = getArguments().getCharSequence("oldName");
 
 			// This is a workaround - better solution might be a layout.
 			// If the EditText is always recreated, then the content will be lost on orientation change.
@@ -298,7 +300,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 						@Override
 						public void onClick(DialogInterface dialog, int id) {
 							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
-							activity.fragment.renameFolderAndFiles((int) rowId, input.getText().toString());
+							activity.fragment.renameFolderAndFiles(oldName.toString(), input.getText().toString());
 						}
 					});
 
