@@ -101,14 +101,14 @@
                 android:text="@string/section_select_name"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
+            <de.eisfeldj.augendiagnose.components.InstantAutoCompleteTextView
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/hint_select_name"
-                android:inputType="textPersonName" >
-            </EditText>
+                android:hint="@string/hint_insert_name"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <View style="@style/Divider_Vertical" />

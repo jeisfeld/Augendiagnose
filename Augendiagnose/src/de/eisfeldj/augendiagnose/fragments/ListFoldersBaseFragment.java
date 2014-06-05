@@ -41,8 +41,6 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
 
 	protected File parentFolder;
-	protected List<String> folderNames = new ArrayList<String>();
-	private File[] folders;
 
 	protected ListView listView;
 	protected EditText editText;
@@ -114,7 +112,26 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * Fill the list of subfolders and create the list adapter
 	 */
 	protected void createList() {
-		folders = parentFolder.listFiles(new FileFilter() {
+		List<String> folderNames = getFolderNames(parentFolder);
+		if (folderNames == null) {
+			DialogUtil.displayErrorAndReturn(getActivity(), R.string.message_dialog_folder_does_not_exist,
+					parentFolder.getAbsolutePath());
+			return;
+		}
+
+		directoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
+		listView.setAdapter(directoryListAdapter);
+		listView.setTextFilterEnabled(true);
+	}
+
+	/**
+	 * Get the list of subfolders, using getFileNameForSorting() for ordering.
+	 * 
+	 * @param parentFolder
+	 * @return
+	 */
+	public static List<String> getFolderNames(File parentFolder) {
+		File[] folders = parentFolder.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
 				return pathname.isDirectory();
@@ -122,9 +139,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		});
 
 		if (folders == null) {
-			DialogUtil.displayErrorAndReturn(getActivity(), R.string.message_dialog_folder_does_not_exist,
-					parentFolder.getAbsolutePath());
-			return;
+			return null;
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
@@ -132,13 +147,11 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
 		});
-		folderNames.clear();
+		List<String> folderNames = new ArrayList<String>();
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
-		directoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
-		listView.setAdapter(directoryListAdapter);
-		listView.setTextFilterEnabled(true);
+		return folderNames;
 	}
 
 	/**
@@ -148,7 +161,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 *            The file
 	 * @return The name for Sorting
 	 */
-	private String getFilenameForSorting(File f) {
+	private static String getFilenameForSorting(File f) {
 		String name = f.getName().toUpperCase(Locale.getDefault());
 		if (FOLDERS_TOP.contains(name)) {
 			return "1" + name;

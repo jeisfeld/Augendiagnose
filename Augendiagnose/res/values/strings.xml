@@ -11,7 +11,6 @@
     <string name="title_activity_list_pictures_for_name">Select Pictures</string>
     <string name="title_activity_list_pictures_for_second_name">Select Second Picture</string>
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
-    <string name="title_dialog_list_folders_for_select">Select Name</string>
     <string name="title_dialog_change_name">Change Name</string>
     <string name="title_dialog_error">Error</string>
     <string name="title_dialog_confirmation">Confirmation</string>
@@ -69,7 +68,6 @@
     <string name="file_infix_left">left</string>
     <string name="suffix_title_right">Right Eye</string>
     <string name="suffix_title_left">Left Eye</string>
-    <string name="hint_select_name">[Select name]</string>
     <string name="hint_search_name">[Search name]</string>
     <string name="hint_insert_name">[Enter name]</string>
     <string name="hint_edit_comment">[Enter image comment]</string>

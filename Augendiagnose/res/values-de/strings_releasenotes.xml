@@ -52,7 +52,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Einführung eines gesonderten Designs für Tablets - Liste der Namen und Liste der Bilder werden gleichzeitig angezeigt.</item>
         <item>Speicherung von Position und Zoom. Overlays und Helligkeit/Kontrast können jetzt auch in der Ansicht zweier Bilder angezeigt und verändert werden.</item>
         <item>Das Foto wird jetzt angezeigt, während der Kommentar bearbeitet wird. Bugfixes.</item>
-        <item>Suche nach Namen ist möglich. Beim Einordnen der Fotos werden neue Namen direkt über das Suchfeld eingegeben.</item>
+        <item>Suche nach Namen ist möglich. Das Eingeben von Namen ist jetzt direkter möglich.</item>
     </string-array>
 
 </resources>

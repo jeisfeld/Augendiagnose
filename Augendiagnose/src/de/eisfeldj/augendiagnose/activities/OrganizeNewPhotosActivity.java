@@ -20,11 +20,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
@@ -54,7 +57,8 @@ public class OrganizeNewPhotosActivity extends Activity {
 	private String[] fileNames;
 
 	private ImageView imageRight, imageLeft;
-	private EditText editName, editDate;
+	private AutoCompleteTextView editName;
+	private EditText editDate;
 
 	private EyePhoto photoRight, photoLeft;
 
@@ -122,18 +126,10 @@ public class OrganizeNewPhotosActivity extends Activity {
 		imageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
 		imageLeft = (ImageView) findViewById(R.id.imageOrganizeLeft);
 
-		// when touching the "name" field, open a dialog.
-		editName = (EditText) findViewById(R.id.editName);
-		editName.setInputType(InputType.TYPE_NULL);
-		editName.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					openNameDialog(v);
-				}
-				return true;
-			}
-		});
+		// when editing the "name" field, show suggestions
+		editName = (AutoCompleteTextView) findViewById(R.id.editName);
+		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names,
+				ListFoldersBaseFragment.getFolderNames(parentFolder)));
 
 		// when touching the "date" field, open a dialog.
 		editDate = (EditText) findViewById(R.id.editDate);
@@ -405,34 +401,11 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * onClick action for Name field. Opens a dialog for selecting the name from the list of folders.
-	 * 
-	 * @param view
-	 */
-	public void openNameDialog(View view) {
-		// open only if it is not already there
-		if (!hasSelectName) {
-			hasSelectName = true;
-			ListFoldersForSelectActivity.startActivity(this, parentFolder.getAbsolutePath(), editName.getText()
-					.toString());
-		}
-	}
-
-	/**
 	 * Handle the result of a called activity - either the selection of the name or the selection of two pictures
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case ListFoldersForSelectActivity.REQUEST_CODE:
-			// Update the name with the result of ListFoldersForSelectActivity
-			CharSequence result = ListFoldersForSelectActivity.getResult(resultCode, data);
-			if (result != null && result.length() > 0) {
-				editName.setText(ListFoldersForSelectActivity.getResult(resultCode, data));
-				editName.invalidate();
-			}
-			hasSelectName = false;
-			break;
 		case SelectTwoPicturesActivity.REQUEST_CODE:
 			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
 			if (filePair != null) {
@@ -440,6 +413,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 				photoLeft = new EyePhoto(filePair.file2);
 				updateImages();
 			}
+			break;
 		}
 	}
 

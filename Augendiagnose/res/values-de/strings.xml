@@ -10,7 +10,6 @@
     <string name="title_activity_list_pictures_for_name">Fotos wählen</string>
     <string name="title_activity_list_pictures_for_second_name">Zweites Foto wählen</string>
     <string name="title_activity_select_two_pictures">Zwei neue Fotos auswählen</string>
-    <string name="title_dialog_list_folders_for_select">Namen wählen</string>
     <string name="title_dialog_change_name">Namen ändern</string>
     <string name="title_dialog_error">Fehler</string>
     <string name="title_dialog_confirmation">Bestätigung</string>
@@ -68,7 +67,6 @@
     <string name="file_infix_left">links</string>
     <string name="suffix_title_right">Rechtes Auge</string>
     <string name="suffix_title_left">Linkes Auge</string>
-    <string name="hint_select_name">[Namen auswählen]</string>
     <string name="hint_search_name">[Namen suchen]</string>
     <string name="hint_insert_name">[Namen eingeben]</string>
     <string name="hint_edit_comment">[Bildkommentar eingeben]</string>

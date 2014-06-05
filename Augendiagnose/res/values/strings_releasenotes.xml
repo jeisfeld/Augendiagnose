@@ -71,7 +71,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Introduced special design for tablets - merged list of names with list of photos per name</item>
         <item>Allowed storage of image position and zoom. Enablement of overlays and scrollbars in two-image view.</item>
         <item>While editing the comment, the image is still shown. Bugfixes.</item>
-        <item>It is now possible to search for names. When organizing photos, new names can be entered directly in the search field.</item>
+        <item>It is now possible to search for names. When organizing photos, new names can be entered more directly.</item>
     </string-array>
 
 </resources>

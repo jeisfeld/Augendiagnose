@@ -71,16 +71,8 @@
         <activity
             android:name="de.eisfeldj.augendiagnose.activities.OrganizeNewPhotosActivity"
             android:label="@string/title_activity_organize_new_photos"
-            android:parentActivityName=".activities.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
-        <activity
-            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForSelectActivity"
-            android:label="@string/title_dialog_list_folders_for_select"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
