@@ -6,7 +6,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.components.PinchImageView;
+import de.eisfeldj.augendiagnose.activities.SettingsActivity;
 
 /**
  * Fragment for displaying the settings.
@@ -47,7 +47,7 @@ public class SettingsFragment extends PreferenceFragment {
 	private void bindPreferenceSummaryToValue(int preferenceKey) {
 		bindPreferenceSummaryToValue(findPreference(getString(preferenceKey)));
 	}
-	
+
 	/**
 	 * A preference value change listener that updates the preference's summary to reflect its new value.
 	 */
@@ -71,9 +71,10 @@ public class SettingsFragment extends PreferenceFragment {
 				// simple string representation.
 				preference.setSummary(stringValue);
 
-				// Inform PinchImageView about maxBitmapSize
+				// For maxBitmapSize, check format and inform PinchImageView
 				if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
-					PinchImageView.setMaxBitmapSize(Integer.parseInt(preference.getSummary().toString()));
+					int maxBitmapSize = SettingsActivity.pushMaxBitmapSize(stringValue);
+					preference.setSummary(Integer.toString(maxBitmapSize));
 				}
 			}
 			return true;

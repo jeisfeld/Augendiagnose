@@ -58,7 +58,6 @@ public class SettingsActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	/**
 	 * Set the default shared preferences (after first installation) Regarding paths, choose external folder as base
 	 * folder. For Bluestacks, chose bluestacks shared folder as base folder.
@@ -94,8 +93,35 @@ public class SettingsActivity extends Activity {
 		}
 
 		// Inform PinchImageView about maxBitmapSize
-		PinchImageView.setMaxBitmapSize(Integer.parseInt(Application
-				.getSharedPreferenceString(R.string.key_max_bitmap_size)));
+		pushMaxBitmapSize(Application.getSharedPreferenceString(R.string.key_max_bitmap_size));
+	}
+
+	/**
+	 * Validate the maxBitmapSize. If not numeric, replace with default. In any case, inform PinchImageView about it.
+	 * 
+	 * @param value
+	 *            the String value to be set
+	 * @return the maxBitmapSize
+	 */
+	public static int pushMaxBitmapSize(String value) {
+		int maxBitmapSize;
+		try {
+			maxBitmapSize = Integer.parseInt(value);
+			if (maxBitmapSize < 512) {
+				maxBitmapSize = 512;
+			}
+			if (maxBitmapSize > 4096) {
+				maxBitmapSize = 4096;
+			}
+		}
+		catch (NumberFormatException e) {
+			// Override preference with default value
+			String defaultMaxBitmapSize = Application.getAppContext().getString(R.string.pref_default_max_bitmap_size);
+			Application.setSharedPreferenceString(R.string.key_max_bitmap_size, defaultMaxBitmapSize);
+			maxBitmapSize = Integer.parseInt(defaultMaxBitmapSize);
+		}
+		PinchImageView.setMaxBitmapSize(maxBitmapSize);
+		return maxBitmapSize;
 	}
 
 }
