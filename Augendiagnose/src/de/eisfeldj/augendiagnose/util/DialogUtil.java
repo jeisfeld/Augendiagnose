@@ -27,17 +27,25 @@ public abstract class DialogUtil {
 	 *            the current activity
 	 * @param resource
 	 *            the error message
+	 * @param finishActivity
+	 *            should activity be finished after display?
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayError(final Activity activity, int resource, Object... args) {
-		DisplayErrorDialogFragment fragment = new DisplayErrorDialogFragment();
+	public static void displayError(final Activity activity, int resource, boolean finishActivity, Object... args) {
+		DialogFragment fragment;
+		if (finishActivity) {
+			fragment = new DisplayErrorDialogAndReturnFragment();
+		}
+		else {
+			fragment = new DisplayErrorDialogFragment();
+		}
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
 		bundle.putString("message", message);
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), DisplayErrorDialogFragment.class.toString());
+		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
 
 	/**
@@ -54,26 +62,6 @@ public abstract class DialogUtil {
 		String message = String.format(context.getString(resource), args);
 		Log.w(Application.TAG, "Toast message: " + message);
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-	}
-
-	/**
-	 * Display an error and stop the activity - return to parent activity.
-	 * 
-	 * @param activity
-	 *            the current activity
-	 * @param resource
-	 *            the error message
-	 * @param args
-	 *            arguments for the error message
-	 */
-	public static void displayErrorAndReturn(final Activity activity, int resource, Object... args) {
-		DisplayErrorDialogAndReturnFragment fragment = new DisplayErrorDialogAndReturnFragment();
-		String message = String.format(activity.getString(resource), args);
-		Log.w(Application.TAG, "Dialog message: " + message);
-		Bundle bundle = new Bundle();
-		bundle.putString("message", message);
-		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), DisplayErrorDialogAndReturnFragment.class.toString());
 	}
 
 	/**

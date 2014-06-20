@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
 				startActivity(launchIntent);
 			}
 			catch (Exception e) {
-				DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed);
+				DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed, false);
 			}
 		}
 	}

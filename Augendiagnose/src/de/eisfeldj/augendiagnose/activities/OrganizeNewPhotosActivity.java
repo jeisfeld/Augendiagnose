@@ -128,8 +128,8 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 		// when editing the "name" field, show suggestions
 		editName = (AutoCompleteTextView) findViewById(R.id.editName);
-		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names,
-				ListFoldersBaseFragment.getFolderNames(parentFolder)));
+		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
+				.getFolderNames(parentFolder)));
 
 		// when touching the "date" field, open a dialog.
 		editDate = (EditText) findViewById(R.id.editDate);
@@ -200,7 +200,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
-				DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_folder_does_not_exist,
+				DialogUtil.displayError(this, R.string.message_dialog_folder_does_not_exist, true,
 						inputFolder.getAbsolutePath());
 				return;
 			}
@@ -256,7 +256,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		}
 		else {
 			// Error message if there are less than two files
-			DialogUtil.displayErrorAndReturn(this, R.string.message_dialog_no_picture);
+			DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
 		}
 	}
 
@@ -278,7 +278,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * @param args
 	 */
 	private void displayError(int resource, Object... args) {
-		DialogUtil.displayError(this, resource, args);
+		DialogUtil.displayError(this, resource, false, args);
 	}
 
 	/**

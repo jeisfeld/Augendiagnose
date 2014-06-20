@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
@@ -65,7 +66,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
 		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
 			if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-				DialogUtil.displayErrorAndReturn(getActivity(), R.string.message_dialog_no_photos_for_name, name);
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name,
+						!Application.isTablet(), name);
 				return;
 			}
 		}
@@ -123,8 +125,9 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 						if (!success) {
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-									R.string.message_dialog_failed_to_delete_file_for_date, pairToDelete.getLeftEye()
-											.getPersonName(), pairToDelete.getDateDisplayString("dd.MM.yyyy"));
+									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToDelete
+											.getLeftEye().getPersonName(), pairToDelete
+											.getDateDisplayString("dd.MM.yyyy"));
 
 						}
 					}
@@ -200,7 +203,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							fragment.updateEyePhotoPairs();
 
 							if (!success) {
-								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date,
+								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date, false,
 										pairToUpdate.getLeftEye().getPersonName(),
 										pairToUpdate.getDateDisplayString("dd.MM.yyyy"),
 										DateUtil.format(newDate, "dd.MM.yyyy"));

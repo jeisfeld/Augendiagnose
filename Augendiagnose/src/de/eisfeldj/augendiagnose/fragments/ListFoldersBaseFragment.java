@@ -114,8 +114,12 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	protected void createList() {
 		List<String> folderNames = getFolderNames(parentFolder);
 		if (folderNames == null) {
-			DialogUtil.displayErrorAndReturn(getActivity(), R.string.message_dialog_folder_does_not_exist,
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_folder_does_not_exist, true,
 					parentFolder.getAbsolutePath());
+			return;
+		}
+		if (folderNames.size() == 0) {
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_organized_photos, true);
 			return;
 		}
 
@@ -187,7 +191,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		createList();
 		directoryListAdapter.notifyDataSetChanged();
 		if (!success) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_folder,
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_folder, false,
 					oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
 			return;
 		}
@@ -197,12 +201,12 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		for (File f : files) {
 			EyePhoto source = new EyePhoto(f.getAbsolutePath());
 			if (!source.isFormatted()) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file,
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file, false,
 						oldFolder.getAbsolutePath());
 				continue;
 			}
 			if (!source.changePersonName(newFileName)) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_file,
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_file, false,
 						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
 			}
 		}
@@ -234,7 +238,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		createList();
 		directoryListAdapter.notifyDataSetChanged();
 		if (!success) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_delete_folder,
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_delete_folder, false,
 					folder.getAbsolutePath());
 			return;
 		}

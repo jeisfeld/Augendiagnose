@@ -11,6 +11,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
@@ -67,7 +68,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
 
 		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			DialogUtil.displayErrorAndReturn(getActivity(), R.string.message_dialog_no_photos_for_name, name);
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !Application.isTablet(),
+					name);
 			dismiss = true;
 			return;
 		}
@@ -99,7 +101,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			EyePhoto eyePhoto = new EyePhoto(f);
 
 			if (!eyePhoto.isFormatted()) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file, f.getAbsolutePath());
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file, false,
+						f.getAbsolutePath());
 			}
 			else {
 				Date date = eyePhoto.getDate();
