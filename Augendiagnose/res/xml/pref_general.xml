@@ -22,7 +22,7 @@
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_max_bitmap_size"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:key="@string/key_max_bitmap_size"
         android:maxLines="1"
         android:selectAllOnFocus="true"
