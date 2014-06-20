@@ -51,6 +51,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4.2</item>
         <item>0.4.3</item>
         <item>0.4.4</item>
+        <item>0.4.5</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -74,6 +75,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>While editing the comment, the image is still shown. Bugfixes.</item>
         <item>It is now possible to search for names. When organizing photos, new names can be entered more directly.</item>
         <item>Bugfixes</item>
+        <item>TODO</item>
     </string-array>
 
 </resources>
