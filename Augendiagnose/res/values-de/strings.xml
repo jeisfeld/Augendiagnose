@@ -51,6 +51,7 @@
     <string name="button_back">Zurück</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_clear">Löschen</string>
+    <string name="button_select">Auswählen</string>
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_other_pictures">Andere Fotos</string>

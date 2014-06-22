@@ -9,8 +9,23 @@
     <string name="pref_title_max_bitmap_size">Maximale Bitmap-Größe</string>
     <string name="pref_title_eye_sequence_choice">Letztes Foto ist rechtes Auge</string>
     <string name="pref_title_user_key">Nutzerschlüssel</string>
-
     <string name="pref_title_store_options">Speichern von Daten in JPG-Dateien</string>
+    
+    <string-array name="pref_list_titles_folder_input">
+        <item>Eye-Fi-Verzeichnis</item>
+        <item>Kamera-Verzeichnis</item>
+        <item>Anderes Verzeichnis</item>
+    </string-array>
+    
+    <string-array name="pref_list_titles_folder_photos">
+        <item>Standardverzeichnis</item>
+        <item>Anderes Verzeichnis</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_photos">
+        <item>__ext_storage__/Augenfotos</item>
+        <item>__custom__</item>
+    </string-array>
+    
     <string-array name="pref_list_titles_store_options">
         <item>Speichern in EXIF</item>
         <item>Speichern in Extra-Feldern</item>

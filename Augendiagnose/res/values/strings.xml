@@ -51,6 +51,7 @@
     <string name="button_back">Back</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_clear">Clear</string>
+    <string name="button_select">Select</string>
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
     <string name="button_other_pictures">Other Pictures</string>

@@ -13,7 +13,6 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
-import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Activity to display the settings page
@@ -65,23 +64,12 @@ public class SettingsActivity extends Activity {
 	@SuppressLint("SdCardPath")
 	public static void setDefaultSharedPreferences() {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.pref_general, false);
-		if (SystemUtil.isBlueStacks()) {
-			for (int id : PATH_RESOURCES) {
-				String path = Application.getSharedPreferenceString(id);
-				if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
-					path = "/sdcard/bstfolder/BstSharedFolder" + path.substring(EXTERNAL_STORAGE_PREFIX.length());
-					Application.setSharedPreferenceString(id, path);
-				}
-			}
-		}
-		else {
-			for (int id : PATH_RESOURCES) {
-				String path = Application.getSharedPreferenceString(id);
-				if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
-					path = Environment.getExternalStorageDirectory().getAbsolutePath()
-							+ path.substring(EXTERNAL_STORAGE_PREFIX.length());
-					Application.setSharedPreferenceString(id, path);
-				}
+		for (int id : PATH_RESOURCES) {
+			String path = Application.getSharedPreferenceString(id);
+			if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
+				path = Environment.getExternalStorageDirectory().getAbsolutePath()
+						+ path.substring(EXTERNAL_STORAGE_PREFIX.length());
+				Application.setSharedPreferenceString(id, path);
 			}
 		}
 

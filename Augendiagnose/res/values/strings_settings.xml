@@ -15,6 +15,26 @@
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
 
+    <string-array name="pref_list_titles_folder_input">
+        <item>Eye-Fi input folder</item>
+        <item>Camera folder</item>
+        <item>Custom folder</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_input" translatable="false">
+        <item>__ext_storage__/Eye-Fi</item>
+        <item>__folder_camera__</item>
+        <item>__custom__</item>
+    </string-array>
+    
+    <string-array name="pref_list_titles_folder_photos">
+        <item>Default folder</item>
+        <item>Custom folder</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_photos">
+        <item>__ext_storage__/EyePhotos</item>
+        <item>__custom__</item>
+    </string-array>
+    
     <string-array name="pref_list_titles_store_options">
         <item>Store in EXIF</item>
         <item>Store in custom fields</item>
