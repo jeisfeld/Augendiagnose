@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -42,6 +43,8 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	private String mDir = "";
 	private List<String> mSubdirs = null;
 	private ArrayAdapter<String> mListAdapter = null;
+
+	private Stack<String> mBackStack = new Stack<String>();
 
 	/**
 	 * Callback interface for selected directory
@@ -114,6 +117,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mBackStack.push(mDir);
 				mDir += "/" + mListAdapter.getItem(position);
 				updateDirectory();
 			}
@@ -145,10 +149,16 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			@Override
 			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-					// Back button pressed
-					dirsDialog.dismiss();
-					if (listener != null) {
-						listener.onCancelled();
+					// Back button pressed - go to the last directory if existing - otherwise cancel the dialog.
+					if (mBackStack.size() == 0) {
+						dirsDialog.dismiss();
+						if (listener != null) {
+							listener.onCancelled();
+						}
+					}
+					else {
+						mDir = mBackStack.pop();
+						updateDirectory();
 					}
 
 					return true;
