@@ -14,6 +14,7 @@
     <string name="title_dialog_change_name">Namen ändern</string>
     <string name="title_dialog_error">Fehler</string>
     <string name="title_dialog_confirmation">Bestätigung</string>
+    <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
     

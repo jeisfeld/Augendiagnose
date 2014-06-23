@@ -18,13 +18,15 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnKeyListener;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 
@@ -33,8 +35,9 @@ import de.eisfeldj.augendiagnose.R;
  * 
  * Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
-public class DirectoryChooserDialog extends DialogFragment {
-	private TextView mTitleView;
+public class DirectoryChooserDialogFragment extends DialogFragment {
+	private TextView mCurrentFolderView;
+	private ListView mListView;
 
 	private String mDir = "";
 	private List<String> mSubdirs = null;
@@ -49,19 +52,29 @@ public class DirectoryChooserDialog extends DialogFragment {
 		public void onCancelled();
 	}
 
+	/**
+	 * Create a DirectoryChooserDialogFragment
+	 * 
+	 * @param activity
+	 * @param listener
+	 * @param dir
+	 */
 	public static void displayDirectoryChooserDialog(Activity activity, ChosenDirectoryListener listener, String dir) {
-		DirectoryChooserDialog fragment = new DirectoryChooserDialog();
+		DirectoryChooserDialogFragment fragment = new DirectoryChooserDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("dir", dir);
 		bundle.putSerializable("listener", listener);
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), DirectoryChooserDialog.class.toString());
+		fragment.show(activity.getFragmentManager(), DirectoryChooserDialogFragment.class.toString());
 	}
 
+	/**
+	 * Instantiate the view of the dialog
+	 */
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// retrieve arguments
-		
+
 		String dir = getArguments().getString("dir");
 		final ChosenDirectoryListener listener = (ChosenDirectoryListener) getArguments().getSerializable("listener");
 
@@ -81,32 +94,27 @@ public class DirectoryChooserDialog extends DialogFragment {
 		mSubdirs = getDirectories(dir);
 
 		Context context = getActivity();
-		
+
 		// Create dialog
-		
+
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
 
-		LinearLayout titleLayout = new LinearLayout(context);
-		titleLayout.setOrientation(LinearLayout.VERTICAL);
+		dialogBuilder.setTitle(R.string.title_dialog_select_folder);
 
-		mTitleView = new TextView(context);
-		mTitleView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		mTitleView.setTextAppearance(context, android.R.style.TextAppearance_Large);
-		mTitleView.setTextColor(context.getResources().getColor(android.R.color.white));
-		mTitleView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-		mTitleView.setText(dir);
+		View layout = LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, null);
+		dialogBuilder.setView(layout);
 
-		titleLayout.addView(mTitleView);
+		mCurrentFolderView = (TextView) layout.findViewById(R.id.textCurrentFolder);
+		mCurrentFolderView.setText(dir);
 
-		dialogBuilder.setCustomTitle(titleLayout);
-
+		mListView = (ListView) layout.findViewById(R.id.listViewSubfolders);
 		mListAdapter = createListAdapter(mSubdirs);
+		mListView.setAdapter(mListAdapter);
 
-		dialogBuilder.setSingleChoiceItems(mListAdapter, -1, new OnClickListener() {
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Navigate into the sub-directory
-				mDir += "/" + ((AlertDialog) dialog).getListView().getAdapter().getItem(which);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mDir += "/" + mListAdapter.getItem(position);
 				updateDirectory();
 			}
 		});
@@ -154,6 +162,12 @@ public class DirectoryChooserDialog extends DialogFragment {
 		return dirsDialog;
 	}
 
+	/**
+	 * Get the list of subdirectories of the current directory. Returns ".." as first value if appropriate.
+	 * 
+	 * @param dir
+	 * @return
+	 */
 	private List<String> getDirectories(String dir) {
 		List<String> dirs = new ArrayList<String>();
 
@@ -185,6 +199,9 @@ public class DirectoryChooserDialog extends DialogFragment {
 		return dirs;
 	}
 
+	/**
+	 * Update the current directory
+	 */
 	private void updateDirectory() {
 		try {
 			mDir = new File(mDir).getCanonicalPath();
@@ -197,11 +214,17 @@ public class DirectoryChooserDialog extends DialogFragment {
 
 		mSubdirs.clear();
 		mSubdirs.addAll(getDirectories(mDir));
-		mTitleView.setText(mDir);
+		mCurrentFolderView.setText(mDir);
 
 		mListAdapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * Create the list adapter for the list of folders
+	 * 
+	 * @param items
+	 * @return
+	 */
 	private ArrayAdapter<String> createListAdapter(List<String> items) {
 		return new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, android.R.id.text1, items) {
 			@Override

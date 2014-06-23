@@ -9,7 +9,7 @@ import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
-import de.eisfeldj.augendiagnose.components.DirectoryChooserDialog.ChosenDirectoryListener;
+import de.eisfeldj.augendiagnose.components.DirectoryChooserDialogFragment.ChosenDirectoryListener;
 import de.eisfeldj.augendiagnose.util.FolderUtil;
 
 public class DirectorySelectionPreference extends ListPreference {
@@ -97,7 +97,7 @@ public class DirectorySelectionPreference extends ListPreference {
 
 					try {
 						Activity activity = (Activity) getContext();
-						DirectoryChooserDialog.displayDirectoryChooserDialog(activity, listener, getValue());
+						DirectoryChooserDialogFragment.displayDirectoryChooserDialog(activity, listener, getValue());
 					}
 					catch (ClassCastException e) {
 						Log.e(Application.TAG, "Could not open directory chooser", e);
