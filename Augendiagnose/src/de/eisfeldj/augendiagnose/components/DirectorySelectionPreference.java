@@ -1,11 +1,15 @@
 package de.eisfeldj.augendiagnose.components;
 
+import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
+import android.util.Log;
+import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.components.DirectoryChooserDialog.ChosenDirectoryListener;
 import de.eisfeldj.augendiagnose.util.FolderUtil;
 
 public class DirectorySelectionPreference extends ListPreference {
@@ -73,25 +77,31 @@ public class DirectorySelectionPreference extends ListPreference {
 
 				if (getEntryValues()[which].toString().equals(CUSTOM_FOLDER)) {
 					// determine custom folder via dialog
-					DirectoryChooserDialog directoryChooserDialog = new DirectoryChooserDialog(getContext(),
-							new DirectoryChooserDialog.ChosenDirectoryListener() {
-								@Override
-								public void onChosenDir(String chosenDir, boolean success) {
-									if(success) {
-										selectedIndex = which;
-										selectedCustomDir = chosenDir;
-										
-										DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-										dialog.dismiss();
-									}
-									else {
-										DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-										dialog.dismiss();
-									}
-								}
-							});
-					directoryChooserDialog.setNewFolderEnabled(false);
-					directoryChooserDialog.chooseDirectory(getValue());
+					ChosenDirectoryListener listener = new ChosenDirectoryListener() {
+						private static final long serialVersionUID = -220546291074442095L;
+						@Override
+						public void onChosenDir(String chosenDir) {
+							selectedIndex = which;
+							selectedCustomDir = chosenDir;
+
+							DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+							dialog.dismiss();
+						}
+
+						@Override
+						public void onCancelled() {
+							DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+							dialog.dismiss();
+						}
+					};
+
+					try {
+						Activity activity = (Activity) getContext();
+						DirectoryChooserDialog.displayDirectoryChooserDialog(activity, listener, getValue());
+					}
+					catch (ClassCastException e) {
+						Log.e(Application.TAG, "Could not open directory chooser", e);
+					}
 				}
 				else {
 					selectedIndex = which;
