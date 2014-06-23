@@ -16,19 +16,21 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_folder_photos" />
-    <EditTextPreference
-        android:capitalize="words"
+
+    <ListPreference
         android:defaultValue="@string/pref_default_max_bitmap_size"
-        android:inputType="number"
+        android:entries="@array/pref_list_titles_max_bitmap_size"
+        android:entryValues="@array/pref_list_values_max_bitmap_size"
         android:key="@string/key_max_bitmap_size"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
         android:title="@string/pref_title_max_bitmap_size" />
+
     <CheckBoxPreference
         android:defaultValue="@string/pref_default_eye_sequence_value"
         android:key="@string/key_eye_sequence_choice"
         android:title="@string/pref_title_eye_sequence_choice" />
+
     <ListPreference
         android:defaultValue="@string/pref_default_store_options"
         android:entries="@array/pref_list_titles_store_options"
@@ -37,6 +39,7 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_store_options" />
+
     <EditTextPreference
         android:defaultValue=""
         android:inputType="textPassword"

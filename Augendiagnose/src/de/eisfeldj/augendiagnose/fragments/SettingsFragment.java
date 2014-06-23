@@ -69,11 +69,11 @@ public class SettingsFragment extends PreferenceFragment {
 				// simple string representation.
 				preference.setSummary(stringValue);
 
-				// For maxBitmapSize, check format and inform PinchImageView
-				if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
-					int maxBitmapSize = SettingsActivity.pushMaxBitmapSize(stringValue);
-					preference.setSummary(Integer.toString(maxBitmapSize));
-				}
+			}
+
+			// For maxBitmapSize, check format and inform PinchImageView
+			if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
+				SettingsActivity.pushMaxBitmapSize(stringValue);
 			}
 			return true;
 		}
