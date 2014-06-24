@@ -2,9 +2,6 @@ package de.eisfeldj.augendiagnose.util;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.util.Date;
 
 import android.content.ContentResolver;
@@ -144,46 +141,6 @@ public abstract class ImageUtil {
 		BitmapFactory.decodeFile(filepath, options);
 		int size = Math.max(options.outWidth, options.outWidth);
 		return size / targetSize;
-	}
-
-	/**
-	 * Copy a file
-	 * 
-	 * @param source
-	 *            The source file
-	 * @param target
-	 *            The target file
-	 * @return
-	 */
-	public static boolean copyFile(File source, File target) {
-		FileInputStream inStream = null;
-		FileOutputStream outStream = null;
-		FileChannel inChannel = null;
-		FileChannel outChannel = null;
-		try {
-			inStream = new FileInputStream(source);
-			outStream = new FileOutputStream(target);
-			inChannel = inStream.getChannel();
-			outChannel = outStream.getChannel();
-			inChannel.transferTo(0, inChannel.size(), outChannel);
-		}
-		catch (Exception e) {
-			Log.e(Application.TAG,
-					"Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
-			return false;
-		}
-		finally {
-			try {
-				inStream.close();
-				outStream.close();
-				inChannel.close();
-				outChannel.close();
-			}
-			catch (Exception e) {
-
-			}
-		}
-		return true;
 	}
 
 	/**

@@ -283,7 +283,7 @@ public class EyePhoto {
 			return false;
 		}
 
-		return ImageUtil.copyFile(getFile(), target.getFile());
+		return FileUtil.copyFile(getFile(), target.getFile());
 	}
 
 	/**

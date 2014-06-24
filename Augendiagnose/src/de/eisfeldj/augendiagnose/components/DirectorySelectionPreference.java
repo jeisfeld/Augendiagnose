@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.components.DirectoryChooserDialogFragment.ChosenDirectoryListener;
-import de.eisfeldj.augendiagnose.util.FolderUtil;
+import de.eisfeldj.augendiagnose.util.FileUtil;
 
 public class DirectorySelectionPreference extends ListPreference {
 
@@ -43,7 +43,7 @@ public class DirectorySelectionPreference extends ListPreference {
 				entryValues[i] = value;
 			}
 			else if (value.startsWith(CAMERA_FOLDER_PREFIX)) {
-				value = FolderUtil.getDefaultCameraFolder();
+				value = FileUtil.getDefaultCameraFolder();
 				entryValues[i] = value;
 			}
 			else if (value.equals(CUSTOM_FOLDER)) {
