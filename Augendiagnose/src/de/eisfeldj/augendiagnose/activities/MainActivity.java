@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
@@ -25,7 +27,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		SettingsActivity.setDefaultSharedPreferences();
+		SettingsActivity.setDefaultSharedPreferences(this);
 
 		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 
@@ -67,6 +69,14 @@ public class MainActivity extends Activity {
 				DialogUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
 			}
 		}
+
+		if (!Application.isEyeFiInstalled()) {
+			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
+			buttonEyeFi.setVisibility(View.GONE);
+			Button buttonOrganize = (Button) findViewById(R.id.mainButtonOrganizeNewPhotos);
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buttonOrganize.getLayoutParams();
+			params.weight = 2;
+		}
 	}
 
 	/**
@@ -100,15 +110,14 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	public void openEyeFiApp(View view) {
-		Intent launchIntent = getPackageManager().getLaunchIntentForPackage("fi.eye.android");
-		if (launchIntent != null) {
-			startActivity(launchIntent);
+		if (Application.isEyeFiInstalled()) {
+			startActivity(getPackageManager().getLaunchIntentForPackage("fi.eye.android"));
 		}
 		else {
-			launchIntent = new Intent(Intent.ACTION_VIEW);
-			launchIntent.setData(Uri.parse("market://details?id=fi.eye.android"));
+			Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
+			googlePlayIntent.setData(Uri.parse("market://details?id=fi.eye.android"));
 			try {
-				startActivity(launchIntent);
+				startActivity(googlePlayIntent);
 			}
 			catch (Exception e) {
 				DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed, false);

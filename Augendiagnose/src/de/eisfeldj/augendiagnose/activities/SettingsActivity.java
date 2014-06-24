@@ -13,14 +13,14 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
+import de.eisfeldj.augendiagnose.util.FileUtil;
 
 /**
  * Activity to display the settings page
  */
 public class SettingsActivity extends Activity {
 	private static String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
-	private static int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos,
-			R.string.key_folder_photos_remote };
+	private static int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos };
 
 	public static void startActivity(Context context) {
 		Intent intent = new Intent(context, SettingsActivity.class);
@@ -62,8 +62,23 @@ public class SettingsActivity extends Activity {
 	 * folder. For Bluestacks, chose bluestacks shared folder as base folder.
 	 */
 	@SuppressLint("SdCardPath")
-	public static void setDefaultSharedPreferences() {
+	public static void setDefaultSharedPreferences(Context context) {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.pref_general, false);
+
+		if (Application.getSharedPreferenceString(R.string.key_folder_input).equals(
+				context.getString(R.string.pref_dummy_value))) {
+			// On first startup, make default setting dependent on status of Eye-Fi.
+			if (Application.isEyeFiInstalled()) {
+				// If Eye-Fi is available, use Eye-Fi folder, which is the first selection
+				Application.setSharedPreferenceString(R.string.key_folder_input,
+						context.getString(R.string.pref_default_folder_input));
+			}
+			else {
+				// Otherwise, use Camera foldder.
+				Application.setSharedPreferenceString(R.string.key_folder_input, FileUtil.getDefaultCameraFolder());
+			}
+		}
+
 		for (int id : PATH_RESOURCES) {
 			String path = Application.getSharedPreferenceString(id);
 			if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {

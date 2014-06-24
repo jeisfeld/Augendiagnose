@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,7 +11,7 @@
     tools:context=".activities.MainActivity" >
 
     <LinearLayout
-        android:layout_width="0pt"
+        android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical" >
@@ -35,13 +36,19 @@
             android:text="@string/button_organize_new_photos" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/mainButtonListFolders"
+    <LinearLayout
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/buttons_main_margin"
         android:layout_weight="1"
-        android:onClick="listFoldersForDisplayActivity"
-        android:text="@string/button_display_pictures" />
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/mainButtonListFolders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/buttons_main_margin"
+            android:onClick="listFoldersForDisplayActivity"
+            android:text="@string/button_display_pictures" />
+    </LinearLayout>
 
 </LinearLayout>

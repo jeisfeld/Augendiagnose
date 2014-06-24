@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <de.eisfeldj.augendiagnose.components.DirectorySelectionPreference
-        android:defaultValue="@string/pref_default_folder_input"
+        android:defaultValue="@string/pref_dummy_value"
         android:entries="@array/pref_list_titles_folder_input"
         android:entryValues="@array/pref_list_values_folder_input"
         android:key="@string/key_folder_input"

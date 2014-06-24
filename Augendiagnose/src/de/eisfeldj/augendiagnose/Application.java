@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnose;
 
 import de.eisfeldj.augendiagnose.util.EncryptionUtil;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
@@ -194,4 +195,13 @@ public class Application extends android.app.Application {
 		return width > height;
 	}
 
+	/**
+	 * Determine if Eye-Fi is installed
+	 * 
+	 * @return
+	 */
+	public static boolean isEyeFiInstalled() {
+		Intent eyeFiIntent = getAppContext().getPackageManager().getLaunchIntentForPackage("fi.eye.android");
+		return eyeFiIntent != null;
+	}
 }
