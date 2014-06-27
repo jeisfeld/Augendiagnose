@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 			// notes.
 			String storedVersionString = Application.getSharedPreferenceString(R.string.key_internal_stored_version);
 			if (storedVersionString == null || storedVersionString.length() == 0) {
-				storedVersionString = "12";
+				storedVersionString = "17";
 				firstStart = true;
 			}
 			int storedVersion = Integer.parseInt(storedVersionString);

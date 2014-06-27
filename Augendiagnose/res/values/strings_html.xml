@@ -105,8 +105,9 @@
 	other folder, such as the camera folder.
 
 	<p>This is the folder, from which the app imports new eye photos. By
-		default, this is the target folder of the Eye-Fi app. However, you can
-		configure here any other folder, such as the camera folder.</p>
+		default, this is either the target folder of the Eye-Fi app or the standard
+		folder of the Camera app. However, you can configure here any other folder,
+		such as the camera folder.</p>
 
 	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile
 		device is not sufficient to capture eye photos in high quality. A more
@@ -115,7 +116,8 @@
 
 	<h3>Eye Photo Folder</h3>
 
-	This is the folder in which the app manages the eye photos.
+	This is the folder in which the app manages the eye photos. Normally, you need
+	not change this. From here, you can copy the photos to other devices.
 
 	<h3>Max Bitmap size</h3>
 

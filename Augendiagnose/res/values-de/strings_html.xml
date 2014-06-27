@@ -52,7 +52,7 @@
 		und in das Augenfoto-Verzeichnis verschoben.</p>
 
 	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, k&ouml;nnen Sie
-		auch zwei Fotos in einem Dabeibrowser oder einer Foto-App ausw&auml;hlen und
+		auch zwei Fotos in einem Dateibrowser oder einer Foto-App ausw&auml;hlen und
 		an die Augendiagnose-App senden. Dann k&ouml;nnen Sie diese Fotos in der App
 		einordnen. In diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis
 		gel&ouml;scht.</p>
@@ -108,9 +108,9 @@
 	<h3>Eingangsverzeichnis f&uuml;r neue Augenfotos</h3>
 
 	<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert.
-		Als Standard ist hier das Zielverzeichnis der Eye-Fi-App gesetzt. Es kann aber
-		ein beliebiges anderes Verzeichnis gew&auml;hlt werden (z.B. das
-		Kamera-Verzeichnis).</p>
+		Als Standard ist hier entweder das Zielverzeichnis der Eye-Fi-App gesetzt oder
+		das Standardverzeichnis der Kamera-App. Es kann aber ein beliebiges anderes
+		Verzeichnis gew&auml;hlt werden (z.B. das Kamera-Verzeichnis).</p>
 
 	<p>Hintergrund zur Eye-Fi-App: Eine Smartphone-Kamera ist typischerweise
 		nicht ausreichend, um hochwertige Augenfotografien zu machen. Daher wird eine
@@ -120,7 +120,9 @@
 
 	<h3>Verzeichnis der Augenfotos</h3>
 
-	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet.
+	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss
+	normalerweise nicht ge&auml;ndert werden. Von hier k&ouml;nnen Sie die Fotos
+	auf andere Ger&auml;te kopieren.
 
 	<h3>Maximale Bitmap-Gr&ouml;&szlig;e</h3>
 
