@@ -17,7 +17,7 @@ public class DisplayHtmlFragment extends Fragment {
 
 	/**
 	 * Initialize the fragment with the resource
-	 * 
+	 *
 	 * @param text
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public class DisplayHtmlFragment extends Fragment {
 		String html = getString(resource);
 		int index = html.indexOf("</head>");
 		html = html.substring(0, index) + STYLE + html.substring(index);
-		webView.loadData(html, "text/html", "UTF-8");
+		webView.loadData(html, "text/html; charset=UTF-8", "utf-8");
 	}
 
 }
