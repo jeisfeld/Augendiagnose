@@ -10,25 +10,43 @@ import android.widget.AutoCompleteTextView;
  */
 public class InstantAutoCompleteTextView extends AutoCompleteTextView {
 
-	public InstantAutoCompleteTextView(Context context) {
+	// JAVADOC:OFF
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context)
+	 */
+	public InstantAutoCompleteTextView(final Context context) {
 		super(context);
 	}
 
-	public InstantAutoCompleteTextView(Context arg0, AttributeSet arg1) {
-		super(arg0, arg1);
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet)
+	 */
+	public InstantAutoCompleteTextView(final Context context, final AttributeSet attrs) {
+		super(context, attrs);
 	}
 
-	public InstantAutoCompleteTextView(Context arg0, AttributeSet arg1, int arg2) {
-		super(arg0, arg1, arg2);
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet, int)
+	 */
+	public InstantAutoCompleteTextView(final Context context, final AttributeSet attrs, final int defStyle) {
+		super(context, attrs, defStyle);
 	}
+
+	// JAVADOC:ON
 
 	@Override
-	public boolean enoughToFilter() {
+	public final boolean enoughToFilter() {
 		return true;
 	}
 
 	@Override
-	protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+	protected final void onFocusChanged(final boolean focused, final int direction, final Rect previouslyFocusedRect) {
 		super.onFocusChanged(focused, direction, previouslyFocusedRect);
 		if (focused) {
 			performFiltering(getText(), 0);

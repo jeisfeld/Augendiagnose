@@ -35,51 +35,143 @@ import de.eisfeldj.augendiagnose.util.JpegMetadata;
  *
  */
 public class OverlayPinchImageView extends PinchImageView {
+	/**
+	 * The number of overlays (including circle).
+	 */
 	public static final int OVERLAY_COUNT = 6;
+
+	/**
+	 * The size of the overlays (in pixels).
+	 */
 	private static final int OVERLAY_SIZE = 1024;
+
+	/**
+	 * The colour of the one-coloured overlays.
+	 */
 	private static final int OVERLAY_COLOR = Color.RED;
 
+	/**
+	 * The minimum scale factor allowed.
+	 */
+	private static final float MIN_OVERLAY_SCALE_FACTOR = 0.2f;
+
+	/**
+	 * The maximum scale factor allowed.
+	 */
+	private static final float MAX_OVERLAY_SCALE_FACTOR = 5f;
+
+	/**
+	 * An array of the available overlays.
+	 */
 	private Drawable[] overlayCache = new Drawable[OVERLAY_COUNT];
 
 	/**
 	 * These are the relative positions of the overlay center on the bitmap. Range: [0,1]
 	 */
 	private float mOverlayX, mOverlayY;
-	private float mOverlayScaleFactor;
-	private float mLastOverlayScaleFactor;
 
+	/**
+	 * The scale factor of the overlays.
+	 */
+	private float mOverlayScaleFactor, mLastOverlayScaleFactor;
+
+	/**
+	 * An array indicating which overlays are displayed.
+	 */
 	private boolean[] mShowOverlay = new boolean[OVERLAY_COUNT];
+
+	/**
+	 * Flag indicating if the overlays are locked.
+	 */
 	private boolean mLocked = false;
+
+	/**
+	 * The eye photo displayed.
+	 */
 	private EyePhoto mEyePhoto;
+
+	/**
+	 * The drawable on which eye photo and overlays are drawn.
+	 */
 	private LayerDrawable mLayerDrawable;
+
+	/**
+	 * The bitmap drawn on the canvas.
+	 */
 	private Bitmap mCanvasBitmap;
+
+	/**
+	 * The canvas on which the drawing is done.
+	 */
 	private Canvas mCanvas;
 
+	/**
+	 * The brightness (-1 to 1) of the bitmap. Default: 0.
+	 */
 	private float mBrightness = 0f;
+
+	/**
+	 * The contrast (0 to infinity) of the bitmap. Default: 1.
+	 */
 	private float mContrast = 1f;
 
+	/**
+	 * A small version of the bitmap.
+	 */
 	private Bitmap mBitmapSmall;
+
+	/**
+	 * The metadata of the image.
+	 */
 	private JpegMetadata mMetadata;
 
+	/**
+	 * Flag indicating if the overlay position is defined for the eye photo.
+	 */
 	private boolean mHasOverlayPosition = false;
+
+	/**
+	 * Flag indicating if the view position is stored for the eye photo.
+	 */
 	private boolean mHasViewPosition = false;
 
+	/**
+	 * Callback class to update the GUI elements from the view.
+	 */
 	private GuiElementUpdater guiElementUpdater;
 
-	public OverlayPinchImageView(Context context) {
+	// JAVADOC:OFF
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context)
+	 */
+	public OverlayPinchImageView(final Context context) {
 		this(context, null, 0);
 	}
 
-	public OverlayPinchImageView(Context context, AttributeSet attrs) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet)
+	 */
+	public OverlayPinchImageView(final Context context, final AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public OverlayPinchImageView(Context context, AttributeSet attrs, int defStyle) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet, int)
+	 */
+	public OverlayPinchImageView(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
+	// JAVADOC:ON
+
 	/**
-	 * Fill with an image, initializing from metadata
+	 * Fill with an image, initializing from metadata.
 	 *
 	 * @param pathName
 	 *            The pathname of the image
@@ -89,13 +181,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            A unique index of the view in the activity
 	 */
 	@Override
-	public void setImage(String pathName, Activity activity, int cacheIndex) {
+	public final void setImage(final String pathName, final Activity activity, final int cacheIndex) {
 		mEyePhoto = new EyePhoto(pathName);
 
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
-		mBitmap = retainFragment.bitmap;
-		mBitmapSmall = retainFragment.bitmapSmall;
+		mBitmap = retainFragment.getBitmap();
+		mBitmapSmall = retainFragment.getBitmapSmall();
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
 			mHasOverlayPosition = false;
@@ -103,14 +195,14 @@ public class OverlayPinchImageView extends PinchImageView {
 			mBitmap = null;
 
 			// Do image loading in separate thread
-			new Thread() {
+			Thread thread = new Thread() {
 				@Override
 				public void run() {
 					mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
 					mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 					mMetadata = mEyePhoto.getImageMetadata();
-					retainFragment.bitmap = mBitmap;
-					retainFragment.bitmapSmall = mBitmapSmall;
+					retainFragment.setBitmap(mBitmap);
+					retainFragment.setBitmapSmall(mBitmapSmall);
 
 					post(new Runnable() {
 						@Override
@@ -154,7 +246,8 @@ public class OverlayPinchImageView extends PinchImageView {
 						}
 					});
 				}
-			}.start();
+			};
+			thread.start();
 		}
 		else {
 			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -167,7 +260,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	@Override
-	protected void doInitialScaling() {
+	protected final void doInitialScaling() {
 		// If available, use stored position
 		if (!mInitialized && mHasViewPosition) {
 			mPosX = mMetadata.xPosition;
@@ -191,12 +284,12 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Update the bitmap with the correct set of overlays
+	 * Update the bitmap with the correct set of overlays.
 	 *
 	 * @param strict
 	 *            indicates if full resolution is required
 	 */
-	public void refresh(boolean strict) {
+	public final void refresh(final boolean strict) {
 		if (mCanvas == null || !mInitialized) {
 			return;
 		}
@@ -249,23 +342,24 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Get information if the view can handle overlays
+	 * Get information if the view can handle overlays.
 	 *
-	 * @return
+	 * @return true if the view can handle overlays. This is possible only if the right/left position of the eye photo
+	 *         is defined.
 	 */
-	public boolean canHandleOverlays() {
+	public final boolean canHandleOverlays() {
 		return mEyePhoto != null && mEyePhoto.getRightLeft() != null;
 	}
 
 	/**
-	 * Change the status of an overlay
+	 * Change the status of an overlay.
 	 *
 	 * @param position
 	 *            number of the overlay
 	 * @param show
 	 *            flag indicating if the overlay should be shown
 	 */
-	public void showOverlay(int position, boolean show) {
+	public final void showOverlay(final int position, final boolean show) {
 		mShowOverlay[position] = show;
 		refresh(true);
 		updateScaleGestureDetector();
@@ -278,7 +372,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param position
 	 *            number of the overlay
 	 */
-	public void triggerOverlay(int position) {
+	public final void triggerOverlay(final int position) {
 		for (int i = 0; i < mShowOverlay.length; i++) {
 			if (i == position) {
 				mShowOverlay[i] = !mShowOverlay[i];
@@ -292,11 +386,14 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Switch the lock status of the overlays
+	 * Switch the lock status of the overlays.
 	 *
 	 * @param lock
+	 *            the target lock status
+	 * @param store
+	 *            a flag indicating if the lock status should be stored.
 	 */
-	public void lockOverlay(boolean lock, boolean store) {
+	public final void lockOverlay(final boolean lock, final boolean store) {
 		this.mLocked = lock;
 		updateScaleGestureDetector();
 
@@ -317,13 +414,16 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Reset the overlay position
+	 * Reset the overlay position.
+	 *
+	 * @param store
+	 *            flag indicating if the overlay position should be stored.
 	 */
-	public void resetOverlayPosition(boolean store) {
+	public final void resetOverlayPosition(final boolean store) {
 		float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
 		mOverlayScaleFactor = size / OVERLAY_SIZE;
-		mOverlayX = 0.5f;
-		mOverlayY = 0.5f;
+		mOverlayX = ONE_HALF;
+		mOverlayY = ONE_HALF;
 		if (store && mInitialized) {
 			if (mMetadata != null) {
 				mMetadata.xCenter = null;
@@ -344,7 +444,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Set the correct ScaleGestureDetector
+	 * Set the correct ScaleGestureDetector.
 	 */
 	private void updateScaleGestureDetector() {
 		if (pinchAll()) {
@@ -356,12 +456,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Helper method to return the overlay drawable of position i
+	 * Helper method to create the overlay drawable of position i.
 	 *
 	 * @param position
-	 * @return
+	 *            The position of the overlay drawable.
+	 * @return The overlay drawable.
 	 */
-	private Drawable getOverlayDrawable(int position) {
+	private Drawable getOverlayDrawable(final int position) {
 		if (overlayCache[position] == null) {
 			int resource;
 
@@ -384,7 +485,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				overlayCache[position] = getResources().getDrawable(resource);
 				break;
-			case 3:
+			case 3: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					resource = R.drawable.overlay_topo5_r;
 				}
@@ -393,7 +494,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;
-			case 4:
+			case 4: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					resource = R.drawable.overlay_topo3_r;
 				}
@@ -402,7 +503,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
 				break;
-			case 5:
+			case 5: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					resource = R.drawable.overlay_topo4_r;
 				}
@@ -427,39 +528,43 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Create a drawable from a black image resource, having a changed colour
+	 * Create a drawable from a black image resource, having a changed colour.
 	 *
 	 * @param resource
+	 *            The black image resource
 	 * @param color
-	 * @return
+	 *            The target color
+	 * @return The modified drawable, with the intended color.
 	 */
-	private Drawable getColouredDrawable(int resource, int color) {
+	private Drawable getColouredDrawable(final int resource, final int color) {
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resource);
 		return new BitmapDrawable(getResources(), changeBitmapColor(bitmap, Color.RED));
 	}
 
 	/**
-	 * Utility method to change a bitmap colour
+	 * Utility method to change a bitmap colour.
 	 *
 	 * @param sourceBitmap
-	 * @param image
+	 *            The original bitmap
 	 * @param color
+	 *            The target color
+	 * @return the bitmap with the target color.
 	 */
-	private static Bitmap changeBitmapColor(Bitmap bmp, int color) {
-		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+	private static Bitmap changeBitmapColor(final Bitmap sourceBitmap, final int color) {
+		Bitmap ret = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
 
 		Paint p = new Paint();
 		ColorFilter filter = new LightingColorFilter(0, color);
 		p.setColorFilter(filter);
 		Canvas canvas = new Canvas(ret);
-		canvas.drawBitmap(bmp, 0, 0, p);
+		canvas.drawBitmap(sourceBitmap, 0, 0, p);
 		return ret;
 	}
 
 	/**
 	 * Utility method to check if pinching includes overlays and the main picture.
 	 *
-	 * @return
+	 * @return true if pinching includes everything. false if pinching should just pinch the overlay.
 	 */
 	private boolean pinchAll() {
 		if (mLocked) {
@@ -476,34 +581,34 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Set the brightness
+	 * Set the brightness.
 	 *
 	 * @param brightness
 	 *            on a scale -1 to 1
 	 */
-	public void setBrightness(float brightness) {
+	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
 		refresh(false);
 	}
 
 	/**
-	 * Set the contrast
+	 * Set the contrast.
 	 *
 	 * @param contrast
 	 *            on a positive scale 0 to infinity, 1 is unchanged.
 	 */
-	public void setContrast(float contrast) {
+	public final void setContrast(final float contrast) {
 		mContrast = contrast;
 		refresh(false);
 	}
 
 	/**
-	 * Store brightness and contrast in the image metadata
+	 * Store brightness and contrast in the image metadata.
 	 *
 	 * @param delete
 	 *            delete brightness and contrast from metadata.
 	 */
-	public void storeBrightnessContrast(boolean delete) {
+	public final void storeBrightnessContrast(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
 				mMetadata.brightness = null;
@@ -525,12 +630,12 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Store position and zoom in the image metadata
+	 * Store position and zoom in the image metadata.
 	 *
 	 * @param delete
 	 *            delete position and zoom from metadata.
 	 */
-	public void storePositionZoom(boolean delete) {
+	public final void storePositionZoom(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
 				mHasViewPosition = false;
@@ -553,14 +658,13 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 	}
 
-	/**
-	 * Utility method to make the calculations in case of a pointer move Overridden to handle zooming of overlay
-	 *
-	 * @param ev
+	/*
+	 * Utility method to make the calculations in case of a pointer move Overridden to handle zooming of overlay.
 	 */
-	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "Using floating point equality to see if value has changed")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
+			justification = "Using floating point equality to see if value has changed")
 	@Override
-	protected boolean handlePointerMove(MotionEvent ev) {
+	protected final boolean handlePointerMove(final MotionEvent ev) {
 		if (pinchAll()) {
 			return super.handlePointerMove(ev);
 		}
@@ -617,17 +721,16 @@ public class OverlayPinchImageView extends PinchImageView {
 		return true;
 	}
 
-	/**
-	 * Overridden to refresh the view in full details
-	 *
-	 * @param ev
+	/*
+	 * Overridden to refresh the view in full details.
 	 */
-	protected void finishPointerMove(MotionEvent ev) {
+	@Override
+	protected final void finishPointerMove(final MotionEvent ev) {
 		refresh(true);
 	}
 
 	/**
-	 * Update contrast and brightness of a bitmap
+	 * Update contrast and brightness of a bitmap.
 	 *
 	 * @param bmp
 	 *            input bitmap
@@ -637,8 +740,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            -1..1 - 0 is default
 	 * @return new bitmap
 	 */
-	protected static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness) {
-		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness);
+	private static Bitmap
+			changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
+		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
 
 		ColorMatrix cm = new ColorMatrix(new float[] { //
 				contrast, 0, 0, 0, offset, //
@@ -658,31 +762,32 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Retrieve the metadata of the image
+	 * Retrieve the metadata of the image.
 	 *
-	 * @return
+	 * @return the metadata of the image
 	 */
-	public JpegMetadata getMetadata() {
+	public final JpegMetadata getMetadata() {
 		return mMetadata;
 	}
 
 	/**
-	 * Store the comment in the image
+	 * Store the comment in the image.
 	 *
-	 * @param metadata
+	 * @param comment
+	 *            the comment to be stored.
 	 */
-	public void storeComment(String comment) {
+	public final void storeComment(final String comment) {
 		if (mInitialized && mMetadata != null) {
 			mMetadata.comment = comment;
 			mEyePhoto.storeImageMetadata(mMetadata);
 		}
 	}
 
-	/**
-	 * Save brightness, contrast and overlay position
+	/*
+	 * Save brightness, contrast and overlay position.
 	 */
 	@Override
-	protected Parcelable onSaveInstanceState() {
+	protected final Parcelable onSaveInstanceState() {
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("instanceState", super.onSaveInstanceState());
 		bundle.putFloat("mOverlayX", this.mOverlayX);
@@ -697,7 +802,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
+	protected final void onRestoreInstanceState(final Parcelable state) {
 		Parcelable enhancedState = state;
 		if (state instanceof Bundle) {
 			Bundle bundle = (Bundle) state;
@@ -720,10 +825,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private class OverlayScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
-		public boolean onScale(ScaleGestureDetector detector) {
+		public boolean onScale(final ScaleGestureDetector detector) {
 			mOverlayScaleFactor *= detector.getScaleFactor();
 			// Don't let the object get too small or too large.
-			mOverlayScaleFactor = Math.max(0.2f, Math.min(mOverlayScaleFactor, 5.0f));
+			mOverlayScaleFactor =
+					Math.max(MIN_OVERLAY_SCALE_FACTOR, Math.min(mOverlayScaleFactor, MAX_OVERLAY_SCALE_FACTOR));
 			invalidate();
 			return true;
 		}
@@ -733,8 +839,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Set the reference that allows GUI updates.
 	 *
 	 * @param updater
+	 *            The GUI Element updater
 	 */
-	public void setGuiElementUpdater(GuiElementUpdater updater) {
+	public final void setGuiElementUpdater(final GuiElementUpdater updater) {
 		guiElementUpdater = updater;
 	}
 
@@ -743,43 +850,67 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public interface GuiElementUpdater {
 		/**
-		 * Set the checked status of the lock button
+		 * Set the checked status of the lock button.
 		 *
 		 * @param checked
+		 *            the lock status.
 		 */
-		public void setLockChecked(boolean checked);
+		void setLockChecked(boolean checked);
 
 		/**
-		 * Update the brightness bar
+		 * Update the brightness bar.
 		 *
 		 * @param brightness
+		 *            The brightness.
 		 */
-		public void updateSeekbarBrightness(float brightness);
+		void updateSeekbarBrightness(float brightness);
 
 		/**
-		 * Update the contrast bar
+		 * Update the contrast bar.
 		 *
 		 * @param contrast
+		 *            The contrast.
 		 */
-		public void updateSeekbarContrast(float contrast);
+		void updateSeekbarContrast(float contrast);
 
 		/**
-		 * Reset the overlays
+		 * Reset the overlays.
 		 */
-		public void resetOverlays();
+		void resetOverlays();
 	}
 
 	/**
-	 * Helper listFoldersFragment to retain the bitmap on configuration change
+	 * Helper listFoldersFragment to retain the bitmap on configuration change.
 	 */
 	protected static class RetainFragment extends PinchImageView.RetainFragment {
+		/**
+		 * Tag to be used as identifier of the fragment.
+		 */
 		private static final String TAG = "RetainFragment";
-		public Bitmap bitmapSmall;
 
-		public RetainFragment() {
+		/**
+		 * The small version of the bitmap.
+		 */
+		private Bitmap bitmapSmall;
+
+		private Bitmap getBitmapSmall() {
+			return bitmapSmall;
 		}
 
-		public static RetainFragment findOrCreateRetainFragment(FragmentManager fm, int index) {
+		private void setBitmapSmall(final Bitmap bitmapSmall) {
+			this.bitmapSmall = bitmapSmall;
+		}
+
+		/**
+		 * Get the retainFragment - search it by the index. If not found, create a new one.
+		 *
+		 * @param fm
+		 *            The fragment manager handling this fragment.
+		 * @param index
+		 *            The index of the view (required in case of multiple PinchImageViews to be retained).
+		 * @return the retainFragment.
+		 */
+		public static final RetainFragment findOrCreateRetainFragment(final FragmentManager fm, final int index) {
 			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
 			if (fragment == null) {
 				fragment = new RetainFragment();

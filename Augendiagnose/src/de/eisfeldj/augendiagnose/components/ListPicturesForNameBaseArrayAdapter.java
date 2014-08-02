@@ -14,22 +14,47 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
  * Array adapter class to display an eye photo pair in a list.
  */
 public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<EyePhotoPair> {
-	protected final Activity activity;
+	/**
+	 * The cache size.
+	 */
+	private static final int CACHE_SIZE = 25;
 
 	/**
 	 * Keep up to 25 rows in memory before reusing views.
 	 */
-	private CacheRange cacheRange = new CacheRange(25);
+	private CacheRange cacheRange = new CacheRange(CACHE_SIZE);
 
+	// PUBLIC_FIELDS:START
+	/**
+	 * A reference to the activity.
+	 */
+	protected final Activity activity;
+
+	/**
+	 * The list of eye photo pairs.
+	 */
 	protected EyePhotoPair[] eyePhotoPairs;
 
-	public ListPicturesForNameBaseArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
+	// PUBLIC_FIELDS:END
+
+	/**
+	 * Constructor for the adapter.
+	 *
+	 * @param activity The activity using the adapter.
+	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
+	 */
+	public ListPicturesForNameBaseArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
 		this.activity = activity;
 		this.eyePhotoPairs = eyePhotoPairs;
 	}
 
-	public ListPicturesForNameBaseArrayAdapter(Context context) {
+	/**
+	 * Default adapter to be used by the framework.
+	 *
+	 * @param context The Context the view is running in.
+	 */
+	public ListPicturesForNameBaseArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
 		this.activity = (Activity) context;
 	}
@@ -37,23 +62,25 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Abstract method do return the layout to be used.
 	 *
-	 * @return
+	 * @return The layout to be used.
 	 */
 	protected abstract int getLayout();
 
 	/**
-	 * Abstract method to prepare the image views for selection of pictures
+	 * Abstract method to prepare the image views for selection of pictures.
 	 *
 	 * @param view
+	 *            The image view to be prepared.
 	 */
 	protected abstract void prepareViewForSelection(EyeImageView view);
 
-	/**
+	/*
 	 * Fill the display of the view (date and pictures) Details on selection are handled within the
 	 * ImageSelectionAndDisplayHandler class
 	 */
+	// OVERRIDABLE
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View rowView;
 		// Reuse views if they are already created and in the cached range
 		if (convertView != null && cacheRange.isInRange(position)) {
@@ -93,17 +120,17 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		return rowView;
 	}
 
-	/**
-	 * After cacheRange.length entries, the views are recycled, i.e. row cacherange.length is stored in the same view as
+	/*
+	 * After cacheRange.length entries, the views are recycled, i.e. row cacheange.length is stored in the same view as
 	 * row 0.
 	 */
 	@Override
-	public int getItemViewType(int position) {
+	public final int getItemViewType(final int position) {
 		return position % cacheRange.length;
 	}
 
 	@Override
-	public int getViewTypeCount() {
+	public final int getViewTypeCount() {
 		int count = getCount();
 		return count < cacheRange.length ? count : cacheRange.length;
 	}
@@ -112,19 +139,44 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 * This is the range of positions for which the images are stored.
 	 */
 	public static class CacheRange {
+		/**
+		 * Length of the cache.
+		 */
 		private int length;
+		/**
+		 * Start position of the cache. Moves to ensure that the current pointer is always within the cache.
+		 */
 		private int start;
 
-		public CacheRange(int length) {
+		/**
+		 * Initialize the cache with a given length.
+		 *
+		 * @param length
+		 *            The length of the cache.
+		 */
+		public CacheRange(final int length) {
 			this.start = 0;
 			this.length = length;
 		}
 
-		public boolean isInRange(int n) {
+		/**
+		 * Check if a given number is within the range of the cache.
+		 *
+		 * @param n
+		 *            The number to be checked.
+		 * @return True if the number is in the cache.
+		 */
+		public final boolean isInRange(final int n) {
 			return (start <= n) && (n < start + length);
 		}
 
-		public void putIntoRange(int n) {
+		/**
+		 * Push a given number into the cache. The start position of the cache is adapted accordingly.
+		 *
+		 * @param n
+		 *            The number to be pushed.
+		 */
+		public final void putIntoRange(final int n) {
 			if (n < start) {
 				start = n;
 			}

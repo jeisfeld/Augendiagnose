@@ -14,27 +14,47 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  * Array adapter class to display an eye photo pair in a list.
  */
 public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
-	protected final Activity activity;
+	/**
+	 * The activity holding this adapter.
+	 */
+	private final Activity activity;
 
-	protected EyePhoto[] eyePhotos;
+	/**
+	 * The array of eye photos displayed.
+	 */
+	private EyePhoto[] eyePhotos;
 
-	public SelectTwoPicturesArrayAdapter(Activity activity, EyePhoto[] eyePhotos) {
+	/**
+	 * Constructor for the adapter.
+	 *
+	 * @param activity
+	 *            The activity using the adapter.
+	 * @param eyePhotos
+	 *            The array of eye photos to be displayed.
+	 */
+	public SelectTwoPicturesArrayAdapter(final Activity activity, final EyePhoto[] eyePhotos) {
 		super(activity, R.layout.text_view_initializing, eyePhotos);
 		this.activity = activity;
 		this.eyePhotos = eyePhotos;
 	}
 
-	public SelectTwoPicturesArrayAdapter(Context context) {
+	/**
+	 * Default adapter to be used by the framework.
+	 *
+	 * @param context
+	 *            The Context the view is running in.
+	 */
+	public SelectTwoPicturesArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
 		this.activity = (Activity) context;
 	}
 
-	/**
+	/*
 	 * Fill the display of the view (date and pictures) Details on selection are handled within the
-	 * ImageSelectionAndDisplayHandler class
+	 * ImageSelectionAndDisplayHandler class.
 	 */
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public final View getView(final int position, final View convertView, final ViewGroup parent) {
 		final EyeImageView eyeImageView;
 		if (convertView != null && convertView instanceof EyeImageView) {
 			eyeImageView = (EyeImageView) convertView;

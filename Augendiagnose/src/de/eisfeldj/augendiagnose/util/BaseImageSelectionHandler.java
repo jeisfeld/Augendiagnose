@@ -37,11 +37,10 @@ public abstract class BaseImageSelectionHandler {
 		}
 	}
 
-	// OVERRIDABLE:START
-
 	/**
 	 * Unselect the selected view.
 	 */
+	// OVERRIDABLE
 	public void cleanSelectedView() {
 		if (selectedView != null) {
 			highlightSelectedView(false);
@@ -55,11 +54,10 @@ public abstract class BaseImageSelectionHandler {
 	 * @param view
 	 *            the view to be selected.
 	 */
+	// OVERRIDABLE
 	protected void selectView(final EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
 	}
-
-	// OVERRIDABLE:END
 
 }

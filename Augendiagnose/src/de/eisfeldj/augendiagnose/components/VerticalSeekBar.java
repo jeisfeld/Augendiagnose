@@ -7,37 +7,63 @@ import android.view.MotionEvent;
 import android.widget.SeekBar;
 
 /**
- * Implementation of an easy vertical SeekBar
+ * Implementation of an easy vertical SeekBar, based on the normal SeekBar.
  */
 public class VerticalSeekBar extends SeekBar {
+	/**
+	 * The angle by which the SeekBar view should be rotated.
+	 */
+	private static final int ROTATION_ANGLE = -90;
 
+	/**
+	 * A change listener registrating start and stop of tracking. Need an own listener because the listener in SeekBar
+	 * is private.
+	 */
 	private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
-	public VerticalSeekBar(Context context) {
+	// JAVADOC:OFF
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context)
+	 */
+	public VerticalSeekBar(final Context context) {
 		super(context);
 	}
 
-	public VerticalSeekBar(Context context, AttributeSet attrs, int defStyle) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet)
+	 */
+	public VerticalSeekBar(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public VerticalSeekBar(Context context, AttributeSet attrs) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet, int)
+	 */
+	public VerticalSeekBar(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 	}
 
+	// JAVADOC:ON
+
 	/*
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		super.onSizeChanged(h, w, oldh, oldw);
+	protected final void onSizeChanged(final int width, final int height, final int oldWidth, final int oldHeight) {
+		super.onSizeChanged(height, width, oldHeight, oldWidth);
 	}
 
 	/*
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	protected final synchronized void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 		super.onMeasure(heightMeasureSpec, widthMeasureSpec);
 		setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
 	}
@@ -46,8 +72,8 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	protected void onDraw(Canvas c) {
-		c.rotate(-90);
+	protected final void onDraw(final Canvas c) {
+		c.rotate(ROTATION_ANGLE);
 		c.translate(-getHeight(), 0);
 
 		super.onDraw(c);
@@ -57,7 +83,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
+	public final void setOnSeekBarChangeListener(final OnSeekBarChangeListener l) {
 		mOnSeekBarChangeListener = l;
 		super.setOnSeekBarChangeListener(l);
 	}
@@ -66,7 +92,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public final boolean onTouchEvent(final MotionEvent event) {
 		if (!isEnabled()) {
 			return false;
 		}
@@ -101,7 +127,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	public void setProgress(int progress) {
+	public final void setProgress(final int progress) {
 		super.setProgress(progress);
 		onSizeChanged(getWidth(), getHeight(), 0, 0);
 	}

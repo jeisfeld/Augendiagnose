@@ -15,44 +15,66 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
- * Array adapter class to display an eye photo pair in a list (initial display)
+ * Array adapter class to display an eye photo pair in a list (initial display).
  */
 public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArrayAdapter {
-
+	/**
+	 * A map linking the TextViews containing the date to their position.
+	 */
 	private Map<TextView, Integer> positionMap = new HashMap<TextView, Integer>();
+
+	/**
+	 * The fragment using the adapter.
+	 */
 	private ListPicturesForNameFragment fragment;
 
-	public ListPicturesForNameArrayAdapter(Activity activity, ListPicturesForNameFragment fragment,
-			EyePhotoPair[] eyePhotoPairs) {
+	/**
+	 * Constructor for the adapter.
+	 *
+	 * @param activity
+	 *            The activity using the adapter.
+	 * @param fragment
+	 *            The fragment using the adapter.
+	 * @param eyePhotoPairs
+	 *            The array of eye photo pairs to be displayed.
+	 */
+	public ListPicturesForNameArrayAdapter(final Activity activity, final ListPicturesForNameFragment fragment,
+			final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
 		this.fragment = fragment;
 	}
 
-	public ListPicturesForNameArrayAdapter(Context context) {
+	/**
+	 * Default adapter to be used by the framework.
+	 *
+	 * @param context
+	 *            The Context the view is running in.
+	 */
+	public ListPicturesForNameArrayAdapter(final Context context) {
 		super(context);
 	}
 
 	@Override
-	protected int getLayout() {
+	protected final int getLayout() {
 		return R.layout.adapter_list_pictures_for_name;
 	}
 
 	@Override
-	protected void prepareViewForSelection(EyeImageView view) {
+	protected final void prepareViewForSelection(final EyeImageView view) {
 		ImageSelectionAndDisplayHandler.getInstance().prepareViewForFirstSelection(view);
 	}
 
-	/**
-	 * When clicking on date, display the two pictures of that date
+	/*
+	 * When clicking on date, display the two pictures of that date.
 	 */
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public final View getView(final int position, final View convertView, final ViewGroup parent) {
 		View rowView = super.getView(position, convertView, parent);
 
 		final TextView textView = (TextView) rowView.findViewById(R.id.textPictureDate);
 		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedView();
 				DisplayTwoActivity.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
 						.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye().getAbsolutePath());
@@ -68,12 +90,13 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	}
 
 	/**
-	 * Retrieve the row corresponding to a TextView displaying the date
-	 * 
+	 * Retrieve the row corresponding to a TextView displaying the date.
+	 *
 	 * @param view
-	 * @return
+	 *            The TextView displaying the date.
+	 * @return The row
 	 */
-	public int getRow(TextView view) {
+	public final int getRow(final TextView view) {
 		return positionMap.get(view);
 	}
 

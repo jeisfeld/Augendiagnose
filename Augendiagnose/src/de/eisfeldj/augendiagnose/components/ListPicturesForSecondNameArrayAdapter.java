@@ -7,25 +7,39 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
- * Array adapter class to display an eye photo pair in a list (display for selection of second picture)
+ * Array adapter class to display an eye photo pair in a list (display for selection of second picture).
  */
 public class ListPicturesForSecondNameArrayAdapter extends ListPicturesForNameBaseArrayAdapter {
 
-	public ListPicturesForSecondNameArrayAdapter(Activity activity, EyePhotoPair[] eyePhotoPairs) {
+	/**
+	 * Constructor for the adapter.
+	 *
+	 * @param activity
+	 *            The activity using the adapter.
+	 * @param eyePhotoPairs
+	 *            The array of eye photo pairs to be displayed.
+	 */
+	public ListPicturesForSecondNameArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
 	}
 
-	public ListPicturesForSecondNameArrayAdapter(Context context) {
+	/**
+	 * Default adapter to be used by the framework.
+	 *
+	 * @param context
+	 *            The Context the view is running in.
+	 */
+	public ListPicturesForSecondNameArrayAdapter(final Context context) {
 		super(context);
 	}
 
 	@Override
-	protected int getLayout() {
+	protected final int getLayout() {
 		return R.layout.adapter_list_pictures_for_second_name;
 	}
 
 	@Override
-	protected void prepareViewForSelection(EyeImageView view) {
+	protected final void prepareViewForSelection(final EyeImageView view) {
 		ImageSelectionAndDisplayHandler.getInstance().prepareViewForSecondSelection(view);
 	}
 

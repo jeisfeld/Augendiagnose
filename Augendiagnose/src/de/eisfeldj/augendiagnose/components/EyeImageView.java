@@ -8,82 +8,111 @@ import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
- * A view for displaying an image.
+ * A view for displaying an eye image.
  */
 public class EyeImageView extends ImageView {
+	/**
+	 * The EyePhoto shown in the view.
+	 */
 	private EyePhoto eyePhoto;
+	/**
+	 * Indicates if the view is initialized.
+	 */
 	private boolean initialized = false;
 
-	public EyeImageView(Context context) {
+	// JAVADOC:OFF
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context)
+	 */
+	public EyeImageView(final Context context) {
 		this(context, null, 0);
 	}
 
-	public EyeImageView(Context context, AttributeSet attrs) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet)
+	 */
+	public EyeImageView(final Context context, final AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public EyeImageView(Context context, AttributeSet attrs, int defStyle) {
+	/**
+	 * Standard constructor to be implemented for all views.
+	 *
+	 * @see #View(Context, AttributeSet, int)
+	 */
+	public EyeImageView(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
+	// JAVADOC:ON
+
 	/**
-	 * Set the eye photo and create the bitmap
+	 * Set the eye photo and create the bitmap.
 	 *
-	 * @param eyePhoto
+	 * @param activity
+	 *            The activity holding the view.
+	 * @param newEyePhoto
+	 *            The eyePhoto to be displayed.
+	 * @param postActivities
+	 *            Activities that may be run on the UI thread after loading the image.
 	 */
-	public void setEyePhoto(final Activity activity, final EyePhoto eyePhoto, final Runnable postActivities) {
-		this.eyePhoto = eyePhoto;
+	public final void setEyePhoto(final Activity activity, final EyePhoto newEyePhoto, final Runnable postActivities) {
+		this.eyePhoto = newEyePhoto;
 		// Fill pictures in separate thread, for performance reasons
-		new Thread() {
+		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				eyePhoto.precalculateImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
+				newEyePhoto.precalculateImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 				activity.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setImageBitmap(eyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+						setImageBitmap(newEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 						invalidate();
 						initialized = true;
-						if(postActivities != null) {
+						if (postActivities != null) {
 							postActivities.run();
 						}
 					}
 				});
 			}
-		}.start();
+		};
+		thread.start();
 	}
 
 	/**
-	 * Clean the eye photo from the view
+	 * Clean the eye photo from the view.
 	 */
-	public void cleanEyePhoto() {
+	public final void cleanEyePhoto() {
 		this.eyePhoto = null;
 		setImageBitmap(null);
 	}
 
-
 	/**
-	 * Retrieve the eyePhoto object
+	 * Retrieve the eyePhoto object.
 	 *
-	 * @return
+	 * @return the eye photo.
 	 */
-	public EyePhoto getEyePhoto() {
+	public final EyePhoto getEyePhoto() {
 		return eyePhoto;
 	}
 
 	/**
-	 * Mark as mInitialized to prevent double initialization
+	 * Mark as mInitialized to prevent double initialization.
 	 */
-	public void setInitialized() {
+	public final void setInitialized() {
 		initialized = true;
 	}
 
 	/**
-	 * Check if it is mInitialized
+	 * Check if it is mInitialized.
 	 *
-	 * @return
+	 * @return true if it is initialized.
 	 */
-	public boolean isInitialized() {
+	public final boolean isInitialized() {
 		return initialized;
 	}
 }

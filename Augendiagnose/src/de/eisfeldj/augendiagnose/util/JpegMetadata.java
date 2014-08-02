@@ -60,7 +60,6 @@ public final class JpegMetadata implements Parcelable {
 	}
 
 	// JAVADOC:OFF
-	// INLINE_CONDITIONALS:START
 
 	// Getters and setters with type conversion.
 
@@ -144,7 +143,6 @@ public final class JpegMetadata implements Parcelable {
 		return contrast == null ? null : contrast.toString();
 	}
 
-	// INLINE_CONDITIONALS:END
 	// JAVADOC:ON
 
 	@Override

@@ -13,23 +13,51 @@ import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment;
 import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment.ChosenDirectoryListener;
 import de.eisfeldj.augendiagnose.util.FileUtil;
 
+/**
+ * A variant of ListPreference that allows to choose from a list of given folders (conigured in the menu configuration)
+ * or to select a custom folder via the directory browser.
+ */
 public class DirectorySelectionPreference extends ListPreference {
 
+	/**
+	 * List value to represent a custom folder to be chosen.
+	 */
 	private static final String CUSTOM_FOLDER = "__custom__";
+
+	/**
+	 * List tag to be replaced by the external storage root.
+	 */
 	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
+
+	/**
+	 * List tag to be replaced by the default camera folder.
+	 */
 	private static final String CAMERA_FOLDER_PREFIX = "__folder_camera__";
 
+	/**
+	 * The selected index in the list.
+	 */
 	private int selectedIndex = -1;
+
+	/**
+	 * The custom directory selected via directory browser. Value is null if no custom directory is selected.
+	 */
 	private String selectedCustomDir = null;
+
+	/**
+	 * The list index of the custom directory.
+	 */
 	private int customIndex = -1;
 
 	/**
 	 * The constructor replaces placeholders for external storage and camera folder.
-	 * 
+	 *
 	 * @param context
+	 *            The Context this is associated with.
 	 * @param attrs
+	 *            (from Preference) The attributes of the XML tag that is inflating the preference.
 	 */
-	public DirectorySelectionPreference(Context context, AttributeSet attrs) {
+	public DirectorySelectionPreference(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 
 		CharSequence[] entryValues = getEntryValues();
@@ -53,15 +81,24 @@ public class DirectorySelectionPreference extends ListPreference {
 		}
 	}
 
-	public DirectorySelectionPreference(Context context) {
+	/**
+	 * Standard constructor.
+	 *
+	 * @param context
+	 *            The Context this is associated with.
+	 */
+	public DirectorySelectionPreference(final Context context) {
 		this(context, null);
 	}
 
 	/**
 	 * Create the dialog and prepare the creation of the directory selection dialog.
+	 *
+	 * @param builder
+	 *            The DialogBuilder to be customized.
 	 */
 	@Override
-	protected void onPrepareDialogBuilder(Builder builder) {
+	protected final void onPrepareDialogBuilder(final Builder builder) {
 		super.onPrepareDialogBuilder(builder);
 
 		final CharSequence[] entries = getEntries();
@@ -81,8 +118,9 @@ public class DirectorySelectionPreference extends ListPreference {
 					// determine custom folder via dialog
 					ChosenDirectoryListener listener = new ChosenDirectoryListener() {
 						private static final long serialVersionUID = -220546291074442095L;
+
 						@Override
-						public void onChosenDir(String chosenDir) {
+						public void onChosenDir(final String chosenDir) {
 							selectedIndex = which;
 							selectedCustomDir = chosenDir;
 
@@ -117,10 +155,15 @@ public class DirectorySelectionPreference extends ListPreference {
 	}
 
 	/**
-	 * Fill the value after closing the dialog. (Mostly a clone of super method.)
+	 * Fill the value after closing the dialog. This is mostly the same as in ListPreference, but takes special care in
+	 * the case of custom folder.
+	 *
+	 * @param positiveResult
+	 *            (from DialogPreference) positiveResult Whether the positive button was clicked (true), or the negative
+	 *            button was clicked or the dialog was canceled (false).
 	 */
 	@Override
-	protected void onDialogClosed(boolean positiveResult) {
+	protected final void onDialogClosed(final boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
 
 		if (positiveResult && selectedIndex >= 0 && getEntryValues() != null) {
