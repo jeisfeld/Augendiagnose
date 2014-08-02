@@ -24,7 +24,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 	private DisplayImageFragment fragmentImage1, fragmentImage2;
 
-	// Required to differentiate between "current fragment" and "other fragment" when editing picture comment
+	// Required to differentiate between "current listFoldersFragment" and "other listFoldersFragment" when editing picture comment
 	private View viewFragmentOther;
 
 	/**
@@ -105,7 +105,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	}
 
 	/**
-	 * Helper method to create the fragment
+	 * Helper method to create the listFoldersFragment
 	 * 
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 	@Override
 	public void startEditComment(DisplayImageFragment fragment, String text) {
-		// Determine which image fragment needs to be hidden
+		// Determine which image listFoldersFragment needs to be hidden
 		if (fragment == fragmentImage1) {
 			viewFragmentOther = viewFragmentImage2;
 		}

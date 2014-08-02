@@ -41,7 +41,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Log all Exif data of the file
-	 * 
+	 *
 	 * @param imageFile
 	 * @throws ImageReadException
 	 * @throws IOException
@@ -56,6 +56,9 @@ public abstract class JpegMetadataUtil {
 		else if (metadata instanceof TiffImageMetadata) {
 			tiffImageMetadata = (TiffImageMetadata) metadata;
 		}
+		else {
+			return;
+		}
 
 		@SuppressWarnings("unchecked")
 		List<TiffImageMetadata.Item> items = (List<TiffImageMetadata.Item>) tiffImageMetadata.getItems();
@@ -68,7 +71,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Log all XML data of the file
-	 * 
+	 *
 	 * @param imageFile
 	 * @throws ImageReadException
 	 * @throws IOException
@@ -81,7 +84,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Validate that the file is a JPEG file
-	 * 
+	 *
 	 * @param jpegImageFileName
 	 * @throws IOException
 	 * @throws ImageReadException
@@ -96,7 +99,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Retrieve the relevant metadata of an image file
-	 * 
+	 *
 	 * @param jpegImageFileName
 	 * @return
 	 * @throws IOException
@@ -129,21 +132,20 @@ public abstract class JpegMetadataUtil {
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
 
-
 		// For standard fields, use custom data only if there is no other data.
-		if(result.description == null) {
+		if (result.description == null) {
 			result.description = parser.getDcDescription();
 		}
-		if(result.subject == null) {
+		if (result.subject == null) {
 			result.subject = parser.getDcSubject();
 		}
-		if(result.person == null) {
+		if (result.person == null) {
 			result.person = parser.getMicrosoftPerson();
 		}
-		if(result.title == null) {
+		if (result.title == null) {
 			result.title = parser.getDcTitle();
 		}
-		if(result.comment == null) {
+		if (result.comment == null) {
 			result.comment = parser.getUserComment();
 		}
 
@@ -157,6 +159,9 @@ public abstract class JpegMetadataUtil {
 			}
 			else if (metadata instanceof TiffImageMetadata) {
 				tiffImageMetadata = (TiffImageMetadata) metadata;
+			}
+			else {
+				return result;
 			}
 
 			TiffField title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
@@ -179,7 +184,7 @@ public abstract class JpegMetadataUtil {
 			if (exifComment != null && (changeExifAllowed() || result.comment == null)) {
 				result.comment = exifComment;
 			}
-			if (result.subject == null && subject != null && (changeExifAllowed() || result.subject == null)) {
+			if (subject != null && (changeExifAllowed() || result.subject == null)) {
 				result.subject = subject.getStringValue().trim();
 			}
 		}
@@ -209,7 +214,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Change metadata of the image
-	 * 
+	 *
 	 * @param jpegImageFileName
 	 * @param metadata
 	 * @throws IOException
@@ -232,6 +237,7 @@ public abstract class JpegMetadataUtil {
 	/**
 	 * Change the EXIF metadata
 	 */
+	@SuppressWarnings("resource")
 	private static void changeExifMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
 			ImageReadException, ImageWriteException {
 		File jpegImageFile = new File(jpegImageFileName);
@@ -240,7 +246,10 @@ public abstract class JpegMetadataUtil {
 
 		if (tempFile.exists()) {
 			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
-			tempFile.delete();
+			boolean success = tempFile.delete();
+			if (!success) {
+				Log.w(Application.TAG, "Failed to delete file" + tempFileName);
+			}
 		}
 
 		OutputStream os = null;
@@ -306,6 +315,7 @@ public abstract class JpegMetadataUtil {
 	/**
 	 * Change the XMP metadata
 	 */
+	@SuppressWarnings("resource")
 	private static void changeXmpMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
 		File jpegImageFile = new File(jpegImageFileName);
@@ -314,7 +324,10 @@ public abstract class JpegMetadataUtil {
 
 		if (tempFile.exists()) {
 			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
-			tempFile.delete();
+			boolean success = tempFile.delete();
+			if (!success) {
+				Log.w(Application.TAG, "Failed to delete file" + tempFileName);
+			}
 		}
 
 		OutputStream os = null;
@@ -367,7 +380,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Check if the settings allow a change of the JPEG
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean changeJpegAllowed() {
@@ -377,7 +390,7 @@ public abstract class JpegMetadataUtil {
 
 	/**
 	 * Check if the settings allow a change of the EXIF data
-	 * 
+	 *
 	 * @return
 	 */
 	private static boolean changeExifAllowed() {
@@ -468,7 +481,7 @@ public abstract class JpegMetadataUtil {
 		public String getZoomFactorString() {
 			return zoomFactor == null ? null : zoomFactor.toString();
 		}
-		
+
 		private long getOrganizeDateLong() {
 			return organizeDate == null ? 0 : organizeDate.getTime();
 		}

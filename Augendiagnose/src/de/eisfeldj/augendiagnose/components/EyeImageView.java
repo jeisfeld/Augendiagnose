@@ -28,7 +28,7 @@ public class EyeImageView extends ImageView {
 
 	/**
 	 * Set the eye photo and create the bitmap
-	 * 
+	 *
 	 * @param eyePhoto
 	 */
 	public void setEyePhoto(final Activity activity, final EyePhoto eyePhoto, final Runnable postActivities) {
@@ -54,8 +54,17 @@ public class EyeImageView extends ImageView {
 	}
 
 	/**
+	 * Clean the eye photo from the view
+	 */
+	public void cleanEyePhoto() {
+		this.eyePhoto = null;
+		setImageBitmap(null);
+	}
+
+
+	/**
 	 * Retrieve the eyePhoto object
-	 * 
+	 *
 	 * @return
 	 */
 	public EyePhoto getEyePhoto() {
@@ -71,7 +80,7 @@ public class EyeImageView extends ImageView {
 
 	/**
 	 * Check if it is mInitialized
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isInitialized() {

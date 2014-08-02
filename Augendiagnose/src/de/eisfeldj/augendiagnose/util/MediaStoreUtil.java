@@ -19,11 +19,12 @@ public abstract class MediaStoreUtil {
 
 	/**
 	 * Get a real file path from the URI of the media store
-	 * 
+	 *
 	 * @param contentUri
 	 *            Thr URI of the media store
 	 * @return
 	 */
+	@SuppressWarnings("static-access")
 	public static String getRealPathFromURI(Uri contentUri) {
 		Cursor cursor = null;
 		try {
@@ -45,13 +46,14 @@ public abstract class MediaStoreUtil {
 
 	/**
 	 * Retrieve a thumbnail of a bitmap from the mediastore
-	 * 
+	 *
 	 * @param path
 	 *            The path of the image
 	 * @param maxSize
 	 *            The maximum size of this bitmap (used for selecting the sample size)
 	 * @return
 	 */
+	@SuppressWarnings("static-access")
 	public static Bitmap getThumbnailFromPath(String path, int maxSize) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
@@ -77,7 +79,7 @@ public abstract class MediaStoreUtil {
 
 	/**
 	 * Add a picture to the media store (via scanning)
-	 * 
+	 *
 	 * @param path
 	 */
 	public static void addPictureToMediaStore(String path) {

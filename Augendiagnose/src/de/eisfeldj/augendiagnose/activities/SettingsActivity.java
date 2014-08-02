@@ -31,7 +31,7 @@ public class SettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Display the fragment as the main content.
+		// Display the listFoldersFragment as the main content.
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 	}
 
@@ -53,8 +53,9 @@ public class SettingsActivity extends Activity {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -101,7 +102,7 @@ public class SettingsActivity extends Activity {
 
 	/**
 	 * Validate the maxBitmapSize. If not numeric, replace with default. In any case, inform PinchImageView about it.
-	 * 
+	 *
 	 * @param value
 	 *            the String value to be set
 	 * @return the maxBitmapSize

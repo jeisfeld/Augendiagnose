@@ -52,7 +52,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	private boolean showUtilities = true;
 
 	/**
-	 * Initialize the fragment with the file name
+	 * Initialize the listFoldersFragment with the file name
 	 * 
 	 * @param text
 	 * @param imageIndex
@@ -69,7 +69,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * Initialize the fragment with the file resource
+	 * Initialize the listFoldersFragment with the file resource
 	 * 
 	 * @param text
 	 * @param imageIndex

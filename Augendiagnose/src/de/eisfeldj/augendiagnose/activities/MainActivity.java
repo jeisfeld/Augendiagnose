@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 					}
 				}
 				boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[0]),
+				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]),
 						Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 			}
 		}
@@ -100,13 +100,15 @@ public class MainActivity extends Activity {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_overview);
 			break;
+		default:
+			break;
 		}
 		return true;
 	}
 
 	/**
 	 * onClick action for Button to open the Eye-Fi app
-	 * 
+	 *
 	 * @param view
 	 */
 	public void openEyeFiApp(View view) {
@@ -127,7 +129,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * onClick action for Button to display eye photos
-	 * 
+	 *
 	 * @param view
 	 */
 	public void listFoldersForDisplayActivity(View view) {
@@ -137,7 +139,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * onClick action for Button to organize new eye photos
-	 * 
+	 *
 	 * @param view
 	 */
 	public void organizeNewFoldersActivity(View view) {

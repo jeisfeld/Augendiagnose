@@ -19,7 +19,7 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
- * Base fragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
+ * Base listFoldersFragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
  * detailed actions.
  */
 public abstract class ListPicturesForNameBaseFragment extends Fragment {
@@ -34,8 +34,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	protected EyePhotoPair[] eyePhotoPairs;
 
 	/**
-	 * Initialize the fragment with parentFolder and name
-	 * 
+	 * Initialize the listFoldersFragment with parentFolder and name
+	 *
 	 * @param parentFolder
 	 * @param name
 	 * @return
@@ -83,7 +83,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 
 	/**
 	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
-	 * 
+	 *
 	 * @param the
 	 *            folder where the photos are located.
 	 * @return
@@ -128,9 +128,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			}
 		}
 
-		EyePhotoPair[] eyePhotoPairs = eyePhotoMap2.values().toArray(new EyePhotoPair[0]);
-
-		return eyePhotoPairs;
+		return eyePhotoMap2.values().toArray(new EyePhotoPair[eyePhotoMap2.size()]);
 	}
 
 }

@@ -22,7 +22,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Get the date field with the EXIF date from the file If not existing, use the last modified date.
-	 * 
+	 *
 	 * @param path
 	 *            The file path of the image
 	 */
@@ -46,7 +46,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Retrieve the rotation angle from the Exif data of an image
-	 * 
+	 *
 	 * @param path
 	 *            The file path of the image
 	 * @return
@@ -67,16 +67,19 @@ public abstract class ImageUtil {
 			case ExifInterface.ORIENTATION_ROTATE_90:
 				rotation = 90;
 				break;
+			default:
+				break;
 			}
 		}
 		catch (Exception e) {
+			Log.w(Application.TAG, "Exception when getting EXIF rotation");
 		}
 		return rotation;
 	}
 
 	/**
 	 * Return a bitmap of this photo
-	 * 
+	 *
 	 * @param path
 	 *            The file path of the image
 	 * @param maxSize
@@ -101,6 +104,7 @@ public abstract class ImageUtil {
 					Thread.sleep(50);
 				}
 				catch (InterruptedException e) {
+					// ignore exception
 				}
 				bitmap = BitmapFactory.decodeFile(path, options);
 
@@ -130,7 +134,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Utility to retrieve the sample size for BitmapFactory.decodeFile
-	 * 
+	 *
 	 * @param filepath
 	 * @param targetSize
 	 * @return
@@ -145,7 +149,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Rotate a bitmap
-	 * 
+	 *
 	 * @param source
 	 *            The original bitmap
 	 * @param angle
@@ -160,7 +164,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Get Mime type from URI
-	 * 
+	 *
 	 * @param uri
 	 *            The URI
 	 * @return
@@ -180,7 +184,7 @@ public abstract class ImageUtil {
 
 	/**
 	 * Retrieves a dummy bitmap (for the case that an image file is not readable)
-	 * 
+	 *
 	 * @return
 	 */
 	public static Bitmap getDummyBitmap() {

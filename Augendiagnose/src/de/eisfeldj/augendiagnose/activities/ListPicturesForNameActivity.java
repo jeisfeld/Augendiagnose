@@ -19,7 +19,7 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
-	 * 
+	 *
 	 * @param activity
 	 * @param parentFolder
 	 * @param name
@@ -33,7 +33,7 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 
 
 	/**
-	 * Get the fragment displayed in the activity
+	 * Get the listFoldersFragment displayed in the activity
 	 */
 	@Override
 	protected ListPicturesForNameBaseFragment createFragment() {
@@ -44,7 +44,7 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Initialize the handler which manages the clicks
@@ -69,8 +69,9 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	// implementation of ListPicturesForNameFragmentHolder

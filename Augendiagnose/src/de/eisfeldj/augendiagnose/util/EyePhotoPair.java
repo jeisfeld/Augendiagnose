@@ -31,12 +31,15 @@ public class EyePhotoPair {
 			break;
 		case LEFT:
 			setLeftEye(eyePhoto);
+			break;
+		default:
+			break;
 		}
 	}
 
 	/**
 	 * Returns the date of the right photo. (Assumption: both should have the same date.)
-	 * 
+	 *
 	 * @return
 	 */
 	public Date getDate() {
@@ -45,7 +48,7 @@ public class EyePhotoPair {
 
 	/**
 	 * Return the date as String for display (Assumption: both photos should have the same date.)
-	 * 
+	 *
 	 * @param format
 	 * @return
 	 */
@@ -55,7 +58,7 @@ public class EyePhotoPair {
 
 	/**
 	 * Return information if the object contains both eyes
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isComplete() {
@@ -64,7 +67,7 @@ public class EyePhotoPair {
 
 	/**
 	 * Delete the eye photo pair
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean delete() {
@@ -73,7 +76,7 @@ public class EyePhotoPair {
 
 	/**
 	 * Change the date of the eye photo pair
-	 * 
+	 *
 	 * @param newDate
 	 * @return
 	 */

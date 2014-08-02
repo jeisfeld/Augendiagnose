@@ -34,6 +34,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 		ImageSelectionAndDisplayHandler.clean();
 	}
 
+	@Override
 	protected void setOnItemClickListener() {
 		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}

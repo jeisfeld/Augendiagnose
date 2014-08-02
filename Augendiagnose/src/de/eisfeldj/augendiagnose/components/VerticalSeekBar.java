@@ -89,10 +89,14 @@ public class VerticalSeekBar extends SeekBar {
 		case MotionEvent.ACTION_CANCEL:
 			mOnSeekBarChangeListener.onStopTrackingTouch(this);
 			break;
+
+		default:
+			break;
 		}
+
 		return true;
 	}
-	
+
 	/*
 	 * (non-Javadoc) ${see_to_overridden}
 	 */

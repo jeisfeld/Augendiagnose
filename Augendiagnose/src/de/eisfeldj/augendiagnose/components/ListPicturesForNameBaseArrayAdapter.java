@@ -36,14 +36,14 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 
 	/**
 	 * Abstract method do return the layout to be used.
-	 * 
+	 *
 	 * @return
 	 */
 	protected abstract int getLayout();
 
 	/**
 	 * Abstract method to prepare the image views for selection of pictures
-	 * 
+	 *
 	 * @param view
 	 */
 	protected abstract void prepareViewForSelection(EyeImageView view);
@@ -111,7 +111,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * This is the range of positions for which the images are stored.
 	 */
-	public class CacheRange {
+	public static class CacheRange {
 		private int length;
 		private int start;
 

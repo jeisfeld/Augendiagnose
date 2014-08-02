@@ -18,11 +18,11 @@ public class ImageSelectionAndDisplayHandler {
 	private Activity activity = null;
 	private ListPicturesForNameFragment fragment = null;
 	private ListPicturesForSecondNameActivity secondActivity = null;
-	private static ImageSelectionAndDisplayHandler singleton;
+	private static volatile ImageSelectionAndDisplayHandler singleton;
 
 	/**
 	 * Get an instance of the handler - it is handled as singleton.
-	 * 
+	 *
 	 * @return
 	 */
 	public static ImageSelectionAndDisplayHandler getInstance() {
@@ -38,7 +38,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Set the activity for first selection (mobile design)
-	 * 
+	 *
 	 * @param activity
 	 */
 	public void setActivity(ListPicturesForNameActivity activity) {
@@ -48,7 +48,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Set the activity for first selection (tablet design)
-	 * 
+	 *
 	 * @param activity
 	 */
 	public void setActivity(ListFoldersForDisplayActivity activity) {
@@ -58,7 +58,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Set the activiy for second selection
-	 * 
+	 *
 	 * @param activity
 	 */
 	public void setSecondActivity(ListPicturesForSecondNameActivity activity) {
@@ -74,7 +74,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Prepare an EyeImageView for selection of the first picture
-	 * 
+	 *
 	 * @param view
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
@@ -123,7 +123,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Prepare an EyeImageView for selection of the second picture
-	 * 
+	 *
 	 * @param view
 	 */
 	public void prepareViewForSecondSelection(final EyeImageView view) {
@@ -140,7 +140,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Highlight the selected view
-	 * 
+	 *
 	 * @param type
 	 */
 	private void highlightSelectedView(boolean highlight) {
@@ -168,7 +168,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Select a specific view
-	 * 
+	 *
 	 * @param view
 	 */
 	private void selectView(EyeImageView view) {
@@ -182,7 +182,7 @@ public class ImageSelectionAndDisplayHandler {
 
 	/**
 	 * Retrieve the path of the selected image
-	 * 
+	 *
 	 * @return
 	 */
 	public String getSelectedImagePath() {

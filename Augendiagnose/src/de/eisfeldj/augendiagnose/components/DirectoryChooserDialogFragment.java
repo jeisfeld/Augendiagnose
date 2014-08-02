@@ -19,6 +19,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnKeyListener;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +28,15 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
 /**
  * Class to present a dialog for selection of a directory.
- * 
+ *
  * Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
@@ -57,7 +60,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 	/**
 	 * Create a DirectoryChooserDialogFragment
-	 * 
+	 *
 	 * @param activity
 	 * @param listener
 	 * @param dir
@@ -104,7 +107,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		dialogBuilder.setTitle(R.string.title_dialog_select_folder);
 
-		View layout = LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, null);
+		View layout = LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, new LinearLayout(context));
 		dialogBuilder.setView(layout);
 
 		mCurrentFolderView = (TextView) layout.findViewById(R.id.textCurrentFolder);
@@ -174,7 +177,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 	/**
 	 * Get the list of subdirectories of the current directory. Returns ".." as first value if appropriate.
-	 * 
+	 *
 	 * @param dir
 	 * @return
 	 */
@@ -198,9 +201,11 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			}
 		}
 		catch (Exception e) {
+			Log.e(Application.TAG, "Could not get directories", e);
 		}
 
 		Collections.sort(dirs, new Comparator<String>() {
+			@Override
 			public int compare(String o1, String o2) {
 				return o1.compareTo(o2);
 			}
@@ -217,6 +222,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			mDir = new File(mDir).getCanonicalPath();
 		}
 		catch (IOException e) {
+			// i
 		}
 		if (mDir == null || mDir.equals("")) {
 			mDir = "/";
@@ -231,7 +237,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 	/**
 	 * Create the list adapter for the list of folders
-	 * 
+	 *
 	 * @param items
 	 * @return
 	 */
@@ -254,7 +260,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 	/**
 	 * Get the SD card directory
-	 * 
+	 *
 	 * @return
 	 */
 	private String getSdCardDirectory() {
@@ -264,6 +270,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			sdCardDirectory = new File(sdCardDirectory).getCanonicalPath();
 		}
 		catch (IOException ioe) {
+			Log.e(Application.TAG, "Could not get SD directory", ioe);
 		}
 		return sdCardDirectory;
 	}

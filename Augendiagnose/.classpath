@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/xmpcore.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse44/plugins/edu.umd.cs.findbugs.plugin.eclipse_3.0.0.20140706-2cfb468/lib/annotations.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

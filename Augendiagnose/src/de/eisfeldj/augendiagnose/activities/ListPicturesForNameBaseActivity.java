@@ -38,7 +38,7 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 	}
 
 	/**
-	 * Factory method to retrieve the fragment
+	 * Factory method to retrieve the listFoldersFragment
 	 */
 	protected abstract ListPicturesForNameBaseFragment createFragment();
 

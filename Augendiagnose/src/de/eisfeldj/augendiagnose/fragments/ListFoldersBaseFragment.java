@@ -16,15 +16,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
@@ -33,7 +31,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
 /**
- * Base fragment to display the list of subfolders of a folder Abstract class - child classes determine the detailed
+ * Base listFoldersFragment to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseFragment extends Fragment {
@@ -47,8 +45,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	protected ArrayAdapter<String> directoryListAdapter;
 
 	/**
-	 * Initialize the fragment with parentFolder
-	 * 
+	 * Initialize the listFoldersFragment with parentFolder
+	 *
 	 * @param parentFolder
 	 * @return
 	 */
@@ -130,7 +128,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 	/**
 	 * Get the list of subfolders, using getFileNameForSorting() for ordering.
-	 * 
+	 *
 	 * @param parentFolder
 	 * @return
 	 */
@@ -147,6 +145,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
+			@Override
 			public int compare(File f1, File f2) {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
@@ -160,7 +159,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 	/**
 	 * Helper method to return the name of the file for sorting
-	 * 
+	 *
 	 * @param f
 	 *            The file
 	 * @return The name for Sorting
@@ -177,7 +176,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 	/**
 	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy)
-	 * 
+	 *
 	 * @param oldFileName
 	 * @param newFileName
 	 */
@@ -222,7 +221,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 	/**
 	 * Delete a folder in the list, including all photos
-	 * 
+	 *
 	 * @param name
 	 */
 	protected void deleteFolder(String name) {
@@ -231,7 +230,10 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		// delete folder and ensure that list is refreshed
 		String[] children = folder.list();
 		for (int i = 0; i < children.length; i++) {
-			new File(folder, children[i]).delete();
+			boolean success = new File(folder, children[i]).delete();
+			if(!success) {
+				Log.w(Application.TAG, "Failed to delete file" + children[i]);
+			}
 		}
 		boolean success = folder.delete();
 		directoryListAdapter.clear();
@@ -245,32 +247,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Listener for a long click on a list item, which allows to change the name. Shows a dialog to enter the new name.
-	 */
-	protected class RenameOnLongClickListener implements OnItemLongClickListener {
-		private AlertDialog dialog;
-
-		@Override
-		public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, final long rowId) {
-			CharSequence name = ((TextView) view).getText();
-			showChangeNameDialog(name, name);
-			return true;
-		}
-
-		public void closeDialog() {
-			try {
-				dialog.dismiss();
-			}
-			catch (Exception e) {
-
-			}
-		}
-
-	}
-
-	/**
 	 * Show the dialog to change the selected name
-	 * 
+	 *
 	 * @param oldName
 	 *            The old name to be renamed
 	 * @param inputText
@@ -317,7 +295,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 						@Override
 						public void onClick(DialogInterface dialog, int id) {
 							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
-							activity.fragment.renameFolderAndFiles(oldName.toString(), input.getText().toString());
+							activity.listFoldersFragment.renameFolderAndFiles(oldName.toString(), input.getText().toString());
 						}
 					});
 

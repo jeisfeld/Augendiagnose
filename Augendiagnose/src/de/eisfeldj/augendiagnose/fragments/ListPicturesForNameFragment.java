@@ -143,7 +143,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						pairToDelete.getDateDisplayString("dd.MM.yyyy"));
 				return true;
 			case R.id.action_change_date:
-				// ensure that activity is linked to the correct instance of this fragment
+				// ensure that activity is linked to the correct instance of this listFoldersFragment
 				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
 
 				pictureDate.setTime(pairToDelete.getDate());
@@ -216,7 +216,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	}
 
 	/**
-	 * Interface to be implemented by activities running this fragment. Required for communication with context menu
+	 * Interface to be implemented by activities running this listFoldersFragment. Required for communication with context menu
 	 * dialogs.
 	 */
 	public interface ListPicturesForNameFragmentHolder {

@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -39,7 +40,7 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 /**
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming)
- * 
+ *
  * The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends Activity {
@@ -65,7 +66,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	/**
 	 * Static helper method to start the activity, passing the source folder, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
-	 * 
+	 *
 	 * @param context
 	 * @param inputFolderName
 	 * @param folderName
@@ -82,7 +83,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	/**
 	 * Static helper method to start the activity, passing the list of files, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
-	 * 
+	 *
 	 * @param context
 	 * @param fileNames
 	 * @param foldername
@@ -158,7 +159,10 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 		// Ensure that target folder exists
 		if (!parentFolder.exists()) {
-			parentFolder.mkdirs();
+			boolean success = parentFolder.mkdirs();
+			if (!success) {
+				Log.w(Application.TAG, "Failed to create folder" + parentFolder);
+			}
 		}
 	}
 
@@ -180,8 +184,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_organize_photos);
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -207,6 +212,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 			// Sort files by date
 			Arrays.sort(files, new Comparator<File>() {
+				@Override
 				public int compare(File f1, File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}
@@ -222,8 +228,8 @@ public class OrganizeNewPhotosActivity extends Activity {
 					fileNameList.add(fileName);
 				}
 			}
-			files = fileList.toArray(new File[0]);
-			fileNames = fileNameList.toArray(new String[0]);
+			files = fileList.toArray(new File[fileList.size()]);
+			fileNames = fileNameList.toArray(new String[fileNameList.size()]);
 		}
 
 		if (files.length > 1) {
@@ -273,7 +279,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	/**
 	 * Helper method to display an error message
-	 * 
+	 *
 	 * @param resource
 	 * @param args
 	 */
@@ -283,7 +289,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	/**
 	 * onClick action for Button "Switch images"
-	 * 
+	 *
 	 * @param view
 	 */
 	public void switchImages(View view) {
@@ -296,7 +302,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	/**
 	 * onClick action for Button "Other photos"
-	 * 
+	 *
 	 * @param view
 	 */
 	public void selectOtherPhotos(View view) {
@@ -310,7 +316,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	/**
 	 * onClick action for Button "Finish" Moves and renames the selected files.
-	 * 
+	 *
 	 * @param view
 	 */
 	public void finishActivity(View view) {
@@ -414,12 +420,14 @@ public class OrganizeNewPhotosActivity extends Activity {
 				updateImages();
 			}
 			break;
+		default:
+			break;
 		}
 	}
 
 	/**
 	 * onClick action for date field. Opens a date picker dialog.
-	 * 
+	 *
 	 * @param view
 	 */
 	public void openDateDialog(View view) {
@@ -444,8 +452,21 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
+	 * Set the displayed date
+	 *
+	 * @param yearSelected
+	 * @param monthOfYear
+	 * @param dayOfMonth
+	 */
+	public void setDate(int yearSelected, int monthOfYear, int dayOfMonth) {
+		pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
+		editDate.setText(DateUtil.getDisplayDate(pictureDate));
+		editDate.invalidate();
+	}
+
+	/**
 	 * onClick action for displaying the two pictures.
-	 * 
+	 *
 	 * @param view
 	 */
 	public void displayNewImages(View view) {
@@ -454,16 +475,17 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	/**
 	 * onClick action - overrides other onClick action to ensure that nothing happens
-	 * 
+	 *
 	 * @param view
 	 */
 	public void doNothing(View view) {
+		// do nothing
 	}
 
 	/**
 	 * Fragment for the date dialog
 	 */
-	public static class DateDialogFragment extends DialogFragment {
+	public class DateDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");
@@ -471,12 +493,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 			int date = getArguments().getInt("Date");
 
 			DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-				OrganizeNewPhotosActivity activity = (OrganizeNewPhotosActivity) getActivity();
-
+				@Override
 				public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
-					activity.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-					activity.editDate.setText(DateUtil.getDisplayDate(activity.pictureDate));
-					activity.editDate.invalidate();
+					setDate(yearSelected, monthOfYear, dayOfMonth);
 				}
 			};
 			return new DatePickerDialog(getActivity(), dateSetListener, year, month, date);

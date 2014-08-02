@@ -28,7 +28,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
-	 * 
+	 *
 	 * @param context
 	 * @param foldername
 	 */
@@ -50,14 +50,14 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			setContentView(R.layout.activity_fragments_single);
 		}
 
-		fragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		listFoldersFragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-		if (fragment == null) {
-			fragment = new ListFoldersForDisplayFragment();
-			setFragmentParameters(fragment);
+		if (listFoldersFragment == null) {
+			listFoldersFragment = new ListFoldersForDisplayFragment();
+			setFragmentParameters(listFoldersFragment);
 
 			if (Application.isTablet()) {
-				getFragmentManager().beginTransaction().add(R.id.fragment_list, fragment, FRAGMENT_TAG).commit();
+				getFragmentManager().beginTransaction().add(R.id.fragment_list, listFoldersFragment, FRAGMENT_TAG).commit();
 
 				String defaultName = Application.getSharedPreferenceString(R.string.key_internal_last_name);
 				if (defaultName.length() > 0 && new File(parentFolder, defaultName).exists()) {
@@ -70,7 +70,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 				setTitle(getString(R.string.title_activity_list_pictures_for_name));
 			}
 			else {
-				displayOnFullScreen(fragment, FRAGMENT_TAG);
+				displayOnFullScreen(listFoldersFragment, FRAGMENT_TAG);
 			}
 		}
 
@@ -98,8 +98,9 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

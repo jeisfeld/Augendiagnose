@@ -16,7 +16,7 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder
-	 * 
+	 *
 	 * @param context
 	 * @param foldername
 	 */
@@ -32,12 +32,12 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 
 		setContentView(R.layout.activity_fragments_single);
 
-		fragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		listFoldersFragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-		if (fragment == null) {
-			fragment = new ListFoldersForDisplaySecondFragment();
-			setFragmentParameters(fragment);
-			displayOnFullScreen(fragment, FRAGMENT_TAG);
+		if (listFoldersFragment == null) {
+			listFoldersFragment = new ListFoldersForDisplaySecondFragment();
+			setFragmentParameters(listFoldersFragment);
+			displayOnFullScreen(listFoldersFragment, FRAGMENT_TAG);
 		}
 	}
 
@@ -51,6 +51,8 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 		case ListPicturesForSecondNameActivity.REQUEST_CODE:
 			// When picture is selected, close also the list of names
 			finish();
+			break;
+		default:
 			break;
 		}
 	}

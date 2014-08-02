@@ -226,7 +226,7 @@ public abstract class DialogUtil {
 	 */
 	public static class ConfirmDeleteDialogFragment extends DialogFragment {
 		/*
-		 * The activity that creates an instance of this dialog fragment must implement this interface in order to
+		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in order to
 		 * receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
 		 */
 		public interface ConfirmDeleteDialogListener extends Serializable {
@@ -245,12 +245,14 @@ public abstract class DialogUtil {
 			builder.setTitle(R.string.title_dialog_confirmation) //
 					.setMessage(message) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int id) {
 							// Send the positive button event back to the host activity
 							listener.onDialogNegativeClick(ConfirmDeleteDialogFragment.this);
 						}
 					}) //
 					.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int id) {
 							// Send the negative button event back to the host activity
 							listener.onDialogPositiveClick(ConfirmDeleteDialogFragment.this);

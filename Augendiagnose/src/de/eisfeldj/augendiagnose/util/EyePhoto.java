@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
@@ -26,7 +27,7 @@ public class EyePhoto {
 
 	/**
 	 * Create the EyePhoto, giving a filename
-	 * 
+	 *
 	 * @param filename
 	 */
 	public EyePhoto(String filename) {
@@ -35,21 +36,24 @@ public class EyePhoto {
 
 	/**
 	 * Create the EyePhoto, giving a file resource
-	 * 
+	 *
 	 * @param file
 	 */
 	public EyePhoto(File file) {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
-		if (filename != getFilename()) {
-			new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+		if (filename != null && !filename.equals(getFilename())) {
+			boolean success = new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+			if (!success) {
+				Log.w(Application.TAG, "Failed to rename file" + filename + " to " + getFilename());
+			}
 		}
 	}
 
 	/**
 	 * Create the EyePhoto, giving details
-	 * 
+	 *
 	 * @param path
 	 *            The file path
 	 * @param personName
@@ -72,7 +76,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the filename (excluding path)
-	 * 
+	 *
 	 * @return
 	 */
 	public String getFilename() {
@@ -87,7 +91,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the file path
-	 * 
+	 *
 	 * @return
 	 */
 	public String getAbsolutePath() {
@@ -96,7 +100,7 @@ public class EyePhoto {
 
 	/**
 	 * Set the filename (extracting from it the person personName, the date and the left/right property)
-	 * 
+	 *
 	 * @param filename
 	 */
 	private void setFilename(String filename) {
@@ -126,7 +130,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the file path
-	 * 
+	 *
 	 * @return
 	 */
 	public String getPath() {
@@ -139,7 +143,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the right/left information
-	 * 
+	 *
 	 * @return
 	 */
 	public RightLeft getRightLeft() {
@@ -152,7 +156,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the person personName (use getFilename for the file personName)
-	 * 
+	 *
 	 * @return
 	 */
 	public String getPersonName() {
@@ -171,7 +175,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the date as a string
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDateString(String format) {
@@ -180,7 +184,7 @@ public class EyePhoto {
 
 	/**
 	 * Set the date from a String
-	 * 
+	 *
 	 * @param dateString
 	 * @return
 	 */
@@ -196,7 +200,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the date
-	 * 
+	 *
 	 * @return
 	 */
 	public Date getDate() {
@@ -209,7 +213,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the file suffix
-	 * 
+	 *
 	 * @return
 	 */
 	public String getSuffix() {
@@ -222,7 +226,7 @@ public class EyePhoto {
 
 	/**
 	 * Check if the file personName is formatted as eye photo
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isFormatted() {
@@ -231,7 +235,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve the phoso as File
-	 * 
+	 *
 	 * @return
 	 */
 	public File getFile() {
@@ -240,7 +244,7 @@ public class EyePhoto {
 
 	/**
 	 * Check if the file exists
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean exists() {
@@ -249,7 +253,7 @@ public class EyePhoto {
 
 	/**
 	 * Delete the eye photo from the file system
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean delete() {
@@ -258,7 +262,7 @@ public class EyePhoto {
 
 	/**
 	 * Move the eye photo to a target path and target personName (given via EyePhoto object)
-	 * 
+	 *
 	 * @param target
 	 * @return
 	 */
@@ -273,7 +277,7 @@ public class EyePhoto {
 
 	/**
 	 * Copy the eye photo to a target path and target personName (given via EyePhoto object)
-	 * 
+	 *
 	 * @param target
 	 * @return
 	 */
@@ -288,7 +292,7 @@ public class EyePhoto {
 
 	/**
 	 * Change the personName renaming the file (keeping the path)
-	 * 
+	 *
 	 * @param targetName
 	 * @return
 	 */
@@ -315,7 +319,7 @@ public class EyePhoto {
 
 	/**
 	 * Change the date renaming the file (keeping the path)
-	 * 
+	 *
 	 * @param newDate
 	 * @return
 	 */
@@ -348,7 +352,7 @@ public class EyePhoto {
 
 	/**
 	 * Retrieve a clone of this object from the absolute path
-	 * 
+	 *
 	 * @return
 	 */
 	public EyePhoto cloneFromPath() {
@@ -357,7 +361,7 @@ public class EyePhoto {
 
 	/**
 	 * Calculate a bitmap of this photo and store it for later retrieval.
-	 * 
+	 *
 	 * @param maxSize
 	 */
 	public synchronized void precalculateImageBitmap(int maxSize) {
@@ -369,7 +373,7 @@ public class EyePhoto {
 
 	/**
 	 * Return a bitmap of this photo
-	 * 
+	 *
 	 * @param maxSize
 	 *            The maximum size of this bitmap. If bigger, it will be resized
 	 * @return
@@ -381,7 +385,7 @@ public class EyePhoto {
 
 	/**
 	 * Get the metadata stored in the file
-	 * 
+	 *
 	 * @return
 	 */
 	public Metadata getImageMetadata() {
@@ -390,7 +394,7 @@ public class EyePhoto {
 
 	/**
 	 * Store the metadata in the file
-	 * 
+	 *
 	 * @param metadata
 	 * @return true if successful
 	 */
@@ -400,7 +404,7 @@ public class EyePhoto {
 
 	/**
 	 * Update metadata object with default metadata, based on the file name.
-	 * 
+	 *
 	 * @return
 	 */
 	public void updateMetadataWithDefaults(Metadata metadata) {
@@ -412,7 +416,7 @@ public class EyePhoto {
 
 	/**
 	 * Store person, date and rightLeft in the metadata
-	 * 
+	 *
 	 * @return
 	 */
 	public void storeDefaultMetadata() {
@@ -437,6 +441,14 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Ensure that hashCode() matches equals()
+	 */
+	@Override
+	public int hashCode() {
+		return getAbsolutePath().hashCode();
+	}
+
+	/**
 	 * Enumeration for left eye vs. right eye
 	 */
 	public enum RightLeft {
@@ -449,10 +461,11 @@ public class EyePhoto {
 			case RIGHT:
 				return Application.getResourceString(R.string.file_infix_right);
 			default:
-				return null;
+				return "";
 			}
 		}
 
+		@Override
 		public String toString() {
 			switch (this) {
 			case LEFT:
@@ -460,7 +473,7 @@ public class EyePhoto {
 			case RIGHT:
 				return "RIGHT";
 			default:
-				return null;
+				return "";
 			}
 		}
 

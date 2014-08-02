@@ -30,7 +30,7 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	}
 
 	/**
-	 * Get the fragment displayed in the activity
+	 * Get the listFoldersFragment displayed in the activity
 	 */
 	@Override
 	protected ListPicturesForNameBaseFragment createFragment() {

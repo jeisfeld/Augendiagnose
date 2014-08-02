@@ -72,6 +72,7 @@ public class DirectorySelectionPreference extends ListPreference {
 		}
 
 		builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				selectedCustomDir = null;
 

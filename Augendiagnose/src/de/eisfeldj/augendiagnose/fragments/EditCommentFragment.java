@@ -23,7 +23,7 @@ public class EditCommentFragment extends Fragment {
 	private String text;
 
 	/**
-	 * Initialize the fragment with the text
+	 * Initialize the listFoldersFragment with the text
 	 * 
 	 * @param text
 	 * @return
@@ -93,7 +93,7 @@ public class EditCommentFragment extends Fragment {
 	}
 
 	/**
-	 * Hide the soft keyboard triggered from this fragment
+	 * Hide the soft keyboard triggered from this listFoldersFragment
 	 */
 	public void hideKeyboard() {
 		KeyboardUtil.hideKeyboard(getActivity(), editText);

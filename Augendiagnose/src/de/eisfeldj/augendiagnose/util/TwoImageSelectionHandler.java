@@ -12,11 +12,11 @@ import de.eisfeldj.augendiagnose.components.EyeImageView;
 public class TwoImageSelectionHandler {
 	private EyeImageView selectedView = null;
 	private SelectTwoPicturesActivity activity = null;
-	private static TwoImageSelectionHandler singleton;
+	private static volatile TwoImageSelectionHandler singleton;
 
 	/**
 	 * Get an instance of the handler - it is handled as singleton.
-	 * 
+	 *
 	 * @return
 	 */
 	public static TwoImageSelectionHandler getInstance() {
@@ -32,7 +32,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Set the activity for first selection
-	 * 
+	 *
 	 * @param activity
 	 */
 	public void setActivity(SelectTwoPicturesActivity activity) {
@@ -48,7 +48,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Prepare a GridView for selection of the pictures
-	 * 
+	 *
 	 * @param view
 	 */
 	public void highlightIfSelected(final EyeImageView view) {
@@ -59,7 +59,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Prepare a GridView for selection of the pictures
-	 * 
+	 *
 	 * @param view
 	 */
 	public void prepareViewForSelection(final GridView view) {
@@ -83,7 +83,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Highlight the selected view
-	 * 
+	 *
 	 * @param type
 	 */
 	private void highlightSelectedView(boolean highlight) {
@@ -107,7 +107,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Select a specific view
-	 * 
+	 *
 	 * @param view
 	 */
 	private void selectView(View view) {
@@ -117,7 +117,7 @@ public class TwoImageSelectionHandler {
 
 	/**
 	 * Return the paths of the two selected files to the parent activity
-	 * 
+	 *
 	 * @param view1
 	 * @param view2
 	 */

@@ -30,9 +30,9 @@ import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.
- * 
+ *
  * @author Joerg
- * 
+ *
  */
 public class OverlayPinchImageView extends PinchImageView {
 	public static final int OVERLAY_COUNT = 6;
@@ -80,7 +80,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Fill with an image, initializing from metadata
-	 * 
+	 *
 	 * @param pathName
 	 *            The pathname of the image
 	 * @param activity
@@ -192,7 +192,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Update the bitmap with the correct set of overlays
-	 * 
+	 *
 	 * @param strict
 	 *            indicates if full resolution is required
 	 */
@@ -250,7 +250,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Get information if the view can handle overlays
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean canHandleOverlays() {
@@ -259,7 +259,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Change the status of an overlay
-	 * 
+	 *
 	 * @param position
 	 *            number of the overlay
 	 * @param show
@@ -274,7 +274,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Trigger one overlay. If it is active, it will be deactivated. If it was inactive, then it will be activated, and
 	 * the previous one will be deactivated.
-	 * 
+	 *
 	 * @param position
 	 *            number of the overlay
 	 */
@@ -293,7 +293,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Switch the lock status of the overlays
-	 * 
+	 *
 	 * @param lock
 	 */
 	public void lockOverlay(boolean lock, boolean store) {
@@ -357,7 +357,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Helper method to return the overlay drawable of position i
-	 * 
+	 *
 	 * @param position
 	 * @return
 	 */
@@ -428,7 +428,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Create a drawable from a black image resource, having a changed colour
-	 * 
+	 *
 	 * @param resource
 	 * @param color
 	 * @return
@@ -440,7 +440,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Utility method to change a bitmap colour
-	 * 
+	 *
 	 * @param sourceBitmap
 	 * @param image
 	 * @param color
@@ -458,7 +458,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Utility method to check if pinching includes overlays and the main picture.
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean pinchAll() {
@@ -477,7 +477,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Set the brightness
-	 * 
+	 *
 	 * @param brightness
 	 *            on a scale -1 to 1
 	 */
@@ -488,7 +488,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Set the contrast
-	 * 
+	 *
 	 * @param contrast
 	 *            on a positive scale 0 to infinity, 1 is unchanged.
 	 */
@@ -499,7 +499,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Store brightness and contrast in the image metadata
-	 * 
+	 *
 	 * @param delete
 	 *            delete brightness and contrast from metadata.
 	 */
@@ -526,7 +526,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Store position and zoom in the image metadata
-	 * 
+	 *
 	 * @param delete
 	 *            delete position and zoom from metadata.
 	 */
@@ -555,9 +555,10 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Utility method to make the calculations in case of a pointer move Overridden to handle zooming of overlay
-	 * 
+	 *
 	 * @param ev
 	 */
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "Using floating point equality to see if value has changed")
 	@Override
 	protected boolean handlePointerMove(MotionEvent ev) {
 		if (pinchAll()) {
@@ -618,7 +619,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Overridden to refresh the view in full details
-	 * 
+	 *
 	 * @param ev
 	 */
 	protected void finishPointerMove(MotionEvent ev) {
@@ -627,7 +628,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Update contrast and brightness of a bitmap
-	 * 
+	 *
 	 * @param bmp
 	 *            input bitmap
 	 * @param contrast
@@ -658,7 +659,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Retrieve the metadata of the image
-	 * 
+	 *
 	 * @return
 	 */
 	public Metadata getMetadata() {
@@ -667,7 +668,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Store the comment in the image
-	 * 
+	 *
 	 * @param metadata
 	 */
 	public void storeComment(String comment) {
@@ -697,6 +698,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
+		Parcelable enhancedState = state;
 		if (state instanceof Bundle) {
 			Bundle bundle = (Bundle) state;
 			this.mOverlayX = bundle.getFloat("mOverlayX");
@@ -708,9 +710,9 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mBrightness = bundle.getFloat("mBrightness");
 			this.mContrast = bundle.getFloat("mContrast");
 			this.mMetadata = bundle.getParcelable("mMetadata");
-			state = bundle.getParcelable("instanceState");
+			enhancedState = bundle.getParcelable("instanceState");
 		}
-		super.onRestoreInstanceState(state);
+		super.onRestoreInstanceState(enhancedState);
 	}
 
 	/**
@@ -729,7 +731,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Set the reference that allows GUI updates.
-	 * 
+	 *
 	 * @param updater
 	 */
 	public void setGuiElementUpdater(GuiElementUpdater updater) {
@@ -742,21 +744,21 @@ public class OverlayPinchImageView extends PinchImageView {
 	public interface GuiElementUpdater {
 		/**
 		 * Set the checked status of the lock button
-		 * 
+		 *
 		 * @param checked
 		 */
 		public void setLockChecked(boolean checked);
 
 		/**
 		 * Update the brightness bar
-		 * 
+		 *
 		 * @param brightness
 		 */
 		public void updateSeekbarBrightness(float brightness);
 
 		/**
 		 * Update the contrast bar
-		 * 
+		 *
 		 * @param contrast
 		 */
 		public void updateSeekbarContrast(float contrast);
@@ -768,7 +770,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Helper fragment to retain the bitmap on configuration change
+	 * Helper listFoldersFragment to retain the bitmap on configuration change
 	 */
 	protected static class RetainFragment extends PinchImageView.RetainFragment {
 		private static final String TAG = "RetainFragment";

@@ -16,7 +16,7 @@ public class DisplayHtmlFragment extends Fragment {
 	private int resource;
 
 	/**
-	 * Initialize the fragment with the resource
+	 * Initialize the listFoldersFragment with the resource
 	 *
 	 * @param text
 	 * @return

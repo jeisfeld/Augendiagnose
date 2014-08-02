@@ -45,8 +45,8 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	/**
 	 * Start the EditCommentFragment
 	 * 
-	 * @param fragment
-	 *            the fragment starting the activity
+	 * @param listFoldersFragment
+	 *            the listFoldersFragment starting the activity
 	 * @param text
 	 *            the old value of the text
 	 */
@@ -69,7 +69,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	}
 
 	/**
-	 * Show the edit fragment
+	 * Show the edit listFoldersFragment
 	 * 
 	 * @param text
 	 *            The initial text to be displayed
@@ -88,7 +88,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	}
 
 	/**
-	 * Hide the edit fragment
+	 * Hide the edit listFoldersFragment
 	 */
 	protected void hideEditFragment() {
 		fragmentEdit.hideKeyboard();

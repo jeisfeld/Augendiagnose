@@ -102,6 +102,7 @@ public class SelectTwoPicturesActivity extends Activity {
 			// Get files from folder
 			files = folder.listFiles(new ImageUtil.ImageFileFilter());
 			Arrays.sort(files, new Comparator<File>() {
+				@Override
 				public int compare(File f1, File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}

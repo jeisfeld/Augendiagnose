@@ -54,25 +54,25 @@ public class XmpHandler {
 
 	/**
 	 * Create an XmpHandler from an xmp String
-	 * 
+	 *
 	 * @param xmpString
 	 */
 	public XmpHandler(String xmpString) {
 		prepareRegistry();
-		
+
 		if(xmpString == null) {
 			Log.w(Application.TAG, "xmpString is null ");
 			xmpMeta = XMPMetaFactory.create();
 			return;
 		}
-		
+
 		try {
-			xmpString = xmpString.trim();
-			int i = xmpString.lastIndexOf("<");
-			if(i>0 && xmpString.substring(i).startsWith("<?xpacket end")) {
-				xmpString = xmpString.substring(0,i);
+			String updatedXmpString = xmpString.trim();
+			int i = updatedXmpString.lastIndexOf('<');
+			if(i>0 && updatedXmpString.substring(i).startsWith("<?xpacket end")) {
+				updatedXmpString = updatedXmpString.substring(0,i);
 			}
-			xmpMeta = XMPMetaFactory.parseFromString(xmpString);
+			xmpMeta = XMPMetaFactory.parseFromString(updatedXmpString);
 		}
 		catch (Exception e) {
 			Log.w(Application.TAG, "Error when parsing XMP Data ", e);
@@ -97,13 +97,14 @@ public class XmpHandler {
 				prepared = true;
 			}
 			catch (XMPException e) {
+				Log.e(Application.TAG, "Exception while preparing XMP registry", e);
 			}
 		}
 	}
 
 	/**
 	 * Get an item from the custom namespace
-	 * 
+	 *
 	 * @param item
 	 * @return
 	 */
@@ -115,10 +116,10 @@ public class XmpHandler {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get a date item from the custom namespace
-	 * 
+	 *
 	 * @param item
 	 * @return
 	 */
@@ -134,7 +135,7 @@ public class XmpHandler {
 
 	/**
 	 * Get an item from the DC namespace
-	 * 
+	 *
 	 * @param item
 	 * @return
 	 */
@@ -149,7 +150,7 @@ public class XmpHandler {
 
 	/**
 	 * Retrieve the image title
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDcTitle() {
@@ -158,7 +159,7 @@ public class XmpHandler {
 
 	/**
 	 * Retrieve the image description
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDcDescription() {
@@ -167,7 +168,7 @@ public class XmpHandler {
 
 	/**
 	 * Retrieve the image subject
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDcSubject() {
@@ -176,7 +177,7 @@ public class XmpHandler {
 
 	/**
 	 * Retrieve the user comment
-	 * 
+	 *
 	 * @return
 	 */
 	public String getUserComment() {
@@ -190,7 +191,7 @@ public class XmpHandler {
 
 	/**
 	 * Retrieve the image person name
-	 * 
+	 *
 	 * @return
 	 */
 	public String getMicrosoftPerson() {
@@ -210,7 +211,7 @@ public class XmpHandler {
 
 	/**
 	 * Dump the complect XMP object
-	 * 
+	 *
 	 * @return
 	 */
 	public String dumpObject() {
@@ -219,7 +220,7 @@ public class XmpHandler {
 
 	/**
 	 * Set an entry in the custom namespace
-	 * 
+	 *
 	 * @param item
 	 * @param value
 	 * @throws XMPException
@@ -233,10 +234,10 @@ public class XmpHandler {
 		}
 	}
 
-	
+
 	/**
 	 * Set a date entry in the custom namespace
-	 * 
+	 *
 	 * @param item
 	 * @param date
 	 * @throws XMPException
@@ -249,10 +250,10 @@ public class XmpHandler {
 			xmpMeta.setPropertyDate(NS_JE, item, xmpDate);
 		}
 	}
-	
+
 	/**
 	 * Delete an entry from the custom namespace
-	 * 
+	 *
 	 * @param item
 	 * @throws XMPException
 	 */
@@ -262,7 +263,7 @@ public class XmpHandler {
 
 	/**
 	 * Set an entry in the DC namespace
-	 * 
+	 *
 	 * @param item
 	 * @param value
 	 * @throws XMPException
@@ -280,7 +281,7 @@ public class XmpHandler {
 
 	/**
 	 * Set the image title
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */
@@ -290,7 +291,7 @@ public class XmpHandler {
 
 	/**
 	 * Set the image description
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */
@@ -300,7 +301,7 @@ public class XmpHandler {
 
 	/**
 	 * Set the image subject
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */
@@ -310,7 +311,7 @@ public class XmpHandler {
 
 	/**
 	 * Set the User Comment
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */
@@ -327,7 +328,7 @@ public class XmpHandler {
 
 	/**
 	 * Set the image person name
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */
@@ -348,7 +349,7 @@ public class XmpHandler {
 
 	/**
 	 * Get the XMP String
-	 * 
+	 *
 	 * @return
 	 * @throws XMPException
 	 */

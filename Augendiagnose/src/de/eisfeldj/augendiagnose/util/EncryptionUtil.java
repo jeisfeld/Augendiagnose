@@ -62,7 +62,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Utility method to test generation and validation of a user key
-	 * 
+	 *
 	 * @param name
 	 */
 	public static void test(String name) {
@@ -72,7 +72,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Validate a user key
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -97,7 +97,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Generate a user key, which is a concatenation of user name and hash.
-	 * 
+	 *
 	 * @param input
 	 * @return
 	 */
@@ -107,7 +107,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Create a cryptographic hash from a username
-	 * 
+	 *
 	 * @param input
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Create a hash value from an input
-	 * 
+	 *
 	 * @param input
 	 * @return
 	 * @throws NoSuchAlgorithmException
@@ -133,7 +133,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Do base 64 encoding of a message
-	 * 
+	 *
 	 * @param bytes
 	 * @return
 	 */
@@ -143,7 +143,7 @@ public class EncryptionUtil {
 
 	/**
 	 * Encrypt a String using DES
-	 * 
+	 *
 	 * @param input
 	 * @return
 	 * @throws BadPaddingException

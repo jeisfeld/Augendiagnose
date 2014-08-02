@@ -17,10 +17,13 @@ import android.view.WindowManager;
 /**
  * Utility class to retrieve base application resources
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Intentionally using same name as superclass")
 public class Application extends android.app.Application {
 	private static Context context;
 	public static final String TAG = "Application";
 
+	@Override
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Make some context visible statically (no matter which one)")
 	public void onCreate() {
 		super.onCreate();
 		Application.context = getApplicationContext();
@@ -28,7 +31,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the application context
-	 * 
+	 *
 	 * @return
 	 */
 	public static Context getAppContext() {
@@ -37,7 +40,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the default display
-	 * 
+	 *
 	 * @return
 	 */
 	public static Display getDefaultDisplay() {
@@ -47,7 +50,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the max display size in pixels
-	 * 
+	 *
 	 * @return
 	 */
 	public static int getDisplaySize() {
@@ -58,7 +61,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the default shared preferences of the application
-	 * 
+	 *
 	 * @return
 	 */
 	public static SharedPreferences getSharedPreferences() {
@@ -67,7 +70,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve a String shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @return
 	 */
@@ -77,7 +80,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Set a String shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @param s
 	 */
@@ -89,7 +92,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve a boolean shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @return
 	 */
@@ -99,7 +102,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Set a Boolean shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @param b
 	 */
@@ -111,7 +114,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve an integer shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @return
 	 */
@@ -121,7 +124,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Set an integer shared preference
-	 * 
+	 *
 	 * @param preferenceId
 	 * @param i
 	 */
@@ -133,7 +136,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Check if the application has an authorized user key
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean isAuthorized() {
@@ -143,7 +146,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Get a resource string
-	 * 
+	 *
 	 * @param resource
 	 * @return
 	 */
@@ -153,7 +156,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Retrieve the version number of the app
-	 * 
+	 *
 	 * @return
 	 */
 	public static int getVersion() {
@@ -170,7 +173,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Determine if the device is a tablet (i.e. it has a large screen).
-	 * 
+	 *
 	 * @param context
 	 *            The calling context.
 	 */
@@ -180,7 +183,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Determine if the screen is shown in landscape mode (i.e. width > height)
-	 * 
+	 *
 	 * @param context
 	 *            The calling context.
 	 */
@@ -197,7 +200,7 @@ public class Application extends android.app.Application {
 
 	/**
 	 * Determine if Eye-Fi is installed
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean isEyeFiInstalled() {

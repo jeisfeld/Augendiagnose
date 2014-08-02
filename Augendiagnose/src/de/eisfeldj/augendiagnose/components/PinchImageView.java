@@ -64,7 +64,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Fill with an image, making the image fit into the view. If the pathName is unchanged (restored), then it is not
 	 * refilled. The sizing (for fit) happens only once at first initialization of the view.
-	 * 
+	 *
 	 * @param pathName
 	 *            The pathname of the image
 	 * @param activity
@@ -105,7 +105,7 @@ public class PinchImageView extends ImageView {
 
 	/**
 	 * Fill with an image from image resource, making the image fit into the view.
-	 * 
+	 *
 	 * @param imageResource
 	 *            The image resource id
 	 * @param activity
@@ -147,7 +147,7 @@ public class PinchImageView extends ImageView {
 
 	/**
 	 * Return the natural scale factor that fits the image into the view
-	 * 
+	 *
 	 * @return
 	 */
 	protected float getNaturalScaleFactor() {
@@ -160,7 +160,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Return an orientation independent scale factor that fits the smaller image dimension into the smaller view
 	 * dimension
-	 * 
+	 *
 	 * @return
 	 */
 	protected float getOrientationIndependentScaleFactor() {
@@ -186,7 +186,7 @@ public class PinchImageView extends ImageView {
 
 	/**
 	 * Set the maximum size in which a bitmap is held in memory
-	 * 
+	 *
 	 * @param size
 	 */
 	public static void setMaxBitmapSize(int size) {
@@ -254,7 +254,6 @@ public class PinchImageView extends ImageView {
 			mHasMoved = false;
 			mActivePointerId = INVALID_POINTER_ID;
 			mActivePointerId2 = INVALID_POINTER_ID;
-			finishPointerMove(ev);
 			break;
 		}
 		case MotionEvent.ACTION_POINTER_UP: {
@@ -273,6 +272,9 @@ public class PinchImageView extends ImageView {
 			else if (pointerId == mActivePointerId2) {
 				mActivePointerId2 = INVALID_POINTER_ID;
 			}
+			break;
+		}
+		default: {
 			break;
 		}
 		}
@@ -299,19 +301,11 @@ public class PinchImageView extends ImageView {
 	}
 
 	/**
-	 * Utility method to do the refresh after finishing the pointer move
-	 * 
-	 * @param ev
-	 */
-	protected void finishPointerMove(MotionEvent ev) {
-
-	}
-
-	/**
 	 * Utility method to make the calculations in case of a pointer move
-	 * 
+	 *
 	 * @param ev
 	 */
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "Using floating point equality to see if value has changed")
 	protected boolean handlePointerMove(MotionEvent ev) {
 		boolean moved = false;
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
@@ -376,6 +370,7 @@ public class PinchImageView extends ImageView {
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
+		Parcelable enhancedState = state;
 		if (state instanceof Bundle) {
 			Bundle bundle = (Bundle) state;
 			this.mScaleFactor = bundle.getFloat("mScaleFactor");
@@ -384,9 +379,9 @@ public class PinchImageView extends ImageView {
 			this.mPathName = bundle.getString("mPathName");
 			this.mImageResource = bundle.getInt("mImageResource");
 			this.mInitialized = bundle.getBoolean("mInitialized");
-			state = bundle.getParcelable("instanceState");
+			enhancedState = bundle.getParcelable("instanceState");
 		}
-		super.onRestoreInstanceState(state);
+		super.onRestoreInstanceState(enhancedState);
 	}
 
 	/**
@@ -404,7 +399,7 @@ public class PinchImageView extends ImageView {
 	}
 
 	/**
-	 * Helper fragment to retain the bitmap on configuration change
+	 * Helper listFoldersFragment to retain the bitmap on configuration change
 	 */
 	protected static class RetainFragment extends Fragment {
 		private static final String TAG = "RetainFragment";
