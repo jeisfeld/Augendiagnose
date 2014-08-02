@@ -154,8 +154,10 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 *
 	 * @param dismissIfEmpty
 	 *            Dismiss fragment in case of no photos?
+	 *
+	 * @return true if there are still eye photos remaining.
 	 */
-	protected final void createAndStoreEyePhotoList(final boolean dismissIfEmpty) {
+	protected final boolean createAndStoreEyePhotoList(final boolean dismissIfEmpty) {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
 
 		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
@@ -164,8 +166,9 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			if (dismissIfEmpty) {
 				dismiss = true;
 			}
-			return;
+			return false;
 		}
+		return true;
 	}
 
 	public final String getParentFolder() {

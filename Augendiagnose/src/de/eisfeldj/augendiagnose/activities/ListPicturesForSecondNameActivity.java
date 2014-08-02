@@ -12,33 +12,39 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  * display.
  */
 public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseActivity {
+	/**
+	 * The requestCode with which this activity is started.
+	 */
 	public static final int REQUEST_CODE = 3;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
-	 * 
+	 *
 	 * @param activity
+	 *            The activity triggering this activity.
 	 * @param parentFolder
+	 *            The parent folder of the application.
 	 * @param name
+	 *            The name of the image folder to be shown.
 	 */
-	public static void startActivity(Activity activity, String parentFolder, String name) {
+	public static final void startActivity(final Activity activity, final String parentFolder, final String name) {
 		Intent intent = new Intent(activity, ListPicturesForSecondNameActivity.class);
 		intent.putExtra(STRING_EXTRA_PARENTFOLDER, parentFolder);
 		intent.putExtra(STRING_EXTRA_NAME, name);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
 
-	/**
-	 * Get the listFoldersFragment displayed in the activity
+	/*
+	 * Get the listFoldersFragment displayed in the activity.
 	 */
 	@Override
-	protected ListPicturesForNameBaseFragment createFragment() {
+	protected final ListPicturesForNameBaseFragment createFragment() {
 		return new ListPicturesForSecondNameFragment();
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Initialize the handler which manages the clicks

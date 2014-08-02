@@ -77,10 +77,12 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * @param eyePhotoPairs
 	 */
 	protected final void updateEyePhotoPairs() {
-		createAndStoreEyePhotoList(false);
+		boolean isPhotosRemaining = createAndStoreEyePhotoList(false);
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
-		getListView().setAdapter(adapter);
+		if (isPhotosRemaining) {
+			adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+			getListView().setAdapter(adapter);
+		}
 	}
 
 	/**

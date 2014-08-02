@@ -41,19 +41,19 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	protected static final int UTILITIES_SHOW_ALWAYS = 3;
 
 	/**
-	 * The resource key of the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
+	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
 	 */
 	protected static final String STRING_TYPE = "de.eisfeldj.augendiagnose.TYPE";
 	/**
-	 * The resource key of the file path.
+	 * The resource key for the file path.
 	 */
 	protected static final String STRING_FILE = "de.eisfeldj.augendiagnose.FILE";
 	/**
-	 * The resource key of the file resource.
+	 * The resource key for the file resource.
 	 */
 	protected static final String STRING_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
 	/**
-	 * The resource kay of the image index (in case of multiple images).
+	 * The resource kay for the image index (in case of multiple images).
 	 */
 	protected static final String STRING_IMAGEINDEX = "de.eisfeldj.augendiagnose.IMAGEINDEX";
 

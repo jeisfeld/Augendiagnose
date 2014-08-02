@@ -15,25 +15,49 @@ import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**
- * Activity to select a pair of eye photos from a folder and return the paths to the parent activity
+ * Activity to select a pair of eye photos from a folder and return the paths to the parent activity.
  */
 public class SelectTwoPicturesActivity extends Activity {
+	/**
+	 * The requestCode with which this activity is started.
+	 */
 	public static final int REQUEST_CODE = 2;
+
+	/**
+	 * The resource key for the folder name.
+	 */
 	private static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
+	/**
+	 * The resource key for the array of filenames.
+	 */
 	private static final String STRING_EXTRA_FILENAMES = "de.eisfeldj.augendiagnose.FILENAMES";
+	/**
+	 * The resource key for the name of the first selected file.
+	 */
 	private static final String STRING_RESULT_FILENAME1 = "de.eisfeldj.augendiagnose.FILENAME1";
+	/**
+	 * The resource key for the name of the second selected file.
+	 */
 	private static final String STRING_RESULT_FILENAME2 = "de.eisfeldj.augendiagnose.FILENAME2";
 
+	/**
+	 * The image folder.
+	 */
 	private File folder;
+	/**
+	 * The list of image files.
+	 */
 	private String[] fileNames;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
-	 * 
-	 * @param context
+	 *
+	 * @param activity
+	 *            The activity starting this activity.
 	 * @param foldername
+	 *            The image folder.
 	 */
-	public static void startActivity(Activity activity, String foldername) {
+	public static final void startActivity(final Activity activity, final String foldername) {
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -41,25 +65,28 @@ public class SelectTwoPicturesActivity extends Activity {
 
 	/**
 	 * Static helper method to start the activity, passing the list of files.
-	 * 
-	 * @param context
-	 * @param foldername
+	 *
+	 * @param activity
+	 *            The activity starting this activity.
+	 * @param fileNames
+	 *            The list of image files.
 	 */
-	public static void startActivity(Activity activity, String[] fileNames) {
+	public static final void startActivity(final Activity activity, final String[] fileNames) {
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
 
 	/**
-	 * Static helper method to extract the selected filenames from the activity response
-	 * 
+	 * Static helper method to extract the selected filenames from the activity response.
+	 *
 	 * @param resultCode
+	 *            The result code indicating if the response was successful.
 	 * @param data
-	 *            The activity response
-	 * @return
+	 *            The activity response data.
+	 * @return The returned file names.
 	 */
-	public static FilePair getResult(int resultCode, Intent data) {
+	public static final FilePair getResult(final int resultCode, final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
 			return new FilePair(res.getString(STRING_RESULT_FILENAME1), res.getString(STRING_RESULT_FILENAME2));
@@ -70,7 +97,7 @@ public class SelectTwoPicturesActivity extends Activity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_two_pictures);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,9 +118,9 @@ public class SelectTwoPicturesActivity extends Activity {
 	}
 
 	/**
-	 * Helper method to retrieve the list of photos in the folder as EyePhoto objects
-	 * 
-	 * @return
+	 * Helper method to retrieve the list of photos in the folder as EyePhoto objects.
+	 *
+	 * @return The list of eye photos.
 	 */
 	private EyePhoto[] getEyePhotos() {
 		File[] files;
@@ -103,7 +130,7 @@ public class SelectTwoPicturesActivity extends Activity {
 			files = folder.listFiles(new ImageUtil.ImageFileFilter());
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
-				public int compare(File f1, File f2) {
+				public int compare(final File f1, final File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}
 			});
@@ -123,9 +150,14 @@ public class SelectTwoPicturesActivity extends Activity {
 	}
 
 	/**
-	 * Helper method: Return the selected filenames and finish the activity
+	 * Helper method: Return the selected filenames and finish the activity.
+	 *
+	 * @param filename1
+	 *            The first filename.
+	 * @param filename2
+	 *            The second filename.
 	 */
-	public void returnResult(String filename1, String filename2) {
+	public final void returnResult(final String filename1, final String filename2) {
 		Bundle resultData = new Bundle();
 		resultData.putCharSequence(STRING_RESULT_FILENAME1, filename1);
 		resultData.putCharSequence(STRING_RESULT_FILENAME2, filename2);
@@ -136,15 +168,33 @@ public class SelectTwoPicturesActivity extends Activity {
 	}
 
 	/**
-	 * Container for two files
+	 * Container for two files.
 	 */
 	public static class FilePair {
-		public FilePair(String name1, String name2) {
+		/**
+		 * Constructor to create a pair of files.
+		 *
+		 * @param name1
+		 *            The first file.
+		 * @param name2
+		 *            The second file.
+		 */
+		public FilePair(final String name1, final String name2) {
 			file1 = new File(name1);
 			file2 = new File(name2);
 		}
 
-		public File file1;
-		public File file2;
+		/**
+		 * The two files stored in the container.
+		 */
+		private File file1, file2;
+
+		public final File getFile1() {
+			return file1;
+		}
+
+		public final File getFile2() {
+			return file2;
+		}
 	}
 }

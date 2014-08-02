@@ -8,44 +8,68 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragmentHalfscreen;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
-import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
+import de.eisfeldj.augendiagnose.util.AutoKeyboardLayoutUtility;
 
 /**
- * Activity to display two pictures on full screen (screen split in two halves)
+ * Activity to display two pictures on full screen (screen split in two halves).
  */
 public class DisplayTwoActivity extends DisplayImageActivity {
+	/**
+	 * The resource key for the first file to be displayed.
+	 */
 	private static final String STRING_EXTRA_FILE1 = "de.eisfeldj.augendiagnose.FILE1";
+	/**
+	 * The resource key for the second file to be displayed.
+	 */
 	private static final String STRING_EXTRA_FILE2 = "de.eisfeldj.augendiagnose.FILE2";
 
+	/**
+	 * The fragment tag for the first image fragment.
+	 */
 	private static final String FRAGMENT_IMAGE1_TAG = "FRAGMENT_IMAGE1_TAG";
+	/**
+	 * The fragment tag for the second image fragment.
+	 */
 	private static final String FRAGMENT_IMAGE2_TAG = "FRAGMENT_IMAGE2_TAG";
 
+	/**
+	 * The views displaying the files.
+	 */
 	private View viewFragmentImage1, viewFragmentImage2;
 
+	/**
+	 * The fragments displaying the files.
+	 */
 	private DisplayImageFragment fragmentImage1, fragmentImage2;
 
-	// Required to differentiate between "current listFoldersFragment" and "other listFoldersFragment" when editing picture comment
+	/**
+	 * The view displaying the "other" file. Required to differentiate between "current listFoldersFragment" and
+	 * "other listFoldersFragment" when editing picture comment.
+	 */
 	private View viewFragmentOther;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
-	 * 
+	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param filename1
+	 *            The filename of the first picture.
 	 * @param filename2
+	 *            The filename of the second picture.
 	 */
-	public static void startActivity(Context context, String filename1, String filename2) {
+	public static void startActivity(final Context context, final String filename1, final String filename2) {
 		Intent intent = new Intent(context, DisplayTwoActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE1, filename1);
 		intent.putExtra(STRING_EXTRA_FILE2, filename2);
 		context.startActivity(intent);
 	}
 
-	/**
-	 * Build the screen on creation
+	/*
+	 * Build the screen on creation.
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		String file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
@@ -101,27 +125,27 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		}
 
 		// ensure that layout is refreshed if view gets resized
-		AndroidBug5497Workaround.assistActivity(this);
+		AutoKeyboardLayoutUtility.assistActivity(this);
 	}
 
 	/**
-	 * Helper method to create the listFoldersFragment
-	 * 
-	 * @return
+	 * Helper method to create the DisplayImageFragment.
+	 *
+	 * @return the fragment.
 	 */
 	private DisplayImageFragment createFragment() {
 		return new DisplayImageFragmentHalfscreen();
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("fragmentImage1Visibility", viewFragmentImage1.getVisibility());
 		outState.putInt("fragmentImage2Visibility", viewFragmentImage2.getVisibility());
 	}
 
 	@Override
-	public void startEditComment(DisplayImageFragment fragment, String text) {
+	public final void startEditComment(final DisplayImageFragment fragment, final String text) {
 		// Determine which image listFoldersFragment needs to be hidden
 		if (fragment == fragmentImage1) {
 			viewFragmentOther = viewFragmentImage2;
@@ -134,22 +158,22 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	}
 
 	@Override
-	protected void showEditFragment(String text) {
+	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
 		viewFragmentOther.setVisibility(View.GONE);
 	}
 
 	@Override
-	protected void hideEditFragment() {
+	protected final void hideEditFragment() {
 		super.hideEditFragment();
 		viewFragmentOther.setVisibility(View.VISIBLE);
 	}
 
 	/**
-	 * Initialize the images
+	 * Initialize the images.
 	 */
 	@Override
-	protected void initializeImages() {
+	protected final void initializeImages() {
 		fragmentImage1.initializeImages();
 		fragmentImage2.initializeImages();
 	}
@@ -157,7 +181,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	// implemenation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
-	public void requestLayout() {
+	public final void requestLayout() {
 		viewLayoutMain.invalidate();
 		fragmentImage1.requestLayout();
 		fragmentImage2.requestLayout();

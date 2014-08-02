@@ -16,39 +16,61 @@ import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
 import de.eisfeldj.augendiagnose.util.FileUtil;
 
 /**
- * Activity to display the settings page
+ * Activity to display the settings page.
  */
 public class SettingsActivity extends Activity {
-	private static String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
-	private static int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos };
+	/**
+	 * Minimum value of maxBitmapSize.
+	 */
+	private static final int MIN_MAX_BITMAP_SIZE = 512;
+	/**
+	 * Minimum value of maxBitmapSize.
+	 */
+	private static final int MAX_MAX_BITMAP_SIZE = 4096;
 
-	public static void startActivity(Context context) {
+	/**
+	 * Tag to be replaced by the external storage root.
+	 */
+	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
+
+	/**
+	 * The path resources for which external storag prefix should be replaced.
+	 */
+	private static final int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos };
+
+	/**
+	 * Utility method to start the activity.
+	 *
+	 * @param context
+	 *            The context in which the activity is started.
+	 */
+	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, SettingsActivity.class);
 		context.startActivity(intent);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Display the listFoldersFragment as the main content.
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 	}
 
-	/**
-	 * Inflate options menu
+	/*
+	 * Inflate options menu.
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	/**
-	 * Handle menu actions
+	/*
+	 * Handle menu actions.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
@@ -61,9 +83,12 @@ public class SettingsActivity extends Activity {
 	/**
 	 * Set the default shared preferences (after first installation) Regarding paths, choose external folder as base
 	 * folder. For Bluestacks, chose bluestacks shared folder as base folder.
+	 *
+	 * @param context
+	 *            The Context in which the preferences should be set.
 	 */
 	@SuppressLint("SdCardPath")
-	public static void setDefaultSharedPreferences(Context context) {
+	public static final void setDefaultSharedPreferences(final Context context) {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.pref_general, false);
 
 		if (Application.getSharedPreferenceString(R.string.key_folder_input).equals(
@@ -80,6 +105,7 @@ public class SettingsActivity extends Activity {
 			}
 		}
 
+		// TODO: remove duplications from DirectorySelectionPreference
 		for (int id : PATH_RESOURCES) {
 			String path = Application.getSharedPreferenceString(id);
 			if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
@@ -107,15 +133,15 @@ public class SettingsActivity extends Activity {
 	 *            the String value to be set
 	 * @return the maxBitmapSize
 	 */
-	public static int pushMaxBitmapSize(String value) {
+	public static int pushMaxBitmapSize(final String value) {
 		int maxBitmapSize;
 		try {
 			maxBitmapSize = Integer.parseInt(value);
-			if (maxBitmapSize < 512) {
-				maxBitmapSize = 512;
+			if (maxBitmapSize < MIN_MAX_BITMAP_SIZE) {
+				maxBitmapSize = MIN_MAX_BITMAP_SIZE;
 			}
-			if (maxBitmapSize > 4096) {
-				maxBitmapSize = 4096;
+			if (maxBitmapSize > MAX_MAX_BITMAP_SIZE) {
+				maxBitmapSize = MAX_MAX_BITMAP_SIZE;
 			}
 		}
 		catch (NumberFormatException e) {

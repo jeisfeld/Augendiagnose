@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
  * For more information, see https://code.google.com/p/android/issues/detail?id=5497 To use this class, simply invoke
  * assistActivity() on an Activity that already has its content view set.
  */
-public final class AndroidBug5497Workaround {
+public final class AutoKeyboardLayoutUtility {
 
 	/**
 	 * Assumed minimum portion that the keyboard fills vertically.
@@ -31,7 +31,24 @@ public final class AndroidBug5497Workaround {
 	 */
 	@SuppressWarnings("unused")
 	public static void assistActivity(final Activity activity) {
-		new AndroidBug5497Workaround(activity);
+		new AutoKeyboardLayoutUtility(activity);
+	}
+
+	/**
+	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
+	 *
+	 * @param activity
+	 *            the activity which uses the workaround.
+	 * @param callback
+	 *            a callback to be called if the kayboard is shown or hidden.
+	 * @param changeLayout
+	 *            Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
+	 */
+	public static void assistActivity(final Activity activity, final OnKeyboardChangeListener callback,
+			final boolean changeLayout) {
+		AutoKeyboardLayoutUtility instance = new AutoKeyboardLayoutUtility(activity);
+		instance.callback = callback;
+		instance.changeLayout = changeLayout;
 	}
 
 	// JAVADOC:OFF
@@ -43,12 +60,22 @@ public final class AndroidBug5497Workaround {
 	// JAVADOC:ON
 
 	/**
+	 * A callback to be called if the kayboard is shown or hidden.
+	 */
+	private OnKeyboardChangeListener callback = null;
+
+	/**
+	 * Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
+	 */
+	private boolean changeLayout = true;
+
+	/**
 	 * Constructor, adding a listener to change the global layout if required.
 	 *
 	 * @param activity
 	 *            the activity which uses the workaround.
 	 */
-	private AndroidBug5497Workaround(final Activity activity) {
+	private AutoKeyboardLayoutUtility(final Activity activity) {
 		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
 		mChildOfContent = content.getChildAt(0);
 		mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -74,11 +101,21 @@ public final class AndroidBug5497Workaround {
 			int heightDifference = usableHeightSansKeyboard - usableHeightNow;
 			if (heightDifference > (usableHeightSansKeyboard * MIN_KEYBOARD_SIZE)) {
 				// keyboard probably just became visible
-				frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
+				if (changeLayout) {
+					frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
+				}
+				if (callback != null) {
+					callback.onKeyboardChanged(true);
+				}
 			}
 			else {
 				// keyboard probably just became hidden
-				frameLayoutParams.height = usableHeightSansKeyboard;
+				if (changeLayout) {
+					frameLayoutParams.height = usableHeightSansKeyboard;
+				}
+				if (callback != null) {
+					callback.onKeyboardChanged(false);
+				}
 			}
 			mChildOfContent.requestLayout();
 			usableHeightPrevious = usableHeightNow;
@@ -108,5 +145,18 @@ public final class AndroidBug5497Workaround {
 		 * Callback method to do request layout.
 		 */
 		void requestLayout();
+	}
+
+	/**
+	 * Callback listener that will be informed if the keyboard is added or removed.
+	 */
+	public interface OnKeyboardChangeListener {
+		/**
+		 * Callback method that will be called if the keyboard is added or removed.
+		 *
+		 * @param visible
+		 *            true if the keyboard is added, false if the keyboard is removed.
+		 */
+		void onKeyboardChanged(final boolean visible);
 	}
 }

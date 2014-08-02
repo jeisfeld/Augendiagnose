@@ -58,7 +58,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 */
 	public void setActivity(final ListPicturesForNameActivity activity) {
 		this.activity = activity;
-		this.fragment = (ListPicturesForNameFragment) activity.fragment;
+		this.fragment = activity.getListPicturesForNameFragment();
 	}
 
 	/**

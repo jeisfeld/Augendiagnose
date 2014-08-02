@@ -7,31 +7,55 @@ import android.view.View;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
-import de.eisfeldj.augendiagnose.util.AndroidBug5497Workaround;
+import de.eisfeldj.augendiagnose.util.AutoKeyboardLayoutUtility;
 
 /**
- * Variant of DisplayOneFragment that includes overlay handling
- * 
+ * Variant of DisplayOneFragment that includes overlay handling.
+ *
  * @author Joerg
  */
 public class DisplayOneActivity extends DisplayImageActivity {
+	/**
+	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
+	 */
 	private static final String STRING_EXTRA_TYPE = "de.eisfeldj.augendiagnose.TYPE";
+	/**
+	 * The resource key for the file path.
+	 */
 	private static final String STRING_EXTRA_FILE = "de.eisfeldj.augendiagnose.FILE";
+	/**
+	 * The resource key for the file resource.
+	 */
 	private static final String STRING_EXTRA_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
+
+	/**
+	 * Type value set if the activity shows an image by filename.
+	 */
 	private static final int TYPE_FILENAME = 1;
+	/**
+	 * Type value set if the activity shows an image by resource id.
+	 */
 	private static final int TYPE_FILERESOURCE = 2;
 
+	/**
+	 * The fragment tag.
+	 */
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
+	/**
+	 * The fragment displaying the image.
+	 */
 	private DisplayImageFragment fragmentImage;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
-	 * 
+	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param filename
+	 *            The filename of the picture.
 	 */
-	public static void startActivity(Context context, String filename) {
+	public static void startActivity(final Context context, final String filename) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE, filename);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILENAME);
@@ -40,22 +64,24 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
-	 * 
+	 *
 	 * @param context
-	 * @param filename
+	 *            The context in which the activity is started.
+	 * @param fileResource
+	 *            The resource id of the picture.
 	 */
-	public static void startActivity(Context context, int fileResource) {
+	public static void startActivity(final Context context, final int fileResource) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILERESOURCE, fileResource);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILERESOURCE);
 		context.startActivity(intent);
 	}
 
-	/**
-	 * Build the screen on creation
+	/*
+	 * Build the screen on creation.
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		int type = getIntent().getIntExtra(STRING_EXTRA_TYPE, -1);
@@ -95,21 +121,21 @@ public class DisplayOneActivity extends DisplayImageActivity {
 		}
 
 		// ensure that layout is refreshed if view gets resized
-		AndroidBug5497Workaround.assistActivity(this);
+		AutoKeyboardLayoutUtility.assistActivity(this);
 	}
 
 	/**
-	 * Initialize the images
+	 * Initialize the images.
 	 */
 	@Override
-	protected void initializeImages() {
+	protected final void initializeImages() {
 		fragmentImage.initializeImages();
 	}
 
 	// implemenation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
-	public void requestLayout() {
+	public final void requestLayout() {
 		viewLayoutMain.invalidate();
 		fragmentImage.requestLayout();
 	}

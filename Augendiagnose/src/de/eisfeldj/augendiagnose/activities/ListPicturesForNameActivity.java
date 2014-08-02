@@ -8,41 +8,38 @@ import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
-import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPicturesForNameFragmentHolder;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
  * directly, or another folder can be selected for a second picture.
  */
-public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity implements ListPicturesForNameFragmentHolder {
+public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity {
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
 	 *
-	 * @param activity
-	 * @param parentFolder
-	 * @param name
+	 * @param context The context in which the activity is started.
+	 * @param parentFolder The parent folder of the application.
+	 * @param name The name of the image folder to be shown.
 	 */
-	public static void startActivity(Context context, String parentFolder, String name) {
+	public static final void startActivity(final Context context, final String parentFolder, final String name) {
 		Intent intent = new Intent(context, ListPicturesForNameActivity.class);
 		intent.putExtra(STRING_EXTRA_PARENTFOLDER, parentFolder);
 		intent.putExtra(STRING_EXTRA_NAME, name);
 		context.startActivity(intent);
 	}
 
-
-	/**
-	 * Get the listFoldersFragment displayed in the activity
+	/*
+	 * Get the listFoldersFragment displayed in the activity.
 	 */
 	@Override
-	protected ListPicturesForNameBaseFragment createFragment() {
+	protected final ListPicturesForNameBaseFragment createFragment() {
 		return new ListPicturesForNameFragment();
 	}
 
-
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,20 +48,20 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 	}
 
-	/**
-	 * Inflate options menu
+	/*
+	 * Inflate options menu.
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	/**
-	 * Handle menu actions
+	/*
+	 * Handle menu actions.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
@@ -73,19 +70,5 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-	// implementation of ListPicturesForNameFragmentHolder
-
-	@Override
-	public ListPicturesForNameFragment getListPicturesForNameFragment() {
-		return (ListPicturesForNameFragment) fragment;
-	}
-
-
-	@Override
-	public void setListPicturesForNameFragment(ListPicturesForNameFragment fragment) {
-		this.fragment = fragment;
-	}
-
 
 }

@@ -22,12 +22,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.InstantAutoCompleteTextView;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
@@ -45,22 +45,59 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  */
 public class OrganizeNewPhotosActivity extends Activity {
 
+	/**
+	 * The resource key for the input folder.
+	 */
 	private static final String STRING_EXTRA_INPUTFOLDER = "de.eisfeldj.augendiagnose.INPUTFOLDER";
+	/**
+	 * The resource key for the target (parent) folder.
+	 */
 	private static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
+	/**
+	 * The resource key for the list of input files.
+	 */
 	private static final String STRING_EXTRA_FILENAMES = "de.eisfeldj.augendiagnose.FILENAMES";
+	/**
+	 * The resource key for the flag indicating if the last picture is the right eye.
+	 */
 	private static final String BOOL_EXTRA_RIGHTEYELAST = "de.eisfeldj.augendiagnose.RIGHTEYELAST";
 
+	/**
+	 * The input folder for images.
+	 */
 	private File inputFolder;
+	/**
+	 * The parent output folder for images.
+	 */
 	private File parentFolder;
+	/**
+	 * The currently selected date to be given to the pictures.
+	 */
 	private Calendar pictureDate = Calendar.getInstance();
+	/**
+	 * The flag indicating if the last picture is the right eye.
+	 */
 	private boolean rightEyeLast;
-	private boolean hasSelectName = false;
+	/**
+	 * The list of input images.
+	 */
 	private String[] fileNames;
 
+	/**
+	 * The ImageViews displaying the eye photos.
+	 */
 	private ImageView imageRight, imageLeft;
-	private AutoCompleteTextView editName;
+	/**
+	 * The EditText with the name to which the photos should be assigned.
+	 */
+	private InstantAutoCompleteTextView editName;
+	/**
+	 * The EditText with the data to which the photos should be assigned.
+	 */
 	private EditText editDate;
-
+	/**
+	 * The currently chosen eye photos.
+	 */
 	private EyePhoto photoRight, photoLeft;
 
 	/**
@@ -68,11 +105,16 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * if the last picture is the right or the left eye.
 	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param inputFolderName
+	 *            The folder containing the input files.
 	 * @param folderName
+	 *            The target Folder.
 	 * @param rightEyeLast
+	 *            A flag indicating if the last picture is the right eye.
 	 */
-	public static void startActivity(Context context, String inputFolderName, String folderName, boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String inputFolderName,
+			final String folderName, final boolean rightEyeLast) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
 		intent.putExtra(STRING_EXTRA_FOLDER, folderName);
@@ -85,23 +127,28 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * if the last picture is the right or the left eye.
 	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param fileNames
-	 * @param foldername
+	 *            The list of files.
+	 * @param folderName
+	 *            The target folder.
 	 * @param rightEyeLast
+	 *            A flag indicating if the last picture is the right eye.
 	 */
-	public static void startActivity(Context context, String[] fileNames, String foldername, boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String[] fileNames, final String folderName,
+			final boolean rightEyeLast) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
-		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
+		intent.putExtra(STRING_EXTRA_FOLDER, folderName);
 		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
 		context.startActivity(intent);
 	}
 
-	/**
+	/*
 	 * Create the activity, build the view, fill all content and add listeners.
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_organize_new_photos);
@@ -116,19 +163,16 @@ public class OrganizeNewPhotosActivity extends Activity {
 		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, true);
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
-		if (savedInstanceState != null) {
-			hasSelectName = savedInstanceState.getBoolean("hasSelectName", false);
-			if (savedInstanceState.getString("rightEyePhoto") != null) {
-				photoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
-				photoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
-			}
+		if (savedInstanceState != null && savedInstanceState.getString("rightEyePhoto") != null) {
+			photoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
+			photoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
 		}
 
 		imageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
 		imageLeft = (ImageView) findViewById(R.id.imageOrganizeLeft);
 
 		// when editing the "name" field, show suggestions
-		editName = (AutoCompleteTextView) findViewById(R.id.editName);
+		editName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
 		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
 				.getFolderNames(parentFolder)));
 
@@ -137,7 +181,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 		editDate.setInputType(InputType.TYPE_NULL);
 		editDate.setOnTouchListener(new View.OnTouchListener() {
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public boolean onTouch(final View v, final MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					openDateDialog(v);
 				}
@@ -164,22 +208,23 @@ public class OrganizeNewPhotosActivity extends Activity {
 				Log.w(Application.TAG, "Failed to create folder" + parentFolder);
 			}
 		}
+
 	}
 
-	/**
-	 * Inflate options menu
+	/*
+	 * Inflate options menu.
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	/**
-	 * Handle menu actions
+	/*
+	 * Handle menu actions.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_organize_photos);
@@ -190,7 +235,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected final void onDestroy() {
 		super.onDestroy();
 		TwoImageSelectionHandler.clean();
 	}
@@ -213,7 +258,7 @@ public class OrganizeNewPhotosActivity extends Activity {
 			// Sort files by date
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
-				public int compare(File f1, File f2) {
+				public int compare(final File f1, final File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}
 			});
@@ -278,21 +323,24 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * Helper method to display an error message
+	 * Helper method to display an error message.
 	 *
 	 * @param resource
+	 *            The resource containing the error message.
 	 * @param args
+	 *            The arguments of the error message.
 	 */
-	private void displayError(int resource, Object... args) {
+	private void displayError(final int resource, final Object... args) {
 		DialogUtil.displayError(this, resource, false, args);
 	}
 
 	/**
-	 * onClick action for Button "Switch images"
+	 * onClick action for Button "Switch images".
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void switchImages(View view) {
+	public final void switchImages(final View view) {
 		rightEyeLast = !rightEyeLast;
 		EyePhoto temp = photoLeft;
 		photoLeft = photoRight;
@@ -301,11 +349,12 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * onClick action for Button "Other photos"
+	 * onClick action for Button "Other photos".
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void selectOtherPhotos(View view) {
+	public final void selectOtherPhotos(final View view) {
 		if (inputFolder != null) {
 			SelectTwoPicturesActivity.startActivity(this, inputFolder.getAbsolutePath());
 		}
@@ -318,8 +367,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * onClick action for Button "Finish" Moves and renames the selected files.
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void finishActivity(View view) {
+	public final void finishActivity(final View view) {
 		String name = editName.getText().toString();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
@@ -406,17 +456,17 @@ public class OrganizeNewPhotosActivity extends Activity {
 		finish();
 	}
 
-	/**
-	 * Handle the result of a called activity - either the selection of the name or the selection of two pictures
+	/*
+	 * Handle the result of a called activity - either the selection of the name or the selection of two pictures.
 	 */
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		switch (requestCode) {
 		case SelectTwoPicturesActivity.REQUEST_CODE:
 			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
 			if (filePair != null) {
-				photoRight = new EyePhoto(filePair.file1);
-				photoLeft = new EyePhoto(filePair.file2);
+				photoRight = new EyePhoto(filePair.getFile1());
+				photoLeft = new EyePhoto(filePair.getFile2());
 				updateImages();
 			}
 			break;
@@ -429,8 +479,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * onClick action for date field. Opens a date picker dialog.
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void openDateDialog(View view) {
+	public final void openDateDialog(final View view) {
 		DateDialogFragment fragment = new DateDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
@@ -442,9 +493,8 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putBoolean("hasSelectName", hasSelectName);
 		if (photoRight != null && photoLeft != null) {
 			outState.putString("rightEyePhoto", photoRight.getAbsolutePath());
 			outState.putString("leftEyePhoto", photoLeft.getAbsolutePath());
@@ -452,13 +502,16 @@ public class OrganizeNewPhotosActivity extends Activity {
 	}
 
 	/**
-	 * Set the displayed date
+	 * Set the displayed date.
 	 *
 	 * @param yearSelected
+	 *            The year.
 	 * @param monthOfYear
+	 *            The month of the year.
 	 * @param dayOfMonth
+	 *            The day of the month.
 	 */
-	public void setDate(int yearSelected, int monthOfYear, int dayOfMonth) {
+	public final void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
 		pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
 		editDate.setText(DateUtil.getDisplayDate(pictureDate));
 		editDate.invalidate();
@@ -468,33 +521,36 @@ public class OrganizeNewPhotosActivity extends Activity {
 	 * onClick action for displaying the two pictures.
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void displayNewImages(View view) {
+	public final void displayNewImages(final View view) {
 		DisplayTwoActivity.startActivity(this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath());
 	}
 
 	/**
-	 * onClick action - overrides other onClick action to ensure that nothing happens
+	 * onClick action - overrides other onClick action to ensure that nothing happens.
 	 *
 	 * @param view
+	 *            The view triggering the onClick action.
 	 */
-	public void doNothing(View view) {
+	public final void doNothing(final View view) {
 		// do nothing
 	}
 
 	/**
-	 * Fragment for the date dialog
+	 * Fragment for the date dialog.
 	 */
 	public class DateDialogFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");
 			int month = getArguments().getInt("Month");
 			int date = getArguments().getInt("Date");
 
 			DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 				@Override
-				public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
+				public void onDateSet(final DatePicker view, final int yearSelected, final int monthOfYear,
+						final int dayOfMonth) {
 					setDate(yearSelected, monthOfYear, dayOfMonth);
 				}
 			};

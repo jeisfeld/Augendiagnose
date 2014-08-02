@@ -326,7 +326,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
-							activity.listFoldersFragment.renameFolderAndFiles(oldName.toString(), input.getText()
+							activity.getListFoldersFragment().renameFolderAndFiles(oldName.toString(), input.getText()
 									.toString());
 						}
 					});

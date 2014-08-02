@@ -18,12 +18,12 @@ import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
- * Main activity of the application
+ * Main activity of the application.
  */
 public class MainActivity extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -79,20 +79,20 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/**
-	 * Inflate options menu
+	/*
+	 * Inflate options menu.
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
 	}
 
-	/**
-	 * Handle menu actions
+	/*
+	 * Handle menu actions.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_settings:
 			SettingsActivity.startActivity(this);
@@ -107,11 +107,12 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * onClick action for Button to open the Eye-Fi app
+	 * onClick action for Button to open the Eye-Fi app.
 	 *
 	 * @param view
+	 *            the button to open the Eye-Fi app.
 	 */
-	public void openEyeFiApp(View view) {
+	public final void openEyeFiApp(final View view) {
 		if (Application.isEyeFiInstalled()) {
 			startActivity(getPackageManager().getLaunchIntentForPackage("fi.eye.android"));
 		}
@@ -128,21 +129,23 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * onClick action for Button to display eye photos
+	 * onClick action for Button to display eye photos.
 	 *
 	 * @param view
+	 *            the button to display the eye photos.
 	 */
-	public void listFoldersForDisplayActivity(View view) {
+	public final void listFoldersForDisplayActivity(final View view) {
 		ListFoldersForDisplayActivity.startActivity(this,
 				Application.getSharedPreferenceString(R.string.key_folder_photos));
 	}
 
 	/**
-	 * onClick action for Button to organize new eye photos
+	 * onClick action for Button to organize new eye photos.
 	 *
 	 * @param view
+	 *            the button to organize new folders.
 	 */
-	public void organizeNewFoldersActivity(View view) {
+	public final void organizeNewFoldersActivity(final View view) {
 		boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 		OrganizeNewPhotosActivity.startActivity(this, Application.getSharedPreferenceString(R.string.key_folder_input),
 				Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);

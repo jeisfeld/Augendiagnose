@@ -10,36 +10,63 @@ import android.os.Bundle;
  * actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseActivity extends Activity {
+	/**
+	 * The resource key for the parent folder.
+	 */
 	protected static final String STRING_EXTRA_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
 
-	protected String parentFolder;
-	public ListFoldersBaseFragment listFoldersFragment;
+	/**
+	 * The parent folder.
+	 */
+	private String parentFolder;
+	/**
+	 * The fragment displaying the list of folders.
+	 */
+	private ListFoldersBaseFragment listFoldersFragment;
 
+	// OVERRIDABLE
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		parentFolder = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
 	}
 
 	/**
-	 * Populate the listFoldersFragment with parameters
+	 * Populate the ListFoldersBaseFragment with parameters.
 	 *
-	 * @param listFoldersFragment
+	 * @param fragment
+	 *            The fragment to be populated.
 	 */
-	protected void setFragmentParameters(ListFoldersBaseFragment fragment) {
+	protected final void setFragmentParameters(final ListFoldersBaseFragment fragment) {
 		fragment.setParameters(parentFolder);
 	}
 
-
 	/**
-	 * Display the listFoldersFragment in the main listFoldersFragment container
+	 * Display the ListFoldersBaseFragment in the main listFoldersFragment container.
 	 *
-	 * @param listFoldersFragment
+	 * @param fragment
+	 *            The fragment to be displayed.
+	 * @param tag
+	 *            The tag name of the fragment.
 	 */
-	protected void displayOnFullScreen(ListFoldersBaseFragment fragment, String tag) {
+	protected final void displayOnFullScreen(final ListFoldersBaseFragment fragment, final String tag) {
 		getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, tag).commit();
 		getFragmentManager().executePendingTransactions();
+	}
+
+	// Setters and getters
+
+	protected final String getParentFolder() {
+		return parentFolder;
+	}
+
+	public final ListFoldersBaseFragment getListFoldersFragment() {
+		return listFoldersFragment;
+	}
+
+	protected final void setListFoldersFragment(final ListFoldersBaseFragment listFoldersFragment) {
+		this.listFoldersFragment = listFoldersFragment;
 	}
 
 }

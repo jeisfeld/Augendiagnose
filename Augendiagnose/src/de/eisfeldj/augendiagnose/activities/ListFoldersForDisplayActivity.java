@@ -22,24 +22,36 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
  */
 public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity implements ListPicturesForNameFragmentHolder {
+	/**
+	 * The fragment tag.
+	 */
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+	/**
+	 * The fragment tag for the list pictures fragment.
+	 */
 	private static final String FRAGMENT_LISTPICTURES_TAG = "FRAGMENT_LISTPICTURES_TAG";
-	public ListPicturesForNameFragment listPicturesFragment;
 
 	/**
-	 * Static helper method to start the activity, passing the path of the folder
+	 * The ListPicturesForNameFragment used to display pictures on a tablet.
+	 */
+	private ListPicturesForNameFragment listPicturesFragment;
+
+	/**
+	 * Static helper method to start the activity, passing the path of the folder.
 	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param foldername
+	 *            The path of the folder.
 	 */
-	public static void startActivity(Context context, String foldername) {
+	public static final void startActivity(final Context context, final String foldername) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -50,17 +62,18 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			setContentView(R.layout.activity_fragments_single);
 		}
 
-		listFoldersFragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		setListFoldersFragment((ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG));
 
-		if (listFoldersFragment == null) {
-			listFoldersFragment = new ListFoldersForDisplayFragment();
-			setFragmentParameters(listFoldersFragment);
+		if (getListFoldersFragment() == null) {
+			setListFoldersFragment(new ListFoldersForDisplayFragment());
+			setFragmentParameters(getListFoldersFragment());
 
 			if (Application.isTablet()) {
-				getFragmentManager().beginTransaction().add(R.id.fragment_list, listFoldersFragment, FRAGMENT_TAG).commit();
+				getFragmentManager().beginTransaction().add(R.id.fragment_list, getListFoldersFragment(), FRAGMENT_TAG)
+						.commit();
 
 				String defaultName = Application.getSharedPreferenceString(R.string.key_internal_last_name);
-				if (defaultName.length() > 0 && new File(parentFolder, defaultName).exists()) {
+				if (defaultName.length() > 0 && new File(getParentFolder(), defaultName).exists()) {
 					listPicturesForName(defaultName);
 				}
 
@@ -70,7 +83,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 				setTitle(getString(R.string.title_activity_list_pictures_for_name));
 			}
 			else {
-				displayOnFullScreen(listFoldersFragment, FRAGMENT_TAG);
+				displayOnFullScreen(getListFoldersFragment(), FRAGMENT_TAG);
 			}
 		}
 
@@ -80,20 +93,20 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		}
 	}
 
-	/**
-	 * Inflate options menu
+	/*
+	 * Inflate options menu.
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	/**
-	 * Handle menu actions
+	/*
+	 * Handle menu actions.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
 			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
@@ -104,18 +117,21 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected final void onDestroy() {
 		super.onDestroy();
 		ImageSelectionAndDisplayHandler.clean();
 	}
 
 	/**
-	 * Display the list of pictures for a selected name
+	 * Display the list of pictures for a selected name.
+	 *
+	 * @param name
+	 *            The name for which pictures should be shown.
 	 */
-	public void listPicturesForName(String name) {
+	public final void listPicturesForName(final String name) {
 		if (Application.isTablet()) {
 			listPicturesFragment = new ListPicturesForNameFragment();
-			listPicturesFragment.setParameters(parentFolder, name);
+			listPicturesFragment.setParameters(getParentFolder(), name);
 
 			FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragment_detail,
 					listPicturesFragment, FRAGMENT_LISTPICTURES_TAG);
@@ -128,7 +144,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			getFragmentManager().executePendingTransactions();
 		}
 		else {
-			ListPicturesForNameActivity.startActivity(this, parentFolder, name);
+			ListPicturesForNameActivity.startActivity(this, getParentFolder(), name);
 		}
 
 		// Store the name so that it may be opened automatically next time
@@ -139,7 +155,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	/**
 	 * Remove the back stack on the "ListPicturesForName" pane and clean the pane.
 	 */
-	public void popBackStack() {
+	public final void popBackStack() {
 		if (Application.isTablet()) {
 			getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
@@ -154,12 +170,12 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	// implementation of ListPicturesForNameFragmentHolder
 
 	@Override
-	public ListPicturesForNameFragment getListPicturesForNameFragment() {
+	public final ListPicturesForNameFragment getListPicturesForNameFragment() {
 		return listPicturesFragment;
 	}
 
 	@Override
-	public void setListPicturesForNameFragment(ListPicturesForNameFragment fragment) {
+	public final void setListPicturesForNameFragment(final ListPicturesForNameFragment fragment) {
 		this.listPicturesFragment = fragment;
 	}
 

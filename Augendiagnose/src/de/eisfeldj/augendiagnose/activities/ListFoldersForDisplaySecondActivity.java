@@ -12,41 +12,46 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplaySecondFragment;
  * for display.
  */
 public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity {
+	/**
+	 * The fragment tag.
+	 */
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
-	 * Static helper method to start the activity, passing the path of the folder
+	 * Static helper method to start the activity, passing the path of the folder.
 	 *
 	 * @param context
+	 *            The context in which the activity is started.
 	 * @param foldername
+	 *            The path of the folder.
 	 */
-	public static void startActivity(Context context, String foldername) {
+	public static final void startActivity(final Context context, final String foldername) {
 		Intent intent = new Intent(context, ListFoldersForDisplaySecondActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fragments_single);
 
-		listFoldersFragment = (ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		setListFoldersFragment((ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG));
 
-		if (listFoldersFragment == null) {
-			listFoldersFragment = new ListFoldersForDisplaySecondFragment();
-			setFragmentParameters(listFoldersFragment);
-			displayOnFullScreen(listFoldersFragment, FRAGMENT_TAG);
+		if (getListFoldersFragment() == null) {
+			setListFoldersFragment(new ListFoldersForDisplaySecondFragment());
+			setFragmentParameters(getListFoldersFragment());
+			displayOnFullScreen(getListFoldersFragment(), FRAGMENT_TAG);
 		}
 	}
 
-	/**
+	/*
 	 * When getting the response from the picture selection, return the name of the selected picture and finish the
 	 * activity.
 	 */
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		switch (requestCode) {
 		case ListPicturesForSecondNameActivity.REQUEST_CODE:
 			// When picture is selected, close also the list of names
