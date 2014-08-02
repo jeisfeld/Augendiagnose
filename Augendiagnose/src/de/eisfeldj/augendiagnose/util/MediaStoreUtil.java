@@ -12,27 +12,30 @@ import android.provider.MediaStore;
 import de.eisfeldj.augendiagnose.Application;
 
 /**
- * Utility class for handling the media store
+ * Utility class for handling the media store.
  */
 public abstract class MediaStoreUtil {
+	/**
+	 * The size of a mini thumbnail.
+	 */
 	public static final int MINI_THUMB_SIZE = 512;
 
 	/**
-	 * Get a real file path from the URI of the media store
+	 * Get a real file path from the URI of the media store.
 	 *
 	 * @param contentUri
 	 *            Thr URI of the media store
-	 * @return
+	 * @return the file path.
 	 */
 	@SuppressWarnings("static-access")
-	public static String getRealPathFromURI(Uri contentUri) {
+	public static final String getRealPathFromURI(final Uri contentUri) {
 		Cursor cursor = null;
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
 			cursor = Application.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
-			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
-			return cursor.getString(column_index);
+			return cursor.getString(columnIndex);
 		}
 		catch (Exception e) {
 			return null;
@@ -45,16 +48,16 @@ public abstract class MediaStoreUtil {
 	}
 
 	/**
-	 * Retrieve a thumbnail of a bitmap from the mediastore
+	 * Retrieve a thumbnail of a bitmap from the mediastore.
 	 *
 	 * @param path
 	 *            The path of the image
 	 * @param maxSize
 	 *            The maximum size of this bitmap (used for selecting the sample size)
-	 * @return
+	 * @return the thumbnail.
 	 */
 	@SuppressWarnings("static-access")
-	public static Bitmap getThumbnailFromPath(String path, int maxSize) {
+	public static final Bitmap getThumbnailFromPath(final String path, final int maxSize) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -78,11 +81,12 @@ public abstract class MediaStoreUtil {
 	}
 
 	/**
-	 * Add a picture to the media store (via scanning)
+	 * Add a picture to the media store (via scanning).
 	 *
 	 * @param path
+	 *            the path of the image.
 	 */
-	public static void addPictureToMediaStore(String path) {
+	public static final void addPictureToMediaStore(final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		File file = new File(path);
 		Uri contentUri = Uri.fromFile(file);

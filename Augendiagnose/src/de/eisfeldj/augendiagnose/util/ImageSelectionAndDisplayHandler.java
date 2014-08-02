@@ -11,19 +11,34 @@ import de.eisfeldj.augendiagnose.components.EyeImageView;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 
 /**
- * A class handling the selection of up to two pictures for display, and the display of these pictures
+ * A class handling the selection of up to two pictures for display, and the display of these pictures.
  */
-public class ImageSelectionAndDisplayHandler {
+public final class ImageSelectionAndDisplayHandler {
+	/**
+	 * The selected view.
+	 */
 	private EyeImageView selectedView = null;
+	/**
+	 * The activity for first selection.
+	 */
 	private Activity activity = null;
-	private ListPicturesForNameFragment fragment = null;
+	/**
+	 * The activity for second selection.
+	 */
 	private ListPicturesForSecondNameActivity secondActivity = null;
+	/**
+	 * The fragment for first selection.
+	 */
+	private ListPicturesForNameFragment fragment = null;
+	/**
+	 * An instance of the ImageSelectionAndDisplayHandler - as singleton.
+	 */
 	private static volatile ImageSelectionAndDisplayHandler singleton;
 
 	/**
 	 * Get an instance of the handler - it is handled as singleton.
 	 *
-	 * @return
+	 * @return an instance of this class (as singleton).
 	 */
 	public static ImageSelectionAndDisplayHandler getInstance() {
 		if (singleton == null) {
@@ -32,50 +47,57 @@ public class ImageSelectionAndDisplayHandler {
 		return singleton;
 	}
 
+	/**
+	 * Hide default constructor.
+	 */
 	private ImageSelectionAndDisplayHandler() {
-		// Ensure handling as singleton
+		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * Set the activity for first selection (mobile design)
+	 * Set the activity for first selection (mobile design).
 	 *
 	 * @param activity
+	 *            The activity to be set.
 	 */
-	public void setActivity(ListPicturesForNameActivity activity) {
+	public void setActivity(final ListPicturesForNameActivity activity) {
 		this.activity = activity;
 		this.fragment = (ListPicturesForNameFragment) activity.fragment;
 	}
 
 	/**
-	 * Set the activity for first selection (tablet design)
+	 * Set the activity for first selection (tablet design).
 	 *
 	 * @param activity
+	 *            The activity to be set.
 	 */
-	public void setActivity(ListFoldersForDisplayActivity activity) {
+	public void setActivity(final ListFoldersForDisplayActivity activity) {
 		this.activity = activity;
 		this.fragment = null;
 	}
 
 	/**
-	 * Set the activiy for second selection
+	 * Set the activiy for second selection.
 	 *
-	 * @param activity
+	 * @param secondActivity
+	 *            The activity to be set.
 	 */
-	public void setSecondActivity(ListPicturesForSecondNameActivity activity) {
-		this.secondActivity = activity;
+	public void setSecondActivity(final ListPicturesForSecondNameActivity secondActivity) {
+		this.secondActivity = secondActivity;
 	}
 
 	/**
-	 * Clean all references
+	 * Clean all references.
 	 */
 	public static void clean() {
 		singleton = null;
 	}
 
 	/**
-	 * Prepare an EyeImageView for selection of the first picture
+	 * Prepare an EyeImageView for selection of the first picture.
 	 *
 	 * @param view
+	 *            The view to be prepared.
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
 		// Ensure that selected view stays selected after rotating device
@@ -85,7 +107,7 @@ public class ImageSelectionAndDisplayHandler {
 
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				if (activity == null) {
 					// Prevent NullPointerException
 					return;
@@ -108,7 +130,7 @@ public class ImageSelectionAndDisplayHandler {
 
 		view.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
+			public boolean onLongClick(final View v) {
 				if (selectedView == view) {
 					cleanSelectedView();
 				}
@@ -122,14 +144,15 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Prepare an EyeImageView for selection of the second picture
+	 * Prepare an EyeImageView for selection of the second picture.
 	 *
 	 * @param view
+	 *            The view to be prepared.
 	 */
 	public void prepareViewForSecondSelection(final EyeImageView view) {
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				DisplayTwoActivity
 						.startActivity(activity, getSelectedImagePath(), view.getEyePhoto().getAbsolutePath());
 				cleanSelectedView();
@@ -139,11 +162,12 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Highlight the selected view
+	 * Change the highlighting setting of the selected view.
 	 *
-	 * @param type
+	 * @param highlight
+	 *            true if the view should be highlighted.
 	 */
-	private void highlightSelectedView(boolean highlight) {
+	private void highlightSelectedView(final boolean highlight) {
 		if (highlight) {
 			selectedView.setBackgroundColor(activity.getResources().getColor(android.R.color.holo_orange_light));
 		}
@@ -153,7 +177,7 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Unselect the selected view
+	 * Unselect the selected view.
 	 */
 	public void cleanSelectedView() {
 		if (selectedView != null) {
@@ -167,11 +191,12 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Select a specific view
+	 * Select a specific view.
 	 *
 	 * @param view
+	 *            the view to be selected.
 	 */
-	private void selectView(EyeImageView view) {
+	private void selectView(final EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
 
@@ -181,9 +206,9 @@ public class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Retrieve the path of the selected image
+	 * Retrieve the path of the selected image.
 	 *
-	 * @return
+	 * @return the path of the selected image.
 	 */
 	public String getSelectedImagePath() {
 		if (selectedView == null) {

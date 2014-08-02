@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
@@ -303,9 +302,9 @@ public class EyePhoto {
 
 		if (success) {
 			// update metadata
-			Metadata metadata = target.getImageMetadata();
+			JpegMetadata metadata = target.getImageMetadata();
 			if (metadata == null) {
-				metadata = new Metadata();
+				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
 			if (metadata.person == null || metadata.person.length() == 0 || metadata.person.equals(getPersonName())) {
@@ -330,9 +329,9 @@ public class EyePhoto {
 
 		if (success) {
 			// update metadata
-			Metadata metadata = target.getImageMetadata();
+			JpegMetadata metadata = target.getImageMetadata();
 			if (metadata == null) {
-				metadata = new Metadata();
+				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
 			metadata.organizeDate = newDate;
@@ -388,7 +387,7 @@ public class EyePhoto {
 	 *
 	 * @return
 	 */
-	public Metadata getImageMetadata() {
+	public JpegMetadata getImageMetadata() {
 		return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
 	}
 
@@ -398,7 +397,7 @@ public class EyePhoto {
 	 * @param metadata
 	 * @return true if successful
 	 */
-	public void storeImageMetadata(Metadata metadata) {
+	public void storeImageMetadata(JpegMetadata metadata) {
 		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
 	}
 
@@ -407,7 +406,7 @@ public class EyePhoto {
 	 *
 	 * @return
 	 */
-	public void updateMetadataWithDefaults(Metadata metadata) {
+	public void updateMetadataWithDefaults(JpegMetadata metadata) {
 		metadata.person = getPersonName();
 		metadata.organizeDate = getDate();
 		metadata.rightLeft = getRightLeft();
@@ -420,9 +419,9 @@ public class EyePhoto {
 	 * @return
 	 */
 	public void storeDefaultMetadata() {
-		Metadata metadata = getImageMetadata();
+		JpegMetadata metadata = getImageMetadata();
 		if (metadata == null) {
-			metadata = new Metadata();
+			metadata = new JpegMetadata();
 		}
 		updateMetadataWithDefaults(metadata);
 		storeImageMetadata(metadata);

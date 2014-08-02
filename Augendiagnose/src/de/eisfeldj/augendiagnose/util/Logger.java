@@ -4,14 +4,25 @@ import de.eisfeldj.augendiagnose.Application;
 import android.util.Log;
 
 /**
- * Utility class for debugging
+ * Utility class for debugging.
  */
-public class Logger {
+public final class Logger {
+
 	/**
-	 * Make a log entry
+	 * Hide default constructor.
 	 */
-	public static void log(String output) {
-		if(output == null) {
+	private Logger() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Make a log entry.
+	 *
+	 * @param output
+	 *            the content of th log entry.
+	 */
+	public static void log(final String output) {
+		if (output == null) {
 			Log.i(Application.TAG, "null");
 		}
 		else {

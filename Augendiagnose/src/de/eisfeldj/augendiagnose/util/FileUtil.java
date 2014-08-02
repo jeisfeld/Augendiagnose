@@ -17,7 +17,7 @@ public abstract class FileUtil {
 	/**
 	 * Determine the camera folder. There seems to be no Android API to work for real devices, so this is a best guess.
 	 *
-	 * @return
+	 * @return the default camera folder.
 	 */
 	public static String getDefaultCameraFolder() {
 		File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
@@ -45,16 +45,16 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * Copy a file
+	 * Copy a file.
 	 *
 	 * @param source
 	 *            The source file
 	 * @param target
 	 *            The target file
-	 * @return
+	 * @return true if the copying was successful.
 	 */
 	@SuppressWarnings("null")
-	public static boolean copyFile(File source, File target) {
+	public static boolean copyFile(final File source, final File target) {
 		FileInputStream inStream = null;
 		FileOutputStream outStream = null;
 		FileChannel inChannel = null;

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -24,25 +23,30 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPException;
 
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 
 /**
- * Helper clase to retrieve and save metadata in a JPEG file
+ * Helper clase to retrieve and save metadata in a JPEG file.
  */
-public abstract class JpegMetadataUtil {
+public final class JpegMetadataUtil {
 
 	/**
-	 * Log all Exif data of the file
+	 * Hide default constructor.
+	 */
+	private JpegMetadataUtil() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Log all Exif data of the file.
 	 *
 	 * @param imageFile
+	 *            the image file.
 	 * @throws ImageReadException
 	 * @throws IOException
 	 */
@@ -70,9 +74,10 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Log all XML data of the file
+	 * Log all XML data of the file.
 	 *
 	 * @param imageFile
+	 *            the file.
 	 * @throws ImageReadException
 	 * @throws IOException
 	 * @throws XMPException
@@ -83,13 +88,15 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Validate that the file is a JPEG file
+	 * Validate that the file is a JPEG file.
 	 *
 	 * @param jpegImageFileName
+	 *            the file to be validated.
 	 * @throws IOException
+	 *             thrown if the file is no jpg.
 	 * @throws ImageReadException
 	 */
-	protected static void checkJpeg(String jpegImageFileName) throws IOException, ImageReadException {
+	protected static void checkJpeg(final String jpegImageFileName) throws IOException, ImageReadException {
 		File file = new File(jpegImageFileName);
 		String mimeType = Imaging.getImageInfo(file).getMimeType();
 		if (!mimeType.equals("image/jpeg")) {
@@ -98,16 +105,17 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Retrieve the relevant metadata of an image file
+	 * Retrieve the relevant metadata of an image file.
 	 *
 	 * @param jpegImageFileName
-	 * @return
+	 *            the file for which metadata should be retrieved.
+	 * @return the metadata of the file.
 	 * @throws IOException
 	 * @throws ImageReadException
 	 */
-	public static Metadata getMetadata(final String jpegImageFileName) throws ImageReadException, IOException {
+	public static JpegMetadata getMetadata(final String jpegImageFileName) throws ImageReadException, IOException {
 		checkJpeg(jpegImageFileName);
-		Metadata result = new Metadata();
+		JpegMetadata result = new JpegMetadata();
 		final File imageFile = new File(jpegImageFileName);
 
 		// Retrieve XMP data
@@ -213,16 +221,18 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Change metadata of the image
+	 * Change metadata of the image (EXIF and XMP as far as applicable).
 	 *
 	 * @param jpegImageFileName
+	 *            the file for which metadata should be changed.
 	 * @param metadata
+	 *            the new metadata.
 	 * @throws IOException
 	 * @throws ImageReadException
 	 * @throws ImageWriteException
 	 * @throws XMPException
 	 */
-	public static void changeMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
+	public static void changeMetadata(final String jpegImageFileName, final JpegMetadata metadata) throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
 		if (changeJpegAllowed()) {
 			checkJpeg(jpegImageFileName);
@@ -235,22 +245,25 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Change the EXIF metadata
+	 * Change the EXIF metadata.
+	 *
+	 * @param jpegImageFileName
+	 *            the file for which metadata should be changed.
+	 * @param metadata
+	 *            the new metadata
+	 * @throws IOException
+	 * @throws ImageReadException
+	 * @throws ImageWriteException
 	 */
 	@SuppressWarnings("resource")
-	private static void changeExifMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
+	private static void changeExifMetadata(final String jpegImageFileName, final JpegMetadata metadata)
+			throws IOException,
 			ImageReadException, ImageWriteException {
 		File jpegImageFile = new File(jpegImageFileName);
 		String tempFileName = jpegImageFileName + ".temp";
 		File tempFile = new File(tempFileName);
 
-		if (tempFile.exists()) {
-			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
-			boolean success = tempFile.delete();
-			if (!success) {
-				Log.w(Application.TAG, "Failed to delete file" + tempFileName);
-			}
-		}
+		verifyTempFile(tempFile);
 
 		OutputStream os = null;
 		try {
@@ -313,22 +326,27 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Change the XMP metadata
+	 * Change the XMP metadata.
+	 *
+	 * @param jpegImageFileName
+	 *            the file for which metadata should be changed.
+	 * @param metadata
+	 *            the new metadata.
+	 *
+	 * @throws IOException
+	 * @throws ImageReadException
+	 * @throws ImageWriteException
+	 * @throws XMPException
 	 */
 	@SuppressWarnings("resource")
-	private static void changeXmpMetadata(final String jpegImageFileName, Metadata metadata) throws IOException,
+	private static void changeXmpMetadata(final String jpegImageFileName, final JpegMetadata metadata)
+			throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
 		File jpegImageFile = new File(jpegImageFileName);
 		String tempFileName = jpegImageFileName + ".temp";
 		File tempFile = new File(tempFileName);
 
-		if (tempFile.exists()) {
-			Log.w(Application.TAG, "tempFile " + tempFileName + " already exists - deleting it");
-			boolean success = tempFile.delete();
-			if (!success) {
-				Log.w(Application.TAG, "Failed to delete file" + tempFileName);
-			}
-		}
+		verifyTempFile(tempFile);
 
 		OutputStream os = null;
 		try {
@@ -379,9 +397,25 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Check if the settings allow a change of the JPEG
+	 * Verify if the temporary file already exists. If yes, delete it.
 	 *
-	 * @return
+	 * @param tempFile
+	 *            the temporary file.
+	 */
+	private static void verifyTempFile(final File tempFile) {
+		if (tempFile.exists()) {
+			Log.w(Application.TAG, "tempFile " + tempFile.getName() + " already exists - deleting it");
+			boolean success = tempFile.delete();
+			if (!success) {
+				Log.w(Application.TAG, "Failed to delete file" + tempFile.getName());
+			}
+		}
+	}
+
+	/**
+	 * Check if the settings allow a change of the JPEG.
+	 *
+	 * @return true if it is allowed to change image files.
 	 */
 	public static boolean changeJpegAllowed() {
 		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
@@ -389,194 +423,13 @@ public abstract class JpegMetadataUtil {
 	}
 
 	/**
-	 * Check if the settings allow a change of the EXIF data
+	 * Check if the settings allow a change of the EXIF data.
 	 *
-	 * @return
+	 * @return true if it is allowed to change EXIF data.
 	 */
 	private static boolean changeExifAllowed() {
 		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
 		return storeOption == 2;
-	}
-
-	/**
-	 * Helper class for storing the metadata to be written into the file
-	 */
-	public static class Metadata implements Parcelable {
-		public String title = null;
-		public String description = null;
-		public String subject = null;
-		public String comment = null;
-		public String person = null;
-		public Float xCenter = null;
-		public Float yCenter = null;
-		public Float overlayScaleFactor = null;
-		public Float xPosition = null;
-		public Float yPosition = null;
-		public Float zoomFactor = null;
-		public Date organizeDate = null;
-		public RightLeft rightLeft = null;
-		public Float brightness = null;
-		public Float contrast = null;
-
-		public Metadata() {
-
-		}
-
-		public boolean hasOverlayPosition() {
-			return xCenter != null && yCenter != null && overlayScaleFactor != null;
-		}
-
-		public boolean hasViewPosition() {
-			return xPosition != null && yPosition != null && zoomFactor != null;
-		}
-
-		public boolean hasBrightnessContrast() {
-			return brightness != null && contrast != null;
-		}
-
-		public void setXCenter(String value) {
-			xCenter = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getXCenterString() {
-			return xCenter == null ? null : xCenter.toString();
-		}
-
-		public void setYCenter(String value) {
-			yCenter = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getYCenterString() {
-			return yCenter == null ? null : yCenter.toString();
-		}
-
-		public void setOverlayScaleFactor(String value) {
-			overlayScaleFactor = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getOverlayScaleFactorString() {
-			return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
-		}
-
-		public void setXPosition(String value) {
-			xPosition = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getXPositionString() {
-			return xPosition == null ? null : xPosition.toString();
-		}
-
-		public void setYPosition(String value) {
-			yPosition = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getYPositionString() {
-			return yPosition == null ? null : yPosition.toString();
-		}
-
-		public void setZoomFactor(String value) {
-			zoomFactor = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getZoomFactorString() {
-			return zoomFactor == null ? null : zoomFactor.toString();
-		}
-
-		private long getOrganizeDateLong() {
-			return organizeDate == null ? 0 : organizeDate.getTime();
-		}
-
-		private void setOrganizeDateFromLong(long timestamp) {
-			organizeDate = timestamp == 0 ? null : new Date(timestamp);
-		}
-
-		public void setRightLeft(String value) {
-			rightLeft = value == null ? null : RightLeft.fromString(value);
-		}
-
-		public String getRightLeftString() {
-			return rightLeft == null ? null : rightLeft.toString();
-		}
-
-		public void setBrightness(String value) {
-			brightness = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getBrightnessString() {
-			return brightness == null ? null : brightness.toString();
-		}
-
-		public void setContrast(String value) {
-			contrast = value == null ? null : Float.parseFloat(value);
-		}
-
-		public String getContrastString() {
-			return contrast == null ? null : contrast.toString();
-		}
-
-		@Override
-		public String toString() {
-			StringBuffer str = new StringBuffer();
-			str.append("Title: " + title + "\n");
-			str.append("Description: " + description + "\n");
-			str.append("Subject: " + subject + "\n");
-			str.append("Comment: " + comment + "\n");
-			str.append("Person: " + person + "\n");
-			str.append("X-Position: " + xCenter + "\n");
-			str.append("Y-Position: " + yCenter + "\n");
-			str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
-			str.append("OrganizeDate: " + organizeDate + "\n");
-			str.append("RightLeft: " + rightLeft + "\n");
-			str.append("Brightness: " + brightness + "\n");
-			str.append("Contrast: " + contrast + "\n");
-			return str.toString();
-		}
-
-		@Override
-		public int describeContents() {
-			return 0;
-		}
-
-		@Override
-		public void writeToParcel(Parcel dest, int flags) {
-			dest.writeString(title);
-			dest.writeString(description);
-			dest.writeString(subject);
-			dest.writeString(comment);
-			dest.writeString(person);
-			dest.writeString(getXCenterString());
-			dest.writeString(getYCenterString());
-			dest.writeString(getOverlayScaleFactorString());
-			dest.writeLong(getOrganizeDateLong());
-			dest.writeString(getRightLeftString());
-			dest.writeString(getBrightnessString());
-			dest.writeString(getContrastString());
-		}
-
-		public static final Parcelable.Creator<Metadata> CREATOR = new Parcelable.Creator<Metadata>() {
-			@Override
-			public Metadata createFromParcel(Parcel in) {
-				Metadata metadata = new Metadata();
-				metadata.title = in.readString();
-				metadata.description = in.readString();
-				metadata.subject = in.readString();
-				metadata.comment = in.readString();
-				metadata.person = in.readString();
-				metadata.setXCenter(in.readString());
-				metadata.setYCenter(in.readString());
-				metadata.setOverlayScaleFactor(in.readString());
-				metadata.setOrganizeDateFromLong(in.readLong());
-				metadata.setRightLeft(in.readString());
-				metadata.setBrightness(in.readString());
-				metadata.setContrast(in.readString());
-				return metadata;
-			}
-
-			@Override
-			public Metadata[] newArray(int size) {
-				return new Metadata[size];
-			}
-		};
 	}
 
 }

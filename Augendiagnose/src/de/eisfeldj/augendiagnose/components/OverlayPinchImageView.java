@@ -25,8 +25,8 @@ import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
-import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.Metadata;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.JpegMetadata;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.
@@ -59,7 +59,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mContrast = 1f;
 
 	private Bitmap mBitmapSmall;
-	private Metadata mMetadata;
+	private JpegMetadata mMetadata;
 
 	private boolean mHasOverlayPosition = false;
 	private boolean mHasViewPosition = false;
@@ -662,7 +662,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *
 	 * @return
 	 */
-	public Metadata getMetadata() {
+	public JpegMetadata getMetadata() {
 		return mMetadata;
 	}
 

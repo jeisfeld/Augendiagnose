@@ -16,17 +16,37 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
 /**
- * Utility class for operations with images
+ * Utility class for operations with images.
  */
-public abstract class ImageUtil {
+public final class ImageUtil {
+	// JAVADOC:OFF
+	// Rotation angles
+	private static final int ROTATION_90 = 90;
+	private static final int ROTATION_180 = 180;
+	private static final int ROTATION_270 = 270;
+
+	// JAVADOC:ON
+
+	/**
+	 * Number of milliseconds for retry of getting bitmap.
+	 */
+	private static final long BITMAP_RETRY = 50;
+
+	/**
+	 * Hide default constructor.
+	 */
+	private ImageUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Get the date field with the EXIF date from the file If not existing, use the last modified date.
 	 *
 	 * @param path
 	 *            The file path of the image
+	 * @return the date stored in the EXIF data.
 	 */
-	public static Date getExifDate(String path) {
+	public static Date getExifDate(final String path) {
 		Date retrievedDate = null;
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -45,13 +65,13 @@ public abstract class ImageUtil {
 	}
 
 	/**
-	 * Retrieve the rotation angle from the Exif data of an image
+	 * Retrieve the rotation angle from the Exif data of an image.
 	 *
 	 * @param path
 	 *            The file path of the image
-	 * @return
+	 * @return the rotation stored in the exif data, mapped into degrees.
 	 */
-	public static int getExifRotation(String path) {
+	public static int getExifRotation(final String path) {
 		int rotation = 0;
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -59,13 +79,13 @@ public abstract class ImageUtil {
 
 			switch (orientation) {
 			case ExifInterface.ORIENTATION_ROTATE_270:
-				rotation = 270;
+				rotation = ROTATION_270;
 				break;
 			case ExifInterface.ORIENTATION_ROTATE_180:
-				rotation = 180;
+				rotation = ROTATION_180;
 				break;
 			case ExifInterface.ORIENTATION_ROTATE_90:
-				rotation = 90;
+				rotation = ROTATION_90;
 				break;
 			default:
 				break;
@@ -78,15 +98,15 @@ public abstract class ImageUtil {
 	}
 
 	/**
-	 * Return a bitmap of this photo
+	 * Return a bitmap of this photo.
 	 *
 	 * @param path
-	 *            The file path of the image
+	 *            The file path of the image.
 	 * @param maxSize
-	 *            The maximum size of this bitmap. If bigger, it will be resized
-	 * @return
+	 *            The maximum size of this bitmap. If bigger, it will be resized.
+	 * @return the bitmap.
 	 */
-	public static Bitmap getImageBitmap(String path, int maxSize) {
+	public static Bitmap getImageBitmap(final String path, final int maxSize) {
 		Bitmap bitmap = null;
 
 		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
@@ -101,7 +121,7 @@ public abstract class ImageUtil {
 			if (bitmap == null) {
 				// cannot create bitmap - try once more in case that the image was just in process of saving metadata
 				try {
-					Thread.sleep(50);
+					Thread.sleep(BITMAP_RETRY);
 				}
 				catch (InterruptedException e) {
 					// ignore exception
@@ -133,13 +153,15 @@ public abstract class ImageUtil {
 	}
 
 	/**
-	 * Utility to retrieve the sample size for BitmapFactory.decodeFile
+	 * Utility to retrieve the sample size for BitmapFactory.decodeFile.
 	 *
 	 * @param filepath
+	 *            the path of the bitmap.
 	 * @param targetSize
-	 * @return
+	 *            the target size of the bitmap
+	 * @return the sample size to be used.
 	 */
-	private static int getBitmapFactor(String filepath, int targetSize) {
+	private static int getBitmapFactor(final String filepath, final int targetSize) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filepath, options);
@@ -148,28 +170,28 @@ public abstract class ImageUtil {
 	}
 
 	/**
-	 * Rotate a bitmap
+	 * Rotate a bitmap.
 	 *
 	 * @param source
 	 *            The original bitmap
 	 * @param angle
 	 *            The rotation angle
-	 * @return
+	 * @return the rotated bitmap.
 	 */
-	public static Bitmap rotateBitmap(Bitmap source, float angle) {
+	public static Bitmap rotateBitmap(final Bitmap source, final float angle) {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
 	}
 
 	/**
-	 * Get Mime type from URI
+	 * Get Mime type from URI.
 	 *
 	 * @param uri
 	 *            The URI
-	 * @return
+	 * @return the mime type.
 	 */
-	public static String getMimeType(Uri uri) {
+	public static String getMimeType(final Uri uri) {
 		ContentResolver contentResolver = Application.getAppContext().getContentResolver();
 		String mimeType = contentResolver.getType(uri);
 		if (mimeType == null) {
@@ -183,20 +205,20 @@ public abstract class ImageUtil {
 	}
 
 	/**
-	 * Retrieves a dummy bitmap (for the case that an image file is not readable)
+	 * Retrieves a dummy bitmap (for the case that an image file is not readable).
 	 *
-	 * @return
+	 * @return the dummy bitmap.
 	 */
 	public static Bitmap getDummyBitmap() {
 		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.bad_file_format);
 	}
 
 	/**
-	 * File filter class to identify image files
+	 * File filter class to identify image files.
 	 */
 	public static class ImageFileFilter implements FileFilter {
 		@Override
-		public boolean accept(File file) {
+		public final boolean accept(final File file) {
 			Uri uri = Uri.fromFile(file);
 			return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
 		}

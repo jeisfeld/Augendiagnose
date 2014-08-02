@@ -59,7 +59,7 @@ public class XmpHandler {
 	private static boolean prepared = false;
 
 	/**
-	 * The XMP Metadata stored in the handler.
+	 * The XMP JpegMetadata stored in the handler.
 	 */
 	private XMPMeta xmpMeta;
 
