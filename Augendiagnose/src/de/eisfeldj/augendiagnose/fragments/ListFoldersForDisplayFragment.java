@@ -23,19 +23,19 @@ import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(listView);
 	}
 
 	@Override
-	public void onDestroyView() {
+	public final void onDestroyView() {
 		super.onDestroyView();
 		ImageSelectionAndDisplayHandler.clean();
 	}
 
 	@Override
-	protected void setOnItemClickListener() {
+	protected final void setOnItemClickListener() {
 		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
@@ -45,20 +45,20 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	 */
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(((TextView) view).getText().toString());
 		}
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_name_list, menu);
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public final boolean onContextItemSelected(final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_name_list) {
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 			final CharSequence name = ((TextView) info.targetView).getText();
@@ -72,12 +72,12 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 					private static final long serialVersionUID = -90397353402300863L;
 
 					@Override
-					public void onDialogPositiveClick(DialogFragment dialog) {
+					public void onDialogPositiveClick(final DialogFragment dialog) {
 						deleteFolder(name.toString());
 					}
 
 					@Override
-					public void onDialogNegativeClick(DialogFragment dialog) {
+					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing
 					}
 				};

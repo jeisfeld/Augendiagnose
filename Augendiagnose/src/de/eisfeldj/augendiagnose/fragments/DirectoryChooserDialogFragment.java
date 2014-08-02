@@ -40,32 +40,66 @@ import de.eisfeldj.augendiagnose.R;
  * Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
+	/**
+	 * The text view showing the current folder.
+	 */
 	private TextView mCurrentFolderView;
+
+	/**
+	 * The list view showing the sub-elements.
+	 */
 	private ListView mListView;
 
+	/**
+	 * The current folder.
+	 */
 	private String mDir = "";
+
+	/**
+	 * The sub-elements of the current folder.
+	 */
 	private List<String> mSubdirs = null;
+
+	/**
+	 * The list adapter handling the sub-elements of the current folder.
+	 */
 	private ArrayAdapter<String> mListAdapter = null;
 
+	/**
+	 * The backstack of last browsed folders.
+	 */
 	private Stack<String> mBackStack = new Stack<String>();
 
 	/**
-	 * Callback interface for selected directory
+	 * Callback interface for selected directory.
 	 */
 	public interface ChosenDirectoryListener extends Serializable {
-		public void onChosenDir(String chosenDir);
+		/**
+		 * Called when a folder is selected.
+		 *
+		 * @param chosenDir
+		 *            The selected folder.
+		 */
+		void onChosenDir(final String chosenDir);
 
-		public void onCancelled();
+		/**
+		 * Called when the dialog is cancelled.
+		 */
+		void onCancelled();
 	}
 
 	/**
-	 * Create a DirectoryChooserDialogFragment
+	 * Create a DirectoryChooserDialogFragment.
 	 *
 	 * @param activity
+	 *            The activity calling the dialog.
 	 * @param listener
+	 *            The callback listener reacting on the dialog response.
 	 * @param dir
+	 *            The start folder.
 	 */
-	public static void displayDirectoryChooserDialog(Activity activity, ChosenDirectoryListener listener, String dir) {
+	public static void displayDirectoryChooserDialog(final Activity activity, final ChosenDirectoryListener listener,
+			final String dir) {
 		DirectoryChooserDialogFragment fragment = new DirectoryChooserDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("dir", dir);
@@ -74,11 +108,11 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		fragment.show(activity.getFragmentManager(), DirectoryChooserDialogFragment.class.toString());
 	}
 
-	/**
-	 * Instantiate the view of the dialog
+	/*
+	 * Instantiate the view of the dialog.
 	 */
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 		// retrieve arguments
 
 		String dir = getArguments().getString("dir");
@@ -107,7 +141,8 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		dialogBuilder.setTitle(R.string.title_dialog_select_folder);
 
-		View layout = LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, new LinearLayout(context));
+		View layout =
+				LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, new LinearLayout(context));
 		dialogBuilder.setView(layout);
 
 		mCurrentFolderView = (TextView) layout.findViewById(R.id.textCurrentFolder);
@@ -119,7 +154,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				mBackStack.push(mDir);
 				mDir += "/" + mListAdapter.getItem(position);
 				updateDirectory();
@@ -130,7 +165,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		dialogBuilder.setPositiveButton(R.string.button_select, new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(final DialogInterface dialog, final int which) {
 				// Current directory chosen
 				if (listener != null) {
 					// Call registered listener supplied with the chosen directory
@@ -139,7 +174,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			}
 		}).setNegativeButton(R.string.button_cancel, new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(final DialogInterface dialog, final int which) {
 				if (listener != null) {
 					listener.onCancelled();
 				}
@@ -150,7 +185,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		dirsDialog.setOnKeyListener(new OnKeyListener() {
 			@Override
-			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+			public boolean onKey(final DialogInterface dialog, final int keyCode, final KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 					// Back button pressed - go to the last directory if existing - otherwise cancel the dialog.
 					if (mBackStack.size() == 0) {
@@ -179,9 +214,10 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	 * Get the list of subdirectories of the current directory. Returns ".." as first value if appropriate.
 	 *
 	 * @param dir
-	 * @return
+	 *            The current directory.
+	 * @return The list of subdirectories.
 	 */
-	private List<String> getDirectories(String dir) {
+	private List<String> getDirectories(final String dir) {
 		List<String> dirs = new ArrayList<String>();
 
 		if (!(dir == null || !dir.startsWith("/") || dir.equals("/"))) {
@@ -206,7 +242,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		Collections.sort(dirs, new Comparator<String>() {
 			@Override
-			public int compare(String o1, String o2) {
+			public int compare(final String o1, final String o2) {
 				return o1.compareTo(o2);
 			}
 		});
@@ -215,7 +251,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	}
 
 	/**
-	 * Update the current directory
+	 * Update the current directory.
 	 */
 	private void updateDirectory() {
 		try {
@@ -236,15 +272,15 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	}
 
 	/**
-	 * Create the list adapter for the list of folders
+	 * Create the list adapter for the list of folders.
 	 *
-	 * @param items
-	 * @return
+	 * @param items The list of folders.
+	 * @return The list adapter.
 	 */
-	private ArrayAdapter<String> createListAdapter(List<String> items) {
+	private ArrayAdapter<String> createListAdapter(final List<String> items) {
 		return new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, android.R.id.text1, items) {
 			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
+			public View getView(final int position, final View convertView, final ViewGroup parent) {
 				View v = super.getView(position, convertView, parent);
 
 				if (v instanceof TextView) {
@@ -259,9 +295,9 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	}
 
 	/**
-	 * Get the SD card directory
+	 * Get the SD card directory.
 	 *
-	 * @return
+	 * @return The SD card directory.
 	 */
 	private String getSdCardDirectory() {
 		String sdCardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();

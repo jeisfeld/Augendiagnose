@@ -21,75 +21,155 @@ import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpda
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
- * Variant of DisplayOneFragment that includes overlay handling
- * 
+ * Variant of DisplayOneFragment that includes overlay handling.
+ *
  * @author Joerg
  */
 public class DisplayImageFragment extends Fragment implements GuiElementUpdater {
+
+	/**
+	 * "Show utilities value" indicating that utilities should never be shown.
+	 */
+	protected static final int UTILITIES_DO_NOT_SHOW = 1;
+	/**
+	 * "Show utilities value" indicating that utilities should be shown only on fullscreen.
+	 */
+	protected static final int UTILITIES_SHOW_FULLSCREEN = 2;
+	/**
+	 * "Show utilities value" indicating that utilities should always be shown.
+	 */
+	protected static final int UTILITIES_SHOW_ALWAYS = 3;
+
+	/**
+	 * The resource key of the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
+	 */
 	protected static final String STRING_TYPE = "de.eisfeldj.augendiagnose.TYPE";
+	/**
+	 * The resource key of the file path.
+	 */
 	protected static final String STRING_FILE = "de.eisfeldj.augendiagnose.FILE";
+	/**
+	 * The resource key of the file resource.
+	 */
 	protected static final String STRING_FILERESOURCE = "de.eisfeldj.augendiagnose.FILERESOURCE";
+	/**
+	 * The resource kay of the image index (in case of multiple images).
+	 */
 	protected static final String STRING_IMAGEINDEX = "de.eisfeldj.augendiagnose.IMAGEINDEX";
+
+	/**
+	 * Type value set if the fragment shows an image by filename.
+	 */
 	protected static final int TYPE_FILENAME = 1;
+	/**
+	 * Type value set if the fragment shows an image by resource id.
+	 */
 	protected static final int TYPE_FILERESOURCE = 2;
 
-	protected int type;
-	protected int fileResource;
-	protected String file;
-	protected int imageIndex;
+	/**
+	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
+	 */
+	private int type;
 
+	/**
+	 * The file resource id.
+	 */
+	private int fileResource;
+
+	/**
+	 * The file path.
+	 */
+	private String file;
+
+	/**
+	 * The image index.
+	 */
+	private int imageIndex;
+
+	/**
+	 * The view displaying the image.
+	 */
 	private OverlayPinchImageView imageView;
+
+	/**
+	 * The maximum contrast allowed when changing the image contrast.
+	 */
 	private static final int CONTRAST_MAX = 5;
+	/**
+	 * The density of contrast levels.
+	 */
 	private static final int CONTRAST_DENSITY = 20;
 
+	/**
+	 * The number of overlay images.
+	 */
 	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
+
+	/**
+	 * The array of overlay buttons.
+	 */
 	private ToggleButton[] toggleOverlayButtons;
 
+	/**
+	 * The lock button.
+	 */
 	private ToggleButton lockButton;
+
+	/**
+	 * The brightness SeekBar.
+	 */
 	private SeekBar seekbarBrightness;
+
+	/**
+	 * The contrast SeekBar.
+	 */
 	private SeekBar seekbarContrast;
 
+	/**
+	 * A flag indicating if utilities (seekbars, buttons) should be displayed.
+	 */
 	private boolean showUtilities = true;
 
 	/**
-	 * Initialize the listFoldersFragment with the file name
-	 * 
-	 * @param text
-	 * @param imageIndex
+	 * Initialize the listFoldersFragment with the file name.
+	 *
+	 * @param initialFile
+	 *            the file path.
+	 * @param initialImageIndex
 	 *            The index of the view (required if there are multiple such fragments)
 	 * @return
 	 */
-	public void setParameters(String file, int imageIndex) {
+	public final void setParameters(final String initialFile, final int initialImageIndex) {
 		Bundle args = new Bundle();
-		args.putString(STRING_FILE, file);
+		args.putString(STRING_FILE, initialFile);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
-		args.putInt(STRING_IMAGEINDEX, imageIndex);
+		args.putInt(STRING_IMAGEINDEX, initialImageIndex);
 
 		setArguments(args);
 	}
 
 	/**
-	 * Initialize the listFoldersFragment with the file resource
-	 * 
-	 * @param text
-	 * @param imageIndex
+	 * Initialize the listFoldersFragment with the file resource.
+	 *
+	 * @param initialFileResource
+	 *            The file resource.
+	 * @param initialImageIndex
 	 *            The index of the view (required if there are multiple such fragments)
-	 * @return
 	 */
-	public void setParameters(int fileResource, int imageIndex) {
+	public final void setParameters(final int initialFileResource, final int initialImageIndex) {
 		Bundle args = new Bundle();
-		args.putInt(STRING_FILERESOURCE, fileResource);
+		args.putInt(STRING_FILERESOURCE, initialFileResource);
 		args.putInt(STRING_TYPE, TYPE_FILERESOURCE);
-		args.putInt(STRING_IMAGEINDEX, imageIndex);
+		args.putInt(STRING_IMAGEINDEX, initialImageIndex);
 
 		setArguments(args);
 	}
 
-	/**
-	 * Retrieve parameters
+	/*
+	 * Retrieve parameters.
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		type = getArguments().getInt(STRING_TYPE, -1);
@@ -98,11 +178,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		imageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
 	}
 
-	/**
-	 * Inflate View
+	/*
+	 * Inflate View.
 	 */
+	// OVERRIDABLE
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
@@ -111,11 +192,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		}
 	}
 
-	/**
-	 * Update data from view
+	/*
+	 * Update data from view.
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		if (savedInstanceState != null) {
@@ -133,17 +214,17 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
 		toggleOverlayButtons[1] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay1);
 		toggleOverlayButtons[2] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay2);
-		toggleOverlayButtons[3] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay3);
-		toggleOverlayButtons[4] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay4);
-		toggleOverlayButtons[5] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay5);
+		toggleOverlayButtons[3] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay3); // MAGIC_NUMBER
+		toggleOverlayButtons[4] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay4); // MAGIC_NUMBER
+		toggleOverlayButtons[5] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay5); // MAGIC_NUMBER
 
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
 		if (!Application.isAuthorized()) {
-			toggleOverlayButtons[4].setEnabled(false);
-			toggleOverlayButtons[4].setVisibility(View.GONE);
-			toggleOverlayButtons[5].setEnabled(false);
-			toggleOverlayButtons[5].setVisibility(View.GONE);
+			toggleOverlayButtons[4].setEnabled(false); // MAGIC_NUMBER
+			toggleOverlayButtons[4].setVisibility(View.GONE); // MAGIC_NUMBER
+			toggleOverlayButtons[5].setEnabled(false); // MAGIC_NUMBER
+			toggleOverlayButtons[5].setVisibility(View.GONE); // MAGIC_NUMBER
 		}
 
 		// Initialize the onClick listeners for the buttons
@@ -151,7 +232,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 			final int index = i;
 			toggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View v) {
+				public void onClick(final View v) {
 					onToggleOverlayClicked(v, index);
 				}
 			});
@@ -159,26 +240,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 
 		lockButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				onToggleLinkClicked(v);
 			}
 		});
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
-		seekbarBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		seekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				imageView.refresh(true);
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// do nothing
-			}
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
 				imageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
@@ -186,19 +257,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		seekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
 		seekbarContrast.setMax(CONTRAST_MAX * CONTRAST_DENSITY);
 		seekbarContrast.setProgress(CONTRAST_DENSITY);
-		seekbarContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		seekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				imageView.refresh(true);
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// do nothing
-			}
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
 				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
 			}
 		});
@@ -209,11 +270,14 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * Helper method for onClick actions for Button to toggle display of Overlays
-	 * 
+	 * Helper method for onClick actions for Button to toggle display of Overlays.
+	 *
 	 * @param view
+	 *            The overlay button.
+	 * @param position
+	 *            The number of the overlay button.
 	 */
-	public void onToggleOverlayClicked(View view, int position) {
+	public final void onToggleOverlayClicked(final View view, final int position) {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			if (position != i) {
 				toggleOverlayButtons[i].setChecked(false);
@@ -224,20 +288,21 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * onClick action for Button to switch link between overlay and image
-	 * 
+	 * onClick action for Button to switch link between overlay and image.
+	 *
 	 * @param view
+	 *            The view of the link button.
 	 */
-	public void onToggleLinkClicked(View view) {
+	public final void onToggleLinkClicked(final View view) {
 		ToggleButton button = (ToggleButton) view;
 		imageView.lockOverlay(button.isChecked(), true);
 	}
 
-	/**
-	 * Create the context menu
+	/*
+	 * Create the context menu.
 	 */
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_display_one, menu);
@@ -260,11 +325,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		((ContextMenuReferenceHolder) getActivity()).setContextMenuReference(this);
 	}
 
-	/**
-	 * Handle items in the context menu
+	/*
+	 * Handle items in the context menu.
 	 */
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public final boolean onContextItemSelected(final MenuItem item) {
 		Object contextMenuReference = ((ContextMenuReferenceHolder) getActivity()).getContextMenuReference();
 
 		if (contextMenuReference == this) {
@@ -302,21 +367,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * Store the comment in the image
-	 * 
+	 * Store the comment in the image.
+	 *
 	 * @param comment
+	 *            The comment text to be stored.
 	 */
-	public void storeComment(String comment) {
+	public final void storeComment(final String comment) {
 		imageView.storeComment(comment);
 	}
 
 	/**
-	 * Show or hide the utilities (overlay bar, scrollbars)
-	 * 
+	 * Show or hide the utilities (overlay bar, scrollbars).
+	 *
 	 * @param show
 	 *            If true, the utilities will be shown, otherwise hidden.
 	 */
-	protected void showUtilities(boolean show) {
+	protected final void showUtilities(final boolean show) {
 		if (show) {
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
@@ -332,9 +398,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * Get information if utilies should be shown according to default
+	 * Get information if utilies should be shown according to default.
+	 *
+	 * @return true if utilities should be shown by default.
 	 */
-	protected boolean getDefaultShowUtilities() {
+	protected final boolean getDefaultShowUtilities() {
 		int level = getDefaultShowUtilitiesValue();
 
 		return level >= getShowUtilitiesLimitLevel();
@@ -343,35 +411,39 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	/**
 	 * Return the level from which on the utilities are shown. 1 means: don't show. 2 means: show only on full screen. 3
 	 * means: show always.
-	 * 
-	 * @return
+	 *
+	 * @return The default limit level.
 	 */
+	// OVERRIDABLE
 	protected int getShowUtilitiesLimitLevel() {
-		return 2;
+		return UTILITIES_SHOW_FULLSCREEN;
 	}
 
 	/**
-	 * Get the value of indicating if utilities should be shown.
-	 * 
+	 * Get the value indicating if utilities should be shown.
+	 *
 	 * 1 means: don't show. 2 means: show only on full screen. 3 means: show always.
-	 * 
-	 * @return
+	 *
+	 * @return The value indicating if utilities should be shown.
 	 */
-	protected int getDefaultShowUtilitiesValue() {
+	private int getDefaultShowUtilitiesValue() {
 		int level = Application.getSharedPreferenceInt(R.string.key_internal_show_utilities, -1);
 
 		if (level == -1) {
 			// call this method only if no value is set
-			level = Application.isTablet() ? 3 : 2;
+			level = Application.isTablet() ? UTILITIES_SHOW_ALWAYS : UTILITIES_SHOW_FULLSCREEN;
 		}
 
 		return level;
 	}
 
 	/**
-	 * Update default for showing utilities
+	 * Update default for showing utilities.
+	 *
+	 * @param show
+	 *            true means that utilities should be shown.
 	 */
-	protected void updateDefaultShowUtilities(boolean show) {
+	private void updateDefaultShowUtilities(final boolean show) {
 		int level = getDefaultShowUtilitiesValue();
 
 		if (show && level < getShowUtilitiesLimitLevel()) {
@@ -385,15 +457,15 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", showUtilities);
 	}
 
 	/**
-	 * Initialize images - to be called after the views have restored instance state
+	 * Initialize images - to be called after the views have restored instance state.
 	 */
-	public void initializeImages() {
+	public final void initializeImages() {
 		if (type == TYPE_FILERESOURCE) {
 			imageView.setImage(fileResource, getActivity(), imageIndex);
 		}
@@ -407,9 +479,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	}
 
 	/**
-	 * Trigger redrawing of the imageView from outside
+	 * Trigger redrawing of the imageView from outside.
 	 */
-	public void requestLayout() {
+	public final void requestLayout() {
 		imageView.post(new Runnable() {
 			@Override
 			public void run() {
@@ -419,27 +491,42 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		});
 	}
 
+	/**
+	 * Base implementation of OnSeekBarChangeListener, used for brightness and contrast seekbars.
+	 */
+	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+		@Override
+		public void onStopTrackingTouch(final SeekBar seekBar) {
+			imageView.refresh(true);
+		}
+
+		@Override
+		public void onStartTrackingTouch(final SeekBar seekBar) {
+			// do nothing
+		}
+	}
+
 	// Implementation of GuiElementUpdater
 
 	@Override
-	public void setLockChecked(boolean checked) {
+	public final void setLockChecked(final boolean checked) {
 		lockButton.setChecked(checked);
 	}
 
 	@Override
-	public void updateSeekbarBrightness(float brightness) {
+	public final void updateSeekbarBrightness(final float brightness) {
 		float progress = (brightness + 1) * seekbarBrightness.getMax() / 2;
 		seekbarBrightness.setProgress(Float.valueOf(progress).intValue());
 	}
 
 	@Override
-	public void updateSeekbarContrast(float contrast) {
+	public final void updateSeekbarContrast(final float contrast) {
 		float progress = contrast * CONTRAST_DENSITY;
 		seekbarContrast.setProgress(Float.valueOf(progress).intValue());
 	}
 
 	@Override
-	public void resetOverlays() {
+	public final void resetOverlays() {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			toggleOverlayButtons[i].setChecked(false);
 		}

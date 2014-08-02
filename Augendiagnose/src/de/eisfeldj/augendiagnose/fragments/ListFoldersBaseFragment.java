@@ -31,69 +31,96 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 
 /**
- * Base listFoldersFragment to display the list of subfolders of a folder Abstract class - child classes determine the detailed
- * actions. The folders should contain eye photos (following the name policy).
+ * Base listFoldersFragment to display the list of subfolders of a folder Abstract class - child classes determine the
+ * detailed actions. The folders should contain eye photos (following the name policy).
  */
 public abstract class ListFoldersBaseFragment extends Fragment {
+	/**
+	 * The resource key of the parent folder.
+	 */
 	protected static final String STRING_FOLDER = "de.eisfeldj.augendiagnose.FOLDER";
-	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
-
-	protected File parentFolder;
-
-	protected ListView listView;
-	protected EditText editText;
-	protected ArrayAdapter<String> directoryListAdapter;
 
 	/**
-	 * Initialize the listFoldersFragment with parentFolder
-	 *
-	 * @param parentFolder
-	 * @return
+	 * The list of folder names which should be shown on top of the list.
 	 */
-	public void setParameters(String parentFolder) {
+	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
+
+	// PUBLIC_FIELDS:START
+
+	/**
+	 * The parent folder.
+	 */
+	protected File parentFolder;
+
+	/**
+	 * The list view containing the folders.
+	 */
+	protected ListView listView;
+
+	// PUBLIC_FIELDS:END
+
+	/**
+	 * The editText in which the name can be searched.
+	 */
+	private EditText editTextSearch;
+
+	/**
+	 * The array adapter displaying the list of names.
+	 */
+	private ArrayAdapter<String> directoryListAdapter;
+
+	/**
+	 * Initialize the listFoldersFragment with parentFolder.
+	 *
+	 * @param initialParentFolder
+	 *            The parent folder for which the fragment should be created.
+	 */
+	public final void setParameters(final String initialParentFolder) {
 		Bundle args = new Bundle();
-		args.putString(STRING_FOLDER, parentFolder);
+		args.putString(STRING_FOLDER, initialParentFolder);
 
 		setArguments(args);
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		Bundle args = getArguments();
 		parentFolder = new File(args.getString(STRING_FOLDER));
 	}
 
-	/**
+	/*
 	 * Inflate View
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_names, container, false);
 	}
 
+	// OVERRIDABLE
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		listView = (ListView) getView().findViewById(R.id.listViewNames);
 		createList();
 
-		editText = (EditText) getView().findViewById(R.id.searchName);
-		editText.addTextChangedListener(new TextWatcher() {
+		editTextSearch = (EditText) getView().findViewById(R.id.searchName);
+		editTextSearch.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 				directoryListAdapter.getFilter().filter(s.toString());
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 				// do nothing
 			}
 
 			@Override
-			public void afterTextChanged(Editable s) {
+			public void afterTextChanged(final Editable s) {
 				// do nothing
 			}
 		});
@@ -102,14 +129,14 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Listener for a short click on a list item
+	 * Listener for a short click on a list item.
 	 */
 	protected abstract void setOnItemClickListener();
 
 	/**
-	 * Fill the list of subfolders and create the list adapter
+	 * Fill the list of subfolders and create the list adapter.
 	 */
-	protected void createList() {
+	protected final void createList() {
 		List<String> folderNames = getFolderNames(parentFolder);
 		if (folderNames == null) {
 			DialogUtil.displayError(getActivity(), R.string.message_dialog_folder_does_not_exist, true,
@@ -130,12 +157,13 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * Get the list of subfolders, using getFileNameForSorting() for ordering.
 	 *
 	 * @param parentFolder
-	 * @return
+	 *            The parent folder.
+	 * @return The list of subfolders.
 	 */
-	public static List<String> getFolderNames(File parentFolder) {
+	public static final List<String> getFolderNames(final File parentFolder) {
 		File[] folders = parentFolder.listFiles(new FileFilter() {
 			@Override
-			public boolean accept(File pathname) {
+			public boolean accept(final File pathname) {
 				return pathname.isDirectory();
 			}
 		});
@@ -146,7 +174,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		Arrays.sort(folders, new Comparator<File>() {
 			@Override
-			public int compare(File f1, File f2) {
+			public int compare(final File f1, final File f2) {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
 		});
@@ -158,13 +186,13 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Helper method to return the name of the file for sorting
+	 * Helper method to return the name of the file for sorting.
 	 *
 	 * @param f
 	 *            The file
 	 * @return The name for Sorting
 	 */
-	private static String getFilenameForSorting(File f) {
+	private static String getFilenameForSorting(final File f) {
 		String name = f.getName().toUpperCase(Locale.getDefault());
 		if (FOLDERS_TOP.contains(name)) {
 			return "1" + name;
@@ -175,14 +203,16 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy)
+	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy).
 	 *
-	 * @param oldFileName
-	 * @param newFileName
+	 * @param oldName
+	 *            the old name.
+	 * @param newName
+	 *            the new name.
 	 */
-	protected void renameFolderAndFiles(String oldFileName, String newFileName) {
-		File oldFolder = new File(parentFolder, oldFileName.trim());
-		File newFolder = new File(parentFolder, newFileName.trim());
+	protected final void renameFolderAndFiles(final String oldName, final String newName) {
+		File oldFolder = new File(parentFolder, oldName.trim());
+		File newFolder = new File(parentFolder, newName.trim());
 
 		// rename folder and ensure that list is refreshed
 		boolean success = oldFolder.renameTo(newFolder);
@@ -204,7 +234,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 						oldFolder.getAbsolutePath());
 				continue;
 			}
-			if (!source.changePersonName(newFileName)) {
+			if (!source.changePersonName(newName)) {
 				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_file, false,
 						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
 			}
@@ -214,24 +244,25 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		if (getActivity() instanceof ListFoldersForDisplayActivity && Application.isTablet()) {
 			ListFoldersForDisplayActivity activity = (ListFoldersForDisplayActivity) getActivity();
 			activity.popBackStack();
-			activity.listPicturesForName(newFileName);
+			activity.listPicturesForName(newName);
 		}
 
 	}
 
 	/**
-	 * Delete a folder in the list, including all photos
+	 * Delete a folder in the list, including all photos.
 	 *
 	 * @param name
+	 *            the name for which the folder should be deleted.
 	 */
-	protected void deleteFolder(String name) {
+	protected final void deleteFolder(final String name) {
 		File folder = new File(parentFolder, name.trim());
 
 		// delete folder and ensure that list is refreshed
 		String[] children = folder.list();
 		for (int i = 0; i < children.length; i++) {
 			boolean success = new File(folder, children[i]).delete();
-			if(!success) {
+			if (!success) {
 				Log.w(Application.TAG, "Failed to delete file" + children[i]);
 			}
 		}
@@ -247,14 +278,14 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Show the dialog to change the selected name
+	 * Show the dialog to change the selected name.
 	 *
 	 * @param oldName
 	 *            The old name to be renamed
 	 * @param inputText
 	 *            The name to be initially displayed
 	 */
-	protected void showChangeNameDialog(final CharSequence oldName, final CharSequence inputText) {
+	protected final void showChangeNameDialog(final CharSequence oldName, final CharSequence inputText) {
 		DisplayChangeNameFragment fragment = new DisplayChangeNameFragment();
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence("inputText", inputText);
@@ -264,11 +295,11 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	}
 
 	/**
-	 * Fragment to change the name
+	 * Fragment to change the name.
 	 */
 	public static class DisplayChangeNameFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			final CharSequence inputText = getArguments().getCharSequence("inputText");
 			final CharSequence oldName = getArguments().getCharSequence("oldName");
 
@@ -288,14 +319,15 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 					.setView(input) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
-							activity.listFoldersFragment.renameFolderAndFiles(oldName.toString(), input.getText().toString());
+							activity.listFoldersFragment.renameFolderAndFiles(oldName.toString(), input.getText()
+									.toString());
 						}
 					});
 

@@ -12,7 +12,7 @@ import de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity;
  */
 public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment {
 	@Override
-	protected void setOnItemClickListener() {
+	protected final void setOnItemClickListener() {
 		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
@@ -21,7 +21,7 @@ public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment
 	 */
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		public final void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 			ListFoldersForDisplaySecondFragment fragment = ListFoldersForDisplaySecondFragment.this;
 			ListPicturesForSecondNameActivity.startActivity(fragment.getActivity(),
 					fragment.parentFolder.getAbsolutePath(), ((TextView) view).getText().toString());

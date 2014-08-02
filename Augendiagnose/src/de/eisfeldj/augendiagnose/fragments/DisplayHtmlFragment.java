@@ -8,40 +8,54 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import de.eisfeldj.augendiagnose.R;
 
+/**
+ * A fragment to display an HTML page (used for help screens).
+ */
 public class DisplayHtmlFragment extends Fragment {
 
+	/**
+	 * The style tag to be inserted into the HTML.
+	 */
 	private static final String STYLE = "<style type=\"text/css\">body{color: #fff}</style>";
+
+	/**
+	 * The resource key for the resource to be displayed (for storage in the bundle).
+	 */
 	private static final String STRING_RESOURCE = "de.eisfeldj.augendiagnose.RESOURCE";
 
+	/**
+	 * The resource id of the HTML String to be displayed.
+	 */
 	private int resource;
 
 	/**
-	 * Initialize the listFoldersFragment with the resource
+	 * Initialize the listFoldersFragment with the resource.
 	 *
-	 * @param text
-	 * @return
+	 * @param initialResource
+	 *            The resource id of the HTML to be displayed.
 	 */
-	public void setParameters(int resource) {
+	public final void setParameters(final int initialResource) {
 		Bundle args = new Bundle();
-		args.putInt(STRING_RESOURCE, resource);
+		args.putInt(STRING_RESOURCE, initialResource);
 
 		setArguments(args);
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		resource = getArguments().getInt(STRING_RESOURCE, -1);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_display_html, container, false);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);

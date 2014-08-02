@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.fragments;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
@@ -34,82 +32,91 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
  * directly, or another folder can be selected for a second picture.
  */
 public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment {
+	/**
+	 * The Button for selecting an additional picture.
+	 */
 	private Button buttonAdditionalPictures;
+
+	/**
+	 * The position in the context menu which has been selected.
+	 */
 	private int contextMenuPosition;
+
+	/**
+	 * The adapter displaying the list of pictures.
+	 */
 	private ListPicturesForNameArrayAdapter adapter;
+
+	/**
+	 * The date of the pictures - used in case of date change.
+	 */
 	private Calendar pictureDate = new GregorianCalendar();
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_name, container, false);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (dismiss) {
+		if (isDismiss()) {
 			return;
 		}
 
 		buttonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, eyePhotoPairs);
-		listview.setAdapter(adapter);
+		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+		getListView().setAdapter(adapter);
 	}
 
 	/**
-	 * Update the list of eye photo pairs
-	 * 
+	 * Update the list of eye photo pairs.
+	 *
 	 * @param eyePhotoPairs
 	 */
-	public void updateEyePhotoPairs() {
-		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
-		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name,
-						!Application.isTablet(), name);
-				return;
-			}
-		}
+	protected final void updateEyePhotoPairs() {
+		createAndStoreEyePhotoList(false);
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, eyePhotoPairs);
-		listview.setAdapter(adapter);
+		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+		getListView().setAdapter(adapter);
 	}
 
 	/**
-	 * Display the button "additional pictures" after one photo is selected
+	 * Display the button "additional pictures" after one photo is selected.
 	 */
-	public void activateButtonAdditionalPictures() {
+	public final void activateButtonAdditionalPictures() {
 		buttonAdditionalPictures.setVisibility(View.VISIBLE);
-		listview.invalidate();
+		getListView().invalidate();
 	}
 
 	/**
 	 * Undisplay the button "additional pictures" if photo selection has been removed.
 	 */
-	public void deactivateButtonAdditionalPictures() {
+	public final void deactivateButtonAdditionalPictures() {
 		buttonAdditionalPictures.setVisibility(View.GONE);
-		listview.invalidate();
+		getListView().invalidate();
 	}
 
-	/**
-	 * Create the context menu
+	/*
+	 * Create the context menu.
 	 */
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_picture_date, menu);
 		contextMenuPosition = adapter.getRow((TextView) v);
 	}
 
-	/**
-	 * Handle items in the context menu
+	/*
+	 * Handle items in the context menu.
 	 */
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public final boolean onContextItemSelected(final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_picture_date) {
-			final EyePhotoPair pairToDelete = eyePhotoPairs[contextMenuPosition];
+			final EyePhotoPair pairToDelete = getEyePhotoPairs()[contextMenuPosition];
 
 			switch (item.getItemId()) {
 			case R.id.action_delete_images:
@@ -117,7 +124,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 					private static final long serialVersionUID = -7137767075780390391L;
 
 					@Override
-					public void onDialogPositiveClick(DialogFragment dialog) {
+					public void onDialogPositiveClick(final DialogFragment dialog) {
 						// delete images
 						boolean success = pairToDelete.delete();
 						// update list of images
@@ -133,7 +140,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 					}
 
 					@Override
-					public void onDialogNegativeClick(DialogFragment dialog) {
+					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing
 					}
 				};
@@ -167,11 +174,11 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	}
 
 	/**
-	 * Fragment for the dialog to change the date
+	 * Fragment for the dialog to change the date.
 	 */
 	public static class DateChangeDialogFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");
 			int month = getArguments().getInt("Month");
 			int date = getArguments().getInt("Date");
@@ -181,7 +188,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			final ListPicturesForNameFragment fragment = ((ListPicturesForNameFragmentHolder) activity)
 					.getListPicturesForNameFragment();
 
-			final EyePhotoPair pairToUpdate = fragment.eyePhotoPairs[position];
+			final EyePhotoPair pairToUpdate = fragment.getEyePhotoPairs()[position];
 
 			final DatePickerDialog dialog = new DatePickerDialog(getActivity(), null, year, month, date);
 
@@ -192,7 +199,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.button_ok), //
 					new OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialogInterface, int which) {
+						public void onClick(final DialogInterface dialogInterface, final int which) {
 							int yearSelected = dialog.getDatePicker().getYear();
 							int monthOfYear = dialog.getDatePicker().getMonth();
 							int dayOfMonth = dialog.getDatePicker().getDayOfMonth();
@@ -216,13 +223,24 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	}
 
 	/**
-	 * Interface to be implemented by activities running this listFoldersFragment. Required for communication with context menu
-	 * dialogs.
+	 * Interface to be implemented by activities running this listFoldersFragment. Required for communication with
+	 * context menu dialogs.
 	 */
 	public interface ListPicturesForNameFragmentHolder {
-		public ListPicturesForNameFragment getListPicturesForNameFragment();
+		/**
+		 * Get the ListPicturesForNameFragment.
+		 *
+		 * @return the fragment.
+		 */
+		ListPicturesForNameFragment getListPicturesForNameFragment();
 
-		public void setListPicturesForNameFragment(ListPicturesForNameFragment fragment);
+		/**
+		 * Set the ListPicturesForNameFragment.
+		 *
+		 * @param fragment
+		 *            the fragment.
+		 */
+		void setListPicturesForNameFragment(final ListPicturesForNameFragment fragment);
 	}
 
 }

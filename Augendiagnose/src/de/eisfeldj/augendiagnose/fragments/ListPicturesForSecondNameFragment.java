@@ -13,20 +13,19 @@ import de.eisfeldj.augendiagnose.components.ListPicturesForSecondNameArrayAdapte
  */
 public class ListPicturesForSecondNameFragment extends ListPicturesForNameBaseFragment {
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_second_name, container, false);
 	}
 
-
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (dismiss) {
+		if (isDismiss()) {
 			return;
 		}
 
-		listview.setAdapter(new ListPicturesForSecondNameArrayAdapter(getActivity(), eyePhotoPairs));
+		getListView().setAdapter(new ListPicturesForSecondNameArrayAdapter(getActivity(), getEyePhotoPairs()));
 	}
-
 
 }

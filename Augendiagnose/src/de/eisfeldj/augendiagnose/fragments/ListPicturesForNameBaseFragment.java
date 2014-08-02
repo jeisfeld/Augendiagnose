@@ -19,37 +19,61 @@ import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 
 /**
- * Base listFoldersFragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
- * detailed actions.
+ * Base listFoldersFragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes
+ * determine the detailed actions.
  */
 public abstract class ListPicturesForNameBaseFragment extends Fragment {
+	/**
+	 * The resource key of the name.
+	 */
 	private static final String STRING_NAME = "de.eisfeldj.augendiagnose.NAME";
+	/**
+	 * The resource key of the parent folder.
+	 */
 	private static final String STRING_PARENTFOLDER = "de.eisfeldj.augendiagnose.PARENTFOLDER";
 
-	public String parentFolder;
-	protected String name;
-	protected boolean dismiss = false;
-
-	protected ListView listview;
-	protected EyePhotoPair[] eyePhotoPairs;
+	/**
+	 * The parent folder.
+	 */
+	private String parentFolder;
+	/**
+	 * The name for which the eye photos should be displayed.
+	 */
+	private String name;
 
 	/**
-	 * Initialize the listFoldersFragment with parentFolder and name
-	 *
-	 * @param parentFolder
-	 * @param name
-	 * @return
+	 * Flag indicating that the fragment should be dismissed because there are no pictures.
 	 */
-	public void setParameters(String parentFolder, String name) {
+	private boolean dismiss = false;
+
+	/**
+	 * The list view showing the pictures.
+	 */
+	private ListView listview;
+
+	/**
+	 * The array of eye photo pairs.
+	 */
+	private EyePhotoPair[] eyePhotoPairs;
+
+	/**
+	 * Initialize the listFoldersFragment with parentFolder and name.
+	 *
+	 * @param initialParentFolder
+	 *            The parent folder
+	 * @param initialName
+	 *            the name
+	 */
+	public final void setParameters(final String initialParentFolder, final String initialName) {
 		Bundle args = new Bundle();
-		args.putString(STRING_PARENTFOLDER, parentFolder);
-		args.putString(STRING_NAME, name);
+		args.putString(STRING_PARENTFOLDER, initialParentFolder);
+		args.putString(STRING_NAME, initialName);
 
 		setArguments(args);
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		Bundle args = getArguments();
@@ -58,21 +82,15 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		parentFolder = args.getString(STRING_PARENTFOLDER);
 	}
 
+	// OVERRIDABLE
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		TextView headerNameView = (TextView) getView().findViewById(R.id.textTitleName);
 		headerNameView.setText(name);
 
-		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
-
-		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !Application.isTablet(),
-					name);
-			dismiss = true;
-			return;
-		}
+		createAndStoreEyePhotoList(true);
 
 		listview = (ListView) getView().findViewById(R.id.listViewForName);
 
@@ -84,11 +102,11 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
 	 *
-	 * @param the
-	 *            folder where the photos are located.
-	 * @return
+	 * @param folder
+	 *            the folder where the photos are located.
+	 * @return The list of eye photo pairs.
 	 */
-	protected EyePhotoPair[] createEyePhotoList(File folder) {
+	private EyePhotoPair[] createEyePhotoList(final File folder) {
 		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
@@ -129,6 +147,45 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		}
 
 		return eyePhotoMap2.values().toArray(new EyePhotoPair[eyePhotoMap2.size()]);
+	}
+
+	/**
+	 * Create the list of eye photo pairs and store them.
+	 *
+	 * @param dismissIfEmpty
+	 *            Dismiss fragment in case of no photos?
+	 */
+	protected final void createAndStoreEyePhotoList(final boolean dismissIfEmpty) {
+		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
+
+		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !Application.isTablet(),
+					name);
+			if (dismissIfEmpty) {
+				dismiss = true;
+			}
+			return;
+		}
+	}
+
+	public final String getParentFolder() {
+		return parentFolder;
+	}
+
+	protected final String getName() {
+		return name;
+	}
+
+	protected final boolean isDismiss() {
+		return dismiss;
+	}
+
+	protected final ListView getListView() {
+		return listview;
+	}
+
+	protected final EyePhotoPair[] getEyePhotoPairs() {
+		return eyePhotoPairs;
 	}
 
 }

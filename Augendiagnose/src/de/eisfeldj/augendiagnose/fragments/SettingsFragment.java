@@ -13,7 +13,7 @@ import de.eisfeldj.augendiagnose.activities.SettingsActivity;
  */
 public class SettingsFragment extends PreferenceFragment {
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Load the preferences from an XML resource
@@ -28,8 +28,11 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Binds a preference's summary to its value. More specifically, when the preference's value is changed, its summary
 	 * (line of text below the preference title) is updated to reflect the value. The summary is also immediately
 	 * updated upon calling this method. The exact display format is dependent on the type of preference.
+	 *
+	 * @param preference
+	 *            The preference to be bound.
 	 */
-	private static void bindPreferenceSummaryToValue(Preference preference) {
+	private static void bindPreferenceSummaryToValue(final Preference preference) {
 		// Set the listener to watch for value changes.
 		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
@@ -40,42 +43,44 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
-	 * Helper method for easier cal of bindPreferenceSummaryToValue.
-	 * 
+	 * Helper method for easier call of {@link #bindPreferenceSummaryToValue(android.preference.Preference)}.
+	 *
 	 * @param preferenceKey
+	 *            The key of the preference.
 	 */
-	private void bindPreferenceSummaryToValue(int preferenceKey) {
+	private void bindPreferenceSummaryToValue(final int preferenceKey) {
 		bindPreferenceSummaryToValue(findPreference(getString(preferenceKey)));
 	}
 
 	/**
 	 * A preference value change listener that updates the preference's summary to reflect its new value.
 	 */
-	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-		@Override
-		public boolean onPreferenceChange(Preference preference, Object value) {
-			String stringValue = value.toString();
+	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
+			new Preference.OnPreferenceChangeListener() {
+				@Override
+				public boolean onPreferenceChange(final Preference preference, final Object value) {
+					String stringValue = value.toString();
 
-			if (preference.getClass().equals(ListPreference.class)) {
-				// For list preferences (except customized ones), look up the correct display value in
-				// the preference's 'entries' list.
-				ListPreference listPreference = (ListPreference) preference;
-				int index = listPreference.findIndexOfValue(stringValue);
+					if (preference.getClass().equals(ListPreference.class)) {
+						// For list preferences (except customized ones), look up the correct display value in
+						// the preference's 'entries' list.
+						ListPreference listPreference = (ListPreference) preference;
+						int index = listPreference.findIndexOfValue(stringValue);
 
-				preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
-			}
-			else {
-				// For all other preferences, set the summary to the value's
-				// simple string representation.
-				preference.setSummary(stringValue);
+						preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
+					}
+					else {
+						// For all other preferences, set the summary to the value's
+						// simple string representation.
+						preference.setSummary(stringValue);
 
-			}
+					}
 
-			// For maxBitmapSize, check format and inform PinchImageView
-			if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
-				SettingsActivity.pushMaxBitmapSize(stringValue);
-			}
-			return true;
-		}
-	};
+					// For maxBitmapSize, check format and inform PinchImageView
+					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
+						SettingsActivity.pushMaxBitmapSize(stringValue);
+					}
+					return true;
+				}
+			};
 }

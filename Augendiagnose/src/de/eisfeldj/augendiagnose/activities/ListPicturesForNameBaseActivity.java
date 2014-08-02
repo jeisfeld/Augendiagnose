@@ -44,10 +44,10 @@ public abstract class ListPicturesForNameBaseActivity extends Activity {
 
 	/**
 	 * onClick action for Button "additional pictures"
-	 * 
+	 *
 	 * @param view
 	 */
 	public void selectDifferentPictureActivity(View view) {
-		ListFoldersForDisplaySecondActivity.startActivity(this, fragment.parentFolder);
+		ListFoldersForDisplaySecondActivity.startActivity(this, fragment.getParentFolder());
 	}
 }

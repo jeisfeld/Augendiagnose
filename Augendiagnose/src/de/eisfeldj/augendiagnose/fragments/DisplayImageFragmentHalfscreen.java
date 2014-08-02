@@ -8,17 +8,15 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
 /**
- * Variant of DisplayImageFragment that is intended for a half screen
- * 
+ * Variant of DisplayImageFragment that is intended for a half screen.
+ *
  * @author Joerg
  */
 public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 
-	/**
-	 * Inflate View
-	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
 			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}
@@ -27,15 +25,9 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 		}
 	}
 
-	/**
-	 * Return the level from which on the utilities are shown. 1 means: don't show. 2 means: show only on full screen. 3
-	 * means: show always.
-	 * 
-	 * @return
-	 */
 	@Override
-	protected int getShowUtilitiesLimitLevel() {
-		return 3;
+	protected final int getShowUtilitiesLimitLevel() {
+		return UTILITIES_SHOW_ALWAYS;
 	}
 
 }
