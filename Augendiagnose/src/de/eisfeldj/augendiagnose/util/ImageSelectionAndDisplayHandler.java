@@ -13,11 +13,7 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 /**
  * A class handling the selection of up to two pictures for display, and the display of these pictures.
  */
-public final class ImageSelectionAndDisplayHandler {
-	/**
-	 * The selected view.
-	 */
-	private EyeImageView selectedView = null;
+public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHandler {
 	/**
 	 * The activity for first selection.
 	 */
@@ -48,10 +44,10 @@ public final class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Hide default constructor.
+	 * Hide default constructor, to ensure singleton use.
 	 */
 	private ImageSelectionAndDisplayHandler() {
-		throw new UnsupportedOperationException();
+		// default constructor
 	}
 
 	/**
@@ -162,27 +158,12 @@ public final class ImageSelectionAndDisplayHandler {
 	}
 
 	/**
-	 * Change the highlighting setting of the selected view.
-	 *
-	 * @param highlight
-	 *            true if the view should be highlighted.
-	 */
-	private void highlightSelectedView(final boolean highlight) {
-		if (highlight) {
-			selectedView.setBackgroundColor(activity.getResources().getColor(android.R.color.holo_orange_light));
-		}
-		else {
-			selectedView.setBackgroundColor(activity.getResources().getColor(android.R.color.transparent));
-		}
-	}
-
-	/**
 	 * Unselect the selected view.
 	 */
+	@Override
 	public void cleanSelectedView() {
 		if (selectedView != null) {
-			highlightSelectedView(false);
-			selectedView = null;
+			super.cleanSelectedView();
 
 			if (fragment != null) {
 				fragment.deactivateButtonAdditionalPictures();
@@ -196,9 +177,9 @@ public final class ImageSelectionAndDisplayHandler {
 	 * @param view
 	 *            the view to be selected.
 	 */
-	private void selectView(final EyeImageView view) {
-		selectedView = view;
-		highlightSelectedView(true);
+	@Override
+	protected void selectView(final EyeImageView view) {
+		super.selectView(view);
 
 		if (fragment != null) {
 			fragment.activateButtonAdditionalPictures();
@@ -217,5 +198,10 @@ public final class ImageSelectionAndDisplayHandler {
 		else {
 			return selectedView.getEyePhoto().getAbsolutePath();
 		}
+	}
+
+	@Override
+	protected Activity getActivity() {
+		return activity;
 	}
 }

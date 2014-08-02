@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.util;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -9,15 +10,12 @@ import de.eisfeldj.augendiagnose.components.EyeImageView;
 /**
  * A class handling the selection two pictures, returning the pictures.
  */
-public final class TwoImageSelectionHandler {
+public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
-	 * The view containing the first selected image.
-	 */
-	private EyeImageView selectedView = null;
-	/**
-	 * A reference to the activity.
+	 * The activity for selection.
 	 */
 	private SelectTwoPicturesActivity activity = null;
+
 	/**
 	 * A holder of the TwoImageSelectionHandler as singleton.
 	 */
@@ -36,10 +34,10 @@ public final class TwoImageSelectionHandler {
 	}
 
 	/**
-	 * Make constructor private to ensure singleton use.
+	 * Hide default constructor, to ensure singleton use.
 	 */
 	private TwoImageSelectionHandler() {
-		// Ensure handling as singleton
+		// default constructor
 	}
 
 	/**
@@ -82,7 +80,7 @@ public final class TwoImageSelectionHandler {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View v, final int position, final long id) {
 				if (selectedView == null) {
-					selectView(v);
+					selectView((EyeImageView) v);
 				}
 				else if (selectedView == v) {
 					cleanSelectedView();
@@ -97,47 +95,20 @@ public final class TwoImageSelectionHandler {
 	}
 
 	/**
-	 * Change highlight setting of the selected view.
-	 *
-	 * @param highlight indicator if the view should be highlighted
-	 */
-	private void highlightSelectedView(final boolean highlight) {
-		if (highlight) {
-			selectedView.setBackgroundColor(activity.getResources().getColor(android.R.color.holo_orange_light));
-		}
-		else {
-			selectedView.setBackgroundColor(activity.getResources().getColor(android.R.color.transparent));
-		}
-	}
-
-	/**
-	 * Unselect the selected view.
-	 */
-	public void cleanSelectedView() {
-		if (selectedView != null) {
-			highlightSelectedView(false);
-			selectedView = null;
-		}
-	}
-
-	/**
-	 * Select a specific view.
-	 *
-	 * @param view the view to be selected.
-	 */
-	private void selectView(final View view) {
-		selectedView = (EyeImageView) view;
-		highlightSelectedView(true);
-	}
-
-	/**
 	 * Return the paths of the two selected files to the parent activity.
 	 *
-	 * @param view1 the first selected path.
-	 * @param view2 the second selected path.
+	 * @param view1
+	 *            the first selected path.
+	 * @param view2
+	 *            the second selected path.
 	 */
 	private void createResponse(final EyeImageView view1, final EyeImageView view2) {
-		activity.returnResult(view1.getEyePhoto().getAbsolutePath(), view2.getEyePhoto().getAbsolutePath());
+		activity.returnResult(view1.getEyePhoto().getAbsolutePath(), view2.getEyePhoto()
+				.getAbsolutePath());
 	}
 
+	@Override
+	protected Activity getActivity() {
+		return activity;
+	}
 }

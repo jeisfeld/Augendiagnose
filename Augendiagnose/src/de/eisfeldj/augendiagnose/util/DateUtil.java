@@ -6,41 +6,62 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public abstract class DateUtil {
+/**
+ * Utility class for handling dates.
+ */
+public final class DateUtil {
+	/**
+	 * The date format to be used for display.
+	 *
+	 * TODO: use locale default format
+	 */
+	private static final String DATE_FORMAT_DISPLAY = "d. MMMM yyyy";
 
 	/**
-	 * Transfer a date String into a date object, using a given date format
-	 * 
+	 * Hide default constructor.
+	 */
+	private DateUtil() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Transfer a date String into a date object, using a given date format.
+	 *
 	 * @param date
+	 *            the date string
 	 * @param format
-	 * @return
+	 *            the date format
+	 * @return the date object
 	 * @throws ParseException
 	 */
-	public static Date parse(String date, String format) throws ParseException {
+	public static Date parse(final String date, final String format) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
 		return dateFormat.parse(date);
 	}
 
 	/**
-	 * Format a date object into a date String using a given date format
-	 * 
+	 * Format a date object into a date String using a given date format.
+	 *
 	 * @param date
+	 *            the date object
 	 * @param format
-	 * @return
+	 *            the date format
+	 * @return the formatted date
 	 */
-	public static String format(Date date, String format) {
+	public static String format(final Date date, final String format) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
 		return dateFormat.format(date);
 	}
 
 	/**
-	 * Get display format of the date
-	 * 
+	 * Get display format of the date.
+	 *
 	 * @param calendar
-	 * @return
+	 *            the date as calendar object
+	 * @return the date formatted for display
 	 */
-	public static String getDisplayDate(Calendar calendar) {
-		return format(calendar.getTime(), "d. MMMM yyyy");
+	public static String getDisplayDate(final Calendar calendar) {
+		return format(calendar.getTime(), DATE_FORMAT_DISPLAY);
 	}
 
 }

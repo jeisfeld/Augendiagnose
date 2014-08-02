@@ -17,12 +17,12 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
 
 /**
- * Helper class to show standard dialogs
+ * Helper class to show standard dialogs.
  */
 public abstract class DialogUtil {
 	/**
-	 * Display an error and go back to the current activity
-	 * 
+	 * Display an error and go back to the current activity.
+	 *
 	 * @param activity
 	 *            the current activity
 	 * @param resource
@@ -32,7 +32,8 @@ public abstract class DialogUtil {
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayError(final Activity activity, int resource, boolean finishActivity, Object... args) {
+	public static void displayError(final Activity activity, final int resource, final boolean finishActivity,
+			final Object... args) {
 		DialogFragment fragment;
 		if (finishActivity) {
 			fragment = new DisplayErrorDialogAndReturnFragment();
@@ -49,33 +50,36 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Display an error just as toast
-	 * 
-	 * @param activity
-	 *            the current activity
+	 * Display an error just as toast.
+	 *
+	 * @param context
+	 *            the current activity or context
 	 * @param resource
 	 *            the error message
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayErrorAsToast(final Context context, int resource, Object... args) {
+	public static void displayErrorAsToast(final Context context, final int resource, final Object... args) {
 		String message = String.format(context.getString(resource), args);
 		Log.w(Application.TAG, "Toast message: " + message);
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
 	/**
-	 * Display a confirmation message asking for cancel or ok
-	 * 
+	 * Display a confirmation message asking for cancel or ok.
+	 *
 	 * @param activity
 	 *            the current activity
+	 * @param listener
+	 *            The listener waiting for the response
 	 * @param resource
 	 *            the confirmation message
 	 * @param args
 	 *            arguments for the confirmation message
 	 */
-	public static void displayDeleteConfirmationMessage(final Activity activity, ConfirmDeleteDialogListener listener,
-			int resource, Object... args) {
+	public static void displayDeleteConfirmationMessage(final Activity activity,
+			final ConfirmDeleteDialogListener listener,
+			final int resource, final Object... args) {
 		ConfirmDeleteDialogFragment fragment = new ConfirmDeleteDialogFragment();
 		String message = String.format(activity.getString(resource), args);
 		Bundle bundle = new Bundle();
@@ -87,15 +91,13 @@ public abstract class DialogUtil {
 
 	/**
 	 * Display an error and stop the activity - return to parent activity.
-	 * 
+	 *
 	 * @param activity
 	 *            the current activity
-	 * @param resource
+	 * @param message
 	 *            the error message
-	 * @param args
-	 *            arguments for the error message
 	 */
-	public static void displayReleaseNotes(final Activity activity, String message) {
+	public static void displayReleaseNotes(final Activity activity, final String message) {
 		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("message", message);
@@ -104,8 +106,8 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Display release notes
-	 * 
+	 * Display release notes.
+	 *
 	 * @param activity
 	 *            the triggering activity
 	 * @param firstStart
@@ -115,7 +117,8 @@ public abstract class DialogUtil {
 	 * @param toVersion
 	 *            last version to which to show release notes
 	 */
-	public static void displayReleaseNotes(final Activity activity, boolean firstStart, int fromVersion, int toVersion) {
+	public static void displayReleaseNotes(final Activity activity, final boolean firstStart, final int fromVersion,
+			final int toVersion) {
 		StringBuffer message = new StringBuffer();
 		if (firstStart) {
 			message.append(activity.getString(R.string.releasenotes_first_usage));
@@ -144,11 +147,11 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Fragment to display an error and go back to the current activity
+	 * Fragment to display an error and go back to the current activity.
 	 */
 	public static class DisplayErrorDialogFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString("message");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -156,7 +159,7 @@ public abstract class DialogUtil {
 					.setMessage(message) //
 					.setPositiveButton(R.string.button_back, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							dialog.dismiss();
 						}
 					});
@@ -169,7 +172,7 @@ public abstract class DialogUtil {
 	 */
 	public static class DisplayErrorDialogAndReturnFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString("message");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -177,7 +180,7 @@ public abstract class DialogUtil {
 					.setMessage(message) //
 					.setPositiveButton(R.string.button_back, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							getActivity().finish();
 						}
 					});
@@ -186,7 +189,7 @@ public abstract class DialogUtil {
 		}
 
 		@Override
-		public void onDismiss(DialogInterface dialog) {
+		public final void onDismiss(final DialogInterface dialog) {
 			super.onDismiss(dialog);
 			getActivity().finish();
 		}
@@ -197,7 +200,7 @@ public abstract class DialogUtil {
 	 */
 	public static class DisplayReleaseNotesFragment extends DialogFragment {
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString("message");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -205,12 +208,12 @@ public abstract class DialogUtil {
 					.setMessage(Html.fromHtml(message)) //
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							int version = Application.getVersion();
 							Application.setSharedPreferenceString(R.string.key_internal_stored_version,
 									Integer.toString(version));
@@ -222,21 +225,33 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Fragment to display a confirmation message
+	 * Fragment to display a confirmation message.
 	 */
 	public static class ConfirmDeleteDialogFragment extends DialogFragment {
-		/*
-		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in order to
-		 * receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
+		/**
+		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
+		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
 		 */
 		public interface ConfirmDeleteDialogListener extends Serializable {
-			public void onDialogPositiveClick(DialogFragment dialog);
+			/**
+			 * Callback method for positive click from the confirmation dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogPositiveClick(final DialogFragment dialog);
 
-			public void onDialogNegativeClick(DialogFragment dialog);
+			/**
+			 * Callback method for negative click from the confirmation dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogNegativeClick(final DialogFragment dialog);
 		}
 
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString("message");
 			final ConfirmDeleteDialogListener listener = (ConfirmDeleteDialogListener) getArguments().getSerializable(
 					"listener");
@@ -246,14 +261,14 @@ public abstract class DialogUtil {
 					.setMessage(message) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the positive button event back to the host activity
 							listener.onDialogNegativeClick(ConfirmDeleteDialogFragment.this);
 						}
 					}) //
 					.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int id) {
+						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the negative button event back to the host activity
 							listener.onDialogPositiveClick(ConfirmDeleteDialogFragment.this);
 						}

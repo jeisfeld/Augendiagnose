@@ -16,18 +16,39 @@ import android.widget.FrameLayout;
  * For more information, see https://code.google.com/p/android/issues/detail?id=5497 To use this class, simply invoke
  * assistActivity() on an Activity that already has its content view set.
  */
-public class AndroidBug5497Workaround {
+public final class AndroidBug5497Workaround {
+
+	/**
+	 * Assumed minimum portion that the keyboard fills vertically.
+	 */
+	private static final float MIN_KEYBOARD_SIZE = .1f;
+
+	/**
+	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
+	 *
+	 * @param activity
+	 *            the activity which uses the workaround.
+	 */
 	@SuppressWarnings("unused")
-	public static void assistActivity(Activity activity) {
+	public static void assistActivity(final Activity activity) {
 		new AndroidBug5497Workaround(activity);
 	}
 
+	// JAVADOC:OFF
 	private View mChildOfContent;
 	private int usableHeightPrevious;
 	private FrameLayout.LayoutParams frameLayoutParams;
 	private ActivityWithExplicitLayoutTrigger activityWithLayoutTrigger = null;
 
-	private AndroidBug5497Workaround(Activity activity) {
+	// JAVADOC:ON
+
+	/**
+	 * Constructor, adding a listener to change the global layout if required.
+	 *
+	 * @param activity
+	 *            the activity which uses the workaround.
+	 */
+	private AndroidBug5497Workaround(final Activity activity) {
 		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
 		mChildOfContent = content.getChildAt(0);
 		mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -43,12 +64,15 @@ public class AndroidBug5497Workaround {
 		}
 	}
 
+	/**
+	 * Resize the view, as the keyboard may have appeared or vanished.
+	 */
 	private void possiblyResizeChildOfContent() {
 		int usableHeightNow = computeUsableHeight();
 		if (usableHeightNow != usableHeightPrevious) {
 			int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
 			int heightDifference = usableHeightSansKeyboard - usableHeightNow;
-			if (heightDifference > (usableHeightSansKeyboard / 8)) {
+			if (heightDifference > (usableHeightSansKeyboard * MIN_KEYBOARD_SIZE)) {
 				// keyboard probably just became visible
 				frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
 			}
@@ -65,6 +89,11 @@ public class AndroidBug5497Workaround {
 		}
 	}
 
+	/**
+	 * Calculate the height that can be used for the view above keyboard.
+	 *
+	 * @return the usable height.
+	 */
 	private int computeUsableHeight() {
 		Rect r = new Rect();
 		mChildOfContent.getWindowVisibleDisplayFrame(r);
@@ -72,9 +101,12 @@ public class AndroidBug5497Workaround {
 	}
 
 	/**
-	 * Callback for activities to request layout
+	 * Callback for activities to request layout.
 	 */
 	public interface ActivityWithExplicitLayoutTrigger {
-		public void requestLayout();
+		/**
+		 * Callback method to do request layout.
+		 */
+		void requestLayout();
 	}
 }

@@ -13,32 +13,73 @@ import de.eisfeldj.augendiagnose.R;
  * Utility class to handle an eye photo, in particular regarding personName policies.
  */
 public class EyePhoto {
+	/**
+	 * The date format used for the file name.
+	 */
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
+
+	/**
+	 * Indicator if the file has already a formatted name.
+	 */
 	private boolean formattedName = false;
+
+	/**
+	 * The path of the file.
+	 */
 	private String path;
+
+	/**
+	 * The filename.
+	 */
 	private String filename;
+
+	/**
+	 * The name of the person.
+	 */
 	private String personName;
+
+	/**
+	 * The date of the image.
+	 */
 	private Date date;
+
+	/**
+	 * The information of right/left eye.
+	 */
 	private RightLeft rightLeft;
+
+	/**
+	 * The file suffix.
+	 */
 	private String suffix;
+
+	/**
+	 * A cache of the bitmap (to avoid too frequent generation).
+	 */
 	private Bitmap cachedBitmap;
+
+	/**
+	 * The size of the cached bitmap (to avoid getting a badly sized bitmap from the cache).
+	 */
 	private int cachedSize;
 
 	/**
-	 * Create the EyePhoto, giving a filename
+	 * Create the EyePhoto, giving a filename.
 	 *
 	 * @param filename
+	 *            the file name.
 	 */
-	public EyePhoto(String filename) {
+	public EyePhoto(final String filename) {
 		this(new File(filename));
 	}
 
 	/**
-	 * Create the EyePhoto, giving a file resource
+	 * Create the EyePhoto, giving a file resource.
 	 *
 	 * @param file
+	 *            the file.
 	 */
-	public EyePhoto(File file) {
+	public EyePhoto(final File file) {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
@@ -51,12 +92,12 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Create the EyePhoto, giving details
+	 * Create the EyePhoto, giving details.
 	 *
 	 * @param path
 	 *            The file path
-	 * @param personName
-	 *            The person personName
+	 * @param name
+	 *            The person name
 	 * @param date
 	 *            The date
 	 * @param rightLeft
@@ -64,7 +105,8 @@ public class EyePhoto {
 	 * @param suffix
 	 *            File suffix (".jpg")
 	 */
-	public EyePhoto(String path, String name, Date date, RightLeft rightLeft, String suffix) {
+	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
+			final String suffix) {
 		setPath(path);
 		setPersonName(name);
 		setDate(date);
@@ -74,11 +116,11 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the filename (excluding path)
+	 * Retrieve the filename (excluding path).
 	 *
-	 * @return
+	 * @return the filename.
 	 */
-	public String getFilename() {
+	public final String getFilename() {
 		if (formattedName) {
 			return getPersonName() + " " + getDateString(DATE_FORMAT) + " " + getRightLeft().toShortString() + "."
 					+ getSuffix();
@@ -89,20 +131,21 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the file path
+	 * Retrieve the file path.
 	 *
-	 * @return
+	 * @return the file path.
 	 */
-	public String getAbsolutePath() {
+	public final String getAbsolutePath() {
 		return getFile().getAbsolutePath();
 	}
 
 	/**
-	 * Set the filename (extracting from it the person personName, the date and the left/right property)
+	 * Set the filename (extracting from it the person personName, the date and the left/right property).
 	 *
 	 * @param filename
+	 *            the filename
 	 */
-	private void setFilename(String filename) {
+	private void setFilename(final String filename) {
 		this.filename = filename;
 		int suffixPosition = filename.lastIndexOf('.');
 		int rightLeftPosition = filename.lastIndexOf(' ', suffixPosition);
@@ -128,41 +171,47 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the file path
+	 * Retrieve the file path.
 	 *
-	 * @return
+	 * @return the file path.
 	 */
-	public String getPath() {
+	public final String getPath() {
 		return path;
 	}
 
-	private void setPath(String path) {
+	private void setPath(final String path) {
 		this.path = path;
 	}
 
 	/**
-	 * Retrieve the right/left information
+	 * Retrieve the right/left information.
 	 *
-	 * @return
+	 * @return the right/left information.
 	 */
-	public RightLeft getRightLeft() {
+	public final RightLeft getRightLeft() {
 		return rightLeft;
 	}
 
-	private void setRightLeft(RightLeft rightLeft) {
+	private void setRightLeft(final RightLeft rightLeft) {
 		this.rightLeft = rightLeft;
 	}
 
 	/**
-	 * Retrieve the person personName (use getFilename for the file personName)
+	 * Retrieve the person name (use getFilename for the file name).
 	 *
-	 * @return
+	 * @return the person name.
 	 */
-	public String getPersonName() {
+	public final String getPersonName() {
 		return personName;
 	}
 
-	private void setPersonName(String name) {
+	/**
+	 * Set the person name (trimmed).
+	 *
+	 * @param name
+	 *            the person name
+	 */
+	private void setPersonName(final String name) {
 		if (name == null) {
 			this.personName = null;
 
@@ -173,21 +222,26 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the date as a string
+	 * Retrieve the date as a string.
 	 *
-	 * @return
+	 * @param format
+	 *            the date format.
+	 * @return the date string.
 	 */
-	public String getDateString(String format) {
+	public final String getDateString(final String format) {
 		return DateUtil.format(getDate(), format);
 	}
 
 	/**
-	 * Set the date from a String
+	 * Set the date from a String.
 	 *
 	 * @param dateString
-	 * @return
+	 *            the date string
+	 * @param format
+	 *            the date format
+	 * @return true if successful.
 	 */
-	private boolean setDateString(String dateString, String format) {
+	private boolean setDateString(final String dateString, final String format) {
 		try {
 			setDate(DateUtil.parse(dateString, format));
 			return true;
@@ -198,74 +252,75 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the date
+	 * Retrieve the date.
 	 *
-	 * @return
+	 * @return the date.
 	 */
-	public Date getDate() {
+	public final Date getDate() {
 		return date;
 	}
 
-	private void setDate(Date date) {
+	private void setDate(final Date date) {
 		this.date = date;
 	}
 
 	/**
-	 * Retrieve the file suffix
+	 * Retrieve the file suffix.
 	 *
-	 * @return
+	 * @return the suffix.
 	 */
-	public String getSuffix() {
+	public final String getSuffix() {
 		return suffix;
 	}
 
-	private void setSuffix(String suffix) {
+	private void setSuffix(final String suffix) {
 		this.suffix = suffix.toLowerCase(Locale.getDefault());
 	}
 
 	/**
-	 * Check if the file personName is formatted as eye photo
+	 * Check if the file name is formatted as eye photo.
 	 *
-	 * @return
+	 * @return true if the file name is formatted as eye photo.
 	 */
-	public boolean isFormatted() {
+	public final boolean isFormatted() {
 		return formattedName;
 	}
 
 	/**
-	 * Retrieve the phoso as File
+	 * Retrieve the photo as File.
 	 *
-	 * @return
+	 * @return the file
 	 */
-	public File getFile() {
+	public final File getFile() {
 		return new File(getPath(), getFilename());
 	}
 
 	/**
-	 * Check if the file exists
+	 * Check if the file exists.
 	 *
-	 * @return
+	 * @return true if the file exists.
 	 */
-	public boolean exists() {
+	public final boolean exists() {
 		return getFile().exists();
 	}
 
 	/**
-	 * Delete the eye photo from the file system
+	 * Delete the eye photo from the file system.
 	 *
-	 * @return
+	 * @return true if the deletion was successful.
 	 */
-	public boolean delete() {
+	public final boolean delete() {
 		return getFile().delete();
 	}
 
 	/**
-	 * Move the eye photo to a target path and target personName (given via EyePhoto object)
+	 * Move the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
 	 * @param target
-	 * @return
+	 *            the file information of the target file.
+	 * @return true if the renaming was successful.
 	 */
-	public boolean moveTo(EyePhoto target) {
+	public final boolean moveTo(final EyePhoto target) {
 		if (target.getFile().exists()) {
 			// do not allow overwriting
 			return false;
@@ -275,12 +330,13 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Copy the eye photo to a target path and target personName (given via EyePhoto object)
+	 * Copy the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
 	 * @param target
-	 * @return
+	 *            the file information of the target file.
+	 * @return true if the copying was successful.
 	 */
-	public boolean copyTo(EyePhoto target) {
+	public final boolean copyTo(final EyePhoto target) {
 		if (target.getFile().exists()) {
 			// do not allow overwriting
 			return false;
@@ -290,12 +346,13 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Change the personName renaming the file (keeping the path)
+	 * Change the personName renaming the file (keeping the path).
 	 *
 	 * @param targetName
-	 * @return
+	 *            the target name
+	 * @return true if the renaming was successful.
 	 */
-	public boolean changePersonName(String targetName) {
+	public final boolean changePersonName(final String targetName) {
 		EyePhoto target = cloneFromPath();
 		target.setPersonName(targetName);
 		boolean success = moveTo(target);
@@ -317,12 +374,13 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Change the date renaming the file (keeping the path)
+	 * Change the date renaming the file (keeping the path).
 	 *
 	 * @param newDate
-	 * @return
+	 *            the target date.
+	 * @return true if the change was successful.
 	 */
-	public boolean changeDate(Date newDate) {
+	public final boolean changeDate(final Date newDate) {
 		EyePhoto target = cloneFromPath();
 		target.setDate(newDate);
 		boolean success = moveTo(target);
@@ -345,16 +403,16 @@ public class EyePhoto {
 	 * Add the photo to the media store. Must be used carefully - may lead to failures if the photo is later moved away
 	 * again.
 	 */
-	public void addToMediaStore() {
+	public final void addToMediaStore() {
 		MediaStoreUtil.addPictureToMediaStore(getAbsolutePath());
 	}
 
 	/**
-	 * Retrieve a clone of this object from the absolute path
+	 * Retrieve a clone of this object from the absolute path.
 	 *
-	 * @return
+	 * @return a clone (recreation) of this object having the same absolute path.
 	 */
-	public EyePhoto cloneFromPath() {
+	public final EyePhoto cloneFromPath() {
 		return new EyePhoto(getAbsolutePath());
 	}
 
@@ -362,8 +420,9 @@ public class EyePhoto {
 	 * Calculate a bitmap of this photo and store it for later retrieval.
 	 *
 	 * @param maxSize
+	 *            the target size of the bitmap
 	 */
-	public synchronized void precalculateImageBitmap(int maxSize) {
+	public final synchronized void precalculateImageBitmap(final int maxSize) {
 		if (maxSize != cachedSize || cachedBitmap == null) {
 			cachedBitmap = ImageUtil.getImageBitmap(getAbsolutePath(), maxSize);
 			cachedSize = maxSize;
@@ -371,42 +430,43 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Return a bitmap of this photo
+	 * Return a bitmap of this photo.
 	 *
 	 * @param maxSize
 	 *            The maximum size of this bitmap. If bigger, it will be resized
-	 * @return
+	 * @return the bitmap
 	 */
-	public Bitmap getImageBitmap(int maxSize) {
+	public final Bitmap getImageBitmap(final int maxSize) {
 		precalculateImageBitmap(maxSize);
 		return cachedBitmap;
 	}
 
 	/**
-	 * Get the metadata stored in the file
+	 * Get the metadata stored in the file.
 	 *
-	 * @return
+	 * @return the metadata.
 	 */
-	public JpegMetadata getImageMetadata() {
+	public final JpegMetadata getImageMetadata() {
 		return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
 	}
 
 	/**
-	 * Store the metadata in the file
+	 * Store the metadata in the file.
 	 *
 	 * @param metadata
-	 * @return true if successful
+	 *            the metadata to be stored.
 	 */
-	public void storeImageMetadata(JpegMetadata metadata) {
+	public final void storeImageMetadata(final JpegMetadata metadata) {
 		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
 	}
 
 	/**
 	 * Update metadata object with default metadata, based on the file name.
 	 *
-	 * @return
+	 * @param metadata
+	 *            the metadata object to be enhanced by the default information.
 	 */
-	public void updateMetadataWithDefaults(JpegMetadata metadata) {
+	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
 		metadata.person = getPersonName();
 		metadata.organizeDate = getDate();
 		metadata.rightLeft = getRightLeft();
@@ -414,11 +474,11 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Store person, date and rightLeft in the metadata
+	 * Store person, date and rightLeft in the metadata.
 	 *
 	 * @return
 	 */
-	public void storeDefaultMetadata() {
+	public final void storeDefaultMetadata() {
 		JpegMetadata metadata = getImageMetadata();
 		if (metadata == null) {
 			metadata = new JpegMetadata();
@@ -428,10 +488,14 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Compare two bitmaps for equality (by path)
+	 * Compare two images for equality (by path).
+	 *
+	 * @param other
+	 *            the other image to be compared to
+	 * @return true if the bitmaps have the same path.
 	 */
 	@Override
-	public boolean equals(Object other) {
+	public final boolean equals(final Object other) {
 		if (!(other instanceof EyePhoto)) {
 			return false;
 		}
@@ -440,20 +504,30 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Ensure that hashCode() matches equals()
+	 * Ensure that hashCode() matches equals().
+	 *
+	 * @return the hashCode.
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return getAbsolutePath().hashCode();
 	}
 
 	/**
-	 * Enumeration for left eye vs. right eye
+	 * Enumeration for left eye vs. right eye.
 	 */
 	public enum RightLeft {
+		/**
+		 * Enumeration values for right eye and left eye.
+		 */
 		RIGHT, LEFT;
 
-		public String toShortString() {
+		/**
+		 * Convert into a short string, to be used for filenames.
+		 *
+		 * @return the short string (dependent on language!)
+		 */
+		public final String toShortString() {
 			switch (this) {
 			case LEFT:
 				return Application.getResourceString(R.string.file_infix_left);
@@ -476,7 +550,12 @@ public class EyePhoto {
 			}
 		}
 
-		public String getTitleSuffix() {
+		/**
+		 * The suffix to be used for the title of the image.
+		 *
+		 * @return the title suffix.
+		 */
+		public final String getTitleSuffix() {
 			switch (this) {
 			case LEFT:
 				return Application.getResourceString(R.string.suffix_title_left);
@@ -487,7 +566,14 @@ public class EyePhoto {
 			}
 		}
 
-		public static RightLeft fromString(String rightLeftString) {
+		/**
+		 * Convert a String into a RightLeft enum (by first letter).
+		 *
+		 * @param rightLeftString
+		 *            The String to be converted.
+		 * @return the converted RightString.
+		 */
+		public static final RightLeft fromString(final String rightLeftString) {
 			if (rightLeftString != null && (rightLeftString.startsWith("r") || rightLeftString.startsWith("R"))) {
 				return RIGHT;
 			}
