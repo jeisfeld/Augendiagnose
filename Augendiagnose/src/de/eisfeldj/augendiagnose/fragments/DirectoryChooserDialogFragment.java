@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.components;
+package de.eisfeldj.augendiagnose.fragments;
 
 import java.io.File;
 import java.io.IOException;

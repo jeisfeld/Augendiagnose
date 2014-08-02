@@ -18,9 +18,12 @@ import com.adobe.xmp.options.PropertyOptions;
 import de.eisfeldj.augendiagnose.Application;
 
 /**
- * Helper class to handle XML data in a JPEG file
+ * Helper class to handle XML data in a JPEG file.
  */
 public class XmpHandler {
+	// JAVADOC:OFF
+
+	// Standard namespaces
 	private static final String NS_DC = "http://purl.org/dc/elements/1.1/";
 	private static final String NS_MP1 = "http://ns.microsoft.com/photo/1.0/";
 	private static final String NS_MP2 = "http://ns.microsoft.com/photo/1.2/";
@@ -48,19 +51,28 @@ public class XmpHandler {
 	public static final String ITEM_BRIGHTNESS = "brightness";
 	public static final String ITEM_CONTRAST = "contrast";
 
+	// JAVADOC:ON
+
+	/**
+	 * Store if the registry is prepared via prepareRegistry.
+	 */
 	private static boolean prepared = false;
 
+	/**
+	 * The XMP Metadata stored in the handler.
+	 */
 	private XMPMeta xmpMeta;
 
 	/**
-	 * Create an XmpHandler from an xmp String
+	 * Create an XmpHandler from an XMP String.
 	 *
 	 * @param xmpString
+	 *            the XMP String.
 	 */
-	public XmpHandler(String xmpString) {
+	public XmpHandler(final String xmpString) {
 		prepareRegistry();
 
-		if(xmpString == null) {
+		if (xmpString == null) {
 			Log.w(Application.TAG, "xmpString is null ");
 			xmpMeta = XMPMetaFactory.create();
 			return;
@@ -69,8 +81,8 @@ public class XmpHandler {
 		try {
 			String updatedXmpString = xmpString.trim();
 			int i = updatedXmpString.lastIndexOf('<');
-			if(i>0 && updatedXmpString.substring(i).startsWith("<?xpacket end")) {
-				updatedXmpString = updatedXmpString.substring(0,i);
+			if (i > 0 && updatedXmpString.substring(i).startsWith("<?xpacket end")) {
+				updatedXmpString = updatedXmpString.substring(0, i);
 			}
 			xmpMeta = XMPMetaFactory.parseFromString(updatedXmpString);
 		}
@@ -103,12 +115,13 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Get an item from the custom namespace
+	 * Get an item from the custom namespace.
 	 *
 	 * @param item
-	 * @return
+	 *            the name of the item.
+	 * @return the value of the item.
 	 */
-	public String getJeItem(String item) {
+	public final String getJeItem(final String item) {
 		try {
 			return xmpMeta.getPropertyString(NS_JE, item);
 		}
@@ -118,12 +131,13 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Get a date item from the custom namespace
+	 * Get a date item from the custom namespace.
 	 *
 	 * @param item
-	 * @return
+	 *            the name of the item.
+	 * @return the value of the item.
 	 */
-	public Date getJeDate(String item) {
+	public final Date getJeDate(final String item) {
 		try {
 			XMPDateTime dateTime = xmpMeta.getPropertyDate(NS_JE, item);
 			return dateTime.getCalendar().getTime();
@@ -134,12 +148,13 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Get an item from the DC namespace
+	 * Get an item from the DC namespace.
 	 *
 	 * @param item
-	 * @return
+	 *            the name of the item.
+	 * @return the value of the item.
 	 */
-	private String getDcItem(String item) {
+	private String getDcItem(final String item) {
 		try {
 			return xmpMeta.getArrayItem(NS_DC, item, 1).getValue();
 		}
@@ -149,38 +164,38 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Retrieve the image title
+	 * Retrieve the image title.
 	 *
-	 * @return
+	 * @return the image title.
 	 */
-	public String getDcTitle() {
+	public final String getDcTitle() {
 		return getDcItem("title");
 	}
 
 	/**
-	 * Retrieve the image description
+	 * Retrieve the image description.
 	 *
-	 * @return
+	 * @return the image description.
 	 */
-	public String getDcDescription() {
+	public final String getDcDescription() {
 		return getDcItem("description");
 	}
 
 	/**
-	 * Retrieve the image subject
+	 * Retrieve the image subject.
 	 *
-	 * @return
+	 * @return the image subject.
 	 */
-	public String getDcSubject() {
+	public final String getDcSubject() {
 		return getDcItem("subject");
 	}
 
 	/**
-	 * Retrieve the user comment
+	 * Retrieve the user comment.
 	 *
-	 * @return
+	 * @return the user comment.
 	 */
-	public String getUserComment() {
+	public final String getUserComment() {
 		try {
 			return xmpMeta.getArrayItem(NS_EXIF, "UserComment", 1).getValue();
 		}
@@ -190,11 +205,11 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Retrieve the image person name
+	 * Retrieve the image person name, from Microsoft namespace^.
 	 *
-	 * @return
+	 * @return the image person name.
 	 */
-	public String getMicrosoftPerson() {
+	public final String getMicrosoftPerson() {
 		try {
 			String path = "RegionInfo"
 					+ XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1)
@@ -210,22 +225,24 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Dump the complect XMP object
+	 * Dump the complete XMP object.
 	 *
-	 * @return
+	 * @return a dump of the XMP object.
 	 */
-	public String dumpObject() {
+	public final String dumpObject() {
 		return xmpMeta.dumpObject();
 	}
 
 	/**
-	 * Set an entry in the custom namespace
+	 * Set an entry in the custom namespace.
 	 *
 	 * @param item
+	 *            the name of the entry.
 	 * @param value
+	 *            the value of the entry.
 	 * @throws XMPException
 	 */
-	public void setJeItem(String item, String value) throws XMPException {
+	public final void setJeItem(final String item, final String value) throws XMPException {
 		if (value != null) {
 			xmpMeta.setProperty(NS_JE, item, value);
 		}
@@ -234,15 +251,16 @@ public class XmpHandler {
 		}
 	}
 
-
 	/**
-	 * Set a date entry in the custom namespace
+	 * Set a date entry in the custom namespace.
 	 *
 	 * @param item
+	 *            the name of the entry.
 	 * @param date
+	 *            the value of the entry.
 	 * @throws XMPException
 	 */
-	public void setJeDate(String item, Date date) throws XMPException {
+	public final void setJeDate(final String item, final Date date) throws XMPException {
 		if (date != null) {
 			Calendar calendar = new GregorianCalendar();
 			calendar.setTime(date);
@@ -252,23 +270,26 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Delete an entry from the custom namespace
+	 * Delete an entry from the custom namespace.
 	 *
 	 * @param item
+	 *            the name of the entry.
 	 * @throws XMPException
 	 */
-	public void removeJeItem(String item) throws XMPException {
+	public final void removeJeItem(final String item) throws XMPException {
 		xmpMeta.deleteProperty(NS_JE, item);
 	}
 
 	/**
-	 * Set an entry in the DC namespace
+	 * Set an entry in the DC namespace.
 	 *
 	 * @param item
+	 *            the name of the entry.
 	 * @param value
+	 *            the value of the entry.
 	 * @throws XMPException
 	 */
-	private void setDcItem(String item, String value) throws XMPException {
+	private void setDcItem(final String item, final String value) throws XMPException {
 		if (value != null) {
 			if (xmpMeta.doesArrayItemExist(NS_DC, item, 1)) {
 				xmpMeta.setArrayItem(NS_DC, item, 1, value);
@@ -280,42 +301,46 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Set the image title
+	 * Set the image title.
 	 *
-	 * @return
+	 * @param title
+	 *            the image title.
 	 * @throws XMPException
 	 */
-	public void setDcTitle(String title) throws XMPException {
+	public final void setDcTitle(final String title) throws XMPException {
 		setDcItem("title", title);
 	}
 
 	/**
-	 * Set the image description
+	 * Set the image description.
 	 *
-	 * @return
+	 * @param description
+	 *            the image description.
 	 * @throws XMPException
 	 */
-	public void setDcDescription(String description) throws XMPException {
+	public final void setDcDescription(final String description) throws XMPException {
 		setDcItem("description", description);
 	}
 
 	/**
-	 * Set the image subject
+	 * Set the image subject.
 	 *
-	 * @return
+	 * @param subject
+	 *            the image subject.
 	 * @throws XMPException
 	 */
-	public void setDcSubject(String subject) throws XMPException {
+	public final void setDcSubject(final String subject) throws XMPException {
 		setDcItem("subject", subject);
 	}
 
 	/**
-	 * Set the User Comment
+	 * Set the User Comment.
 	 *
-	 * @return
+	 * @param userComment
+	 *            the user comment.
 	 * @throws XMPException
 	 */
-	public void setUserComment(String userComment) throws XMPException {
+	public final void setUserComment(final String userComment) throws XMPException {
 		if (userComment != null) {
 			if (xmpMeta.doesArrayItemExist(NS_EXIF, "UserComment", 1)) {
 				xmpMeta.setArrayItem(NS_EXIF, "UserComment", 1, userComment);
@@ -327,12 +352,12 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Set the image person name
+	 * Set the image person name.
 	 *
-	 * @return
+	 * @param name the image person name.
 	 * @throws XMPException
 	 */
-	public void setMicrosoftPerson(String name) throws XMPException {
+	public final void setMicrosoftPerson(final String name) throws XMPException {
 		if (name != null) {
 			String path = "RegionInfo"
 					+ XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1)
@@ -348,12 +373,12 @@ public class XmpHandler {
 	}
 
 	/**
-	 * Get the XMP String
+	 * Get the XMP String.
 	 *
-	 * @return
+	 * @return the XMP String.
 	 * @throws XMPException
 	 */
-	public String getXmpString() throws XMPException {
+	public final String getXmpString() throws XMPException {
 		return XMPMetaFactory.serializeToString(xmpMeta, null);
 	}
 

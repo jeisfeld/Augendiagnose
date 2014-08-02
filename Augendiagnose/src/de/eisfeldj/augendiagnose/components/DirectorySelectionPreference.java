@@ -9,7 +9,8 @@ import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
-import de.eisfeldj.augendiagnose.components.DirectoryChooserDialogFragment.ChosenDirectoryListener;
+import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment;
+import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment.ChosenDirectoryListener;
 import de.eisfeldj.augendiagnose.util.FileUtil;
 
 public class DirectorySelectionPreference extends ListPreference {

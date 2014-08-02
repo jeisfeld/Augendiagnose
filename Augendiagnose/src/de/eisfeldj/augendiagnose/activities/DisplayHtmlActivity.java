@@ -13,8 +13,8 @@ public class DisplayHtmlActivity extends Activity {
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
-	 * Static helper method to start the activity, passing the resource holding the HTML as string
-	 * 
+	 * Static helper method to start the activity, passing the resource holding the HTML as string.
+	 *
 	 * @param context
 	 * @param resource
 	 */
