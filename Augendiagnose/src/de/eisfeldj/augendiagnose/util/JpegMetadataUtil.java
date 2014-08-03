@@ -99,7 +99,7 @@ public final class JpegMetadataUtil {
 	protected static void checkJpeg(final String jpegImageFileName) throws IOException, ImageReadException {
 		File file = new File(jpegImageFileName);
 		String mimeType = Imaging.getImageInfo(file).getMimeType();
-		if (!mimeType.equals("image/jpeg")) {
+		if (!"image/jpeg".equals(mimeType)) {
 			throw new IOException("Bad MIME type " + mimeType + " - can handle metadata only for image/jpeg.");
 		}
 	}

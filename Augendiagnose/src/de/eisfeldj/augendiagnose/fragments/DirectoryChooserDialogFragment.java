@@ -220,7 +220,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	private List<String> getDirectories(final String dir) {
 		List<String> dirs = new ArrayList<String>();
 
-		if (!(dir == null || !dir.startsWith("/") || dir.equals("/"))) {
+		if (dir != null && dir.startsWith("/") && !dir.equals("/")) {
 			dirs.add("..");
 		}
 
@@ -274,7 +274,8 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
 	 * Create the list adapter for the list of folders.
 	 *
-	 * @param items The list of folders.
+	 * @param items
+	 *            The list of folders.
 	 * @return The list adapter.
 	 */
 	private ArrayAdapter<String> createListAdapter(final List<String> items) {

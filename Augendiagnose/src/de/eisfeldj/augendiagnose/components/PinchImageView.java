@@ -332,7 +332,7 @@ public class PinchImageView extends ImageView {
 		case MotionEvent.ACTION_POINTER_DOWN:
 			mHasMoved = true;
 			if (ev.getPointerCount() == 2) {
-				final int pointerIndex = (ev.getActionIndex());
+				final int pointerIndex = ev.getActionIndex();
 				mActivePointerId2 = ev.getPointerId(pointerIndex);
 				mLastTouchX0 = (ev.getX(pointerIndex) + mLastTouchX) / 2;
 				mLastTouchY0 = (ev.getY(pointerIndex) + mLastTouchY) / 2;
@@ -356,7 +356,7 @@ public class PinchImageView extends ImageView {
 			break;
 
 		case MotionEvent.ACTION_POINTER_UP:
-			final int pointerIndex = (ev.getActionIndex());
+			final int pointerIndex = ev.getActionIndex();
 			final int pointerId = ev.getPointerId(pointerIndex);
 			if (pointerId == mActivePointerId) {
 				// This was our active pointer going up. Choose a new active pointer and adjust accordingly.
@@ -399,11 +399,11 @@ public class PinchImageView extends ImageView {
 		}
 	}
 
-
 	/**
 	 * Utility method to do the refresh after finishing the pointer move.
 	 *
-	 * @param ev The motion event.
+	 * @param ev
+	 *            The motion event.
 	 */
 	// OVERRIDABLE
 	protected void finishPointerMove(final MotionEvent ev) {
