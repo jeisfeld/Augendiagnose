@@ -1,14 +1,11 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
@@ -18,7 +15,7 @@ import de.eisfeldj.augendiagnose.util.FileUtil;
 /**
  * Activity to display the settings page.
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends BaseActivity {
 	/**
 	 * Minimum value of maxBitmapSize.
 	 */
@@ -57,27 +54,9 @@ public class SettingsActivity extends Activity {
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 	}
 
-	/*
-	 * Inflate options menu.
-	 */
 	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_only_help, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/*
-	 * Handle menu actions.
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_help:
-			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	protected final int getHelpResource() {
+		return R.string.html_settings;
 	}
 
 	/**

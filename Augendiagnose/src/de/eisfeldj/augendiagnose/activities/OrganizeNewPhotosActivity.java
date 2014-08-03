@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -17,8 +16,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,7 +40,7 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  *
  * The activity can be started either with a folder name, or with an array of file names.
  */
-public class OrganizeNewPhotosActivity extends Activity {
+public class OrganizeNewPhotosActivity extends BaseActivity {
 
 	/**
 	 * The resource key for the input folder.
@@ -211,27 +208,9 @@ public class OrganizeNewPhotosActivity extends Activity {
 
 	}
 
-	/*
-	 * Inflate options menu.
-	 */
 	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_only_help, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/*
-	 * Handle menu actions.
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_help:
-			DisplayHtmlActivity.startActivity(this, R.string.html_organize_photos);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	protected final int getHelpResource() {
+		return R.string.html_organize_photos;
 	}
 
 	@Override

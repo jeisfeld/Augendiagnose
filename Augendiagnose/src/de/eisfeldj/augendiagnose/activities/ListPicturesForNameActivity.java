@@ -3,9 +3,6 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
@@ -19,9 +16,12 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
 	 *
-	 * @param context The context in which the activity is started.
-	 * @param parentFolder The parent folder of the application.
-	 * @param name The name of the image folder to be shown.
+	 * @param context
+	 *            The context in which the activity is started.
+	 * @param parentFolder
+	 *            The parent folder of the application.
+	 * @param name
+	 *            The name of the image folder to be shown.
 	 */
 	public static final void startActivity(final Context context, final String parentFolder, final String name) {
 		Intent intent = new Intent(context, ListPicturesForNameActivity.class);
@@ -46,29 +46,6 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
-	}
-
-	/*
-	 * Inflate options menu.
-	 */
-	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_only_help, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/*
-	 * Handle menu actions.
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_help:
-			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 }

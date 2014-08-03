@@ -1,15 +1,14 @@
 package de.eisfeldj.augendiagnose.activities;
 
+import android.os.Bundle;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
-import android.app.Activity;
-import android.os.Bundle;
 
 /**
  * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
-public abstract class ListFoldersBaseActivity extends Activity {
+public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
 	 * The resource key for the parent folder.
 	 */
@@ -53,6 +52,11 @@ public abstract class ListFoldersBaseActivity extends Activity {
 	protected final void displayOnFullScreen(final ListFoldersBaseFragment fragment, final String tag) {
 		getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, tag).commit();
 		getFragmentManager().executePendingTransactions();
+	}
+
+	@Override
+	protected final int getHelpResource() {
+		return R.string.html_display_photos;
 	}
 
 	// Setters and getters

@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import de.eisfeldj.augendiagnose.R;
@@ -12,7 +11,7 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPictu
  * Base activity to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
  * detailed actions.
  */
-public abstract class ListPicturesForNameBaseActivity extends Activity implements
+public abstract class ListPicturesForNameBaseActivity extends BaseActivity implements
 		ListPicturesForNameFragmentHolder {
 	/**
 	 * The resource key for the name of the folder/person to be displayed.
@@ -69,6 +68,11 @@ public abstract class ListPicturesForNameBaseActivity extends Activity implement
 	 */
 	public final void selectDifferentPictureActivity(final View view) {
 		ListFoldersForDisplaySecondActivity.startActivity(this, fragment.getParentFolder());
+	}
+
+	@Override
+	protected final int getHelpResource() {
+		return R.string.html_display_photos;
 	}
 
 	// implementation of ListPicturesForNameFragmentHolder

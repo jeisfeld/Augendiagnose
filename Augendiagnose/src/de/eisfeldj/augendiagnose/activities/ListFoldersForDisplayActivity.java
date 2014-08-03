@@ -8,8 +8,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
@@ -90,29 +88,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		if (Application.isTablet()) {
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
-		}
-	}
-
-	/*
-	 * Inflate options menu.
-	 */
-	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_only_help, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/*
-	 * Handle menu actions.
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_help:
-			DisplayHtmlActivity.startActivity(this, R.string.html_display_photos);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
 	}
 
