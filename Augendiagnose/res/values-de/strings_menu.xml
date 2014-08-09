@@ -11,6 +11,7 @@
     <string name="menu_delete_overlay_position">Overlay-Position löschen</string>
     <string name="menu_delete_images">Fotos löschen</string>
     <string name="menu_change_date">Datum ändern</string>
+    <string name="menu_move_to_input_folder">In Eingangsverzeichnis verschieben</string>
     <string name="menu_change_name">Name ändern</string>
-    
+
 </resources>

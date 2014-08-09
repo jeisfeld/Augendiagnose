@@ -14,12 +14,25 @@ import android.util.Log;
 import android.widget.Toast;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
+import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 
 /**
  * Helper class to show standard dialogs.
  */
 public abstract class DialogUtil {
+	/**
+	 * Parameter to pass the message to the DialogFragment (of all types).
+	 */
+	private static final String PARAM_MESSAGE = "message";
+	/**
+	 * Parameter to pass the text resource for the confirmation button to the ConfirmDialogFragment.
+	 */
+	private static final String PARAM_BUTTON_RESOURCE = "buttonResource";
+	/**
+	 * Parameter to pass the callback listener to the ConfirmDialogFragment.
+	 */
+	private static final String PARAM_LISTENER = "listener";
+
 	/**
 	 * Display an error and go back to the current activity.
 	 *
@@ -44,7 +57,7 @@ public abstract class DialogUtil {
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
-		bundle.putString("message", message);
+		bundle.putString(PARAM_MESSAGE, message);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -72,19 +85,22 @@ public abstract class DialogUtil {
 	 *            the current activity
 	 * @param listener
 	 *            The listener waiting for the response
-	 * @param resource
+	 * @param buttonResource
+	 *            the display on the positive button
+	 * @param messageResource
 	 *            the confirmation message
 	 * @param args
 	 *            arguments for the confirmation message
 	 */
-	public static void displayDeleteConfirmationMessage(final Activity activity,
-			final ConfirmDeleteDialogListener listener,
-			final int resource, final Object... args) {
-		ConfirmDeleteDialogFragment fragment = new ConfirmDeleteDialogFragment();
-		String message = String.format(activity.getString(resource), args);
+	public static void displayConfirmationMessage(final Activity activity,
+			final ConfirmDialogListener listener, final int buttonResource,
+			final int messageResource, final Object... args) {
+		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
+		String message = String.format(activity.getString(messageResource), args);
 		Bundle bundle = new Bundle();
-		bundle.putString("message", message);
-		bundle.putSerializable("listener", listener);
+		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putInt(PARAM_BUTTON_RESOURCE, buttonResource);
+		bundle.putSerializable(PARAM_LISTENER, listener);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayErrorDialogFragment.class.toString());
 	}
@@ -100,7 +116,7 @@ public abstract class DialogUtil {
 	public static void displayReleaseNotes(final Activity activity, final String message) {
 		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
 		Bundle bundle = new Bundle();
-		bundle.putString("message", message);
+		bundle.putString(PARAM_MESSAGE, message);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayReleaseNotesFragment.class.toString());
 	}
@@ -141,7 +157,7 @@ public abstract class DialogUtil {
 
 		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
 		Bundle bundle = new Bundle();
-		bundle.putString("message", message.toString());
+		bundle.putString(PARAM_MESSAGE, message.toString());
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), DisplayReleaseNotesFragment.class.toString());
 	}
@@ -152,7 +168,7 @@ public abstract class DialogUtil {
 	public static class DisplayErrorDialogFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString("message");
+			String message = getArguments().getString(PARAM_MESSAGE);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_error) //
@@ -173,7 +189,7 @@ public abstract class DialogUtil {
 	public static class DisplayErrorDialogAndReturnFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString("message");
+			String message = getArguments().getString(PARAM_MESSAGE);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_error) //
@@ -201,7 +217,7 @@ public abstract class DialogUtil {
 	public static class DisplayReleaseNotesFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString("message");
+			String message = getArguments().getString(PARAM_MESSAGE);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.releasenotes_title) //
@@ -227,12 +243,12 @@ public abstract class DialogUtil {
 	/**
 	 * Fragment to display a confirmation message.
 	 */
-	public static class ConfirmDeleteDialogFragment extends DialogFragment {
+	public static class ConfirmDialogFragment extends DialogFragment {
 		/**
 		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
 		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
 		 */
-		public interface ConfirmDeleteDialogListener extends Serializable {
+		public interface ConfirmDialogListener extends Serializable {
 			/**
 			 * Callback method for positive click from the confirmation dialog.
 			 *
@@ -252,9 +268,10 @@ public abstract class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString("message");
-			final ConfirmDeleteDialogListener listener = (ConfirmDeleteDialogListener) getArguments().getSerializable(
-					"listener");
+			String message = getArguments().getString(PARAM_MESSAGE);
+			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
+			final ConfirmDialogListener listener = (ConfirmDialogListener) getArguments().getSerializable(
+					PARAM_LISTENER);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_confirmation) //
@@ -263,14 +280,14 @@ public abstract class DialogUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the positive button event back to the host activity
-							listener.onDialogNegativeClick(ConfirmDeleteDialogFragment.this);
+							listener.onDialogNegativeClick(ConfirmDialogFragment.this);
 						}
 					}) //
-					.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
+					.setPositiveButton(confirmButtonResource, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the negative button event back to the host activity
-							listener.onDialogPositiveClick(ConfirmDeleteDialogFragment.this);
+							listener.onDialogPositiveClick(ConfirmDialogFragment.this);
 						}
 					});
 			return builder.create();

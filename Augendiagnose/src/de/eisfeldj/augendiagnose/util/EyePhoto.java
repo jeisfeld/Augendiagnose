@@ -330,6 +330,29 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Move the eye photo to a target folder.
+	 *
+	 * @param folderName
+	 *            the target folder
+	 * @return true if the move was successful.
+	 */
+	public final boolean moveToFolder(final String folderName) {
+		File folder = new File(folderName);
+		if (!folder.exists() || !folder.isDirectory()) {
+			// target folder does not exist
+			return false;
+		}
+
+		File targetFile = new File(folder, getFilename());
+		if (targetFile.exists()) {
+			// do not overwrite
+			return false;
+		}
+
+		return getFile().renameTo(targetFile);
+	}
+
+	/**
 	 * Copy the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
 	 * @param target

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Eye Diagnosis</string>
-    
+
     <string name="title_activity_display_two">Compare Photos</string>
     <string name="title_activity_display_one">Display Photo</string>
     <string name="title_activity_list_folders_for_display">Select Name</string>
@@ -17,7 +17,7 @@
     <string name="title_dialog_select_folder">Select Folder</string>
     <string name="title_settings">Settings</string>
     <string name="title_help">Help</string>
-    
+
     <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
     <string name="message_dialog_no_photos_for_name">No eye photos available for %1$s</string>
     <string name="message_dialog_select_name">Please select a name</string>
@@ -30,6 +30,7 @@
     <string name="message_dialog_failed_to_rename_folder">Failed to rename folder %1$s to %2$s</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Failed to delete the photos of %1$s from %2$s</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Failed to move the photos of %1$s from %2$s</string>
     <string name="message_dialog_failed_to_delete_folder">Failed to delete the folder of %1$s</string>
     <string name="message_dialog_failed_to_change_date">Could not change date for photos of %1$s from %2$s to %3$s</string>
     <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
@@ -37,14 +38,15 @@
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
-    
+    <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
+
     <string name="section_select_eye_orientation">Select Eye Orientation</string>
     <string name="section_select_name">Select Name</string>
     <string name="section_select_date">Select Date</string>
-    
+
     <string name="text_brightness">Brightness</string>
     <string name="text_contrast">Contrast</string>
-    
+
     <string name="button_open_eyefi_app">Open Eye-Fi App</string>
     <string name="button_display_pictures">Display Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>
@@ -55,14 +57,15 @@
     <string name="button_select">Select</string>
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
+    <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
-    
+
     <string name="toggle_overlay_1">T1</string>
     <string name="toggle_overlay_2">T2</string>
     <string name="toggle_overlay_3">T3</string>
     <string name="toggle_overlay_4">T4</string>
     <string name="toggle_overlay_5">T5</string>
-    
+
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>

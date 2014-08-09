@@ -20,11 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
+import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 
 /**
@@ -118,24 +119,24 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	@Override
 	public final boolean onContextItemSelected(final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_picture_date) {
-			final EyePhotoPair pairToDelete = getEyePhotoPairs()[contextMenuPosition];
+			final EyePhotoPair pairToModify = getEyePhotoPairs()[contextMenuPosition];
 
 			switch (item.getItemId()) {
 			case R.id.action_delete_images:
-				ConfirmDeleteDialogListener listener = new ConfirmDeleteDialogListener() {
+				ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
 					private static final long serialVersionUID = -7137767075780390391L;
 
 					@Override
 					public void onDialogPositiveClick(final DialogFragment dialog) {
 						// delete images
-						boolean success = pairToDelete.delete();
+						boolean success = pairToModify.delete();
 						// update list of images
 						updateEyePhotoPairs();
 
 						if (!success) {
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToDelete
-											.getLeftEye().getPersonName(), pairToDelete
+									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify
+											.getLeftEye().getPersonName(), pairToModify
 											.getDateDisplayString("dd.MM.yyyy"));
 
 						}
@@ -147,15 +148,15 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 					}
 				};
 
-				DialogUtil.displayDeleteConfirmationMessage(getActivity(), listener,
-						R.string.message_dialog_confirm_delete_date, pairToDelete.getLeftEye().getPersonName(),
-						pairToDelete.getDateDisplayString("dd.MM.yyyy"));
+				DialogUtil.displayConfirmationMessage(getActivity(), listenerDelete, R.string.button_delete,
+						R.string.message_dialog_confirm_delete_date, pairToModify.getLeftEye().getPersonName(),
+						pairToModify.getDateDisplayString("dd.MM.yyyy"));
 				return true;
 			case R.id.action_change_date:
 				// ensure that activity is linked to the correct instance of this listFoldersFragment
 				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
 
-				pictureDate.setTime(pairToDelete.getDate());
+				pictureDate.setTime(pairToModify.getDate());
 				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
 				Bundle bundle = new Bundle();
 				bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
@@ -164,6 +165,39 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				bundle.putInt("position", contextMenuPosition);
 				fragment.setArguments(bundle);
 				fragment.show(getFragmentManager(), DateChangeDialogFragment.class.toString());
+				return true;
+			case R.id.action_move_to_input_folder:
+				ConfirmDialogListener listenerMove = new ConfirmDialogListener() {
+					private static final long serialVersionUID = -7137767075780390391L;
+
+					@Override
+					public void onDialogPositiveClick(final DialogFragment dialog) {
+						// delete images
+						boolean success =
+								pairToModify.moveToFolder(Application
+										.getSharedPreferenceString(R.string.key_folder_input));
+						// update list of images
+						updateEyePhotoPairs();
+
+						if (!success) {
+							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
+									R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
+											.getLeftEye().getPersonName(), pairToModify
+											.getDateDisplayString("dd.MM.yyyy"));
+
+						}
+					}
+
+					@Override
+					public void onDialogNegativeClick(final DialogFragment dialog) {
+						// Do nothing
+					}
+				};
+
+				DialogUtil.displayConfirmationMessage(getActivity(), listenerMove, R.string.button_move,
+						R.string.message_dialog_confirm_move_to_input_folder,
+						pairToModify.getLeftEye().getPersonName(),
+						pairToModify.getDateDisplayString("dd.MM.yyyy"));
 				return true;
 			default:
 				return super.onContextItemSelected(item);

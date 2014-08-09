@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Augendiagnose</string>
-    
+
     <string name="title_activity_display_two">Fotovergleich</string>
     <string name="title_activity_display_one">Fotoanzeige</string>
     <string name="title_activity_list_folders_for_display">Namen wählen</string>
@@ -17,7 +17,7 @@
     <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_help">Hilfe</string>
-    
+
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
@@ -30,6 +30,7 @@
     <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Verschieben der Fotos von %1$s vom %2$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_delete_folder">Löschen des Verzeichnisses von %1$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
@@ -37,14 +38,15 @@
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
     <string name="message_dialog_confirm_delete_folder">Wollen Sie %1$s wirklich mit allen Fotos löschen?</string>
-    
+    <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
+
     <string name="section_select_eye_orientation">Orientierung wählen</string>
     <string name="section_select_name">Name wählen</string>
     <string name="section_select_date">Datum wählen</string>
-    
+
     <string name="text_brightness">Helligkeit</string>
     <string name="text_contrast">Kontrast</string>
-    
+
     <string name="button_open_eyefi_app">Eye-Fi App öffnen</string>
     <string name="button_display_pictures">Fotos anzeigen</string>
     <string name="button_organize_new_photos">Neue Fotos einordnen</string>
@@ -55,14 +57,15 @@
     <string name="button_select">Auswählen</string>
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
+    <string name="button_move">Verschieben</string>
     <string name="button_other_pictures">Andere Fotos</string>
-    
+
     <string name="toggle_overlay_1">T1</string>
     <string name="toggle_overlay_2">T2</string>
     <string name="toggle_overlay_3">T3</string>
     <string name="toggle_overlay_4">T4</string>
     <string name="toggle_overlay_5">T5</string>
-    
+
     <string name="content_description_right_eye">Rechtes Auge</string>
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>

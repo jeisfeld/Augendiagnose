@@ -14,7 +14,7 @@ import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener;
+import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
@@ -68,7 +68,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 				showChangeNameDialog(name, name);
 				return true;
 			case R.id.action_delete_images:
-				ConfirmDeleteDialogListener listener = new ConfirmDeleteDialogListener() {
+				ConfirmDialogListener listener = new ConfirmDialogListener() {
 					private static final long serialVersionUID = -90397353402300863L;
 
 					@Override
@@ -82,7 +82,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 					}
 				};
 
-				DialogUtil.displayDeleteConfirmationMessage(getActivity(), listener,
+				DialogUtil.displayConfirmationMessage(getActivity(), listener, R.string.button_delete,
 						R.string.message_dialog_confirm_delete_folder, name);
 				return true;
 			default:
