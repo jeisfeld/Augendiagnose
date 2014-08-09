@@ -122,6 +122,21 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			final EyePhotoPair pairToModify = getEyePhotoPairs()[contextMenuPosition];
 
 			switch (item.getItemId()) {
+			case R.id.action_change_date:
+				// ensure that activity is linked to the correct instance of this listFoldersFragment
+				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
+
+				pictureDate.setTime(pairToModify.getDate());
+				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
+				Bundle bundle = new Bundle();
+				bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
+				bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
+				bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
+				bundle.putInt("position", contextMenuPosition);
+				fragment.setArguments(bundle);
+				fragment.show(getFragmentManager(), DateChangeDialogFragment.class.toString());
+				return true;
+
 			case R.id.action_delete_images:
 				ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
 					private static final long serialVersionUID = -7137767075780390391L;
@@ -142,6 +157,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						}
 					}
 
+					// Intentional duplicate code 1
 					@Override
 					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing
@@ -152,20 +168,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						R.string.message_dialog_confirm_delete_date, pairToModify.getLeftEye().getPersonName(),
 						pairToModify.getDateDisplayString("dd.MM.yyyy"));
 				return true;
-			case R.id.action_change_date:
-				// ensure that activity is linked to the correct instance of this listFoldersFragment
-				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
 
-				pictureDate.setTime(pairToModify.getDate());
-				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
-				Bundle bundle = new Bundle();
-				bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
-				bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
-				bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
-				bundle.putInt("position", contextMenuPosition);
-				fragment.setArguments(bundle);
-				fragment.show(getFragmentManager(), DateChangeDialogFragment.class.toString());
-				return true;
 			case R.id.action_move_to_input_folder:
 				ConfirmDialogListener listenerMove = new ConfirmDialogListener() {
 					private static final long serialVersionUID = -7137767075780390391L;
@@ -188,6 +191,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						}
 					}
 
+					// Intentional duplicate code 2
 					@Override
 					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing
