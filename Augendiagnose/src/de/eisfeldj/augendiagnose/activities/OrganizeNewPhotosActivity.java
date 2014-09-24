@@ -188,7 +188,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		if (photoLeft == null || photoRight == null) {
 			// initial fill
-			setPicturesAndValues();
+			setPicturesAndValues(false);
 		}
 		else {
 			// only load predefined images
@@ -221,8 +221,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 	/**
 	 * Helper methods to load the pictures and to preset the date (from the pictures).
+	 *
+	 * @param update
+	 *            Value true means that values are not initially filled, but updated after organizing an eye photo pair.
 	 */
-	private void setPicturesAndValues() {
+	private void setPicturesAndValues(final boolean update) {
 		File[] files;
 		if (inputFolder != null) {
 			// retrieve files from Input Folder
@@ -245,13 +248,18 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		else {
 			ArrayList<File> fileList = new ArrayList<File>();
 			ArrayList<String> fileNameList = new ArrayList<String>();
+
 			for (String fileName : fileNames) {
 				File file = new File(fileName);
 				if (file.exists() && file.isFile()) {
-					fileList.add(file);
-					fileNameList.add(fileName);
+					if (!update || (!photoLeft.getAbsolutePath().equals(file.getAbsolutePath())
+							&& !photoRight.getAbsolutePath().equals(file.getAbsolutePath()))) {
+						fileList.add(file);
+						fileNameList.add(fileName);
+					}
 				}
 			}
+
 			files = fileList.toArray(new File[fileList.size()]);
 			fileNames = fileNameList.toArray(new String[fileNameList.size()]);
 		}
@@ -285,82 +293,14 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			editDate.invalidate();
 		}
 		else {
-			// Error message if there are less than two files
-			DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
-		}
-	}
-
-	/**
-	 * Helper method to update the list of pictures after moving the photos.
-	 */
-	private void updateAfterMovingPhotos() {
-		File[] files;
-		if (inputFolder != null) {
-			// retrieve files from Input Folder
-			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
-
-			if (files == null || files.length < 2) {
+			if (update) {
 				finish();
-				return;
 			}
-
-			// Sort files by date
-			Arrays.sort(files, new Comparator<File>() {
-				@Override
-				public int compare(final File f1, final File f2) {
-					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-				}
-			});
-		}
-		else {
-			ArrayList<File> fileList = new ArrayList<File>();
-			ArrayList<String> fileNameList = new ArrayList<String>();
-			for (String fileName : fileNames) {
-				File file = new File(fileName);
-				if (file.exists() && file.isFile()) {
-					if (!photoLeft.getAbsolutePath().equals(file.getAbsolutePath())
-							&& !photoRight.getAbsolutePath().equals(file.getAbsolutePath())) {
-						fileList.add(file);
-						fileNameList.add(fileName);
-					}
-				}
+			else {
+				// Error message if there are less than two files
+				DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
 			}
-
-			if (fileList.size() < 2) {
-				finish();
-				return;
-			}
-
-			files = fileList.toArray(new File[fileList.size()]);
-			fileNames = fileNameList.toArray(new String[fileNameList.size()]);
 		}
-
-		EyePhoto photoLast = new EyePhoto(files[0]);
-		EyePhoto photoLastButOne = new EyePhoto(files[1]);
-
-		// Override last modified time by EXIF time
-		boolean isRealLast = photoLast.getDate().compareTo(photoLastButOne.getDate()) >= 0;
-		if (!isRealLast) {
-			EyePhoto temp = photoLast;
-			photoLast = photoLastButOne;
-			photoLastButOne = temp;
-		}
-
-		// Organize left vs. right
-		if (rightEyeLast) {
-			photoRight = photoLast;
-			photoLeft = photoLastButOne;
-		}
-		else {
-			photoLeft = photoLast;
-			photoRight = photoLastButOne;
-		}
-
-		updateImages();
-
-		pictureDate.setTime(photoRight.getDate());
-		editDate.setText(DateUtil.getDisplayDate(pictureDate));
-		editDate.invalidate();
 	}
 
 	/**
@@ -416,7 +356,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	}
 
 	/**
-	 * onClick action for Button "Finish" Moves and renames the selected files.
+	 * onClick action for Button "Ok". Moves and renames the selected files.
 	 *
 	 * @param view
 	 *            The view triggering the onClick action.
@@ -505,7 +445,17 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		Application.setSharedPreferenceString(R.string.key_internal_last_name, name);
 		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
 
-		updateAfterMovingPhotos();
+		setPicturesAndValues(true);
+	}
+
+	/**
+	 * onClick action for Button "Cancel". Finishes the activity without action.
+	 *
+	 * @param view
+	 *            The view triggering the onClick action.
+	 */
+	public final void finishActivity(final View view) {
+		finish();
 	}
 
 	/*

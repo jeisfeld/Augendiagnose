@@ -125,12 +125,26 @@
 
     <Space style="@style/Space" />
 
-    <LinearLayout style="@style/Subactivity" >
+    <LinearLayout
+        style="@style/Subactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|fill_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonOrganizeCancel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="finishActivity"
+            android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/buttonOrganizeOk"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:onClick="movePhotos"
             android:text="@string/button_ok" />
     </LinearLayout>
