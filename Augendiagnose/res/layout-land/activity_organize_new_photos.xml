@@ -147,7 +147,7 @@
             android:id="@+id/buttonOrganizeOk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="finishActivity"
+            android:onClick="movePhotos"
             android:text="@string/button_ok" />
     </LinearLayout>
 
