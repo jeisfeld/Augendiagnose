@@ -134,14 +134,20 @@ public final class ImageUtil {
 					return getDummyBitmap();
 				}
 			}
-			if (bitmap.getWidth() > maxSize) {
-				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
-				bitmap = Bitmap.createScaledBitmap(bitmap, maxSize, targetHeight, false);
-			}
-			if (bitmap.getHeight() > maxSize) {
-				int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
-				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, maxSize, false);
-			}
+		}
+		if (bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
+			return bitmap;
+		}
+
+		if (bitmap.getWidth() > bitmap.getHeight()) {
+			int targetWidth = maxSize;
+			int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
+			bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+		}
+		else {
+			int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
+			int targetHeight = maxSize;
+			bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
 		}
 
 		int rotation = getExifRotation(path);
