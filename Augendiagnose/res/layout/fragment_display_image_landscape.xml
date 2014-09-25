@@ -69,8 +69,10 @@
             android:layout_weight="1"
             android:checked="false"
             android:drawableLeft="@drawable/ic_circle"
+            android:drawableStart="@drawable/ic_circle"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:textOff=""
             android:textOn=""
             android:textSize="0pt" />

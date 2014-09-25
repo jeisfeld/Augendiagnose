@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_weight="0.7"
         android:visibility="gone" />
 
@@ -19,6 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_weight="1" />
 
 </LinearLayout>
