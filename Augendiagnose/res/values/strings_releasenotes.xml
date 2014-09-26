@@ -53,6 +53,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4.4</item>
         <item>0.4.5</item>
         <item>0.4.6</item>
+        <item>0.4.7</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -78,6 +79,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Simplified folder selection in settings.</item>
         <item>Enabled moving photos back to the input folder. The app stays with organizing photos if there are more photos to be organized.</item>
+        <item>TODO</item>
     </string-array>
 
 </resources>
