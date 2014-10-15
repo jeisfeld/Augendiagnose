@@ -175,7 +175,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		return parentFolder;
 	}
 
-	protected final String getName() {
+	public final String getName() {
 		return name;
 	}
 

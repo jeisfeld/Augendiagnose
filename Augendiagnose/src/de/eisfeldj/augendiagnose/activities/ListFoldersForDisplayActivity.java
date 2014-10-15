@@ -105,6 +105,11 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 */
 	public final void listPicturesForName(final String name) {
 		if (Application.isTablet()) {
+			if (listPicturesFragment != null && name.equals(listPicturesFragment.getName())) {
+				// Do nothing if the given name is already opened.
+				return;
+			}
+
 			listPicturesFragment = new ListPicturesForNameFragment();
 			listPicturesFragment.setParameters(getParentFolder(), name);
 
