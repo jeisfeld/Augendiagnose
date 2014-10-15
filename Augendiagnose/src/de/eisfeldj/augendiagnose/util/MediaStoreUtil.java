@@ -48,16 +48,14 @@ public abstract class MediaStoreUtil {
 	}
 
 	/**
-	 * Retrieve a thumbnail of a bitmap from the mediastore.
+	 * Retrieve a the image id of an image in the Mediastore from the path.
 	 *
 	 * @param path
 	 *            The path of the image
-	 * @param maxSize
-	 *            The maximum size of this bitmap (used for selecting the sample size)
-	 * @return the thumbnail.
+	 * @return the image id.
 	 */
 	@SuppressWarnings("static-access")
-	public static final Bitmap getThumbnailFromPath(final String path, final int maxSize) {
+	private static int getImageId(final String path) throws ImageNotFoundException {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -68,14 +66,37 @@ public abstract class MediaStoreUtil {
 		if (!imagecursor.isAfterLast()) {
 			int imageId = imagecursor.getInt(imagecursor.getColumnIndex(MediaStore.Images.Media._ID));
 			imagecursor.close();
+			return imageId;
+		}
+		else {
+			imagecursor.close();
+			throw new ImageNotFoundException();
+		}
+	}
+
+	/**
+	 * Retrieve a thumbnail of a bitmap from the mediastore.
+	 *
+	 * @param path
+	 *            The path of the image
+	 * @param maxSize
+	 *            The maximum size of this bitmap (used for selecting the sample size)
+	 * @return the thumbnail.
+	 */
+	public static final Bitmap getThumbnailFromPath(final String path, final int maxSize) {
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
+
+		try {
+			int imageId = getImageId(path);
+
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = MINI_THUMB_SIZE / maxSize;
 			options.inDither = true;
 			return MediaStore.Images.Thumbnails.getThumbnail(resolver, imageId, MediaStore.Images.Thumbnails.MINI_KIND,
 					options);
+
 		}
-		else {
-			imagecursor.close();
+		catch (ImageNotFoundException e) {
 			return null;
 		}
 	}
@@ -92,6 +113,35 @@ public abstract class MediaStoreUtil {
 		Uri contentUri = Uri.fromFile(file);
 		mediaScanIntent.setData(contentUri);
 		Application.getAppContext().sendBroadcast(mediaScanIntent);
+	}
+
+	/**
+	 * Delete the thumbnail of a bitmap.
+	 *
+	 * @param path
+	 *            The path of the image
+	 */
+	public static final void deleteThumbnail(final String path) {
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
+
+		try {
+			int imageId = getImageId(path);
+			resolver.delete(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+					MediaStore.Images.Thumbnails.IMAGE_ID + " = ?", new String[] { "" + imageId });
+		}
+		catch (ImageNotFoundException e) {
+			// ignore
+		}
+	}
+
+	/**
+	 * Utility exception to be thrown if an image cannot be found.
+	 */
+	private static class ImageNotFoundException extends Exception {
+		/**
+		 * The default serial version id.
+		 */
+		private static final long serialVersionUID = 1L;
 	}
 
 }

@@ -27,6 +27,7 @@ import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * Fragment to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -175,6 +176,10 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 					@Override
 					public void onDialogPositiveClick(final DialogFragment dialog) {
+						// delete old thumbnails, in so that other photos can get the same names
+						MediaStoreUtil.deleteThumbnail(pairToModify.getLeftEye().getAbsolutePath());
+						MediaStoreUtil.deleteThumbnail(pairToModify.getRightEye().getAbsolutePath());
+
 						// delete images
 						boolean success =
 								pairToModify.moveToFolder(Application
