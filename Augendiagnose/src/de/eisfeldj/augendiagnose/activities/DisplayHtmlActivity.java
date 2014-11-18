@@ -74,13 +74,15 @@ public class DisplayHtmlActivity extends Activity {
 			setContentView(R.layout.activity_fragments_single);
 		}
 
-		if (Application.isTablet() || resource == NO_RESOURCE) {
-			displayNavigation();
+		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+			if (Application.isTablet() || resource == NO_RESOURCE) {
+				displayNavigation();
+			}
+			if (resource != NO_RESOURCE) {
+				displayDetails(resource);
+			}
 		}
 
-		if (resource != NO_RESOURCE) {
-			displayDetails(resource);
-		}
 	}
 
 	/**
