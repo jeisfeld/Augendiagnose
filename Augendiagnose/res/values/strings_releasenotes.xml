@@ -79,7 +79,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Simplified folder selection in settings.</item>
         <item>Enabled moving photos back to the input folder. The app stays with organizing photos if there are more photos to be organized.</item>
-        <item>TODO</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
