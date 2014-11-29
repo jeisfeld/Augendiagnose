@@ -14,16 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
-
-import com.android.colorpicker.ColorPickerDialog;
-import com.android.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
-
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
+import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
+import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
