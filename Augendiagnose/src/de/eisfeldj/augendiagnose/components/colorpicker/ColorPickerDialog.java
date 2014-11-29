@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 
@@ -77,11 +76,6 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	 * The color palette.
 	 */
 	private ColorPickerPalette mPalette;
-
-	/**
-	 * A Progress bar displayed while loading.
-	 */
-	private ProgressBar mProgress;
 
 	/**
 	 * The listener called when a color is selected.
@@ -180,7 +174,6 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 
 		View view =
 				LayoutInflater.from(getActivity()).inflate(R.layout.color_picker_dialog, new LinearLayout(activity));
-		mProgress = (ProgressBar) view.findViewById(android.R.id.progress);
 		mPalette = (ColorPickerPalette) view.findViewById(R.id.color_picker);
 		mPalette.init(mSize, mColumns, this);
 
@@ -221,8 +214,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	 * Show the palette.
 	 */
 	private void showPaletteView() {
-		if (mProgress != null && mPalette != null) {
-			mProgress.setVisibility(View.GONE);
+		if (mPalette != null) {
 			refreshPalette();
 			mPalette.setVisibility(View.VISIBLE);
 		}

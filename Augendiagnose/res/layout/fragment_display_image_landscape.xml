@@ -68,14 +68,11 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
-            android:drawableLeft="@drawable/ic_circle"
-            android:drawableStart="@drawable/ic_circle"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textOff=""
-            android:textOn=""
-            android:textSize="0pt" />
+            android:gravity="center"
+            android:padding="0dp"
+            android:textOff="@string/toggle_circle"
+            android:textOn="@string/toggle_circle"
+            android:textSize="18sp" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
@@ -136,10 +133,11 @@
             android:id="@+id/buttonSelectColor"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:text="@string/button_select_color" />
+            android:padding="0dp"
+            android:text="@string/button_select_color"
+            android:textSize="36sp" />
 
         <ToggleButton
             android:id="@+id/toggleButtonLink"
