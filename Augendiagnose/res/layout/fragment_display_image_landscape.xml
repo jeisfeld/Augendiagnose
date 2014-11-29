@@ -83,6 +83,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_1"
             android:textOn="@string/toggle_overlay_1" />
 
@@ -92,6 +94,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_2"
             android:textOn="@string/toggle_overlay_2" />
 
@@ -101,6 +105,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_3"
             android:textOn="@string/toggle_overlay_3" />
 
@@ -110,6 +116,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_4"
             android:textOn="@string/toggle_overlay_4" />
 
@@ -119,8 +127,19 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_5"
             android:textOn="@string/toggle_overlay_5" />
+
+        <Button
+            android:id="@+id/buttonSelectColor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/button_select_color" />
 
         <ToggleButton
             android:id="@+id/toggleButtonLink"

@@ -25,8 +25,8 @@ import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
+import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.
@@ -46,11 +46,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static final int OVERLAY_SIZE = 1024;
 
 	/**
-	 * The colour of the one-coloured overlays.
-	 */
-	private static final int OVERLAY_COLOR = Color.RED;
-
-	/**
 	 * The minimum scale factor allowed.
 	 */
 	private static final float MIN_OVERLAY_SCALE_FACTOR = 0.2f;
@@ -61,9 +56,14 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static final float MAX_OVERLAY_SCALE_FACTOR = 5f;
 
 	/**
+	 * The color of the one-colored overlays.
+	 */
+	private int mOverlayColor = Color.RED;
+
+	/**
 	 * An array of the available overlays.
 	 */
-	private Drawable[] overlayCache = new Drawable[OVERLAY_COUNT];
+	private Drawable[] mOverlayCache = new Drawable[OVERLAY_COUNT];
 
 	/**
 	 * These are the relative positions of the overlay center on the bitmap. Range: [0,1]
@@ -463,7 +463,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @return The overlay drawable.
 	 */
 	private Drawable getOverlayDrawable(final int position) {
-		if (overlayCache[position] == null) {
+		if (mOverlayCache[position] == null) {
 			int resource;
 
 			switch (position) {
@@ -474,7 +474,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo1_l;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;
 			case 2:
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
@@ -483,7 +483,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo2_l;
 				}
-				overlayCache[position] = getResources().getDrawable(resource);
+				mOverlayCache[position] = getResources().getDrawable(resource);
 				break;
 			case 3: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
@@ -492,7 +492,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo5_l;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;
 			case 4: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
@@ -501,7 +501,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo3_l;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;
 			case 5: // MAGIC_NUMBER
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
@@ -510,7 +510,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_topo4_l;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;
 			default:
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
@@ -519,12 +519,12 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					resource = R.drawable.overlay_circle_r;
 				}
-				overlayCache[position] = getColouredDrawable(resource, OVERLAY_COLOR);
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;
 			}
 		}
 
-		return overlayCache[position];
+		return mOverlayCache[position];
 	}
 
 	/**
@@ -538,7 +538,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private Drawable getColouredDrawable(final int resource, final int color) {
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resource);
-		return new BitmapDrawable(getResources(), changeBitmapColor(bitmap, Color.RED));
+		return new BitmapDrawable(getResources(), changeBitmapColor(bitmap, color));
 	}
 
 	/**
@@ -600,6 +600,27 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setContrast(final float contrast) {
 		mContrast = contrast;
 		refresh(false);
+	}
+
+	/**
+	 * Set the overlay color.
+	 *
+	 * @param overlayColor
+	 *            the overlay color (such as Color.RED)
+	 */
+	public final void setOverlayColor(final int overlayColor) {
+		mOverlayColor = overlayColor;
+		mOverlayCache = new Drawable[OVERLAY_COUNT];
+		refresh(true);
+	}
+
+	/**
+	 * Get the overlay color.
+	 *
+	 * @return the overlay color (such as Color.RED)
+	 */
+	public final int getOverlayColor() {
+		return mOverlayColor;
 	}
 
 	/**

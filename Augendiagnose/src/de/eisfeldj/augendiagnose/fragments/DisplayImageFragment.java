@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -10,8 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
+
+import com.android.colorpicker.ColorPickerDialog;
+import com.android.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
+
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
@@ -25,7 +31,7 @@ import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
  *
  * @author Joerg
  */
-public class DisplayImageFragment extends Fragment implements GuiElementUpdater {
+public class DisplayImageFragment extends Fragment implements GuiElementUpdater, OnColorSelectedListener {
 
 	/**
 	 * "Show utilities value" indicating that utilities should never be shown.
@@ -65,6 +71,25 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	 * Type value set if the fragment shows an image by resource id.
 	 */
 	protected static final int TYPE_FILERESOURCE = 2;
+
+	/**
+	 * List of colors to be used for the color picker dialog.
+	 */
+	protected static final int[] COLORS = { Color.BLACK, Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.WHITE,
+			Color.MAGENTA,
+			0xFF7F0000, Color.RED, 0xFFFF7F00, Color.YELLOW, 0xFF7F7F00, 0xFF007F00, Color.GREEN, Color.CYAN,
+			Color.BLUE, 0xFF00007F };
+
+	/**
+	 * Number of columns shown in the color picker dialog.
+	 */
+	private static final int COLOR_PICKER_COLUMNS = 4;
+
+	/**
+	 * Size of symbols in the color picker dialog.
+	 */
+	private static final int COLOR_PICKER_SIZE = Application.isTablet() ? ColorPickerDialog.SIZE_LARGE
+			: ColorPickerDialog.SIZE_SMALL;
 
 	/**
 	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
@@ -114,6 +139,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	 * The lock button.
 	 */
 	private ToggleButton lockButton;
+
+	/**
+	 * The color selector button.
+	 */
+	private Button selectColorButton;
 
 	/**
 	 * The brightness SeekBar.
@@ -220,6 +250,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
+		selectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
+
 		// Initialize the onClick listeners for the buttons
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			final int index = i;
@@ -237,6 +269,14 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 				onToggleLinkClicked(v);
 			}
 		});
+
+		selectColorButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				onButtonSelectColorClicked(v);
+			}
+		});
+		selectColorButton.setTextColor(Color.RED);
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
@@ -270,7 +310,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	 * @param position
 	 *            The number of the overlay button.
 	 */
-	public final void onToggleOverlayClicked(final View view, final int position) {
+	private void onToggleOverlayClicked(final View view, final int position) {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			if (position != i) {
 				toggleOverlayButtons[i].setChecked(false);
@@ -286,9 +326,26 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 	 * @param view
 	 *            The view of the link button.
 	 */
-	public final void onToggleLinkClicked(final View view) {
+	private void onToggleLinkClicked(final View view) {
 		ToggleButton button = (ToggleButton) view;
 		imageView.lockOverlay(button.isChecked(), true);
+	}
+
+	/**
+	 * onClick action for Button to select color of overlays.
+	 *
+	 * @param view
+	 *            The view of the select color button.
+	 */
+	private void onButtonSelectColorClicked(final View view) {
+		ColorPickerDialog dialog =
+				ColorPickerDialog
+						.newInstance(R.string.color_picker_title, COLORS, imageView.getOverlayColor(),
+								COLOR_PICKER_COLUMNS,
+								COLOR_PICKER_SIZE);
+
+		dialog.setTargetFragment(this, 0);
+		dialog.show(getFragmentManager(), ColorPickerDialog.class.toString());
 	}
 
 	/*
@@ -497,6 +554,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 		public void onStartTrackingTouch(final SeekBar seekBar) {
 			// do nothing
 		}
+	}
+
+	/**
+	 * Implementation of OnColorSelectedListener, to react on selected overlay color.
+	 *
+	 * @param color
+	 *            the selected color.
+	 */
+	@Override
+	public final void onColorSelected(final int color) {
+		selectColorButton.setTextColor(color);
+		imageView.setOverlayColor(color);
 	}
 
 	// Implementation of GuiElementUpdater
