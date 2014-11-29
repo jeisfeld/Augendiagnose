@@ -220,13 +220,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater 
 
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
-		if (!Application.isAuthorized()) {
-			toggleOverlayButtons[4].setEnabled(false); // MAGIC_NUMBER
-			toggleOverlayButtons[4].setVisibility(View.GONE); // MAGIC_NUMBER
-			toggleOverlayButtons[5].setEnabled(false); // MAGIC_NUMBER
-			toggleOverlayButtons[5].setVisibility(View.GONE); // MAGIC_NUMBER
-		}
-
 		// Initialize the onClick listeners for the buttons
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			final int index = i;
