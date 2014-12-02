@@ -159,6 +159,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private boolean showUtilities = true;
 
 	/**
+	 * The overlay color.
+	 */
+	private int overlayColor = Color.RED;
+
+	/**
 	 * Initialize the listFoldersFragment with the file name.
 	 *
 	 * @param initialFile
@@ -229,6 +234,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (savedInstanceState != null) {
 			showUtilities = savedInstanceState.getBoolean("showUtilities");
+			overlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
 		}
 		else {
 			showUtilities = getDefaultShowUtilities();
@@ -237,6 +243,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		imageView.setGuiElementUpdater(this);
+		imageView.setOverlayColor(overlayColor);
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
 		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
@@ -274,7 +281,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				onButtonSelectColorClicked(v);
 			}
 		});
-		selectColorButton.setTextColor(Color.RED);
+		selectColorButton.setTextColor(overlayColor);
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
@@ -508,6 +515,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", showUtilities);
+		outState.putInt("overlayColor", overlayColor);
 	}
 
 	/**
@@ -564,6 +572,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void onColorSelected(final int color) {
 		selectColorButton.setTextColor(color);
 		imageView.setOverlayColor(color);
+		overlayColor = color;
 	}
 
 	// Implementation of GuiElementUpdater
