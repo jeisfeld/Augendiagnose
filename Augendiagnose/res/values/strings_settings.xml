@@ -12,9 +12,10 @@
     <string name="pref_default_max_bitmap_size" translatable="false">2048</string>
     <string name="pref_title_eye_sequence_choice">Last photo is right eye</string>
     <string name="pref_default_eye_sequence_value" translatable="false">false</string>
-    <string name="pref_title_user_key">User key</string>
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
+    <string name="pref_title_overlay_color">Default overlay color</string>
+    <string name="pref_title_user_key">User key</string>
 
     <string-array name="pref_list_titles_folder_input">
         <item>Eye-Fi input folder</item>
@@ -66,6 +67,7 @@
     <string name="key_max_bitmap_size" translatable="false">max_bitmap_size</string>
     <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
     <string name="key_store_option" translatable="false">store_option</string>
+    <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_user_key" translatable="false">user_key</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
     <string name="key_internal_last_name" translatable="false">last_name</string>

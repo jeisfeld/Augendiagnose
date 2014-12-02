@@ -40,6 +40,10 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_store_options" />
 
+    <de.eisfeldj.augendiagnose.components.colorpicker.ColorDialogPreference
+        android:key="@string/key_overlay_color"
+        android:title="@string/pref_title_overlay_color" />
+
     <EditTextPreference
         android:defaultValue=""
         android:inputType="textPassword"

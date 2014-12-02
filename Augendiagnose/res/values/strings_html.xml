@@ -150,6 +150,11 @@
 			information in JPG files. (This limits the functionality of the app.)</li>
 	</ul>
 
+	<h3>Default overlay color</h3>
+
+	Here you can define the default color for iris topography overlays. (Standard:
+	red)
+
 	<h3>User key</h3>
 
 	A user key that allows unlocking of additional functionality.

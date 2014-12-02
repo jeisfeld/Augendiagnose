@@ -155,12 +155,16 @@
 			Verfügng.)</li>
 	</ul>
 
+	<h3>Standardfarbe für Overlays</h3>
+
+	Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays
+	normalerweise angezeigt werden. (Voreinstellung: rot)
+
 	<h3>Nutzerschlüssel</h3>
 
 	Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.
 </body>
 </html>
-
 ]]>
     </string>
     <string name="html_organize_photos">

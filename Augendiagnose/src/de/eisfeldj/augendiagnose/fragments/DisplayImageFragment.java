@@ -20,14 +20,13 @@ import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
 import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
+import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
- *
- * @author Joerg
  */
 public class DisplayImageFragment extends Fragment implements GuiElementUpdater, OnColorSelectedListener {
 
@@ -69,25 +68,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Type value set if the fragment shows an image by resource id.
 	 */
 	protected static final int TYPE_FILERESOURCE = 2;
-
-	/**
-	 * List of colors to be used for the color picker dialog.
-	 */
-	protected static final int[] COLORS = { Color.BLACK, Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.WHITE,
-			Color.MAGENTA,
-			0xFF7F0000, Color.RED, 0xFFFF7F00, Color.YELLOW, 0xFF7F7F00, 0xFF007F00, Color.GREEN, Color.CYAN,
-			Color.BLUE, 0xFF00007F };
-
-	/**
-	 * Number of columns shown in the color picker dialog.
-	 */
-	private static final int COLOR_PICKER_COLUMNS = 4;
-
-	/**
-	 * Size of symbols in the color picker dialog.
-	 */
-	private static final int COLOR_PICKER_SIZE = Application.isTablet() ? ColorPickerDialog.SIZE_LARGE
-			: ColorPickerDialog.SIZE_SMALL;
 
 	/**
 	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
@@ -238,6 +218,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			showUtilities = getDefaultShowUtilities();
+			overlayColor = Application.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		}
 		showUtilities(showUtilities);
 
@@ -345,9 +326,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private void onButtonSelectColorClicked(final View view) {
 		ColorPickerDialog dialog =
 				ColorPickerDialog
-						.newInstance(R.string.color_picker_title, COLORS, imageView.getOverlayColor(),
-								COLOR_PICKER_COLUMNS,
-								COLOR_PICKER_SIZE);
+						.newInstance(R.string.color_picker_title, ColorPickerConstants.COLOR_PICKER_COLORS,
+								imageView.getOverlayColor(),
+								ColorPickerConstants.COLOR_PICKER_COLUMNS,
+								ColorPickerConstants.COLOR_PICKER_SIZE);
 
 		dialog.setTargetFragment(this, 0);
 		dialog.show(getFragmentManager(), ColorPickerDialog.class.toString());
