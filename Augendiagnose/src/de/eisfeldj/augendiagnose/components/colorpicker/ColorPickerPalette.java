@@ -131,7 +131,7 @@ public class ColorPickerPalette extends TableLayout {
 			View colorSwatch = createColorSwatch(color, selectedColor);
 			setSwatchDescription(rowNumber, tableElements, rowElements, color == selectedColor,
 					colorSwatch);
-			addSwatchToRow(row, colorSwatch, rowNumber);
+			addSwatchToRow(row, colorSwatch);
 
 			rowElements++;
 			if (rowElements == mNumColumns) {
@@ -145,7 +145,7 @@ public class ColorPickerPalette extends TableLayout {
 		// Create blank views to fill the row if the last row has not been filled.
 		if (rowElements > 0) {
 			while (rowElements != mNumColumns) {
-				addSwatchToRow(row, createBlankSpace(), rowNumber);
+				addSwatchToRow(row, createBlankSpace());
 				rowElements++;
 			}
 			addView(row);
@@ -153,23 +153,15 @@ public class ColorPickerPalette extends TableLayout {
 	}
 
 	/**
-	 * Appends a swatch to the end of the row for even-numbered rows (starting with row 0), to the beginning of a row
-	 * for odd-numbered rows.
+	 * Appends a swatch to the end of the row.
 	 *
 	 * @param row
 	 *            The row.
 	 * @param swatch
 	 *            The swatch to be added.
-	 * @param rowNumber
-	 *            The row number.
 	 */
-	private static void addSwatchToRow(final TableRow row, final View swatch, final int rowNumber) {
-		if (rowNumber % 2 == 0) {
-			row.addView(swatch);
-		}
-		else {
-			row.addView(swatch, 0);
-		}
+	private static void addSwatchToRow(final TableRow row, final View swatch) {
+		row.addView(swatch);
 	}
 
 	/**

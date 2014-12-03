@@ -559,6 +559,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		Paint p = new Paint();
 		ColorFilter filter = new LightingColorFilter(0, color);
+		p.setAlpha(color >>> 24); //MAGIC_NUMBER
 		p.setColorFilter(filter);
 		Canvas canvas = new Canvas(ret);
 		canvas.drawBitmap(sourceBitmap, 0, 0, p);
