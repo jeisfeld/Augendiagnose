@@ -139,6 +139,7 @@ public final class JpegMetadataUtil {
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
+		result.setOverlayColor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_COLOR));
 
 		// For standard fields, use custom data only if there is no other data.
 		if (result.description == null) {
@@ -379,6 +380,7 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
 			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
 			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());
+			parser.setJeItem(XmpHandler.ITEM_OVERLAY_COLOR, metadata.getOverlayColorString());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);

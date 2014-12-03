@@ -18,6 +18,12 @@
             android:id="@+id/action_reset_brightness"
             android:title="@string/menu_reset_brightness"/>
         <item
+            android:id="@+id/action_store_overlay_color"
+            android:title="@string/menu_store_overlay_color"/>
+        <item
+            android:id="@+id/action_reset_overlay_color"
+            android:title="@string/menu_reset_overlay_color"/>
+        <item
             android:id="@+id/action_delete_overlay_position"
             android:title="@string/menu_delete_overlay_position"/>
     </group>

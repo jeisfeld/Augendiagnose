@@ -224,7 +224,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		imageView.setGuiElementUpdater(this);
-		imageView.setOverlayColor(overlayColor);
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
 		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
@@ -262,7 +261,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				onButtonSelectColorClicked(v);
 			}
 		});
-		selectColorButton.setTextColor(overlayColor);
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
@@ -282,6 +280,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
 			}
 		});
+
+		// The following also updates the selectColorButton
+		imageView.setOverlayColor(overlayColor);
 
 		if (JpegMetadataUtil.changeJpegAllowed()) {
 			registerForContextMenu(imageView);
@@ -390,6 +391,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				return true;
 			case R.id.action_reset_position:
 				imageView.storePositionZoom(true);
+				return true;
+			case R.id.action_store_overlay_color:
+				imageView.storeOverlayColor(false);
+				return true;
+			case R.id.action_reset_overlay_color:
+				imageView.storeOverlayColor(true);
 				return true;
 			case R.id.action_delete_overlay_position:
 				imageView.resetOverlayPosition(true);
@@ -552,7 +559,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	@Override
 	public final void onColorSelected(final int color) {
-		selectColorButton.setTextColor(color);
 		imageView.setOverlayColor(color);
 		overlayColor = color;
 	}
@@ -574,6 +580,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void updateSeekbarContrast(final float contrast) {
 		float progress = contrast * CONTRAST_DENSITY;
 		seekbarContrast.setProgress(Float.valueOf(progress).intValue());
+	}
+
+	@Override
+	public final void updateOverlayColorButton(final int color) {
+		selectColorButton.setTextColor(color);
+	}
+
+	@Override
+	public final int getOverlayDefaultColor() {
+		return overlayColor;
 	}
 
 	@Override

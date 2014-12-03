@@ -8,7 +8,9 @@
     <string name="menu_reset_brightness">Helligkeit/Kontrast zurücksetzen</string>
     <string name="menu_store_position">Zoom/Position speichern</string>
     <string name="menu_reset_position">Zoom/Position zurücksetzen</string>
-    <string name="menu_delete_overlay_position">Overlay-Position löschen</string>
+    <string name="menu_store_overlay_color">Overlay-Farbe speichern</string>
+    <string name="menu_reset_overlay_color">Overlay-Farbe zurücksetzen</string>
+    <string name="menu_delete_overlay_position">Overlay-Position zurücksetzen</string>
     <string name="menu_delete_images">Fotos löschen</string>
     <string name="menu_change_date">Datum ändern</string>
     <string name="menu_move_to_input_folder">In Eingangsverzeichnis verschieben</string>

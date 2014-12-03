@@ -28,6 +28,7 @@ public final class JpegMetadata implements Parcelable {
 	public RightLeft rightLeft = null;
 	public Float brightness = null;
 	public Float contrast = null;
+	public Integer overlayColor = null;
 
 	// PUBLIC_FIELDS:END
 	// JAVADOC:ON
@@ -143,6 +144,14 @@ public final class JpegMetadata implements Parcelable {
 		return contrast == null ? null : contrast.toString();
 	}
 
+	public void setOverlayColor(final String value) {
+		overlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
+	}
+
+	public String getOverlayColorString() {
+		return overlayColor == null ? null : Integer.toHexString(overlayColor);
+	}
+
 	// JAVADOC:ON
 
 	@Override
@@ -160,6 +169,7 @@ public final class JpegMetadata implements Parcelable {
 		str.append("RightLeft: " + rightLeft + "\n");
 		str.append("Brightness: " + brightness + "\n");
 		str.append("Contrast: " + contrast + "\n");
+		str.append("OverlayColor: " + getOverlayColorString() + "\n");
 		return str.toString();
 	}
 
@@ -175,13 +185,14 @@ public final class JpegMetadata implements Parcelable {
 		dest.writeString(subject);
 		dest.writeString(comment);
 		dest.writeString(person);
-		dest.writeString(getXCenterString());
-		dest.writeString(getYCenterString());
-		dest.writeString(getOverlayScaleFactorString());
+		dest.writeFloat(xCenter);
+		dest.writeFloat(yCenter);
+		dest.writeFloat(overlayScaleFactor);
 		dest.writeLong(getOrganizeDateLong());
 		dest.writeString(getRightLeftString());
-		dest.writeString(getBrightnessString());
-		dest.writeString(getContrastString());
+		dest.writeFloat(brightness);
+		dest.writeFloat(contrast);
+		dest.writeInt(overlayColor);
 	}
 
 	/**
@@ -196,13 +207,14 @@ public final class JpegMetadata implements Parcelable {
 			metadata.subject = in.readString();
 			metadata.comment = in.readString();
 			metadata.person = in.readString();
-			metadata.setXCenter(in.readString());
-			metadata.setYCenter(in.readString());
-			metadata.setOverlayScaleFactor(in.readString());
+			metadata.xCenter = in.readFloat();
+			metadata.yCenter = in.readFloat();
+			metadata.overlayScaleFactor = in.readFloat();
 			metadata.setOrganizeDateFromLong(in.readLong());
 			metadata.setRightLeft(in.readString());
-			metadata.setBrightness(in.readString());
-			metadata.setContrast(in.readString());
+			metadata.brightness = in.readFloat();
+			metadata.contrast = in.readFloat();
+			metadata.overlayColor = in.readInt();
 			return metadata;
 		}
 

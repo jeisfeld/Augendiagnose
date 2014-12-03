@@ -138,7 +138,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Callback class to update the GUI elements from the view.
 	 */
-	private GuiElementUpdater guiElementUpdater;
+	private GuiElementUpdater mGuiElementUpdater;
 
 	// JAVADOC:OFF
 	/**
@@ -215,8 +215,8 @@ public class OverlayPinchImageView extends PinchImageView {
 								mOverlayScaleFactor = mMetadata.overlayScaleFactor
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 								lockOverlay(true, false);
-								if (guiElementUpdater != null) {
-									guiElementUpdater.setLockChecked(true);
+								if (mGuiElementUpdater != null) {
+									mGuiElementUpdater.setLockChecked(true);
 								}
 							}
 							else {
@@ -229,10 +229,14 @@ public class OverlayPinchImageView extends PinchImageView {
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
 								mBrightness = mMetadata.brightness.floatValue();
 								mContrast = mMetadata.contrast.floatValue();
-								if (guiElementUpdater != null) {
-									guiElementUpdater.updateSeekbarBrightness(mBrightness);
-									guiElementUpdater.updateSeekbarContrast(mContrast);
+								if (mGuiElementUpdater != null) {
+									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
+									mGuiElementUpdater.updateSeekbarContrast(mContrast);
 								}
+							}
+							if (mMetadata != null && mMetadata.overlayColor != null) {
+								mOverlayColor = mMetadata.overlayColor.intValue();
+								mGuiElementUpdater.updateOverlayColorButton(mOverlayColor);
 							}
 
 							mLastOverlayScaleFactor = mOverlayScaleFactor;
@@ -437,9 +441,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			mShowOverlay[i] = false;
 		}
-		if (guiElementUpdater != null) {
-			guiElementUpdater.setLockChecked(false);
-			guiElementUpdater.resetOverlays();
+		if (mGuiElementUpdater != null) {
+			mGuiElementUpdater.setLockChecked(false);
+			mGuiElementUpdater.resetOverlays();
 		}
 	}
 
@@ -611,6 +615,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setOverlayColor(final int overlayColor) {
 		mOverlayColor = overlayColor;
 		mOverlayCache = new Drawable[OVERLAY_COUNT];
+		mGuiElementUpdater.updateOverlayColorButton(overlayColor);
 		refresh(true);
 	}
 
@@ -636,9 +641,9 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.contrast = null;
 				mBrightness = 0;
 				mContrast = 1;
-				if (guiElementUpdater != null) {
-					guiElementUpdater.updateSeekbarBrightness(mBrightness);
-					guiElementUpdater.updateSeekbarContrast(mContrast);
+				if (mGuiElementUpdater != null) {
+					mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
+					mGuiElementUpdater.updateSeekbarContrast(mContrast);
 				}
 			}
 			else {
@@ -673,6 +678,26 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.xPosition = mPosX;
 				mMetadata.yPosition = mPosY;
 				mMetadata.zoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
+			}
+
+			mEyePhoto.storeImageMetadata(mMetadata);
+		}
+	}
+
+	/**
+	 * Store the overlay color in the image metadata.
+	 *
+	 * @param delete
+	 *            delete the overlay color from metadata.
+	 */
+	public final void storeOverlayColor(final boolean delete) {
+		if (mInitialized && mMetadata != null) {
+			if (delete) {
+				mMetadata.overlayColor = null;
+				setOverlayColor(mGuiElementUpdater.getOverlayDefaultColor());
+			}
+			else {
+				mMetadata.overlayColor = mOverlayColor;
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -818,6 +843,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		bundle.putBoolean("mLocked", this.mLocked);
 		bundle.putFloat("mBrightness", this.mBrightness);
 		bundle.putFloat("mContrast", this.mContrast);
+		bundle.putInt("mOverlayColor", mOverlayColor);
 		bundle.putParcelable("mMetadata", mMetadata);
 		return bundle;
 	}
@@ -835,6 +861,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mLocked = bundle.getBoolean("mLocked");
 			this.mBrightness = bundle.getFloat("mBrightness");
 			this.mContrast = bundle.getFloat("mContrast");
+			this.mOverlayColor = bundle.getInt("mOverlayColor");
 			this.mMetadata = bundle.getParcelable("mMetadata");
 			enhancedState = bundle.getParcelable("instanceState");
 		}
@@ -863,7 +890,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            The GUI Element updater
 	 */
 	public final void setGuiElementUpdater(final GuiElementUpdater updater) {
-		guiElementUpdater = updater;
+		mGuiElementUpdater = updater;
 	}
 
 	/**
@@ -893,6 +920,21 @@ public class OverlayPinchImageView extends PinchImageView {
 		 *            The contrast.
 		 */
 		void updateSeekbarContrast(float contrast);
+
+		/**
+		 * Update the overlay color button.
+		 *
+		 * @param color
+		 *            The color displayed in the button.
+		 */
+		void updateOverlayColorButton(int color);
+
+		/**
+		 * Retrieve the default color for the overlay.
+		 *
+		 * @return The default color for the overlay.
+		 */
+		int getOverlayDefaultColor();
 
 		/**
 		 * Reset the overlays.

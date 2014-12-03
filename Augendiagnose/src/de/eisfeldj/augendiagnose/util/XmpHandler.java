@@ -50,6 +50,7 @@ public class XmpHandler {
 	public static final String ITEM_RIGHT_LEFT = "rightLeft";
 	public static final String ITEM_BRIGHTNESS = "brightness";
 	public static final String ITEM_CONTRAST = "contrast";
+	public static final String ITEM_OVERLAY_COLOR = "overlayColor";
 
 	// JAVADOC:ON
 
@@ -354,7 +355,8 @@ public class XmpHandler {
 	/**
 	 * Set the image person name.
 	 *
-	 * @param name the image person name.
+	 * @param name
+	 *            the image person name.
 	 * @throws XMPException
 	 */
 	public final void setMicrosoftPerson(final String name) throws XMPException {

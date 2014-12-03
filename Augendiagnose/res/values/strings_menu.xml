@@ -8,7 +8,9 @@
     <string name="menu_reset_brightness">Reset brightness/contrast</string>
     <string name="menu_store_position">Store zoom/position</string>
     <string name="menu_reset_position">Reset zoom/position</string>
-    <string name="menu_delete_overlay_position">Delete overlay position</string>
+    <string name="menu_store_overlay_color">Store overlay color</string>
+    <string name="menu_reset_overlay_color">Reset overlay color</string>
+    <string name="menu_delete_overlay_position">Reset overlay position</string>
     <string name="menu_delete_images">Delete images</string>
     <string name="menu_change_date">Change date</string>
     <string name="menu_move_to_input_folder">Move to input folder</string>
