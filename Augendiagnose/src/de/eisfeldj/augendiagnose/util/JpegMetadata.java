@@ -180,19 +180,20 @@ public final class JpegMetadata implements Parcelable {
 
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
+		// using String values in order to be fine with null values
 		dest.writeString(title);
 		dest.writeString(description);
 		dest.writeString(subject);
 		dest.writeString(comment);
 		dest.writeString(person);
-		dest.writeFloat(xCenter);
-		dest.writeFloat(yCenter);
-		dest.writeFloat(overlayScaleFactor);
+		dest.writeString(getXCenterString());
+		dest.writeString(getYCenterString());
+		dest.writeString(getOverlayScaleFactorString());
 		dest.writeLong(getOrganizeDateLong());
 		dest.writeString(getRightLeftString());
-		dest.writeFloat(brightness);
-		dest.writeFloat(contrast);
-		dest.writeInt(overlayColor);
+		dest.writeString(getBrightnessString());
+		dest.writeString(getContrastString());
+		dest.writeString(getOverlayColorString());
 	}
 
 	/**
@@ -207,14 +208,14 @@ public final class JpegMetadata implements Parcelable {
 			metadata.subject = in.readString();
 			metadata.comment = in.readString();
 			metadata.person = in.readString();
-			metadata.xCenter = in.readFloat();
-			metadata.yCenter = in.readFloat();
-			metadata.overlayScaleFactor = in.readFloat();
+			metadata.setXCenter(in.readString());
+			metadata.setYCenter(in.readString());
+			metadata.setOverlayScaleFactor(in.readString());
 			metadata.setOrganizeDateFromLong(in.readLong());
 			metadata.setRightLeft(in.readString());
-			metadata.brightness = in.readFloat();
-			metadata.contrast = in.readFloat();
-			metadata.overlayColor = in.readInt();
+			metadata.setBrightness(in.readString());
+			metadata.setContrast(in.readString());
+			metadata.setOverlayColor(in.readString());
 			return metadata;
 		}
 
