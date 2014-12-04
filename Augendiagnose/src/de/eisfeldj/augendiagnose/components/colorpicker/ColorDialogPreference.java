@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 
@@ -47,6 +48,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 		ColorPickerPalette palette = new ColorPickerPalette(getContext());
 		palette.init(ColorPickerConstants.COLOR_PICKER_SIZE, ColorPickerConstants.COLOR_PICKER_COLUMNS, this);
 		palette.drawPalette(ColorPickerConstants.COLOR_PICKER_COLORS, storedColor);
+		palette.setGravity(Gravity.CENTER);
 
 		builder.setView(palette);
 		builder.setPositiveButton(null, null);
