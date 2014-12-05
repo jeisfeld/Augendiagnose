@@ -559,7 +559,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		Paint p = new Paint();
 		ColorFilter filter = new LightingColorFilter(0, color);
-		p.setAlpha(color >>> 24); //MAGIC_NUMBER
+		p.setAlpha(color >>> 24); // MAGIC_NUMBER
 		p.setColorFilter(filter);
 		Canvas canvas = new Canvas(ret);
 		canvas.drawBitmap(sourceBitmap, 0, 0, p);
@@ -715,6 +715,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (pinchAll()) {
 			return super.handlePointerMove(ev);
 		}
+		boolean moved = false;
 
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
 		final float x = ev.getX(pointerIndex);
@@ -744,12 +745,16 @@ public class OverlayPinchImageView extends PinchImageView {
 				mOverlayX = pinchX + (mOverlayX - pinchX) * changeFactor;
 				mOverlayY = pinchY + (mOverlayY - pinchY) * changeFactor;
 				mLastOverlayScaleFactor = mOverlayScaleFactor;
+				moved = true;
 			}
 			mLastTouchX0 = x0;
 			mLastTouchY0 = y0;
 		}
-		mLastTouchX = x;
-		mLastTouchY = y;
+		if (x != mLastTouchX || y != mLastTouchY) {
+			mLastTouchX = x;
+			mLastTouchY = y;
+			moved = true;
+		}
 
 		if (mOverlayX < 0) {
 			mOverlayX = 0;
@@ -765,7 +770,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		refresh(false);
-		return true;
+		return moved;
 	}
 
 	/*

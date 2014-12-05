@@ -84,7 +84,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled moving photos back to the input folder. The app stays with organizing photos if there are more photos to be organized.</item>
         <item>Added navigation on help pages. Bugfixes.</item>
         <item>New overlays. Choose color of overlays. Bugfixes.</item>
-        <item>TODO</item>
+        <item>Bugfixes.</item>
     </string-array>
 
 </resources>
