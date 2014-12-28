@@ -67,6 +67,7 @@
     <string name="toggle_overlay_3">T3</string>
     <string name="toggle_overlay_4">T4</string>
     <string name="toggle_overlay_5">T5</string>
+    <string name="toggle_overlay_6">T6</string>
 
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>

@@ -232,6 +232,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		toggleOverlayButtons[3] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay3); // MAGIC_NUMBER
 		toggleOverlayButtons[4] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay4); // MAGIC_NUMBER
 		toggleOverlayButtons[5] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay5); // MAGIC_NUMBER
+		toggleOverlayButtons[6] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay6); // MAGIC_NUMBER
 
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 

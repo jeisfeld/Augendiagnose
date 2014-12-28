@@ -38,7 +38,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The number of overlays (including circle).
 	 */
-	public static final int OVERLAY_COUNT = 6;
+	public static final int OVERLAY_COUNT = 7;
 
 	/**
 	 * The size of the overlays (in pixels).
@@ -513,6 +513,15 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 				else {
 					resource = R.drawable.overlay_topo4_l;
+				}
+				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
+				break;
+			case 6: // MAGIC_NUMBER
+				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
+					resource = R.drawable.overlay_topo6_r;
+				}
+				else {
+					resource = R.drawable.overlay_topo6_l;
 				}
 				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
 				break;

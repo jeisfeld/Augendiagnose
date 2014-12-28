@@ -129,6 +129,17 @@
             android:textOff="@string/toggle_overlay_5"
             android:textOn="@string/toggle_overlay_5" />
 
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:textOff="@string/toggle_overlay_6"
+            android:textOn="@string/toggle_overlay_6" />
+
         <Button
             android:id="@+id/buttonSelectColor"
             android:layout_width="0dp"
