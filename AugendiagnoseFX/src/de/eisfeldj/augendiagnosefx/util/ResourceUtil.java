@@ -2,6 +2,8 @@ package de.eisfeldj.augendiagnosefx.util;
 
 import java.util.ResourceBundle;
 
+import javafx.scene.image.Image;
+
 /**
  * Utility class to get localized resources.
  */
@@ -27,6 +29,17 @@ public final class ResourceUtil {
 	 */
 	public static String getString(final String key) {
 		return STRINGS_BUNDLE.getString(key);
+	}
+
+	/**
+	 * Get an Image.
+	 *
+	 * @param name
+	 *            The name of the image file.
+	 * @return The image object.
+	 */
+	public static Image getImage(final String name) {
+		return new Image(ClassLoader.getSystemResourceAsStream("img/" + name));
 	}
 
 }

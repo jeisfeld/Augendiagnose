@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
@@ -36,8 +37,8 @@ public class Main extends Application {
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 
-		FXMLUtil.displayMenuFromFxml("Menu.fxml");
-		FXMLUtil.displayFromFxml("StartPage.fxml");
+		FXMLUtil.displayMenu("Menu.fxml");
+		FXMLUtil.displayBody("StartPage.fxml");
 	}
 
 	/**
@@ -57,6 +58,12 @@ public class Main extends Application {
 		private MenuBar menuBar;
 
 		/**
+		 * The pane containing menu buttons.
+		 */
+		@FXML
+		private HBox menuButtons;
+
+		/**
 		 * Getter for the body pane.
 		 *
 		 * @return The body pane.
@@ -73,6 +80,15 @@ public class Main extends Application {
 		public final MenuBar getMenuBar() {
 			return menuBar;
 		}
+
+		/**
+		 * Getter for the menu buttons.
+		 *
+		 * @return The menu buttons.
+		 */
+		public final HBox getMenuButtons() {
+			return menuButtons;
+		}
 	}
 
 	/**
@@ -88,7 +104,7 @@ public class Main extends Application {
 		 */
 		@FXML
 		protected final void handleButtonOrganize(final ActionEvent event) throws IOException {
-			FXMLUtil.displayFromFxml("DisplayPhotos.fxml");
+			FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 		}
 
 		/**
