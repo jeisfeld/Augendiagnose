@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
 
 /**
  * A fragment to display an HTML page (used for help screens).
  */
 public class DisplayHtmlFragment extends Fragment {
-
 	/**
 	 * The style tag to be inserted into the HTML.
 	 */
@@ -60,7 +61,18 @@ public class DisplayHtmlFragment extends Fragment {
 
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
+
 		String html = getString(resource);
+		if (resource == R.string.html_release_notes_base) {
+			int indexBody = html.indexOf("</body>");
+			String releaseNotes =
+					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), true, 1, Application.getVersion());
+			html = html.substring(0, indexBody) + releaseNotes + html.substring(indexBody);
+		}
+		else {
+			html = getString(resource);
+		}
+
 		int index = html.indexOf("</head>");
 		html = html.substring(0, index) + STYLE + html.substring(index);
 		webView.loadData(html, "text/html; charset=UTF-8", "utf-8");

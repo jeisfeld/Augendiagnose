@@ -19,13 +19,14 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 	 */
 	private static final int[] HTML_NAVIGATION_RESOURCES = { R.string.html_navigation_overview,
 			R.string.html_navigation_settings,
-			R.string.html_navigation_organize_photos, R.string.html_navigation_display_photos };
+			R.string.html_navigation_organize_photos, R.string.html_navigation_display_photos,
+			R.string.html_navigation_release_notes };
 
 	/**
 	 * The array of HTML details to be shown (ordered in same sequence as navigation pane).
 	 */
 	private static final int[] HTML_RESOURCES = { R.string.html_overview, R.string.html_settings,
-			R.string.html_organize_photos, R.string.html_display_photos };
+			R.string.html_organize_photos, R.string.html_display_photos, R.string.html_release_notes_base };
 
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {

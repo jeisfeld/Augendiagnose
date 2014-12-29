@@ -16,6 +16,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
 
 /**
  * Main activity of the application.
@@ -66,7 +67,7 @@ public class MainActivity extends Activity {
 			int currentVersion = Application.getVersion();
 
 			if (storedVersion < currentVersion) {
-				DialogUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
+				ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
 			}
 		}
 

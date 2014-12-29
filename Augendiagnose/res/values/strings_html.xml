@@ -5,6 +5,21 @@
     <string name="html_navigation_settings">Settings</string>
     <string name="html_navigation_organize_photos">Organize Photos</string>
     <string name="html_navigation_display_photos">Display Photos</string>
+    <string name="html_navigation_release_notes">Release Notes</string>
+    <string name="html_release_notes_base">
+<![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Eye Diagnosis - Release Notes</title>
+</head>
+<body>
+	<h2>Eye Diagnosis - Release Notes</h2>
+</body>
+</html>
+]]>
+    </string>
     <string name="html_overview">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
