@@ -57,6 +57,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4.7</item>
         <item>0.4.8</item>
         <item>0.4.9</item>
+        <item>0.4.10</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -85,6 +86,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added navigation on help pages. Bugfixes.</item>
         <item>New overlays. Choose color of overlays. Bugfixes.</item>
         <item>Added one more overlay. Help page for release notes. Bugfixes.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
