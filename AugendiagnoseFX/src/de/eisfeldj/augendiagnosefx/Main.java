@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
@@ -48,7 +48,7 @@ public class Main extends Application {
 		 * The pane containing the body.
 		 */
 		@FXML
-		private Pane body;
+		private StackPane body;
 
 		/**
 		 * The pane containing the menu bar.
@@ -61,7 +61,7 @@ public class Main extends Application {
 		 *
 		 * @return The body pane.
 		 */
-		public final Pane getBody() {
+		public final StackPane getBody() {
 			return body;
 		}
 

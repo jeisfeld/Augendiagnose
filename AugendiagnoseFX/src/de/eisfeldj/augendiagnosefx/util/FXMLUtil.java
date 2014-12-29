@@ -3,8 +3,10 @@ package de.eisfeldj.augendiagnosefx.util;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Pane;
 import de.eisfeldj.augendiagnosefx.Main.MainController;
 
 /**
@@ -54,8 +56,17 @@ public final class FXMLUtil {
 	 */
 	public static void displayFromFxml(final String fxmlFile) throws IOException {
 		Parent root = getRootFromFxml(fxmlFile);
-		controller.getBody().getChildren().clear();
 		controller.getBody().getChildren().add(root);
+	}
+
+	/**
+	 * Utility method to remove a node. In particular, a full pane can be removed.
+	 *
+	 * @param node
+	 *            The node to be removed.
+	 */
+	public static void remove(final Node node) {
+		((Pane) node.getParent()).getChildren().remove(node);
 	}
 
 	/**

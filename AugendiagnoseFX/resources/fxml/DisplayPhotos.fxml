@@ -3,7 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="de.eisfeldj.augendiagnosefx.Main"
+<?import javafx.scene.control.Button?>
+<GridPane fx:id="displayMain" fx:controller="de.eisfeldj.augendiagnosefx.display.DisplayPhotosController"
 	xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10"
 	styleClass="root">
 	<padding>
@@ -12,5 +13,8 @@
 
 	<Label text="New Page" GridPane.columnIndex="0"
 		GridPane.rowIndex="0" />
+
+	<Button  text="Close" GridPane.columnIndex="1" GridPane.rowIndex="0"
+		onAction="#close" />
 
 </GridPane>
