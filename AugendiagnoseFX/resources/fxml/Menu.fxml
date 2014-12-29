@@ -4,31 +4,26 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<MenuBar styleClass="menu">
+<MenuBar styleClass="menu" xmlns:fx="http://javafx.com/fxml"
+	fx:controller="de.eisfeldj.augendiagnosefx.menu.MenuController">
 	<menus>
-		<Menu text="File">
+		<Menu text="%menu_file">
 			<items>
-				<MenuItem text="New" />
-				<MenuItem text="Open" />
-				<MenuItem text="Save" />
-				<MenuItem text="Save As" />
 				<SeparatorMenuItem />
-				<MenuItem text="Exit" />
+				<MenuItem text="%menu_exit" onAction="#exitApplication" />
 			</items>
 		</Menu>
-		<Menu text="Edit">
+
+		<Menu text="%menu_tools">
 			<items>
-				<MenuItem text="Copy" />
-				<MenuItem text="Cut" />
-				<MenuItem text="Paste" />
+				<MenuItem fx:id="menuClose" text="%menu_close" disable="true" />
 			</items>
 		</Menu>
-		<Menu text="Help">
+		<Menu text="%menu_help">
 			<items>
-				<MenuItem text="Search" disable="true" />
-				<MenuItem text="Online Manual" visible="false" />
+				<MenuItem text="%menu_online_manual" disable="true" />
 				<SeparatorMenuItem />
-				<MenuItem text="About" />
+				<MenuItem text="%menu_about" disable="true" />
 			</items>
 		</Menu>
 	</menus>

@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import de.eisfeldj.augendiagnosefx.Main.MainController;
+import de.eisfeldj.augendiagnosefx.menu.MenuController;
 
 /**
  * Utility class for reading FXML files.
@@ -20,9 +21,14 @@ import de.eisfeldj.augendiagnosefx.Main.MainController;
 public final class FXMLUtil {
 
 	/**
-	 * The controller of the main application.
+	 * The mainController of the main application.
 	 */
-	private static MainController controller = null;
+	private static MainController mainController = null;
+
+	/**
+	 * The menu controller.
+	 */
+	private static MenuController menuController = null;
 
 	/**
 	 * Private constructor to prevent instantiation.
@@ -46,7 +52,10 @@ public final class FXMLUtil {
 		root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
 
 		if (fxmlLoader.getController() instanceof MainController) {
-			FXMLUtil.controller = (MainController) fxmlLoader.getController();
+			FXMLUtil.mainController = (MainController) fxmlLoader.getController();
+		}
+		else if (fxmlLoader.getController() instanceof MenuController) {
+			FXMLUtil.menuController = (MenuController) fxmlLoader.getController();
 		}
 
 		return root;
@@ -61,7 +70,7 @@ public final class FXMLUtil {
 	 */
 	public static void displayBody(final String fxmlFile) throws IOException {
 		Parent root = getRootFromFxml(fxmlFile);
-		controller.getBody().getChildren().add(root);
+		mainController.getBody().getChildren().add(root);
 	}
 
 	/**
@@ -73,20 +82,27 @@ public final class FXMLUtil {
 	 */
 	public static void displaySubpage(final String fxmlFile) throws IOException {
 		final Parent root = getRootFromFxml(fxmlFile);
-		controller.getBody().getChildren().add(root);
+		mainController.getBody().getChildren().add(root);
 
+		// Add close button
 		Image btnImage = ResourceUtil.getImage("close.png");
 		Button closeButton = new Button("", new ImageView(btnImage));
 		closeButton.getStyleClass().add("imageButton");
-		closeButton.setOnAction(new EventHandler<ActionEvent>() {
+
+		// Create event handler for closing
+		final EventHandler<ActionEvent> closeHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				remove(root);
+				removeSubpage(root);
 				remove(closeButton);
 			}
-		});
+		};
+		closeButton.setOnAction(closeHandler);
 
-		controller.getMenuButtons().getChildren().addAll(closeButton);
+		mainController.getMenuButtons().getChildren().addAll(closeButton);
+
+		// Enable close menu
+		menuController.enableClose(root, closeHandler);
 	}
 
 	/**
@@ -100,6 +116,20 @@ public final class FXMLUtil {
 	}
 
 	/**
+	 * Utility method to remove a pane from the stack.
+	 *
+	 * @param node
+	 *            The pane to be removed.
+	 */
+	public static void removeSubpage(final Node node) {
+		remove(node);
+
+		if (mainController.getBody().getChildren().size() <= 1) {
+			menuController.disableClose();
+		}
+	}
+
+	/**
 	 * Utility method to expand and display the menu bar.
 	 *
 	 * @param fxmlFile
@@ -108,8 +138,8 @@ public final class FXMLUtil {
 	 */
 	public static void displayMenu(final String fxmlFile) throws IOException {
 		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile);
-		controller.getMenuBar().getMenus().clear();
-		controller.getMenuBar().getMenus().addAll(root.getMenus());
+		mainController.getMenuBar().getMenus().clear();
+		mainController.getMenuBar().getMenus().addAll(root.getMenus());
 	}
 
 }
