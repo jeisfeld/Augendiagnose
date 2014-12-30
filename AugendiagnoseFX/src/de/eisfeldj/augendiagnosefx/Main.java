@@ -1,13 +1,18 @@
 package de.eisfeldj.augendiagnosefx;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -61,16 +66,16 @@ public class Main extends Application {
 	/**
 	 * The controller of the main window.
 	 */
-	public static class MainController implements Controller {
+	public static class MainController implements Initializable, Controller {
 		/**
 		 * The root of the main page.
 		 */
 		@FXML
-		private VBox main;
+		private VBox mainPane;
 
 		@Override
 		public final Parent getRoot() {
-			return main;
+			return mainPane;
 		}
 
 		/**
@@ -90,6 +95,17 @@ public class Main extends Application {
 		 */
 		@FXML
 		private HBox menuButtons;
+
+		/**
+		 * The close button in the menu bar.
+		 */
+		@FXML
+		private Button closeButton;
+
+		@Override
+		public final void initialize(final URL location, final ResourceBundle resources) {
+			closeButton.setGraphic(new ImageView(ResourceUtil.getImage("close.png")));
+		}
 
 		/**
 		 * Getter for the body pane.
@@ -118,6 +134,14 @@ public class Main extends Application {
 			return menuButtons;
 		}
 
+		/**
+		 * Getter for the close button.
+		 *
+		 * @return the close button.
+		 */
+		public final Button getCloseButton() {
+			return closeButton;
+		}
 	}
 
 	/**

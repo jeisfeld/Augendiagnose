@@ -7,10 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import de.eisfeldj.augendiagnosefx.Controller;
 import de.eisfeldj.augendiagnosefx.Main.MainController;
@@ -57,6 +54,7 @@ public final class FXMLUtil {
 		}
 		else if (fxmlLoader.getController() instanceof MenuController) {
 			FXMLUtil.menuController = (MenuController) fxmlLoader.getController();
+			FXMLUtil.menuController.setMainController(FXMLUtil.mainController);
 		}
 
 		return fxmlLoader.getController();
@@ -81,24 +79,13 @@ public final class FXMLUtil {
 		}
 		mainController.getBody().getChildren().add(controller.getRoot());
 
-		// Add close button
-		Image btnImage = ResourceUtil.getImage("close.png");
-		Button closeButton = new Button("", new ImageView(btnImage));
-		closeButton.getStyleClass().add("imageButton");
-
-		// Create event handler for closing
+		// Enable close menu
 		final EventHandler<ActionEvent> closeHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
 				removeSubpage(controller.getRoot());
-				remove(closeButton);
 			}
 		};
-		closeButton.setOnAction(closeHandler);
-
-		mainController.getMenuButtons().getChildren().addAll(closeButton);
-
-		// Enable close menu
 		menuController.enableClose(closeHandler);
 
 		return controller;
@@ -122,10 +109,7 @@ public final class FXMLUtil {
 	 */
 	public static void removeSubpage(final Node node) {
 		remove(node);
-
-		if (mainController.getBody().getChildren().size() <= 1) {
-			menuController.disableClose();
-		}
+		menuController.disableClose();
 	}
 
 	/**

@@ -4,12 +4,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.StackPane?>
-<VBox fx:id="main" prefHeight="720" prefWidth="1024"
+<?import javafx.scene.control.Button?>
+<VBox fx:id="mainPane" prefHeight="720" prefWidth="1024"
 	xmlns:fx="http://javafx.com/fxml" fx:controller="de.eisfeldj.augendiagnosefx.Main$MainController"
 	id="main">
 	<StackPane alignment="CENTER_RIGHT">
 		<MenuBar fx:id="menuBar" styleClass="menu" />
-		<HBox fx:id="menuButtons" maxWidth="0" />
+		<HBox fx:id="menuButtons" maxWidth="0">
+			<Button fx:id="closeButton" styleClass="imageButton" visible="false" />
+		</HBox>
 	</StackPane>
 	<StackPane fx:id="body" id="body" />
 </VBox>
