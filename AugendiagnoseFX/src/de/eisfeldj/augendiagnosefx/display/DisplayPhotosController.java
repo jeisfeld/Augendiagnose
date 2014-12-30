@@ -31,6 +31,7 @@ import javafx.scene.layout.Priority;
 import de.eisfeldj.augendiagnosefx.Main;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
+import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
@@ -129,7 +130,8 @@ public class DisplayPhotosController implements Initializable {
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				System.out.println(eyePhoto.getAbsolutePath());
+				ImageView bigView = eyePhoto.getImageView(Main.getScene().getWidth(), Main.getScene().getHeight());
+				FXMLUtil.displaySubpage(bigView);
 			}
 		});
 		return imageView;

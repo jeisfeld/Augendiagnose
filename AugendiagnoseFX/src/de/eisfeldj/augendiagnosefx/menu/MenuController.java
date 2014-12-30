@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
 /**
@@ -32,12 +31,10 @@ public class MenuController {
 	/**
 	 * Enable the close menu item.
 	 *
-	 * @param root
-	 *            The pane to be closed.
 	 * @param eventHandler
 	 *            The event handler to be called when closing.
 	 */
-	public final void enableClose(final Parent root, final EventHandler<ActionEvent> eventHandler) {
+	public final void enableClose(final EventHandler<ActionEvent> eventHandler) {
 		menuClose.setDisable(false);
 		menuClose.setOnAction(eventHandler);
 	}

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
@@ -378,13 +379,33 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Return a bitmap of this photo.
+	 * Return an Image of this photo.
 	 *
-	 * @return the bitmap
+	 * @return the Image
 	 */
 	public final Image getImage() {
 		precalculateImage();
 		return cachedImage;
+	}
+
+	/**
+	 * Return an image view of this photo, fitting into the given dimensions.
+	 *
+	 * @param width
+	 *            The maximum width.
+	 * @param height
+	 *            The maximum height.
+	 * @return The ImageView.
+	 */
+	public final ImageView getImageView(final double width, final double height) {
+		Image image = getImage();
+		ImageView imageView = new ImageView(image);
+
+		imageView.setPreserveRatio(true);
+		imageView.setFitWidth(width);
+		imageView.setFitHeight(height);
+
+		return imageView;
 	}
 
 	// /**

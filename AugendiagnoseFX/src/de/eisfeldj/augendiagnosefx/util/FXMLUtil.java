@@ -74,14 +74,13 @@ public final class FXMLUtil {
 	}
 
 	/**
-	 * Utility method to expand and display an FXML file in the body as subpage.
+	 * Utility method to display a pane as subpage.
 	 *
-	 * @param fxmlFile
-	 *            The name of the FXML file.
+	 * @param root
+	 *            The pane to be displayed.
 	 * @throws IOException
 	 */
-	public static void displaySubpage(final String fxmlFile) throws IOException {
-		final Parent root = getRootFromFxml(fxmlFile);
+	public static void displaySubpage(final Node root) {
 		mainController.getBody().getChildren().add(root);
 
 		// Add close button
@@ -102,7 +101,18 @@ public final class FXMLUtil {
 		mainController.getMenuButtons().getChildren().addAll(closeButton);
 
 		// Enable close menu
-		menuController.enableClose(root, closeHandler);
+		menuController.enableClose(closeHandler);
+	}
+
+	/**
+	 * Utility method to expand and display an FXML file in the body as subpage.
+	 *
+	 * @param fxmlFile
+	 *            The name of the FXML file.
+	 * @throws IOException
+	 */
+	public static void displaySubpage(final String fxmlFile) throws IOException {
+		displaySubpage(getRootFromFxml(fxmlFile));
 	}
 
 	/**
