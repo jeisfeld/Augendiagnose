@@ -63,18 +63,6 @@ public final class FXMLUtil {
 	}
 
 	/**
-	 * Utility method to expand and display an FXML file in the body.
-	 *
-	 * @param fxmlFile
-	 *            The name of the FXML file.
-	 * @throws IOException
-	 */
-	public static void displayBody(final String fxmlFile) throws IOException {
-		Controller controller = getRootFromFxml(fxmlFile);
-		mainController.getBody().getChildren().add(controller.getRoot());
-	}
-
-	/**
 	 * Utility method to expand and display an FXML file in the body as subpage.
 	 *
 	 * @param fxmlFile

@@ -40,13 +40,13 @@ public class Main extends Application {
 	public final void start(final Stage primaryStage) throws IOException, IllegalAccessException {
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		Parent root = FXMLUtil.getRootFromFxml("Main.fxml").getRoot();
-		scene = new Scene(root);
+		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
+		scene = new Scene(mainController.getRoot());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		FXMLUtil.displayMenu("Menu.fxml");
-		FXMLUtil.displayBody("StartPage.fxml");
+		mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("StartPage.fxml").getRoot());
 	}
 
 	/**
