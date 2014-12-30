@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
-import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 
 /**
@@ -104,7 +103,7 @@ public class Main extends Application {
 		 */
 		@FXML
 		protected final void handleButtonOrganize(final ActionEvent event) throws IOException {
-			FXMLUtil.displaySubpage("DisplayPhotos.fxml");
+			FXMLUtil.displaySubpage("OrganizePhotos.fxml");
 		}
 
 		/**
@@ -112,11 +111,11 @@ public class Main extends Application {
 		 *
 		 * @param event
 		 *            The action event.
+		 * @throws IOException
 		 */
 		@FXML
-		protected final void handleButtonDisplay(final ActionEvent event) {
-			// TODO
-			Logger.info("Pressed Display Button.");
+		protected final void handleButtonDisplay(final ActionEvent event) throws IOException {
+			FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 		}
 	}
 }
