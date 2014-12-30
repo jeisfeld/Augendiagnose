@@ -19,7 +19,7 @@
 	<children>
 		<ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0"
 			fitToHeight="true" fitToWidth="true">
-			<ListView fx:id="listNames" styleClass="listNames" />
+			<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick" />
 		</ScrollPane>
 		<ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="0"
 			fitToHeight="true" fitToWidth="true">
