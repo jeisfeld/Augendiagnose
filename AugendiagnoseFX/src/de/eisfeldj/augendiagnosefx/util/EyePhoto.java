@@ -1,8 +1,11 @@
 package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.Locale;
+
+import javafx.scene.image.Image;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
@@ -47,6 +50,11 @@ public class EyePhoto {
 	 * The file suffix.
 	 */
 	private String suffix;
+
+	/**
+	 * A cache of the bitmap (to avoid too frequent generation).
+	 */
+	private Image cachedImage;
 
 	/**
 	 * Create the EyePhoto, giving a filename.
@@ -143,9 +151,9 @@ public class EyePhoto {
 			setSuffix(filename.substring(suffixPosition + 1));
 
 			// TODO
-//			if (!formattedName) {
-//				setDate(ImageUtil.getExifDate(getAbsolutePath()));
-//			}
+			// if (!formattedName) {
+			// setDate(ImageUtil.getExifDate(getAbsolutePath()));
+			// }
 		}
 		else {
 			if (suffixPosition > 0) {
@@ -355,6 +363,30 @@ public class EyePhoto {
 		return FileUtil.copyFile(getFile(), target.getFile());
 	}
 
+	/**
+	 * Calculate a bitmap of this photo and store it for later retrieval.
+	 */
+	public final synchronized void precalculateImage() {
+		if (cachedImage == null) {
+			try {
+				cachedImage = new Image(getFile().toURI().toURL().toExternalForm());
+			}
+			catch (MalformedURLException e) {
+				Logger.error("Error when creating URL for " + getAbsolutePath());
+			}
+		}
+	}
+
+	/**
+	 * Return a bitmap of this photo.
+	 *
+	 * @return the bitmap
+	 */
+	public final Image getImage() {
+		precalculateImage();
+		return cachedImage;
+	}
+
 	// /**
 	// * Change the personName renaming the file (keeping the path).
 	// *
@@ -418,17 +450,6 @@ public class EyePhoto {
 	// return new EyePhoto(getAbsolutePath());
 	// }
 	//
-	// /**
-	// * Return a bitmap of this photo.
-	// *
-	// * @param maxSize
-	// * The maximum size of this bitmap. If bigger, it will be resized
-	// * @return the bitmap
-	// */
-	// public final Bitmap getImageBitmap(final int maxSize) {
-	// precalculateImageBitmap(maxSize);
-	// return cachedBitmap;
-	// }
 	//
 	// /**
 	// * Get the metadata stored in the file.

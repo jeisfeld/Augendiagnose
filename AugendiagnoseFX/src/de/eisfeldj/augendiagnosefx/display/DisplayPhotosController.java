@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +16,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -103,31 +103,8 @@ public class DisplayPhotosController implements Initializable {
 		totalImageConstraints.setHgrow(Priority.SOMETIMES);
 		pane.getColumnConstraints().add(1, totalImageConstraints);
 
-		File imageRightFile = pair.getRightEye().getFile();
-		File imageLeftFile = pair.getLeftEye().getFile();
-
-		String urlRight = null;
-		String urlLeft = null;
-		try {
-			urlRight = imageRightFile.toURI().toURL().toExternalForm();
-			urlLeft = imageLeftFile.toURI().toURL().toExternalForm();
-		}
-		catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		double imageWidth = (Main.getScene().getWidth() - 270) / 2; // MAGIC_NUMBER
-
-		ImageView imageRight = new ImageView(urlRight);
-		imageRight.setPreserveRatio(true);
-		imageRight.setFitWidth(imageWidth);
-		imagePane.add(imageRight, 0, 0);
-
-		ImageView imageLeft = new ImageView(urlLeft);
-		imageLeft.setPreserveRatio(true);
-		imageLeft.setFitWidth(imageWidth);
-		imagePane.add(imageLeft, 1, 0);
+		imagePane.add(getImageView(pair.getRightEye()), 0, 0);
+		imagePane.add(getImageView(pair.getLeftEye()), 1, 0);
 
 		ColumnConstraints imageConstraints = new ColumnConstraints();
 		imageConstraints.setPercentWidth(50); // MAGIC_NUMBER
@@ -136,6 +113,35 @@ public class DisplayPhotosController implements Initializable {
 		imagePane.getColumnConstraints().add(1, imageConstraints);
 
 		return pane;
+	}
+
+	/**
+	 * Get the image view for a thumbnail.
+	 *
+	 * @param eyePhoto
+	 *            The eye photo to be displayed.
+	 * @return The image view.
+	 */
+	private ImageView getImageView(final EyePhoto eyePhoto) {
+		ImageView imageView = new ImageView(eyePhoto.getImage());
+		imageView.setPreserveRatio(true);
+		imageView.setFitWidth(getThumbnailWidth());
+		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				System.out.println(eyePhoto.getAbsolutePath());
+			}
+		});
+		return imageView;
+	}
+
+	/**
+	 * Calculate the width of the thumbnails in dependence of the window size.
+	 *
+	 * @return The width.
+	 */
+	private double getThumbnailWidth() {
+		return (Main.getScene().getWidth() - 270) / 2; // MAGIC_NUMBER
 	}
 
 	/**
