@@ -10,3 +10,28 @@
 	-fx-padding: 0.0;
 	-fx-background-color: transparent;
 }
+
+.listNames {
+	-fx-padding: 0.0;
+	-fx-pref-height: 10000.0;
+}
+
+.start {
+	-fx-padding: 25.0;
+	-fx-alignment: center;
+	-fx-hgap: 10.0;
+	-fx-vgap: 10.0;
+}
+
+#body {
+	-fx-pref-height: 10000.0;
+}
+
+.display {
+	-fx-padding: 0.0;
+	-fx-hgap: 10.0;
+	-fx-vgap: 10.0;
+	-fx-alignment: center;
+	-fx-background-color: whitesmoke;
+	-fx-fill-height: true ;
+}

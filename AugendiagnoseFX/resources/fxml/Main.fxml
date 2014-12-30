@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.HBox?>
-<VBox prefHeight="400" prefWidth="800" xmlns:fx="http://javafx.com/fxml"
+<VBox prefHeight="720" prefWidth="1024" xmlns:fx="http://javafx.com/fxml"
 	fx:controller="de.eisfeldj.augendiagnosefx.Main$MainController"
-	styleClass="root">
+	id="main">
 	<StackPane alignment="CENTER_RIGHT">
 		<MenuBar fx:id="menuBar" styleClass="menu" />
 		<HBox fx:id="menuButtons" maxWidth="0" />
 	</StackPane>
-	<StackPane fx:id="body" styleClass="body" />
+	<StackPane fx:id="body" id="body" />
 </VBox>
