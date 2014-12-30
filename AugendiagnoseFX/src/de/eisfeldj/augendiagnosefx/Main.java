@@ -18,6 +18,12 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
  * Main class for starting the application.
  */
 public class Main extends Application {
+
+	/**
+	 * The primary scene.
+	 */
+	private static Scene scene;
+
 	/**
 	 * Main method to start the application.
 	 *
@@ -33,11 +39,21 @@ public class Main extends Application {
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
 		Parent root = FXMLUtil.getRootFromFxml("Main.fxml");
-		primaryStage.setScene(new Scene(root));
+		scene = new Scene(root);
+		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		FXMLUtil.displayMenu("Menu.fxml");
 		FXMLUtil.displayBody("StartPage.fxml");
+	}
+
+	/**
+	 * Getter for the primary scene.
+	 *
+	 * @return The primary scene.
+	 */
+	public static Scene getScene() {
+		return scene;
 	}
 
 	/**

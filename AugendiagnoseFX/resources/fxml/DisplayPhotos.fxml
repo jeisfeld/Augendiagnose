@@ -13,8 +13,8 @@
 		<Insets top="0" right="0" bottom="0" left="0" />
 	</padding>
 	<columnConstraints>
-		<ColumnConstraints percentWidth="34.0" />
-		<ColumnConstraints percentWidth="66.0" />
+		<ColumnConstraints prefWidth="150" />
+		<ColumnConstraints hgrow="SOMETIMES" />
 	</columnConstraints>
 	<children>
 		<ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0"

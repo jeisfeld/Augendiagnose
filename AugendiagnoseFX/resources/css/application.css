@@ -29,9 +29,9 @@
 
 .display {
 	-fx-padding: 0.0;
-	-fx-hgap: 10.0;
-	-fx-vgap: 10.0;
+	-fx-hgap: 0.0;
+	-fx-vgap: 0.0;
 	-fx-alignment: center;
 	-fx-background-color: whitesmoke;
-	-fx-fill-height: true ;
+	-fx-fill-height: true;
 }

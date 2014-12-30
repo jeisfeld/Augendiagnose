@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="de/eisfeldj/augendiagnosefx/util/DialogUtil.java|de/eisfeldj/augendiagnosefx/util/EyePhoto.java|de/eisfeldj/augendiagnosefx/util/ImageSelectionAndDisplayHandler.java|de/eisfeldj/augendiagnosefx/util/ImageUtil.java|de/eisfeldj/augendiagnosefx/util/JpegSynchronizationUtil.java|de/eisfeldj/augendiagnosefx/util/EyePhotoPair.java|de/eisfeldj/augendiagnosefx/util/JpegMetadata.java|de/eisfeldj/augendiagnosefx/util/JpegMetadataUtil.java|de/eisfeldj/augendiagnosefx/util/DateUtil.java|de/eisfeldj/augendiagnosefx/util/FileUtil.java|de/eisfeldj/augendiagnosefx/util/PreferenceUtil.java|de/eisfeldj/augendiagnosefx/util/XmpHandler.java" kind="src" path="src"/>
+	<classpathentry excluding="de/eisfeldj/augendiagnosefx/util/DialogUtil.java|de/eisfeldj/augendiagnosefx/util/ImageSelectionAndDisplayHandler.java|de/eisfeldj/augendiagnosefx/util/JpegMetadataUtil.java|de/eisfeldj/augendiagnosefx/util/JpegSynchronizationUtil.java|de/eisfeldj/augendiagnosefx/util/PreferenceUtil.java|de/eisfeldj/augendiagnosefx/util/XmpHandler.java|de/eisfeldj/augendiagnosefx/util/ImageUtil.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
