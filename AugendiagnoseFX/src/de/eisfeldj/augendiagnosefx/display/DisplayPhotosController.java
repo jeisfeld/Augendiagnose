@@ -52,6 +52,7 @@ public class DisplayPhotosController implements Initializable {
 	 * The eye photos folder.
 	 */
 	private static final File EYE_PHOTOS_FOLDER = new File("D:/Jörg/Bilder/SchnuSy/Augenfotos/");
+	// private static final File EYE_PHOTOS_FOLDER = new File("Z:/");
 
 	/**
 	 * The list of folder names which should be shown on top of the list.
@@ -177,8 +178,9 @@ public class DisplayPhotosController implements Initializable {
 			}
 		});
 
+		List<String> folderNames = new ArrayList<String>();
 		if (folders == null) {
-			return null;
+			return folderNames;
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
@@ -187,7 +189,6 @@ public class DisplayPhotosController implements Initializable {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
 		});
-		List<String> folderNames = new ArrayList<String>();
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
