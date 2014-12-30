@@ -8,8 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
@@ -38,7 +40,7 @@ public class Main extends Application {
 	public final void start(final Stage primaryStage) throws IOException, IllegalAccessException {
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		Parent root = FXMLUtil.getRootFromFxml("Main.fxml");
+		Parent root = FXMLUtil.getRootFromFxml("Main.fxml").getRoot();
 		scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -59,7 +61,18 @@ public class Main extends Application {
 	/**
 	 * The controller of the main window.
 	 */
-	public static class MainController {
+	public static class MainController implements Controller {
+		/**
+		 * The root of the main page.
+		 */
+		@FXML
+		private VBox main;
+
+		@Override
+		public final Parent getRoot() {
+			return main;
+		}
+
 		/**
 		 * The pane containing the body.
 		 */
@@ -104,12 +117,24 @@ public class Main extends Application {
 		public final HBox getMenuButtons() {
 			return menuButtons;
 		}
+
 	}
 
 	/**
 	 * The controller of the start body.
 	 */
-	public static class StartController {
+	public static class StartController implements Controller {
+		/**
+		 * The root pane of the start page.
+		 */
+		@FXML
+		private GridPane start;
+
+		@Override
+		public final Parent getRoot() {
+			return start;
+		}
+
 		/**
 		 * Handler for button "Organize new photos".
 		 *
@@ -118,7 +143,7 @@ public class Main extends Application {
 		 * @throws IOException
 		 */
 		@FXML
-		protected final void handleButtonOrganize(final ActionEvent event) throws IOException {
+		protected final void handleButtonOrganize(final ActionEvent event) {
 			FXMLUtil.displaySubpage("OrganizePhotos.fxml");
 		}
 
@@ -130,8 +155,9 @@ public class Main extends Application {
 		 * @throws IOException
 		 */
 		@FXML
-		protected final void handleButtonDisplay(final ActionEvent event) throws IOException {
+		protected final void handleButtonDisplay(final ActionEvent event) {
 			FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 		}
+
 	}
 }

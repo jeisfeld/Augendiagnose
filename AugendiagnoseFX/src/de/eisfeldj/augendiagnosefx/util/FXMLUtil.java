@@ -12,6 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import de.eisfeldj.augendiagnosefx.Controller;
 import de.eisfeldj.augendiagnosefx.Main.MainController;
 import de.eisfeldj.augendiagnosefx.menu.MenuController;
 
@@ -42,10 +43,10 @@ public final class FXMLUtil {
 	 *
 	 * @param fxmlFile
 	 *            The name of the FXML file.
-	 * @return The root.
+	 * @return The controller handling the expanded page.
 	 * @throws IOException
 	 */
-	public static Parent getRootFromFxml(final String fxmlFile) throws IOException {
+	public static Controller getRootFromFxml(final String fxmlFile) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setResources(ResourceUtil.STRINGS_BUNDLE);
 		Parent root = fxmlLoader.load(ClassLoader.getSystemResource("fxml/" + fxmlFile).openStream());
@@ -58,7 +59,7 @@ public final class FXMLUtil {
 			FXMLUtil.menuController = (MenuController) fxmlLoader.getController();
 		}
 
-		return root;
+		return fxmlLoader.getController();
 	}
 
 	/**
@@ -69,19 +70,28 @@ public final class FXMLUtil {
 	 * @throws IOException
 	 */
 	public static void displayBody(final String fxmlFile) throws IOException {
-		Parent root = getRootFromFxml(fxmlFile);
-		mainController.getBody().getChildren().add(root);
+		Controller controller = getRootFromFxml(fxmlFile);
+		mainController.getBody().getChildren().add(controller.getRoot());
 	}
 
 	/**
-	 * Utility method to display a pane as subpage.
+	 * Utility method to expand and display an FXML file in the body as subpage.
 	 *
-	 * @param root
-	 *            The pane to be displayed.
+	 * @param fxmlFile
+	 *            The name of the FXML file.
+	 * @return the controller of the subpage.
 	 * @throws IOException
 	 */
-	public static void displaySubpage(final Node root) {
-		mainController.getBody().getChildren().add(root);
+	public static Controller displaySubpage(final String fxmlFile) {
+		Controller controller;
+		try {
+			controller = getRootFromFxml(fxmlFile);
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file " + fxmlFile);
+			return null;
+		}
+		mainController.getBody().getChildren().add(controller.getRoot());
 
 		// Add close button
 		Image btnImage = ResourceUtil.getImage("close.png");
@@ -92,7 +102,7 @@ public final class FXMLUtil {
 		final EventHandler<ActionEvent> closeHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				removeSubpage(root);
+				removeSubpage(controller.getRoot());
 				remove(closeButton);
 			}
 		};
@@ -102,17 +112,8 @@ public final class FXMLUtil {
 
 		// Enable close menu
 		menuController.enableClose(closeHandler);
-	}
 
-	/**
-	 * Utility method to expand and display an FXML file in the body as subpage.
-	 *
-	 * @param fxmlFile
-	 *            The name of the FXML file.
-	 * @throws IOException
-	 */
-	public static void displaySubpage(final String fxmlFile) throws IOException {
-		displaySubpage(getRootFromFxml(fxmlFile));
+		return controller;
 	}
 
 	/**
@@ -147,7 +148,7 @@ public final class FXMLUtil {
 	 * @throws IOException
 	 */
 	public static void displayMenu(final String fxmlFile) throws IOException {
-		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile);
+		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile).getRoot();
 		mainController.getMenuBar().getMenus().clear();
 		mainController.getMenuBar().getMenus().addAll(root.getMenus());
 	}

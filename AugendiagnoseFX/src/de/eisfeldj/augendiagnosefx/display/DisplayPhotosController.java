@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import de.eisfeldj.augendiagnosefx.Controller;
 import de.eisfeldj.augendiagnosefx.Main;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
@@ -37,7 +39,7 @@ import de.eisfeldj.augendiagnosefx.util.Logger;
 /**
  * Controller for the "Display Photos" page.
  */
-public class DisplayPhotosController implements Initializable {
+public class DisplayPhotosController implements Initializable, Controller {
 
 	/**
 	 * The width of the date node.
@@ -82,6 +84,11 @@ public class DisplayPhotosController implements Initializable {
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		List<String> valuesNames = getFolderNames(EYE_PHOTOS_FOLDER);
 		listNames.setItems(FXCollections.observableList(valuesNames));
+	}
+
+	@Override
+	public final Parent getRoot() {
+		return displayMain;
 	}
 
 	/**
@@ -130,8 +137,11 @@ public class DisplayPhotosController implements Initializable {
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
+				DisplayImageController controller =
+						(DisplayImageController) FXMLUtil.displaySubpage("DisplayImage.fxml");
+
 				ImageView bigView = eyePhoto.getImageView(Main.getScene().getWidth(), Main.getScene().getHeight());
-				FXMLUtil.displaySubpage(bigView);
+				controller.setImageView(bigView);
 			}
 		});
 		return imageView;

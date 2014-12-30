@@ -35,3 +35,8 @@
 	-fx-background-color: whitesmoke;
 	-fx-fill-height: true;
 }
+
+.displayImage {
+	-fx-background-color: whitesmoke;
+	-fx-alignment: center;
+}
