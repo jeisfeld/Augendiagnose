@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx;
+package de.eisfeldj.augendiagnosefx.controller;
 
 import javafx.scene.Parent;
 

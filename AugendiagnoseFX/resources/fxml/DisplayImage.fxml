@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
-<GridPane fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.display.DisplayImageController"
+<GridPane fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController"
 	xmlns:fx="http://javafx.com/fxml" styleClass="displayImage">
 
 </GridPane>

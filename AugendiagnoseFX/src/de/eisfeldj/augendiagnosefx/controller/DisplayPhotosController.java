@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.display;
+package de.eisfeldj.augendiagnosefx.controller;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -29,7 +29,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import de.eisfeldj.augendiagnosefx.Controller;
 import de.eisfeldj.augendiagnosefx.Main;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;

@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.menu;
+package de.eisfeldj.augendiagnosefx.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import de.eisfeldj.augendiagnosefx.Controller;
-import de.eisfeldj.augendiagnosefx.Main.MainController;
 
 /**
  * Controller class for the menu.

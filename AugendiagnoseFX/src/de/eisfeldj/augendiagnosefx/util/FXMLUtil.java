@@ -9,9 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Pane;
-import de.eisfeldj.augendiagnosefx.Controller;
-import de.eisfeldj.augendiagnosefx.Main.MainController;
-import de.eisfeldj.augendiagnosefx.menu.MenuController;
+import de.eisfeldj.augendiagnosefx.controller.Controller;
+import de.eisfeldj.augendiagnosefx.controller.MainController;
+import de.eisfeldj.augendiagnosefx.controller.MenuController;
 
 /**
  * Utility class for reading FXML files.

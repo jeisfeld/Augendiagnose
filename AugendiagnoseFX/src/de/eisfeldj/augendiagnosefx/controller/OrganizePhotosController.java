@@ -1,6 +1,5 @@
-package de.eisfeldj.augendiagnosefx.organize;
+package de.eisfeldj.augendiagnosefx.controller;
 
-import de.eisfeldj.augendiagnosefx.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;

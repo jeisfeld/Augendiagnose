@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <MenuBar fx:id="menuBar" styleClass="menu" xmlns:fx="http://javafx.com/fxml"
-	fx:controller="de.eisfeldj.augendiagnosefx.menu.MenuController">
+	fx:controller="de.eisfeldj.augendiagnosefx.controller.MenuController">
 	<menus>
 		<Menu text="%menu_file">
 			<items>

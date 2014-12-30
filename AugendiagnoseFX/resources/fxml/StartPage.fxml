@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
-<GridPane fx:id="start" fx:controller="de.eisfeldj.augendiagnosefx.Main$StartController"
+<GridPane fx:id="start" fx:controller="de.eisfeldj.augendiagnosefx.controller.StartController"
 	xmlns:fx="http://javafx.com/fxml" styleClass="start">
 	<Button text="%button_organize_new_photos" GridPane.columnIndex="0"
 		GridPane.rowIndex="0" onAction="#handleButtonOrganize" />
