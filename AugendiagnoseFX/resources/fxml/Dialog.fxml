@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.GridPane?>
+<GridPane fx:id="dialogPane" xmlns:fx="http://javafx.com/fxml"
+	managed="false" fx:controller="de.eisfeldj.augendiagnosefx.controller.DialogController"
+	id="dialog" vgap="10">
+	<Label fx:id="heading" id="dialogHeading" GridPane.columnIndex="0"
+		GridPane.rowIndex="0" GridPane.halignment="CENTER" />
+	<Text fx:id="message" id="dialogMessage" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" GridPane.halignment="CENTER" />
+	<Button fx:id="btnBack" text="%button_back"
+		GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER" />
+</GridPane>

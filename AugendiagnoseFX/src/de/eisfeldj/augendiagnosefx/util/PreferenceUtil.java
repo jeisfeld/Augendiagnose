@@ -25,6 +25,12 @@ public final class PreferenceUtil {
 	 */
 	public static String getPreferenceString(final String key) {
 		// TODO
-		return null;
+
+		if (key.equals(KEY_STORE_OPTION)) {
+			return "2";
+		}
+		else {
+			return null;
+		}
 	}
 }

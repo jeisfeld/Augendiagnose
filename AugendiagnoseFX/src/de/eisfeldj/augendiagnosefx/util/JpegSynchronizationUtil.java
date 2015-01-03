@@ -97,7 +97,7 @@ public final class JpegSynchronizationUtil {
 	}
 
 	/**
-	 * Do cleanup from the last JpegSaverTask and trigger the next task on the same file, if existing.
+	 * Do cleanup from the last JpegSaverThread and trigger the next task on the same file, if existing.
 	 *
 	 * @param pathname
 	 *            The path of the jpg file.
@@ -115,7 +115,7 @@ public final class JpegSynchronizationUtil {
 	}
 
 	/**
-	 * Utility method to start the JpegSaverTask so save a jpg file with metadata.
+	 * Utility method to start the JpegSaverThread so save a jpg file with metadata.
 	 *
 	 * @param pathname
 	 *            the path of the jpg file.
@@ -124,14 +124,14 @@ public final class JpegSynchronizationUtil {
 	 */
 	private static void triggerJpegSaverTask(final String pathname, final JpegMetadata metadata) {
 		runningSaveRequests.put(pathname, metadata);
-		JpegSaverTask task = new JpegSaverTask(pathname, metadata);
-		task.execute();
+		JpegSaverThread thread = new JpegSaverThread(pathname, metadata);
+		thread.start();
 	}
 
 	/**
-	 * Task to save a JPEG file asynchronously with changed metadata.
+	 * Thread to save a JPEG file asynchronously with changed metadata.
 	 */
-	private static class JpegSaverTask extends AsyncTask<Void, Void, Exception> {
+	private static class JpegSaverThread extends Thread {
 		/**
 		 * The path of the jpg file.
 		 */
@@ -149,39 +149,26 @@ public final class JpegSynchronizationUtil {
 		 * @param metadata
 		 *            the metadata.
 		 */
-		public JpegSaverTask(final String pathname, final JpegMetadata metadata) {
+		public JpegSaverThread(final String pathname, final JpegMetadata metadata) {
 			this.pathname = pathname;
 			this.metadata = metadata;
 		}
 
-		@Override
-		protected void onPreExecute() {
+	    @Override
+	    public void run() {
 			Logger.info("Starting thread to save file " + pathname);
-		}
 
-		@Override
-		protected Exception doInBackground(final Void... nothing) {
 			try {
 				JpegMetadataUtil.changeMetadata(pathname, metadata);
-				return null;
-			}
-			catch (Exception e) {
-				return e;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(final Exception e) {
-			if (e != null) {
-				Logger.error("Failed to save file " + pathname + ": " + e.toString());
-				DialogUtil.displayErrorAsToast(Application.getAppContext(),
-						R.string.message_dialog_failed_to_store_metadata, pathname);
-			}
-			else {
 				Logger.info("Successfully saved file " + pathname);
 			}
+			catch (Exception e) {
+				Logger.error("Failed to save file " + pathname + ": " + e.toString());
+				DialogUtil.displayError("message_dialog_failed_to_store_metadata", pathname);
+			}
 			triggerNextFromQueue(pathname);
-		}
+	    }
+
 	}
 
 }

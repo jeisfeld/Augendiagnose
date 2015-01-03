@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO8859-1"?>
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${project}/build">
   <deploy packagingFormat="exe">
-    <application name="AugendiagnoseFX" mainclass="de.eisfeldj.augendiagnosefx.Main" version="0.1" toolkit="fx"/>
+    <application name="AugendiagnoseFX" mainclass="de.eisfeldj.augendiagnosefx.Application" version="0.1" toolkit="fx"/>
     <info title="Augendiagnose" vendor="Jörg Eisfeld"/>
   </deploy>
   <signjar alias="jeisfeld.de" keypass="supila1" keystore="D:\Jörg\Miscellaneous\Keystores\jekeystore1" storepass="supila1"/>

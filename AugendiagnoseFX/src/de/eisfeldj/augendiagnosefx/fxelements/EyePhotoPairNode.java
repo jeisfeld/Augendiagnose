@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import de.eisfeldj.augendiagnosefx.Main;
+import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
@@ -84,7 +84,7 @@ public class EyePhotoPairNode extends GridPane {
 						(DisplayImageController) FXMLUtil.displaySubpage("DisplayImage.fxml");
 
 				ImageView bigView =
-						eyePhoto.getImageView(Main.getScene().getWidth() - 2, Main.getScene().getHeight() - 27); // MAGIC_NUMBER
+						eyePhoto.getImageView(Application.getScene().getWidth() - 2, Application.getScene().getHeight() - 27); // MAGIC_NUMBER
 				controller.setImageView(bigView);
 			}
 		});

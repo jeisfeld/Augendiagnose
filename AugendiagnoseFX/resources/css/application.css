@@ -40,3 +40,12 @@
 	-fx-background-color: whitesmoke;
 	-fx-alignment: center;
 }
+
+#dialogHeading {
+	-fx-font-size: 18.0;
+	-fx-font-weight: bold;
+}
+
+#dialogMessage {
+
+}
