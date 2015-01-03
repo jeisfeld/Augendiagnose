@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
-<GridPane fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController"
+<ScrollPane fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController"
 	xmlns:fx="http://javafx.com/fxml" styleClass="displayImage">
 
-</GridPane>
+</ScrollPane>

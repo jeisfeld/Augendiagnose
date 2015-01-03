@@ -151,7 +151,7 @@ public class EyePhoto {
 			setRightLeft(RightLeft.fromString(filename.substring(rightLeftPosition + 1, suffixPosition)));
 			setSuffix(filename.substring(suffixPosition + 1));
 
-			// TODO
+			// TODO: retrieval of EXIF date.
 			// if (!formattedName) {
 			// setDate(ImageUtil.getExifDate(getAbsolutePath()));
 			// }
@@ -160,7 +160,7 @@ public class EyePhoto {
 			if (suffixPosition > 0) {
 				setSuffix(filename.substring(suffixPosition + 1));
 			}
-			// TODO
+			// TODO: retrieval of EXIF date.
 			// setDate(ImageUtil.getExifDate(getAbsolutePath()));
 			formattedName = false;
 		}

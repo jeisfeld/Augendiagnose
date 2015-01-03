@@ -139,7 +139,8 @@ public class DisplayPhotosController implements Initializable, Controller {
 				DisplayImageController controller =
 						(DisplayImageController) FXMLUtil.displaySubpage("DisplayImage.fxml");
 
-				ImageView bigView = eyePhoto.getImageView(Main.getScene().getWidth(), Main.getScene().getHeight());
+				ImageView bigView =
+						eyePhoto.getImageView(Main.getScene().getWidth() - 2, Main.getScene().getHeight() - 27); // MAGIC_NUMBER
 				controller.setImageView(bigView);
 			}
 		});
