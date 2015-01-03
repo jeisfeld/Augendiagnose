@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -35,6 +34,18 @@ public class DialogController implements Controller {
 	 */
 	@FXML
 	private Button btnBack;
+
+	/**
+	 * The "ok" button on the dialog.
+	 */
+	@FXML
+	private Button btnOk;
+
+	/**
+	 * The "cancel" button on the dialog.
+	 */
+	@FXML
+	private Button btnCancel;
 
 	@Override
 	public final Parent getRoot() {
@@ -71,14 +82,20 @@ public class DialogController implements Controller {
 	}
 
 	/**
-	 * Handler for button "Organize new photos".
+	 * Get the "ok" button.
 	 *
-	 * @param event
-	 *            The action event.
+	 * @return The "ok" button.
 	 */
-	@FXML
-	protected final void onButtonBack(final ActionEvent event) {
-
+	public final Button getBtnOk() {
+		return btnOk;
 	}
 
+	/**
+	 * Get the "cancel" button.
+	 *
+	 * @return The "cancel" button.
+	 */
+	public final Button getBtnCancel() {
+		return btnCancel;
+	}
 }

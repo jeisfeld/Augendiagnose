@@ -95,15 +95,15 @@ public class EyePhotoPair {
 		return rightEye.moveToFolder(targetFolder) && leftEye.moveToFolder(targetFolder);
 	}
 
-//	/**
-//	 * Change the date of the eye photo pair.
-//	 *
-//	 * @param newDate
-//	 *            the new date.
-//	 * @return true if the change operation was successful on both eyes.
-//	 */
-//	public final boolean changeDate(final Date newDate) {
-//		return rightEye.changeDate(newDate) && leftEye.changeDate(newDate);
-//	}
+	/**
+	 * Change the date of the eye photo pair.
+	 *
+	 * @param newDate
+	 *            the new date.
+	 * @return true if the change operation was successful on both eyes.
+	 */
+	public final boolean changeDate(final Date newDate) {
+		return rightEye.changeDate(newDate) && leftEye.changeDate(newDate);
+	}
 
 }

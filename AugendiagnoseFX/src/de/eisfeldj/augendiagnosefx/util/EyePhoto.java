@@ -408,115 +408,114 @@ public class EyePhoto {
 		return imageView;
 	}
 
-	// /**
-	// * Change the personName renaming the file (keeping the path).
-	// *
-	// * @param targetName
-	// * the target name
-	// * @return true if the renaming was successful.
-	// */
-	// public final boolean changePersonName(final String targetName) {
-	// EyePhoto target = cloneFromPath();
-	// target.setPersonName(targetName);
-	// boolean success = moveTo(target);
-	//
-	// if (success) {
-	// // update metadata
-	// JpegMetadata metadata = target.getImageMetadata();
-	// if (metadata == null) {
-	// metadata = new JpegMetadata();
-	// target.updateMetadataWithDefaults(metadata);
-	// }
-	// if (metadata.person == null || metadata.person.length() == 0 || metadata.person.equals(getPersonName())) {
-	// metadata.person = targetName;
-	// }
-	// target.storeImageMetadata(metadata);
-	// }
-	//
-	// return success;
-	// }
-	//
-	// /**
-	// * Change the date renaming the file (keeping the path).
-	// *
-	// * @param newDate
-	// * the target date.
-	// * @return true if the change was successful.
-	// */
-	// public final boolean changeDate(final Date newDate) {
-	// EyePhoto target = cloneFromPath();
-	// target.setDate(newDate);
-	// boolean success = moveTo(target);
-	//
-	// if (success) {
-	// // update metadata
-	// JpegMetadata metadata = target.getImageMetadata();
-	// if (metadata == null) {
-	// metadata = new JpegMetadata();
-	// target.updateMetadataWithDefaults(metadata);
-	// }
-	// metadata.organizeDate = newDate;
-	// target.storeImageMetadata(metadata);
-	// }
-	//
-	// return success;
-	// }
-	//
-	// /**
-	// * Retrieve a clone of this object from the absolute path.
-	// *
-	// * @return a clone (recreation) of this object having the same absolute path.
-	// */
-	// public final EyePhoto cloneFromPath() {
-	// return new EyePhoto(getAbsolutePath());
-	// }
-	//
-	//
-	// /**
-	// * Get the metadata stored in the file.
-	// *
-	// * @return the metadata.
-	// */
-	// public final JpegMetadata getImageMetadata() {
-	// return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
-	// }
-	//
-	// /**
-	// * Store the metadata in the file.
-	// *
-	// * @param metadata
-	// * the metadata to be stored.
-	// */
-	// public final void storeImageMetadata(final JpegMetadata metadata) {
-	// JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
-	// }
-	//
-	// /**
-	// * Update metadata object with default metadata, based on the file name.
-	// *
-	// * @param metadata
-	// * the metadata object to be enhanced by the default information.
-	// */
-	// public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
-	// metadata.person = getPersonName();
-	// metadata.organizeDate = getDate();
-	// metadata.rightLeft = getRightLeft();
-	// metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
-	// }
-	//
-	// /**
-	// * Store person, date and rightLeft in the metadata.
-	// *
-	// * @return
-	// */
-	// public final void storeDefaultMetadata() {
-	// JpegMetadata metadata = getImageMetadata();
-	// if (metadata == null) {
-	// metadata = new JpegMetadata();
-	// }
-	// updateMetadataWithDefaults(metadata);
-	// storeImageMetadata(metadata);
-	// }
+	/**
+	 * Change the personName renaming the file (keeping the path).
+	 *
+	 * @param targetName
+	 *            the target name
+	 * @return true if the renaming was successful.
+	 */
+	public final boolean changePersonName(final String targetName) {
+		EyePhoto target = cloneFromPath();
+		target.setPersonName(targetName);
+		boolean success = moveTo(target);
+
+		if (success) {
+			// update metadata
+			JpegMetadata metadata = target.getImageMetadata();
+			if (metadata == null) {
+				metadata = new JpegMetadata();
+				target.updateMetadataWithDefaults(metadata);
+			}
+			if (metadata.person == null || metadata.person.length() == 0 || metadata.person.equals(getPersonName())) {
+				metadata.person = targetName;
+			}
+			target.storeImageMetadata(metadata);
+		}
+
+		return success;
+	}
+
+	/**
+	 * Change the date renaming the file (keeping the path).
+	 *
+	 * @param newDate
+	 *            the target date.
+	 * @return true if the change was successful.
+	 */
+	public final boolean changeDate(final Date newDate) {
+		EyePhoto target = cloneFromPath();
+		target.setDate(newDate);
+		boolean success = moveTo(target);
+
+		if (success) {
+			// update metadata
+			JpegMetadata metadata = target.getImageMetadata();
+			if (metadata == null) {
+				metadata = new JpegMetadata();
+				target.updateMetadataWithDefaults(metadata);
+			}
+			metadata.organizeDate = newDate;
+			target.storeImageMetadata(metadata);
+		}
+
+		return success;
+	}
+
+	/**
+	 * Retrieve a clone of this object from the absolute path.
+	 *
+	 * @return a clone (recreation) of this object having the same absolute path.
+	 */
+	public final EyePhoto cloneFromPath() {
+		return new EyePhoto(getAbsolutePath());
+	}
+
+	/**
+	 * Get the metadata stored in the file.
+	 *
+	 * @return the metadata.
+	 */
+	public final JpegMetadata getImageMetadata() {
+		return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
+	}
+
+	/**
+	 * Store the metadata in the file.
+	 *
+	 * @param metadata
+	 *            the metadata to be stored.
+	 */
+	public final void storeImageMetadata(final JpegMetadata metadata) {
+		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
+	}
+
+	/**
+	 * Update metadata object with default metadata, based on the file name.
+	 *
+	 * @param metadata
+	 *            the metadata object to be enhanced by the default information.
+	 */
+	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
+		metadata.person = getPersonName();
+		metadata.organizeDate = getDate();
+		metadata.rightLeft = getRightLeft();
+		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
+	}
+
+	/**
+	 * Store person, date and rightLeft in the metadata.
+	 *
+	 * @return
+	 */
+	public final void storeDefaultMetadata() {
+		JpegMetadata metadata = getImageMetadata();
+		if (metadata == null) {
+			metadata = new JpegMetadata();
+		}
+		updateMetadataWithDefaults(metadata);
+		storeImageMetadata(metadata);
+	}
 
 	/**
 	 * Compare two images for equality (by path).
