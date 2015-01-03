@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnosefx.util;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 /**
  * Utility class for debugging.
  */
@@ -46,6 +48,16 @@ public final class Logger {
 	 */
 	public static void error(final String output) {
 		LOGGER.severe(output);
+	}
+
+	/**
+	 * Make an error entry.
+	 *
+	 * @param output The log entry
+	 * @param e The exception
+	 */
+	public static void error(final String output, final Throwable e) {
+		error(output + "\n" + ExceptionUtils.getStackTrace(e));
 	}
 
 }

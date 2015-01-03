@@ -62,7 +62,7 @@ public final class JpegSynchronizationUtil {
 				return JpegMetadataUtil.getMetadata(pathname);
 			}
 			catch (Exception e) {
-				Logger.error("Failed to retrieve metadata for file " + pathname + ": " + e.toString());
+				Logger.error("Failed to retrieve metadata for file " + pathname, e);
 				return new JpegMetadata();
 			}
 		}
@@ -163,7 +163,7 @@ public final class JpegSynchronizationUtil {
 				Logger.info("Successfully saved file " + pathname);
 			}
 			catch (Exception e) {
-				Logger.error("Failed to save file " + pathname + ": " + e.toString());
+				Logger.error("Failed to save file " + pathname, e);
 				DialogUtil.displayError("message_dialog_failed_to_store_metadata", pathname);
 			}
 			triggerNextFromQueue(pathname);

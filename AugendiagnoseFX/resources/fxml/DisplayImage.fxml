@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
+<?import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView?>
 <?import javafx.scene.control.Button?>
-<ScrollPane fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController"
-	xmlns:fx="http://javafx.com/fxml" styleClass="displayImage">
-
-</ScrollPane>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<GridPane fx:id="displayImage"
+	fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController"
+	xmlns:fx="http://javafx.com/fxml" styleClass="displayImage" alignment="CENTER">
+	<SizeableImageView fx:id="displayImageView"
+		GridPane.columnIndex="0" GridPane.rowIndex="0">
+	</SizeableImageView>
+</GridPane>

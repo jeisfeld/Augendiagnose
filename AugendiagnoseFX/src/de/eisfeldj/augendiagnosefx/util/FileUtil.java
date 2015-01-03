@@ -33,8 +33,7 @@ public abstract class FileUtil {
 			inChannel.transferTo(0, inChannel.size(), outChannel);
 		}
 		catch (Exception e) {
-			Logger.error("Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath()
-					+ ": " + e.toString());
+			Logger.error("Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
 			return false;
 		}
 		finally {

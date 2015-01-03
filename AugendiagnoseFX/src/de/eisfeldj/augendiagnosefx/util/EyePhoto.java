@@ -373,7 +373,7 @@ public class EyePhoto {
 				cachedImage = new Image(getFile().toURI().toURL().toExternalForm());
 			}
 			catch (MalformedURLException e) {
-				Logger.error("Error when creating URL for " + getAbsolutePath());
+				Logger.error("Error when creating URL for " + getAbsolutePath(), e);
 			}
 		}
 	}

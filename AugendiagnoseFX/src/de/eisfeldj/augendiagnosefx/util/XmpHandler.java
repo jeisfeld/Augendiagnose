@@ -106,7 +106,7 @@ public class XmpHandler {
 				prepared = true;
 			}
 			catch (XMPException e) {
-				Logger.error("Exception while preparing XMP registry: " + e.toString());
+				Logger.error("Exception while preparing XMP registry", e);
 			}
 		}
 	}

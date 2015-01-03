@@ -32,7 +32,7 @@ public abstract class DialogUtil {
 			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogError.fxml");
 		}
 		catch (IOException e) {
-			Logger.error("Failed to load FXML file for dialog");
+			Logger.error("Failed to load FXML file for dialog", e);
 			return;
 		}
 
@@ -79,7 +79,7 @@ public abstract class DialogUtil {
 			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogConfirm.fxml");
 		}
 		catch (IOException e) {
-			Logger.error("Failed to load FXML file for dialog");
+			Logger.error("Failed to load FXML file for dialog", e);
 			return;
 		}
 

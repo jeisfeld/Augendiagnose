@@ -74,7 +74,7 @@ public final class FXMLUtil {
 			controller = getRootFromFxml(fxmlFile);
 		}
 		catch (IOException e) {
-			Logger.error("Failed to load FXML file " + fxmlFile);
+			Logger.error("Failed to load FXML file " + fxmlFile, e);
 			return null;
 		}
 		mainController.getBody().getChildren().add(controller.getRoot());
