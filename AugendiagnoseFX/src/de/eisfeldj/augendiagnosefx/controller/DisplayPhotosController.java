@@ -16,40 +16,22 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import de.eisfeldj.augendiagnosefx.Main;
+import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
-import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
  * Controller for the "Display Photos" page.
  */
 public class DisplayPhotosController implements Initializable, Controller {
-
-	/**
-	 * The width of the date node.
-	 */
-	private static final int DATE_WIDTH = 70;
-
-	/**
-	 * The standard size of gaps.
-	 */
-	private static final int STANDARD_GAP = 10;
-
 	/**
 	 * The eye photos folder.
 	 */
@@ -91,73 +73,7 @@ public class DisplayPhotosController implements Initializable, Controller {
 	}
 
 	/**
-	 * Create a node for display of an eye photo pair in the list.
-	 *
-	 * @param pair
-	 *            the eye photo pair.
-	 * @return the list.
-	 */
-	private GridPane createNodeForEyePhotoPair(final EyePhotoPair pair) {
-		GridPane pane = new GridPane();
-		pane.setHgap(STANDARD_GAP);
-		pane.add(new Label(pair.getDateDisplayString("dd.MM.yyyy")), 0, 0);
-		pane.getColumnConstraints().add(0, new ColumnConstraints(DATE_WIDTH));
-
-		GridPane imagePane = new GridPane();
-		imagePane.setHgap(STANDARD_GAP);
-		pane.add(imagePane, 1, 0);
-		ColumnConstraints totalImageConstraints = new ColumnConstraints();
-		totalImageConstraints.setHgrow(Priority.SOMETIMES);
-		pane.getColumnConstraints().add(1, totalImageConstraints);
-
-		imagePane.add(getImageView(pair.getRightEye()), 0, 0);
-		imagePane.add(getImageView(pair.getLeftEye()), 1, 0);
-
-		ColumnConstraints imageConstraints = new ColumnConstraints();
-		imageConstraints.setPercentWidth(50); // MAGIC_NUMBER
-		imageConstraints.setHalignment(HPos.CENTER);
-		imagePane.getColumnConstraints().add(0, imageConstraints);
-		imagePane.getColumnConstraints().add(1, imageConstraints);
-
-		return pane;
-	}
-
-	/**
-	 * Get the image view for a thumbnail.
-	 *
-	 * @param eyePhoto
-	 *            The eye photo to be displayed.
-	 * @return The image view.
-	 */
-	private ImageView getImageView(final EyePhoto eyePhoto) {
-		ImageView imageView = new ImageView(eyePhoto.getImage());
-		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(getThumbnailWidth());
-		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(final MouseEvent event) {
-				DisplayImageController controller =
-						(DisplayImageController) FXMLUtil.displaySubpage("DisplayImage.fxml");
-
-				ImageView bigView =
-						eyePhoto.getImageView(Main.getScene().getWidth() - 2, Main.getScene().getHeight() - 27); // MAGIC_NUMBER
-				controller.setImageView(bigView);
-			}
-		});
-		return imageView;
-	}
-
-	/**
-	 * Calculate the width of the thumbnails in dependence of the window size.
-	 *
-	 * @return The width.
-	 */
-	private double getThumbnailWidth() {
-		return (Main.getScene().getWidth() - 270) / 2; // MAGIC_NUMBER
-	}
-
-	/**
-	 * Handler for Click on name on list.
+	 * Handler for Click on name on list. Displays the eye photo pairs for that name.
 	 *
 	 * @param event
 	 *            The action event.
@@ -173,7 +89,7 @@ public class DisplayPhotosController implements Initializable, Controller {
 		List<GridPane> valuesPhotos = new ArrayList<GridPane>();
 
 		for (int i = 0; i < eyePhotos.length; i++) {
-			valuesPhotos.add(createNodeForEyePhotoPair(eyePhotos[i]));
+			valuesPhotos.add(new EyePhotoPairNode(eyePhotos[i]));
 		}
 
 		listPhotos.setItems(FXCollections.observableList(valuesPhotos));

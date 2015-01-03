@@ -58,8 +58,9 @@ public class ImageViewPane extends Region {
 		ImageView imageView = imageViewProperty.get();
 		if (imageView != null) {
 			imageView.setFitWidth(getWidth());
-			imageView.setFitHeight(getHeight());
-			layoutInArea(imageView, 0, 0, getWidth(), getHeight(), 0, HPos.CENTER, VPos.CENTER);
+			double newHeight = getWidth() * imageView.getImage().getHeight() / imageView.getImage().getWidth();
+			imageView.setFitHeight(newHeight);
+			layoutInArea(imageView, 0, 0, getWidth(), newHeight, 0, HPos.CENTER, VPos.CENTER);
 		}
 		super.layoutChildren();
 	}
@@ -75,6 +76,7 @@ public class ImageViewPane extends Region {
 			@Override
 			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldIV,
 					final ImageView newIV) {
+
 				if (oldIV != null) {
 					getChildren().remove(oldIV);
 				}
