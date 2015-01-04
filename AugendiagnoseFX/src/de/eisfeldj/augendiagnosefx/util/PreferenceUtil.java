@@ -31,6 +31,11 @@ public final class PreferenceUtil {
 	public static final String KEY_WINDOW_MAXIMIZED = "key_window_maximized";
 
 	/**
+	 * Preference key for the Window maximized property.
+	 */
+	public static final String KEY_LAST_NAME = "key_last_name";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -45,6 +50,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_WINDOW_SIZE_X, 1024.0); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_WINDOW_SIZE_Y, 720.0); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_WINDOW_MAXIMIZED, false);
+		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 	}
 
 	/**

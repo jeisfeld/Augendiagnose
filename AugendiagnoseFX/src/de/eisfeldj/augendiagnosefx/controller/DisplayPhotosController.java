@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
@@ -27,6 +29,7 @@ import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
  * Controller for the "Display Photos" page.
@@ -65,6 +68,14 @@ public class DisplayPhotosController implements Initializable, Controller {
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		List<String> valuesNames = getFolderNames(EYE_PHOTOS_FOLDER);
 		listNames.setItems(FXCollections.observableList(valuesNames));
+
+		String lastName = PreferenceUtil.getPreferenceString(KEY_LAST_NAME);
+		if (lastName != null && valuesNames.contains(lastName)) {
+			showPicturesForName(lastName);
+			int selectedIndex = valuesNames.indexOf(lastName);
+			listNames.getSelectionModel().select(selectedIndex);
+			listNames.scrollTo(selectedIndex);
+		}
 	}
 
 	@Override
@@ -82,6 +93,17 @@ public class DisplayPhotosController implements Initializable, Controller {
 	@FXML
 	protected final void handleNameClick(final MouseEvent event) throws IOException {
 		String name = listNames.getSelectionModel().getSelectedItem();
+		showPicturesForName(name);
+		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
+	}
+
+	/**
+	 * Display the pictures for a given name.
+	 *
+	 * @param name
+	 *            The name.
+	 */
+	private void showPicturesForName(final String name) {
 		File nameFolder = new File(EYE_PHOTOS_FOLDER, name);
 
 		EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
