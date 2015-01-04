@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DialogController;
+import de.eisfeldj.augendiagnosefx.controller.PreferencesController;
 
 /**
  * Helper class to show standard dialogs.
@@ -123,6 +124,28 @@ public abstract class DialogUtil {
 				dialog.show();
 			}
 		});
+	}
+
+	/**
+	 * Display the setting dialog.
+	 */
+	public static void displayPreferencesDialog() {
+		PreferencesController controller;
+		try {
+			controller = (PreferencesController) FXMLUtil.getRootFromFxml("Preferences.fxml");
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file for settings");
+			return;
+		}
+
+		Scene scene = new Scene(controller.getRoot());
+		Stage dialog = new Stage();
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(Application.getStage());
+		dialog.setScene(scene);
+		controller.setStage(dialog);
+		dialog.show();
 	}
 
 	/**

@@ -18,9 +18,11 @@
 				<MenuItem text="%menu_exit" onAction="#exitApplication"/> 
 			</items>
 		</Menu>
-		<Menu text="%menu_tools"> 
+		<Menu text="%menu_window"> 
 			<items>
 				<MenuItem fx:id="menuClose" text="%menu_close" disable="true"/> 
+				<SeparatorMenuItem/> 
+				<MenuItem text="%menu_preferences" onAction="#showPreferences"/> 
 			</items>
 		</Menu>
 		<Menu text="%menu_help"> 

@@ -36,6 +36,11 @@ public final class PreferenceUtil {
 	public static final String KEY_LAST_NAME = "key_last_name";
 
 	/**
+	 * Preference key for the eye photos folder.
+	 */
+	public static final String KEY_FOLDER_PHOTOS = "key_folder_photos";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -51,6 +56,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_WINDOW_SIZE_Y, 720.0); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_WINDOW_MAXIMIZED, false);
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
+		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
 	}
 
 	/**

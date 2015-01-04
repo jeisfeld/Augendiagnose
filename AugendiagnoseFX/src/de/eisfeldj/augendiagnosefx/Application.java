@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 
@@ -31,6 +32,11 @@ public class Application extends javafx.application.Application {
 	private static Stage stage;
 
 	/**
+	 * The main controller.
+	 */
+	private static MainController mainController;
+
+	/**
 	 * Application method to start the application.
 	 *
 	 * @param args
@@ -45,7 +51,7 @@ public class Application extends javafx.application.Application {
 		stage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
+		mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
 		scene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
 						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
@@ -68,6 +74,19 @@ public class Application extends javafx.application.Application {
 
 		FXMLUtil.displayMenu("Menu.fxml");
 		mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
+	}
+
+	/**
+	 * Redisplay the main page.
+	 */
+	public static final void refreshMainPage() {
+		mainController.getBody().getChildren().clear();
+		try {
+			mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file for display", e);
+		}
 	}
 
 	/**

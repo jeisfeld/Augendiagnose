@@ -5,8 +5,9 @@ import javafx.scene.layout.VBox
 import javafx.scene.control.MenuBar
 import javafx.scene.layout.StackPane
 import javafx.scene.control.Button
+import de.eisfeldj.augendiagnosefx.controller.MainController
 
-component Main controlledby de.eisfeldj.augendiagnosefx.controller.MainController {
+component Main controlledby MainController {
 	VBox id mainPane {
 		StackPane {
 			alignment : "CENTER_RIGHT", MenuBar id menuBar {

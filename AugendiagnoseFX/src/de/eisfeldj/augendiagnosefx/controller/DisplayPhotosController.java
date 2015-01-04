@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
 
 import java.io.File;
@@ -40,12 +41,6 @@ import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
  */
 public class DisplayPhotosController implements Initializable, Controller {
 	/**
-	 * The eye photos folder.
-	 */
-	private static final File EYE_PHOTOS_FOLDER = new File("D:/Jörg/Bilder/SchnuSy/Augenfotos/");
-	// private static final File EYE_PHOTOS_FOLDER = new File("Z:/");
-
-	/**
 	 * The list of folder names which should be shown on top of the list.
 	 */
 	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
@@ -70,7 +65,7 @@ public class DisplayPhotosController implements Initializable, Controller {
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
-		List<String> valuesNames = getFolderNames(EYE_PHOTOS_FOLDER);
+		List<String> valuesNames = getFolderNames(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)));
 		listNames.setItems(FXCollections.observableList(valuesNames));
 
 		String lastName = PreferenceUtil.getPreferenceString(KEY_LAST_NAME);
@@ -108,7 +103,7 @@ public class DisplayPhotosController implements Initializable, Controller {
 	 *            The name.
 	 */
 	private void showPicturesForName(final String name) {
-		File nameFolder = new File(EYE_PHOTOS_FOLDER, name);
+		File nameFolder = new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS), name);
 
 		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTOS, name);
 

@@ -1,0 +1,56 @@
+package fxml
+
+import javafx.scene.layout.ColumnConstraints
+import javafx.scene.layout.GridPane
+import javafx.scene.control.Label
+import de.eisfeldj.augendiagnosefx.controller.PreferencesController
+import javafx.scene.control.TextField
+import javafx.scene.control.Button
+
+component Settings controlledby PreferencesController {
+	GridPane id settingsPane {
+		styleClass : "display",
+		columnConstraints : ColumnConstraints {
+		},
+		columnConstraints : ColumnConstraints {
+			hgrow : "SOMETIMES"
+		},
+		children : [
+			Label {
+				text : rstring "title_settings",
+				styleClass : "settingsHeading",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 0,
+				call GridPane#columnSpan : 2
+			},
+
+			Label {
+				text : rstring "pref_title_folder_photos",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 1
+			},
+
+			TextField id textFolderPhotos {
+				minWidth : 300,
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex : 1
+			},
+
+			Button {
+				text : rstring "button_cancel",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 2,
+				call GridPane#halignment : "LEFT",
+				onAction : controllermethod cancel
+			},
+
+			Button {
+				text : rstring "button_ok",
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex : 2,
+				call GridPane#halignment : "RIGHT",
+				onAction : controllermethod submit
+			}
+		]
+	}
+}

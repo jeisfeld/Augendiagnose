@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -69,6 +70,17 @@ public class MenuController implements Controller {
 	}
 
 	/**
+	 * Handler for menu entry "Preferences".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void showPreferences(final ActionEvent event) {
+		DialogUtil.displayPreferencesDialog();
+	}
+
+	/**
 	 * Enable the close menu item.
 	 *
 	 * @param eventHandler
@@ -98,4 +110,5 @@ public class MenuController implements Controller {
 			mainController.getCloseButton().setVisible(false);
 		}
 	}
+
 }

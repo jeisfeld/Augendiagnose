@@ -4,8 +4,9 @@ import javafx.scene.control.MenuBar
 import javafx.scene.control.Menu
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
+import de.eisfeldj.augendiagnosefx.controller.MenuController
 
-component Menu controlledby de.eisfeldj.augendiagnosefx.controller.MenuController {
+component Menu controlledby MenuController {
 	MenuBar id menuBar {
 		styleClass : "menu",
 		menus : [
@@ -20,11 +21,16 @@ component Menu controlledby de.eisfeldj.augendiagnosefx.controller.MenuControlle
 				]
 			},
 			Menu {
-				text : rstring "menu_tools",
+				text : rstring "menu_window",
 				items : [
 					MenuItem id menuClose {
 						text : rstring "menu_close",
 						disable : true
+					},
+					SeparatorMenuItem,
+					MenuItem {
+						text : rstring "menu_preferences",
+						onAction : controllermethod showPreferences
 					}
 				]
 			},

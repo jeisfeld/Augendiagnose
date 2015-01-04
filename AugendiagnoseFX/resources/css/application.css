@@ -48,3 +48,14 @@
 	-fx-border-width: 2.0;
 	-fx-border-color: darkgrey;
 }
+
+.settingsHeading {
+	-fx-font-size: 18.0;
+	-fx-font-weight: bold;
+}
+
+#settingsPane {
+	-fx-hgap: 10.0;
+	-fx-vgap: 10.0;
+	-fx-padding: 10.0;
+}
