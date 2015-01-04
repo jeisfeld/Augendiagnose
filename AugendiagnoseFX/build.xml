@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO8859-1"?>
 <project name="AugendiagnoseFX" default="do-deploy" basedir="."
 	xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
@@ -118,8 +118,9 @@
 			<fx:fileset dir="dist" includes="libs/*" />
 		</fx:resources>
 
-		<fx:application id="fxApplication" name="Augendiagnose"
-			mainClass="de.eisfeldj.augendiagnosefx.Application" toolkit="fx" />
+		<fx:application id="fxApplication" name="Augendiagnose${buildtype}"
+			version="0.1" mainClass="de.eisfeldj.augendiagnosefx.Application"
+			toolkit="fx" />
 
 		<mkdir dir="build/classes/META-INF" />
 
@@ -132,7 +133,7 @@
 			<fx:resources refid="appRes" />
 
 			<manifest>
-				<attribute name="Implementation-Vendor" value="JÃ¶rg Eisfeld" />
+				<attribute name="Implementation-Vendor" value="Jörg Eisfeld" />
 				<attribute name="Implementation-Title" value="Augendiagnose" />
 				<attribute name="Implementation-Version" value="0.1" />
 				<attribute name="JavaFX-Feature-Proxy" value="None" />
@@ -141,7 +142,7 @@
 
 		<!-- Need to use ${basedir} because somehow the ant task is calculating
 			the directory differently -->
-		<fx:signjar keystore="D:\JÃ¶rg\Miscellaneous\Keystores\jekeystore1"
+		<fx:signjar keystore="D:\Jörg\Miscellaneous\Keystores\jekeystore1"
 			alias="jeisfeld.de" keypass="supila1" storepass="supila1" destDir="${basedir}/dist">
 			<fileset dir='dist'>
 				<include name='**/*.jar' />
@@ -152,10 +153,10 @@
 		<!-- Need to use ${basedir} because somehow the ant task is calculating
 			the directory differently -->
 		<fx:deploy embedJNLP="false" extension="false" includeDT="false"
-			offlineAllowed="true" outdir="${basedir}/deploy" outfile="Augendiagnose"
+			offlineAllowed="true" outdir="${basedir}/deploy" outfile="Augendiagnose${buildtype}"
 			nativeBundles="exe" updatemode="background">
 			<fx:platform basedir="${java.home}" />
-			<fx:info title="Augendiagnose" vendor="JÃ¶rg Eisfeld">
+			<fx:info title="Augendiagnose" vendor="Jörg Eisfeld">
 				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
 					height="48" kind="default" width="48" />
 			</fx:info>
