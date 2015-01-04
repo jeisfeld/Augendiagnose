@@ -15,8 +15,10 @@ import javafx.scene.input.ZoomEvent;
 public class SizeableImageView extends ScrollPane {
 	/**
 	 * The zoom factor to be applied for each zoom event.
+	 *
+	 * (480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
 	 */
-	private static final double ZOOM_FACTOR = 1.05;
+	private static final double ZOOM_FACTOR = 1.0014450997779993488675056142818;
 
 	/**
 	 * The zoom factor.
@@ -70,12 +72,7 @@ public class SizeableImageView extends ScrollPane {
 				double sourceWidth = zoomProperty.get() * image.getImage().getWidth();
 				double sourceHeight = zoomProperty.get() * image.getImage().getHeight();
 
-				if (event.getDeltaY() > 0) {
-					zoomProperty.set(zoomProperty.get() * ZOOM_FACTOR);
-				}
-				else if (event.getDeltaY() < 0) {
-					zoomProperty.set(zoomProperty.get() / ZOOM_FACTOR);
-				}
+				zoomProperty.set(zoomProperty.get() * Math.pow(ZOOM_FACTOR, event.getDeltaY()));
 
 				// Old values of the scrollbars.
 				double oldHvalue = getHvalue();
@@ -98,11 +95,13 @@ public class SizeableImageView extends ScrollPane {
 				double postScrollYFactor = Math.max(0, targetHeight - getHeight());
 
 				// Correction applied to compensate the vertical scrolling done by ScrollPane
-				double verticalCorrection = preScrollYFactor / sourceHeight * event.getDeltaY();
+				double verticalCorrection = (postScrollYFactor / sourceHeight) * event.getDeltaY();
 
 				// New scrollbar positions keeping the mouse position.
 				double newHvalue = ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor;
-				double newVvalue = ((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection) / postScrollYFactor;
+				double newVvalue =
+						((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
+								/ postScrollYFactor;
 
 				image.setFitWidth(targetWidth);
 				image.setFitHeight(targetHeight);
