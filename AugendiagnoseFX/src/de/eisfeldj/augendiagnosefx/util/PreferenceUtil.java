@@ -16,6 +16,21 @@ public final class PreferenceUtil {
 	public static final String KEY_STORE_OPTION = "key_store_option";
 
 	/**
+	 * Preference key for the Window width.
+	 */
+	public static final String KEY_WINDOW_SIZE_X = "key_window_size_x";
+
+	/**
+	 * Preference key for the Window height.
+	 */
+	public static final String KEY_WINDOW_SIZE_Y = "key_window_size_y";
+
+	/**
+	 * Preference key for the Window maximized property.
+	 */
+	public static final String KEY_WINDOW_MAXIMIZED = "key_window_maximized";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -27,6 +42,9 @@ public final class PreferenceUtil {
 
 	static {
 		DEFAULT_MAP.put(KEY_STORE_OPTION, 2);
+		DEFAULT_MAP.put(KEY_WINDOW_SIZE_X, 1024.0); // MAGIC_NUMBER
+		DEFAULT_MAP.put(KEY_WINDOW_SIZE_Y, 720.0); // MAGIC_NUMBER
+		DEFAULT_MAP.put(KEY_WINDOW_MAXIMIZED, false);
 	}
 
 	/**
@@ -82,6 +100,30 @@ public final class PreferenceUtil {
 	 */
 	public static int getPreferenceInt(final String key) {
 		return prefs.getInt(key, (Integer) DEFAULT_MAP.get(key));
+	}
+
+	/**
+	 * Set an double shared preference.
+	 *
+	 * @param key
+	 *            The key of the preference.
+	 * @param value
+	 *            The value of the preference.
+	 */
+	public static void setPreference(final String key, final double value) {
+		prefs.putDouble(key, value);
+	}
+
+	/**
+	 * Retrieve an double shared preference.
+	 *
+	 * @param key
+	 *            the key of the preference.
+	 *
+	 * @return the corresponding preference value.
+	 */
+	public static double getPreferenceDouble(final String key) {
+		return prefs.getDouble(key, (Double) DEFAULT_MAP.get(key));
 	}
 
 	/**

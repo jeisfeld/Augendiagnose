@@ -1,11 +1,18 @@
 package de.eisfeldj.augendiagnosefx;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_MAXIMIZED;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_X;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
+
 import java.io.IOException;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 
 /**
@@ -39,8 +46,24 @@ public class Application extends javafx.application.Application {
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
 		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
-		scene = new Scene(mainController.getRoot());
+		scene =
+				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
+						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
+
+		primaryStage.setOnCloseRequest(
+				new EventHandler<WindowEvent>() {
+					@Override
+					public void handle(final WindowEvent event) {
+						PreferenceUtil.setPreference(KEY_WINDOW_MAXIMIZED, primaryStage.isMaximized());
+						if (!primaryStage.isMaximized()) {
+							PreferenceUtil.setPreference(KEY_WINDOW_SIZE_X, scene.getWidth());
+							PreferenceUtil.setPreference(KEY_WINDOW_SIZE_Y, scene.getHeight());
+						}
+					}
+				});
+
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
 		FXMLUtil.displayMenu("Menu.fxml");

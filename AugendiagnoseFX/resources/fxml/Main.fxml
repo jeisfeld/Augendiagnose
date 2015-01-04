@@ -5,8 +5,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Button?>
-<VBox fx:id="mainPane" prefHeight="720" prefWidth="1024"
-	xmlns:fx="http://javafx.com/fxml" fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController"
+<VBox fx:id="mainPane" xmlns:fx="http://javafx.com/fxml"
+	fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController"
 	id="main">
 	<StackPane alignment="CENTER_RIGHT">
 		<MenuBar fx:id="menuBar" styleClass="menu" />
