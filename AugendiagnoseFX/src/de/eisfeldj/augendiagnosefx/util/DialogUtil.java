@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.util;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -40,20 +41,25 @@ public abstract class DialogUtil {
 		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_ERROR));
 		controller.setMessage(message);
 
-		Scene scene = new Scene(controller.getRoot());
-		Stage dialog = new Stage();
-		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(Application.getStage());
-		dialog.setScene(scene);
-
-		controller.getBtnBack().setOnAction(new EventHandler<ActionEvent>() {
+		Platform.runLater(new Runnable() {
 			@Override
-			public void handle(final ActionEvent event) {
-				dialog.close();
+			public void run() {
+				Scene scene = new Scene(controller.getRoot());
+				Stage dialog = new Stage();
+				dialog.initModality(Modality.WINDOW_MODAL);
+				dialog.initOwner(Application.getStage());
+				dialog.setScene(scene);
+
+				controller.getBtnBack().setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						dialog.close();
+					}
+				});
+
+				dialog.show();
 			}
 		});
-
-		dialog.show();
 	}
 
 	/**
@@ -90,28 +96,33 @@ public abstract class DialogUtil {
 			controller.getBtnOk().setText(buttonText);
 		}
 
-		Scene scene = new Scene(controller.getRoot());
-		Stage dialog = new Stage();
-		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(Application.getStage());
-		dialog.setScene(scene);
-
-		controller.getBtnCancel().setOnAction(new EventHandler<ActionEvent>() {
+		Platform.runLater(new Runnable() {
 			@Override
-			public void handle(final ActionEvent event) {
-				dialog.close();
-				listener.onDialogNegativeClick();
+			public void run() {
+				Scene scene = new Scene(controller.getRoot());
+				Stage dialog = new Stage();
+				dialog.initModality(Modality.WINDOW_MODAL);
+				dialog.initOwner(Application.getStage());
+				dialog.setScene(scene);
+
+				controller.getBtnCancel().setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						dialog.close();
+						listener.onDialogNegativeClick();
+					}
+				});
+				controller.getBtnOk().setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						dialog.close();
+						listener.onDialogPositiveClick();
+					}
+				});
+
+				dialog.show();
 			}
 		});
-		controller.getBtnOk().setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent event) {
-				dialog.close();
-				listener.onDialogPositiveClick();
-			}
-		});
-
-		dialog.show();
 	}
 
 	/**
