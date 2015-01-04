@@ -44,7 +44,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.show();
 
 		FXMLUtil.displayMenu("Menu.fxml");
-		mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("StartPage.fxml").getRoot());
+		mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
 	}
 
 	/**
