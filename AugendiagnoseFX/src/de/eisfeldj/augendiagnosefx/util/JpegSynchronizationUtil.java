@@ -154,8 +154,8 @@ public final class JpegSynchronizationUtil {
 			this.metadata = metadata;
 		}
 
-	    @Override
-	    public void run() {
+		@Override
+		public void run() {
 			Logger.info("Starting thread to save file " + pathname);
 
 			try {
@@ -164,10 +164,10 @@ public final class JpegSynchronizationUtil {
 			}
 			catch (Exception e) {
 				Logger.error("Failed to save file " + pathname, e);
-				DialogUtil.displayError("message_dialog_failed_to_store_metadata", pathname);
+				DialogUtil.displayError(ResourceConstants.MESSAGE_DIALOG_FAILED_TO_STORE_METADATA, pathname);
 			}
 			triggerNextFromQueue(pathname);
-	    }
+		}
 
 	}
 

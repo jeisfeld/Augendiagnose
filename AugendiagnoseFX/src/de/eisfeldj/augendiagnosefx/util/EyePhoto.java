@@ -560,9 +560,9 @@ public class EyePhoto {
 		public final String toShortString() {
 			switch (this) {
 			case LEFT:
-				return ResourceUtil.getString("file_infix_left");
+				return ResourceUtil.getString(ResourceConstants.FILE_INFIX_LEFT);
 			case RIGHT:
-				return ResourceUtil.getString("file_infix_right");
+				return ResourceUtil.getString(ResourceConstants.FILE_INFIX_RIGHT);
 			default:
 				return "";
 			}
@@ -588,9 +588,9 @@ public class EyePhoto {
 		public final String getTitleSuffix() {
 			switch (this) {
 			case LEFT:
-				return ResourceUtil.getString("suffix_title_left");
+				return ResourceUtil.getString(ResourceConstants.SUFFIX_TITLE_LEFT);
 			case RIGHT:
-				return ResourceUtil.getString("suffix_title_right");
+				return ResourceUtil.getString(ResourceConstants.SUFFIX_TITLE_RIGHT);
 			default:
 				return null;
 			}

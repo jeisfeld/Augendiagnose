@@ -36,7 +36,7 @@ public abstract class DialogUtil {
 			return;
 		}
 
-		controller.setHeading(ResourceUtil.getString("title_dialog_error"));
+		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_ERROR));
 		controller.setMessage(message);
 
 		Scene scene = new Scene(controller.getRoot());
@@ -83,7 +83,7 @@ public abstract class DialogUtil {
 			return;
 		}
 
-		controller.setHeading(ResourceUtil.getString("title_dialog_error"));
+		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_CONFIRMATION));
 		controller.setMessage(message);
 		if (buttonResource != null) {
 			String buttonText = String.format(ResourceUtil.getString(buttonResource));
