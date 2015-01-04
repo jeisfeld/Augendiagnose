@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
@@ -76,16 +75,12 @@ public class EyePhotoPairNode extends GridPane {
 	private ImageViewPane getImageViewPane(final EyePhoto eyePhoto) {
 		ImageView imageView = new ImageView(eyePhoto.getImage());
 		imageView.setPreserveRatio(true);
-		// imageView.setFitWidth(getThumbnailWidth());
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
 				DisplayImageController controller =
 						(DisplayImageController) FXMLUtil.displaySubpage("DisplayImage.fxml");
-
-				ImageView bigView =
-						eyePhoto.getImageView(Application.getScene().getWidth() - 2, Application.getScene().getHeight() - 27); // MAGIC_NUMBER
-				controller.setImageView(bigView);
+				controller.setEyePhoto(eyePhoto);
 			}
 		});
 
