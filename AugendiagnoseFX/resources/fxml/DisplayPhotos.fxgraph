@@ -28,7 +28,7 @@ component DisplayPhotos controlledby DisplayPhotosController {
 				call GridPane#columnIndex : 0,
 				call GridPane#rowIndex : 0,
 				fitToHeight : true,
-				fitToWidth : true, ListView id listNames {
+				fitToWidth : true, ListView<GridPane> id listNames {
 					styleClass : "listNames",
 					onMouseClicked : controllermethod handleNameClick
 				}
@@ -37,7 +37,7 @@ component DisplayPhotos controlledby DisplayPhotosController {
 				call GridPane#columnIndex : 1,
 				call GridPane#rowIndex : 0,
 				fitToHeight : true,
-				fitToWidth : true, ListView id listPhotos {
+				fitToWidth : true, ListView<Object> id listPhotos {
 					styleClass : "listPhotos"
 				}
 			}
