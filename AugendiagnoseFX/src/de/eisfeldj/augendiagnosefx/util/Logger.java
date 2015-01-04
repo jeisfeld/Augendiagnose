@@ -13,6 +13,11 @@ public final class Logger {
 	private static final java.util.logging.Logger LOGGER = java.util.logging.Logger
 			.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
 
+	static {
+		System.setProperty("java.util.logging.SimpleFormatter.format",
+				"%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %5$s%6$s%n");
+	}
+
 	/**
 	 * Hide default constructor.
 	 */
@@ -53,8 +58,10 @@ public final class Logger {
 	/**
 	 * Make an error entry.
 	 *
-	 * @param output The log entry
-	 * @param e The exception
+	 * @param output
+	 *            The log entry
+	 * @param e
+	 *            The exception
 	 */
 	public static void error(final String output, final Throwable e) {
 		error(output + "\n" + ExceptionUtils.getStackTrace(e));

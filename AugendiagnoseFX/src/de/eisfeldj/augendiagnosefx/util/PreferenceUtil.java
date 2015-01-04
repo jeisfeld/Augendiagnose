@@ -57,7 +57,7 @@ public final class PreferenceUtil {
 	 * Private constructor to disable instantiation.
 	 */
 	private PreferenceUtil() {
-		// do nothing.
+		throw new UnsupportedOperationException();
 	}
 
 	/**

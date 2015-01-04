@@ -9,7 +9,7 @@ public final class ResourceConstants {
 	 * Private default constructor.
 	 */
 	private ResourceConstants() {
-		// do nothing.
+		throw new UnsupportedOperationException();
 	}
 
 	// JAVADOC:OFF
