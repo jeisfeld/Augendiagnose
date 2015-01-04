@@ -155,7 +155,10 @@
 			offlineAllowed="true" outdir="${basedir}/deploy" outfile="Augendiagnose"
 			nativeBundles="exe" updatemode="background">
 			<fx:platform basedir="${java.home}" />
-			<fx:info title="Augendiagnose" vendor="Jörg Eisfeld" />
+			<fx:info title="Augendiagnose" vendor="Jörg Eisfeld">
+				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
+					height="48" kind="default" width="48" />
+			</fx:info>
 			<fx:preferences menu="true" install="true" shortcut="true" />
 			<fx:application refId="fxApplication" />
 			<fx:resources refid="appRes" />
