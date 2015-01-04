@@ -113,6 +113,14 @@ public final class FXMLUtil {
 	}
 
 	/**
+	 * Utility method to remove all panes from the stack.
+	 */
+	public static void removeAllSubpages() {
+		mainController.getBody().getChildren().clear();
+		menuController.disableAllClose();
+	}
+
+	/**
 	 * Utility method to expand and display the menu bar.
 	 *
 	 * @param fxmlFile

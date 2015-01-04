@@ -111,4 +111,13 @@ public class MenuController implements Controller {
 		}
 	}
 
+	/**
+	 * Disable all levels of the close menu icon.
+	 */
+	public final void disableAllClose() {
+		closeHandlerList.clear();
+		menuClose.setDisable(true);
+		mainController.getCloseButton().setVisible(false);
+	}
+
 }

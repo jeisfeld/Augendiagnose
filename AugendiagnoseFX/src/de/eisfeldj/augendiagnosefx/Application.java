@@ -80,7 +80,7 @@ public class Application extends javafx.application.Application {
 	 * Redisplay the main page.
 	 */
 	public static final void refreshMainPage() {
-		mainController.getBody().getChildren().clear();
+		FXMLUtil.removeAllSubpages();
 		try {
 			mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
 		}
