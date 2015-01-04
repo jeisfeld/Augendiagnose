@@ -1,0 +1,47 @@
+package fxml
+
+import javafx.scene.control.MenuBar
+import javafx.scene.control.Menu
+import javafx.scene.control.MenuItem
+import javafx.scene.control.SeparatorMenuItem
+
+component Menu controlledby de.eisfeldj.augendiagnosefx.controller.MenuController {
+	MenuBar id menuBar {
+		styleClass : "menu",
+		menus : [
+			Menu {
+				text : rstring "menu_file",
+				items : [
+					SeparatorMenuItem,
+					MenuItem {
+						text : rstring "menu_exit",
+						onAction : controllermethod exitApplication
+					}
+				]
+			},
+			Menu {
+				text : rstring "menu_tools",
+				items : [
+					MenuItem id menuClose {
+						text : rstring "menu_close",
+						disable : true
+					}
+				]
+			},
+			Menu {
+				text : rstring "menu_help",
+				items : [
+					MenuItem {
+						text : rstring "menu_online_manual",
+						disable : true
+					},
+					SeparatorMenuItem,
+					MenuItem {
+						text : rstring "menu_about",
+						disable : true
+					}
+				]
+			}
+		]
+	}
+}

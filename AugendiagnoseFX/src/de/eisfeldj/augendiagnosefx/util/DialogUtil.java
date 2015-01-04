@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DialogController;
 
@@ -41,7 +42,6 @@ public abstract class DialogUtil {
 
 		Scene scene = new Scene(controller.getRoot());
 		Stage dialog = new Stage();
-		// dialog.initStyle(StageStyle.UTILITY);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(Application.getStage());
 		dialog.setScene(scene);
@@ -92,7 +92,6 @@ public abstract class DialogUtil {
 
 		Scene scene = new Scene(controller.getRoot());
 		Stage dialog = new Stage();
-		// dialog.initStyle(StageStyle.UTILITY);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(Application.getStage());
 		dialog.setScene(scene);
@@ -113,6 +112,103 @@ public abstract class DialogUtil {
 		});
 
 		dialog.show();
+	}
+
+	/**
+	 * Display a progress dialog.
+	 *
+	 * @param messageResource
+	 *            the displayed message
+	 * @param args
+	 *            arguments for the displayed message
+	 * @return A reference to the dialog.
+	 */
+	public static ProgressDialog displayProgressDialog(final String messageResource, final Object... args) {
+		String message = String.format(ResourceUtil.getString(messageResource), args);
+
+		DialogController controller;
+		try {
+			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogProgress.fxml");
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file for dialog", e);
+			return null;
+		}
+
+		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_PROGRESS));
+		controller.setMessage(message);
+
+		Scene scene = new Scene(controller.getRoot());
+		Stage dialog = new Stage();
+		dialog.initStyle(StageStyle.UNDECORATED);
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(Application.getStage());
+		dialog.setScene(scene);
+		dialog.show();
+
+		return new ProgressDialog(dialog, controller);
+	}
+
+	/**
+	 * A progress dialog.
+	 */
+	public static final class ProgressDialog {
+		/**
+		 * The stage.
+		 */
+		private Stage stage;
+
+		/**
+		 * The controller.
+		 */
+		private DialogController controller;
+
+		/**
+		 * Constructor setting the stage and the controller.
+		 *
+		 * @param stage
+		 *            The stage.
+		 * @param controller
+		 *            The controller.
+		 */
+		private ProgressDialog(final Stage stage, final DialogController controller) {
+			this.stage = stage;
+			this.controller = controller;
+		}
+
+		/**
+		 * Getter for the stage.
+		 *
+		 * @return The stage.
+		 */
+		public Stage getStage() {
+			return stage;
+		}
+
+		/**
+		 * Getter for the scene.
+		 *
+		 * @return The scene.
+		 */
+		public Scene getScene() {
+			return stage.getScene();
+		}
+
+		/**
+		 * Getter for the controller.
+		 *
+		 * @return The controller.
+		 */
+		public DialogController getController() {
+			return controller;
+		}
+
+		/**
+		 * Close the dialog.
+		 */
+		public void close() {
+			stage.close();
+		}
 	}
 
 	/**

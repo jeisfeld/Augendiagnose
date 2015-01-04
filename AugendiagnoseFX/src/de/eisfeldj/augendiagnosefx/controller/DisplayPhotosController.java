@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,10 +27,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
  * Controller for the "Display Photos" page.
@@ -106,15 +110,29 @@ public class DisplayPhotosController implements Initializable, Controller {
 	private void showPicturesForName(final String name) {
 		File nameFolder = new File(EYE_PHOTOS_FOLDER, name);
 
-		EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
+		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTOS, name);
 
-		List<GridPane> valuesPhotos = new ArrayList<GridPane>();
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
 
-		for (int i = 0; i < eyePhotos.length; i++) {
-			valuesPhotos.add(new EyePhotoPairNode(eyePhotos[i]));
-		}
+				List<GridPane> valuesPhotos = new ArrayList<GridPane>();
 
-		listPhotos.setItems(FXCollections.observableList(valuesPhotos));
+				for (int i = 0; i < eyePhotos.length; i++) {
+					valuesPhotos.add(new EyePhotoPairNode(eyePhotos[i]));
+				}
+
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						listPhotos.setItems(FXCollections.observableList(valuesPhotos));
+						dialog.close();
+					}
+				});
+			}
+		};
+		thread.start();
 	}
 
 	// METHODS CLONED FROM ANDROID

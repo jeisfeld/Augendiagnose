@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -21,13 +22,13 @@ public class DialogController implements Controller {
 	 * The heading of the Dialog box.
 	 */
 	@FXML
-	private Label heading;
+	private Label dialogHeading;
 
 	/**
 	 * The message of the dialog box.
 	 */
 	@FXML
-	private Text message;
+	private Text dialogMessage;
 
 	/**
 	 * The "back" button on the dialog.
@@ -40,6 +41,12 @@ public class DialogController implements Controller {
 	 */
 	@FXML
 	private Button btnOk;
+
+	/**
+	 * The progress bar.
+	 */
+	@FXML
+	private ProgressBar progress;
 
 	/**
 	 * The "cancel" button on the dialog.
@@ -59,7 +66,7 @@ public class DialogController implements Controller {
 	 *            The heading text.
 	 */
 	public final void setHeading(final String text) {
-		heading.setText(text);
+		dialogHeading.setText(text);
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class DialogController implements Controller {
 	 *            The message text.
 	 */
 	public final void setMessage(final String text) {
-		message.setText(text);
+		dialogMessage.setText(text);
 	}
 
 	/**

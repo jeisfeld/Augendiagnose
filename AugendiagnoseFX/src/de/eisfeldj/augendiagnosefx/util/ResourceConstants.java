@@ -27,9 +27,11 @@ public final class ResourceConstants {
 	public static final String MENU_ONLINE_MANUAL = "menu_online_manual";
 	public static final String MENU_TOOLS = "menu_tools";
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
+	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
 	public static final String SUFFIX_TITLE_LEFT = "suffix_title_left";
 	public static final String SUFFIX_TITLE_RIGHT = "suffix_title_right";
 	public static final String TITLE_DIALOG_CONFIRMATION = "title_dialog_confirmation";
 	public static final String TITLE_DIALOG_ERROR = "title_dialog_error";
+	public static final String TITLE_DIALOG_PROGRESS = "title_dialog_progress";
 	// JAVADOC:ON
 }

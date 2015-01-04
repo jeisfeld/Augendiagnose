@@ -16,13 +16,6 @@
 	-fx-pref-height: 10000.0;
 }
 
-.start {
-	-fx-padding: 25.0;
-	-fx-alignment: center;
-	-fx-hgap: 10.0;
-	-fx-vgap: 10.0;
-}
-
 #body {
 	-fx-pref-height: 10000.0;
 }
@@ -48,4 +41,10 @@
 
 #dialogMessage {
 
+}
+
+.dialogProgress {
+	-fx-padding: 10.0;
+	-fx-border-width: 2.0;
+	-fx-border-color: darkgrey;
 }

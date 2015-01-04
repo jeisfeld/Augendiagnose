@@ -1,0 +1,22 @@
+package fxml
+
+import javafx.scene.layout.HBox
+import javafx.scene.layout.VBox
+import javafx.scene.control.MenuBar
+import javafx.scene.layout.StackPane
+import javafx.scene.control.Button
+
+component Main controlledby de.eisfeldj.augendiagnosefx.controller.MainController {
+	VBox id mainPane {
+		StackPane {
+			alignment : "CENTER_RIGHT", MenuBar id menuBar {
+				styleClass : "menu"
+			}, HBox id menuButtons {
+				maxWidth : 0, Button id closeButton {
+					styleClass : "imageButton",
+					visible : false
+				}
+			}
+		}, StackPane id body
+	}
+}

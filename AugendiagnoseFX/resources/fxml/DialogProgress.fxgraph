@@ -1,0 +1,26 @@
+package fxml
+
+import javafx.scene.control.Label
+import javafx.scene.text.Text
+import javafx.scene.layout.GridPane
+import javafx.scene.control.ProgressBar
+
+component DialogProgress controlledby de.eisfeldj.augendiagnosefx.controller.DialogController {
+	GridPane id dialogPane {
+		styleClass : "dialogProgress",
+		managed : false,
+		vgap : 10, Label id dialogHeading {
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 0,
+			call GridPane#halignment : "CENTER"
+		}, Text id dialogMessage {
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 1,
+			call GridPane#halignment : "CENTER"
+		}, ProgressBar id progress {
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 2,
+			call GridPane#halignment : "CENTER"
+		}
+	}
+}
