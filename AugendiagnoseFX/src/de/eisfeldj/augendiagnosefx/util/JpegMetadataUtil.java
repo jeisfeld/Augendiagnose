@@ -415,7 +415,7 @@ public final class JpegMetadataUtil {
 	 * @return true if it is allowed to change image files.
 	 */
 	public static boolean changeJpegAllowed() {
-		int storeOption = Integer.parseInt(PreferenceUtil.getPreferenceString(PreferenceUtil.KEY_STORE_OPTION));
+		int storeOption = PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_STORE_OPTION);
 		return storeOption > 0;
 	}
 
@@ -425,7 +425,7 @@ public final class JpegMetadataUtil {
 	 * @return true if it is allowed to change EXIF data.
 	 */
 	private static boolean changeExifAllowed() {
-		int storeOption = Integer.parseInt(PreferenceUtil.getPreferenceString(PreferenceUtil.KEY_STORE_OPTION));
+		int storeOption = PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_STORE_OPTION);
 		return storeOption == 2;
 	}
 
