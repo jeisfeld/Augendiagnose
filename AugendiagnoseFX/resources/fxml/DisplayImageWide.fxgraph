@@ -1,0 +1,67 @@
+package fxml
+
+import de.eisfeldj.augendiagnosefx.controller.DisplayImageController
+import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.control.TextArea
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.ColumnConstraints
+import javafx.scene.layout.RowConstraints
+import javafx.scene.control.ToggleButton
+import java.lang.Double
+
+component DisplayImage controlledby DisplayImageController {
+	GridPane id displayImage {
+		styleClass : "displayImage",
+		alignment : "CENTER",
+
+		columnConstraints : [
+			ColumnConstraints {
+				hgrow : "SOMETIMES"
+			},
+			ColumnConstraints {
+				hgrow : "SOMETIMES"
+			}
+		],
+		rowConstraints : [
+			RowConstraints {
+			},
+			RowConstraints {
+				vgrow : "SOMETIMES"
+			},
+			RowConstraints {
+			}
+
+		], SizeableImageView id displayImageView {
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 0,
+			call GridPane#rowSpan : 3,
+			call GridPane#halignment : "CENTER",
+			call GridPane#valignment : "CENTER"
+		}, Label {
+			styleClass : "labelComment",
+			text : rstring "label_comment",
+			call GridPane#columnIndex : 1,
+			call GridPane#rowIndex : 0
+		}, TextArea id txtImageComment {
+			promptText : rstring "hint_edit_comment",
+			editable : false,
+			wrapText : true,
+			minWidth : 100,
+			call GridPane#columnIndex : 1,
+			call GridPane#rowIndex : 1
+		}, ToggleButton id btnEditComment {
+			text : rstring "button_edit_comment",
+			selected : false,
+			alignment : "BOTTOM_CENTER",
+			call GridPane#columnIndex : 1,
+			call GridPane#rowIndex : 2,
+			call GridPane#hgrow : "ALWAYS",
+			call GridPane#fillWidth : true,
+			call GridPane#halignment : "CENTER",
+			onAction : controllermethod btnEditCommentPressed,
+			maxWidth : 10000
+		}
+	}
+}
