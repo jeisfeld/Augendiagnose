@@ -391,20 +391,12 @@ public class EyePhoto {
 	/**
 	 * Return an image view of this photo, fitting into the given dimensions.
 	 *
-	 * @param width
-	 *            The maximum width.
-	 * @param height
-	 *            The maximum height.
 	 * @return The ImageView.
 	 */
-	public final ImageView getImageView(final double width, final double height) {
+	public final ImageView getImageView() {
 		Image image = getImage();
 		ImageView imageView = new ImageView(image);
-
 		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(width);
-		imageView.setFitHeight(height);
-
 		return imageView;
 	}
 

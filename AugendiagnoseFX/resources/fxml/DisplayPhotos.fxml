@@ -17,8 +17,6 @@
 	</padding>
 	<columnConstraints>
 		<ColumnConstraints prefWidth="150"/> 
-	</columnConstraints>
-	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<children>

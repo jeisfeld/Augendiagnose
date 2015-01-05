@@ -5,9 +5,26 @@
 
 <?import java.lang.*?>
 <?import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
 
-	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
+	<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
+	<TextField fx:id="imageComment" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
+	<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" GridPane.columnIndex="2" GridPane.rowIndex="1"/> 
+	<columnConstraints>
+		<ColumnConstraints/> 
+		<ColumnConstraints hgrow="SOMETIMES"/> 
+		<ColumnConstraints/> 
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints vgrow="SOMETIMES"/> 
+		<RowConstraints vgrow="NEVER"/> 
+	</rowConstraints>
 </GridPane>

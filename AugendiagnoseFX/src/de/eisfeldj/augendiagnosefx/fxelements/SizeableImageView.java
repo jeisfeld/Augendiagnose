@@ -2,12 +2,15 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
+import javafx.scene.layout.BorderPane;
 
 /**
  * Pane containing an image that can be resized.
@@ -36,22 +39,18 @@ public class SizeableImageView extends ScrollPane {
 	private final DoubleProperty mouseYProperty = new SimpleDoubleProperty();
 
 	/**
+	 * The displayed ImageView.
+	 */
+	private ImageView imageView;
+
+	/**
 	 * Constructor without initialization of image.
 	 */
 	public SizeableImageView() {
-		this(new ImageView());
-	}
-
-	/**
-	 * Constructor, initializing with an image view.
-	 *
-	 * @param imageView
-	 *            The ImageView to be displayed.
-	 */
-	public SizeableImageView(final ImageView imageView) {
-		setContent(imageView);
-
 		setPannable(true);
+		setFitToHeight(true);
+		setFitToWidth(true);
+
 		setHbarPolicy(ScrollBarPolicy.NEVER);
 		setVbarPolicy(ScrollBarPolicy.NEVER);
 
@@ -66,11 +65,9 @@ public class SizeableImageView extends ScrollPane {
 		addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
 			@Override
 			public void handle(final ScrollEvent event) {
-				ImageView image = (ImageView) getContent();
-
 				// Original size of the image.
-				double sourceWidth = zoomProperty.get() * image.getImage().getWidth();
-				double sourceHeight = zoomProperty.get() * image.getImage().getHeight();
+				double sourceWidth = zoomProperty.get() * imageView.getImage().getWidth();
+				double sourceHeight = zoomProperty.get() * imageView.getImage().getHeight();
 
 				zoomProperty.set(zoomProperty.get() * Math.pow(ZOOM_FACTOR, event.getDeltaY()));
 
@@ -87,8 +84,8 @@ public class SizeableImageView extends ScrollPane {
 				double mouseYPosition = (mouseYProperty.get() + preScrollYFactor * oldVvalue) / sourceHeight;
 
 				// Target size of the image.
-				double targetWidth = zoomProperty.get() * image.getImage().getWidth();
-				double targetHeight = zoomProperty.get() * image.getImage().getHeight();
+				double targetWidth = zoomProperty.get() * imageView.getImage().getWidth();
+				double targetHeight = zoomProperty.get() * imageView.getImage().getHeight();
 
 				// Image pixels outside the visible area which need to be scrolled.
 				double postScrollXFactor = Math.max(0, targetWidth - getWidth());
@@ -98,14 +95,18 @@ public class SizeableImageView extends ScrollPane {
 				double verticalCorrection = (postScrollYFactor / sourceHeight) * event.getDeltaY();
 
 				// New scrollbar positions keeping the mouse position.
-				double newHvalue = ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor;
-				double newVvalue =
-						((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
-								/ postScrollYFactor;
+				double newHvalue = postScrollXFactor > 0
+						? ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor
+						: oldHvalue;
+				double newVvalue = postScrollYFactor > 0
+						? ((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
+								/ postScrollYFactor
+						: oldVvalue;
 
-				image.setFitWidth(targetWidth);
-				image.setFitHeight(targetHeight);
-
+				imageView.setFitWidth(targetWidth);
+				imageView.setFitHeight(targetHeight);
+				// Layout needs to be done now so that default scrollbar position is applied.
+				layout();
 				setHvalue(newHvalue);
 				setVvalue(newVvalue);
 			}
@@ -121,7 +122,6 @@ public class SizeableImageView extends ScrollPane {
 				image.setFitHeight(zoomProperty.get() * image.getImage().getHeight());
 			}
 		});
-
 	}
 
 	/**
@@ -131,8 +131,23 @@ public class SizeableImageView extends ScrollPane {
 	 *            The ImageView.
 	 */
 	public final void setImageView(final ImageView imageView) {
-		setContent(imageView);
-		zoomProperty.set(Math.min(imageView.getFitWidth() / imageView.getImage().getWidth(), imageView.getFitHeight()
-				/ imageView.getImage().getHeight()));
+		this.imageView = imageView;
+
+		// Surround with BorderPane, so that image is centered if not filling screen
+		setContent(new BorderPane(imageView));
+
+		// Size the image only after this pane is sized
+		heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				imageView.setFitWidth(getWidth());
+				imageView.setFitHeight(getHeight());
+				zoomProperty.set(Math.min(imageView.getFitWidth() / imageView.getImage().getWidth(),
+						imageView.getFitHeight()
+								/ imageView.getImage().getHeight()));
+				heightProperty().removeListener(this);
+			}
+		});
 	}
 }

@@ -20,7 +20,7 @@
 	-fx-pref-height: 10000.0;
 }
 
-.display {
+.displayPhotos {
 	-fx-padding: 0.0;
 	-fx-hgap: 0.0;
 	-fx-vgap: 0.0;
@@ -32,6 +32,11 @@
 .displayImage {
 	-fx-background-color: whitesmoke;
 	-fx-alignment: center;
+}
+
+.labelComment {
+	-fx-font-weight: bold;
+	-fx-padding: 5;
 }
 
 #dialogHeading {

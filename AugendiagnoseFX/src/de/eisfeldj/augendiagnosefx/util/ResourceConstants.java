@@ -16,9 +16,13 @@ public final class ResourceConstants {
 	public static final String APP_NAME = "app_name";
 	public static final String BUTTON_BACK = "button_back";
 	public static final String BUTTON_CANCEL = "button_cancel";
+	public static final String BUTTON_EDIT_COMMENT = "button_edit_comment";
 	public static final String BUTTON_OK = "button_ok";
+	public static final String BUTTON_SAVE_COMMENT = "button_save_comment";
 	public static final String FILE_INFIX_LEFT = "file_infix_left";
 	public static final String FILE_INFIX_RIGHT = "file_infix_right";
+	public static final String HINT_EDIT_COMMENT = "hint_edit_comment";
+	public static final String LABEL_COMMENT = "label_comment";
 	public static final String MENU_ABOUT = "menu_about";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_EXIT = "menu_exit";

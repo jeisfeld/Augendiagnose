@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
- * A custom pane holding an image view.
+ * A custom pane holding an image view, so that the image size adapts to the pane size.
  */
 public class ImageViewPane extends Region {
 	/**

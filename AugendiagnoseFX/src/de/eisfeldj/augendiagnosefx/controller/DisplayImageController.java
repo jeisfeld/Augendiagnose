@@ -2,8 +2,9 @@ package de.eisfeldj.augendiagnosefx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
-import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 
@@ -22,6 +23,18 @@ public class DisplayImageController implements Controller {
 	 */
 	@FXML
 	private SizeableImageView displayImageView;
+
+	/**
+	 * The text field for the image comment.
+	 */
+	@FXML
+	private TextField imageComment;
+
+	/**
+	 * The Button for editing/saving the image comment.
+	 */
+	@FXML
+	private ToggleButton btnEditComment;
 
 	/**
 	 * The displayed eye photo.
@@ -46,8 +59,9 @@ public class DisplayImageController implements Controller {
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
 
-		displayImageView.setImageView(
-				eyePhoto.getImageView(Application.getScene().getWidth() - 2, Application.getScene().getHeight() - 27)); // MAGIC_NUMBER
+		displayImageView.setImageView(eyePhoto.getImageView());
+
+		imageComment.setText(eyePhoto.getImageMetadata().comment);
 
 	}
 

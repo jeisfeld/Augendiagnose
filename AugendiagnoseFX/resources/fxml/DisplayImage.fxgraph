@@ -3,15 +3,54 @@ package fxml
 import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView
 import javafx.scene.control.Button
 import javafx.scene.layout.GridPane
+import javafx.scene.layout.ColumnConstraints
 import javafx.scene.control.Label
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController
+import javafx.scene.control.TextField
+import javafx.scene.control.ToggleButton
+import javafx.scene.layout.RowConstraints
 
 component DisplayImage controlledby DisplayImageController {
 	GridPane id displayImage {
 		styleClass : "displayImage",
-		alignment : "CENTER", SizeableImageView id displayImageView {
+		alignment : "CENTER",
+
+		columnConstraints : [
+			ColumnConstraints {
+			},
+			ColumnConstraints {
+				hgrow : "SOMETIMES"
+			},
+			ColumnConstraints {
+			}
+		],
+		rowConstraints : [
+			RowConstraints {
+				vgrow : "SOMETIMES"
+			},
+			RowConstraints {
+				vgrow : "NEVER"
+			}
+
+		], SizeableImageView id displayImageView {
 			call GridPane#columnIndex : 0,
-			call GridPane#rowIndex : 0
+			call GridPane#rowIndex : 0,
+			call GridPane#columnSpan : 3,
+			call GridPane#halignment : "CENTER",
+			call GridPane#valignment : "CENTER"
+		}, Label {
+			styleClass : "labelComment",
+			text : rstring "label_comment",
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 1
+		}, TextField id imageComment {
+			editable : false,
+			call GridPane#columnIndex : 1,
+			call GridPane#rowIndex : 1
+		}, ToggleButton id btnEditComment {
+			text : rstring "button_edit_comment",
+			call GridPane#columnIndex : 2,
+			call GridPane#rowIndex : 1
 		}
 	}
 }

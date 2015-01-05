@@ -8,7 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.controller.MenuController;
@@ -131,6 +137,18 @@ public final class FXMLUtil {
 		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile).getRoot();
 		mainController.getMenuBar().getMenus().clear();
 		mainController.getMenuBar().getMenus().addAll(root.getMenus());
+	}
+
+	/**
+	 * Utility method to temporarily add a visible border around a region.
+	 *
+	 * @param region
+	 *            The region getting the border.
+	 * @param color
+	 *            the color of the border.
+	 */
+	public static void addDummyBorder(final Region region, final Color color) {
+		region.setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, null, new BorderWidths(5)))); // MAGIC_NUMBER
 	}
 
 }
