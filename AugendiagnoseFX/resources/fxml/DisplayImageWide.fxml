@@ -16,10 +16,10 @@
 
 	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
 	<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="1" GridPane.rowIndex="0"/> 
-	<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" wrapText="true" minWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
+	<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
 	<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" alignment="BOTTOM_CENTER" onAction="#btnEditCommentPressed" maxWidth="10000" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.fillWidth="true" GridPane.halignment="CENTER"/> 
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES"/> 
+		<ColumnConstraints hgrow="SOMETIMES" percentWidth="80"/> 
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<rowConstraints>

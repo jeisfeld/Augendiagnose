@@ -26,7 +26,8 @@ component DisplayImage controlledby DisplayImageController {
 		],
 		rowConstraints : [
 			RowConstraints {
-				vgrow : "SOMETIMES"
+				vgrow : "SOMETIMES",
+				percentHeight : 80
 			},
 			RowConstraints {
 				vgrow : "SOMETIMES"
@@ -35,24 +36,26 @@ component DisplayImage controlledby DisplayImageController {
 		], SizeableImageView id displayImageView {
 			call GridPane#columnIndex : 0,
 			call GridPane#rowIndex : 0,
-			call GridPane#columnSpan : 3,
+			call GridPane#columnSpan : 2,
 			call GridPane#halignment : "CENTER",
 			call GridPane#valignment : "CENTER"
 		}, Label {
 			styleClass : "labelComment",
 			text : rstring "label_comment",
 			call GridPane#columnIndex : 0,
-			call GridPane#rowIndex : 1
+			call GridPane#rowIndex : 1,
+			call GridPane#valignment : "TOP"
 		}, TextArea id txtImageComment {
 			promptText : rstring "hint_edit_comment",
 			editable : false,
 			call GridPane#columnIndex : 1,
-			call GridPane#rowIndex : 1
+			call GridPane#rowIndex : 1,
+			call GridPane#rowSpan : 2
 		}, ToggleButton id btnEditComment {
 			text : rstring "button_edit_comment",
 			selected : false,
-			call GridPane#columnIndex : 2,
-			call GridPane#rowIndex : 1,
+			call GridPane#columnIndex : 0,
+			call GridPane#rowIndex : 2,
 			onAction : controllermethod btnEditCommentPressed
 		}
 	}

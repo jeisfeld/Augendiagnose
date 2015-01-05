@@ -47,7 +47,8 @@
 
 .labelComment {
 	-fx-font-weight: bold;
-	-fx-padding: 5;
+	-fx-font-size: 14.0;
+	-fx-padding: 5.0;
 }
 
 #dialogHeading {

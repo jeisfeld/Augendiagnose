@@ -88,8 +88,6 @@ public class DisplayImageController implements Controller {
 			oldComment = txtImageComment.getText();
 			txtImageComment.setEditable(true);
 			txtImageComment.requestFocus();
-			txtImageComment.setMinHeight(displayImage.getHeight() / 4); // MAGIC_NUMBER
-			txtImageComment.setMinWidth(displayImage.getWidth() / 4); // MAGIC_NUMBER
 
 			btnEditComment.setText(ResourceUtil.getString(BUTTON_SAVE_COMMENT));
 		}
@@ -103,8 +101,6 @@ public class DisplayImageController implements Controller {
 				metadata.comment = newComment;
 				eyePhoto.storeImageMetadata(metadata);
 			}
-			txtImageComment.setMinHeight(0);
-			txtImageComment.setMinWidth(100); // MAGIC_NUMBER
 
 			btnEditComment.setText(ResourceUtil.getString(BUTTON_EDIT_COMMENT));
 		}
