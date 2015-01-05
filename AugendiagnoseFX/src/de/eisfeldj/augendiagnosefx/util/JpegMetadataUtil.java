@@ -260,16 +260,13 @@ public final class JpegMetadataUtil {
 		File tempFile = new File(tempFileName);
 
 		verifyTempFile(tempFile);
-		if (!jpegImageFile.renameTo(tempFile)) {
-			throw new IOException("Failed to rename file " + jpegImageFileName + " to " + tempFileName);
-		}
 
 		OutputStream os = null;
 		try {
 			TiffOutputSet outputSet = null;
 
 			// note that metadata might be null if no metadata is found.
-			final IImageMetadata imageMetadata = Imaging.getMetadata(tempFile);
+			final IImageMetadata imageMetadata = Imaging.getMetadata(jpegImageFile);
 			final JpegImageMetadata jpegMetadata = (JpegImageMetadata) imageMetadata;
 			if (null != jpegMetadata) {
 				// note that exif might be null if no Exif metadata is found.
@@ -307,15 +304,15 @@ public final class JpegMetadataUtil {
 				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.subject);
 			}
 
-			os = new FileOutputStream(jpegImageFile);
+			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);
 
-			new ExifRewriter().updateExifMetadataLossless(tempFile, os, outputSet);
+			new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!tempFile.delete()) {
-				throw new IOException("Failed to delete file " + tempFileName);
+			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
 			}
 		}
 		finally {
@@ -346,13 +343,10 @@ public final class JpegMetadataUtil {
 		File tempFile = new File(tempFileName);
 
 		verifyTempFile(tempFile);
-		if (!jpegImageFile.renameTo(tempFile)) {
-			throw new IOException("Failed to rename file " + jpegImageFileName + " to " + tempFileName);
-		}
 
 		OutputStream os = null;
 		try {
-			final String xmpString = Imaging.getXmpXml(tempFile);
+			final String xmpString = Imaging.getXmpXml(jpegImageFile);
 
 			XmpHandler parser = new XmpHandler(xmpString);
 
@@ -383,15 +377,15 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_COLOR, metadata.getOverlayColorString());
 
-			os = new FileOutputStream(jpegImageFile);
+			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);
 
-			new JpegXmpRewriter().updateXmpXml(tempFile, os, parser.getXmpString());
+			new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!tempFile.delete()) {
-				throw new IOException("Failed to delete file " + tempFileName);
+			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
 			}
 		}
 		finally {

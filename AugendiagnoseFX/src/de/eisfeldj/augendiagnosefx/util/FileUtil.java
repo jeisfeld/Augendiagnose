@@ -33,7 +33,8 @@ public abstract class FileUtil {
 			inChannel.transferTo(0, inChannel.size(), outChannel);
 		}
 		catch (Exception e) {
-			Logger.error("Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
+			Logger.error(
+					"Error when copying file from " + source.getAbsolutePath() + " to " + target.getAbsolutePath(), e);
 			return false;
 		}
 		finally {
@@ -63,5 +64,36 @@ public abstract class FileUtil {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Move a file.
+	 *
+	 * @param source
+	 *            The source file
+	 * @param target
+	 *            The target file
+	 * @return true if the copying was successful.
+	 */
+	public static boolean moveFile(final File source, final File target) {
+		// First try the simple way
+		boolean success = source.renameTo(target);
+
+		if (!success) {
+			// Special handling for platforms where renameTo does not overwrite.
+			String backupSuffix = ".bak." + System.currentTimeMillis();
+			File backupFile = new File(target.getAbsolutePath() + backupSuffix);
+
+			success = target.renameTo(backupFile);
+			if (success) {
+				success = source.renameTo(target);
+				if (success) {
+					success = backupFile.delete();
+				}
+			}
+
+		}
+
+		return success;
 	}
 }
