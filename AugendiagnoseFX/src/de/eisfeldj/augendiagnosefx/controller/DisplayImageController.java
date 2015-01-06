@@ -16,7 +16,7 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 /**
  * Controller for the "Display Image" page.
  */
-public class DisplayImageController implements Controller {
+public class DisplayImageController extends Controller {
 	/**
 	 * The main pane holding the image.
 	 */

@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
-import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 
@@ -73,7 +72,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.show();
 
 		FXMLUtil.displayMenu("Menu.fxml");
-		mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
+		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 	}
 
 	/**
@@ -81,12 +80,7 @@ public class Application extends javafx.application.Application {
 	 */
 	public static final void refreshMainPage() {
 		FXMLUtil.removeAllSubpages();
-		try {
-			mainController.getBody().getChildren().add(FXMLUtil.getRootFromFxml("DisplayPhotos.fxml").getRoot());
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file for display", e);
-		}
+		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 	}
 
 	/**

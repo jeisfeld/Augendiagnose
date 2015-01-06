@@ -44,6 +44,8 @@ public final class FXMLUtil {
 	/**
 	 * Utility method to expand an FXML file, including internationalization.
 	 *
+	 * The controller is added to the controller registry.
+	 *
 	 * @param fxmlFile
 	 *            The name of the FXML file.
 	 * @return The controller handling the expanded page.
@@ -83,13 +85,13 @@ public final class FXMLUtil {
 			Logger.error("Failed to load FXML file " + fxmlFile, e);
 			return null;
 		}
-		mainController.getBody().getChildren().add(controller.getRoot());
+		mainController.addSubPage(controller);
 
 		// Enable close menu
 		final EventHandler<ActionEvent> closeHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				removeSubpage(controller.getRoot());
+				removeSubpage(controller);
 			}
 		};
 		menuController.enableClose(closeHandler);
@@ -104,17 +106,19 @@ public final class FXMLUtil {
 	 *            The node to be removed.
 	 */
 	public static void remove(final Node node) {
-		((Pane) node.getParent()).getChildren().remove(node);
+		if (node.getParent() != null && node.getParent() instanceof Pane) {
+			((Pane) node.getParent()).getChildren().remove(node);
+		}
 	}
 
 	/**
 	 * Utility method to remove a pane from the stack.
 	 *
-	 * @param node
-	 *            The pane to be removed.
+	 * @param controller
+	 *            The controller of the pane to be removed.
 	 */
-	public static void removeSubpage(final Node node) {
-		remove(node);
+	public static void removeSubpage(final Controller controller) {
+		mainController.removeSubPage(controller);
 		menuController.disableClose();
 	}
 
@@ -122,7 +126,7 @@ public final class FXMLUtil {
 	 * Utility method to remove all panes from the stack.
 	 */
 	public static void removeAllSubpages() {
-		mainController.getBody().getChildren().clear();
+		mainController.removeAllSubPages();
 		menuController.disableAllClose();
 	}
 

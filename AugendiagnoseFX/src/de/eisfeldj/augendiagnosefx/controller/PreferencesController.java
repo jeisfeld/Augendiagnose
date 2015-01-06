@@ -11,24 +11,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
- * Controller for the "Display Image" page.
+ * Controller for the Preferences page.
  */
-public class PreferencesController implements Controller, Initializable {
+public class PreferencesController extends DialogController implements Initializable {
 	/**
 	 * The main pane.
 	 */
 	@FXML
 	private GridPane settingsPane;
-
-	/**
-	 * The stage containing the dialog.
-	 */
-	private Stage stage;
 
 	/**
 	 * The photos folder when starting the activity.
@@ -40,10 +34,6 @@ public class PreferencesController implements Controller, Initializable {
 	 */
 	@FXML
 	private TextField textFolderPhotos;
-
-	public final void setStage(final Stage stage) {
-		this.stage = stage;
-	}
 
 	@Override
 	public final Parent getRoot() {
@@ -64,7 +54,7 @@ public class PreferencesController implements Controller, Initializable {
 	 */
 	@FXML
 	public final void cancel(final ActionEvent event) {
-		stage.close();
+		close();
 	}
 
 	/**
@@ -80,7 +70,7 @@ public class PreferencesController implements Controller, Initializable {
 			PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
 			Application.refreshMainPage();
 		}
-		stage.close();
+		close();
 	}
 
 }

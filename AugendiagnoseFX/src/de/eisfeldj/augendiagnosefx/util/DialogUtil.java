@@ -11,7 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import de.eisfeldj.augendiagnosefx.Application;
-import de.eisfeldj.augendiagnosefx.controller.DialogController;
+import de.eisfeldj.augendiagnosefx.controller.MessageDialogController;
 import de.eisfeldj.augendiagnosefx.controller.PreferencesController;
 
 /**
@@ -30,9 +30,9 @@ public abstract class DialogUtil {
 		String message = String.format(ResourceUtil.getString(resource), args);
 		Logger.warning("Dialog message: " + message);
 
-		DialogController controller;
+		MessageDialogController controller;
 		try {
-			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogError.fxml");
+			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogError.fxml");
 		}
 		catch (IOException e) {
 			Logger.error("Failed to load FXML file for dialog", e);
@@ -54,10 +54,11 @@ public abstract class DialogUtil {
 				controller.getBtnBack().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent event) {
-						dialog.close();
+						controller.close();
 					}
 				});
 
+				controller.setStage(dialog);
 				dialog.show();
 			}
 		});
@@ -81,9 +82,9 @@ public abstract class DialogUtil {
 
 		String message = String.format(ResourceUtil.getString(messageResource), args);
 
-		DialogController controller;
+		MessageDialogController controller;
 		try {
-			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogConfirm.fxml");
+			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogConfirm.fxml");
 		}
 		catch (IOException e) {
 			Logger.error("Failed to load FXML file for dialog", e);
@@ -109,18 +110,19 @@ public abstract class DialogUtil {
 				controller.getBtnCancel().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent event) {
-						dialog.close();
+						controller.close();
 						listener.onDialogNegativeClick();
 					}
 				});
 				controller.getBtnOk().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent event) {
-						dialog.close();
+						controller.close();
 						listener.onDialogPositiveClick();
 					}
 				});
 
+				controller.setStage(dialog);
 				dialog.show();
 			}
 		});
@@ -160,9 +162,9 @@ public abstract class DialogUtil {
 	public static ProgressDialog displayProgressDialog(final String messageResource, final Object... args) {
 		String message = String.format(ResourceUtil.getString(messageResource), args);
 
-		DialogController controller;
+		MessageDialogController controller;
 		try {
-			controller = (DialogController) FXMLUtil.getRootFromFxml("DialogProgress.fxml");
+			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogProgress.fxml");
 		}
 		catch (IOException e) {
 			Logger.error("Failed to load FXML file for dialog", e);
@@ -178,9 +180,10 @@ public abstract class DialogUtil {
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(Application.getStage());
 		dialog.setScene(scene);
+		controller.setStage(dialog);
 		dialog.show();
 
-		return new ProgressDialog(dialog, controller);
+		return new ProgressDialog(controller);
 	}
 
 	/**
@@ -188,44 +191,18 @@ public abstract class DialogUtil {
 	 */
 	public static final class ProgressDialog {
 		/**
-		 * The stage.
-		 */
-		private Stage stage;
-
-		/**
 		 * The controller.
 		 */
-		private DialogController controller;
+		private MessageDialogController controller;
 
 		/**
 		 * Constructor setting the stage and the controller.
 		 *
-		 * @param stage
-		 *            The stage.
 		 * @param controller
 		 *            The controller.
 		 */
-		private ProgressDialog(final Stage stage, final DialogController controller) {
-			this.stage = stage;
+		private ProgressDialog(final MessageDialogController controller) {
 			this.controller = controller;
-		}
-
-		/**
-		 * Getter for the stage.
-		 *
-		 * @return The stage.
-		 */
-		public Stage getStage() {
-			return stage;
-		}
-
-		/**
-		 * Getter for the scene.
-		 *
-		 * @return The scene.
-		 */
-		public Scene getScene() {
-			return stage.getScene();
 		}
 
 		/**
@@ -233,7 +210,7 @@ public abstract class DialogUtil {
 		 *
 		 * @return The controller.
 		 */
-		public DialogController getController() {
+		public MessageDialogController getController() {
 			return controller;
 		}
 
@@ -241,7 +218,7 @@ public abstract class DialogUtil {
 		 * Close the dialog.
 		 */
 		public void close() {
-			stage.close();
+			controller.close();
 		}
 	}
 

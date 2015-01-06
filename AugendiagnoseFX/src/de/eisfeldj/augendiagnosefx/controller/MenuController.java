@@ -16,7 +16,7 @@ import javafx.scene.control.CheckMenuItem;
 /**
  * Controller class for the menu.
  */
-public class MenuController implements Controller {
+public class MenuController extends Controller {
 	/**
 	 * The main menu bar.
 	 */
@@ -94,12 +94,15 @@ public class MenuController implements Controller {
 	 *            The event handler to be called when closing.
 	 */
 	public final void enableClose(final EventHandler<ActionEvent> eventHandler) {
-		menuClose.setDisable(false);
 		closeHandlerList.add(eventHandler);
-		menuClose.setOnAction(eventHandler);
 
-		mainController.getCloseButton().setVisible(true);
-		mainController.getCloseButton().setOnAction(eventHandler);
+		if (closeHandlerList.size() > 1) {
+			menuClose.setDisable(false);
+			menuClose.setOnAction(eventHandler);
+
+			mainController.getCloseButton().setVisible(true);
+			mainController.getCloseButton().setOnAction(eventHandler);
+		}
 	}
 
 	/**
@@ -107,7 +110,7 @@ public class MenuController implements Controller {
 	 */
 	public final void disableClose() {
 		closeHandlerList.remove(closeHandlerList.size() - 1);
-		if (closeHandlerList.size() > 0) {
+		if (closeHandlerList.size() > 1) {
 			EventHandler<ActionEvent> newEventHandler = closeHandlerList.get(closeHandlerList.size() - 1);
 			menuClose.setOnAction(newEventHandler);
 			mainController.getCloseButton().setOnAction(newEventHandler);

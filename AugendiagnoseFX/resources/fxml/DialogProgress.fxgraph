@@ -1,12 +1,12 @@
 package fxml
 
-import de.eisfeldj.augendiagnosefx.controller.DialogController
+import de.eisfeldj.augendiagnosefx.controller.MessageDialogController
 import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
 
-component DialogProgress controlledby DialogController {
+component DialogProgress controlledby MessageDialogController {
 	GridPane id dialogPane {
 		styleClass : "dialogProgress",
 		managed : false,

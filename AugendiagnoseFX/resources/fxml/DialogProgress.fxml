@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Text?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="dialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.DialogController" styleClass="dialogProgress" managed="false" vgap="10">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="dialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" styleClass="dialogProgress" managed="false" vgap="10">
 
 	<Label fx:id="dialogHeading" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
 	<Text fx:id="dialogMessage" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"/> 
