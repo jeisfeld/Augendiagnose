@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 
-component Main controlledby MainController {
+component Main controlledby MainController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	VBox id mainPane {
 		StackPane {
 			alignment : "CENTER_RIGHT",

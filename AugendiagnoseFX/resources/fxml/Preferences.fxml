@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
+<?scenebuilder-stylesheet ../css/application.css?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="settingsPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.PreferencesController" styleClass="display">
 

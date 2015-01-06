@@ -11,7 +11,7 @@ import javafx.scene.layout.RowConstraints
 import javafx.scene.control.ToggleButton
 import java.lang.Double
 
-component DisplayImage controlledby DisplayImageController {
+component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id displayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",

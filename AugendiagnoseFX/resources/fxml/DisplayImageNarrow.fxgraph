@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.RowConstraints
 
-component DisplayImage controlledby DisplayImageController {
+component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id displayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",

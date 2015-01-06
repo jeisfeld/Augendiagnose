@@ -7,7 +7,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
 
-component Settings controlledby PreferencesController {
+component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id settingsPane {
 		styleClass : "display",
 		columnConstraints : ColumnConstraints {

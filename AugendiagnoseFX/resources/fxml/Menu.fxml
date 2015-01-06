@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
+<?scenebuilder-stylesheet ../css/application.css?>
 
 <MenuBar xmlns:fx="http://javafx.com/fxml" fx:id="menuBar" fx:controller="de.eisfeldj.augendiagnosefx.controller.MenuController" styleClass="menu">
 

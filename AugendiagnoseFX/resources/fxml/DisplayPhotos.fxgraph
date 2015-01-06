@@ -8,7 +8,7 @@ import javafx.scene.control.ListView
 import javafx.scene.control.ScrollPane
 import de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController
 
-component DisplayPhotos controlledby DisplayPhotosController {
+component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css"  {
 	GridPane id displayMain {
 		styleClass : "display",
 		padding : Insets {

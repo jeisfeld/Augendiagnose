@@ -6,14 +6,14 @@ import javafx.scene.control.ProgressBar
 import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
 
-component DialogProgress controlledby MessageDialogController {
+component DialogProgress controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id dialogPane {
 		styleClass : "dialogProgress",
-		managed : false,
 		vgap : 10, Label id dialogHeading {
 			static columnIndex : 0,
 			static rowIndex : 0,
-			static halignment : "CENTER"
+			static halignment : "CENTER",
+			text : rstring "title_dialog_progress"
 		},
 		Text id dialogMessage {
 			static columnIndex : 0,

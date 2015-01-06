@@ -6,18 +6,19 @@ import javafx.scene.control.Label
 import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
 
-component DialogError controlledby MessageDialogController {
+component DialogError controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id dialogPane {
-		managed : false,
 		vgap : 10, Label id dialogHeading {
 			static columnIndex : 0,
 			static rowIndex : 0,
-			static halignment : "CENTER"
+			static halignment : "CENTER",
+			text : rstring "title_dialog_error"
 		},
 		Text id dialogMessage {
 			static columnIndex : 0,
 			static rowIndex : 1,
-			static halignment : "CENTER"
+			static halignment : "CENTER",
+			text: rstring "message_dialog_unknown_error"
 		},
 		Button id btnBack {
 			text : rstring "button_back",

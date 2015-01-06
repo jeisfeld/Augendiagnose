@@ -6,14 +6,14 @@ import javafx.scene.control.Label
 import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
 
-component DialogConfirm controlledby MessageDialogController {
+component DialogConfirm controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id dialogPane {
-		managed : false,
 		vgap : 10, Label id dialogHeading {
 			static columnIndex : 0,
 			static columnSpan : 2,
 			static rowIndex : 0,
-			static halignment : "CENTER"
+			static halignment : "CENTER",
+			text: rstring "title_dialog_confirmation"
 		},
 		Text id dialogMessage {
 			static columnIndex : 0,

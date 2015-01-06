@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
+<?scenebuilder-stylesheet ../css/application.css?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
 

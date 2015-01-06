@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
+<?scenebuilder-stylesheet ../css/application.css?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController">
 
