@@ -2,8 +2,6 @@ package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,23 +15,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
-import de.eisfeldj.augendiagnosefx.controller.MenuController;
 
 /**
  * Utility class for reading FXML files.
  */
 public final class FXMLUtil {
-
-	/**
-	 * The mainController of the main application.
-	 */
-	private static MainController mainController = null;
-
-	/**
-	 * The menu controller.
-	 */
-	private static MenuController menuController = null;
-
 	/**
 	 * Private constructor to prevent instantiation.
 	 */
@@ -57,14 +43,6 @@ public final class FXMLUtil {
 		Parent root = fxmlLoader.load(ClassLoader.getSystemResource("fxml/" + fxmlFile).openStream());
 		root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
 
-		if (fxmlLoader.getController() instanceof MainController) {
-			FXMLUtil.mainController = (MainController) fxmlLoader.getController();
-		}
-		else if (fxmlLoader.getController() instanceof MenuController) {
-			FXMLUtil.menuController = (MenuController) fxmlLoader.getController();
-			FXMLUtil.menuController.setMainController(FXMLUtil.mainController);
-		}
-
 		return fxmlLoader.getController();
 	}
 
@@ -85,16 +63,7 @@ public final class FXMLUtil {
 			Logger.error("Failed to load FXML file " + fxmlFile, e);
 			return null;
 		}
-		mainController.addSubPage(controller);
-
-		// Enable close menu
-		final EventHandler<ActionEvent> closeHandler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent event) {
-				removeSubpage(controller);
-			}
-		};
-		menuController.enableClose(closeHandler);
+		MainController.getInstance().addSubPage(controller);
 
 		return controller;
 	}
@@ -118,16 +87,14 @@ public final class FXMLUtil {
 	 *            The controller of the pane to be removed.
 	 */
 	public static void removeSubpage(final Controller controller) {
-		mainController.removeSubPage(controller);
-		menuController.disableClose();
+		MainController.getInstance().removeSubPage(controller);
 	}
 
 	/**
 	 * Utility method to remove all panes from the stack.
 	 */
 	public static void removeAllSubpages() {
-		mainController.removeAllSubPages();
-		menuController.disableAllClose();
+		MainController.getInstance().removeAllSubPages();
 	}
 
 	/**
@@ -139,8 +106,7 @@ public final class FXMLUtil {
 	 */
 	public static void displayMenu(final String fxmlFile) throws IOException {
 		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile).getRoot();
-		mainController.getMenuBar().getMenus().clear();
-		mainController.getMenuBar().getMenus().addAll(root.getMenus());
+		MainController.getInstance().setMenuBarContents(root);
 	}
 
 	/**
