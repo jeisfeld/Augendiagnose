@@ -1,11 +1,11 @@
 package fxml
 
+import de.eisfeldj.augendiagnosefx.controller.PreferencesController
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.control.TextField
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
-import javafx.scene.control.Label
-import de.eisfeldj.augendiagnosefx.controller.PreferencesController
-import javafx.scene.control.TextField
-import javafx.scene.control.Button
 
 component Settings controlledby PreferencesController {
 	GridPane id settingsPane {
@@ -19,36 +19,36 @@ component Settings controlledby PreferencesController {
 			Label {
 				text : rstring "title_settings",
 				styleClass : "settingsHeading",
-				call GridPane#columnIndex : 0,
-				call GridPane#rowIndex : 0,
-				call GridPane#columnSpan : 2
+				static columnIndex : 0,
+				static rowIndex : 0,
+				static columnSpan : 2
 			},
 
 			Label {
 				text : rstring "pref_title_folder_photos",
-				call GridPane#columnIndex : 0,
-				call GridPane#rowIndex : 1
+				static columnIndex : 0,
+				static rowIndex : 1
 			},
 
 			TextField id textFolderPhotos {
 				minWidth : 300,
-				call GridPane#columnIndex : 1,
-				call GridPane#rowIndex : 1
+				static columnIndex : 1,
+				static rowIndex : 1
 			},
 
 			Button {
 				text : rstring "button_cancel",
-				call GridPane#columnIndex : 0,
-				call GridPane#rowIndex : 2,
-				call GridPane#halignment : "LEFT",
+				static columnIndex : 0,
+				static rowIndex : 2,
+				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
 
 			Button {
 				text : rstring "button_ok",
-				call GridPane#columnIndex : 1,
-				call GridPane#rowIndex : 2,
-				call GridPane#halignment : "RIGHT",
+				static columnIndex : 1,
+				static rowIndex : 2,
+				static halignment : "RIGHT",
 				onAction : controllermethod submit
 			}
 		]

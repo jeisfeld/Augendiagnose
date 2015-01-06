@@ -1,10 +1,11 @@
 package fxml
 
-import javafx.scene.control.MenuBar
+import de.eisfeldj.augendiagnosefx.controller.MenuController
+import javafx.scene.control.CheckMenuItem
 import javafx.scene.control.Menu
+import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
-import de.eisfeldj.augendiagnosefx.controller.MenuController
 
 component Menu controlledby MenuController {
 	MenuBar id menuBar {
@@ -17,6 +18,16 @@ component Menu controlledby MenuController {
 					MenuItem {
 						text : rstring "menu_exit",
 						onAction : controllermethod exitApplication
+					}
+				]
+			},
+			Menu {
+				text : rstring "menu_view",
+				items : [
+					CheckMenuItem id menuCommentPane {
+						text : rstring "menu_comment_pane",
+						selected : true,
+						disable : true
 					}
 				]
 			},

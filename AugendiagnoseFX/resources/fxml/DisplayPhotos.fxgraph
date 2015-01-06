@@ -27,19 +27,21 @@ component DisplayPhotos controlledby DisplayPhotosController {
 		],
 		children : [
 			ScrollPane {
-				call GridPane#columnIndex : 0,
-				call GridPane#rowIndex : 0,
+				static columnIndex : 0,
+				static rowIndex : 0,
 				fitToHeight : true,
-				fitToWidth : true, ListView < GridPane > id listNames {
+				fitToWidth : true,
+				ListView < GridPane > id listNames {
 					styleClass : "listNames",
 					onMouseClicked : controllermethod handleNameClick
 				}
 			},
 			ScrollPane {
-				call GridPane#columnIndex : 1,
-				call GridPane#rowIndex : 0,
+				static columnIndex : 1,
+				static rowIndex : 0,
 				fitToHeight : true,
-				fitToWidth : true, ListView < Object > id listPhotos {
+				fitToWidth : true,
+				ListView < Object > id listPhotos {
 					styleClass : "listPhotos"
 				}
 			}

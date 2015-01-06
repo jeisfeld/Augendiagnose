@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.CheckMenuItem;
 
 /**
  * Controller class for the menu.
@@ -27,6 +28,12 @@ public class MenuController implements Controller {
 	 */
 	@FXML
 	private MenuItem menuClose;
+
+	/**
+	 * The Menu entry "Comment Pane".
+	 */
+	@FXML
+	private CheckMenuItem menuCommentPane;
 
 	@Override
 	public final Parent getRoot() {

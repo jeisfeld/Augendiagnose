@@ -4,6 +4,7 @@
 -->
 
 <?import java.lang.*?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -16,6 +17,11 @@
 			<items>
 				<SeparatorMenuItem/> 
 				<MenuItem text="%menu_exit" onAction="#exitApplication"/> 
+			</items>
+		</Menu>
+		<Menu text="%menu_view"> 
+			<items>
+				<CheckMenuItem fx:id="menuCommentPane" text="%menu_comment_pane" selected="true" disable="true"/> 
 			</items>
 		</Menu>
 		<Menu text="%menu_window"> 

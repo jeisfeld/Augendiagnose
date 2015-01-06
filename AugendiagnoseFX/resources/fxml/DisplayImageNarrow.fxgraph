@@ -33,29 +33,33 @@ component DisplayImage controlledby DisplayImageController {
 				vgrow : "SOMETIMES"
 			}
 
-		], SizeableImageView id displayImageView {
-			call GridPane#columnIndex : 0,
-			call GridPane#rowIndex : 0,
-			call GridPane#columnSpan : 2,
-			call GridPane#halignment : "CENTER",
-			call GridPane#valignment : "CENTER"
-		}, Label {
+		],
+		SizeableImageView id displayImageView {
+			static columnIndex : 0,
+			static rowIndex : 0,
+			static columnSpan : 2,
+			static halignment : "CENTER",
+			static valignment : "CENTER"
+		},
+		Label {
 			styleClass : "labelComment",
 			text : rstring "label_comment",
-			call GridPane#columnIndex : 0,
-			call GridPane#rowIndex : 1,
-			call GridPane#valignment : "TOP"
-		}, TextArea id txtImageComment {
+			static columnIndex : 0,
+			static rowIndex : 1,
+			static valignment : "TOP"
+		},
+		TextArea id txtImageComment {
 			promptText : rstring "hint_edit_comment",
 			editable : false,
-			call GridPane#columnIndex : 1,
-			call GridPane#rowIndex : 1,
-			call GridPane#rowSpan : 2
-		}, ToggleButton id btnEditComment {
+			static columnIndex : 1,
+			static rowIndex : 1,
+			static rowSpan : 2
+		},
+		ToggleButton id btnEditComment {
 			text : rstring "button_edit_comment",
 			selected : false,
-			call GridPane#columnIndex : 0,
-			call GridPane#rowIndex : 2,
+			static columnIndex : 0,
+			static rowIndex : 2,
 			onAction : controllermethod btnEditCommentPressed
 		}
 	}

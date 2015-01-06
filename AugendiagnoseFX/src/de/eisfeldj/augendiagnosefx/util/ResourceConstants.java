@@ -25,11 +25,13 @@ public final class ResourceConstants {
 	public static final String LABEL_COMMENT = "label_comment";
 	public static final String MENU_ABOUT = "menu_about";
 	public static final String MENU_CLOSE = "menu_close";
+	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
 	public static final String MENU_EXIT = "menu_exit";
 	public static final String MENU_FILE = "menu_file";
 	public static final String MENU_HELP = "menu_help";
 	public static final String MENU_ONLINE_MANUAL = "menu_online_manual";
 	public static final String MENU_PREFERENCES = "menu_preferences";
+	public static final String MENU_VIEW = "menu_view";
 	public static final String MENU_WINDOW = "menu_window";
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
