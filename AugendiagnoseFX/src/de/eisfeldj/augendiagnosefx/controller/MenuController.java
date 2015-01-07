@@ -1,20 +1,27 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
  * BaseController class for the menu.
  */
-public class MenuController extends BaseController {
+public class MenuController extends BaseController implements Initializable {
 	/**
 	 * The main menu bar.
 	 */
@@ -32,6 +39,10 @@ public class MenuController extends BaseController {
 	 */
 	@FXML
 	private CheckMenuItem menuCommentPane;
+
+	public final CheckMenuItem getMenuCommentPane() {
+		return menuCommentPane;
+	}
 
 	@Override
 	public final Parent getRoot() {
@@ -76,6 +87,20 @@ public class MenuController extends BaseController {
 	}
 
 	/**
+	 * Handler for menu entry "Comment pane".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void toggleCommentPane(final ActionEvent event) {
+		for (DisplayImageController controller : getControllers(DisplayImageController.class)) {
+			controller.showCommentPane(menuCommentPane.isSelected());
+			PreferenceUtil.setPreference(KEY_SHOW_COMMENT_PANE, menuCommentPane.isSelected());
+		}
+	}
+
+	/**
 	 * Configure the "Close" menu entry.
 	 *
 	 * @param enabled
@@ -86,6 +111,12 @@ public class MenuController extends BaseController {
 	public final void setMenuClose(final boolean enabled, final EventHandler<ActionEvent> eventHandler) {
 		menuClose.setDisable(!enabled);
 		menuClose.setOnAction(eventHandler);
+	}
+
+
+	@Override
+	public final void initialize(final URL location, final ResourceBundle resources) {
+		menuCommentPane.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 	}
 
 }

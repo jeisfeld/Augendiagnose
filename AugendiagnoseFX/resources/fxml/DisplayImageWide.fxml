@@ -16,19 +16,19 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
 
-	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
-	<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="1" GridPane.rowIndex="0"/> 
-	<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
-	<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" alignment="BOTTOM_CENTER" onAction="#btnEditCommentPressed" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.fillWidth="true" GridPane.halignment="CENTER"> 
-		<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
-	</ToggleButton>
+	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
+	<GridPane fx:id="commentPane" visible="true" managed="true" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
+		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+		<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES"/> 
+		<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" alignment="BOTTOM_CENTER" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+	</GridPane>
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" percentWidth="80"/> 
 		<ColumnConstraints hgrow="SOMETIMES"/> 
+		<ColumnConstraints fx:id="commentConstraints" hgrow="SOMETIMES" percentWidth="20"/> 
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints/> 
 		<RowConstraints vgrow="SOMETIMES"/> 
-		<RowConstraints/> 
 	</rowConstraints>
 </GridPane>

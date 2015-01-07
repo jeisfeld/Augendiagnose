@@ -27,7 +27,8 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 					CheckMenuItem id menuCommentPane {
 						text : rstring "menu_comment_pane",
 						selected : true,
-						disable : true
+						disable : true,
+						onAction : controllermethod toggleCommentPane
 					}
 				]
 			},

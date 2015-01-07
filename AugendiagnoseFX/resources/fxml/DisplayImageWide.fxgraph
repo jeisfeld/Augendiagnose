@@ -10,6 +10,7 @@ import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.RowConstraints
 import javafx.scene.control.ToggleButton
 import java.lang.Double
+import javafx.scene.layout.VBox
 
 component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id displayImage {
@@ -18,54 +19,52 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 
 		columnConstraints : [
 			ColumnConstraints {
-				hgrow : "SOMETIMES",
-				percentWidth : 80
-			},
-			ColumnConstraints {
 				hgrow : "SOMETIMES"
+			},
+			ColumnConstraints id commentConstraints {
+				hgrow : "SOMETIMES",
+				percentWidth : 20
 			}
 		],
 		rowConstraints : [
 			RowConstraints {
-			},
-			RowConstraints {
 				vgrow : "SOMETIMES"
-			},
-			RowConstraints {
 			}
-
 		],
 		SizeableImageView id displayImageView {
 			static columnIndex : 0,
 			static rowIndex : 0,
-			static rowSpan : 3,
 			static halignment : "CENTER",
 			static valignment : "CENTER"
 		},
-		Label {
-			styleClass : "labelComment",
-			text : rstring "label_comment",
+		GridPane id commentPane {
 			static columnIndex : 1,
-			static rowIndex : 0
-		},
-		TextArea id txtImageComment {
-			promptText : rstring "hint_edit_comment",
-			editable : false,
-			wrapText : true,
-			static columnIndex : 1,
-			static rowIndex : 1
-		},
-		ToggleButton id btnEditComment {
-			text : rstring "button_edit_comment",
-			selected : false,
-			alignment : "BOTTOM_CENTER",
-			static columnIndex : 1,
-			static rowIndex : 2,
-			static hgrow : "ALWAYS",
-			static fillWidth : true,
-			static halignment : "CENTER",
-			onAction : controllermethod btnEditCommentPressed,
-			maxWidth : const Double#MAX_VALUE
+			static rowIndex : 0,
+			visible : true,
+			managed : true,
+			Label {
+				static columnIndex : 0,
+				static rowIndex : 0,
+				styleClass : "labelComment",
+				text : rstring "label_comment"
+			},
+			TextArea id txtImageComment {
+				static columnIndex : 0,
+				static rowIndex : 1,
+				static vgrow : "SOMETIMES",
+				promptText : rstring "hint_edit_comment",
+				editable : false,
+				wrapText : true
+			},
+			ToggleButton id btnEditComment {
+				static columnIndex : 0,
+				static rowIndex : 2,
+				text : rstring "button_edit_comment",
+				selected : false,
+				alignment : "BOTTOM_CENTER",
+				onAction : controllermethod btnEditCommentPressed,
+				maxWidth : const Double#MAX_VALUE
+			}
 		}
 	}
 }

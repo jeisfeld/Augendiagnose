@@ -31,6 +31,11 @@ public final class PreferenceUtil {
 	public static final String KEY_WINDOW_MAXIMIZED = "key_window_maximized";
 
 	/**
+	 * Preference key for the flag indicating if the comment pane should be shown.
+	 */
+	public static final String KEY_SHOW_COMMENT_PANE = "key_show_comment_pane";
+
+	/**
 	 * Preference key for the Window maximized property.
 	 */
 	public static final String KEY_LAST_NAME = "key_last_name";
@@ -55,6 +60,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_WINDOW_SIZE_X, 1024.0); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_WINDOW_SIZE_Y, 720.0); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_WINDOW_MAXIMIZED, false);
+		DEFAULT_MAP.put(KEY_SHOW_COMMENT_PANE, true);
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
 	}

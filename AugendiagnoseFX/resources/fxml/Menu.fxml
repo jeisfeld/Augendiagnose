@@ -23,7 +23,7 @@
 		</Menu>
 		<Menu text="%menu_view"> 
 			<items>
-				<CheckMenuItem fx:id="menuCommentPane" text="%menu_comment_pane" selected="true" disable="true"/> 
+				<CheckMenuItem fx:id="menuCommentPane" text="%menu_comment_pane" selected="true" disable="true" onAction="#toggleCommentPane"/> 
 			</items>
 		</Menu>
 		<Menu text="%menu_window"> 

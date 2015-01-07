@@ -16,17 +16,21 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
 
-	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
-	<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="TOP"/> 
-	<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2"/> 
-	<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="2"/> 
-	<columnConstraints>
-		<ColumnConstraints/> 
-		<ColumnConstraints hgrow="SOMETIMES"/> 
-		<ColumnConstraints/> 
-	</columnConstraints>
+	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
+	<GridPane fx:id="commentPane" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
+		<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
+		<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM"/> 
+		<columnConstraints>
+			<ColumnConstraints hgrow="NEVER"/> 
+			<ColumnConstraints hgrow="SOMETIMES"/> 
+		</columnConstraints>
+	</GridPane>
 	<rowConstraints>
-		<RowConstraints vgrow="SOMETIMES" percentHeight="80"/> 
 		<RowConstraints vgrow="SOMETIMES"/> 
+		<RowConstraints fx:id="commentConstraints" vgrow="SOMETIMES" percentHeight="20"/> 
 	</rowConstraints>
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES"/> 
+	</columnConstraints>
 </GridPane>
