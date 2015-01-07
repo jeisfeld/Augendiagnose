@@ -14,10 +14,13 @@ import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Application class for starting the application.
  */
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
+		justification = "Intentionally using same name as superclass")
 public class Application extends javafx.application.Application {
 
 	/**
@@ -41,8 +44,10 @@ public class Application extends javafx.application.Application {
 	}
 
 	@Override
+	@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+			justification = "Intentionally write the stage statically")
 	public final void start(final Stage primaryStage) throws IOException, IllegalAccessException {
-		stage = primaryStage;
+		Application.stage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
 		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");

@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose;
 
 import de.eisfeldj.augendiagnose.util.EncryptionUtil;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +18,7 @@ import android.view.WindowManager;
 /**
  * Utility class to retrieve base application resources.
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
 		justification = "Intentionally using same name as superclass")
 public class Application extends android.app.Application {
 	/**
@@ -79,7 +80,8 @@ public class Application extends android.app.Application {
 	/**
 	 * Retrieve a String shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static String getSharedPreferenceString(final int preferenceId) {
@@ -89,8 +91,10 @@ public class Application extends android.app.Application {
 	/**
 	 * Set a String shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
-	 * @param s the target value of the preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param s
+	 *            the target value of the preference.
 	 */
 	public static void setSharedPreferenceString(final int preferenceId, final String s) {
 		Editor editor = getSharedPreferences().edit();
@@ -101,7 +105,8 @@ public class Application extends android.app.Application {
 	/**
 	 * Retrieve a boolean shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static boolean getSharedPreferenceBoolean(final int preferenceId) {
@@ -111,8 +116,10 @@ public class Application extends android.app.Application {
 	/**
 	 * Set a Boolean shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
-	 * @param b the target value of the preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param b
+	 *            the target value of the preference.
 	 */
 	public static void setSharedPreferenceBoolean(final int preferenceId, final boolean b) {
 		Editor editor = getSharedPreferences().edit();
@@ -123,8 +130,10 @@ public class Application extends android.app.Application {
 	/**
 	 * Retrieve an integer shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
-	 * @param defaultValue the default value of the shared preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param defaultValue
+	 *            the default value of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static int getSharedPreferenceInt(final int preferenceId, final int defaultValue) {
@@ -134,8 +143,10 @@ public class Application extends android.app.Application {
 	/**
 	 * Set an integer shared preference.
 	 *
-	 * @param preferenceId the id of the shared preference.
-	 * @param i the target value of the preference.
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param i
+	 *            the target value of the preference.
 	 */
 	public static void setSharedPreferenceInt(final int preferenceId, final int i) {
 		Editor editor = getSharedPreferences().edit();
@@ -156,7 +167,8 @@ public class Application extends android.app.Application {
 	/**
 	 * Get a resource string.
 	 *
-	 * @param resourceId the id of the resource.
+	 * @param resourceId
+	 *            the id of the resource.
 	 * @return the value of the String resource.
 	 */
 	public static String getResourceString(final int resourceId) {

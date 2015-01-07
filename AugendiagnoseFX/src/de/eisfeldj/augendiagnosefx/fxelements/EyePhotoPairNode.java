@@ -16,6 +16,7 @@ import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Special GridPane for displaying a pair of eye photos.
@@ -59,6 +60,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @param pair
 	 *            The eye photo pair.
 	 */
+	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
 	public EyePhotoPairNode(final EyePhotoPair pair) {
 		FXMLUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
 
