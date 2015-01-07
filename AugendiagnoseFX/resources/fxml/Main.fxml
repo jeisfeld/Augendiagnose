@@ -5,7 +5,6 @@
 
 <?import java.lang.*?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -17,18 +16,20 @@
 <VBox xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController">
 
 	<StackPane alignment="CENTER_RIGHT"> 
-		<MenuBar fx:id="menuBar" styleClass="menu"/> 
-		<HBox fx:id="menuButtons" maxWidth="0"> 
-			<Button fx:id="closeButton" styleClass="imageButton" visible="false"> 
-				<graphic>
-					<ImageView> 
-						<image>
-							<Image url="@img/close.png"/> 
-						</image>
-					</ImageView>
-				</graphic>
-			</Button>
-		</HBox>
+		<children>
+			<fx:include fx:id="menuBar" source="/fxml/Menu.fxml" />
+			<HBox fx:id="menuButtons" maxWidth="0"> 
+				<Button fx:id="closeButton" styleClass="imageButton" visible="false"> 
+					<graphic>
+						<ImageView> 
+							<image>
+								<Image url="@img/close.png"/> 
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+			</HBox>
+		</children>
 	</StackPane>
 	<StackPane fx:id="body"/> 
 </VBox>

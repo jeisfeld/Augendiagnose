@@ -31,11 +31,6 @@ public class Application extends javafx.application.Application {
 	private static Stage stage;
 
 	/**
-	 * The main controller.
-	 */
-	private static MainController mainController;
-
-	/**
 	 * Application method to start the application.
 	 *
 	 * @param args
@@ -50,11 +45,12 @@ public class Application extends javafx.application.Application {
 		stage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
+		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
 		scene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
 						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
 
+		// Store window size on close.
 		primaryStage.setOnCloseRequest(
 				new EventHandler<WindowEvent>() {
 					@Override
@@ -71,7 +67,6 @@ public class Application extends javafx.application.Application {
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
-		FXMLUtil.displayMenu("Menu.fxml");
 		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 	}
 

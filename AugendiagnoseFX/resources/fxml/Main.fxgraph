@@ -13,21 +13,21 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 	VBox id mainPane {
 		StackPane {
 			alignment : "CENTER_RIGHT",
-			MenuBar id menuBar {
-				styleClass : "menu"
-			},
-			HBox id menuButtons {
-				maxWidth : 0,
-				Button id closeButton {
-					styleClass : "imageButton",
-					visible : false,
-					graphic : ImageView {
-						image : Image {
-							url : location "img/close.png"
+			children : [
+				include fxml.Menu as menuBar,
+				HBox id menuButtons {
+					maxWidth : 0,
+					Button id closeButton {
+						styleClass : "imageButton",
+						visible : false,
+						graphic : ImageView {
+							image : Image {
+								url : location "img/close.png"
+							}
 						}
 					}
 				}
-			}
+			]
 		},
 		StackPane id body
 	}
