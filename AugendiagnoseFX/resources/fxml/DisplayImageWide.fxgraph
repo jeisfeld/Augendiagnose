@@ -65,7 +65,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static fillWidth : true,
 			static halignment : "CENTER",
 			onAction : controllermethod btnEditCommentPressed,
-			maxWidth : 10000
+			maxWidth : const Double#MAX_VALUE
 		}
 	}
 }

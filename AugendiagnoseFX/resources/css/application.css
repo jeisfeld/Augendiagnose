@@ -24,11 +24,7 @@
 
 .listNames {
 	-fx-padding: 0.0;
-	-fx-pref-height: 10000.0;
-}
-
-#body {
-	-fx-pref-height: 10000.0;
+	-fx-pref-height: 100000.0;
 }
 
 .displayPhotos {

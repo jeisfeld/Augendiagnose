@@ -31,7 +31,7 @@ component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bu
 				static rowIndex : 0,
 				fitToHeight : true,
 				fitToWidth : true,
-				ListView < GridPane > id listNames {
+				ListView < String > id listNames {
 					styleClass : "listNames",
 					onMouseClicked : controllermethod handleNameClick
 				}
@@ -41,7 +41,7 @@ component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bu
 				static rowIndex : 0,
 				fitToHeight : true,
 				fitToWidth : true,
-				ListView < Object > id listPhotos {
+				ListView < GridPane > id listPhotos {
 					styleClass : "listPhotos"
 				}
 			}

@@ -92,7 +92,9 @@ public class DisplayPhotosController extends Controller implements Initializable
 	@FXML
 	protected final void handleNameClick(final MouseEvent event) throws IOException {
 		String name = listNames.getSelectionModel().getSelectedItem();
-		showPicturesForName(name);
+		if (name != null && !name.equals(PreferenceUtil.getPreferenceString(KEY_LAST_NAME))) {
+			showPicturesForName(name);
+		}
 		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
 	}
 
