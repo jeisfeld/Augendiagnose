@@ -15,9 +15,20 @@ public abstract class DialogController extends Controller {
 		this.stage = stage;
 	}
 
+	public final Stage getStage() {
+		return stage;
+	}
+
 	@Override
 	public final void close() {
 		super.close();
 		stage.close();
+	}
+
+	/**
+	 * Show the dialog window.
+	 */
+	public final void show() {
+		stage.show();
 	}
 }

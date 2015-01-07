@@ -11,13 +11,40 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.DialogController;
 import de.eisfeldj.augendiagnosefx.controller.MessageDialogController;
-import de.eisfeldj.augendiagnosefx.controller.PreferencesController;
 
 /**
  * Helper class to show standard dialogs.
  */
 public abstract class DialogUtil {
+	/**
+	 * Create a basic dialog window.
+	 *
+	 * @param fxmlString
+	 *            The FXML resource.
+	 *
+	 * @return The dialog controller.
+	 */
+	private static DialogController createDialog(final String fxmlString) {
+		DialogController controller;
+		try {
+			controller = (MessageDialogController) FXMLUtil.getRootFromFxml(fxmlString);
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file " + fxmlString, e);
+			return null;
+		}
+
+		Scene scene = new Scene(controller.getRoot());
+		Stage dialog = new Stage();
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(Application.getStage());
+		dialog.setScene(scene);
+		controller.setStage(dialog);
+		return controller;
+	}
+
 	/**
 	 * Display an error and go back to the current activity.
 	 *
@@ -27,29 +54,16 @@ public abstract class DialogUtil {
 	 *            arguments for the error message
 	 */
 	public static void displayError(final String resource, final Object... args) {
-		String message = String.format(ResourceUtil.getString(resource), args);
-		Logger.warning("Dialog message: " + message);
-
-		MessageDialogController controller;
-		try {
-			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogError.fxml");
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file for dialog", e);
-			return;
-		}
-
-		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_ERROR));
-		controller.setMessage(message);
-
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				Scene scene = new Scene(controller.getRoot());
-				Stage dialog = new Stage();
-				dialog.initModality(Modality.WINDOW_MODAL);
-				dialog.initOwner(Application.getStage());
-				dialog.setScene(scene);
+				String message = String.format(ResourceUtil.getString(resource), args);
+				Logger.warning("Dialog message: " + message);
+
+				MessageDialogController controller = (MessageDialogController) createDialog("DialogError.fxml");
+
+				controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_ERROR));
+				controller.setMessage(message);
 
 				controller.getBtnBack().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -58,8 +72,7 @@ public abstract class DialogUtil {
 					}
 				});
 
-				controller.setStage(dialog);
-				dialog.show();
+				controller.show();
 			}
 		});
 	}
@@ -80,32 +93,21 @@ public abstract class DialogUtil {
 			final ConfirmDialogListener listener, final String buttonResource,
 			final String messageResource, final Object... args) {
 
-		String message = String.format(ResourceUtil.getString(messageResource), args);
-
-		MessageDialogController controller;
-		try {
-			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogConfirm.fxml");
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file for dialog", e);
-			return;
-		}
-
-		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_CONFIRMATION));
-		controller.setMessage(message);
-		if (buttonResource != null) {
-			String buttonText = String.format(ResourceUtil.getString(buttonResource));
-			controller.getBtnOk().setText(buttonText);
-		}
-
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				Scene scene = new Scene(controller.getRoot());
-				Stage dialog = new Stage();
-				dialog.initModality(Modality.WINDOW_MODAL);
-				dialog.initOwner(Application.getStage());
-				dialog.setScene(scene);
+
+				String message = String.format(ResourceUtil.getString(messageResource), args);
+
+				MessageDialogController controller = (MessageDialogController) createDialog("DialogConfirm.fxml");
+
+				controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_CONFIRMATION));
+				controller.setMessage(message);
+
+				if (buttonResource != null) {
+					String buttonText = String.format(ResourceUtil.getString(buttonResource));
+					controller.getBtnOk().setText(buttonText);
+				}
 
 				controller.getBtnCancel().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -122,32 +124,16 @@ public abstract class DialogUtil {
 					}
 				});
 
-				controller.setStage(dialog);
-				dialog.show();
+				controller.show();
 			}
 		});
 	}
 
 	/**
-	 * Display the setting dialog.
+	 * Display the settings dialog.
 	 */
 	public static void displayPreferencesDialog() {
-		PreferencesController controller;
-		try {
-			controller = (PreferencesController) FXMLUtil.getRootFromFxml("Preferences.fxml");
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file for settings");
-			return;
-		}
-
-		Scene scene = new Scene(controller.getRoot());
-		Stage dialog = new Stage();
-		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(Application.getStage());
-		dialog.setScene(scene);
-		controller.setStage(dialog);
-		dialog.show();
+		createDialog("Preferences.fxml").show();
 	}
 
 	/**
@@ -162,26 +148,13 @@ public abstract class DialogUtil {
 	public static ProgressDialog displayProgressDialog(final String messageResource, final Object... args) {
 		String message = String.format(ResourceUtil.getString(messageResource), args);
 
-		MessageDialogController controller;
-		try {
-			controller = (MessageDialogController) FXMLUtil.getRootFromFxml("DialogProgress.fxml");
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file for dialog", e);
-			return null;
-		}
+		MessageDialogController controller = (MessageDialogController) createDialog("DialogProgress.fxml");
 
+		controller.getStage().initStyle(StageStyle.UNDECORATED);
 		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_PROGRESS));
 		controller.setMessage(message);
 
-		Scene scene = new Scene(controller.getRoot());
-		Stage dialog = new Stage();
-		dialog.initStyle(StageStyle.UNDECORATED);
-		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(Application.getStage());
-		dialog.setScene(scene);
-		controller.setStage(dialog);
-		dialog.show();
+		controller.show();
 
 		return new ProgressDialog(controller);
 	}
