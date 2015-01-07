@@ -75,7 +75,7 @@ public class MainController extends BaseController {
 		}
 		catch (TooManyControllersException | MissingControllerException e) {
 			Logger.error("Could not find main controller", e);
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 

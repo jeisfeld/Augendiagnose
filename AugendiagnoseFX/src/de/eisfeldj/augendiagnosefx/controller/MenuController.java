@@ -49,7 +49,7 @@ public class MenuController extends BaseController {
 		}
 		catch (TooManyControllersException | MissingControllerException e) {
 			Logger.error("Could not find menu controller", e);
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 
