@@ -3,9 +3,9 @@ package de.eisfeldj.augendiagnosefx.controller;
 import javafx.stage.Stage;
 
 /**
- * Controller of a dialog with own stage.
+ * BaseController of a dialog with own stage.
  */
-public abstract class DialogController extends Controller {
+public abstract class DialogController extends BaseController {
 	/**
 	 * The stage containing the dialog.
 	 */

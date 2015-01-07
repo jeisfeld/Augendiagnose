@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnosefx.util;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javafx.application.Platform;
@@ -28,13 +27,7 @@ public abstract class DialogUtil {
 	 */
 	private static DialogController createDialog(final String fxmlString) {
 		DialogController controller;
-		try {
-			controller = (MessageDialogController) FXMLUtil.getRootFromFxml(fxmlString);
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file " + fxmlString, e);
-			return null;
-		}
+		controller = (DialogController) FXMLUtil.getRootFromFxml(fxmlString);
 
 		Scene scene = new Scene(controller.getRoot());
 		Stage dialog = new Stage();

@@ -23,7 +23,7 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 /**
  * The controller of the main window.
  */
-public class MainController extends Controller implements Initializable {
+public class MainController extends BaseController implements Initializable {
 	/**
 	 * The root of the main page.
 	 */
@@ -57,7 +57,7 @@ public class MainController extends Controller implements Initializable {
 	/**
 	 * The list of subpages.
 	 */
-	private List<Controller> subPageRegistry = new ArrayList<Controller>();
+	private List<BaseController> subPageRegistry = new ArrayList<BaseController>();
 
 	/**
 	 * A list storing the handlers for closing windows.
@@ -106,7 +106,7 @@ public class MainController extends Controller implements Initializable {
 	 * @param controller
 	 *            The controller of the subpage.
 	 */
-	public final void addSubPage(final Controller controller) {
+	public final void addSubPage(final BaseController controller) {
 		body.getChildren().add(controller.getRoot());
 		subPageRegistry.add(controller);
 
@@ -125,7 +125,7 @@ public class MainController extends Controller implements Initializable {
 	 * @param controller
 	 *            The controller of the subpage.
 	 */
-	public final void removeSubPage(final Controller controller) {
+	public final void removeSubPage(final BaseController controller) {
 		controller.close();
 		subPageRegistry.remove(controller);
 		disableClose();
@@ -135,7 +135,7 @@ public class MainController extends Controller implements Initializable {
 	 * Remove all subpages.
 	 */
 	public final void removeAllSubPages() {
-		for (Controller controller : subPageRegistry) {
+		for (BaseController controller : subPageRegistry) {
 			controller.close();
 		}
 		subPageRegistry.clear();

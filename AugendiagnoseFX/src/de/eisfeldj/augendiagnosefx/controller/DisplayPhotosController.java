@@ -37,9 +37,9 @@ import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
- * Controller for the "Display Photos" page.
+ * BaseController for the "Display Photos" page.
  */
-public class DisplayPhotosController extends Controller implements Initializable {
+public class DisplayPhotosController extends BaseController implements Initializable {
 	/**
 	 * The list of folder names which should be shown on top of the list.
 	 */

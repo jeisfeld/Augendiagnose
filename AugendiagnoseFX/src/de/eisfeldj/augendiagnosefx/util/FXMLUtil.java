@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 
@@ -24,26 +25,53 @@ public final class FXMLUtil {
 	 * Private constructor to prevent instantiation.
 	 */
 	private FXMLUtil() {
-		// do nothing
+		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Utility method to expand an FXML file, including internationalization.
-	 *
-	 * The controller is added to the controller registry.
 	 *
 	 * @param fxmlFile
 	 *            The name of the FXML file.
 	 * @return The controller handling the expanded page.
 	 * @throws IOException
 	 */
-	public static Controller getRootFromFxml(final String fxmlFile) throws IOException {
+	public static Controller getRootFromFxml(final String fxmlFile) {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setResources(ResourceUtil.STRINGS_BUNDLE);
-		Parent root = fxmlLoader.load(ClassLoader.getSystemResource("fxml/" + fxmlFile).openStream());
-		root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
+		Parent root;
+		try {
+			root = fxmlLoader.load(ClassLoader.getSystemResource("fxml/" + fxmlFile).openStream());
+			root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
 
-		return fxmlLoader.getController();
+			return fxmlLoader.getController();
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Utility method to expand an FXML file for a custom component.
+	 *
+	 * @param root
+	 *            The custom component.
+	 * @param fxmlFile
+	 *            The FXML file.
+	 */
+	public static void loadFromFxml(final Parent root, final String fxmlFile) {
+		FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/" + fxmlFile));
+		fxmlLoader.setResources(ResourceUtil.STRINGS_BUNDLE);
+		fxmlLoader.setController(root);
+		fxmlLoader.setRoot(root);
+		try {
+			fxmlLoader.load();
+			root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
+		}
+		catch (IOException e) {
+			Logger.error("Failed to load FXML file " + fxmlFile, e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -54,15 +82,9 @@ public final class FXMLUtil {
 	 * @return the controller of the subpage.
 	 * @throws IOException
 	 */
-	public static Controller displaySubpage(final String fxmlFile) {
-		Controller controller;
-		try {
-			controller = getRootFromFxml(fxmlFile);
-		}
-		catch (IOException e) {
-			Logger.error("Failed to load FXML file " + fxmlFile, e);
-			return null;
-		}
+	public static BaseController displaySubpage(final String fxmlFile) {
+		BaseController controller;
+		controller = (BaseController) getRootFromFxml(fxmlFile);
 		MainController.getInstance().addSubPage(controller);
 
 		return controller;
@@ -86,7 +108,7 @@ public final class FXMLUtil {
 	 * @param controller
 	 *            The controller of the pane to be removed.
 	 */
-	public static void removeSubpage(final Controller controller) {
+	public static void removeSubpage(final BaseController controller) {
 		MainController.getInstance().removeSubPage(controller);
 	}
 

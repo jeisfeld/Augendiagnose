@@ -1,0 +1,54 @@
+package fxml
+
+import de.eisfeldj.augendiagnosefx.controller.MessageDialogController
+import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode
+import de.eisfeldj.augendiagnosefx.fxelements.ImageViewPane
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.layout.ColumnConstraints
+import javafx.scene.layout.GridPane
+import javafx.scene.text.Text
+
+dynamic component EyePhotoPairNode resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
+	GridPane {
+		hgap: 10,
+		columnConstraints : [
+			ColumnConstraints {
+				prefWidth : 70
+			},
+			ColumnConstraints {
+				hgrow : "SOMETIMES"
+			}
+		],
+
+		Label id labelDate {
+			static columnIndex : 0,
+			static rowIndex : 0
+		},
+		GridPane {
+			static columnIndex : 1,
+			static rowIndex : 0,
+			hgap : 10,
+			columnConstraints : [
+				ColumnConstraints {
+					percentWidth : 50,
+					halignment : "CENTER"
+				},
+				ColumnConstraints {
+					percentWidth : 50,
+					halignment : "CENTER"
+				}
+			],
+			ImageViewPane id imageViewRight {
+				static columnIndex : 0,
+				static rowIndex : 0,
+				prefWidth : 0
+			},
+			ImageViewPane id imageViewLeft {
+				static columnIndex : 1,
+				static rowIndex : 0,
+				prefWidth : 0
+			}
+		}
+	}
+}

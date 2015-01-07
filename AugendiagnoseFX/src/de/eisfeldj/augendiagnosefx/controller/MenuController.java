@@ -12,9 +12,9 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
- * Controller class for the menu.
+ * BaseController class for the menu.
  */
-public class MenuController extends Controller {
+public class MenuController extends BaseController {
 	/**
 	 * The main menu bar.
 	 */

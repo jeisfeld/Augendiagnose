@@ -50,7 +50,19 @@ public class ImageViewPane extends Region {
 	 * Creating an ImageViewPane without imageView.
 	 */
 	public ImageViewPane() {
-		this(new ImageView());
+		imageViewProperty.addListener(new ChangeListener<ImageView>() {
+			@Override
+			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldIV,
+					final ImageView newIV) {
+
+				if (oldIV != null) {
+					getChildren().remove(oldIV);
+				}
+				if (newIV != null) {
+					getChildren().add(newIV);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -65,26 +77,4 @@ public class ImageViewPane extends Region {
 		super.layoutChildren();
 	}
 
-	/**
-	 * Create an ImageViewPane containing an imageView.
-	 *
-	 * @param imageView
-	 *            The imageView contained in the pane.
-	 */
-	public ImageViewPane(final ImageView imageView) {
-		imageViewProperty.addListener(new ChangeListener<ImageView>() {
-			@Override
-			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldIV,
-					final ImageView newIV) {
-
-				if (oldIV != null) {
-					getChildren().remove(oldIV);
-				}
-				if (newIV != null) {
-					getChildren().add(newIV);
-				}
-			}
-		});
-		this.imageViewProperty.set(imageView);
-	}
 }

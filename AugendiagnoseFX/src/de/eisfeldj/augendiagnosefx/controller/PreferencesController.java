@@ -15,7 +15,7 @@ import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
- * Controller for the Preferences page.
+ * BaseController for the Preferences page.
  */
 public class PreferencesController extends DialogController implements Initializable {
 	/**

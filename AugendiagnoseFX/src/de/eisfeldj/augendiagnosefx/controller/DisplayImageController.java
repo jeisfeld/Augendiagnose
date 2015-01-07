@@ -14,9 +14,9 @@ import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 
 /**
- * Controller for the "Display Image" page.
+ * BaseController for the "Display Image" page.
  */
-public class DisplayImageController extends Controller {
+public class DisplayImageController extends BaseController {
 	/**
 	 * The main pane holding the image.
 	 */

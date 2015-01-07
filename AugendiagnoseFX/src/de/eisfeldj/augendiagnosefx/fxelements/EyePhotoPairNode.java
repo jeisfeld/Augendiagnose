@@ -4,14 +4,14 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
@@ -20,17 +20,7 @@ import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 /**
  * Special GridPane for displaying a pair of eye photos.
  */
-public class EyePhotoPairNode extends GridPane {
-	/**
-	 * The width of the date node.
-	 */
-	private static final int DATE_WIDTH = 70;
-
-	/**
-	 * The standard size of gaps.
-	 */
-	private static final int STANDARD_GAP = 10;
-
+public class EyePhotoPairNode extends GridPane implements Controller {
 	/**
 	 * Height of the left image.
 	 */
@@ -41,29 +31,41 @@ public class EyePhotoPairNode extends GridPane {
 	private double heightRight = 0;
 
 	/**
+	 * The label for the date.
+	 */
+	@FXML
+	private Label labelDate;
+
+	/**
+	 * The image view of the right eye.
+	 */
+	@FXML
+	private ImageViewPane imageViewRight;
+
+	/**
+	 * The image view of the left eye.
+	 */
+	@FXML
+	private ImageViewPane imageViewLeft;
+
+	@Override
+	public final Parent getRoot() {
+		return this;
+	}
+
+	/**
 	 * Constructor given a pair of eye photos.
 	 *
 	 * @param pair
 	 *            The eye photo pair.
 	 */
 	public EyePhotoPairNode(final EyePhotoPair pair) {
-		setHgap(STANDARD_GAP);
-		add(new Label(pair.getDateDisplayString("dd.MM.yyyy")), 0, 0);
-		getColumnConstraints().add(0, new ColumnConstraints(DATE_WIDTH));
-		GridPane imagePane = new GridPane();
-		imagePane.setHgap(STANDARD_GAP);
-		add(imagePane, 1, 0);
-		ColumnConstraints totalImageConstraints = new ColumnConstraints();
-		totalImageConstraints.setHgrow(Priority.SOMETIMES);
-		getColumnConstraints().add(1, totalImageConstraints);
+		FXMLUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
 
-		imagePane.add(getImageViewPane(pair.getRightEye()), 0, 0);
-		imagePane.add(getImageViewPane(pair.getLeftEye()), 1, 0);
-		ColumnConstraints imageConstraints = new ColumnConstraints();
-		imageConstraints.setPercentWidth(50); // MAGIC_NUMBER
-		imageConstraints.setHalignment(HPos.CENTER);
-		imagePane.getColumnConstraints().add(0, imageConstraints);
-		imagePane.getColumnConstraints().add(1, imageConstraints);
+		labelDate.setText(pair.getDateDisplayString("dd.MM.yyyy"));
+
+		imageViewRight.setImageView(getImageView(pair.getRightEye()));
+		imageViewLeft.setImageView(getImageView(pair.getLeftEye()));
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class EyePhotoPairNode extends GridPane {
 	 *            The eye photo to be displayed.
 	 * @return The image view.
 	 */
-	private ImageViewPane getImageViewPane(final EyePhoto eyePhoto) {
+	private ImageView getImageView(final EyePhoto eyePhoto) {
 		ImageView imageView = new ImageView(eyePhoto.getImage());
 		imageView.setPreserveRatio(true);
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -87,9 +89,6 @@ public class EyePhotoPairNode extends GridPane {
 				controller.setEyePhoto(eyePhoto);
 			}
 		});
-
-		ImageViewPane imageViewPane = new ImageViewPane(imageView);
-		imageViewPane.setPrefWidth(0);
 
 		// Ensure that height is adapted to image width.
 		imageView.fitHeightProperty().addListener(new ChangeListener<Number>() {
@@ -114,8 +113,7 @@ public class EyePhotoPairNode extends GridPane {
 				});
 			}
 		});
-
-		return imageViewPane;
+		return imageView;
 	}
 
 }

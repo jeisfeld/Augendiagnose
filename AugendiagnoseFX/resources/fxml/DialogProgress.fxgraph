@@ -9,7 +9,8 @@ import javafx.scene.text.Text
 component DialogProgress controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id dialogPane {
 		styleClass : "dialogProgress",
-		vgap : 10, Label id dialogHeading {
+		vgap : 10,
+		Label id dialogHeading {
 			static columnIndex : 0,
 			static rowIndex : 0,
 			static halignment : "CENTER",
