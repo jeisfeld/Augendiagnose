@@ -208,6 +208,8 @@ public class DisplayImageController extends BaseController implements Initializa
 
 		displayImageView.setEyePhoto(eyePhoto);
 
+		enableOverlayButtons(eyePhoto.getImageMetadata().hasOverlayPosition());
+
 		txtImageComment.setText(eyePhoto.getImageMetadata().comment);
 	}
 
@@ -250,6 +252,22 @@ public class DisplayImageController extends BaseController implements Initializa
 		if (overlayConstraints instanceof ColumnConstraints) {
 			((ColumnConstraints) overlayConstraints).setMinWidth(visible ? 70 : 0); // MAGIC_NUMBER
 		}
+	}
+
+	/**
+	 * Enable or disable the overlay buttons.
+	 *
+	 * @param enabled
+	 *            Indicator if the overlay buttons should be enabled.
+	 */
+	private void enableOverlayButtons(final boolean enabled) {
+		btnOverlayCircle.setDisable(!enabled);
+		btnOverlay1.setDisable(!enabled);
+		btnOverlay2.setDisable(!enabled);
+		btnOverlay3.setDisable(!enabled);
+		btnOverlay4.setDisable(!enabled);
+		btnOverlay5.setDisable(!enabled);
+		btnOverlay6.setDisable(!enabled);
 	}
 
 }
