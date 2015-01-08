@@ -121,7 +121,7 @@ public class MenuController extends BaseController implements Initializable {
 	public final void toggleOverlayPane(final ActionEvent event) {
 		for (DisplayImageController controller : getControllers(DisplayImageController.class)) {
 			controller.showOverlayPane(menuOverlayPane.isSelected());
-			PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuCommentPane.isSelected());
+			PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuOverlayPane.isSelected());
 		}
 	}
 
