@@ -2,9 +2,7 @@ package de.eisfeldj.augendiagnosefx.util;
 
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import java.net.URL;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -35,19 +33,13 @@ public final class ImageUtil {
 	/**
 	 * Get an image from a file.
 	 *
-	 * @param file
-	 *            The image file.
+	 * @param url
+	 *            The image URL.
 	 * @return the image.
 	 */
-	public static Image getImage(final File file) {
+	public static Image getImage(final URL url) {
 		int maxSize = PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
-		try {
-			return new Image(file.toURI().toURL().toExternalForm(), maxSize, maxSize, true, true);
-		}
-		catch (MalformedURLException e) {
-			Logger.error("Could not create image " + file.getAbsolutePath());
-			return null;
-		}
+		return new Image(url.toExternalForm(), maxSize, maxSize, true, true);
 	}
 
 	/**
@@ -85,13 +77,9 @@ public final class ImageUtil {
 		default:
 		}
 
-		File imageFile = new File("resources/overlay/" + baseName + suffix);
-		if (!imageFile.exists()) {
-			throw new RuntimeException(new FileNotFoundException("Could not find image file " + "overlay/" + baseName
-					+ suffix));
-		}
+		URL imageURL = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
 
-		Image image = getImage(imageFile);
+		Image image = getImage(imageURL);
 
 		// Type 2 is not changed in color.
 		if (overlayType == 2) {
@@ -144,7 +132,8 @@ public final class ImageUtil {
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
 
-		Image overlayImage = getOverlayImage(overlayType, side, color);
+		Image overlayImage = null;
+		overlayImage = getOverlayImage(overlayType, side, color);
 
 		Canvas canvas = new Canvas(width, height);
 		canvas.getGraphicsContext2D().drawImage(baseImage, 0, 0, width, height);

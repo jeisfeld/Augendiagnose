@@ -2,6 +2,8 @@ package de.eisfeldj.augendiagnosefx.util;
 
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import javafx.scene.image.Image;
 
 /**
@@ -28,7 +30,7 @@ public final class ResourceUtil {
 	 * @return The value.
 	 */
 	public static String getString(final String key) {
-		return STRINGS_BUNDLE.getString(key);
+		return StringEscapeUtils.unescapeJava(STRINGS_BUNDLE.getString(key));
 	}
 
 	/**

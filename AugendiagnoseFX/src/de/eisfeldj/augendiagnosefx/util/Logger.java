@@ -1,5 +1,10 @@
 package de.eisfeldj.augendiagnosefx.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
@@ -16,6 +21,22 @@ public final class Logger {
 	static {
 		System.setProperty("java.util.logging.SimpleFormatter.format",
 				"%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %5$s%6$s%n");
+
+		File logDir = null;
+		File logFile = new File("");
+		try {
+			logDir = new File(new File(System.getProperty("java.io.tmpdir")), "Augendiagnose");
+			logFile = new File(logDir, "Augendiagnose.log");
+			logDir.mkdirs();
+			FileHandler fileHandler = new FileHandler(logFile.getAbsolutePath(), 1000000, 5, true); // MAGIC_NUMBER
+			fileHandler.setFormatter(new SimpleFormatter());
+			LOGGER.addHandler(fileHandler);
+		}
+		catch (SecurityException | IOException e) {
+			DialogUtil.displayError(ResourceConstants.MESSAGE_DIALOG_COULD_NOT_OPEN_LOG_FILE,
+					logFile.getAbsolutePath(), ExceptionUtils.getStackTrace(e));
+			e.printStackTrace();
+		}
 	}
 
 	/**

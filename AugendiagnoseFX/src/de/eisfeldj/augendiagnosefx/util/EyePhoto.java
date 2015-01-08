@@ -1,6 +1,8 @@
 package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
@@ -290,6 +292,21 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Retrieve the photo as URL.
+	 *
+	 * @return the URL.
+	 */
+	public final URL getUrl() {
+		try {
+			return getFile().toURI().toURL();
+		}
+		catch (MalformedURLException e) {
+			Logger.error("Could not convert to URL", e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
 	 * Check if the file exists.
 	 *
 	 * @return true if the file exists.
@@ -367,7 +384,7 @@ public class EyePhoto {
 	 */
 	public final synchronized void precalculateImage() {
 		if (cachedImage == null) {
-			cachedImage = ImageUtil.getImage(getFile());
+			cachedImage = ImageUtil.getImage(getUrl());
 		}
 	}
 
