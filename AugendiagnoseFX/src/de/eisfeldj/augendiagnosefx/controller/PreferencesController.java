@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import de.eisfeldj.augendiagnosefx.Application;
@@ -35,6 +37,12 @@ public class PreferencesController extends DialogController implements Initializ
 	@FXML
 	private TextField textFolderPhotos;
 
+	/**
+	 * Choice box for max bitmap size.
+	 */
+	@FXML
+	private ChoiceBox<Integer> choiceMaxBitmapSize;
+
 	@Override
 	public final Parent getRoot() {
 		return settingsPane;
@@ -44,6 +52,8 @@ public class PreferencesController extends DialogController implements Initializ
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		oldPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
 		textFolderPhotos.setText(oldPhotosFolder);
+
+		choiceMaxBitmapSize.setValue(PreferenceUtil.getPreferenceInt(KEY_MAX_BITMAP_SIZE));
 	}
 
 	/**
@@ -70,6 +80,7 @@ public class PreferencesController extends DialogController implements Initializ
 			PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
 			Application.refreshMainPage();
 		}
+		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
 		close();
 	}
 

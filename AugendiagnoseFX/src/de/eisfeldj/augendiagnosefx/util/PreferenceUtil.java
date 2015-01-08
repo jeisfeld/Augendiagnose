@@ -46,6 +46,11 @@ public final class PreferenceUtil {
 	public static final String KEY_FOLDER_PHOTOS = "key_folder_photos";
 
 	/**
+	 * Preference key for max bitmap size.
+	 */
+	public static final String KEY_MAX_BITMAP_SIZE = "max_bitmap_size";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -63,6 +68,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_SHOW_COMMENT_PANE, true);
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
+		DEFAULT_MAP.put(KEY_MAX_BITMAP_SIZE, 2048); //MAGIC_NUMBER
 	}
 
 	/**

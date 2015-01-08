@@ -6,6 +6,8 @@ import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
+import javafx.scene.control.ChoiceBox
+import javafx.collections.FXCollections
 
 component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id settingsPane {
@@ -36,10 +38,24 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 1
 			},
 
+			Label {
+				text : rstring "pref_title_max_bitmap_size",
+				static columnIndex : 0,
+				static rowIndex : 2
+			},
+
+			ChoiceBox<Integer> id choiceMaxBitmapSize {
+				static columnIndex : 1,
+				static rowIndex : 2,
+				items : FXCollections createdby observableArrayList {
+					Integer(4096), Integer(2880), Integer(2048), Integer(1440), Integer(1024)
+				}
+			},
+
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 2,
+				static rowIndex : 3,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -47,7 +63,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 2,
+				static rowIndex : 3,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit
 			}

@@ -26,11 +26,6 @@ public final class ImageUtil {
 	private static final int OVERLAY_SIZE = 1024;
 
 	/**
-	 * Maximum size of the canvas.
-	 */
-	private static final int MAX_SIZE = 4096;
-
-	/**
 	 * Do not allow instantiation.
 	 */
 	private ImageUtil() {
@@ -45,8 +40,9 @@ public final class ImageUtil {
 	 * @return the image.
 	 */
 	public static Image getImage(final File file) {
+		int maxSize = PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
 		try {
-			return new Image(file.toURI().toURL().toExternalForm(), MAX_SIZE, MAX_SIZE, true, true);
+			return new Image(file.toURI().toURL().toExternalForm(), maxSize, maxSize, true, true);
 		}
 		catch (MalformedURLException e) {
 			Logger.error("Could not create image " + file.getAbsolutePath());

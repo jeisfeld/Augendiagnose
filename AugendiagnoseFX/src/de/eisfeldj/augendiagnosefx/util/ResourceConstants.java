@@ -38,6 +38,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_DIALOG_UNKNOWN_ERROR = "message_dialog_unknown_error";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
+	public static final String PREF_TITLE_MAX_BITMAP_SIZE = "pref_title_max_bitmap_size";
 	public static final String SUFFIX_TITLE_LEFT = "suffix_title_left";
 	public static final String SUFFIX_TITLE_RIGHT = "suffix_title_right";
 	public static final String TITLE_DIALOG_CONFIRMATION = "title_dialog_confirmation";
