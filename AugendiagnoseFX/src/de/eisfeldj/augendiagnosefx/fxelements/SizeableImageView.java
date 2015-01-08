@@ -6,7 +6,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -49,9 +48,18 @@ public class SizeableImageView extends ScrollPane {
 	private ImageView imageView;
 
 	/**
+	 * The displayed eye photo.
+	 */
+	private EyePhoto eyePhoto;
+
+	/**
 	 * Constructor without initialization of image.
 	 */
 	public SizeableImageView() {
+		imageView = new ImageView();
+		imageView.setPreserveRatio(true);
+		setContent(new BorderPane(imageView));
+
 		setPannable(true);
 		setFitToHeight(true);
 		setFitToWidth(true);
@@ -130,42 +138,68 @@ public class SizeableImageView extends ScrollPane {
 	}
 
 	/**
-	 * Set the image view displayed by this class.
+	 * Set the eye photo displayed by this class.
 	 *
 	 * @param eyePhoto
-	 *            The ImageView.
+	 *            The eye photo.
 	 */
-	public final void setImage(final EyePhoto eyePhoto) {
-		Image image = eyePhoto.getImage();
-
-		imageView = new ImageView();
-		imageView.setPreserveRatio(true);
-
-		JpegMetadata metadata = eyePhoto.getImageMetadata();
-		if (metadata != null && metadata.hasOverlayPosition()) {
-			imageView.setImage(ImageUtil.getImageWithOverlay(image, 1, eyePhoto.getRightLeft(), Color.RED,
-					metadata.xCenter, metadata.yCenter,
-					metadata.overlayScaleFactor));
-		}
-		else {
-			imageView.setImage(image);
-		}
-
-		// Surround with BorderPane, so that image is centered if not filling screen
-		setContent(new BorderPane(imageView));
+	public final void setEyePhoto(final EyePhoto eyePhoto) {
+		this.eyePhoto = eyePhoto;
+		imageView.setImage(eyePhoto.getImage());
 
 		// Size the image only after this pane is sized
 		heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				imageView.setFitWidth(getWidth());
-				imageView.setFitHeight(getHeight());
-				zoomProperty.set(Math.min(imageView.getFitWidth() / imageView.getImage().getWidth(),
-						imageView.getFitHeight()
-								/ imageView.getImage().getHeight()));
+				JpegMetadata metadata = eyePhoto.getImageMetadata();
+				if (metadata != null && metadata.hasOverlayPosition()) {
+					zoomProperty.set(Math.min(getWidth(), getHeight())
+							/ Math.max(imageView.getImage().getWidth(), imageView.getImage().getHeight())
+							/ metadata.overlayScaleFactor);
+				}
+				else {
+					zoomProperty.set(Math.min(getWidth() / imageView.getImage().getWidth(),
+							getHeight() / imageView.getImage().getHeight()));
+				}
+
+				imageView.setFitWidth(zoomProperty.get() * imageView.getImage().getWidth());
+				imageView.setFitHeight(zoomProperty.get() * imageView.getImage().getHeight());
+				layout();
+
+				if (metadata != null && metadata.hasOverlayPosition()) {
+					// Target size of the image.
+					double targetWidth = zoomProperty.get() * imageView.getImage().getWidth();
+					double targetHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+					// Image pixels outside the visible area which need to be scrolled.
+					double postScrollXFactor = Math.max(0, targetWidth - getWidth());
+					double postScrollYFactor = Math.max(0, targetHeight - getHeight());
+
+					// The initial scrollbar positions
+					double hValue = postScrollXFactor > 0
+							? (metadata.xCenter * targetWidth - getWidth() / 2) / postScrollXFactor
+							: 1;
+					double vValue = postScrollYFactor > 0
+							? (metadata.yCenter * targetHeight - getHeight() / 2) / postScrollYFactor
+							: 1;
+
+					setHvalue(hValue);
+					setVvalue(vValue);
+				}
+
 				heightProperty().removeListener(this);
 			}
 		});
+	}
+
+	/**
+	 * Display the overlay.
+	 *
+	 * @param overlayType
+	 *            The overlay type to be displayed.
+	 */
+	public final void displayOverlay(final Integer overlayType) {
+		imageView.setImage(ImageUtil.getImageWithOverlay(eyePhoto, overlayType, Color.RED));
 	}
 }

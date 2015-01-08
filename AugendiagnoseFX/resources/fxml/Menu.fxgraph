@@ -24,6 +24,12 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 			Menu {
 				text : rstring "menu_view",
 				items : [
+					CheckMenuItem id menuOverlayPane {
+						text : rstring "menu_overlay_pane",
+						selected : true,
+						disable : true,
+						onAction : controllermethod toggleOverlayPane
+					},
 					CheckMenuItem id menuCommentPane {
 						text : rstring "menu_comment_pane",
 						selected : true,

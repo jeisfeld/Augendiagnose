@@ -18,11 +18,19 @@ public final class ResourceConstants {
 	public static final String BUTTON_CANCEL = "button_cancel";
 	public static final String BUTTON_EDIT_COMMENT = "button_edit_comment";
 	public static final String BUTTON_OK = "button_ok";
+	public static final String BUTTON_OVERLAY_1 = "button_overlay_1";
+	public static final String BUTTON_OVERLAY_2 = "button_overlay_2";
+	public static final String BUTTON_OVERLAY_3 = "button_overlay_3";
+	public static final String BUTTON_OVERLAY_4 = "button_overlay_4";
+	public static final String BUTTON_OVERLAY_5 = "button_overlay_5";
+	public static final String BUTTON_OVERLAY_6 = "button_overlay_6";
+	public static final String BUTTON_OVERLAY_CIRCLE = "button_overlay_circle";
 	public static final String BUTTON_SAVE_COMMENT = "button_save_comment";
 	public static final String FILE_INFIX_LEFT = "file_infix_left";
 	public static final String FILE_INFIX_RIGHT = "file_infix_right";
 	public static final String HINT_EDIT_COMMENT = "hint_edit_comment";
 	public static final String LABEL_COMMENT = "label_comment";
+	public static final String LABEL_OVERLAYS = "label_overlays";
 	public static final String MENU_ABOUT = "menu_about";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
@@ -30,6 +38,7 @@ public final class ResourceConstants {
 	public static final String MENU_FILE = "menu_file";
 	public static final String MENU_HELP = "menu_help";
 	public static final String MENU_ONLINE_MANUAL = "menu_online_manual";
+	public static final String MENU_OVERLAY_PANE = "menu_overlay_pane";
 	public static final String MENU_PREFERENCES = "menu_preferences";
 	public static final String MENU_VIEW = "menu_view";
 	public static final String MENU_WINDOW = "menu_window";

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,9 +16,36 @@
 <?scenebuilder-stylesheet ../css/application.css?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
+	<fx:define>
+		<ToggleGroup fx:id="overlayGroup"/> 
+	</fx:define>
 
 	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
-	<GridPane fx:id="commentPane" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+	<GridPane fx:id="overlayPane" visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+		<Label styleClass="labelPanes" text="%label_overlays" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+		<ToggleButton fx:id="btnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="2" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay2" text="%button_overlay_2" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="3" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay3" text="%button_overlay_3" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="4" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay4" text="%button_overlay_4" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="5" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay5" text="%button_overlay_5" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="6" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+		<ToggleButton fx:id="btnOverlay6" text="%button_overlay_6" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="7" GridPane.rowIndex="0"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ToggleButton>
+	</GridPane>
+	<GridPane fx:id="commentPane" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
 		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
 		<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
 		<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM"/> 
@@ -28,6 +56,7 @@
 	</GridPane>
 	<rowConstraints>
 		<RowConstraints vgrow="SOMETIMES"/> 
+		<RowConstraints fx:id="commentConstraints" vgrow="NEVER"/> 
 		<RowConstraints fx:id="commentConstraints" vgrow="SOMETIMES" percentHeight="20"/> 
 	</rowConstraints>
 	<columnConstraints>

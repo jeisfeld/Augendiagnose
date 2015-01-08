@@ -5,22 +5,21 @@
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
 }
 
-.imageButton {
-	-fx-padding: 0.0;
-	-fx-background-color: transparent;
-}
-
-#btnEditComment {
+.toggle-button {
 	-fx-text-fill: white;
 	-fx-font-family: "Arial Narrow";
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
 }
 
-#btnEditComment:selected {
+.toggle-button:selected {
 	-fx-background-color: linear-gradient(#ffa265, #BF1600);
 }
 
+.imageButton {
+	-fx-padding: 0.0;
+	-fx-background-color: transparent;
+}
 
 .listNames {
 	-fx-padding: 0.0;
@@ -41,7 +40,7 @@
 	-fx-alignment: center;
 }
 
-.labelComment {
+.labelPanes {
 	-fx-font-weight: bold;
 	-fx-font-size: 14.0;
 	-fx-padding: 5.0;

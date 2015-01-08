@@ -138,7 +138,7 @@ public final class ImageUtil {
 	 *            The scale factor of the overlay.
 	 * @return The image with overlay.
 	 */
-	public static Image getImageWithOverlay(final Image baseImage, final int overlayType, final RightLeft side,
+	private static Image getImageWithOverlay(final Image baseImage, final int overlayType, final RightLeft side,
 			final Paint color, final double xPosition, final double yPosition, final double scaleFactor) {
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
@@ -153,4 +153,30 @@ public final class ImageUtil {
 
 		return canvas.snapshot(null, null);
 	}
+
+	/**
+	 * Get an eye photo image with a displayed overlay, positioned via the metadata.
+	 *
+	 * @param eyePhoto
+	 *            The eye photo image.
+	 * @param overlayType
+	 *            The overlay type.
+	 * @param color
+	 *            The overlay color.
+	 * @return The image with overlay.
+	 */
+	public static Image getImageWithOverlay(final EyePhoto eyePhoto, final Integer overlayType, final Paint color) {
+		Image image = eyePhoto.getImage();
+		JpegMetadata metadata = eyePhoto.getImageMetadata();
+
+		if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
+			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
+					metadata.xCenter, metadata.yCenter,
+					metadata.overlayScaleFactor);
+		}
+		else {
+			return image;
+		}
+	}
+
 }
