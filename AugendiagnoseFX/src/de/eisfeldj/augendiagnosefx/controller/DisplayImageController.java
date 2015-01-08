@@ -230,6 +230,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the pane should be visible.
 	 */
 	public final void showCommentPane(final boolean visible) {
+		displayImageView.storePosition();
 		commentPane.setVisible(visible);
 		commentPane.setManaged(visible);
 		if (commentConstraints instanceof ColumnConstraints) {
@@ -238,6 +239,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		if (commentConstraints instanceof RowConstraints) {
 			((RowConstraints) commentConstraints).setPercentHeight(visible ? 20 : 0); // MAGIC_NUMBER
 		}
+		displayImage.layout();
+		displayImageView.retrievePosition();
 	}
 
 	/**

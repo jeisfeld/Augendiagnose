@@ -53,6 +53,17 @@ public class SizeableImageView extends ScrollPane {
 	private EyePhoto eyePhoto;
 
 	/**
+	 * X Location of the view center on the image.
+	 */
+	private double centerX;
+
+	/**
+	 * Y Location of the view center on the image.
+	 */
+	private double centerY;
+
+
+	/**
 	 * Constructor without initialization of image.
 	 */
 	public SizeableImageView() {
@@ -168,20 +179,20 @@ public class SizeableImageView extends ScrollPane {
 				layout();
 
 				if (metadata != null && metadata.hasOverlayPosition()) {
-					// Target size of the image.
-					double targetWidth = zoomProperty.get() * imageView.getImage().getWidth();
-					double targetHeight = zoomProperty.get() * imageView.getImage().getHeight();
+					// Size of the image.
+					double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+					double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
 
 					// Image pixels outside the visible area which need to be scrolled.
-					double postScrollXFactor = Math.max(0, targetWidth - getWidth());
-					double postScrollYFactor = Math.max(0, targetHeight - getHeight());
+					double scrollXFactor = Math.max(0, imageWidth - getWidth());
+					double scrollYFactor = Math.max(0, imageHeight - getHeight());
 
 					// The initial scrollbar positions
-					double hValue = postScrollXFactor > 0
-							? (metadata.xCenter * targetWidth - getWidth() / 2) / postScrollXFactor
+					double hValue = scrollXFactor > 0
+							? (metadata.xCenter * imageWidth - getWidth() / 2) / scrollXFactor
 							: 1;
-					double vValue = postScrollYFactor > 0
-							? (metadata.yCenter * targetHeight - getHeight() / 2) / postScrollYFactor
+					double vValue = scrollYFactor > 0
+							? (metadata.yCenter * imageHeight - getHeight() / 2) / scrollYFactor
 							: 1;
 
 					setHvalue(hValue);
@@ -202,4 +213,55 @@ public class SizeableImageView extends ScrollPane {
 	public final void displayOverlay(final Integer overlayType) {
 		imageView.setImage(ImageUtil.getImageWithOverlay(eyePhoto, overlayType, Color.RED));
 	}
+
+	/**
+	 * Store image position for later retrieval.
+	 */
+	public final void storePosition() {
+		if (imageView == null || imageView.getImage() == null) {
+			return;
+		}
+
+		// Size of the image.
+		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+		// Image pixels outside the visible area which need to be scrolled.
+		double scrollXFactor = Math.max(0, imageWidth - getWidth());
+		double scrollYFactor = Math.max(0, imageHeight - getHeight());
+
+		// Calculate position of pane center in the image
+		centerX = scrollXFactor > 0
+				? getWidth() / 2 + scrollXFactor * getHvalue()
+				: imageWidth / 2;
+		centerY = scrollYFactor > 0
+				? getHeight() / 2 + scrollYFactor * getVvalue()
+				: imageHeight / 2;
+	}
+
+	/**
+	 * Retrieve image position.
+	 */
+	public final void retrievePosition() {
+		if (imageView == null || imageView.getImage() == null) {
+			return;
+		}
+
+		// Size of the image.
+		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+		// Image pixels outside the visible area which need to be scrolled.
+		double scrollXFactor = Math.max(0, imageWidth - getWidth());
+		double scrollYFactor = Math.max(0, imageHeight - getHeight());
+
+		// Move scroll position to put center back.
+		if (scrollXFactor > 0) {
+			setHvalue((centerX - getWidth() / 2) / scrollXFactor);
+		}
+		if (scrollYFactor > 0) {
+			setVvalue((centerY - getHeight() / 2) / scrollYFactor);
+		}
+	}
+
 }
