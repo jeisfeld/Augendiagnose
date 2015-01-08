@@ -3,6 +3,8 @@ package de.eisfeldj.augendiagnosefx.controller;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,7 +15,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
 import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
@@ -82,6 +86,30 @@ public class PreferencesController extends DialogController implements Initializ
 		}
 		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
 		close();
+	}
+
+	/**
+	 * Action handler for select directory button.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void selectDirectory(final ActionEvent event) {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)));
+		File selectedFolder = directoryChooser.showDialog(getStage());
+		if (selectedFolder != null) {
+			String selectedFolderString;
+			try {
+				selectedFolderString = selectedFolder.getCanonicalPath();
+			}
+			catch (IOException e) {
+				Logger.warning("Could not get canonical path for " + selectedFolder.getAbsolutePath());
+				selectedFolderString = selectedFolder.getAbsolutePath();
+			}
+			textFolderPhotos.setText(selectedFolderString);
+		}
 	}
 
 }

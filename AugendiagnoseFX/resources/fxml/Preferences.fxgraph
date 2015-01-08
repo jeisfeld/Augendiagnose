@@ -8,6 +8,8 @@ import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
 import javafx.scene.control.ChoiceBox
 import javafx.collections.FXCollections
+import javafx.scene.image.ImageView
+import javafx.scene.image.Image
 
 component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id settingsPane {
@@ -23,7 +25,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				styleClass : "settingsHeading",
 				static columnIndex : 0,
 				static rowIndex : 0,
-				static columnSpan : 2
+				static columnSpan : 3
 			},
 
 			Label {
@@ -38,6 +40,18 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 1
 			},
 
+			Button {
+				static columnIndex : 2,
+				static rowIndex : 1,
+				styleClass : "imageButton",
+				graphic : ImageView {
+					image : Image {
+						url : location "img/folder.png"
+					}
+				},
+				onAction : controllermethod selectDirectory
+			},
+
 			Label {
 				text : rstring "pref_title_max_bitmap_size",
 				static columnIndex : 0,
@@ -47,6 +61,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			ChoiceBox<Integer> id choiceMaxBitmapSize {
 				static columnIndex : 1,
 				static rowIndex : 2,
+				static columnSpan : 2,
 				items : FXCollections createdby observableArrayList {
 					Integer(4096), Integer(2880), Integer(2048), Integer(1440), Integer(1024)
 				}
@@ -64,6 +79,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				text : rstring "button_ok",
 				static columnIndex : 1,
 				static rowIndex : 3,
+				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit
 			}

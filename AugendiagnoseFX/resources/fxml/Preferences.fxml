@@ -9,6 +9,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
@@ -23,11 +25,20 @@
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<children>
-		<Label text="%title_settings" styleClass="settingsHeading" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/> 
+		<Label text="%title_settings" styleClass="settingsHeading" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/> 
 		<Label text="%pref_title_folder_photos" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
 		<TextField fx:id="textFolderPhotos" minWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
+		<Button styleClass="imageButton" onAction="#selectDirectory" GridPane.columnIndex="2" GridPane.rowIndex="1"> 
+			<graphic>
+				<ImageView> 
+					<image>
+						<Image url="@img/folder.png"/> 
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
 		<Label text="%pref_title_max_bitmap_size" GridPane.columnIndex="0" GridPane.rowIndex="2"/> 
-		<ChoiceBox fx:id="choiceMaxBitmapSize" GridPane.columnIndex="1" GridPane.rowIndex="2"> 
+		<ChoiceBox fx:id="choiceMaxBitmapSize" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"> 
 			<items>
 				<FXCollections fx:factory="observableArrayList"> 
 					<Integer fx:value="4096"/> 
@@ -39,6 +50,6 @@
 			</items>
 		</ChoiceBox>
 		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="LEFT"/> 
-		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="RIGHT"/> 
+		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
 	</children>
 </GridPane>
