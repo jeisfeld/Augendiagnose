@@ -1,12 +1,10 @@
 package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.Locale;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
@@ -369,12 +367,7 @@ public class EyePhoto {
 	 */
 	public final synchronized void precalculateImage() {
 		if (cachedImage == null) {
-			try {
-				cachedImage = new Image(getFile().toURI().toURL().toExternalForm());
-			}
-			catch (MalformedURLException e) {
-				Logger.error("Error when creating URL for " + getAbsolutePath(), e);
-			}
+			cachedImage = ImageUtil.getImage(getFile());
 		}
 	}
 
@@ -386,18 +379,6 @@ public class EyePhoto {
 	public final Image getImage() {
 		precalculateImage();
 		return cachedImage;
-	}
-
-	/**
-	 * Return an image view of this photo, fitting into the given dimensions.
-	 *
-	 * @return The ImageView.
-	 */
-	public final ImageView getImageView() {
-		Image image = getImage();
-		ImageView imageView = new ImageView(image);
-		imageView.setPreserveRatio(true);
-		return imageView;
 	}
 
 	/**

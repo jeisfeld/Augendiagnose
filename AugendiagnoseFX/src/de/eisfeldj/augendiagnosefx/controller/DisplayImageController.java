@@ -137,7 +137,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
 
-		displayImageView.setImageView(eyePhoto.getImageView());
+		displayImageView.setImage(eyePhoto);
 
 		txtImageComment.setText(eyePhoto.getImageMetadata().comment);
 

@@ -6,11 +6,16 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import de.eisfeldj.augendiagnosefx.util.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil;
+import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 
 /**
  * Pane containing an image that can be resized.
@@ -127,11 +132,24 @@ public class SizeableImageView extends ScrollPane {
 	/**
 	 * Set the image view displayed by this class.
 	 *
-	 * @param imageView
+	 * @param eyePhoto
 	 *            The ImageView.
 	 */
-	public final void setImageView(final ImageView imageView) {
-		this.imageView = imageView;
+	public final void setImage(final EyePhoto eyePhoto) {
+		Image image = eyePhoto.getImage();
+
+		imageView = new ImageView();
+		imageView.setPreserveRatio(true);
+
+		JpegMetadata metadata = eyePhoto.getImageMetadata();
+		if (metadata != null && metadata.hasOverlayPosition()) {
+			imageView.setImage(ImageUtil.getImageWithOverlay(image, 1, eyePhoto.getRightLeft(), Color.RED,
+					metadata.xCenter, metadata.yCenter,
+					metadata.overlayScaleFactor));
+		}
+		else {
+			imageView.setImage(image);
+		}
 
 		// Surround with BorderPane, so that image is centered if not filling screen
 		setContent(new BorderPane(imageView));
