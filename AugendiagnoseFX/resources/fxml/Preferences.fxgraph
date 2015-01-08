@@ -1,15 +1,16 @@
 package fxml
 
 import de.eisfeldj.augendiagnosefx.controller.PreferencesController
+import javafx.collections.FXCollections
 import javafx.scene.control.Button
+import javafx.scene.control.ChoiceBox
+import javafx.scene.control.ColorPicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
-import javafx.scene.control.ChoiceBox
-import javafx.collections.FXCollections
-import javafx.scene.image.ImageView
-import javafx.scene.image.Image
 
 component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id settingsPane {
@@ -67,10 +68,22 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				}
 			},
 
+			Label {
+				text : rstring "pref_title_overlay_color",
+				static columnIndex : 0,
+				static rowIndex : 3
+			},
+
+			ColorPicker id colorPicker {
+				static columnIndex : 1,
+				static rowIndex : 3,
+				static columnSpan : 2
+			},
+
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 3,
+				static rowIndex : 4,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -78,7 +91,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 3,
+				static rowIndex : 4,
 				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit

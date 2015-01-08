@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
+import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.Application;
 
 /**
@@ -56,6 +57,11 @@ public final class PreferenceUtil {
 	public static final String KEY_MAX_BITMAP_SIZE = "max_bitmap_size";
 
 	/**
+	 * Preference key for default overlay color.
+	 */
+	public static final String KEY_OVERLAY_COLOR = "key_overlay_color";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -75,6 +81,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
 		DEFAULT_MAP.put(KEY_MAX_BITMAP_SIZE, 2048); // MAGIC_NUMBER
+		DEFAULT_MAP.put(KEY_OVERLAY_COLOR, "#FF0000FF"); // RED
 	}
 
 	/**
@@ -180,4 +187,34 @@ public final class PreferenceUtil {
 		return prefs.getBoolean(key, (Boolean) DEFAULT_MAP.get(key));
 	}
 
+	/**
+	 * Set a Color shared preference.
+	 *
+	 * @param key
+	 *            The key of the preference.
+	 * @param color
+	 *            The value of the preference.
+	 */
+	public static void setPreference(final String key, final Color color) {
+		double maxByte = 255.999; // MAGIC_NUMBER
+		String colorString = String.format("#%02X%02X%02X%02X",
+				(int) (color.getRed() * maxByte),
+				(int) (color.getGreen() * maxByte),
+				(int) (color.getBlue() * maxByte),
+				(int) (color.getOpacity() * maxByte));
+		prefs.put(key, colorString);
+	}
+
+	/**
+	 * Retrieve a Color shared preference.
+	 *
+	 * @param key
+	 *            the key of the preference.
+	 *
+	 * @return the corresponding preference value.
+	 */
+	public static Color getPreferenceColor(final String key) {
+		String colorString = prefs.get(key, (String) DEFAULT_MAP.get(key));
+		return Color.web(colorString);
+	}
 }

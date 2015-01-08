@@ -5,6 +5,8 @@
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
+    <filter-data value="resources/bundles"/>
+    <filter-data value="resources/fxml"/>
     <filter-data value="resources/img"/>
     <filter-data value="resources/overlay"/>
   </filter>

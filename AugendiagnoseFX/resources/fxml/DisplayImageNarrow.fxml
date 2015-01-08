@@ -5,12 +5,15 @@
 
 <?import java.lang.*?>
 <?import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
@@ -21,30 +24,34 @@
 	</fx:define>
 
 	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
-	<GridPane fx:id="overlayPane" visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
-		<Label styleClass="labelPanes" text="%label_overlays" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
-		<ToggleButton fx:id="btnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
+	<HBox fx:id="overlayPane" visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+		<Label styleClass="labelPanes" text="%label_overlays"/> 
+		<ToggleButton fx:id="btnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="2" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay2" text="%button_overlay_2" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="3" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay2" text="%button_overlay_2" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay3" text="%button_overlay_3" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="4" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay3" text="%button_overlay_3" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay4" text="%button_overlay_4" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="5" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay4" text="%button_overlay_4" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay5" text="%button_overlay_5" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="6" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay5" text="%button_overlay_5" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-		<ToggleButton fx:id="btnOverlay6" text="%button_overlay_6" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup" GridPane.columnIndex="7" GridPane.rowIndex="0"> 
+		<ToggleButton fx:id="btnOverlay6" text="%button_overlay_6" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
-	</GridPane>
+		<Separator/> 
+		<ColorPicker fx:id="btnOverlayColor" onAction="#onColorChanged"> 
+			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+		</ColorPicker>
+	</HBox>
 	<GridPane fx:id="commentPane" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
 		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
 		<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 

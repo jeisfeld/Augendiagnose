@@ -62,7 +62,6 @@ public class SizeableImageView extends ScrollPane {
 	 */
 	private double centerY;
 
-
 	/**
 	 * Constructor without initialization of image.
 	 */
@@ -209,9 +208,12 @@ public class SizeableImageView extends ScrollPane {
 	 *
 	 * @param overlayType
 	 *            The overlay type to be displayed.
+	 *
+	 * @param color
+	 *            The color of the overlay.
 	 */
-	public final void displayOverlay(final Integer overlayType) {
-		imageView.setImage(ImageUtil.getImageWithOverlay(eyePhoto, overlayType, Color.RED));
+	public final void displayOverlay(final Integer overlayType, final Color color) {
+		imageView.setImage(ImageUtil.getImageWithOverlay(eyePhoto, overlayType, color));
 	}
 
 	/**
@@ -221,11 +223,9 @@ public class SizeableImageView extends ScrollPane {
 		if (imageView == null || imageView.getImage() == null) {
 			return;
 		}
-
 		// Size of the image.
 		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
 		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
-
 		// Image pixels outside the visible area which need to be scrolled.
 		double scrollXFactor = Math.max(0, imageWidth - getWidth());
 		double scrollYFactor = Math.max(0, imageHeight - getHeight());
@@ -246,11 +246,9 @@ public class SizeableImageView extends ScrollPane {
 		if (imageView == null || imageView.getImage() == null) {
 			return;
 		}
-
 		// Size of the image.
 		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
 		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
-
 		// Image pixels outside the visible area which need to be scrolled.
 		double scrollXFactor = Math.max(0, imageWidth - getWidth());
 		double scrollYFactor = Math.max(0, imageHeight - getHeight());

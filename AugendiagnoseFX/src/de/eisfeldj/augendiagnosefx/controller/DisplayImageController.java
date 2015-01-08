@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_EDIT_COMMENT;
@@ -12,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.ColumnConstraints;
@@ -57,7 +59,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * The pane used for toggling the overlay.
 	 */
 	@FXML
-	private GridPane overlayPane;
+	private Pane overlayPane;
 
 	/**
 	 * The constraints of the overlay pane.
@@ -102,6 +104,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	// JAVADOC:ON
 
 	/**
+	 * The Button for selecting the overlay color.
+	 */
+	@FXML
+	private ColorPicker btnOverlayColor;
+
+	/**
 	 * The displayed eye photo.
 	 */
 	private EyePhoto eyePhoto;
@@ -111,12 +119,18 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	private String oldComment;
 
+	/**
+	 * Storage for the current overlay type.
+	 */
+	private Integer currentOverlayType = null;
+
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		MenuController.getInstance().getMenuCommentPane().setDisable(false);
 		MenuController.getInstance().getMenuOverlayPane().setDisable(false);
 		showCommentPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 		showOverlayPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
+		btnOverlayColor.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
 	}
 
 	@Override
@@ -165,7 +179,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	}
 
 	/**
-	 * Action method for button "Overlay".
+	 * Action method for button "Overlay x".
 	 *
 	 * @param event
 	 *            The action event.
@@ -193,8 +207,15 @@ public class DisplayImageController extends BaseController implements Initializa
 		}
 	}
 
-	public final EyePhoto getEyePhoto() {
-		return eyePhoto;
+	/**
+	 * Action method for color picker.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void onColorChanged(final ActionEvent event) {
+		showOverlay(currentOverlayType);
 	}
 
 	/**
@@ -220,7 +241,8 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The overlay type to be displayed.
 	 */
 	public final void showOverlay(final Integer overlayType) {
-		displayImageView.displayOverlay(overlayType);
+		currentOverlayType = overlayType;
+		displayImageView.displayOverlay(overlayType, btnOverlayColor.getValue());
 	}
 
 	/**

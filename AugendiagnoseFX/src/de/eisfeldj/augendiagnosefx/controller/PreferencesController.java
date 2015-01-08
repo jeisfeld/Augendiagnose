@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnosefx.controller;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
@@ -47,6 +49,12 @@ public class PreferencesController extends DialogController implements Initializ
 	@FXML
 	private ChoiceBox<Integer> choiceMaxBitmapSize;
 
+	/**
+	 * Color picker for the default overlay color.
+	 */
+	@FXML
+	private ColorPicker colorPicker;
+
 	@Override
 	public final Parent getRoot() {
 		return settingsPane;
@@ -58,6 +66,7 @@ public class PreferencesController extends DialogController implements Initializ
 		textFolderPhotos.setText(oldPhotosFolder);
 
 		choiceMaxBitmapSize.setValue(PreferenceUtil.getPreferenceInt(KEY_MAX_BITMAP_SIZE));
+		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
 	}
 
 	/**
@@ -85,6 +94,7 @@ public class PreferencesController extends DialogController implements Initializ
 			Application.refreshMainPage();
 		}
 		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
+		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, colorPicker.getValue());
 		close();
 	}
 

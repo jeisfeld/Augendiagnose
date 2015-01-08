@@ -11,7 +11,6 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto.RightLeft;
 
 /**
@@ -53,7 +52,7 @@ public final class ImageUtil {
 	 *            The overlay color.
 	 * @return The overlay image.
 	 */
-	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Paint color) {
+	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
 		String baseName = "";
 		switch (overlayType) {
 		case 0:
@@ -127,7 +126,7 @@ public final class ImageUtil {
 	 * @return The image with overlay.
 	 */
 	private static Image getImageWithOverlay(final Image baseImage, final int overlayType, final RightLeft side,
-			final Paint color, final double xPosition, final double yPosition, final double scaleFactor) {
+			final Color color, final double xPosition, final double yPosition, final double scaleFactor) {
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
@@ -137,6 +136,8 @@ public final class ImageUtil {
 
 		Canvas canvas = new Canvas(width, height);
 		canvas.getGraphicsContext2D().drawImage(baseImage, 0, 0, width, height);
+		canvas.getGraphicsContext2D().setGlobalAlpha(color.getOpacity());
+
 		canvas.getGraphicsContext2D().drawImage(overlayImage, xPosition * width - overlaySize / 2,
 				yPosition * height - overlaySize / 2, overlaySize, overlaySize);
 
@@ -154,7 +155,7 @@ public final class ImageUtil {
 	 *            The overlay color.
 	 * @return The image with overlay.
 	 */
-	public static Image getImageWithOverlay(final EyePhoto eyePhoto, final Integer overlayType, final Paint color) {
+	public static Image getImageWithOverlay(final EyePhoto eyePhoto, final Integer overlayType, final Color color) {
 		Image image = eyePhoto.getImage();
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 

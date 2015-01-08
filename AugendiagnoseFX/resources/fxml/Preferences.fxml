@@ -7,6 +7,7 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -49,7 +50,9 @@
 				</FXCollections>
 			</items>
 		</ChoiceBox>
-		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="LEFT"/> 
-		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
+		<Label text="%pref_title_overlay_color" GridPane.columnIndex="0" GridPane.rowIndex="3"/> 
+		<ColorPicker fx:id="colorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"/> 
+		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.halignment="LEFT"/> 
+		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
 	</children>
 </GridPane>
