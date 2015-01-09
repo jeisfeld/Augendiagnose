@@ -4,7 +4,6 @@
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
 	-fx-alignment: center;
-	-fx-padding: 0.0;
 }
 
 .button .color-picker-label .text {
