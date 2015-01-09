@@ -61,6 +61,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				maxWidth : const Double#MAX_VALUE,
 				toggleGroup : idref overlayGroup
 			},
+			Separator,
 			ToggleButton id btnOverlay1 {
 				text : rstring "button_overlay_1",
 				styleClass : "toggleOverlay",
@@ -116,7 +117,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				toggleGroup : idref overlayGroup
 			},
 			Separator,
-			ColorPicker id btnOverlayColor {
+			ColorPicker id colorPicker {
 				maxWidth : const Double#MAX_VALUE,
 				onAction : controllermethod onColorChanged
 			}

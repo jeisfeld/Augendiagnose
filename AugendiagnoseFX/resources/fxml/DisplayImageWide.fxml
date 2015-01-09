@@ -29,6 +29,7 @@
 		<ToggleButton fx:id="btnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
+		<Separator/> 
 		<ToggleButton fx:id="btnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
@@ -48,7 +49,7 @@
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ToggleButton>
 		<Separator/> 
-		<ColorPicker fx:id="btnOverlayColor" onAction="#onColorChanged"> 
+		<ColorPicker fx:id="colorPicker" onAction="#onColorChanged"> 
 			<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 		</ColorPicker>
 	</VBox>
@@ -61,7 +62,7 @@
 	</GridPane>
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES"/> 
-		<ColumnConstraints fx:id="overlayConstraints" hgrow="NEVER" minWidth="70"/> 
+		<ColumnConstraints fx:id="overlayConstraints" hgrow="NEVER" minWidth="75"/> 
 		<ColumnConstraints fx:id="commentConstraints" hgrow="SOMETIMES" percentWidth="20"/> 
 	</columnConstraints>
 	<rowConstraints>

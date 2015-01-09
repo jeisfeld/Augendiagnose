@@ -107,7 +107,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * The Button for selecting the overlay color.
 	 */
 	@FXML
-	private ColorPicker btnOverlayColor;
+	private ColorPicker colorPicker;
 
 	/**
 	 * The displayed eye photo.
@@ -130,7 +130,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		MenuController.getInstance().getMenuOverlayPane().setDisable(false);
 		showCommentPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 		showOverlayPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
-		btnOverlayColor.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
+		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
+		colorPicker.getStyleClass().add("button");
 	}
 
 	@Override
@@ -242,7 +243,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	public final void showOverlay(final Integer overlayType) {
 		currentOverlayType = overlayType;
-		displayImageView.displayOverlay(overlayType, btnOverlayColor.getValue());
+		displayImageView.displayOverlay(overlayType, colorPicker.getValue());
 	}
 
 	/**
@@ -275,7 +276,7 @@ public class DisplayImageController extends BaseController implements Initializa
 		overlayPane.setVisible(visible);
 		overlayPane.setManaged(visible);
 		if (overlayConstraints instanceof ColumnConstraints) {
-			((ColumnConstraints) overlayConstraints).setMinWidth(visible ? 70 : 0); // MAGIC_NUMBER
+			((ColumnConstraints) overlayConstraints).setMinWidth(visible ? 75 : 0); // MAGIC_NUMBER
 		}
 	}
 
