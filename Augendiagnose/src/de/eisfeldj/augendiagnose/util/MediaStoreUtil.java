@@ -3,12 +3,15 @@ package de.eisfeldj.augendiagnose.util;
 import java.io.File;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import de.eisfeldj.augendiagnose.Application;
 
 /**
@@ -72,6 +75,50 @@ public abstract class MediaStoreUtil {
 			imagecursor.close();
 			throw new ImageNotFoundException();
 		}
+	}
+
+	/**
+	 * Get an Uri from an image file path.
+	 *
+	 * @param path
+	 *            The image file path.
+	 * @return The Uri.
+	 */
+	public static Uri getUriFromFile(final String path) {
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
+
+		Cursor filecursor = resolver.query(MediaStore.Files.getContentUri("external"),
+				new String[] { BaseColumns._ID }, MediaColumns.DATA + " = ?",
+				new String[] { path }, MediaColumns.DATE_ADDED + " desc");
+		filecursor.moveToFirst();
+
+		if (!filecursor.isAfterLast()) {
+			int imageId = filecursor.getInt(filecursor.getColumnIndex(BaseColumns._ID));
+			Uri uri = MediaStore.Files.getContentUri("external").buildUpon().appendPath(
+					Integer.toString(imageId)).build();
+			filecursor.close();
+			return uri;
+		}
+		else {
+			filecursor.close();
+			ContentValues values = new ContentValues();
+			values.put(MediaColumns.DATA, path);
+			return resolver.insert(MediaStore.Files.getContentUri("external"), values);
+		}
+	}
+
+	/**
+	 * Add a picture to the media store (via scanning).
+	 *
+	 * @param path
+	 *            the path of the image.
+	 */
+	public static final void addFileToMediaStore(final String path) {
+		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		File file = new File(path);
+		Uri contentUri = Uri.fromFile(file);
+		mediaScanIntent.setData(contentUri);
+		Application.getAppContext().sendBroadcast(mediaScanIntent);
 	}
 
 	/**

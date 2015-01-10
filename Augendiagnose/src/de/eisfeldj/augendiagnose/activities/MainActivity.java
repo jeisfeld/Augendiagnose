@@ -78,6 +78,8 @@ public class MainActivity extends Activity {
 			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buttonOrganize.getLayoutParams();
 			params.weight = 2;
 		}
+
+		test();
 	}
 
 	/*
@@ -152,4 +154,9 @@ public class MainActivity extends Activity {
 				Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 	}
 
+	/**
+	 * Utility method - here it is possible to place code to be tested on startup.
+	 */
+	private void test() {
+	}
 }

@@ -84,7 +84,7 @@ public class EyePhoto {
 		setFilename(file.getName());
 
 		if (filename != null && !filename.equals(getFilename())) {
-			boolean success = new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+			boolean success = FileUtil.moveFile(new File(getPath(), filename), new File(getPath(), getFilename()));
 			if (!success) {
 				Log.w(Application.TAG, "Failed to rename file" + filename + " to " + getFilename());
 			}
@@ -310,7 +310,7 @@ public class EyePhoto {
 	 * @return true if the deletion was successful.
 	 */
 	public final boolean delete() {
-		return getFile().delete();
+		return FileUtil.deleteFile(getFile());
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class EyePhoto {
 			return false;
 		}
 
-		return getFile().renameTo(target.getFile());
+		return FileUtil.moveFile(getFile(), target.getFile());
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class EyePhoto {
 			return false;
 		}
 
-		return getFile().renameTo(targetFile);
+		return FileUtil.moveFile(getFile(), targetFile);
 	}
 
 	/**

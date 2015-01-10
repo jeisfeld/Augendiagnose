@@ -261,8 +261,7 @@ public final class JpegMetadataUtil {
 			throws IOException,
 			ImageReadException, ImageWriteException {
 		File jpegImageFile = new File(jpegImageFileName);
-		String tempFileName = jpegImageFileName + ".temp";
-		File tempFile = new File(tempFileName);
+		File tempFile = FileUtil.getTempFile(jpegImageFile);
 
 		verifyTempFile(tempFile);
 
@@ -316,8 +315,9 @@ public final class JpegMetadataUtil {
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!tempFile.renameTo(jpegImageFile)) {
-				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
+			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFile.getAbsolutePath() + " to "
+						+ jpegImageFileName);
 			}
 		}
 		finally {
@@ -344,8 +344,7 @@ public final class JpegMetadataUtil {
 			throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
 		File jpegImageFile = new File(jpegImageFileName);
-		String tempFileName = jpegImageFileName + ".temp";
-		File tempFile = new File(tempFileName);
+		File tempFile = FileUtil.getTempFile(jpegImageFile);
 
 		verifyTempFile(tempFile);
 
@@ -389,8 +388,9 @@ public final class JpegMetadataUtil {
 
 			IoUtils.closeQuietly(true, os);
 
-			if (!tempFile.renameTo(jpegImageFile)) {
-				throw new IOException("Failed to rename file " + tempFileName + " to " + jpegImageFileName);
+			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
+				throw new IOException("Failed to rename file " + tempFile.getAbsolutePath() + " to "
+						+ jpegImageFileName);
 			}
 		}
 		finally {
@@ -407,7 +407,7 @@ public final class JpegMetadataUtil {
 	private static void verifyTempFile(final File tempFile) {
 		if (tempFile.exists()) {
 			Log.w(Application.TAG, "tempFile " + tempFile.getName() + " already exists - deleting it");
-			boolean success = tempFile.delete();
+			boolean success = FileUtil.deleteFile(tempFile);
 			if (!success) {
 				Log.w(Application.TAG, "Failed to delete file" + tempFile.getName());
 			}
