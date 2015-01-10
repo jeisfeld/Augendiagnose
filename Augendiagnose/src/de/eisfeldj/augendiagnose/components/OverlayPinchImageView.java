@@ -56,6 +56,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static final float MAX_OVERLAY_SCALE_FACTOR = 5f;
 
 	/**
+	 * The limiting value of contrast (to avoid infinity or gray).
+	 */
+	private static final float CONTRAST_LIMIT = 0.99f;
+
+	/**
 	 * The color of the one-colored overlays.
 	 */
 	private int mOverlayColor = Color.RED;
@@ -231,7 +236,8 @@ public class OverlayPinchImageView extends PinchImageView {
 								mContrast = mMetadata.contrast.floatValue();
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
-									mGuiElementUpdater.updateSeekbarContrast(mContrast);
+									mGuiElementUpdater
+											.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 								}
 							}
 							if (mMetadata != null && mMetadata.overlayColor != null) {
@@ -612,7 +618,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            on a positive scale 0 to infinity, 1 is unchanged.
 	 */
 	public final void setContrast(final float contrast) {
-		mContrast = contrast;
+		// input goes from -1 to 1. Output goes from 0 to infinity.
+		mContrast = seekbarContrastToStoredContrast(contrast);
 		refresh(false);
 	}
 
@@ -653,7 +660,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mContrast = 1;
 				if (mGuiElementUpdater != null) {
 					mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
-					mGuiElementUpdater.updateSeekbarContrast(mContrast);
+					mGuiElementUpdater.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 				}
 			}
 			else {
@@ -663,6 +670,30 @@ public class OverlayPinchImageView extends PinchImageView {
 
 			mEyePhoto.storeImageMetadata(mMetadata);
 		}
+	}
+
+	/**
+	 * Convert contrast from (-1,1) scale to (0,infty) scale.
+	 *
+	 * @param seekbarContrast
+	 *            the contrast on (-1,1) scale.
+	 * @return the contrast on (0,infty) scale.
+	 */
+	private float seekbarContrastToStoredContrast(final float seekbarContrast) {
+		float contrastImd = (float) (Math.asin(seekbarContrast) * 2 / Math.PI);
+		return 2f / (1f - contrastImd * CONTRAST_LIMIT) - 1f;
+	}
+
+	/**
+	 * Convert contrast from (0,infty) scale to (-1,1) scale.
+	 *
+	 * @param storedContrast
+	 *            the contrast on (0,infty) scale.
+	 * @return the contrast on (-1,1) scale.
+	 */
+	private float storedContrastToSeekbarContrast(final float storedContrast) {
+		float contrastImd = (1f - 2f / (storedContrast + 1f)) / CONTRAST_LIMIT;
+		return (float) Math.sin(Math.PI * contrastImd / 2);
 	}
 
 	/**

@@ -86,7 +86,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added navigation on help pages. Bugfixes.</item>
         <item>New overlays. Choose color of overlays. Bugfixes.</item>
         <item>Added one more overlay. Help page for release notes. Bugfixes.</item>
-        <item>Bugfixes</item>
+        <item>Changed scale on contrast bar. Enabled saving on ext sd card for Android 4.4.</item>
     </string-array>
 
 </resources>

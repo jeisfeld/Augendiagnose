@@ -95,15 +95,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private OverlayPinchImageView imageView;
 
 	/**
-	 * The maximum contrast allowed when changing the image contrast.
-	 */
-	private static final int CONTRAST_MAX = 5;
-	/**
-	 * The density of contrast levels.
-	 */
-	private static final int CONTRAST_DENSITY = 20;
-
-	/**
 	 * The number of overlay images.
 	 */
 	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
@@ -273,12 +264,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 
 		seekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
-		seekbarContrast.setMax(CONTRAST_MAX * CONTRAST_DENSITY);
-		seekbarContrast.setProgress(CONTRAST_DENSITY);
 		seekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				imageView.setContrast(((float) seekBar.getProgress()) / CONTRAST_DENSITY);
+				imageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
 
@@ -579,7 +568,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 	@Override
 	public final void updateSeekbarContrast(final float contrast) {
-		float progress = contrast * CONTRAST_DENSITY;
+		float progress = (contrast + 1) * seekbarContrast.getMax() / 2;
 		seekbarContrast.setProgress(Float.valueOf(progress).intValue());
 	}
 

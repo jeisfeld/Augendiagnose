@@ -8,6 +8,11 @@ import de.eisfeldj.augendiagnosefx.util.ImageUtil;
  */
 public class OverlayImageView extends SizableImageView {
 	/**
+	 * The limiting value of contrast (to avoid infinity or gray).
+	 */
+	private static final float CONTRAST_LIMIT = 0.99f;
+
+	/**
 	 * The current overlay displayed.
 	 */
 	private Integer overlayType;
@@ -62,8 +67,20 @@ public class OverlayImageView extends SizableImageView {
 	 *            The contrast
 	 */
 	public final void setContrast(final float newContrast) {
-		contrast = newContrast;
+		contrast = seekbarContrastToStoredContrast(newContrast);
 		getImageView().setImage(
 				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast));
+	}
+
+	/**
+	 * Convert contrast from (-1,1) scale to (0,infty) scale.
+	 *
+	 * @param seekbarContrast
+	 *            the contrast on (-1,1) scale.
+	 * @return the contrast on (0,infty) scale.
+	 */
+	private float seekbarContrastToStoredContrast(final float seekbarContrast) {
+		float contrastImd = (float) (Math.asin(seekbarContrast) * 2 / Math.PI);
+		return 2f / (1f - contrastImd * CONTRAST_LIMIT) - 1f;
 	}
 }
