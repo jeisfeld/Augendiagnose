@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.ColumnConstraints;
@@ -86,6 +87,18 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton btnOverlayCircle;
 
 	/**
+	 * The slider for brightness.
+	 */
+	@FXML
+	private Slider sliderBrightness;
+
+	/**
+	 * The slider for contrast.
+	 */
+	@FXML
+	private Slider sliderContrast;
+
+	/**
 	 * The Buttons for overlays.
 	 */
 	// JAVADOC:OFF
@@ -126,8 +139,13 @@ public class DisplayImageController extends BaseController implements Initializa
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
-		MenuController.getInstance().getMenuCommentPane().setDisable(false);
-		MenuController.getInstance().getMenuOverlayPane().setDisable(false);
+		try {
+			MenuController.getInstance().getMenuCommentPane().setDisable(false);
+			MenuController.getInstance().getMenuOverlayPane().setDisable(false);
+		}
+		catch (RuntimeException e) {
+			// Catching exception so that JavaFX preview works.
+		}
 		showCommentPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 		showOverlayPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
 		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));

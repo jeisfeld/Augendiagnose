@@ -3,16 +3,20 @@ package fxml
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController
 import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView
 import javafx.scene.control.Button
+import javafx.scene.control.ColorPicker
 import javafx.scene.control.Label
 import javafx.scene.control.Separator
+import javafx.scene.control.Slider
 import javafx.scene.control.TextArea
 import javafx.scene.control.ToggleButton
 import javafx.scene.control.ToggleGroup
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.RowConstraints
-import javafx.scene.control.ColorPicker
+import javafx.geometry.Insets
 
 component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	define ToggleGroup id overlayGroup
@@ -43,83 +47,126 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static halignment : "CENTER",
 			static valignment : "CENTER"
 		},
-		HBox id overlayPane {
+		GridPane id overlayPane {
 			static columnIndex : 0,
 			static rowIndex : 1,
-			visible : true,
-			managed : true,
-			Label {
-				styleClass : "labelPanes",
-				text : rstring "label_overlays"
+			hgap : 5,
+			vgap: 5,
+			padding : Insets {
+				bottom : 5,
+				top : 5
 			},
-			ToggleButton id btnOverlayCircle {
-				text : rstring "button_overlay_circle",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
+			ImageView {
+				static columnIndex : 0,
+				static rowIndex : 0,
+				static halignment : "CENTER",
+				image : Image {
+					url : location "img/brightness.png"
+				}
 			},
-			Separator,
-			ToggleButton id btnOverlay1 {
-				text : rstring "button_overlay_1",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
+			Slider id sliderBrightness {
+				static columnIndex : 1,
+				static rowIndex : 0,
+				static halignment : "CENTER",
+				static vgrow : "SOMETIMES",
+				static hgrow : "SOMETIMES",
+				orientation : "HORIZONTAL"
 			},
-			ToggleButton id btnOverlay2 {
-				text : rstring "button_overlay_2",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
+			ImageView {
+				static columnIndex : 2,
+				static rowIndex : 0,
+				static halignment : "CENTER",
+				image : Image {
+					url : location "img/contrast.png"
+				}
 			},
-			ToggleButton id btnOverlay3 {
-				text : rstring "button_overlay_3",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
+			Slider id sliderContrast {
+				static columnIndex : 3,
+				static rowIndex : 0,
+				static halignment : "CENTER",
+				static vgrow : "SOMETIMES",
+				static hgrow : "SOMETIMES",
+				orientation : "HORIZONTAL"
 			},
-			ToggleButton id btnOverlay4 {
-				text : rstring "button_overlay_4",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
-			},
-			ToggleButton id btnOverlay5 {
-				text : rstring "button_overlay_5",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
-			},
-			ToggleButton id btnOverlay6 {
-				text : rstring "button_overlay_6",
-				styleClass : "toggleOverlay",
-				selected : false,
-				alignment : "CENTER",
-				onAction : controllermethod btnOverlayPressed,
-				maxWidth : const Double#MAX_VALUE,
-				toggleGroup : idref overlayGroup
-			},
-			Separator,
-			ColorPicker id colorPicker {
-				maxWidth : const Double#MAX_VALUE,
-				onAction : controllermethod onColorChanged
+			HBox {
+				static columnIndex : 0,
+				static rowIndex : 1,
+				static columnSpan : 4,
+				visible : true,
+				managed : true,
+				Label {
+					styleClass : "labelPanes",
+					text : rstring "label_overlays"
+				},
+				ToggleButton id btnOverlayCircle {
+					text : rstring "button_overlay_circle",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				Separator,
+				ToggleButton id btnOverlay1 {
+					text : rstring "button_overlay_1",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				ToggleButton id btnOverlay2 {
+					text : rstring "button_overlay_2",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				ToggleButton id btnOverlay3 {
+					text : rstring "button_overlay_3",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				ToggleButton id btnOverlay4 {
+					text : rstring "button_overlay_4",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				ToggleButton id btnOverlay5 {
+					text : rstring "button_overlay_5",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				ToggleButton id btnOverlay6 {
+					text : rstring "button_overlay_6",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
+				Separator,
+				ColorPicker id colorPicker {
+					maxWidth : const Double#MAX_VALUE,
+					onAction : controllermethod onColorChanged
+				}
 			}
 		},
 		GridPane id commentPane {
