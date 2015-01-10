@@ -87,6 +87,7 @@ public final class ImageUtil {
 		}
 
 		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
+		Color colorNoAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
 
 		Blend effect = new Blend(
 				BlendMode.SRC_ATOP,
@@ -96,11 +97,12 @@ public final class ImageUtil {
 						0,
 						OVERLAY_SIZE,
 						OVERLAY_SIZE,
-						color
+						colorNoAlpha
 				)
 				);
 
 		canvas.getGraphicsContext2D().setEffect(effect);
+		canvas.getGraphicsContext2D().setGlobalAlpha(color.getOpacity());
 		canvas.getGraphicsContext2D().drawImage(image, 0, 0, OVERLAY_SIZE, OVERLAY_SIZE);
 		SnapshotParameters parameters = new SnapshotParameters();
 		parameters.setFill(Color.TRANSPARENT);
@@ -199,17 +201,9 @@ public final class ImageUtil {
 			}
 		}
 
-		// Blend effect = new Blend(BlendMode.SRC_OVER,
-		// new ColorAdjust(0, 0, 0, contrast),
-		// new ColorAdjust(0, 0, brightness, 0));
-		//
-		// gc.setEffect(effect);
-		// gc.drawImage(baseImage, 0, 0, width, height);
-
 		if (overlayType != null) {
 			Image overlayImage = getOverlayImage(overlayType, side, color);
 			gc.setEffect(null);
-			gc.setGlobalAlpha(color.getOpacity());
 			gc.setGlobalBlendMode(BlendMode.SRC_OVER);
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
 					yPosition * height - overlaySize / 2, overlaySize, overlaySize);
