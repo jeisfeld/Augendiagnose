@@ -4,7 +4,7 @@
 -->
 
 <?import java.lang.*?>
-<?import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView?>
+<?import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -26,7 +26,7 @@
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<SizeableImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"/> 
+	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"/> 
 	<GridPane fx:id="overlayPane" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
 		<VBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 

@@ -11,15 +11,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 
 /**
  * Pane containing an image that can be resized.
  */
-public class SizeableImageView extends ScrollPane {
+public class SizableImageView extends ScrollPane {
 	/**
 	 * The zoom factor to be applied for each zoom event.
 	 *
@@ -47,10 +45,18 @@ public class SizeableImageView extends ScrollPane {
 	 */
 	private ImageView imageView;
 
+	protected final ImageView getImageView() {
+		return imageView;
+	}
+
 	/**
 	 * The displayed eye photo.
 	 */
 	private EyePhoto eyePhoto;
+
+	protected final EyePhoto getEyePhoto() {
+		return eyePhoto;
+	}
 
 	/**
 	 * X Location of the view center on the image.
@@ -65,7 +71,7 @@ public class SizeableImageView extends ScrollPane {
 	/**
 	 * Constructor without initialization of image.
 	 */
-	public SizeableImageView() {
+	public SizableImageView() {
 		imageView = new ImageView();
 		imageView.setPreserveRatio(true);
 		setContent(new BorderPane(imageView));
@@ -201,19 +207,6 @@ public class SizeableImageView extends ScrollPane {
 				heightProperty().removeListener(this);
 			}
 		});
-	}
-
-	/**
-	 * Display the overlay.
-	 *
-	 * @param overlayType
-	 *            The overlay type to be displayed.
-	 *
-	 * @param color
-	 *            The color of the overlay.
-	 */
-	public final void displayOverlay(final Integer overlayType, final Color color) {
-		imageView.setImage(ImageUtil.getImageWithOverlay(eyePhoto, overlayType, color));
 	}
 
 	/**

@@ -9,6 +9,8 @@ import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_SAVE_COM
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +24,7 @@ import javafx.scene.layout.ConstraintsBase;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import de.eisfeldj.augendiagnosefx.fxelements.SizeableImageView;
+import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -42,7 +44,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * The scroll pane holding the image.
 	 */
 	@FXML
-	private SizeableImageView displayImageView;
+	private OverlayImageView displayImageView;
 
 	/**
 	 * The pane used for displaying and editing the comment.
@@ -150,6 +152,30 @@ public class DisplayImageController extends BaseController implements Initializa
 		showOverlayPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
 		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
 		colorPicker.getStyleClass().add("button");
+
+		// Inititlize slider for brightness.
+		sliderBrightness.setMin(-1);
+		sliderBrightness.setValue(0);
+		sliderBrightness.setMax(1);
+		sliderBrightness.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				displayImageView.setBrightness(newValue.floatValue());
+			}
+		});
+
+		// Inititlize slider for contrast.
+		sliderContrast.setMin(-1);
+		sliderContrast.setValue(0);
+		sliderContrast.setMax(1);
+		sliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				displayImageView.setContrast(newValue.floatValue());
+			}
+		});
 	}
 
 	@Override

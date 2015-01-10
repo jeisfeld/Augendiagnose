@@ -6,8 +6,10 @@ import java.net.URL;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -123,23 +125,36 @@ public final class ImageUtil {
 	 *            The y position of the overlay.
 	 * @param scaleFactor
 	 *            The scale factor of the overlay.
+	 * @param brightness
+	 *            The brightness of the image.
+	 * @param contrast
+	 *            The contrast of the imabe.
 	 * @return The image with overlay.
 	 */
-	private static Image getImageWithOverlay(final Image baseImage, final int overlayType, final RightLeft side,
-			final Color color, final double xPosition, final double yPosition, final double scaleFactor) {
+	private static Image getImageWithOverlay( // SUPPRESS_CHECKSTYLE Too many parameters
+			final Image baseImage, final Integer overlayType, final RightLeft side,
+			final Color color, final double xPosition, final double yPosition, final double scaleFactor,
+			final float brightness, final float contrast) {
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
 
-		Image overlayImage = null;
-		overlayImage = getOverlayImage(overlayType, side, color);
-
 		Canvas canvas = new Canvas(width, height);
-		canvas.getGraphicsContext2D().drawImage(baseImage, 0, 0, width, height);
-		canvas.getGraphicsContext2D().setGlobalAlpha(color.getOpacity());
+		GraphicsContext gc = canvas.getGraphicsContext2D();
 
-		canvas.getGraphicsContext2D().drawImage(overlayImage, xPosition * width - overlaySize / 2,
-				yPosition * height - overlaySize / 2, overlaySize, overlaySize);
+		ColorAdjust effect = new ColorAdjust();
+		effect.setBrightness(brightness);
+		effect.setContrast(contrast);
+		gc.setEffect(effect);
+		gc.drawImage(baseImage, 0, 0, width, height);
+
+		if (overlayType != null) {
+			Image overlayImage = getOverlayImage(overlayType, side, color);
+			gc.setEffect(null);
+			gc.setGlobalAlpha(color.getOpacity());
+			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
+					yPosition * height - overlaySize / 2, overlaySize, overlaySize);
+		}
 
 		return canvas.snapshot(null, null);
 	}
@@ -153,19 +168,25 @@ public final class ImageUtil {
 	 *            The overlay type.
 	 * @param color
 	 *            The overlay color.
+	 * @param brightness
+	 *            The brightness of the image.
+	 * @param contrast
+	 *            The contrast of the image.
 	 * @return The image with overlay.
 	 */
-	public static Image getImageWithOverlay(final EyePhoto eyePhoto, final Integer overlayType, final Color color) {
+	public static Image getImageForDisplay(final EyePhoto eyePhoto, final Integer overlayType,
+			final Color color, final float brightness, final float contrast) {
 		Image image = eyePhoto.getImage();
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 
 		if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
 			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
 					metadata.xCenter, metadata.yCenter,
-					metadata.overlayScaleFactor);
+					metadata.overlayScaleFactor, brightness, contrast);
 		}
 		else {
-			return image;
+			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
+					0, 0, 0, brightness, contrast);
 		}
 	}
 
