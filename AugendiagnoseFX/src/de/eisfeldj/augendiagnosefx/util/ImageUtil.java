@@ -81,11 +81,6 @@ public final class ImageUtil {
 
 		Image image = getImage(imageURL);
 
-		// Type 2 is not changed in color.
-		if (overlayType == 2) {
-			return image;
-		}
-
 		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
 		Color colorNoAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
 
@@ -101,7 +96,10 @@ public final class ImageUtil {
 				)
 				);
 
-		canvas.getGraphicsContext2D().setEffect(effect);
+		// Type 2 is not changed in color.
+		if (overlayType != 2) {
+			canvas.getGraphicsContext2D().setEffect(effect);
+		}
 		canvas.getGraphicsContext2D().setGlobalAlpha(color.getOpacity());
 		canvas.getGraphicsContext2D().drawImage(image, 0, 0, OVERLAY_SIZE, OVERLAY_SIZE);
 		SnapshotParameters parameters = new SnapshotParameters();
