@@ -166,9 +166,9 @@ public class DisplayImageController extends BaseController implements Initializa
 		});
 
 		// Inititlize slider for contrast.
-		sliderContrast.setMin(-1);
-		sliderContrast.setValue(0);
-		sliderContrast.setMax(1);
+		sliderContrast.setMin(0);
+		sliderContrast.setValue(1);
+		sliderContrast.setMax(5); // MAGIC_NUMBER
 		sliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,

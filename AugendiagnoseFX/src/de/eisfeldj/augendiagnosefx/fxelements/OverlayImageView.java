@@ -25,7 +25,7 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * The current contrast of the image.
 	 */
-	private float contrast = 0;
+	private float contrast = 1;
 
 	/**
 	 * Display the overlay.

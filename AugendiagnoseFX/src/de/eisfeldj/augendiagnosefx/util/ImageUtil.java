@@ -9,7 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -139,19 +138,79 @@ public final class ImageUtil {
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
 
+		// logic of brightness and contrast does not work very well. Therefore, simulating logic from android
+		// OverlayPinghImageView.changeBitmapContrastBrightness
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-
-		ColorAdjust effect = new ColorAdjust();
-		effect.setBrightness(brightness);
-		effect.setContrast(contrast);
-		gc.setEffect(effect);
 		gc.drawImage(baseImage, 0, 0, width, height);
+
+		// The offset which needs to be added after multiplying by contrast.
+		float offset = 1f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER
+
+		// The following just wants to multiply by contrast, followed by addition of offset.
+		// We achieve this by overlaying grey rectangles with varying blend mode.
+		// Various cases to ensure that all intermediate values are in the range [0,1]
+		if (contrast <= 1) {
+			gc.setGlobalBlendMode(BlendMode.MULTIPLY);
+			gc.setFill(new Color(contrast, contrast, contrast, 1));
+			gc.fillRect(0, 0, width, height);
+			if (offset > 0) {
+				gc.setGlobalBlendMode(BlendMode.ADD);
+				gc.setFill(new Color(offset, offset, offset, 1));
+				gc.fillRect(0, 0, width, height);
+			}
+			else {
+				// Subtract is achieved by difference - add - difference.
+				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+				gc.setFill(Color.WHITE);
+				gc.fillRect(0, 0, width, height);
+				gc.setGlobalBlendMode(BlendMode.ADD);
+				gc.setFill(new Color(-offset, -offset, -offset, 1));
+				gc.fillRect(0, 0, width, height);
+				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+				gc.setFill(Color.WHITE);
+				gc.fillRect(0, 0, width, height);
+			}
+		}
+		else {
+			float invContrast = 1 - (1 / contrast);
+			if (offset >= 0) {
+				gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
+				gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
+				gc.fillRect(0, 0, width, height);
+				gc.setGlobalBlendMode(BlendMode.ADD);
+				gc.setFill(new Color(offset, offset, offset, 1));
+				gc.fillRect(0, 0, width, height);
+			}
+			else {
+				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+				gc.setFill(Color.WHITE);
+				gc.fillRect(0, 0, width, height);
+				float delta = -offset / contrast;
+				gc.setGlobalBlendMode(BlendMode.ADD);
+				gc.setFill(new Color(delta, delta, delta, 1));
+				gc.fillRect(0, 0, width, height);
+				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+				gc.setFill(Color.WHITE);
+				gc.fillRect(0, 0, width, height);
+				gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
+				gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
+				gc.fillRect(0, 0, width, height);
+			}
+		}
+
+		// Blend effect = new Blend(BlendMode.SRC_OVER,
+		// new ColorAdjust(0, 0, 0, contrast),
+		// new ColorAdjust(0, 0, brightness, 0));
+		//
+		// gc.setEffect(effect);
+		// gc.drawImage(baseImage, 0, 0, width, height);
 
 		if (overlayType != null) {
 			Image overlayImage = getOverlayImage(overlayType, side, color);
 			gc.setEffect(null);
 			gc.setGlobalAlpha(color.getOpacity());
+			gc.setGlobalBlendMode(BlendMode.SRC_OVER);
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
 					yPosition * height - overlaySize / 2, overlaySize, overlaySize);
 		}
