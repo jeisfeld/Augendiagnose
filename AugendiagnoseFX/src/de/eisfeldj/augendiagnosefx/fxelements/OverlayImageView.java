@@ -10,7 +10,7 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * The limiting value of contrast (to avoid infinity or gray).
 	 */
-	private static final float CONTRAST_LIMIT = 0.99f;
+	private static final float CONTRAST_LIMIT = 0.98f;
 
 	/**
 	 * The current overlay displayed.

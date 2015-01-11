@@ -26,6 +26,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
+import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -56,9 +57,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static final float MAX_OVERLAY_SCALE_FACTOR = 5f;
 
 	/**
-	 * The limiting value of contrast (to avoid infinity or gray).
+	 * The limiting value of contrast (must ensure that offset is smaller than 2^15).
 	 */
-	private static final float CONTRAST_LIMIT = 0.99f;
+	private static final float CONTRAST_LIMIT = 0.98f;
 
 	/**
 	 * The color of the one-colored overlays.
@@ -835,7 +836,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static Bitmap
 			changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
 		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
-
+Logger.log("offset: " + offset + ", contrast: " + contrast);
 		ColorMatrix cm = new ColorMatrix(new float[] { //
 				contrast, 0, 0, 0, offset, //
 						0, contrast, 0, 0, offset, //
