@@ -112,46 +112,40 @@ public class DisplayPhotosController extends BaseController implements Initializ
 
 		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTOS, name);
 
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
+		EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
 
-				ObservableList<GridPane> valuesPhotos = FXCollections.observableList(new ArrayList<GridPane>());
+		ObservableList<GridPane> valuesPhotos = FXCollections.observableList(new ArrayList<GridPane>());
 
-				for (int i = 0; i < eyePhotos.length; i++) {
-					EyePhotoPairNode eyePhotoPairNode = new EyePhotoPairNode(eyePhotos[i]);
-					valuesPhotos.add(eyePhotoPairNode);
+		for (int i = 0; i < eyePhotos.length; i++) {
+			EyePhotoPairNode eyePhotoPairNode = new EyePhotoPairNode(eyePhotos[i]);
+			valuesPhotos.add(eyePhotoPairNode);
 
-					// Workaround to ensure that the scrollbar is correctly resized after the images are loaded.
-					eyePhotoPairNode.getImagesLoadedProperty().addListener(new ChangeListener<Boolean>() {
+			// Workaround to ensure that the scrollbar is correctly resized after the images are loaded.
+			eyePhotoPairNode.getImagesLoadedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(final ObservableValue<? extends Boolean> observable,
+						final Boolean oldValue,
+						final Boolean newValue) {
+					Platform.runLater(new Runnable() {
 						@Override
-						public void changed(final ObservableValue<? extends Boolean> observable,
-								final Boolean oldValue,
-								final Boolean newValue) {
-							Platform.runLater(new Runnable() {
-								@Override
-								public void run() {
-									GridPane dummy = new GridPane();
-									valuesPhotos.add(dummy);
-									listPhotos.layout();
-									valuesPhotos.remove(dummy);
-								}
-							});
+						public void run() {
+							GridPane dummy = new GridPane();
+							valuesPhotos.add(dummy);
+							listPhotos.layout();
+							valuesPhotos.remove(dummy);
 						}
 					});
 				}
+			});
+		}
 
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						listPhotos.setItems(valuesPhotos);
-						dialog.close();
-					}
-				});
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				listPhotos.setItems(valuesPhotos);
+				dialog.close();
 			}
-		};
-		thread.start();
+		});
 	}
 
 	// METHODS CLONED FROM ANDROID

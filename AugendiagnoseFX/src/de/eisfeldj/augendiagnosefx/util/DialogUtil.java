@@ -169,6 +169,7 @@ public abstract class DialogUtil {
 		 */
 		private ProgressDialog(final MessageDialogController controller) {
 			this.controller = controller;
+			setProgress(0);
 		}
 
 		/**
@@ -185,6 +186,16 @@ public abstract class DialogUtil {
 		 */
 		public void close() {
 			controller.close();
+		}
+
+		/**
+		 * Set the progressBar on the progressBar bar.
+		 *
+		 * @param progress
+		 *            The progressBar value.
+		 */
+		public void setProgress(final double progress) {
+			controller.setProgress(progress);
 		}
 	}
 
