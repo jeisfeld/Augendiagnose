@@ -19,7 +19,10 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -114,16 +117,35 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			public void run() {
 				EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
 
-				List<GridPane> valuesPhotos = new ArrayList<GridPane>();
+				ObservableList<GridPane> valuesPhotos = FXCollections.observableList(new ArrayList<GridPane>());
 
 				for (int i = 0; i < eyePhotos.length; i++) {
-					valuesPhotos.add(new EyePhotoPairNode(eyePhotos[i]));
+					EyePhotoPairNode eyePhotoPairNode = new EyePhotoPairNode(eyePhotos[i]);
+					valuesPhotos.add(eyePhotoPairNode);
+
+					// Workaround to ensure that the scrollbar is correctly resized after the images are loaded.
+					eyePhotoPairNode.getImagesLoadedProperty().addListener(new ChangeListener<Boolean>() {
+						@Override
+						public void changed(final ObservableValue<? extends Boolean> observable,
+								final Boolean oldValue,
+								final Boolean newValue) {
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									GridPane dummy = new GridPane();
+									valuesPhotos.add(dummy);
+									listPhotos.layout();
+									valuesPhotos.remove(dummy);
+								}
+							});
+						}
+					});
 				}
 
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						listPhotos.setItems(FXCollections.observableList(valuesPhotos));
+						listPhotos.setItems(valuesPhotos);
 						dialog.close();
 					}
 				});

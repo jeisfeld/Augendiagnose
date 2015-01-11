@@ -35,11 +35,17 @@ public final class ImageUtil {
 	 *
 	 * @param url
 	 *            The image URL.
+	 * @param thumbnail
+	 *            Indicator if an image in thumbnail resolution should be returned.
 	 * @return the image.
 	 */
-	public static Image getImage(final URL url) {
-		int maxSize = PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
-		return new Image(url.toExternalForm(), maxSize, maxSize, true, true);
+	public static Image getImage(final URL url, final boolean thumbnail) {
+		int maxSize = thumbnail
+				? PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_THUMBNAIL_SIZE)
+				: PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
+		// Load the thumbnail in the background. Main image needs to be loaded in foreground, as dimensions are
+		// required.
+		return new Image(url.toExternalForm(), maxSize, maxSize, true, true, thumbnail);
 	}
 
 	/**
@@ -51,9 +57,13 @@ public final class ImageUtil {
 	 *            The side of the eye.
 	 * @param color
 	 *            The overlay color.
+	 * @param thumbnail
+	 *            Indicator if an image in thumbnail resolution should be returned.
+	 *
 	 * @return The overlay image.
 	 */
-	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
+	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color,
+			final boolean thumbnail) {
 		String baseName = "";
 		switch (overlayType) {
 		case 0:
@@ -79,7 +89,7 @@ public final class ImageUtil {
 
 		URL imageURL = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
 
-		Image image = getImage(imageURL);
+		Image image = getImage(imageURL, thumbnail);
 
 		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
 		Color colorNoAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
@@ -128,12 +138,14 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the imabe.
+	 * @param thumbnail
+	 *            Indicator if an image in thumbnail resolution should be returned.
 	 * @return The image with overlay.
 	 */
 	private static Image getImageWithOverlay( // SUPPRESS_CHECKSTYLE Too many parameters
 			final Image baseImage, final Integer overlayType, final RightLeft side,
 			final Color color, final double xPosition, final double yPosition, final double scaleFactor,
-			final float brightness, final float contrast) {
+			final float brightness, final float contrast, final boolean thumbnail) {
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
@@ -200,7 +212,7 @@ public final class ImageUtil {
 		}
 
 		if (overlayType != null) {
-			Image overlayImage = getOverlayImage(overlayType, side, color);
+			Image overlayImage = getOverlayImage(overlayType, side, color, thumbnail);
 			gc.setEffect(null);
 			gc.setGlobalBlendMode(BlendMode.SRC_OVER);
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
@@ -223,21 +235,23 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the image.
+	 * @param thumbnail
+	 *            Indicator if an image in thumbnail resolution should be returned.
 	 * @return The image with overlay.
 	 */
 	public static Image getImageForDisplay(final EyePhoto eyePhoto, final Integer overlayType,
-			final Color color, final float brightness, final float contrast) {
-		Image image = eyePhoto.getImage();
+			final Color color, final float brightness, final float contrast, final boolean thumbnail) {
+		Image image = eyePhoto.getImage(thumbnail);
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 
 		if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
 			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
 					metadata.xCenter, metadata.yCenter,
-					metadata.overlayScaleFactor, brightness, contrast);
+					metadata.overlayScaleFactor, brightness, contrast, thumbnail);
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
-					0, 0, 0, brightness, contrast);
+					0, 0, 0, brightness, contrast, thumbnail);
 		}
 	}
 

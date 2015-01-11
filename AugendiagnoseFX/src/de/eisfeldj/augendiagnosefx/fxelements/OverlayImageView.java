@@ -44,8 +44,7 @@ public class OverlayImageView extends SizableImageView {
 	public final void displayOverlay(final Integer newOverlayType, final Color newOverlayColor) {
 		overlayType = newOverlayType;
 		overlayColor = newOverlayColor;
-		getImageView().setImage(
-				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast));
+		redisplay(false);
 	}
 
 	/**
@@ -53,11 +52,12 @@ public class OverlayImageView extends SizableImageView {
 	 *
 	 * @param newBrightness
 	 *            The brightness
+	 * @param thumbnail
+	 *            Indicator if image should be shown in thumbnail resolution.
 	 */
-	public final void setBrightness(final float newBrightness) {
+	public final void setBrightness(final float newBrightness, final boolean thumbnail) {
 		brightness = newBrightness;
-		getImageView().setImage(
-				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast));
+		redisplay(thumbnail);
 	}
 
 	/**
@@ -65,11 +65,25 @@ public class OverlayImageView extends SizableImageView {
 	 *
 	 * @param newContrast
 	 *            The contrast
+	 * @param thumbnail
+	 *            Indicator if image should be shown in thumbnail resolution.
 	 */
-	public final void setContrast(final float newContrast) {
+	public final void setContrast(final float newContrast, final boolean thumbnail) {
 		contrast = seekbarContrastToStoredContrast(newContrast);
-		getImageView().setImage(
-				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast));
+		redisplay(thumbnail);
+	}
+
+	/**
+	 * Redisplay. (Can be used to switch between non-thumbnail and thumbnail view.
+	 *
+	 * @param thumbnail
+	 *            Indicator if image should be shown in thumbnail resolution.
+	 */
+	public final void redisplay(final boolean thumbnail) {
+		getImageView()
+				.setImage(
+						ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
+								thumbnail));
 	}
 
 	/**
