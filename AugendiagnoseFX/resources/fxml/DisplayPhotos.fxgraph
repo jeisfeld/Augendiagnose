@@ -26,24 +26,16 @@ component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bu
 			}
 		],
 		children : [
-			ScrollPane {
-				static columnIndex : 0,
-				static rowIndex : 0,
-				fitToHeight : true,
-				fitToWidth : true,
-				ListView < String > id listNames {
-					styleClass : "listNames",
-					onMouseClicked : controllermethod handleNameClick
-				}
+			ListView < String > id listNames {
+			static columnIndex : 0,
+			static rowIndex : 0,
+				styleClass : "listNames",
+				onMouseClicked : controllermethod handleNameClick
 			},
-			ScrollPane {
+			ListView < GridPane > id listPhotos {
 				static columnIndex : 1,
 				static rowIndex : 0,
-				fitToHeight : true,
-				fitToWidth : true,
-				ListView < GridPane > id listPhotos {
-					styleClass : "listPhotos"
-				}
+				styleClass : "listPhotos"
 			}
 		]
 	}

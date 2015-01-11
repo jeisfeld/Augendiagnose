@@ -172,31 +172,54 @@ public class SizableImageView extends ScrollPane {
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
 
-		ProgressDialog dialog =
-				DialogUtil
-						.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTO, eyePhoto.getFilename());
+		Image image = eyePhoto.getImage(false);
 
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				Image image = eyePhoto.getImage(false);
-
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						imageView.setImage(image);
-						synchronized (imageView) {
-							// Initialization after window is sized and image is loaded.
-							if (getHeight() > 0 && !isInitialized) {
-								doInitialScaling();
-							}
+		if (image.getProgress() == 1) {
+			// image is already loaded from the start.
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					imageView.setImage(image);
+					synchronized (imageView) {
+						// Initialization after window is sized and image is loaded.
+						if (getHeight() > 0 && !isInitialized) {
+							doInitialScaling();
 						}
-						dialog.close();
 					}
-				});
-			}
-		};
-		thread.start();
+				}
+			});
+			return;
+		}
+		else {
+			ProgressDialog dialog =
+					DialogUtil
+							.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTO,
+									eyePhoto.getFilename());
+
+			image.progressProperty().addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+						final Number newValue) {
+					dialog.setProgress(newValue.doubleValue());
+
+					if (newValue.doubleValue() == 1) {
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								imageView.setImage(image);
+								synchronized (imageView) {
+									// Initialization after window is sized and image is loaded.
+									if (getHeight() > 0 && !isInitialized) {
+										doInitialScaling();
+									}
+								}
+								dialog.close();
+							}
+						});
+					}
+				}
+			});
+		}
 
 		// Size the image only after this pane is sized
 		heightProperty().addListener(new ChangeListener<Number>() {

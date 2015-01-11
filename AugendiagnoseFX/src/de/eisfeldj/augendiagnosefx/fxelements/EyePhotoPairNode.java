@@ -1,12 +1,15 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -55,6 +58,15 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	}
 
 	/**
+	 * A boolean property indicating if images are loaded.
+	 */
+	private BooleanProperty imagesLoadedProperty = new SimpleBooleanProperty(false);
+
+	public final BooleanProperty getImagesLoadedProperty() {
+		return imagesLoadedProperty;
+	}
+
+	/**
 	 * Constructor given a pair of eye photos.
 	 *
 	 * @param pair
@@ -78,7 +90,18 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @return The image view.
 	 */
 	private ImageView getImageView(final EyePhoto eyePhoto) {
-		ImageView imageView = new ImageView(eyePhoto.getImage(true));
+		Image image = eyePhoto.getImage(true);
+		image.progressProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				if (newValue.doubleValue() == 1) {
+					checkIfImagesLoaded();
+				}
+			}
+		});
+
+		ImageView imageView = new ImageView(image);
 		imageView.setPreserveRatio(true);
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -110,12 +133,32 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						requestLayout();
+						requestParentLayout();
 					}
 				});
 			}
 		});
 		return imageView;
+	}
+
+	/**
+	 * Check if the images are loaded.
+	 *
+	 * @return true if the images are loaded.
+	 */
+	private boolean checkIfImagesLoaded() {
+		if (imagesLoadedProperty.get()) {
+			return true;
+		}
+
+		Image imageRight = imageViewRight.getImageView().getImage();
+		Image imageLeft = imageViewRight.getImageView().getImage();
+
+		boolean loaded = imageRight.getProgress() == 1 && imageLeft.getProgress() == 1;
+		if (loaded) {
+			imagesLoadedProperty.set(true);
+		}
+		return loaded;
 	}
 
 }

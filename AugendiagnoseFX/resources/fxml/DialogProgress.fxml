@@ -15,5 +15,5 @@
 
 	<Label fx:id="dialogHeading" text="%title_dialog_progress" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
 	<Text fx:id="dialogMessage" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"/> 
-	<ProgressBar fx:id="progress" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER"/> 
+	<ProgressBar fx:id="progressBar" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER"/> 
 </GridPane>

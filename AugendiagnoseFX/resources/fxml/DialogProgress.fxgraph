@@ -21,7 +21,7 @@ component DialogProgress controlledby MessageDialogController resourcefile "../b
 			static rowIndex : 1,
 			static halignment : "CENTER"
 		},
-		ProgressBar id progress {
+		ProgressBar id progressBar {
 			static columnIndex : 0,
 			static rowIndex : 2,
 			static halignment : "CENTER"

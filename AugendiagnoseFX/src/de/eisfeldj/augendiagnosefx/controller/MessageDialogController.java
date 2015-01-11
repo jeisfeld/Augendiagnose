@@ -43,10 +43,10 @@ public class MessageDialogController extends DialogController {
 	private Button btnOk;
 
 	/**
-	 * The progress bar.
+	 * The progressBar bar.
 	 */
 	@FXML
-	private ProgressBar progress;
+	private ProgressBar progressBar;
 
 	/**
 	 * The "cancel" button on the dialog.
@@ -104,5 +104,15 @@ public class MessageDialogController extends DialogController {
 	 */
 	public final Button getBtnCancel() {
 		return btnCancel;
+	}
+
+	/**
+	 * Set the progressBar on the progressBar bar.
+	 *
+	 * @param progress
+	 *            The progressBar value.
+	 */
+	public final void setProgress(final double progress) {
+		this.progressBar.setProgress(progress);
 	}
 }

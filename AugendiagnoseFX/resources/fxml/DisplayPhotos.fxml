@@ -6,7 +6,6 @@
 <?import java.lang.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
@@ -22,11 +21,7 @@
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<children>
-		<ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="0" GridPane.rowIndex="0"> 
-			<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick"/> 
-		</ScrollPane>
-		<ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
-			<ListView fx:id="listPhotos" styleClass="listPhotos"/> 
-		</ScrollPane>
+		<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+		<ListView fx:id="listPhotos" styleClass="listPhotos" GridPane.columnIndex="1" GridPane.rowIndex="0"/> 
 	</children>
 </GridPane>

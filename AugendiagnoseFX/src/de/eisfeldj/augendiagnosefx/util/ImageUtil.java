@@ -45,7 +45,7 @@ public final class ImageUtil {
 				: PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
 		// Load the thumbnail in the background. Main image needs to be loaded in foreground, as dimensions are
 		// required.
-		return new Image(url.toExternalForm(), maxSize, maxSize, true, true, thumbnail);
+		return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
 	}
 
 	/**
@@ -57,13 +57,10 @@ public final class ImageUtil {
 	 *            The side of the eye.
 	 * @param color
 	 *            The overlay color.
-	 * @param thumbnail
-	 *            Indicator if an image in thumbnail resolution should be returned.
 	 *
 	 * @return The overlay image.
 	 */
-	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color,
-			final boolean thumbnail) {
+	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
 		String baseName = "";
 		switch (overlayType) {
 		case 0:
@@ -89,7 +86,7 @@ public final class ImageUtil {
 
 		URL imageURL = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
 
-		Image image = getImage(imageURL, thumbnail);
+		Image image = new Image(imageURL.toExternalForm());
 
 		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
 		Color colorNoAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
@@ -212,7 +209,7 @@ public final class ImageUtil {
 		}
 
 		if (overlayType != null) {
-			Image overlayImage = getOverlayImage(overlayType, side, color, thumbnail);
+			Image overlayImage = getOverlayImage(overlayType, side, color);
 			gc.setEffect(null);
 			gc.setGlobalBlendMode(BlendMode.SRC_OVER);
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
