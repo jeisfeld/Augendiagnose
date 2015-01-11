@@ -50,9 +50,21 @@
 				</FXCollections>
 			</items>
 		</ChoiceBox>
-		<Label text="%pref_title_overlay_color" GridPane.columnIndex="0" GridPane.rowIndex="3"/> 
-		<ColorPicker fx:id="colorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"/> 
-		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.halignment="LEFT"/> 
-		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
+		<Label text="%pref_title_thumbnail_size" GridPane.columnIndex="0" GridPane.rowIndex="3"/> 
+		<ChoiceBox fx:id="choiceThumbnailSize" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"> 
+			<items>
+				<FXCollections fx:factory="observableArrayList"> 
+					<Integer fx:value="2048"/> 
+					<Integer fx:value="1440"/> 
+					<Integer fx:value="1024"/> 
+					<Integer fx:value="720"/> 
+					<Integer fx:value="512"/> 
+				</FXCollections>
+			</items>
+		</ChoiceBox>
+		<Label text="%pref_title_overlay_color" GridPane.columnIndex="0" GridPane.rowIndex="4"/> 
+		<ColorPicker fx:id="colorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/> 
+		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.halignment="LEFT"/> 
+		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
 	</children>
 </GridPane>

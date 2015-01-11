@@ -57,6 +57,11 @@ public final class PreferenceUtil {
 	public static final String KEY_MAX_BITMAP_SIZE = "max_bitmap_size";
 
 	/**
+	 * Preference key for the thumbnail size.
+	 */
+	public static final String KEY_THUMBNAIL_SIZE = "thumbnail_size";
+
+	/**
 	 * Preference key for default overlay color.
 	 */
 	public static final String KEY_OVERLAY_COLOR = "key_overlay_color";
@@ -81,6 +86,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
 		DEFAULT_MAP.put(KEY_MAX_BITMAP_SIZE, 2048); // MAGIC_NUMBER
+		DEFAULT_MAP.put(KEY_THUMBNAIL_SIZE, 1024); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_OVERLAY_COLOR, "#FF0000FF"); // RED
 	}
 

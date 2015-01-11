@@ -69,21 +69,36 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			},
 
 			Label {
-				text : rstring "pref_title_overlay_color",
+				text : rstring "pref_title_thumbnail_size",
 				static columnIndex : 0,
 				static rowIndex : 3
 			},
 
-			ColorPicker id colorPicker {
+			ChoiceBox<Integer> id choiceThumbnailSize {
 				static columnIndex : 1,
 				static rowIndex : 3,
+				static columnSpan : 2,
+				items : FXCollections createdby observableArrayList {
+					Integer(2048), Integer(1440), Integer(1024), Integer(720), Integer(512)
+				}
+			},
+
+			Label {
+				text : rstring "pref_title_overlay_color",
+				static columnIndex : 0,
+				static rowIndex : 4
+			},
+
+			ColorPicker id colorPicker {
+				static columnIndex : 1,
+				static rowIndex : 4,
 				static columnSpan : 2
 			},
 
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 4,
+				static rowIndex : 5,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -91,7 +106,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 4,
+				static rowIndex : 5,
 				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit
