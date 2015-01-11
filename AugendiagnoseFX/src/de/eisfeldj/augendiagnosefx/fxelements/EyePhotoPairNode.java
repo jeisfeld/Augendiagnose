@@ -78,7 +78,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @return The image view.
 	 */
 	private ImageView getImageView(final EyePhoto eyePhoto) {
-		ImageView imageView = new ImageView(eyePhoto.getImage());
+		ImageView imageView = new ImageView(eyePhoto.getImage(true));
 		imageView.setPreserveRatio(true);
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override

@@ -58,6 +58,11 @@ public class EyePhoto {
 	private Image cachedImage;
 
 	/**
+	 * S cache of the thumbnail.
+	 */
+	private Image cachedThumbnail;
+
+	/**
 	 * Create the EyePhoto, giving a filename.
 	 *
 	 * @param filename
@@ -381,21 +386,29 @@ public class EyePhoto {
 
 	/**
 	 * Calculate a bitmap of this photo and store it for later retrieval.
+	 *
+	 * @param thumbnail
+	 *            Indicator if only an image in thumbnail resolution should be returned.
 	 */
-	public final synchronized void precalculateImage() {
-		if (cachedImage == null) {
-			cachedImage = ImageUtil.getImage(getUrl());
+	public final synchronized void precalculateImage(final boolean thumbnail) {
+		if (cachedThumbnail == null) {
+			cachedThumbnail = ImageUtil.getImage(getUrl(), true);
+		}
+		if (cachedImage == null && !thumbnail) {
+			cachedImage = ImageUtil.getImage(getUrl(), false);
 		}
 	}
 
 	/**
 	 * Return an Image of this photo.
 	 *
+	 * @param thumbnail
+	 *            Indicator if an image in thumbnail resolution should be returned.
 	 * @return the Image
 	 */
-	public final Image getImage() {
-		precalculateImage();
-		return cachedImage;
+	public final Image getImage(final boolean thumbnail) {
+		precalculateImage(thumbnail);
+		return thumbnail ? cachedThumbnail : cachedImage;
 	}
 
 	/**

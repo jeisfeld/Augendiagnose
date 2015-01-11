@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.ConstraintsBase;
 import javafx.scene.layout.GridPane;
@@ -101,6 +103,11 @@ public class DisplayImageController extends BaseController implements Initializa
 	private Slider sliderContrast;
 
 	/**
+	 * Slider indicating if the current state displays only a thumbnail.
+	 */
+	private boolean isThumbnail = false;
+
+	/**
 	 * The Buttons for overlays.
 	 */
 	// JAVADOC:OFF
@@ -161,7 +168,17 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setBrightness(newValue.floatValue());
+				displayImageView.setBrightness(newValue.floatValue(), true);
+				isThumbnail = true;
+			}
+		});
+		sliderBrightness.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				if (isThumbnail) {
+					displayImageView.redisplay(false);
+					isThumbnail = false;
+				}
 			}
 		});
 
@@ -173,7 +190,17 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setContrast(newValue.floatValue());
+				displayImageView.setContrast(newValue.floatValue(), true);
+				isThumbnail = true;
+			}
+		});
+		sliderContrast.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				if (isThumbnail) {
+					displayImageView.redisplay(false);
+					isThumbnail = false;
+				}
 			}
 		});
 	}

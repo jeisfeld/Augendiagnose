@@ -1,18 +1,23 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
  * Pane containing an image that can be resized.
@@ -67,6 +72,11 @@ public class SizableImageView extends ScrollPane {
 	 * Y Location of the view center on the image.
 	 */
 	private double centerY;
+
+	/**
+	 * Flag indicating if the view is already initialized (and image is scaled).
+	 */
+	private boolean isInitialized = false;
 
 	/**
 	 * Constructor without initialization of image.
@@ -161,52 +171,89 @@ public class SizableImageView extends ScrollPane {
 	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
-		imageView.setImage(eyePhoto.getImage());
+
+		ProgressDialog dialog =
+				DialogUtil
+						.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTO, eyePhoto.getFilename());
+
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				Image image = eyePhoto.getImage(false);
+
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						imageView.setImage(image);
+						synchronized (imageView) {
+							// Initialization after window is sized and image is loaded.
+							if (getHeight() > 0 && !isInitialized) {
+								doInitialScaling();
+							}
+						}
+						dialog.close();
+					}
+				});
+			}
+		};
+		thread.start();
 
 		// Size the image only after this pane is sized
 		heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				JpegMetadata metadata = eyePhoto.getImageMetadata();
-				if (metadata != null && metadata.hasOverlayPosition()) {
-					zoomProperty.set(Math.min(getWidth(), getHeight())
-							/ Math.max(imageView.getImage().getWidth(), imageView.getImage().getHeight())
-							/ metadata.overlayScaleFactor);
+				synchronized (imageView) {
+					// Initialization after window is sized and image is loaded.
+					if (imageView.getImage() != null && !isInitialized) {
+						doInitialScaling();
+					}
 				}
-				else {
-					zoomProperty.set(Math.min(getWidth() / imageView.getImage().getWidth(),
-							getHeight() / imageView.getImage().getHeight()));
-				}
-
-				imageView.setFitWidth(zoomProperty.get() * imageView.getImage().getWidth());
-				imageView.setFitHeight(zoomProperty.get() * imageView.getImage().getHeight());
-				layout();
-
-				if (metadata != null && metadata.hasOverlayPosition()) {
-					// Size of the image.
-					double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
-					double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
-
-					// Image pixels outside the visible area which need to be scrolled.
-					double scrollXFactor = Math.max(0, imageWidth - getWidth());
-					double scrollYFactor = Math.max(0, imageHeight - getHeight());
-
-					// The initial scrollbar positions
-					double hValue = scrollXFactor > 0
-							? (metadata.xCenter * imageWidth - getWidth() / 2) / scrollXFactor
-							: 1;
-					double vValue = scrollYFactor > 0
-							? (metadata.yCenter * imageHeight - getHeight() / 2) / scrollYFactor
-							: 1;
-
-					setHvalue(hValue);
-					setVvalue(vValue);
-				}
-
 				heightProperty().removeListener(this);
 			}
 		});
+	}
+
+	/**
+	 * Do the initial scaling of the image.
+	 */
+	private void doInitialScaling() {
+		JpegMetadata metadata = eyePhoto.getImageMetadata();
+		if (metadata != null && metadata.hasOverlayPosition()) {
+			zoomProperty.set(Math.min(getWidth(), getHeight())
+					/ Math.max(imageView.getImage().getWidth(), imageView.getImage().getHeight())
+					/ metadata.overlayScaleFactor);
+		}
+		else {
+			zoomProperty.set(Math.min(getWidth() / imageView.getImage().getWidth(),
+					getHeight() / imageView.getImage().getHeight()));
+		}
+
+		imageView.setFitWidth(zoomProperty.get() * imageView.getImage().getWidth());
+		imageView.setFitHeight(zoomProperty.get() * imageView.getImage().getHeight());
+		layout();
+
+		if (metadata != null && metadata.hasOverlayPosition()) {
+			// Size of the image.
+			double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+			double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+			// Image pixels outside the visible area which need to be scrolled.
+			double scrollXFactor = Math.max(0, imageWidth - getWidth());
+			double scrollYFactor = Math.max(0, imageHeight - getHeight());
+
+			// The initial scrollbar positions
+			double hValue = scrollXFactor > 0
+					? (metadata.xCenter * imageWidth - getWidth() / 2) / scrollXFactor
+					: 1;
+			double vValue = scrollYFactor > 0
+					? (metadata.yCenter * imageHeight - getHeight() / 2) / scrollYFactor
+					: 1;
+
+			setHvalue(hValue);
+			setVvalue(vValue);
+		}
+		isInitialized = true;
 	}
 
 	/**

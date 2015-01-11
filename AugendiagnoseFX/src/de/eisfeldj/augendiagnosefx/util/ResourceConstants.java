@@ -44,6 +44,7 @@ public final class ResourceConstants {
 	public static final String MENU_WINDOW = "menu_window";
 	public static final String MESSAGE_DIALOG_COULD_NOT_OPEN_LOG_FILE = "message_dialog_could_not_open_log_file";
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
+	public static final String MESSAGE_DIALOG_LOADING_PHOTO = "message_dialog_loading_photo";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
 	public static final String MESSAGE_DIALOG_UNKNOWN_ERROR = "message_dialog_unknown_error";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
