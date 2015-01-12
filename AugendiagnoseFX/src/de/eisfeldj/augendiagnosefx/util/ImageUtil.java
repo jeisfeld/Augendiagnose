@@ -24,6 +24,17 @@ public final class ImageUtil {
 	private static final int OVERLAY_SIZE = 1024;
 
 	/**
+	 * A cache of one overlay - to prevent frequent recalculation while sliding brightness and contrast.
+	 */
+	// JAVADOC:OFF
+	private static Image cachedOverlay;
+	private static Integer cachedOverlayType = null;
+	private static RightLeft cachedOverlaySide;
+	private static Color cachedOverlayColor;
+
+	// JAVADOC:ON
+
+	/**
 	 * Do not allow instantiation.
 	 */
 	private ImageUtil() {
@@ -61,6 +72,12 @@ public final class ImageUtil {
 	 * @return The overlay image.
 	 */
 	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
+		if (cachedOverlayType != null && overlayType == cachedOverlayType
+				&& side == cachedOverlaySide
+				&& color.equals(cachedOverlayColor)) {
+			return cachedOverlay;
+		}
+
 		String baseName = "";
 		switch (overlayType) {
 		case 0:
@@ -111,7 +128,12 @@ public final class ImageUtil {
 		canvas.getGraphicsContext2D().drawImage(image, 0, 0, OVERLAY_SIZE, OVERLAY_SIZE);
 		SnapshotParameters parameters = new SnapshotParameters();
 		parameters.setFill(Color.TRANSPARENT);
-		return canvas.snapshot(parameters, null);
+
+		cachedOverlay = canvas.snapshot(parameters, null);
+		cachedOverlayType = overlayType;
+		cachedOverlaySide = side;
+		cachedOverlayColor = color;
+		return cachedOverlay;
 	}
 
 	/**
