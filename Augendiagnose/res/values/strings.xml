@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Eye Diagnosis</string>
-
     <string name="title_activity_display_two">Compare Photos</string>
     <string name="title_activity_display_one">Display Photo</string>
     <string name="title_activity_list_folders_for_display">Select Name</string>
@@ -17,11 +16,11 @@
     <string name="title_dialog_select_folder">Select Folder</string>
     <string name="title_settings">Settings</string>
     <string name="title_help">Help</string>
-
     <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
     <string name="message_dialog_no_photos_for_name">No eye photos available for %1$s</string>
     <string name="message_dialog_select_name">Please select a name</string>
     <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>
+    <string name="message_dialog_cannot_delete_folder">Cannot delete the old folder %1$s due to restrictions of Android 4.4 - please do this manually.</string>
     <string name="message_dialog_folder_does_not_exist">Folder %1$s does not exist. Please check the settings.</string>
     <string name="message_dialog_no_organized_photos">There are no organized photos available for display.</string>
     <string name="message_dialog_file_does_not_exist">File %1$s does not exist</string>
@@ -39,14 +38,11 @@
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
-
     <string name="section_select_eye_orientation">Select Eye Orientation</string>
     <string name="section_select_name">Select Name</string>
     <string name="section_select_date">Select Date</string>
-
     <string name="text_brightness">Brightness</string>
     <string name="text_contrast">Contrast</string>
-
     <string name="button_open_eyefi_app">Open Eye-Fi App</string>
     <string name="button_display_pictures">Display Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>
@@ -60,7 +56,6 @@
     <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_select_color" translatable="false">\u25a0</string>
-
     <string name="toggle_circle" translatable="false">\u2299</string>
     <string name="toggle_overlay_1">T1</string>
     <string name="toggle_overlay_2">T2</string>
@@ -68,7 +63,6 @@
     <string name="toggle_overlay_4">T4</string>
     <string name="toggle_overlay_5">T5</string>
     <string name="toggle_overlay_6">T6</string>
-
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>
@@ -80,7 +74,6 @@
     <string name="hint_search_name">[Search name]</string>
     <string name="hint_insert_name">[Enter name]</string>
     <string name="hint_edit_comment">[Enter image comment]</string>
-
     <string name="color_picker_title">Select an overlay color</string>
     <string name="color_picker_default_title">Select a Color</string>
     <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>

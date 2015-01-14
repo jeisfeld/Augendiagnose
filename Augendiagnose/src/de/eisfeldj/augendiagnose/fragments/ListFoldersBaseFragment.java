@@ -217,13 +217,29 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		// rename folder and ensure that list is refreshed
 		boolean success = oldFolder.renameTo(newFolder);
-		directoryListAdapter.clear();
-		createList();
-		directoryListAdapter.notifyDataSetChanged();
-		if (!success) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_folder, false,
-					oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
-			return;
+
+		if (success) {
+			directoryListAdapter.clear();
+			createList();
+			directoryListAdapter.notifyDataSetChanged();
+		}
+		else {
+			// Try the Kitkat workaround
+			success = FileUtil.renameFolder(oldFolder, newFolder);
+
+			if (success) {
+				directoryListAdapter.clear();
+				createList();
+				directoryListAdapter.notifyDataSetChanged();
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_delete_folder, false,
+						oldFolder.getAbsolutePath());
+			}
+			else {
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_folder, false,
+						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
+				return;
+			}
+
 		}
 
 		// rename files in this folder

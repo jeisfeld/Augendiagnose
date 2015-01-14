@@ -134,9 +134,14 @@
 
 	<h3>Verzeichnis der Augenfotos</h3>
 
-	Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss
-	normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere
-	Geräte kopieren.
+	<p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet.
+		Dieses muss normalerweise nicht geändert werden. Von hier können Sie die Fotos
+		auf andere Geräte kopieren.</p>
+
+	<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der
+		SD-Karte wählen. Unter Android 4.4 (Kitkat) besteht die Einschränkung, dass
+		auf der SD-Karte keine Verzeichnisse gelöscht werden können - ansonsten
+		funktioniert die Speicherung auf der externen SD-Karte auch unter Kitkat.</p>
 
 	<h3>Maximale Bitmap-Größe</h3>
 

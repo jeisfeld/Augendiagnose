@@ -133,8 +133,13 @@
 
 	<h3>Eye Photo Folder</h3>
 
-	This is the folder in which the app manages the eye photos. Normally, you need
-	not change this. From here, you can copy the photos to other devices.
+	<p>This is the folder in which the app manages the eye photos. Normally,
+		you need not change this. From here, you can copy the photos to other devices.</p>
+
+	<p>You can select here a folder either on your device memory or on an SD
+		card. In Android 4.4 (Kitkat), storage on SD card has the limitation that
+		deletion of folders is not possible - except for this, storage on external SD
+		card works even in Kitkat.</p>
 
 	<h3>Max Bitmap size</h3>
 

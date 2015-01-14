@@ -78,10 +78,10 @@ public abstract class MediaStoreUtil {
 	}
 
 	/**
-	 * Get an Uri from an image file path.
+	 * Get an Uri from an file path.
 	 *
 	 * @param path
-	 *            The image file path.
+	 *            The file path.
 	 * @return The Uri.
 	 */
 	public static Uri getUriFromFile(final String path) {
@@ -105,6 +105,50 @@ public abstract class MediaStoreUtil {
 			values.put(MediaColumns.DATA, path);
 			return resolver.insert(MediaStore.Files.getContentUri("external"), values);
 		}
+	}
+
+	/**
+	 * Get the Album Id from an Audio file.
+	 *
+	 * @param file
+	 *            The audio file.
+	 * @return The Album ID.
+	 */
+	@SuppressWarnings("resource")
+	public static int getAlbumIdFromAudioFile(final File file) {
+			ContentResolver resolver = Application.getAppContext().getContentResolver();
+			Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					new String[] { MediaStore.Audio.AlbumColumns.ALBUM_ID },
+					MediaStore.MediaColumns.DATA + "=?",
+					new String[] { file.getAbsolutePath() }, null);
+			if (cursor == null || !cursor.moveToFirst()) {
+				// Entry not available - create entry.
+				if (cursor != null) {
+					cursor.close();
+					cursor = null;
+				}
+				ContentValues values = new ContentValues();
+				values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+				values.put(MediaStore.MediaColumns.TITLE, "{MediaWrite Workaround}");
+				values.put(MediaStore.MediaColumns.SIZE, file.length());
+				values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mpeg");
+				values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, true);
+				resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+			}
+			cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					new String[] { MediaStore.Audio.AlbumColumns.ALBUM_ID },
+					MediaStore.MediaColumns.DATA + "=?",
+					new String[] { file.getAbsolutePath() }, null);
+			if (cursor == null) {
+				return 0;
+			}
+			if (!cursor.moveToFirst()) {
+				cursor.close();
+				return 0;
+			}
+			int albumId = cursor.getInt(0);
+			cursor.close();
+			return albumId;
 	}
 
 	/**

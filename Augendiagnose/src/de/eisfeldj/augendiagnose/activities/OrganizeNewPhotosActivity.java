@@ -30,6 +30,7 @@ import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
@@ -379,7 +380,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			return;
 		}
 		else if (!targetFolder.exists()) {
-			boolean success = targetFolder.mkdir();
+			boolean success = FileUtil.mkdir(targetFolder);
 			if (!success) {
 				displayError(R.string.message_dialog_cannot_create_folder, targetFolder.getAbsolutePath());
 				return;
