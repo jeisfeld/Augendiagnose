@@ -26,7 +26,6 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
-import de.eisfeldj.augendiagnose.util.Logger;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
 /**
@@ -836,7 +835,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static Bitmap
 			changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
 		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
-Logger.log("offset: " + offset + ", contrast: " + contrast);
 		ColorMatrix cm = new ColorMatrix(new float[] { //
 				contrast, 0, 0, 0, offset, //
 						0, contrast, 0, 0, offset, //

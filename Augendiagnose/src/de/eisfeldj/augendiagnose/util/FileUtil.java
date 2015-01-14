@@ -71,7 +71,14 @@ public abstract class FileUtil {
 		try {
 			inStream = new FileInputStream(source);
 
-			if (isKitkat() && !isWritable(target)) {
+			if (isWritable(target)) {
+				// standard way
+				outStream = new FileOutputStream(target);
+				inChannel = inStream.getChannel();
+				outChannel = ((FileOutputStream) outStream).getChannel();
+				inChannel.transferTo(0, inChannel.size(), outChannel);
+			}
+			else {
 				// Workaround for Kitkat ext SD card
 				Uri uri = MediaStoreUtil.getUriFromFile(target.getAbsolutePath());
 				outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
@@ -80,13 +87,6 @@ public abstract class FileUtil {
 				while ((bytesRead = inStream.read(buffer)) != -1) {
 					outStream.write(buffer, 0, bytesRead);
 				}
-			}
-			else {
-				// standard way
-				outStream = new FileOutputStream(target);
-				inChannel = inStream.getChannel();
-				outChannel = ((FileOutputStream) outStream).getChannel();
-				inChannel.transferTo(0, inChannel.size(), outChannel);
 			}
 		}
 		catch (Exception e) {
@@ -136,21 +136,16 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		if (isKitkat()) {
-			// Try via media store.
-			ContentResolver resolver = Application.getAppContext().getContentResolver();
+		// Try via media store.
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
-			try {
-				Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
-				resolver.delete(uri, null, null);
-				return true;
-			}
-			catch (Exception e) {
-				Log.e(Application.TAG, "Error when deleting file " + file.getAbsolutePath(), e);
-				return false;
-			}
+		try {
+			Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
+			resolver.delete(uri, null, null);
+			return true;
 		}
-		else {
+		catch (Exception e) {
+			Log.e(Application.TAG, "Error when deleting file " + file.getAbsolutePath(), e);
 			return false;
 		}
 	}
@@ -170,16 +165,11 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		if (isKitkat()) {
-			boolean success = copyFile(source, target);
-			if (success) {
-				success = deleteFile(source);
-			}
-			return success;
+		boolean success = copyFile(source, target);
+		if (success) {
+			success = deleteFile(source);
 		}
-		else {
-			return false;
-		}
+		return success;
 	}
 
 	/**
@@ -200,35 +190,29 @@ public abstract class FileUtil {
 			return false;
 		}
 
-		if (isKitkat()) {
-			// Try the workaround.
-			if (!mkdir(target)) {
-				return false;
-			}
-
-			File[] sourceFiles = source.listFiles();
-
-			for (File sourceFile : sourceFiles) {
-				String fileName = sourceFile.getName();
-				File targetFile = new File(target, fileName);
-				if (!copyFile(sourceFile, targetFile)) {
-					// stop on first error
-					return false;
-				}
-			}
-			// Only after successfully copying all files, delete files on source folder.
-			for (File sourceFile : sourceFiles) {
-				if (!deleteFile(sourceFile)) {
-					// stop on first error
-					return false;
-				}
-			}
-			return true;
-
-		}
-		else {
+		// Try the workaround.
+		if (!mkdir(target)) {
 			return false;
 		}
+
+		File[] sourceFiles = source.listFiles();
+
+		for (File sourceFile : sourceFiles) {
+			String fileName = sourceFile.getName();
+			File targetFile = new File(target, fileName);
+			if (!copyFile(sourceFile, targetFile)) {
+				// stop on first error
+				return false;
+			}
+		}
+		// Only after successfully copying all files, delete files on source folder.
+		for (File sourceFile : sourceFiles) {
+			if (!deleteFile(sourceFile)) {
+				// stop on first error
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -262,38 +246,34 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		if (isKitkat()) {
-			// Try the Kitkat workaround.
-			ContentResolver resolver = Application.getAppContext().getContentResolver();
-			File tempFile = new File(file, "dummyImage.jpg");
+		// Try the Kitkat workaround.
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
+		File tempFile = new File(file, "dummyImage.jpg");
 
-			File dummySong = copyDummyFiles();
-			int albumId = MediaStoreUtil.getAlbumIdFromAudioFile(dummySong);
-			Uri albumArtUri = Uri.parse("content://media/external/audio/albumart/" + albumId);
+		File dummySong = copyDummyFiles();
+		int albumId = MediaStoreUtil.getAlbumIdFromAudioFile(dummySong);
+		Uri albumArtUri = Uri.parse("content://media/external/audio/albumart/" + albumId);
 
-			ContentValues contentValues = new ContentValues();
-			contentValues.put(MediaStore.MediaColumns.DATA, tempFile.getAbsolutePath());
-			contentValues.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(MediaStore.MediaColumns.DATA, tempFile.getAbsolutePath());
+		contentValues.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
 
-			if (resolver.update(albumArtUri, contentValues, null, null) == 0) {
-				resolver.insert(Uri.parse("content://media/external/audio/albumart"), contentValues);
-			}
-			try {
-				ParcelFileDescriptor fd = resolver.openFileDescriptor(albumArtUri, "r");
-				fd.close();
-			}
-			catch (Exception e) {
-				Log.e(Application.TAG, "Could not open file", e);
-				return false;
-			}
-			finally {
-				FileUtil.deleteFile(tempFile);
-			}
-
-			return true;
+		if (resolver.update(albumArtUri, contentValues, null, null) == 0) {
+			resolver.insert(Uri.parse("content://media/external/audio/albumart"), contentValues);
+		}
+		try {
+			ParcelFileDescriptor fd = resolver.openFileDescriptor(albumArtUri, "r");
+			fd.close();
+		}
+		catch (Exception e) {
+			Log.e(Application.TAG, "Could not open file", e);
+			return false;
+		}
+		finally {
+			FileUtil.deleteFile(tempFile);
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -317,15 +297,6 @@ public abstract class FileUtil {
 			return false;
 		}
 		return file.canWrite();
-	}
-
-	/**
-	 * Determine if this is an Android 4.4.
-	 *
-	 * @return true if Android 4.4
-	 */
-	public static final boolean isKitkat() {
-		return android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.KITKAT;
 	}
 
 	/**
