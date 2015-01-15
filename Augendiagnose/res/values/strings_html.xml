@@ -46,10 +46,15 @@
 
 		<li>Change of brightness and contrast of the photo during display, and
 			overlay with an iris topography.</li>
+
+		<li>You can also save information in the photos, such as brightness
+			adaptions and comments. To be able to store information and use the full
+			functionality of the app, you need photos in JPG format.</li>
+
 	</ul>
 
-	This is just an alpha version of the app. Further features are to come. Ideas
-	for further features are welcome.
+	This is just a beta version of the app. Further features are to come. Ideas for
+	further features are welcome.
 
 	<h3>Main activities</h3>
 
@@ -94,10 +99,10 @@
 		files in MS Windows.</p>
 
 	<p>However, this kind of storage imposes a small risk. It may happen that
-		on some devices, or for pictures from some cameras, it may happen that storing
-		information in the JPG fails, or possibly even destroys the JPG file.
-		Therefore, it is recommended that you keep backups of your JPG files at least
-		when using the app for the first time with a new device or with a new camera.</p>
+		on some devices, or for pictures from some cameras, storage of information in
+		the JPG fails, or possibly even destroys the JPG file. Therefore, it is
+		recommended that you keep backups of your JPG files at least when using the
+		app for the first time with a new device or with a new camera.</p>
 </body>
 </html>
 ]]>
