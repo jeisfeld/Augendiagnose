@@ -26,6 +26,7 @@
     <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>
     <string name="message_dialog_file_already_exists">Datei %1$s existiert schon. Bitte wählen Sie einen anderen Namen oder ein anderes Datum.</string>
     <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
+    <string name="message_dialog_failed_to_move_folder_partially">Beim Verschieben des Verzeichnisses %1$s in %2$s sind Probleme aufgetreten - bitte überprüfen und korrigieren Sie diese Verzeichnisse.</string>
     <string name="message_dialog_failed_to_rename_folder">Konnte Verzeichnis %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>

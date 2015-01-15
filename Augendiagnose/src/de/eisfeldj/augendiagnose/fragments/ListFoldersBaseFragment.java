@@ -212,37 +212,36 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 *            the new name.
 	 */
 	protected final void renameFolderAndFiles(final String oldName, final String newName) {
-		File oldFolder = new File(parentFolder, oldName.trim());
-		File newFolder = new File(parentFolder, newName.trim());
+		final File oldFolder = new File(parentFolder, oldName.trim());
+		final File newFolder = new File(parentFolder, newName.trim());
 
 		// rename folder and ensure that list is refreshed
-		boolean success = oldFolder.renameTo(newFolder);
+		boolean success = FileUtil.renameFolder(oldFolder, newFolder);
 
-		if (success) {
-			directoryListAdapter.clear();
-			createList();
-			directoryListAdapter.notifyDataSetChanged();
-		}
-		else {
-			// Try the Kitkat workaround
-			success = FileUtil.renameFolder(oldFolder, newFolder);
+		directoryListAdapter.clear();
+		createList();
+		directoryListAdapter.notifyDataSetChanged();
 
-			if (success) {
-				directoryListAdapter.clear();
-				createList();
-				directoryListAdapter.notifyDataSetChanged();
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_delete_folder, false,
-						oldFolder.getAbsolutePath());
-			}
-			else {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_rename_folder, false,
-						oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
-				return;
-			}
-
+		if (!success) {
+			// In Kitkat workaround, try to delete old folder only in the end - if done immediately, it fails.
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_move_folder_partially, false,
+					oldFolder.getAbsolutePath(), newFolder.getAbsolutePath());
+			return;
 		}
 
-		// rename files in this folder
+		if (oldFolder.exists()) {
+			// try to delete old folder in separate thread. This is not successful directly after moving files.
+			FileUtil.rmdirAsynchronously(getActivity(), oldFolder, new Runnable() {
+				@Override
+				public void run() {
+					directoryListAdapter.clear();
+					createList();
+					directoryListAdapter.notifyDataSetChanged();
+				}
+			});
+		}
+
+		// rename files in the new folder
 		File[] files = newFolder.listFiles();
 		for (File f : files) {
 			EyePhoto source = new EyePhoto(f.getAbsolutePath());
@@ -283,14 +282,21 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 				Log.w(Application.TAG, "Failed to delete file" + children[i]);
 			}
 		}
-		boolean success = folder.delete();
-		directoryListAdapter.clear();
-		createList();
-		directoryListAdapter.notifyDataSetChanged();
-		if (!success) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_delete_folder, false,
-					folder.getAbsolutePath());
-			return;
+
+		if (folder.delete()) {
+			directoryListAdapter.clear();
+			createList();
+			directoryListAdapter.notifyDataSetChanged();
+		}
+		else {
+			FileUtil.rmdirAsynchronously(getActivity(), folder, new Runnable() {
+				@Override
+				public void run() {
+					directoryListAdapter.clear();
+					createList();
+					directoryListAdapter.notifyDataSetChanged();
+				}
+			});
 		}
 	}
 

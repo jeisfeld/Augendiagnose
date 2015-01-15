@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
@@ -142,7 +143,7 @@ public abstract class FileUtil {
 		try {
 			Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
 			resolver.delete(uri, null, null);
-			return true;
+			return !file.exists();
 		}
 		catch (Exception e) {
 			Log.e(Application.TAG, "Error when deleting file " + file.getAbsolutePath(), e);
@@ -274,6 +275,79 @@ public abstract class FileUtil {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Delete a folder.
+	 *
+	 * @param file
+	 *            The folder name.
+	 *
+	 * @return true if successful.
+	 */
+	public static boolean rmdir(final File file) {
+		if (!file.exists()) {
+			return true;
+		}
+		if (!file.isDirectory()) {
+			return false;
+		}
+		if (file.list() != null && file.list().length > 0) {
+			// Delete only empty folder.
+			return false;
+		}
+
+		// Try the normal way
+		if (file.delete()) {
+			return true;
+		}
+
+		ContentResolver resolver = Application.getAppContext().getContentResolver();
+		ContentValues values = new ContentValues();
+		values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+		resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+		// Delete the created entry, such that content provider will delete the file.
+		resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
+				new String[] { file.getAbsolutePath() });
+
+		return !file.exists();
+	}
+
+	/**
+	 * Delete a directory asynchronously.
+	 *
+	 * @param activity
+	 *            The activity calling this method.
+	 * @param file
+	 *            The folder name.
+	 * @param postActions
+	 *            Commands to be executed after success.
+	 */
+	public static void rmdirAsynchronously(final Activity activity, final File file, final Runnable postActions) {
+		new Thread() {
+			@Override
+			public void run() {
+				int retryCounter = 5; // MAGIC_NUMBER
+				while (!FileUtil.rmdir(file) && retryCounter > 0) {
+					try {
+						Thread.sleep(100); // MAGIC_NUMBER
+					}
+					catch (InterruptedException e) {
+						// do nothing
+					}
+					retryCounter--;
+				}
+				if (file.exists()) {
+					DialogUtil.displayError(activity, R.string.message_dialog_failed_to_delete_folder, false,
+							file.getAbsolutePath());
+				}
+				else {
+					activity.runOnUiThread(postActions);
+				}
+
+			}
+		}.start();
 	}
 
 	/**
