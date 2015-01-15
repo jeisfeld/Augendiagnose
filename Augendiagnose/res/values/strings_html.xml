@@ -141,6 +141,8 @@
 	<p>This is the folder in which the app manages the eye photos. Normally,
 		you need not change this. From here, you can copy the photos to other devices.</p>
 
+	<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
+
 	<p>You can select here a folder either on your device memory or on an SD
 		card. In Android 4.4 (Kitkat), storage on SD card has some limitations,
 		therefore some operations will take longer.</p>

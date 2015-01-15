@@ -1,0 +1,42 @@
+<resources>
+
+    <string name="title_activity_settings">Ajustes</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title_folder_photos">Carpeta de fotos oculares</string>
+    <string name="pref_default_folder_photos">__ext_storage__/FotosOcular</string>
+    <string name="pref_title_folder_input">Carpeta de entrada para nuevas fotos</string>
+    <string name="pref_title_max_bitmap_size">Tamaño máximo de mapas de bits</string>
+    <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>
+    <string name="pref_title_store_options">Guardar datos adicionales en JPG</string>
+    <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
+    <string name="pref_title_user_key">Clave de usuario</string>
+
+    <string-array name="pref_list_titles_folder_input">
+        <item>Carpeta Eye-Fi</item>
+        <item>Carpeta de la cámara</item>
+        <item>Carpeta personalizada</item>
+    </string-array>
+    <string-array name="pref_list_titles_folder_photos">
+        <item>Carpeta predeterminada</item>
+        <item>Carpeta personalizada</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_photos">
+        <item>__ext_storage__/FotosOcular</item>
+        <item>__custom__</item>
+    </string-array>
+    <string-array name="pref_list_titles_max_bitmap_size">
+        <item>4096</item>
+        <item>2048 (recomendado)</item>
+        <item>1440</item>
+        <item>1024</item>
+        <item>720</item>
+        <item>512</item>
+    </string-array>
+    <string-array name="pref_list_titles_store_options">
+        <item>Guardar en EXIF</item>
+        <item>Guardar en campos personalizados</item>
+        <item>No guarde datos en imágenes</item>
+    </string-array>
+
+</resources>

@@ -39,7 +39,7 @@
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
-    <string name="section_select_eye_orientation">Select Eye Orientation</string>
+    <string name="section_select_photos">Select Photos</string>
     <string name="section_select_name">Select Name</string>
     <string name="section_select_date">Select Date</string>
     <string name="text_brightness">Brightness</string>

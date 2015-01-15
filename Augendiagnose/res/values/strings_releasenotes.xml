@@ -13,9 +13,9 @@
 <p>The purpose of this app is the organization and display of eye photos. On first usage, you need
 to do the following:</p>
 <p>1. Define an incoming folder for new eye photos and copy all your existing eye photos into this folder</p>
-<p>2. Configure this folder as &quot;Input folder&quot; in the settings (first entry).</p>
-<p>3. Assign these photos to persons and dates and shift them to the app&apos;s eye photo folder, using the &quot;Organize new photos&quot; functionality.</p>
-<p>After this preparation, you can use the &quot;Display photos&quot; functionality to view and analyze your photos.</p>
+<p>2. Configure this folder as &ldquo;Input folder&rdquo; in the settings (first entry).</p>
+<p>3. Assign these photos to persons and dates and shift them to the app&apos;s eye photo folder, using the &ldquo;Organize new photos&rdquo; functionality.</p>
+<p>After this preparation, you can use the &ldquo;Display photos&rdquo; functionality to view and analyze your photos.</p>
 
 <p>On most pages of the app you find a question mark on the top right corner - here you can access the help page.</p>
 
@@ -86,7 +86,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added navigation on help pages. Bugfixes.</item>
         <item>New overlays. Choose color of overlays. Bugfixes.</item>
         <item>Added one more overlay. Help page for release notes. Bugfixes.</item>
-        <item>Changed scale on contrast bar. Enabled saving on ext sd card for Android 4.4.</item>
+        <item>Changed scale on contrast bar. Enabled saving on ext sd card for Android 4.4. Spanish localization.</item>
     </string-array>
 
 </resources>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="html_navigation_overview">Información general</string>
+    <string name="html_navigation_settings">Configuración</string>
+    <string name="html_navigation_organize_photos">Organizar nuevas fotos</string>
+    <string name="html_navigation_display_photos">Visualizar las fotos</string>
+    <string name="html_navigation_release_notes">Notas de la versión</string>
+    <string name="html_release_notes_base">
+<![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Diagnóstico de ojos - Notas de la versión</title>
+</head>
+<body>
+	<h2>Diagnóstico de ojos - Notas de la versión</h2>
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_overview">
+<![CDATA[
+<! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 Transitional // EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Diagnóstico ocular - Información general</title>
+</head>
+<body>
+	<h2>Diagnóstico ocular - Información general</h2>
+
+	Esta aplicación tiene el objetivo de ayudar a la visualización de fotografías
+	de los ojos en un dispositivo Android, con el fin de hacer el diagnóstico médico.
+
+	<h3>Características principales</h3>
+
+	<ul>
+		<li>Organización de los fotos oculares por nombre, fecha y lado
+			(derecho/izquierdo)</li>
+		<li>Visualización de dos fotos oculares en paralelo (con la posibilidad
+			de cambio de tamaño individual), con el fin de compararlos (por ejemplo,
+			derecha-izquierda comparación, la comparación antes-después, comparación de
+			personas diferentes, o comparación con una topografía del iris).</li>
+		<li>Cambio de brillo y contraste de la foto durante la visualización, y
+			superposición con una topografía del iris.</li>
+		<li>También puede guardar la información en las fotos, por ejemplo el
+			brillo y comentarios. Para ser capaz de almacenar información y usar la plena
+			funcionalidad de la aplicación, las fotos tienen que tener formato JPG.</li>
+	</ul>
+	Esta es sólo una versión beta de la aplicación. Otras características están por
+	venir. Ideas para otras características son bienvenidos.
+
+	<h3>Principales actividades</h3>
+
+	<h4>Paso 1:. Organizar las fotos</h4>
+
+	<p>En este paso, puede organizar las fotos de ojos.</p>
+
+	<p>La aplicación espera nuevas fotos de los ojos en una carpeta de
+		entrada que está preconfigurada como la carpeta de destino de la aplicación
+		Eye-Fi, pero se puede cambiarlo por medio de la configuración.</p>
+
+	<p>En el actividad &laquo;Organizar nuevas fotos&raquo;, puede asignar
+		nuevas fotos de los ojos de la carpeta de entrada a una persona y una fecha y
+		prepararlos en esta manera para la aplicación. De este modo, las fotos serán
+		renombradas y trasladadas a la carpeta de la aplicación.</p>
+
+	<p>Como alternativa, puede seleccionar dos fotos en un explorador de
+		archivos o en una aplicación de fotos, y enviar estas fotos a la aplicación
+		Diagnóstico del ojo. A continuación, puede organizar estas fotos en la
+		aplicación. En este caso, las fotos no se eliminarán de su ubicación anterior.</p>
+
+	<h4>Paso 2:. Visualizar las fotos</h4>
+
+	<p>Este es el objetivo principal de la aplicación, pero requiere de las
+		fotos para ser organizado por medio del paso 1.</p>
+
+	<p>En esta actividad, usted puede</p>
+	<ul>
+		<li>Mostrar una de las fotos en detalle. Aquí también se puede cambiar el
+			brillo y el contraste de la foto, muestra iris topografías como
+			superposición, o escribir comentario a una foto.</li>
+
+		<li>Mostrar dos fotos para la comparación (y cambiar el tamaño
+			independiente).</li>
+	</ul>
+
+	<h3>Almacenamiento de datos</h3>
+
+	<p>La aplicación graba información (como posición del iris o comentarios)
+		directamente en los archivos de imagen JPG. Esto tiene la ventaja de que toda
+		la información es todavía disponible si copia las imágenes de un dispositivo a
+		otro. En parte, la información como los comentarios será aún disponible en MS
+		Windows.</p>
+
+	<p>Sin embargo, este tipo de almacenamiento impone un pequeño riesgo. Puede
+		suceder que en algunos dispositivos, o para los cuadros del algunas cámaras,
+		el almacenamiento de información en el JPG falla, o posiblemente hasta
+		destruye el archivo JPG. Por lo tanto, es recomendado que mantenga copias de
+		seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
+		primera vez con un nuevo dispositivo o con una nueva cámara.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_settings">
+<![CDATA[
+<! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 Transitional // EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Diagnóstico ocular - Ajustes</title>
+</head>
+<body>
+	<h2>Ajustes</h2>
+
+	La aplicación permite a los siguientes ajustes:
+
+	<h3>Carpeta de entrada para nuevas fotos</h3>
+
+	<p>Esta es la carpeta, de donde las nuevas fotos son importadas. Como
+		configuración predeterminada, este es o bien la carpeta de destino de la
+		aplicación Eye-Fi o la carpeta norma de la aplicación de la cámara. Sin
+		embargo, puede configurar aquí cualquiera otra carpeta.</p>
+
+	<p>Bagaje con respecto a la aplicación Eye-Fi: normalmente, la cámara del
+		dispositivo celular no es suficiente para tomar fotos oculares en alta
+		calidad. Un enfoque más práctico es utilizar una cámara externa con SD Eye-Fi,
+		que transfiere las fotos a través de WLAN en el dispositivo celular.</p>
+
+	<h3>Carpeta de fotos oculares</h3>
+
+	<p>Esta es la carpeta en la que la aplicación administra las fotos de ojos.
+		Normalmente, usted no tiene que cambiar esto. Desde aquí, puede copiar las
+		fotos a otros dispositivos.</p>
+
+	<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
+
+	<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo
+		o en una tarjeta SD. En Android 4.4 (Kitkat), almacenamiento en la tarjeta SD
+		tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.</p>
+
+	<h3>Tamaño máximo de mapas de bits</h3>
+
+	Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se
+	requiere para ahorrar memoria del dispositivo. El valor predeterminado es 2048.
+	En dispositivos con poca memoria, puede ser necesario para configurar un valor
+	menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la
+	aplicación.
+
+	<h3>Última foto es ojo derecho</h3>
+
+	Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como
+	configuración predeterminada este es el ojo izquierdo (lo que significa que
+	usted hizo primero una foto del ojo derecho y luego del ojo izquierdo).
+
+	<h3>Guardar datos adicionales en JPG</h3>
+
+	Aquí puede limitar el almacenamiento de datos en los archivos JPG de la
+	aplicación.
+
+	<ul>
+		<li>Guardar en EXIF (recomendado): La aplicación guarda la información
+			relevante en el archivo JPG, incluso en campos estándar que son visibles en
+			Windows.</li>
+
+		<li>Guardar en campos personalizados: La aplicación guarda la información
+			en el archivo JPG, pero sólo en campos separados. Campos estándar se
+			mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
+
+		<li>No guarde datos en imágenes: La aplicación no almacena información en
+			archivos JPG. (Esto limita la funcionalidad de la aplicación.)</Li>
+	</ul>
+
+	<h3>Color predeterminado de superposiciones</h3>
+
+	Aquí puede definir el color predeterminado para los superposiciones de
+	topografías del iris. (Estándar: rojo)
+
+	<h3>Clave de usuario</h3>
+
+	Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_organize_photos">
+<![CDATA[
+<! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 Transitional // EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Diagnóstico ocular - Organizar nuevas fotos</title>
+</head>
+<body>
+	<h2>Organizar nuevas fotos</h2>
+
+	<p>Aquí usted puede organizar sus fotos de los ojos.</p>
+
+	<p>Se muestran los dos últimos pasos de la carpeta de entrada.</p>
+
+	<p>Con el botón &laquo;Cambiar&raquo; usted puede intercambiar las dos
+		fotos.</p>
+
+	<p>Con el botón &laquo;Otras Fotos&raquo; puede seleccionar dos diferentes
+		fotos de la carpeta de entrada.</p>
+
+	<p>En &laquo;Seleccionar Nombre&raquo; se puede seleccionar el nombre de la
+		persona de la cual se toman las fotos de los ojos. Aquí si puede seleccionar
+		un nombre existente o introducir un nuevo nombre.</p>
+
+	<p>En &laquo;Seleccionar Fecha&raquo; puede seleccionar la fecha en que las
+		fotos serán listadas. Normalmente se trata de la fecha de captura de las
+		fotos, que es preseleccionada. Sin embargo, usted puede seleccionar una fecha
+		diferente. Esto es necesario particularmente, si desea mantener más de un par
+		de ojos de una persona de un fecha - la aplicación permite sólo un par de
+		fotos por día y persona</p>
+
+	<p>Con el botón &laquo;Aceptar&raquo; puede mover el par de fotos de ojos
+		seleccionado a la carpeta de fotos ojo. Las fotos están asociadas con el
+		nombre y fecha determinada y luego pueden ser utilizadas por la aplicación.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="html_display_photos">
+<![CDATA[
+<! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 Transitional // EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Diagnóstico ocular - Visualizar las fotos</title>
+</head>
+<body>
+	<h2>Visualizar las fotos</h2>
+
+	<p>En esta actividad, se puede seleccionar el nombre de una persona cuyas
+		fotos oculares se quiere ver. Luego la aplicación mostrará todas las fotos de
+		ojo de esta persona en una lista ordenada por fecha.</p>
+
+	<p>A continuación, usted tiene las siguientes posibilidades:</p>
+
+	<ul>
+		<li>Mostrar una de las fotos en detalle (haciendo clic en una foto).</li>
+
+		<li>Mostrar los dos fotos de una fecha (haciendo clic en una fecha)</li>
+
+		<li>Mostrar dos fotos de diferentes fechas (haciendo largo clic en una
+			foto y después clic en una segunda foto)</li>
+
+		<li>Mostrar dos fotos de diferentes personas: seleccione una foto de esta
+			persona (mediante pulsación larga) y luego seleccione una foto de una persona
+			diferente.</li>
+	</ul>
+
+	<p>Tenga en cuenta que los gráficos de la topografía del iris pueden
+		organizarse como fotos oculares - Esto permite comparar las fotos de los ojos
+		con los gráficos de la topografía del iris. Tal gráficos no están incluidos en
+		la aplicación (excepto de superposiciónes).</p>
+
+	<h3>Otras opciones en la vista general</h3>
+
+	<ul>
+		<li>Al hacer una pulsación larga en un nombre en la lista de nombres, es
+			posible que cambiar o eliminar el nombre</li>
+
+		<li>Al hacer una pulsación larga en una fecha en la lista de fotos para
+			una nombre, usted puede cambiar la fecha o eliminar las imágenes de esa fecha,
+			o puede mover estas fotos a la carpeta de entrada (por ejemplo, con el fin
+			de trasladarlos a un diferente nombre).</li>
+	</ul>
+
+	<h3>Otras opciones en la vista de detalle</h3>
+
+	<p>En la vista de detalle (una o dos fotos), tiene las siguientes más
+		posibilidades:</p>
+
+	<ul>
+		<li>Cambio de brillo y contraste mediante correderas</li>
+
+		<li>Visualización de una topografía de iris como superposición,
+			adaptación de la superposición al iris y almacenamiento de la posición de
+			superposición (botón de cerradura)</li>
+
+		<li>Guardar los ajustes seleccionados de brillo y contraste (por medio de
+			menú contextual - pulsación larga en la foto)</li>
+
+		<li>Guardar la posición y zoom (por medio del menú contextual)</li>
+
+		<li>Cambiar el comentario de la foto (por medio del menú contextual)</li>
+	</ul>
+
+	<p>Estas funciones pueden activarse o desactivarse mediante el menú
+		contextual (larga pulsación en la foto) a &laquo;Mostrar/Ocultar
+		herramientas&raquo;.</p>
+</body>
+</html>
+]]>
+    </string>
+
+</resources>

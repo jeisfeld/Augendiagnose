@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_show_utilities">Ver herramientas</string>
+    <string name="menu_hide_utilities">Ocultar herramientas</string>
+    <string name="menu_edit_comment">Editar comentario</string>
+    <string name="menu_store_brightness">Guardar brillo y contraste</string>
+    <string name="menu_reset_brightness">Restablecer brillo y contraste</string>
+    <string name="menu_store_position">Guardar zoom y posición</string>
+    <string name="menu_reset_position">Restablecer zoom y posición</string>
+    <string name="menu_store_overlay_color">Guardar color de superposición</string>
+    <string name="menu_reset_overlay_color">Restablecer color de superposición</string>
+    <string name="menu_delete_overlay_position">Eliminar posición de superposición</string>
+    <string name="menu_delete_images">Eliminar fotos</string>
+    <string name="menu_change_date">Cambiar fecha</string>
+    <string name="menu_move_to_input_folder">Mover a la carpeta de entrada</string>
+    <string name="menu_change_name">Cambiar nombre</string>
+
+</resources>

@@ -597,7 +597,9 @@ public class EyePhoto {
 		 * @return the converted RightString.
 		 */
 		public static final RightLeft fromString(final String rightLeftString) {
-			if (rightLeftString != null && (rightLeftString.startsWith("r") || rightLeftString.startsWith("R"))) {
+			if (rightLeftString != null
+					&& (rightLeftString.startsWith("r") || rightLeftString.startsWith("R")
+							|| rightLeftString.startsWith("d") || rightLeftString.startsWith("D"))) {
 				return RIGHT;
 			}
 			else {
