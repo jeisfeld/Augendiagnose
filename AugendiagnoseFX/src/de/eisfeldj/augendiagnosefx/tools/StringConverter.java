@@ -34,6 +34,11 @@ public final class StringConverter {
 	private static final File XML_FILE_DE = new File("../Augendiagnose/res/values-de/strings.xml");
 
 	/**
+	 * The Spanish String file.
+	 */
+	private static final File XML_FILE_ES = new File("../Augendiagnose/res/values-es/strings.xml");
+
+	/**
 	 * The global Properties file.
 	 */
 	private static final File PROP_FILE_GLOBAL = new File("resources/bundles/Strings.properties");
@@ -42,6 +47,11 @@ public final class StringConverter {
 	 * The German Properties file.
 	 */
 	private static final File PROP_FILE_DE = new File("resources/bundles/Strings_de.properties");
+
+	/**
+	 * The Spanish Properties file.
+	 */
+	private static final File PROP_FILE_ES = new File("resources/bundles/Strings_es.properties");
 
 	/**
 	 * The class containing resource constants.
@@ -88,20 +98,27 @@ public final class StringConverter {
 	private void process() {
 		File tmpPropFile = new File(PROP_FILE_GLOBAL.getPath() + FILE_SUFFIX);
 		File tmpPropFileDe = new File(PROP_FILE_DE.getPath() + FILE_SUFFIX);
+		File tmpPropFileEs = new File(PROP_FILE_ES.getPath() + FILE_SUFFIX);
 
 		PROP_FILE_GLOBAL.renameTo(tmpPropFile);
 		PROP_FILE_DE.renameTo(tmpPropFileDe);
+		PROP_FILE_ES.renameTo(tmpPropFileEs);
 
 		try (FileReader reader = new FileReader(tmpPropFile);
 				FileWriter writer = new FileWriter(PROP_FILE_GLOBAL);
 				FileReader readerDe = new FileReader(tmpPropFileDe);
-				FileWriter writerDe = new FileWriter(PROP_FILE_DE)) {
+				FileWriter writerDe = new FileWriter(PROP_FILE_DE);
+				FileReader readerEs = new FileReader(tmpPropFileEs);
+				FileWriter writerEs = new FileWriter(PROP_FILE_ES)) {
 
 			AlphabeticProperties props = new AlphabeticProperties();
 			props.load(reader);
 
 			AlphabeticProperties propsDe = new AlphabeticProperties();
 			propsDe.load(readerDe);
+
+			AlphabeticProperties propsEs = new AlphabeticProperties();
+			propsEs.load(readerEs);
 
 			Enumeration<?> e = props.propertyNames();
 
@@ -115,10 +132,15 @@ public final class StringConverter {
 				if (xmlValueDe != null) {
 					propsDe.setProperty(key, xmlValueDe);
 				}
+				String xmlValueEs = getValueFromXml(XML_FILE_ES, key);
+				if (xmlValueEs != null) {
+					propsEs.setProperty(key, xmlValueEs);
+				}
 			}
 
 			props.store(writer, "String resources");
 			propsDe.store(writerDe, "String resources DE");
+			propsEs.store(writerEs, "String resources ES");
 
 			createResourceConstants(props);
 		}
@@ -127,6 +149,7 @@ public final class StringConverter {
 		}
 		tmpPropFile.delete();
 		tmpPropFileDe.delete();
+		tmpPropFileEs.delete();
 	}
 
 	/**
