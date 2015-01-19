@@ -57,10 +57,10 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Selección de carpetas simplificado en la configuración.</item>
         <item>Activado mover fotografías a la carpeta de entrada. La aplicación se queda con la organización de fotos si hay más fotos que se organizarán.</item>
         <item>Añadido navegación en las páginas de ayuda. Corrección de errores.</item>
-        <item>Nuevos superposiciones. Elige el color de las superposiciones. Corrección de errores.</item>
+        <item>Nuevas superposiciones. Elige el color de las superposiciones. Corrección de errores.</item>
         <item>Añadida una superposición más. Página de ayuda para las notas de la versión. Corrección de errores.</item>
         <item>Mejora de la escala de contraste. Habilitado ahorro en la tarjeta SD para Android 4.4. Localización española.</item>
-        <item>Corrección de errores</item>
+        <item>Nueva superposición.</item>
     </string-array>
 
 </resources>

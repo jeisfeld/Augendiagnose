@@ -123,6 +123,8 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton btnOverlay5;
 	@FXML
 	private ToggleButton btnOverlay6;
+	@FXML
+	private ToggleButton btnOverlay7;
 	// JAVADOC:ON
 
 	/**
