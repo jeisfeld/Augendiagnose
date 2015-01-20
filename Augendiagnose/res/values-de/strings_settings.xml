@@ -29,6 +29,7 @@
 
     <string-array name="pref_list_titles_max_bitmap_size">
         <item>4096</item>
+        <item>2880</item>
         <item>2048 (empfohlen)</item>
         <item>1440</item>
         <item>1024</item>
