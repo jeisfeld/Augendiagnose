@@ -999,7 +999,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Helper listFoldersFragment to retain the bitmap on configuration change.
 	 */
-	protected static class RetainFragment extends PinchImageView.RetainFragment {
+	public static class RetainFragment extends PinchImageView.RetainFragment {
 		/**
 		 * Tag to be used as identifier of the fragment.
 		 */

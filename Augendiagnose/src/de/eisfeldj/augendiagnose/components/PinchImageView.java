@@ -517,7 +517,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Helper listFoldersFragment to retain the bitmap on configuration change.
 	 */
-	protected static class RetainFragment extends Fragment {
+	public static class RetainFragment extends Fragment {
 		/**
 		 * Tag to be used as identifier of the fragment.
 		 */
