@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.util.ImageUtil;
 
@@ -74,6 +75,19 @@ public class OverlayImageView extends SizableImageView {
 	}
 
 	/**
+	 * Initialize brightness and contrast before displaying the image.
+	 *
+	 * @param newBrightness
+	 *            The brightness
+	 * @param newContrast
+	 *            The contrast
+	 */
+	public final void initializeBrightnessContrast(final float newBrightness, final float newContrast) {
+		brightness = newBrightness;
+		contrast = newContrast;
+	}
+
+	/**
 	 * Redisplay. (Can be used to switch between non-thumbnail and thumbnail view.
 	 *
 	 * @param thumbnail
@@ -86,6 +100,22 @@ public class OverlayImageView extends SizableImageView {
 								thumbnail));
 	}
 
+	/*
+	 * Override in order to ensure that brightness/contrast are kept.
+	 *
+	 * (non-Javadoc)
+	 *
+	 * @see de.eisfeldj.augendiagnosefx.fxelements.SizableImageView#displayImage(javafx.scene.image.Image)
+	 */
+	@Override
+	protected final void displayImage(final Image image) {
+		Image enhancedImage =
+				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
+						false);
+
+		super.displayImage(enhancedImage);
+	}
+
 	/**
 	 * Convert contrast from (-1,1) scale to (0,infty) scale.
 	 *
@@ -93,8 +123,20 @@ public class OverlayImageView extends SizableImageView {
 	 *            the contrast on (-1,1) scale.
 	 * @return the contrast on (0,infty) scale.
 	 */
-	private float seekbarContrastToStoredContrast(final float seekbarContrast) {
+	private static float seekbarContrastToStoredContrast(final float seekbarContrast) {
 		float contrastImd = (float) (Math.asin(seekbarContrast) * 2 / Math.PI);
 		return 2f / (1f - contrastImd * CONTRAST_LIMIT) - 1f;
+	}
+
+	/**
+	 * Convert contrast from (0,infty) scale to (-1,1) scale.
+	 *
+	 * @param storedContrast
+	 *            the contrast on (0,infty) scale.
+	 * @return the contrast on (-1,1) scale.
+	 */
+	public static float storedContrastToSeekbarContrast(final float storedContrast) {
+		float contrastImd = (1f - 2f / (storedContrast + 1f)) / CONTRAST_LIMIT;
+		return (float) Math.sin(Math.PI * contrastImd / 2);
 	}
 }

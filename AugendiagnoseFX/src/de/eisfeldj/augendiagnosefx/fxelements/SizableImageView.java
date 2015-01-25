@@ -179,13 +179,7 @@ public class SizableImageView extends ScrollPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					imageView.setImage(image);
-					synchronized (imageView) {
-						// Initialization after window is sized and image is loaded.
-						if (getHeight() > 0 && !isInitialized) {
-							doInitialScaling();
-						}
-					}
+					displayImage(image);
 				}
 			});
 			return;
@@ -206,13 +200,7 @@ public class SizableImageView extends ScrollPane {
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
-								imageView.setImage(image);
-								synchronized (imageView) {
-									// Initialization after window is sized and image is loaded.
-									if (getHeight() > 0 && !isInitialized) {
-										doInitialScaling();
-									}
-								}
+								displayImage(image);
 								dialog.close();
 							}
 						});
@@ -235,6 +223,23 @@ public class SizableImageView extends ScrollPane {
 				heightProperty().removeListener(this);
 			}
 		});
+	}
+
+	/**
+	 * Display the image after it is loaded.
+	 *
+	 * @param image
+	 *            The fully loaded image.
+	 */
+	// OVERRIDABLE
+	protected void displayImage(final Image image) {
+		imageView.setImage(image);
+		synchronized (imageView) {
+			// Initialization after window is sized and image is loaded.
+			if (getHeight() > 0 && !isInitialized) {
+				doInitialScaling();
+			}
+		}
 	}
 
 	/**

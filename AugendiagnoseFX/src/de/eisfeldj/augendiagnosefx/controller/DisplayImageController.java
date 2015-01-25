@@ -162,10 +162,18 @@ public class DisplayImageController extends BaseController implements Initializa
 		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
 		colorPicker.getStyleClass().add("button");
 
-		// Inititlize slider for brightness.
 		sliderBrightness.setMin(-1);
 		sliderBrightness.setValue(0);
 		sliderBrightness.setMax(1);
+		sliderContrast.setMin(-1);
+		sliderContrast.setValue(0);
+		sliderContrast.setMax(1);
+	}
+
+	/**
+	 * Initialize the sliders for contrast and brightness.
+	 */
+	private void initializeSliders() {
 		sliderBrightness.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
@@ -185,9 +193,6 @@ public class DisplayImageController extends BaseController implements Initializa
 		});
 
 		// Inititlize slider for contrast.
-		sliderContrast.setMin(-1);
-		sliderContrast.setValue(0);
-		sliderContrast.setMax(1);
 		sliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
@@ -300,12 +305,21 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		this.eyePhoto = eyePhoto;
+		JpegMetadata metadata = eyePhoto.getImageMetadata();
+
+		if (metadata.hasBrightnessContrast()) {
+			sliderBrightness.setValue(metadata.brightness);
+			sliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.contrast));
+			displayImageView.initializeBrightnessContrast(metadata.brightness, metadata.contrast);
+		}
+		// Only now the listeners should be initialized.
+		initializeSliders();
 
 		displayImageView.setEyePhoto(eyePhoto);
 
-		enableOverlayButtons(eyePhoto.getImageMetadata().hasOverlayPosition());
+		enableOverlayButtons(metadata.hasOverlayPosition());
 
-		txtImageComment.setText(eyePhoto.getImageMetadata().comment);
+		txtImageComment.setText(metadata.comment);
 	}
 
 	/**

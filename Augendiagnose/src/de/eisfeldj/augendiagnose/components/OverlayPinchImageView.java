@@ -688,7 +688,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            the contrast on (-1,1) scale.
 	 * @return the contrast on (0,infty) scale.
 	 */
-	private float seekbarContrastToStoredContrast(final float seekbarContrast) {
+	private static float seekbarContrastToStoredContrast(final float seekbarContrast) {
 		float contrastImd = (float) (Math.asin(seekbarContrast) * 2 / Math.PI);
 		return 2f / (1f - contrastImd * CONTRAST_LIMIT) - 1f;
 	}
@@ -700,7 +700,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            the contrast on (0,infty) scale.
 	 * @return the contrast on (-1,1) scale.
 	 */
-	private float storedContrastToSeekbarContrast(final float storedContrast) {
+	private static float storedContrastToSeekbarContrast(final float storedContrast) {
 		float contrastImd = (1f - 2f / (storedContrast + 1f)) / CONTRAST_LIMIT;
 		return (float) Math.sin(Math.PI * contrastImd / 2);
 	}
