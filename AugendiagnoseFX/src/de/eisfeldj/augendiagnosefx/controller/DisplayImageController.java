@@ -381,6 +381,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		btnOverlay4.setDisable(!enabled);
 		btnOverlay5.setDisable(!enabled);
 		btnOverlay6.setDisable(!enabled);
+		btnOverlay7.setDisable(!enabled);
+		colorPicker.setDisable(!enabled);
 	}
 
 }
