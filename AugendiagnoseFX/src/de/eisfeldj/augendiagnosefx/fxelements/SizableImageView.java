@@ -247,7 +247,12 @@ public class SizableImageView extends ScrollPane {
 	 */
 	private void doInitialScaling() {
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
-		if (metadata != null && metadata.hasOverlayPosition()) {
+		if (metadata != null && metadata.hasViewPosition()) {
+			zoomProperty.set(Math.min(getWidth(), getHeight())
+					/ Math.min(imageView.getImage().getWidth(), imageView.getImage().getHeight())
+					* metadata.zoomFactor);
+		}
+		else if (metadata != null && metadata.hasOverlayPosition()) {
 			zoomProperty.set(Math.min(getWidth(), getHeight())
 					/ Math.max(imageView.getImage().getWidth(), imageView.getImage().getHeight())
 					/ metadata.overlayScaleFactor);
@@ -261,7 +266,19 @@ public class SizableImageView extends ScrollPane {
 		imageView.setFitHeight(zoomProperty.get() * imageView.getImage().getHeight());
 		layout();
 
-		if (metadata != null && metadata.hasOverlayPosition()) {
+		if (metadata != null && (metadata.hasViewPosition() || metadata.hasOverlayPosition())) {
+			float xCenter;
+			float yCenter;
+
+			if (metadata.hasViewPosition()) {
+				xCenter = metadata.xPosition;
+				yCenter = metadata.yPosition;
+			}
+			else {
+				xCenter = metadata.xCenter;
+				yCenter = metadata.yCenter;
+			}
+
 			// Size of the image.
 			double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
 			double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
@@ -272,15 +289,16 @@ public class SizableImageView extends ScrollPane {
 
 			// The initial scrollbar positions
 			double hValue = scrollXFactor > 0
-					? (metadata.xCenter * imageWidth - getWidth() / 2) / scrollXFactor
+					? (xCenter * imageWidth - getWidth() / 2) / scrollXFactor
 					: 1;
 			double vValue = scrollYFactor > 0
-					? (metadata.yCenter * imageHeight - getHeight() / 2) / scrollYFactor
+					? (yCenter * imageHeight - getHeight() / 2) / scrollYFactor
 					: 1;
 
 			setHvalue(hValue);
 			setVvalue(vValue);
 		}
+
 		isInitialized = true;
 	}
 
