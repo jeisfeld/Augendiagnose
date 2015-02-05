@@ -220,7 +220,7 @@ public final class ImageUtil {
 	 * @return the dummy bitmap.
 	 */
 	public static Bitmap getDummyBitmap() {
-		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.bad_file_format);
+		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.cannot_read_image);
 	}
 
 	/**
