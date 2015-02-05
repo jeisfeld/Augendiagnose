@@ -193,10 +193,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 		else {
 			// only load predefined images
-			updateImages();
-			pictureDate.setTime(photoRight.getDate());
-			editDate.setText(DateUtil.getDisplayDate(pictureDate));
-			editDate.invalidate();
+			updateImages(true);
 		}
 
 		// Ensure that target folder exists
@@ -287,11 +284,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 				photoRight = photoLastButOne;
 			}
 
-			updateImages();
-
-			pictureDate.setTime(photoRight.getDate());
-			editDate.setText(DateUtil.getDisplayDate(pictureDate));
-			editDate.invalidate();
+			updateImages(true);
 		}
 		else {
 			if (update) {
@@ -307,12 +300,21 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Display the two images. As these are only two thumbnails, we do this in the main thread. Separate thread may lead
 	 * to issues when returning from SelectTwoImages after orientation change
+	 *
+	 * @param updateDate
+	 *            if true, then the date will be updated from the images.
 	 */
-	private void updateImages() {
+	private void updateImages(final boolean updateDate) {
 		imageRight.setImageBitmap(photoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 		imageRight.invalidate();
 		imageLeft.setImageBitmap(photoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 		imageLeft.invalidate();
+
+		if (updateDate) {
+			pictureDate.setTime(photoRight.getDate());
+			editDate.setText(DateUtil.getDisplayDate(pictureDate));
+			editDate.invalidate();
+		}
 	}
 
 	/**
@@ -338,7 +340,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		EyePhoto temp = photoLeft;
 		photoLeft = photoRight;
 		photoRight = temp;
-		updateImages();
+		updateImages(false);
 	}
 
 	/**
@@ -470,7 +472,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			if (filePair != null) {
 				photoRight = new EyePhoto(filePair.getFile1());
 				photoLeft = new EyePhoto(filePair.getFile2());
-				updateImages();
+				updateImages(true);
 			}
 			break;
 		default:
