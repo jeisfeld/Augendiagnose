@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnose.util;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -202,6 +203,9 @@ public final class ImageUtil {
 		String mimeType = contentResolver.getType(uri);
 		if (mimeType == null) {
 			String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+			if (extension != null) {
+				extension = extension.toLowerCase(Locale.getDefault());
+			}
 			mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
 			if (mimeType == null) {
 				mimeType = "unknown";

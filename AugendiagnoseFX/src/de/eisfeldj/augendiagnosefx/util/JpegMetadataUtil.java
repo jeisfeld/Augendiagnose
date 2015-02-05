@@ -304,10 +304,17 @@ public final class JpegMetadataUtil {
 				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.subject);
 			}
 
-			os = new FileOutputStream(tempFile);
-			os = new BufferedOutputStream(os);
-
-			new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			try {
+				os = new FileOutputStream(tempFile);
+				os = new BufferedOutputStream(os);
+				new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			}
+			catch (Exception e) {
+				Logger.warning("Error storing EXIF data lossless - try lossy approach");
+				os = new FileOutputStream(tempFile);
+				os = new BufferedOutputStream(os);
+				new ExifRewriter().updateExifMetadataLossy(jpegImageFile, os, outputSet);
+			}
 
 			IoUtils.closeQuietly(true, os);
 

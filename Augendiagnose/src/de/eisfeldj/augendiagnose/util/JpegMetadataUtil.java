@@ -256,7 +256,7 @@ public final class JpegMetadataUtil {
 	 * @throws ImageReadException
 	 * @throws ImageWriteException
 	 */
-	@SuppressWarnings("resource")
+	@SuppressWarnings({ "resource" })
 	private static void changeExifMetadata(final String jpegImageFileName, final JpegMetadata metadata)
 			throws IOException,
 			ImageReadException, ImageWriteException {
@@ -308,10 +308,17 @@ public final class JpegMetadataUtil {
 				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.subject);
 			}
 
-			os = new FileOutputStream(tempFile);
-			os = new BufferedOutputStream(os);
-
-			new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			try {
+				os = new FileOutputStream(tempFile);
+				os = new BufferedOutputStream(os);
+				new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			}
+			catch (Exception e) {
+				Log.w(Application.TAG, "Error storing EXIF data lossless - try lossy approach");
+				os = new FileOutputStream(tempFile);
+				os = new BufferedOutputStream(os);
+				new ExifRewriter().updateExifMetadataLossy(jpegImageFile, os, outputSet);
+			}
 
 			IoUtils.closeQuietly(true, os);
 
