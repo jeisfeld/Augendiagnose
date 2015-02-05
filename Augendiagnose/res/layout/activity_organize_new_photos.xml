@@ -16,6 +16,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/section_select_name"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <de.eisfeldj.augendiagnose.components.InstantAutoCompleteTextView
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_insert_name"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <Space style="@style/Space" />
+
+    <View style="@style/Divider" />
+
+    <Space style="@style/Space" />
+
+    <LinearLayout style="@style/Subactivity" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/section_select_photos"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -71,30 +95,6 @@
                 android:onClick="selectOtherPhotos"
                 android:text="@string/button_other_pictures" />
         </LinearLayout>
-    </LinearLayout>
-
-    <Space style="@style/Space" />
-
-    <View style="@style/Divider" />
-
-    <Space style="@style/Space" />
-
-    <LinearLayout style="@style/Subactivity" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_select_name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <de.eisfeldj.augendiagnose.components.InstantAutoCompleteTextView
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/hint_insert_name"
-            android:imeOptions="actionDone"
-            android:inputType="textPersonName" />
     </LinearLayout>
 
     <Space style="@style/Space" />
