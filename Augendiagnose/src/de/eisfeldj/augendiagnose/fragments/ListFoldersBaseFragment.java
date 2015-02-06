@@ -276,10 +276,12 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		// delete folder and ensure that list is refreshed
 		String[] children = folder.list();
-		for (int i = 0; i < children.length; i++) {
-			boolean success = FileUtil.deleteFile(new File(folder, children[i]));
-			if (!success) {
-				Log.w(Application.TAG, "Failed to delete file" + children[i]);
+		if (children != null) {
+			for (int i = 0; i < children.length; i++) {
+				boolean success = FileUtil.deleteFile(new File(folder, children[i]));
+				if (!success) {
+					Log.w(Application.TAG, "Failed to delete file" + children[i]);
+				}
 			}
 		}
 
