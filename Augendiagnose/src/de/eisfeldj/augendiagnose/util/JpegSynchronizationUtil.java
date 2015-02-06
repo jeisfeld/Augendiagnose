@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.ExifStorageException;
 
 /**
  * Utility class to help storing metadata in jpg files in a synchronized way, preventing to store the same file twice in
@@ -182,9 +183,16 @@ public final class JpegSynchronizationUtil {
 		@Override
 		protected void onPostExecute(final Exception e) {
 			if (e != null) {
-				Log.e(TAG, "Failed to save file " + pathname, e);
-				DialogUtil.displayErrorAsToast(Application.getAppContext(),
-						R.string.message_dialog_failed_to_store_metadata, pathname);
+				if (e instanceof ExifStorageException) {
+					Log.e(TAG, "Failed to save file " + pathname, e);
+					DialogUtil.displayErrorAsToast(Application.getAppContext(),
+							R.string.message_dialog_failed_to_store_exif, pathname);
+				}
+				else {
+					Log.e(TAG, "Failed to store EXIF data for file " + pathname, e);
+					DialogUtil.displayErrorAsToast(Application.getAppContext(),
+							R.string.message_dialog_failed_to_store_metadata, pathname);
+				}
 			}
 			else {
 				Log.d(TAG, "Successfully saved file " + pathname);

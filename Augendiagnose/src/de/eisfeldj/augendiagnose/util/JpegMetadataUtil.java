@@ -240,7 +240,12 @@ public final class JpegMetadataUtil {
 			changeXmpMetadata(jpegImageFileName, metadata);
 
 			if (changeExifAllowed()) {
-				changeExifMetadata(jpegImageFileName, metadata);
+				try {
+					changeExifMetadata(jpegImageFileName, metadata);
+				}
+				catch (Exception e) {
+					throw new ExifStorageException(e);
+				}
 			}
 		}
 	}
@@ -439,6 +444,26 @@ public final class JpegMetadataUtil {
 	private static boolean changeExifAllowed() {
 		int storeOption = Integer.parseInt(Application.getSharedPreferenceString(R.string.key_store_option));
 		return storeOption == 2;
+	}
+
+	/**
+	 * Exception indicating that an error appeared while storing EXIF data.
+	 */
+	public static final class ExifStorageException extends IOException {
+		/**
+		 * The serial version id.
+		 */
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Standard constructor, passing the causing exception.
+		 *
+		 * @param cause
+		 *            The exception.
+		 */
+		private ExifStorageException(final Throwable cause) {
+			super(cause);
+		}
 	}
 
 }

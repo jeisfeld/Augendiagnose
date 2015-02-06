@@ -32,6 +32,7 @@
     <string name="message_dialog_failed_to_delete_folder">Löschen des Verzeichnisses von %1$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
+    <string name="message_dialog_failed_to_store_exif">Konnte EXIF-Informationen nicht in Datei %1$s speichern - bitte Kontaktieren Sie den Entwickler!</string>
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
