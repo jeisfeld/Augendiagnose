@@ -10,6 +10,7 @@
     <string name="pref_title_eye_sequence_choice">Letztes Foto ist rechtes Auge</string>
     <string name="pref_title_store_options">Speichern von Daten in JPG-Dateien</string>
     <string name="pref_title_overlay_color">Standardfarbe für Overlays</string>
+    <string name="pref_title_language">Sprache</string>
     <string name="pref_title_user_key">Nutzerschlüssel</string>
 
     <string-array name="pref_list_titles_folder_input">
@@ -17,7 +18,6 @@
         <item>Kamera-Verzeichnis</item>
         <item>Anderes Verzeichnis</item>
     </string-array>
-
     <string-array name="pref_list_titles_folder_photos">
         <item>Standardverzeichnis</item>
         <item>Anderes Verzeichnis</item>
@@ -26,7 +26,6 @@
         <item>__ext_storage__/Augenfotos</item>
         <item>__custom__</item>
     </string-array>
-
     <string-array name="pref_list_titles_max_bitmap_size">
         <item>4096</item>
         <item>2880</item>
@@ -36,10 +35,16 @@
         <item>720</item>
         <item>512</item>
     </string-array>
-
     <string-array name="pref_list_titles_store_options">
         <item>Speichern in EXIF</item>
         <item>Speichern in Extra-Feldern</item>
         <item>Nicht in Fotos speichern</item>
     </string-array>
+    <string-array name="pref_list_titles_language">
+        <item>Systemsprache</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+    </string-array>
+
 </resources>

@@ -5,8 +5,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
+import de.eisfeldj.augendiagnose.util.JpegSynchronizationUtil;
 
 /**
  * Fragment for displaying the settings.
@@ -22,6 +24,7 @@ public class SettingsFragment extends PreferenceFragment {
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);
 		bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
 		bindPreferenceSummaryToValue(R.string.key_store_option);
+		bindPreferenceSummaryToValue(R.string.key_language);
 	}
 
 	/**
@@ -57,6 +60,8 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
 			new Preference.OnPreferenceChangeListener() {
+				private boolean isLanguageInitiallySet = false;
+
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
 					String stringValue = value.toString();
@@ -80,6 +85,23 @@ public class SettingsFragment extends PreferenceFragment {
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
 						SettingsActivity.pushMaxBitmapSize(stringValue);
 					}
+
+					// Apply change of language
+					if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
+						Application.setLanguage();
+						if (isLanguageInitiallySet) {
+							// Workaround to get rid of all kinds of cashing
+							Application.setSharedPreferenceString(R.string.key_language, (String) value);
+
+							if (!JpegSynchronizationUtil.isSaving()) {
+								System.exit(0);
+							}
+						}
+						else {
+							isLanguageInitiallySet = true;
+						}
+					}
+
 					return true;
 				}
 			};

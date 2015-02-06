@@ -179,6 +179,11 @@
 	Aquí puede definir el color predeterminado para los superposiciones de
 	topografías del iris. (Estándar: rojo)
 
+	<h3>Idioma</h3>
+
+	Aquí puede cambiar el idioma en el que se mostrará la aplicación. Un cambio de valor fuerza un reinicio de la
+	aplicación.
+
 	<h3>Clave de usuario</h3>
 
 	Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.

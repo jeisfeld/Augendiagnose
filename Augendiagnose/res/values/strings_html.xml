@@ -181,6 +181,10 @@
 	Here you can define the default color for iris topography overlays. (Standard:
 	red)
 
+	<h3>Language</h3>
+
+	Here you can change the language in which the app is displayed. A value change forces a restart of the app.
+
 	<h3>User key</h3>
 
 	A user key that allows unlocking of additional functionality.

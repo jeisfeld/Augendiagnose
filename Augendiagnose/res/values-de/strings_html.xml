@@ -186,6 +186,10 @@
 	Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays
 	normalerweise angezeigt werden. (Voreinstellung: rot)
 
+	<h3>Sprache</h3>
+
+	Hier können Sie die Anzeigesprache der Applikation ändern. Eine Änderung des Wertes erzwingt einen Neustart der App.
+
 	<h3>Nutzerschlüssel</h3>
 
 	Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.

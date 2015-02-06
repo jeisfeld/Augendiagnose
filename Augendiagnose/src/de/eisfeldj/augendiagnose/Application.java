@@ -1,7 +1,7 @@
 package de.eisfeldj.augendiagnose;
 
-import de.eisfeldj.augendiagnose.util.EncryptionUtil;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Locale;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,11 +9,15 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import de.eisfeldj.augendiagnose.util.EncryptionUtil;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Utility class to retrieve base application resources.
@@ -36,6 +40,7 @@ public class Application extends android.app.Application {
 	public final void onCreate() {
 		super.onCreate();
 		Application.context = getApplicationContext();
+		setLanguage();
 	}
 
 	/**
@@ -226,5 +231,46 @@ public class Application extends android.app.Application {
 	public static boolean isEyeFiInstalled() {
 		Intent eyeFiIntent = getAppContext().getPackageManager().getLaunchIntentForPackage("fi.eye.android");
 		return eyeFiIntent != null;
+	}
+
+	/**
+	 * Set the language.
+	 */
+	public static void setLanguage() {
+		String languageString = Application.getSharedPreferenceString(R.string.key_language);
+		if (languageString == null || languageString.length() < 1) {
+			return;
+		}
+
+		int languageSetting = Integer.parseInt(languageString);
+
+		if (languageSetting != 0) {
+			switch (languageSetting) {
+			case 1:
+				setLocale(Locale.ENGLISH);
+				break;
+			case 2:
+				setLocale(Locale.GERMAN);
+				break;
+			case 3: // MAGIC_NUMBER
+				setLocale(new Locale("es"));
+				break;
+			default:
+			}
+		}
+	}
+
+	/**
+	 * Set the locale.
+	 *
+	 * @param locale
+	 *            The locale to be set.
+	 */
+	private static void setLocale(final Locale locale) {
+		Resources res = getAppContext().getResources();
+		DisplayMetrics dm = res.getDisplayMetrics();
+		Configuration conf = res.getConfiguration();
+		conf.locale = locale;
+		res.updateConfiguration(conf, dm);
 	}
 }

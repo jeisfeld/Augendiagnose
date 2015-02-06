@@ -10,6 +10,7 @@
     <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>
     <string name="pref_title_store_options">Guardar datos adicionales en JPG</string>
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
+    <string name="pref_title_language">Idioma</string>
     <string name="pref_title_user_key">Clave de usuario</string>
 
     <string-array name="pref_list_titles_folder_input">
@@ -38,6 +39,12 @@
         <item>Guardar en EXIF</item>
         <item>Guardar en campos personalizados</item>
         <item>No guarde datos en imágenes</item>
+    </string-array>
+    <string-array name="pref_list_titles_language">
+        <item>Idioma del sistema</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Español</item>
     </string-array>
 
 </resources>

@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
 
 		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 
+		Application.setLanguage();
+
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) && intent.getType() != null) {
 			// Application was started from other application by passing a list of images - open

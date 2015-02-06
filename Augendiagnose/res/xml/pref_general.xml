@@ -44,6 +44,15 @@
         android:key="@string/key_overlay_color"
         android:title="@string/pref_title_overlay_color" />
 
+    <ListPreference
+        android:defaultValue="@string/pref_default_language"
+        android:entries="@array/pref_list_titles_language"
+        android:entryValues="@array/pref_list_values_language"
+        android:key="@string/key_language"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_language" />
+
     <EditTextPreference
         android:defaultValue=""
         android:inputType="textPassword"

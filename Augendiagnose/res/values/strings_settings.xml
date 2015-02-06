@@ -15,6 +15,8 @@
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
     <string name="pref_title_overlay_color">Default overlay color</string>
+    <string name="pref_title_language">Language</string>
+    <string name="pref_default_language" translatable="false">0</string>
     <string name="pref_title_user_key">User key</string>
 
     <string-array name="pref_list_titles_folder_input">
@@ -63,6 +65,18 @@
         <item>1</item>
         <item>0</item>
     </string-array>
+    <string-array name="pref_list_titles_language">
+        <item>System language</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+    </string-array>
+    <string-array name="pref_list_values_language" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 
     <string name="key_folder_input" translatable="false">folder_input</string>
     <string name="key_folder_photos" translatable="false">folder_photos</string>
@@ -70,6 +84,7 @@
     <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
     <string name="key_store_option" translatable="false">store_option</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>
+    <string name="key_language" translatable="false">language</string>
     <string name="key_user_key" translatable="false">user_key</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
     <string name="key_internal_last_name" translatable="false">last_name</string>
