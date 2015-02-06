@@ -46,7 +46,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	/**
 	 * The list of folder names which should be shown on top of the list.
 	 */
-	protected static final List<String> FOLDERS_TOP = Arrays.asList(new String[] { "IRISTOPOGRAPHIE" });
+	protected static final String[] FOLDERS_TOP = { "TOPOGRAPH", "TOPOGRAF", "IRIDOLOG" };
 
 	/**
 	 * The full "Display Photos" pane.
@@ -191,12 +191,25 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 */
 	private static String getFilenameForSorting(final File f) {
 		String name = f.getName().toUpperCase(Locale.getDefault());
-		if (FOLDERS_TOP.contains(name)) {
-			return "1" + name;
+
+		boolean sortByLastName = PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SORT_BY_LAST_NAME);
+		if (sortByLastName) {
+			int index = name.lastIndexOf(' ');
+			if (index >= 0) {
+				String firstName = name.substring(0, index);
+				String lastName = name.substring(index + 1);
+				name = lastName + " " + firstName;
+			}
 		}
-		else {
-			return "2" + name;
+
+		if (name.indexOf(' ') < 0) {
+			for (int i = 0; i < FOLDERS_TOP.length; i++) {
+				if (name.contains(FOLDERS_TOP[i])) {
+					return "1" + name;
+				}
+			}
 		}
+		return "2" + name;
 	}
 
 	/**

@@ -67,6 +67,11 @@ public final class PreferenceUtil {
 	public static final String KEY_OVERLAY_COLOR = "key_overlay_color";
 
 	/**
+	 * Preference key for the flag if sorting should be by last name.
+	 */
+	public static final String KEY_SORT_BY_LAST_NAME = "key_sort_by_last_name";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -88,6 +93,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_MAX_BITMAP_SIZE, 2048); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_THUMBNAIL_SIZE, 1024); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_OVERLAY_COLOR, "#FF0000FF"); // RED
+		DEFAULT_MAP.put(KEY_SORT_BY_LAST_NAME, false);
 	}
 
 	/**

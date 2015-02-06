@@ -24,6 +24,7 @@ public final class ResourceConstants {
 	public static final String BUTTON_OVERLAY_4 = "button_overlay_4";
 	public static final String BUTTON_OVERLAY_5 = "button_overlay_5";
 	public static final String BUTTON_OVERLAY_6 = "button_overlay_6";
+	public static final String BUTTON_OVERLAY_7 = "button_overlay_7";
 	public static final String BUTTON_OVERLAY_CIRCLE = "button_overlay_circle";
 	public static final String BUTTON_SAVE_COMMENT = "button_save_comment";
 	public static final String FILE_INFIX_LEFT = "file_infix_left";
@@ -51,6 +52,7 @@ public final class ResourceConstants {
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
 	public static final String PREF_TITLE_MAX_BITMAP_SIZE = "pref_title_max_bitmap_size";
 	public static final String PREF_TITLE_OVERLAY_COLOR = "pref_title_overlay_color";
+	public static final String PREF_TITLE_SORT_BY_LAST_NAME = "pref_title_sort_by_last_name";
 	public static final String PREF_TITLE_THUMBNAIL_SIZE = "pref_title_thumbnail_size";
 	public static final String SUFFIX_TITLE_LEFT = "suffix_title_left";
 	public static final String SUFFIX_TITLE_RIGHT = "suffix_title_right";

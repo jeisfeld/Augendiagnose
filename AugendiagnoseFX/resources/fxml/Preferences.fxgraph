@@ -3,6 +3,7 @@ package fxml
 import de.eisfeldj.augendiagnosefx.controller.PreferencesController
 import javafx.collections.FXCollections
 import javafx.scene.control.Button
+import javafx.scene.control.CheckBox
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.ColorPicker
 import javafx.scene.control.Label
@@ -95,10 +96,22 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static columnSpan : 2
 			},
 
+			Label {
+				text : rstring "pref_title_sort_by_last_name",
+				static columnIndex : 0,
+				static rowIndex : 5
+			},
+
+			CheckBox id checkBoxSortByLastName {
+				static columnIndex : 1,
+				static rowIndex : 5,
+				static columnSpan : 2
+			},
+
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 5,
+				static rowIndex : 6,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -106,7 +119,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 5,
+				static rowIndex : 6,
 				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit

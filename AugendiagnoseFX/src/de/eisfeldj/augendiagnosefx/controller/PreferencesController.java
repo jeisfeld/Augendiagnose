@@ -4,6 +4,7 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
@@ -39,6 +41,11 @@ public class PreferencesController extends DialogController implements Initializ
 	private String oldPhotosFolder;
 
 	/**
+	 * The "sort by last name" value when starting the activity.
+	 */
+	private boolean oldSortByLastName;
+
+	/**
 	 * Text field for the eye photos folder.
 	 */
 	@FXML
@@ -55,6 +62,12 @@ public class PreferencesController extends DialogController implements Initializ
 	 */
 	@FXML
 	private ChoiceBox<Integer> choiceThumbnailSize;
+
+	/**
+	 * Checkbox for "sort by last name" flag.
+	 */
+	@FXML
+	private CheckBox checkBoxSortByLastName;
 
 	/**
 	 * Color picker for the default overlay color.
@@ -75,6 +88,9 @@ public class PreferencesController extends DialogController implements Initializ
 		choiceMaxBitmapSize.setValue(PreferenceUtil.getPreferenceInt(KEY_MAX_BITMAP_SIZE));
 		choiceThumbnailSize.setValue(PreferenceUtil.getPreferenceInt(KEY_THUMBNAIL_SIZE));
 		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
+
+		oldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
+		checkBoxSortByLastName.setSelected(oldSortByLastName);
 	}
 
 	/**
@@ -96,15 +112,35 @@ public class PreferencesController extends DialogController implements Initializ
 	 */
 	@FXML
 	public final void submit(final ActionEvent event) {
-		String newPhotosFolder = textFolderPhotos.getText();
-		if (newPhotosFolder != null && !newPhotosFolder.equals(oldPhotosFolder)) {
-			PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
-			Application.refreshMainPage();
-		}
+		// Check if main page needs to be refreshed, before updating values.
+		boolean requireRefreshMainPage = requireRefreshMainPage();
+
+		PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
 		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
 		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, choiceThumbnailSize.getValue());
 		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, colorPicker.getValue());
+		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, checkBoxSortByLastName.isSelected());
+
+		if (requireRefreshMainPage) {
+			Application.refreshMainPage();
+		}
+
 		close();
+	}
+
+	/**
+	 * Check if the main page needs to be refreshed.
+	 *
+	 * @return true if the main page needs to be refreshed.
+	 */
+	private boolean requireRefreshMainPage() {
+		String newPhotosFolder = textFolderPhotos.getText();
+		boolean changedPhotosFolder = newPhotosFolder != null && !newPhotosFolder.equals(oldPhotosFolder);
+
+		boolean newSortByLastName = checkBoxSortByLastName.isSelected();
+		boolean changedSortByLastName = newSortByLastName != oldSortByLastName;
+
+		return changedPhotosFolder || changedSortByLastName;
 	}
 
 	/**
