@@ -30,6 +30,10 @@
         android:defaultValue="@string/pref_default_eye_sequence_value"
         android:key="@string/key_eye_sequence_choice"
         android:title="@string/pref_title_eye_sequence_choice" />
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_sort_by_last_name"
+        android:key="@string/key_sort_by_last_name"
+        android:title="@string/pref_title_sort_by_last_name" />
 
     <ListPreference
         android:defaultValue="@string/pref_default_store_options"

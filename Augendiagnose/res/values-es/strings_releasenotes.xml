@@ -62,7 +62,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Mejora de la escala de contraste. Habilitado ahorro en la tarjeta SD para Android 4.4. Localización española.</item>
         <item>Nueva superposición.</item>
         <item>Corrección de errores - entre otros, se ha solucionado el problema con mayúsculas en la extensión del archivo ("JPG")</item>
-        <item>Habilitación del cambio de idioma. Corrección de errores</item>
+        <item>Habilitación del cambio de idioma. Habilitación del ordenar por apellido. Corrección de errores</item>
     </string-array>
 
 </resources>

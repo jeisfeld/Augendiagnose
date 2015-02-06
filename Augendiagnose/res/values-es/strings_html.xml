@@ -156,6 +156,10 @@
 	configuración predeterminada este es el ojo izquierdo (lo que significa que
 	usted hizo primero una foto del ojo derecho y luego del ojo izquierdo).
 
+	<h3>Ordenar por apellido</h3>
+
+	Aquí se puede establecer si la lista de nombres será ordenada por apellido.
+
 	<h3>Guardar datos adicionales en JPG</h3>
 
 	Aquí puede limitar el almacenamiento de datos en los archivos JPG de la

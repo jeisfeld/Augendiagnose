@@ -162,6 +162,10 @@
 	ist. Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie
 	zuerst das rechte, und dann das linke Auge fotografiert haben).
 
+	<h3>Sortieren nach Nachname</h3>
+
+	Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden soll.
+
 	<h3>Speichern von Daten in JPG-Dateien</h3>
 
 	Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien

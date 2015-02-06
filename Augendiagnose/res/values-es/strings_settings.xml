@@ -8,6 +8,7 @@
     <string name="pref_title_folder_input">Carpeta de entrada para nuevas fotos</string>
     <string name="pref_title_max_bitmap_size">Tamaño máximo de mapas de bits</string>
     <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>
+    <string name="pref_title_sort_by_last_name">Ordenar por apellido</string>
     <string name="pref_title_store_options">Guardar datos adicionales en JPG</string>
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
