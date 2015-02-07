@@ -14,12 +14,25 @@ import de.eisfeldj.augendiagnose.util.JpegSynchronizationUtil;
  * Fragment for displaying the settings.
  */
 public class SettingsFragment extends PreferenceFragment {
+	/**
+	 * Field holding the value of the language preference, in order to detect a real change.
+	 */
+	private String languageString;
+
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.pref_general);
+
+		// Ensure that language is set
+		languageString = Application.getSharedPreferenceString(R.string.key_language);
+		if (languageString == null || languageString.length() == 0) {
+			languageString = getString(R.string.pref_default_language);
+			Application.setSharedPreferenceString(R.string.key_language, languageString);
+		}
+
 		bindPreferenceSummaryToValue(R.string.key_folder_input);
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);
 		bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
@@ -35,7 +48,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 * @param preference
 	 *            The preference to be bound.
 	 */
-	private static void bindPreferenceSummaryToValue(final Preference preference) {
+	private void bindPreferenceSummaryToValue(final Preference preference) {
 		// Set the listener to watch for value changes.
 		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
@@ -58,10 +71,8 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A preference value change listener that updates the preference's summary to reflect its new value.
 	 */
-	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
+	private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
 			new Preference.OnPreferenceChangeListener() {
-				private boolean isLanguageInitiallySet = false;
-
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
 					String stringValue = value.toString();
@@ -88,17 +99,15 @@ public class SettingsFragment extends PreferenceFragment {
 
 					// Apply change of language
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
-						Application.setLanguage();
-						if (isLanguageInitiallySet) {
-							// Workaround to get rid of all kinds of cashing
+						if (!languageString.equals(value)) {
+							Application.setLanguage();
 							Application.setSharedPreferenceString(R.string.key_language, (String) value);
 
+							// Workaround to get rid of all kinds of cashing
 							if (!JpegSynchronizationUtil.isSaving()) {
 								System.exit(0);
 							}
-						}
-						else {
-							isLanguageInitiallySet = true;
+
 						}
 					}
 
