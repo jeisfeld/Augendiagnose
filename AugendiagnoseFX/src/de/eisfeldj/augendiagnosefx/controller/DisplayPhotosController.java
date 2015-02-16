@@ -256,7 +256,13 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		}
 
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>();
+		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>(new Comparator<Date>() {
+			@Override
+			public int compare(final Date lhs, final Date rhs) {
+				return rhs.compareTo(lhs);
+			}
+		});
+
 		for (Date date : eyePhotoMap.keySet()) {
 			if (eyePhotoMap.get(date).isComplete()) {
 				eyePhotoMap2.put(date, eyePhotoMap.get(date));

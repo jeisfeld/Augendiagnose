@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.fragments;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -139,7 +140,13 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		}
 
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>();
+		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>(new Comparator<Date>() {
+			@Override
+			public int compare(final Date lhs, final Date rhs) {
+				return rhs.compareTo(lhs);
+			}
+		});
+
 		for (Date date : eyePhotoMap.keySet()) {
 			if (eyePhotoMap.get(date).isComplete()) {
 				eyePhotoMap2.put(date, eyePhotoMap.get(date));
