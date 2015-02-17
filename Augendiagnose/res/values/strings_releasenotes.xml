@@ -61,6 +61,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4.11</item>
         <item>0.4.12</item>
         <item>0.4.13</item>
+        <item>0.4.14</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -93,6 +94,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added one more overlay.</item>
         <item>Bugfixes - among others, fixed issues with upper case file extensions ("JPG")</item>
         <item>Enable language change. Enable sorting by last name. Enabled deletion of photos from input folder. Display latest eye photo pairs on top. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
