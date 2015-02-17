@@ -1,12 +1,12 @@
 package de.eisfeldj.augendiagnose.components;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
@@ -17,7 +17,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	/**
 	 * The activity holding this adapter.
 	 */
-	private final Activity activity;
+	private final SelectTwoPicturesActivity activity;
 
 	/**
 	 * The array of eye photos displayed.
@@ -32,7 +32,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 * @param eyePhotos
 	 *            The array of eye photos to be displayed.
 	 */
-	public SelectTwoPicturesArrayAdapter(final Activity activity, final EyePhoto[] eyePhotos) {
+	public SelectTwoPicturesArrayAdapter(final SelectTwoPicturesActivity activity, final EyePhoto[] eyePhotos) {
 		super(activity, R.layout.text_view_initializing, eyePhotos);
 		this.activity = activity;
 		this.eyePhotos = eyePhotos;
@@ -46,12 +46,12 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	public SelectTwoPicturesArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
-		this.activity = (Activity) context;
+		this.activity = (SelectTwoPicturesActivity) context;
 	}
 
 	/*
 	 * Fill the display of the view (date and pictures) Details on selection are handled within the
-	 * ImageSelectionAndDisplayHandler class.
+	 * TwoImageSelectionHandler class.
 	 */
 	@Override
 	public final View getView(final int position, final View convertView, final ViewGroup parent) {
@@ -71,6 +71,9 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 				TwoImageSelectionHandler.getInstance().highlightIfSelected(eyeImageView);
 			}
 		});
+
+		TwoImageSelectionHandler.getInstance().prepareViewForSelection(eyeImageView,
+				activity.isStartedWithInputFolder());
 
 		return eyeImageView;
 	}

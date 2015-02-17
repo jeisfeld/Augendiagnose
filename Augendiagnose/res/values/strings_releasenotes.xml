@@ -92,7 +92,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Changed scale on contrast bar. Enabled saving on ext sd card for Android 4.4. Spanish localization.</item>
         <item>Added one more overlay.</item>
         <item>Bugfixes - among others, fixed issues with upper case file extensions ("JPG")</item>
-        <item>Enable language change. Enable sorting by last name. Display latest eye photo pairs on top. Bugfixes</item>
+        <item>Enable language change. Enable sorting by last name. Enabled deletion of photos from input folder. Display latest eye photo pairs on top. Bugfixes</item>
     </string-array>
 
 </resources>

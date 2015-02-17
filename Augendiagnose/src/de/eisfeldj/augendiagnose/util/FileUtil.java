@@ -315,6 +315,32 @@ public abstract class FileUtil {
 	}
 
 	/**
+	 * Delete all files in a folder.
+	 *
+	 * @param folder
+	 *            the folder
+	 * @return true if successful.
+	 */
+	public static final boolean deleteFilesInFolder(final File folder) {
+		boolean totalSuccess = true;
+
+		String[] children = folder.list();
+		if (children != null) {
+			for (int i = 0; i < children.length; i++) {
+				File file = new File(folder, children[i]);
+				if (!file.isDirectory()) {
+					boolean success = FileUtil.deleteFile(file);
+					if (!success) {
+						Log.w(Application.TAG, "Failed to delete file" + children[i]);
+						totalSuccess = false;
+					}
+				}
+			}
+		}
+		return totalSuccess;
+	}
+
+	/**
 	 * Delete a directory asynchronously.
 	 *
 	 * @param activity

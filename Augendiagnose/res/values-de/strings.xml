@@ -27,6 +27,8 @@
     <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
     <string name="message_dialog_failed_to_move_folder_partially">Beim Verschieben des Verzeichnisses %1$s in %2$s sind Probleme aufgetreten - bitte überprüfen und korrigieren Sie diese Verzeichnisse.</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
+    <string name="message_dialog_failed_to_delete_file">Löschen des Fotos %1$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_delete_all_files">Konnte nicht alle Fotos des Eingangsverzeichnisses löschen</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_move_file_for_date">Verschieben der Fotos von %1$s vom %2$s fehlgeschlagen</string>
     <string name="message_dialog_failed_to_delete_folder">Löschen des Verzeichnisses von %1$s fehlgeschlagen</string>
@@ -37,6 +39,8 @@
     <string name="message_dialog_eyefi_not_installed">Eye-Fi ist nicht installiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
     <string name="message_dialog_confirm_delete_folder">Wollen Sie %1$s wirklich mit allen Fotos löschen?</string>
+    <string name="message_dialog_confirm_delete_photo">Wollen Sie das Foto %1$s wirklich löschen?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Wollen Sie wirklich alle Fotos im Eingangsverzeichnis löschen?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
     <string name="section_select_photos">Fotos wählen</string>
     <string name="section_select_name">Name wählen</string>

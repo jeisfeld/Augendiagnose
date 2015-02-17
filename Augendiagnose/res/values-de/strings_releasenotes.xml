@@ -64,7 +64,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Verbesserte Skala für Kontrast. Speichern der Daten auf externer SD-Karte in Android 4.4. Spanische Sprachversion.</item>
         <item>Neues Overlay.</item>
         <item>Bugfixes - insbesondere Behebung des Problems mit Großbuchstaben in der Dateiendung ("JPG")</item>
-        <item>Wechsel der Sprache ist möglich. Sortieren nach Nachnamen ist möglich. Anzeige der neuestsen Augenfotopaare am oberen Ende der Liste. Bugfixes</item>
+        <item>Wechsel der Sprache ist möglich. Sortieren nach Nachnamen ist möglich. Löschen von Fotos im Eingangsverzeichnis is möglich. Anzeige der neuestsen Augenfotopaare am oberen Ende der Liste. Bugfixes</item>
     </string-array>
 
 </resources>

@@ -75,8 +75,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 	/**
 	 * Update the list of eye photo pairs.
-	 *
-	 * @param eyePhotoPairs
 	 */
 	protected final void updateEyePhotoPairs() {
 		boolean isPhotosRemaining = createAndStoreEyePhotoList(false);
@@ -158,7 +156,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						}
 					}
 
-					// Intentional duplicate code 1
 					@Override
 					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing
@@ -196,7 +193,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						}
 					}
 
-					// Intentional duplicate code 2
 					@Override
 					public void onDialogNegativeClick(final DialogFragment dialog) {
 						// Do nothing

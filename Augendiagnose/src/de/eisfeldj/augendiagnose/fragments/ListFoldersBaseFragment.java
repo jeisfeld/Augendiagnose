@@ -16,7 +16,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -288,17 +287,10 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	protected final void deleteFolder(final String name) {
 		File folder = new File(parentFolder, name.trim());
 
-		// delete folder and ensure that list is refreshed
-		String[] children = folder.list();
-		if (children != null) {
-			for (int i = 0; i < children.length; i++) {
-				boolean success = FileUtil.deleteFile(new File(folder, children[i]));
-				if (!success) {
-					Log.w(Application.TAG, "Failed to delete file" + children[i]);
-				}
-			}
-		}
+		// delete files in folder.
+		FileUtil.deleteFilesInFolder(folder);
 
+		// delete folder and ensure that list is refreshed
 		if (folder.delete()) {
 			directoryListAdapter.clear();
 			createList();

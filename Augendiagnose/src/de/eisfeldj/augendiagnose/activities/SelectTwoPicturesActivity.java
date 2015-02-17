@@ -5,12 +5,22 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.components.EyeImageView;
 import de.eisfeldj.augendiagnose.components.SelectTwoPicturesArrayAdapter;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
+import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
@@ -50,6 +60,26 @@ public class SelectTwoPicturesActivity extends Activity {
 	private String[] fileNames;
 
 	/**
+	 * The view showing the eye photos.
+	 */
+	private GridView gridView;
+
+	/**
+	 * The selected view when displaying the context menu.
+	 */
+	private EyeImageView selectedView;
+
+	/**
+	 * The organize activity which has triggered the selection. Temporary static storage.
+	 */
+	private static OrganizeNewPhotosActivity parentActivityStatic;
+
+	/**
+	 * The organize activity which has triggered the selection.
+	 */
+	private OrganizeNewPhotosActivity parentActivity;
+
+	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 *
 	 * @param activity
@@ -57,7 +87,8 @@ public class SelectTwoPicturesActivity extends Activity {
 	 * @param foldername
 	 *            The image folder.
 	 */
-	public static final void startActivity(final Activity activity, final String foldername) {
+	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String foldername) {
+		parentActivityStatic = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -71,7 +102,8 @@ public class SelectTwoPicturesActivity extends Activity {
 	 * @param fileNames
 	 *            The list of image files.
 	 */
-	public static final void startActivity(final Activity activity, final String[] fileNames) {
+	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String[] fileNames) {
+		parentActivityStatic = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -99,6 +131,10 @@ public class SelectTwoPicturesActivity extends Activity {
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		parentActivity = parentActivityStatic;
+		parentActivityStatic = null;
+
 		setContentView(R.layout.activity_select_two_pictures);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -109,12 +145,17 @@ public class SelectTwoPicturesActivity extends Activity {
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		// Prepare the view
-		GridView gridview = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
-		gridview.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		gridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
+		gridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 
 		// Prepare the handler class
 		TwoImageSelectionHandler.getInstance().setActivity(this);
-		TwoImageSelectionHandler.getInstance().prepareViewForSelection(gridview);
+	}
+
+	@Override
+	protected final void onDestroy() {
+		super.onDestroy();
+		parentActivity = null;
 	}
 
 	/**
@@ -125,7 +166,7 @@ public class SelectTwoPicturesActivity extends Activity {
 	private EyePhoto[] getEyePhotos() {
 		File[] files;
 
-		if (folder != null) {
+		if (isStartedWithInputFolder()) {
 			// Get files from folder
 			files = folder.listFiles(new ImageUtil.ImageFileFilter());
 			Arrays.sort(files, new Comparator<File>() {
@@ -165,6 +206,115 @@ public class SelectTwoPicturesActivity extends Activity {
 		intent.putExtras(resultData);
 		setResult(RESULT_OK, intent);
 		finish();
+	}
+
+	/*
+	 * Create the context menu.
+	 */
+	@Override
+	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.context_select_two, menu);
+		selectedView = (EyeImageView) v;
+	}
+
+	/*
+	 * Handle items in the context menu.
+	 */
+	@Override
+	public final boolean onContextItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_delete_selected_image:
+			ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = -3186094978749077352L;
+
+				@Override
+				public void onDialogPositiveClick(final DialogFragment dialog) {
+					// delete image
+					boolean success = selectedView.getEyePhoto().delete();
+					updateEyePhotoList();
+
+					if (!success) {
+						DialogUtil.displayError(SelectTwoPicturesActivity.this,
+								R.string.message_dialog_failed_to_delete_file, false, selectedView
+										.getEyePhoto().getFilename());
+
+					}
+				}
+
+				@Override
+				public void onDialogNegativeClick(final DialogFragment dialog) {
+					// Do nothing
+				}
+			};
+
+			DialogUtil.displayConfirmationMessage(this, listenerDelete, R.string.button_delete,
+					R.string.message_dialog_confirm_delete_photo, selectedView
+							.getEyePhoto().getFilename());
+			return true;
+
+		case R.id.action_delete_all_images:
+			ConfirmDialogListener listenerDeleteAll = new ConfirmDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = -4135840952030307156L;
+
+				@Override
+				public void onDialogPositiveClick(final DialogFragment dialog) {
+					if (isStartedWithInputFolder()) {
+						// delete images
+						boolean success = FileUtil.deleteFilesInFolder(folder);
+						updateEyePhotoList();
+
+						if (!success) {
+							DialogUtil.displayError(SelectTwoPicturesActivity.this,
+									R.string.message_dialog_failed_to_delete_all_files, false, selectedView
+											.getEyePhoto().getFilename());
+
+						}
+						else {
+							finish();
+							parentActivity.finish();
+						}
+					}
+				}
+
+				@Override
+				public void onDialogNegativeClick(final DialogFragment dialog) {
+					// Do nothing
+				}
+			};
+
+			DialogUtil.displayConfirmationMessage(this, listenerDeleteAll, R.string.button_delete,
+					R.string.message_dialog_confirm_delete_all_photos, selectedView
+							.getEyePhoto().getFilename());
+			return true;
+
+		default:
+			return super.onContextItemSelected(item);
+		}
+
+	}
+
+	/**
+	 * Update the list of eye photo pairs.
+	 */
+	private void updateEyePhotoList() {
+		gridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+	}
+
+	/**
+	 * Gives information if the activity is started via input folder or via list of files.
+	 *
+	 * @return true if started via input folder.
+	 */
+	public final boolean isStartedWithInputFolder() {
+		return folder != null;
 	}
 
 	/**

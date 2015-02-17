@@ -27,6 +27,8 @@
     <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error while moving folder %1$s to %2$s - please check folders and move files to appropriate folder.</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
+    <string name="message_dialog_failed_to_delete_file">Failed to delete the photo %1$s</string>
+    <string name="message_dialog_failed_to_delete_all_files">Failed to delete all files of input folder</string>
     <string name="message_dialog_failed_to_delete_file_for_date">Failed to delete the photos of %1$s from %2$s</string>
     <string name="message_dialog_failed_to_move_file_for_date">Failed to move the photos of %1$s from %2$s</string>
     <string name="message_dialog_failed_to_delete_folder">Failed to delete the folder of %1$s</string>
@@ -37,6 +39,8 @@
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
+    <string name="message_dialog_confirm_delete_photo">Do you really want to delete the photo %1$s?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Do you really want to delete all photos from the input folder?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
     <string name="section_select_photos">Select Photos</string>
     <string name="section_select_name">Select Name</string>

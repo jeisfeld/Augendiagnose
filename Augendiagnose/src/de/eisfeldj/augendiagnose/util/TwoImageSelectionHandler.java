@@ -2,8 +2,7 @@ package de.eisfeldj.augendiagnose.util;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.view.View.OnClickListener;
 import de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
 
@@ -74,24 +73,29 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *
 	 * @param view
 	 *            The GridView to be prepared.
+	 * @param hasContextMenu
+	 *            Flag indicating if a context menu should be enabled.
 	 */
-	public void prepareViewForSelection(final GridView view) {
-		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	public void prepareViewForSelection(final EyeImageView view, final boolean hasContextMenu) {
+		view.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onItemClick(final AdapterView<?> parent, final View v, final int position, final long id) {
+			public void onClick(final View v) {
 				if (selectedView == null) {
-					selectView((EyeImageView) v);
+					selectView(view);
 				}
-				else if (selectedView == v) {
+				else if (selectedView == view) {
 					cleanSelectedView();
 				}
 				else {
-					createResponse(selectedView, (EyeImageView) v);
+					createResponse(selectedView, view);
 					cleanSelectedView();
 				}
 			}
 		});
 
+		if (hasContextMenu) {
+			view.setOnCreateContextMenuListener(getActivity());
+		}
 	}
 
 	/**

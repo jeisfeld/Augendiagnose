@@ -27,6 +27,8 @@
     <string name="message_dialog_failed_to_move_file">Error al mover el archivo %1$s a %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error mientras se mueve la carpeta %1$s a %2$s - Por favor, consulte las carpetas y mover archivos a la carpeta apropiada.</string>
     <string name="message_dialog_failed_to_rename_file">Error al cambiar el nombre de archivo %1$s a %2$s</string>
+    <string name="message_dialog_failed_to_delete_file">No se ha podido eliminar la foto %1$s</string>
+    <string name="message_dialog_failed_to_delete_all_files">No se ha podido eliminar todos los archivos de la carpeta de entrada</string>
     <string name="message_dialog_failed_to_delete_file_for_date">No se ha podido eliminar las fotos de %1$s de %2$s</string>
     <string name="message_dialog_failed_to_move_file_for_date">Error al mover las fotos de %1$s de %2$s</string>
     <string name="message_dialog_failed_to_delete_folder">No se ha podido eliminar la carpeta de %1$s</string>
@@ -37,6 +39,8 @@
     <string name="message_dialog_eyefi_not_installed">Eye-Fi no está instalado</string>
     <string name="message_dialog_confirm_delete_date">¿Realmente desea borrar las fotos de %1$s de %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">¿Realmente desea eliminar %1$s con todas las fotos?</string>
+    <string name="message_dialog_confirm_delete_photo">¿Realmente desea eliminar la foto %1$s?</string>
+    <string name="message_dialog_confirm_delete_all_photos">¿Realmente desea eliminar todas las fotos de la carpeta de entrada?</string>
     <string name="message_dialog_confirm_move_to_input_folder">¿Realmente desea mover las fotos de %1$s de %2$s a la carpeta de entrada?</string>
     <string name="section_select_photos">Seleccionar Fotos</string>
     <string name="section_select_name">Seleccionar Nombre</string>
