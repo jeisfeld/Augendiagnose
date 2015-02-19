@@ -4,7 +4,9 @@ import de.eisfeldj.augendiagnosefx.controller.DisplayImageController
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView
 import javafx.scene.control.Button
 import javafx.scene.control.ColorPicker
+import javafx.scene.control.ContextMenu
 import javafx.scene.control.Label
+import javafx.scene.control.MenuItem
 import javafx.scene.control.Separator
 import javafx.scene.control.Slider
 import javafx.scene.control.TextArea
@@ -46,7 +48,27 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static rowIndex : 0,
 			static halignment : "CENTER",
 			static valignment : "CENTER",
-			static vgrow : "SOMETIMES"
+			static vgrow : "SOMETIMES",
+			contextMenu : ContextMenu {
+				items: [
+					MenuItem {
+						text : rstring "menu_store_brightness",
+						onAction : controllermethod storeBrightnessContrast
+					},
+					MenuItem {
+						text : rstring "menu_reset_brightness",
+						onAction : controllermethod resetBrightnessContrast
+					},
+					MenuItem {
+						text : rstring "menu_store_position",
+						onAction : controllermethod storeViewPosition
+					},
+					MenuItem {
+						text : rstring "menu_reset_position",
+						onAction : controllermethod resetViewPosition
+					}
+				]
+			}
 		},
 		GridPane id overlayPane {
 			static columnIndex : 1,

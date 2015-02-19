@@ -152,9 +152,12 @@ public final class JpegMetadata {
 		str.append("Subject: " + subject + "\n");
 		str.append("Comment: " + comment + "\n");
 		str.append("Person: " + person + "\n");
-		str.append("X-Position: " + xCenter + "\n");
-		str.append("Y-Position: " + yCenter + "\n");
+		str.append("X-Center: " + xCenter + "\n");
+		str.append("Y-Center: " + yCenter + "\n");
 		str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
+		str.append("X-Position: " + xPosition + "\n");
+		str.append("Y-Position: " + yPosition + "\n");
+		str.append("ZoomFactor: " + zoomFactor + "\n");
 		str.append("OrganizeDate: " + organizeDate + "\n");
 		str.append("RightLeft: " + rightLeft + "\n");
 		str.append("Brightness: " + brightness + "\n");

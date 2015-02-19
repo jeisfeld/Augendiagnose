@@ -31,6 +31,11 @@ public class SizableImageView extends ScrollPane {
 	private static final double ZOOM_FACTOR = 1.0014450997779993488675056142818;
 
 	/**
+	 * The x/y values representing the center of the image.
+	 */
+	private static final float IMAGE_CENTER = 0.5f;
+
+	/**
 	 * The zoom factor.
 	 */
 	private final DoubleProperty zoomProperty = new SimpleDoubleProperty(1000);
@@ -44,6 +49,15 @@ public class SizableImageView extends ScrollPane {
 	 * The mouse Y position.
 	 */
 	private final DoubleProperty mouseYProperty = new SimpleDoubleProperty();
+
+	/**
+	 * Flag indicating if the view is initialized (and image is loaded).
+	 */
+	private boolean initialized = false;
+
+	public final boolean isInitialized() {
+		return initialized;
+	}
 
 	/**
 	 * The displayed ImageView.
@@ -72,11 +86,6 @@ public class SizableImageView extends ScrollPane {
 	 * Y Location of the view center on the image.
 	 */
 	private double centerY;
-
-	/**
-	 * Flag indicating if the view is already initialized (and image is scaled).
-	 */
-	private boolean isInitialized = false;
 
 	/**
 	 * Constructor without initialization of image.
@@ -170,6 +179,7 @@ public class SizableImageView extends ScrollPane {
 	 *            The eye photo.
 	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
+		initialized = false;
 		this.eyePhoto = eyePhoto;
 
 		Image image = eyePhoto.getImage(false);
@@ -216,7 +226,7 @@ public class SizableImageView extends ScrollPane {
 					final Number newValue) {
 				synchronized (imageView) {
 					// Initialization after window is sized and image is loaded.
-					if (imageView.getImage() != null && !isInitialized) {
+					if (imageView.getImage() != null && !initialized) {
 						doInitialScaling();
 					}
 				}
@@ -236,7 +246,7 @@ public class SizableImageView extends ScrollPane {
 		imageView.setImage(image);
 		synchronized (imageView) {
 			// Initialization after window is sized and image is loaded.
-			if (getHeight() > 0 && !isInitialized) {
+			if (getHeight() > 0 && !initialized) {
 				doInitialScaling();
 			}
 		}
@@ -248,9 +258,7 @@ public class SizableImageView extends ScrollPane {
 	private void doInitialScaling() {
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 		if (metadata != null && metadata.hasViewPosition()) {
-			zoomProperty.set(Math.min(getWidth(), getHeight())
-					/ Math.min(imageView.getImage().getWidth(), imageView.getImage().getHeight())
-					* metadata.zoomFactor);
+			zoomProperty.set(getDefaultScaleFactor() * metadata.zoomFactor);
 		}
 		else if (metadata != null && metadata.hasOverlayPosition()) {
 			zoomProperty.set(Math.min(getWidth(), getHeight())
@@ -258,8 +266,7 @@ public class SizableImageView extends ScrollPane {
 					/ metadata.overlayScaleFactor);
 		}
 		else {
-			zoomProperty.set(Math.min(getWidth() / imageView.getImage().getWidth(),
-					getHeight() / imageView.getImage().getHeight()));
+			zoomProperty.set(getDefaultScaleFactor());
 		}
 
 		imageView.setFitWidth(zoomProperty.get() * imageView.getImage().getWidth());
@@ -279,31 +286,18 @@ public class SizableImageView extends ScrollPane {
 				yCenter = metadata.yCenter;
 			}
 
-			// Size of the image.
-			double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
-			double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+			ScrollPosition scrollPosition =
+					convertMetadataPositionToScrollPosition(new MetadataPosition(xCenter, yCenter));
 
-			// Image pixels outside the visible area which need to be scrolled.
-			double scrollXFactor = Math.max(0, imageWidth - getWidth());
-			double scrollYFactor = Math.max(0, imageHeight - getHeight());
-
-			// The initial scrollbar positions
-			double hValue = scrollXFactor > 0
-					? (xCenter * imageWidth - getWidth() / 2) / scrollXFactor
-					: 1;
-			double vValue = scrollYFactor > 0
-					? (yCenter * imageHeight - getHeight() / 2) / scrollYFactor
-					: 1;
-
-			setHvalue(hValue);
-			setVvalue(vValue);
+			setHvalue(scrollPosition.hValue);
+			setVvalue(scrollPosition.vValue);
 		}
 
-		isInitialized = true;
+		initialized = true;
 	}
 
 	/**
-	 * Store image position for later retrieval.
+	 * Store image position for later retrieval. Can be used to keep view center if the view size changes.
 	 */
 	public final void storePosition() {
 		if (imageView == null || imageView.getImage() == null) {
@@ -326,7 +320,7 @@ public class SizableImageView extends ScrollPane {
 	}
 
 	/**
-	 * Retrieve image position.
+	 * Retrieve image position from the position stored with storePosition().
 	 */
 	public final void retrievePosition() {
 		if (imageView == null || imageView.getImage() == null) {
@@ -345,6 +339,136 @@ public class SizableImageView extends ScrollPane {
 		}
 		if (scrollYFactor > 0) {
 			setVvalue((centerY - getHeight() / 2) / scrollYFactor);
+		}
+	}
+
+	/**
+	 * Retrieve the default scale factor of the image.
+	 *
+	 * @return The default scale factor that fits the image into the view.
+	 */
+	private double getDefaultScaleFactor() {
+		return Math.min(getWidth() / imageView.getImage().getWidth(),
+				getHeight() / imageView.getImage().getHeight());
+	}
+
+	/**
+	 * Helper method to retrieve the position of the image within the view.
+	 *
+	 * @return the position within the image
+	 */
+	public final MetadataPosition getPosition() {
+		MetadataPosition metadataPosition =
+				convertScrollPositionToMetadataPosition(new ScrollPosition(getHvalue(), getVvalue()));
+
+		metadataPosition.zoom = (float) (zoomProperty.get() / getDefaultScaleFactor());
+
+		return metadataPosition;
+	}
+
+	/**
+	 * Convert coordinates like stored in metadata to coordinates like used in the ScrollPane.
+	 *
+	 * @param metadataPosition
+	 *            The coordinates like stored in metadata.
+	 * @return The coordinates like used in ScrollPane.
+	 */
+	private ScrollPosition convertMetadataPositionToScrollPosition(final MetadataPosition metadataPosition) {
+		// Size of the image.
+		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+		// Image pixels outside the visible area which need to be scrolled.
+		double scrollXFactor = Math.max(0, imageWidth - getWidth());
+		double scrollYFactor = Math.max(0, imageHeight - getHeight());
+
+		double hValue = scrollXFactor > 0
+				? (metadataPosition.xCenter * imageWidth - getWidth() / 2) / scrollXFactor
+				: 1;
+		double vValue = scrollYFactor > 0
+				? (metadataPosition.yCenter * imageHeight - getHeight() / 2) / scrollYFactor
+				: 1;
+
+		return new ScrollPosition(hValue, vValue);
+	}
+
+	/**
+	 * Convert coordinates like used in the ScrollPane to coordinates like stored in metadataused in the ScrollPane.
+	 *
+	 * @param scrollPosition
+	 *            The coordinates like used in ScrollPane.
+	 * @return The coordinates like stored in metadata.
+	 */
+	private MetadataPosition convertScrollPositionToMetadataPosition(final ScrollPosition scrollPosition) {
+		// Size of the image.
+		double imageWidth = zoomProperty.get() * imageView.getImage().getWidth();
+		double imageHeight = zoomProperty.get() * imageView.getImage().getHeight();
+
+		// Image pixels outside the visible area which need to be scrolled.
+		double scrollXFactor = Math.max(0, imageWidth - getWidth());
+		double scrollYFactor = Math.max(0, imageHeight - getHeight());
+
+		double xCenter = scrollXFactor > 0
+				? (scrollXFactor * scrollPosition.hValue + getWidth() / 2) / imageWidth
+				: IMAGE_CENTER;
+		double yCenter = scrollYFactor > 0
+				? (scrollYFactor * scrollPosition.vValue + getHeight() / 2) / imageHeight
+				: IMAGE_CENTER;
+
+		return new MetadataPosition((float) xCenter, (float) yCenter);
+	}
+
+	/**
+	 * Class holding zoom and position as stored in the metadata.
+	 */
+	public static class MetadataPosition {
+		// PUBLIC_FIELDS:START
+		// JAVADOC:OFF
+		public float xCenter;
+		public float yCenter;
+		public float zoom;
+
+		// JAVADOC:ON
+		// PUBLIC_FIELDS:END
+
+		/**
+		 * Initialize a MetadataPosition with coordinate values.
+		 *
+		 * @param xCenter
+		 *            The x position of the center
+		 * @param yCenter
+		 *            The y position of the center
+		 */
+		public MetadataPosition(final float xCenter, final float yCenter) {
+			this.xCenter = xCenter;
+			this.yCenter = yCenter;
+		}
+
+	}
+
+	/**
+	 * Class holding zoom and position as used in the scrollPane.
+	 */
+	public static class ScrollPosition {
+		// PUBLIC_FIELDS:START
+		// JAVADOC:OFF
+		public double hValue;
+		public double vValue;
+
+		// JAVADOC:ON
+		// PUBLIC_FIELDS:END
+
+		/**
+		 * Initialize a ScrollPosition with scrollbar values.
+		 *
+		 * @param hValue
+		 *            The horizontal value
+		 * @param vValue
+		 *            The vertical value
+		 */
+		public ScrollPosition(final double hValue, final double vValue) {
+			this.hValue = hValue;
+			this.vValue = vValue;
 		}
 	}
 

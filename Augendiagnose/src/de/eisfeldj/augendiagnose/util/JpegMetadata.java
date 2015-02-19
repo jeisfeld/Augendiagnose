@@ -165,6 +165,9 @@ public final class JpegMetadata implements Parcelable {
 		str.append("X-Position: " + xCenter + "\n");
 		str.append("Y-Position: " + yCenter + "\n");
 		str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
+		str.append("X-Position: " + xPosition + "\n");
+		str.append("Y-Position: " + yPosition + "\n");
+		str.append("ZoomFactor: " + zoomFactor + "\n");
 		str.append("OrganizeDate: " + organizeDate + "\n");
 		str.append("RightLeft: " + rightLeft + "\n");
 		str.append("Brightness: " + brightness + "\n");

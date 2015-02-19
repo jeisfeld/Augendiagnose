@@ -26,17 +26,23 @@ public final class StringConverter {
 	/**
 	 * The global Strings file.
 	 */
-	private static final File XML_FILE_GLOBAL = new File("../Augendiagnose/res/values/strings.xml");
+	private static final File[] XML_FILES_GLOBAL = { new File("../Augendiagnose/res/values/strings.xml"),
+			new File("../Augendiagnose/res/values/strings_menu.xml"),
+			new File("../Augendiagnose/res/values/strings_settings.xml") };
 
 	/**
 	 * The German String file.
 	 */
-	private static final File XML_FILE_DE = new File("../Augendiagnose/res/values-de/strings.xml");
+	private static final File[] XML_FILES_DE = { new File("../Augendiagnose/res/values-de/strings.xml"),
+			new File("../Augendiagnose/res/values-de/strings_menu.xml"),
+			new File("../Augendiagnose/res/values-de/strings_settings.xml") };
 
 	/**
 	 * The Spanish String file.
 	 */
-	private static final File XML_FILE_ES = new File("../Augendiagnose/res/values-es/strings.xml");
+	private static final File[] XML_FILES_ES = { new File("../Augendiagnose/res/values-es/strings.xml"),
+			new File("../Augendiagnose/res/values-es/strings_menu.xml"),
+			new File("../Augendiagnose/res/values-es/strings_settings.xml") };
 
 	/**
 	 * The global Properties file.
@@ -124,17 +130,23 @@ public final class StringConverter {
 
 			while (e.hasMoreElements()) {
 				String key = (String) e.nextElement();
-				String xmlValue = getValueFromXml(XML_FILE_GLOBAL, key);
-				if (xmlValue != null) {
-					props.setProperty(key, xmlValue);
+				for (File xmlFile : XML_FILES_GLOBAL) {
+					String xmlValue = getValueFromXml(xmlFile, key);
+					if (xmlValue != null) {
+						props.setProperty(key, xmlValue);
+					}
 				}
-				String xmlValueDe = getValueFromXml(XML_FILE_DE, key);
-				if (xmlValueDe != null) {
-					propsDe.setProperty(key, xmlValueDe);
+				for (File xmlFile : XML_FILES_DE) {
+					String xmlValueDe = getValueFromXml(xmlFile, key);
+					if (xmlValueDe != null) {
+						propsDe.setProperty(key, xmlValueDe);
+					}
 				}
-				String xmlValueEs = getValueFromXml(XML_FILE_ES, key);
-				if (xmlValueEs != null) {
-					propsEs.setProperty(key, xmlValueEs);
+				for (File xmlFile : XML_FILES_ES) {
+					String xmlValueEs = getValueFromXml(xmlFile, key);
+					if (xmlValueEs != null) {
+						propsEs.setProperty(key, xmlValueEs);
+					}
 				}
 			}
 

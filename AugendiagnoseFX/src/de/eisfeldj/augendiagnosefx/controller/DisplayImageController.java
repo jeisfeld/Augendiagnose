@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
+import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -108,6 +109,11 @@ public class DisplayImageController extends BaseController implements Initializa
 	private boolean isThumbnail = false;
 
 	/**
+	 * Flag storing if the view is already initialized. (However, the image may be loaded later asynchronously.)
+	 */
+	private boolean initialized = false;
+
+	/**
 	 * The Buttons for overlays.
 	 */
 	// JAVADOC:OFF
@@ -168,6 +174,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		sliderContrast.setMin(-1);
 		sliderContrast.setValue(0);
 		sliderContrast.setMax(1);
+
+		initialized = true;
 	}
 
 	/**
@@ -178,8 +186,16 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setBrightness(newValue.floatValue(), true);
-				isThumbnail = true;
+				displayImageView.setBrightness(newValue.floatValue(), isThumbnail);
+			}
+		});
+		sliderBrightness.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				if (!isThumbnail) {
+					displayImageView.redisplay(true);
+					isThumbnail = true;
+				}
 			}
 		});
 		sliderBrightness.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -197,8 +213,16 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setContrast(newValue.floatValue(), true);
-				isThumbnail = true;
+				displayImageView.setContrast(newValue.floatValue(), isThumbnail);
+			}
+		});
+		sliderContrast.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				if (!isThumbnail) {
+					displayImageView.redisplay(true);
+					isThumbnail = true;
+				}
 			}
 		});
 		sliderContrast.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -298,6 +322,81 @@ public class DisplayImageController extends BaseController implements Initializa
 	}
 
 	/**
+	 * Action method for storing brightness and contrast.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void storeBrightnessContrast(final ActionEvent event) {
+		if (isInitialized()) {
+			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			if (metadata != null) {
+				metadata.brightness = (float) sliderBrightness.getValue();
+				metadata.contrast = OverlayImageView.seekbarContrastToStoredContrast((float) sliderContrast.getValue());
+
+				eyePhoto.storeImageMetadata(metadata);
+			}
+		}
+	}
+
+	/**
+	 * Action method for resetting brightness and contrast.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void resetBrightnessContrast(final ActionEvent event) {
+		sliderBrightness.setValue(0);
+		sliderContrast.setValue(0);
+		storeBrightnessContrast(event);
+	}
+
+	/**
+	 * Action method for storing the view position.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void storeViewPosition(final ActionEvent event) {
+		if (isInitialized()) {
+			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			if (metadata != null) {
+				MetadataPosition position = displayImageView.getPosition();
+				metadata.xPosition = position.xCenter;
+				metadata.yPosition = position.yCenter;
+				metadata.zoomFactor = position.zoom;
+
+				eyePhoto.storeImageMetadata(metadata);
+			}
+		}
+	}
+
+	/**
+	 * Action method for resetting the view position.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void resetViewPosition(final ActionEvent event) {
+		if (isInitialized()) {
+			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			if (metadata != null) {
+				metadata.xPosition = null;
+				metadata.yPosition = null;
+				metadata.zoomFactor = null;
+
+				eyePhoto.storeImageMetadata(metadata);
+				// re-set eyePhoto in order to do initial scaling again.
+				displayImageView.setEyePhoto(eyePhoto);
+			}
+		}
+	}
+
+	/**
 	 * Setter for the eye photo. Initializes the view.
 	 *
 	 * @param eyePhoto
@@ -312,7 +411,8 @@ public class DisplayImageController extends BaseController implements Initializa
 			sliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.contrast));
 			displayImageView.initializeBrightnessContrast(metadata.brightness, metadata.contrast);
 		}
-		// Only now the listeners should be initialized.
+		// Only now the listeners should be initialized, as image is not yet loaded and listeners should not
+		// react on initial slider setup.
 		initializeSliders();
 
 		displayImageView.setEyePhoto(eyePhoto);
@@ -360,11 +460,14 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the pane should be visible.
 	 */
 	public final void showOverlayPane(final boolean visible) {
+		displayImageView.storePosition();
 		overlayPane.setVisible(visible);
 		overlayPane.setManaged(visible);
 		if (overlayConstraints instanceof ColumnConstraints) {
 			((ColumnConstraints) overlayConstraints).setMinWidth(visible ? 75 : 0); // MAGIC_NUMBER
 		}
+		displayImage.layout();
+		displayImageView.retrievePosition();
 	}
 
 	/**
@@ -383,6 +486,15 @@ public class DisplayImageController extends BaseController implements Initializa
 		btnOverlay6.setDisable(!enabled);
 		btnOverlay7.setDisable(!enabled);
 		colorPicker.setDisable(!enabled);
+	}
+
+	/**
+	 * Give information if the image is already loaded and the view is initialized.
+	 *
+	 * @return true if the image is loaded and the view is initialized.
+	 */
+	private boolean isInitialized() {
+		return initialized && displayImageView.isInitialized();
 	}
 
 }

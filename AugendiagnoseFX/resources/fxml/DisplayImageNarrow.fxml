@@ -7,7 +7,9 @@
 <?import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
@@ -27,7 +29,18 @@
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> 
+	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"> 
+		<contextMenu>
+			<ContextMenu> 
+				<items>
+					<MenuItem text="%menu_store_brightness" onAction="#storeBrightnessContrast"/> 
+					<MenuItem text="%menu_reset_brightness" onAction="#resetBrightnessContrast"/> 
+					<MenuItem text="%menu_store_position" onAction="#storeViewPosition"/> 
+					<MenuItem text="%menu_reset_position" onAction="#resetViewPosition"/> 
+				</items>
+			</ContextMenu>
+		</contextMenu>
+	</OverlayImageView>
 	<GridPane fx:id="overlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
 		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>

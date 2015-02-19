@@ -57,6 +57,16 @@ public final class Logger {
 	}
 
 	/**
+	 * Same as info. Can be used for temporary logging.
+	 *
+	 * @param output
+	 *            the content of the log entry.
+	 */
+	public static void log(final String output) {
+		info(output);
+	}
+
+	/**
 	 * Make a warning entry.
 	 *
 	 * @param output

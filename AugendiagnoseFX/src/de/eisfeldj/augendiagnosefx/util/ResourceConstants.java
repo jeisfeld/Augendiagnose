@@ -41,6 +41,10 @@ public final class ResourceConstants {
 	public static final String MENU_ONLINE_MANUAL = "menu_online_manual";
 	public static final String MENU_OVERLAY_PANE = "menu_overlay_pane";
 	public static final String MENU_PREFERENCES = "menu_preferences";
+	public static final String MENU_RESET_BRIGHTNESS = "menu_reset_brightness";
+	public static final String MENU_RESET_POSITION = "menu_reset_position";
+	public static final String MENU_STORE_BRIGHTNESS = "menu_store_brightness";
+	public static final String MENU_STORE_POSITION = "menu_store_position";
 	public static final String MENU_VIEW = "menu_view";
 	public static final String MENU_WINDOW = "menu_window";
 	public static final String MESSAGE_DIALOG_COULD_NOT_OPEN_LOG_FILE = "message_dialog_could_not_open_log_file";

@@ -6,7 +6,9 @@
 <?import java.lang.*?>
 <?import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
@@ -26,7 +28,18 @@
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"/> 
+	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"> 
+		<contextMenu>
+			<ContextMenu> 
+				<items>
+					<MenuItem text="%menu_store_brightness" onAction="#storeBrightnessContrast"/> 
+					<MenuItem text="%menu_reset_brightness" onAction="#resetBrightnessContrast"/> 
+					<MenuItem text="%menu_store_position" onAction="#storeViewPosition"/> 
+					<MenuItem text="%menu_reset_position" onAction="#resetViewPosition"/> 
+				</items>
+			</ContextMenu>
+		</contextMenu>
+	</OverlayImageView>
 	<GridPane fx:id="overlayPane" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
 		<VBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
