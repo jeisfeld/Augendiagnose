@@ -90,6 +90,19 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private int imageIndex;
 
 	/**
+	 * Flag holding information if fragment is shown in landscape mode.
+	 */
+	private boolean isLandscape;
+
+	protected final boolean isLandscape() {
+		return isLandscape;
+	}
+
+	protected final void setLandscape(final boolean newIsLandscape) {
+		this.isLandscape = newIsLandscape;
+	}
+
+	/**
 	 * The view displaying the image.
 	 */
 	private OverlayPinchImageView imageView;
@@ -98,6 +111,26 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The number of overlay images.
 	 */
 	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
+
+	/**
+	 * The button for showing the image in full resolution.
+	 */
+	private Button clarityButton;
+
+	/**
+	 * The button for showing the image comment.
+	 */
+	private Button commentButton;
+
+	/**
+	 * The button for saving image metadata.
+	 */
+	private Button saveButton;
+
+	/**
+	 * The button for showing or hiding the tools.
+	 */
+	private Button toolsButton;
 
 	/**
 	 * The array of overlay buttons.
@@ -189,9 +222,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
+			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
 		else {
+			setLandscape(false);
 			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}
 	}
@@ -211,7 +246,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			showUtilities = getDefaultShowUtilities();
 			overlayColor = Application.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		}
-		showUtilities(showUtilities);
 
 		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		imageView.setGuiElementUpdater(this);
@@ -229,6 +263,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
 		selectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
+
+		clarityButton = (Button) getView().findViewById(R.id.buttonClarity);
+		commentButton = (Button) getView().findViewById(R.id.buttonComment);
+		saveButton = (Button) getView().findViewById(R.id.buttonSave);
+		toolsButton = (Button) getView().findViewById(R.id.buttonTools);
+
+		showUtilities(showUtilities);
 
 		// Initialize the onClick listeners for the buttons
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
@@ -252,6 +293,38 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onClick(final View v) {
 				onButtonSelectColorClicked(v);
+			}
+		});
+
+		clarityButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		commentButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				// TODO Auto-generated method stub
+				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
+						imageView.getMetadata().comment);
+			}
+		});
+
+		saveButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		toolsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				boolean newShowUtilities = !showUtilities;
+				showUtilities(newShowUtilities);
+				updateDefaultShowUtilities(newShowUtilities);
 			}
 		});
 
@@ -337,17 +410,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		inflater.inflate(R.menu.context_display_one, menu);
 
 		if (!showUtilities) {
-			// update text to show/hide utilities
-			MenuItem item = menu.findItem(R.id.action_show_hide_utilities);
-
-			item.setTitle(R.string.menu_show_utilities);
 			// Hide store/reset actions when utilities are not shown
 			menu.removeGroup(R.id.group_store_reset);
-		}
-
-		if (((DisplayImageActivity) getActivity()).isEditingComment()) {
-			// Do not allow duplicate selection of "edit comment"
-			menu.removeItem(R.id.action_edit_comment);
 		}
 
 		// need to store reference, because onContextItemSelected will be called on all fragments
@@ -363,14 +427,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (contextMenuReference == this) {
 			switch (item.getItemId()) {
-			case R.id.action_show_hide_utilities:
-				boolean newShowUtilities = !showUtilities;
-				showUtilities(newShowUtilities);
-				updateDefaultShowUtilities(newShowUtilities);
-				return true;
-			case R.id.action_edit_comment:
-				((DisplayImageActivity) getActivity()).startEditComment(this, imageView.getMetadata().comment);
-				return true;
 			case R.id.action_store_brightness:
 				imageView.storeBrightnessContrast(false);
 				return true;
@@ -419,18 +475,30 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	protected final void showUtilities(final boolean show) {
 		if (show) {
+			if (isLandscape) {
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_menu_down, 0);
+			}
+			else {
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_menu_down);
+			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
 		}
 		else {
+			if (isLandscape) {
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_menu_up, 0);
+			}
+			else {
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_menu_up);
+			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 		}
-		getView().findViewById(R.id.fragment_display_one_overlay).invalidate();
+		requestLayout();
 		showUtilities = show;
 	}
 

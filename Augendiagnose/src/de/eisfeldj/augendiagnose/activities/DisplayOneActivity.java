@@ -43,6 +43,11 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
+	 * The view displaying the files.
+	 */
+	private View viewFragmentImage;
+
+	/**
 	 * The fragment displaying the image.
 	 */
 	private DisplayImageFragment fragmentImage;
@@ -105,6 +110,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 			getFragmentManager().executePendingTransactions();
 		}
 
+		viewFragmentImage = findViewById(R.id.fragment_image);
 		viewFragmentEdit = findViewById(R.id.fragment_edit);
 		viewLayoutMain = findViewById(android.R.id.content);
 		viewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
@@ -129,12 +135,14 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
 		viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
+		viewFragmentImage.findViewById(R.id.buttonComment).setEnabled(false);
 	}
 
 	@Override
 	protected final void hideEditFragment() {
 		super.hideEditFragment();
 		viewSeparatorAfterEdit.setVisibility(View.GONE);
+		viewFragmentImage.findViewById(R.id.buttonComment).setEnabled(true);
 	}
 
 	/**

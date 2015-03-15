@@ -19,18 +19,22 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/buttonClarity"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_clarity" />
 
         <Button
+            android:id="@+id/buttonComment"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_comment" />
 
         <Button
+            android:id="@+id/buttonSave"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_action_save" />
 
         <Button
+            android:id="@+id/buttonTools"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_menu_down" />
     </LinearLayout>

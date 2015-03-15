@@ -19,18 +19,22 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/buttonClarity"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_clarity" />
 
         <Button
+            android:id="@+id/buttonComment"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_comment" />
 
         <Button
+            android:id="@+id/buttonSave"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_action_save" />
 
         <Button
+            android:id="@+id/buttonTools"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_menu_down" />
     </LinearLayout>
@@ -48,7 +52,7 @@
         android:id="@+id/separatorTools"
         style="@style/SeparatorBarHorizontal" />
 
-    <LinearLayout
+    <LinearLayout
         android:id="@+id/seekBarBrightnessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

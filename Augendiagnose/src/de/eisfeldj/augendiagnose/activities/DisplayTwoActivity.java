@@ -46,7 +46,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	 * The view displaying the "other" file. Required to differentiate between "current listFoldersFragment" and
 	 * "other listFoldersFragment" when editing picture comment.
 	 */
-	private View viewFragmentOther;
+	private View viewFragmentOther, viewFragmentThis;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
@@ -150,9 +150,11 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	public final void startEditComment(final DisplayImageFragment fragment, final String text) {
 		// Determine which image listFoldersFragment needs to be hidden
 		if (fragment == fragmentImage1) {
+			viewFragmentThis = viewFragmentImage1;
 			viewFragmentOther = viewFragmentImage2;
 		}
 		else {
+			viewFragmentThis = viewFragmentImage2;
 			viewFragmentOther = viewFragmentImage1;
 		}
 
@@ -163,20 +165,22 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
 		viewFragmentOther.setVisibility(View.GONE);
-		if (viewFragmentOther == viewFragmentImage1) {
+		if (viewFragmentThis == viewFragmentImage2) {
 			viewSeparatorBeforeEdit.setVisibility(View.GONE);
 			viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
 		}
+		viewFragmentThis.findViewById(R.id.buttonComment).setEnabled(false);
 	}
 
 	@Override
 	protected final void hideEditFragment() {
 		super.hideEditFragment();
 		viewFragmentOther.setVisibility(View.VISIBLE);
-		if (viewFragmentOther == viewFragmentImage1) {
+		if (viewFragmentThis == viewFragmentImage2) {
 			viewSeparatorBeforeEdit.setVisibility(View.VISIBLE);
 			viewSeparatorAfterEdit.setVisibility(View.GONE);
 		}
+		viewFragmentThis.findViewById(R.id.buttonComment).setEnabled(true);
 	}
 
 	/**

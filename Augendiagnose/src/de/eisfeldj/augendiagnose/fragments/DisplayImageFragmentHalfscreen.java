@@ -18,9 +18,11 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 			final Bundle savedInstanceState) {
 		if (Application.isLandscape()) {
+			setLandscape(false);
 			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}
 		else {
+			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
 	}

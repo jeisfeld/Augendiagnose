@@ -1,9 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_edit_comment"
-        android:title="@string/menu_edit_comment"/>
-    <item
         android:id="@+id/action_store_position"
         android:title="@string/menu_store_position"/>
     <item
@@ -27,9 +24,5 @@
             android:id="@+id/action_delete_overlay_position"
             android:title="@string/menu_delete_overlay_position"/>
     </group>
-
-    <item
-        android:id="@+id/action_show_hide_utilities"
-        android:title="@string/menu_hide_utilities"/>
 
 </menu>

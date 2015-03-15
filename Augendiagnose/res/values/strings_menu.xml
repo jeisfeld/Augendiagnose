@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="menu_show_utilities">Show utilities</string>
-    <string name="menu_hide_utilities">Hide utilities</string>
-    <string name="menu_edit_comment">Edit comment</string>
     <string name="menu_store_brightness">Store brightness/contrast</string>
     <string name="menu_reset_brightness">Reset brightness/contrast</string>
     <string name="menu_store_position">Store zoom/position</string>

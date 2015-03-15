@@ -65,7 +65,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Neues Overlay.</item>
         <item>Bugfixes - insbesondere Behebung des Problems mit Großbuchstaben in der Dateiendung ("JPG")</item>
         <item>Wechsel der Sprache ist möglich. Sortieren nach Nachnamen ist möglich. Löschen von Fotos im Eingangsverzeichnis is möglich. Anzeige der neuestsen Augenfotopaare am oberen Ende der Liste. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Bei der Anzeige von Fotos gibt es jetzt statt des Kontextmenüs ein Menü am oberen Rand. Bugfixes</item>
     </string-array>
 
 </resources>
