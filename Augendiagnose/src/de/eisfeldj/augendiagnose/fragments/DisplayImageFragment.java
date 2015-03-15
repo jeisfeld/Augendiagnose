@@ -419,11 +419,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	protected final void showUtilities(final boolean show) {
 		if (show) {
+			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
 		}
 		else {
+			getView().findViewById(R.id.separatorTools).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);

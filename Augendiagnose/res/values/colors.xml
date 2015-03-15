@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Colors for action bar simulation -->
+    <color name="action_bar">#ff0d0d0d</color>
+    <color name="white">#ffffffff</color>
+    <color name="off_white">#99ffffff</color>
+
+</resources>

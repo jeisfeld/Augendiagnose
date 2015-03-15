@@ -42,6 +42,16 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	protected View viewLayoutMain;
 
+	/**
+	 * The separator line after the edit field.
+	 */
+	protected View viewSeparatorAfterEdit;
+
+	/**
+	 * The separator line before the edit field.
+	 */
+	protected View viewSeparatorBeforeEdit = null;
+
 	// PUBLIC_FIELDS:END
 
 	/**

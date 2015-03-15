@@ -101,6 +101,8 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		viewFragmentImage2 = findViewById(R.id.fragment_image2);
 		viewFragmentEdit = findViewById(R.id.fragment_edit);
 		viewLayoutMain = findViewById(android.R.id.content);
+		viewSeparatorBeforeEdit = findViewById(R.id.separator_before_edit);
+		viewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
 		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
@@ -161,12 +163,20 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
 		viewFragmentOther.setVisibility(View.GONE);
+		if (viewFragmentOther == viewFragmentImage1) {
+			viewSeparatorBeforeEdit.setVisibility(View.GONE);
+			viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
 	protected final void hideEditFragment() {
 		super.hideEditFragment();
 		viewFragmentOther.setVisibility(View.VISIBLE);
+		if (viewFragmentOther == viewFragmentImage1) {
+			viewSeparatorBeforeEdit.setVisibility(View.VISIBLE);
+			viewSeparatorAfterEdit.setVisibility(View.GONE);
+		}
 	}
 
 	/**

@@ -107,6 +107,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		viewFragmentEdit = findViewById(R.id.fragment_edit);
 		viewLayoutMain = findViewById(android.R.id.content);
+		viewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
 		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
@@ -122,6 +123,18 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		// ensure that layout is refreshed if view gets resized
 		AutoKeyboardLayoutUtility.assistActivity(this);
+	}
+
+	@Override
+	protected final void showEditFragment(final String text) {
+		super.showEditFragment(text);
+		viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	protected final void hideEditFragment() {
+		super.hideEditFragment();
+		viewSeparatorAfterEdit.setVisibility(View.GONE);
 	}
 
 	/**

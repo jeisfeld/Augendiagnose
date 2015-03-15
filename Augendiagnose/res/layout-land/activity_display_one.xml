@@ -10,17 +10,22 @@
         android:id="@+id/fragment_edit"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="2dp"
         android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:layout_weight="0.7"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/separator_after_edit"
+        style="@style/SeparatorBarVertical"
         android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/fragment_image"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="2dp"
         android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:layout_weight="1" />
 
 </LinearLayout>

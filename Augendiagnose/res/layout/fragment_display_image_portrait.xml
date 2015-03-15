@@ -7,6 +7,36 @@
     android:orientation="vertical"
     tools:context=".activities.DisplayOneActivityOverlay" >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_clarity" />
+
+        <Button
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_comment" />
+
+        <Button
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_action_save" />
+
+        <Button
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_menu_down" />
+    </LinearLayout>
+
+    <FrameLayout style="@style/SeparatorBarHorizontal" />
+
     <de.eisfeldj.augendiagnose.components.OverlayPinchImageView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mainImage"
@@ -14,7 +44,11 @@
         android:layout_height="0dip"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/separatorTools"
+        style="@style/SeparatorBarHorizontal" />
+
+    <LinearLayout
         android:id="@+id/seekBarBrightnessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

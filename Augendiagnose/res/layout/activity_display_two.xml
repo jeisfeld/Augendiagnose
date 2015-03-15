@@ -10,22 +10,28 @@
         android:id="@+id/fragment_image1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
         android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/separator_before_edit"
+        style="@style/SeparatorBarHorizontal" />
 
     <FrameLayout
         android:id="@+id/fragment_edit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
         android:layout_weight="1"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/separator_after_edit"
+        style="@style/SeparatorBarHorizontal"
         android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/fragment_image2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="2dp"
         android:layout_weight="1" />
 
 </LinearLayout>
