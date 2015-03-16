@@ -3,27 +3,24 @@ package de.eisfeldj.augendiagnose.fragments;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
-import de.eisfeldj.augendiagnose.components.ContextMenuReferenceHolder;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
-import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -315,7 +312,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		saveButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				// TODO Auto-generated method stub
+				showSaveMenu(v);
 			}
 		});
 
@@ -347,10 +344,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		// The following also updates the selectColorButton
 		imageView.setOverlayColor(overlayColor);
-
-		if (JpegMetadataUtil.changeJpegAllowed()) {
-			registerForContextMenu(imageView);
-		}
 	}
 
 	/**
@@ -400,61 +393,51 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		dialog.show(getFragmentManager(), ColorPickerDialog.class.toString());
 	}
 
-	/*
-	 * Create the context menu.
+	/**
+	 * Create the popup menu for saving metadata.
+	 *
+	 * @param view
+	 *            The view opening the menu.
 	 */
-	@Override
-	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.context_display_one, menu);
+	public final void showSaveMenu(final View view) {
+		PopupMenu popup = new PopupMenu(getActivity(), view);
+		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(final MenuItem item) {
+				switch (item.getItemId()) {
+				case R.id.action_store_brightness:
+					imageView.storeBrightnessContrast(false);
+					return true;
+				case R.id.action_reset_brightness:
+					imageView.storeBrightnessContrast(true);
+					return true;
+				case R.id.action_store_position:
+					imageView.storePositionZoom(false);
+					return true;
+				case R.id.action_reset_position:
+					imageView.storePositionZoom(true);
+					return true;
+				case R.id.action_store_overlay_color:
+					imageView.storeOverlayColor(false);
+					return true;
+				case R.id.action_reset_overlay_color:
+					imageView.storeOverlayColor(true);
+					return true;
+				case R.id.action_delete_overlay_position:
+					imageView.resetOverlayPosition(true);
+					return true;
+				default:
+					return true;
+				}
+			}
+		});
+		popup.inflate(R.menu.context_display_one);
 
 		if (!showUtilities) {
 			// Hide store/reset actions when utilities are not shown
-			menu.removeGroup(R.id.group_store_reset);
+			popup.getMenu().removeGroup(R.id.group_store_reset);
 		}
-
-		// need to store reference, because onContextItemSelected will be called on all fragments
-		((ContextMenuReferenceHolder) getActivity()).setContextMenuReference(this);
-	}
-
-	/*
-	 * Handle items in the context menu.
-	 */
-	@Override
-	public final boolean onContextItemSelected(final MenuItem item) {
-		Object contextMenuReference = ((ContextMenuReferenceHolder) getActivity()).getContextMenuReference();
-
-		if (contextMenuReference == this) {
-			switch (item.getItemId()) {
-			case R.id.action_store_brightness:
-				imageView.storeBrightnessContrast(false);
-				return true;
-			case R.id.action_reset_brightness:
-				imageView.storeBrightnessContrast(true);
-				return true;
-			case R.id.action_store_position:
-				imageView.storePositionZoom(false);
-				return true;
-			case R.id.action_reset_position:
-				imageView.storePositionZoom(true);
-				return true;
-			case R.id.action_store_overlay_color:
-				imageView.storeOverlayColor(false);
-				return true;
-			case R.id.action_reset_overlay_color:
-				imageView.storeOverlayColor(true);
-				return true;
-			case R.id.action_delete_overlay_position:
-				imageView.resetOverlayPosition(true);
-				return true;
-			default:
-				return super.onContextItemSelected(item);
-			}
-		}
-		else {
-			return false;
-		}
+		popup.show();
 	}
 
 	/**
