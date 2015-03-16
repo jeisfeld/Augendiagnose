@@ -110,7 +110,7 @@
             android:padding="0dp"
             android:textOff="@string/toggle_circle"
             android:textOn="@string/toggle_circle"
-            android:textSize="18sp" />
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
@@ -121,7 +121,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_1"
-            android:textOn="@string/toggle_overlay_1" />
+            android:textOn="@string/toggle_overlay_1"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay2"
@@ -132,7 +133,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_2"
-            android:textOn="@string/toggle_overlay_2" />
+            android:textOn="@string/toggle_overlay_2"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay3"
@@ -143,7 +145,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_3"
-            android:textOn="@string/toggle_overlay_3" />
+            android:textOn="@string/toggle_overlay_3"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay4"
@@ -154,7 +157,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_4"
-            android:textOn="@string/toggle_overlay_4" />
+            android:textOn="@string/toggle_overlay_4"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay5"
@@ -165,7 +169,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_5"
-            android:textOn="@string/toggle_overlay_5" />
+            android:textOn="@string/toggle_overlay_5"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay6"
@@ -176,7 +181,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_6"
-            android:textOn="@string/toggle_overlay_6" />
+            android:textOn="@string/toggle_overlay_6"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay7"
@@ -187,7 +193,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textOff="@string/toggle_overlay_7"
-            android:textOn="@string/toggle_overlay_7" />
+            android:textOn="@string/toggle_overlay_7"
+            android:textSize="@dimen/togglebutton_circlesize" />
 
         <Button
             android:id="@+id/buttonSelectColor"

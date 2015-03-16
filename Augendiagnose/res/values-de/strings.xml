@@ -59,13 +59,6 @@
     <string name="button_delete">Löschen</string>
     <string name="button_move">Verschieben</string>
     <string name="button_other_pictures">Andere Fotos</string>
-    <string name="toggle_overlay_1">T1</string>
-    <string name="toggle_overlay_2">T2</string>
-    <string name="toggle_overlay_3">T3</string>
-    <string name="toggle_overlay_4">T4</string>
-    <string name="toggle_overlay_5">T5</string>
-    <string name="toggle_overlay_6">T6</string>
-    <string name="toggle_overlay_7">T7</string>
     <string name="content_description_right_eye">Rechtes Auge</string>
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>
