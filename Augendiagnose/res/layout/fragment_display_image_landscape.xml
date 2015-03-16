@@ -36,7 +36,7 @@
         <Button
             android:id="@+id/buttonTools"
             style="@style/ActionBarButtonLandscape"
-            android:drawableRight="@drawable/ic_menu_down" />
+            android:drawableRight="@drawable/ic_tools_down" />
     </LinearLayout>
 
     <FrameLayout style="@style/SeparatorBarVertical" />

@@ -459,10 +459,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	protected final void showUtilities(final boolean show) {
 		if (show) {
 			if (isLandscape) {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_menu_down, 0);
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
 			}
 			else {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_menu_down);
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_down);
 			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
@@ -471,10 +471,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			if (isLandscape) {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_menu_up, 0);
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_left, 0);
 			}
 			else {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_menu_up);
+				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_up);
 			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
