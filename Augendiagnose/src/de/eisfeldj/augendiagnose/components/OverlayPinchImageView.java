@@ -766,10 +766,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			justification = "Using floating point equality to see if value has changed")
 	@Override
 	protected final boolean handlePointerMove(final MotionEvent ev) {
-		if (mIsFullResolutionShapshot) {
-			setImageBitmap(mCanvasBitmap);
-			mIsFullResolutionShapshot = false;
-		}
+		showNormalResolution();
 
 		if (pinchAll()) {
 			return super.handlePointerMove(ev);
@@ -924,6 +921,25 @@ public class OverlayPinchImageView extends PinchImageView {
 		setImageBitmap(fullViewBitmap);
 		setImageMatrix(null);
 		mIsFullResolutionShapshot = true;
+	}
+
+	/**
+	 * Show normal resolution again after having the full resolution snapshot.
+	 */
+	public final void showNormalResolution() {
+		if (mIsFullResolutionShapshot) {
+			setImageBitmap(mCanvasBitmap);
+			mIsFullResolutionShapshot = false;
+		}
+	}
+
+	/**
+	 * Override requestLayout to show normal resolution.
+	 */
+	@Override
+	public final void requestLayout() {
+		showNormalResolution();
+		super.requestLayout();
 	}
 
 	/**

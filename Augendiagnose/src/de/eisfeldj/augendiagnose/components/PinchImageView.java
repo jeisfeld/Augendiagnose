@@ -301,10 +301,11 @@ public class PinchImageView extends ImageView {
 	}
 
 	/**
-	 * Override invalidate to reposition the image.
+	 * Override requestLayout to reposition the image.
 	 */
+	// OVERRIDABLE
 	@Override
-	public final void requestLayout() {
+	public void requestLayout() {
 		super.requestLayout();
 		if (mBitmap != null) {
 			setMatrix();
