@@ -161,6 +161,18 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				ColorPicker id colorPicker {
 					maxWidth : const Double#MAX_VALUE,
 					onAction : controllermethod onColorChanged
+				},
+				Separator,
+				ToggleButton id clarityButton {
+					alignment : "CENTER",
+					maxWidth : const Double#MAX_VALUE,
+					onAction : controllermethod btnClarityPressed,
+					graphic : ImageView {
+						image : Image {
+							url: location "img/clarity.png"
+						}
+					},
+					toggleGroup : idref overlayGroup
 				}
 			},
 			Slider id sliderBrightness {

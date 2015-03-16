@@ -72,6 +72,17 @@
 			<ColorPicker fx:id="colorPicker" onAction="#onColorChanged"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ColorPicker>
+			<Separator/> 
+			<ToggleButton fx:id="clarityButton" alignment="CENTER" onAction="#btnClarityPressed" toggleGroup="$overlayGroup"> 
+				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+				<graphic>
+					<ImageView> 
+						<image>
+							<Image url="@img/clarity.png"/> 
+						</image>
+					</ImageView>
+				</graphic>
+			</ToggleButton>
 		</VBox>
 		<Slider fx:id="sliderBrightness" orientation="VERTICAL" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<Slider fx:id="sliderContrast" orientation="VERTICAL" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 

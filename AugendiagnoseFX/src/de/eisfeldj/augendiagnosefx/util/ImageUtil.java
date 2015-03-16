@@ -46,12 +46,17 @@ public final class ImageUtil {
 	 *
 	 * @param url
 	 *            The image URL.
-	 * @param thumbnail
-	 *            Indicator if an image in thumbnail resolution should be returned.
+	 * @param resolution
+	 *            Indicator of the resolution in which the image should be returned.
 	 * @return the image.
 	 */
-	public static Image getImage(final URL url, final boolean thumbnail) {
-		int maxSize = thumbnail
+	public static Image getImage(final URL url, final Resolution resolution) {
+		if (resolution == Resolution.FULL) {
+			// no specification of size required in case of full resolution.
+			return new Image(url.toExternalForm());
+		}
+
+		int maxSize = resolution == Resolution.THUMB
 				? PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_THUMBNAIL_SIZE)
 				: PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
 		// Load the thumbnail in the background. Main image needs to be loaded in foreground, as dimensions are
@@ -157,14 +162,14 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the imabe.
-	 * @param thumbnail
-	 *            Indicator if an image in thumbnail resolution should be returned.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 * @return The image with overlay.
 	 */
 	private static Image getImageWithOverlay( // SUPPRESS_CHECKSTYLE Too many parameters
 			final Image baseImage, final Integer overlayType, final RightLeft side,
 			final Color color, final double xPosition, final double yPosition, final double scaleFactor,
-			final float brightness, final float contrast, final boolean thumbnail) {
+			final float brightness, final float contrast, final Resolution resolution) {
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
@@ -254,24 +259,36 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the image.
-	 * @param thumbnail
-	 *            Indicator if an image in thumbnail resolution should be returned.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 * @return The image with overlay.
 	 */
 	public static Image getImageForDisplay(final EyePhoto eyePhoto, final Integer overlayType,
-			final Color color, final float brightness, final float contrast, final boolean thumbnail) {
-		Image image = eyePhoto.getImage(thumbnail);
+			final Color color, final float brightness, final float contrast, final Resolution resolution) {
+		Image image = eyePhoto.getImage(resolution);
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
-
-		if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
+		if (resolution == Resolution.FULL) {
+			// Full resolution does not allow use of Canvas to set brightness, contrast and overlay.
+			return image;
+		}
+		else if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
 			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
 					metadata.xCenter, metadata.yCenter,
-					metadata.overlayScaleFactor, brightness, contrast, thumbnail);
+					metadata.overlayScaleFactor, brightness, contrast, resolution);
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
-					0, 0, 0, brightness, contrast, thumbnail);
+					0, 0, 0, brightness, contrast, resolution);
 		}
 	}
 
+	/**
+	 * Enumeration indicating the resolution with which the image should be displayed.
+	 */
+	public enum Resolution {
+		/**
+		 * The resolution values.
+		 */
+		FULL, NORMAL, THUMB;
+	}
 }

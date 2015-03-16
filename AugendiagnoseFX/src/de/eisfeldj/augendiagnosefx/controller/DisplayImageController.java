@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.FULL;
+import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.NORMAL;
+import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.THUMB;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
@@ -29,6 +32,7 @@ import javafx.scene.layout.RowConstraints;
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
@@ -92,6 +96,14 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton btnOverlayCircle;
 
 	/**
+	 * The button for displaying the view in full resolution.
+	 *
+	 * This is a ToggleButton, as it is incompatible with overlays.
+	 */
+	@FXML
+	private ToggleButton clarityButton;
+
+	/**
 	 * The slider for brightness.
 	 */
 	@FXML
@@ -102,16 +114,6 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	private Slider sliderContrast;
-
-	/**
-	 * Slider indicating if the current state displays only a thumbnail.
-	 */
-	private boolean isThumbnail = false;
-
-	/**
-	 * Flag storing if the view is already initialized. (However, the image may be loaded later asynchronously.)
-	 */
-	private boolean initialized = false;
 
 	/**
 	 * The Buttons for overlays.
@@ -145,14 +147,41 @@ public class DisplayImageController extends BaseController implements Initializa
 	private EyePhoto eyePhoto;
 
 	/**
+	 * Flag storing if the view is already initialized. (However, the image may be loaded later asynchronously.)
+	 */
+	private boolean initialized = false;
+
+	/**
 	 * Temporary storage for the comment while editing.
 	 */
 	private String oldComment;
 
 	/**
+	 * Slider indicating if the current state displays only a thumbnail.
+	 */
+	private Resolution currentResolution = NORMAL;
+
+	/**
 	 * Storage for the current overlay type.
 	 */
 	private Integer currentOverlayType = null;
+
+	/**
+	 * Update the stored current resolution, redisplay if the resolution changed, and update the clarityButton if
+	 * appicable.
+	 *
+	 * @param newResolution
+	 *            The current resolution.
+	 */
+	private void updateResolution(final Resolution newResolution) {
+		if (newResolution != currentResolution) {
+			currentResolution = newResolution;
+			if (newResolution != FULL) {
+				clarityButton.setSelected(false);
+			}
+			displayImageView.redisplay(newResolution);
+		}
+	}
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
@@ -186,25 +215,19 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setBrightness(newValue.floatValue(), isThumbnail);
+				displayImageView.setBrightness(newValue.floatValue(), currentResolution);
 			}
 		});
 		sliderBrightness.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				if (!isThumbnail) {
-					displayImageView.redisplay(true);
-					isThumbnail = true;
-				}
+				updateResolution(THUMB);
 			}
 		});
 		sliderBrightness.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				if (isThumbnail) {
-					displayImageView.redisplay(false);
-					isThumbnail = false;
-				}
+				updateResolution(NORMAL);
 			}
 		});
 
@@ -213,25 +236,19 @@ public class DisplayImageController extends BaseController implements Initializa
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setContrast(newValue.floatValue(), isThumbnail);
+				displayImageView.setContrast(newValue.floatValue(), currentResolution);
 			}
 		});
 		sliderContrast.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				if (!isThumbnail) {
-					displayImageView.redisplay(true);
-					isThumbnail = true;
-				}
+				updateResolution(THUMB);
 			}
 		});
 		sliderContrast.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				if (isThumbnail) {
-					displayImageView.redisplay(false);
-					isThumbnail = false;
-				}
+				updateResolution(NORMAL);
 			}
 		});
 	}
@@ -303,10 +320,28 @@ public class DisplayImageController extends BaseController implements Initializa
 				overlayType = Integer.parseInt(indexStr);
 			}
 
+			updateResolution(NORMAL);
 			showOverlay(overlayType);
 		}
 		else {
 			showOverlay(null);
+		}
+	}
+
+	/**
+	 * Action method for clarity button.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void btnClarityPressed(final ActionEvent event) {
+		if (clarityButton.isSelected()) {
+			showOverlay(null);
+			updateResolution(FULL);
+		}
+		else {
+			updateResolution(NORMAL);
 		}
 	}
 
@@ -430,7 +465,10 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	public final void showOverlay(final Integer overlayType) {
 		currentOverlayType = overlayType;
-		displayImageView.displayOverlay(overlayType, colorPicker.getValue());
+		if (overlayType != null) {
+			currentResolution = NORMAL;
+		}
+		displayImageView.displayOverlay(overlayType, colorPicker.getValue(), currentResolution);
 	}
 
 	/**

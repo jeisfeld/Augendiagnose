@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.util.ImageUtil;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 
 /**
  * Pane containing an image that can be resized and can display overlays.
@@ -34,18 +35,31 @@ public class OverlayImageView extends SizableImageView {
 	private float contrast = 1;
 
 	/**
+	 * The current resolution of the image - used to adapt zoomFactor if resolution changes.
+	 */
+	private Resolution currentResolution = Resolution.NORMAL;
+
+	/**
+	 * The current image width - used to adapt zoomFactor if resolution changes.
+	 */
+	private double currentImageWidth;
+
+	/**
 	 * Display the overlay.
 	 *
 	 * @param newOverlayType
 	 *            The overlay type to be displayed.
-	 *
 	 * @param newOverlayColor
 	 *            The color of the overlay.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 */
-	public final void displayOverlay(final Integer newOverlayType, final Color newOverlayColor) {
+	public final void displayOverlay(final Integer newOverlayType, final Color newOverlayColor,
+			final Resolution resolution) {
 		overlayType = newOverlayType;
 		overlayColor = newOverlayColor;
-		redisplay(false);
+		currentResolution = resolution;
+		redisplay(resolution);
 	}
 
 	/**
@@ -53,12 +67,12 @@ public class OverlayImageView extends SizableImageView {
 	 *
 	 * @param newBrightness
 	 *            The brightness
-	 * @param thumbnail
-	 *            Indicator if image should be shown in thumbnail resolution.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 */
-	public final void setBrightness(final float newBrightness, final boolean thumbnail) {
+	public final void setBrightness(final float newBrightness, final Resolution resolution) {
 		brightness = newBrightness;
-		redisplay(thumbnail);
+		redisplay(resolution);
 	}
 
 	/**
@@ -66,12 +80,12 @@ public class OverlayImageView extends SizableImageView {
 	 *
 	 * @param newContrast
 	 *            The contrast
-	 * @param thumbnail
-	 *            Indicator if image should be shown in thumbnail resolution.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 */
-	public final void setContrast(final float newContrast, final boolean thumbnail) {
+	public final void setContrast(final float newContrast, final Resolution resolution) {
 		contrast = seekbarContrastToStoredContrast(newContrast);
-		redisplay(thumbnail);
+		redisplay(resolution);
 	}
 
 	/**
@@ -90,18 +104,26 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * Redisplay. (Can be used to switch between non-thumbnail and thumbnail view.
 	 *
-	 * @param thumbnail
-	 *            Indicator if image should be shown in thumbnail resolution.
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 */
-	public final void redisplay(final boolean thumbnail) {
-		getImageView()
-				.setImage(
-						ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
-								thumbnail));
+	public final void redisplay(final Resolution resolution) {
+		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
+				resolution);
+
+		if (resolution != currentResolution) {
+			double imageRatio = newImage.getWidth() / currentImageWidth;
+			multiplyZoomProperty(1 / imageRatio);
+			currentImageWidth = newImage.getWidth();
+			currentResolution = resolution;
+		}
+
+		getImageView().setImage(newImage);
 	}
 
 	/*
-	 * Override in order to ensure that brightness/contrast are kept.
+	 * Override in order to ensure that brightness/contrast are kept in case sliders have been initialized from
+	 * metadata.
 	 *
 	 * (non-Javadoc)
 	 *
@@ -111,7 +133,9 @@ public class OverlayImageView extends SizableImageView {
 	protected final void displayImage(final Image image) {
 		Image enhancedImage =
 				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
-						false);
+						Resolution.NORMAL);
+		currentResolution = Resolution.NORMAL;
+		currentImageWidth = enhancedImage.getWidth();
 
 		super.displayImage(enhancedImage);
 	}

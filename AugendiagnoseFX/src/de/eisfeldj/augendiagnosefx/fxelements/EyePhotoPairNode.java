@@ -19,6 +19,7 @@ import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -90,7 +91,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @return The image view.
 	 */
 	private ImageView getImageView(final EyePhoto eyePhoto) {
-		Image image = eyePhoto.getImage(true);
+		Image image = eyePhoto.getImage(Resolution.THUMB);
 		image.progressProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,

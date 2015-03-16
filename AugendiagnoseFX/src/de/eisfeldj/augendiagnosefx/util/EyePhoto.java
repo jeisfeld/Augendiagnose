@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import javafx.scene.image.Image;
 
 /**
@@ -58,7 +59,7 @@ public class EyePhoto {
 	private Image cachedImage;
 
 	/**
-	 * S cache of the thumbnail.
+	 * A cache of the thumbnail.
 	 */
 	private Image cachedThumbnail;
 
@@ -387,28 +388,39 @@ public class EyePhoto {
 	/**
 	 * Calculate a bitmap of this photo and store it for later retrieval.
 	 *
-	 * @param thumbnail
-	 *            Indicator if only an image in thumbnail resolution should be returned.
+	 * @param resolution
+	 *            Indicator of the resolution in which the image should be returned.
 	 */
-	public final synchronized void precalculateImage(final boolean thumbnail) {
+	public final synchronized void precalculateImage(final Resolution resolution) {
 		if (cachedThumbnail == null) {
-			cachedThumbnail = ImageUtil.getImage(getUrl(), true);
+			cachedThumbnail = ImageUtil.getImage(getUrl(), Resolution.THUMB);
 		}
-		if (cachedImage == null && !thumbnail) {
-			cachedImage = ImageUtil.getImage(getUrl(), false);
+		if (cachedImage == null && resolution == Resolution.NORMAL) {
+			cachedImage = ImageUtil.getImage(getUrl(), Resolution.NORMAL);
 		}
 	}
 
 	/**
 	 * Return an Image of this photo.
 	 *
-	 * @param thumbnail
-	 *            Indicator if an image in thumbnail resolution should be returned.
+	 * @param resolution
+	 *            Indicator of the resolution in which the image should be returned.
 	 * @return the Image
 	 */
-	public final Image getImage(final boolean thumbnail) {
-		precalculateImage(thumbnail);
-		return thumbnail ? cachedThumbnail : cachedImage;
+	public final Image getImage(final Resolution resolution) {
+		precalculateImage(resolution);
+
+		switch (resolution) {
+		case THUMB:
+			return cachedThumbnail;
+		case NORMAL:
+			return cachedImage;
+		case FULL:
+			// Full size image is not cached.
+			return ImageUtil.getImage(getUrl(), Resolution.FULL);
+		default:
+			return null;
+		}
 	}
 
 	/**

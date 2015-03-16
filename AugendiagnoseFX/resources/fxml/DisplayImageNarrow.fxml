@@ -85,6 +85,17 @@
 			<ColorPicker fx:id="colorPicker" onAction="#onColorChanged"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ColorPicker>
+			<Separator/> 
+			<ToggleButton fx:id="clarityButton" alignment="CENTER" onAction="#btnClarityPressed" toggleGroup="$overlayGroup"> 
+				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+				<graphic>
+					<ImageView> 
+						<image>
+							<Image url="@img/clarity.png"/> 
+						</image>
+					</ImageView>
+				</graphic>
+			</ToggleButton>
 		</HBox>
 		<padding>
 			<Insets bottom="5" top="5"/> 

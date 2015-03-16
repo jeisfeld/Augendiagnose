@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
@@ -117,7 +118,7 @@ public class SizableImageView extends ScrollPane {
 				double sourceWidth = zoomProperty.get() * imageView.getImage().getWidth();
 				double sourceHeight = zoomProperty.get() * imageView.getImage().getHeight();
 
-				zoomProperty.set(zoomProperty.get() * Math.pow(ZOOM_FACTOR, event.getDeltaY()));
+				multiplyZoomProperty(Math.pow(ZOOM_FACTOR, event.getDeltaY()));
 
 				// Old values of the scrollbars.
 				double oldHvalue = getHvalue();
@@ -163,7 +164,7 @@ public class SizableImageView extends ScrollPane {
 		addEventFilter(ZoomEvent.ANY, new EventHandler<ZoomEvent>() {
 			@Override
 			public void handle(final ZoomEvent event) {
-				zoomProperty.set(zoomProperty.get() * event.getZoomFactor());
+				multiplyZoomProperty(event.getZoomFactor());
 
 				ImageView image = (ImageView) getContent();
 				image.setFitWidth(zoomProperty.get() * image.getImage().getWidth());
@@ -182,7 +183,7 @@ public class SizableImageView extends ScrollPane {
 		initialized = false;
 		this.eyePhoto = eyePhoto;
 
-		Image image = eyePhoto.getImage(false);
+		Image image = eyePhoto.getImage(Resolution.NORMAL);
 
 		if (image.getProgress() == 1) {
 			// image is already loaded from the start.
@@ -312,11 +313,11 @@ public class SizableImageView extends ScrollPane {
 
 		// Calculate position of pane center in the image
 		centerX = scrollXFactor > 0
-				? getWidth() / 2 + scrollXFactor * getHvalue()
-				: imageWidth / 2;
+				? (getWidth() / 2 + scrollXFactor * getHvalue()) / imageWidth
+				: 0.5; // MAGIC_NUMBER
 		centerY = scrollYFactor > 0
-				? getHeight() / 2 + scrollYFactor * getVvalue()
-				: imageHeight / 2;
+				? (getHeight() / 2 + scrollYFactor * getVvalue()) / imageHeight
+				: 0.5; // MAGIC_NUMBER
 	}
 
 	/**
@@ -335,11 +336,21 @@ public class SizableImageView extends ScrollPane {
 
 		// Move scroll position to put center back.
 		if (scrollXFactor > 0) {
-			setHvalue((centerX - getWidth() / 2) / scrollXFactor);
+			setHvalue((centerX * imageWidth - getWidth() / 2) / scrollXFactor);
 		}
 		if (scrollYFactor > 0) {
-			setVvalue((centerY - getHeight() / 2) / scrollYFactor);
+			setVvalue((centerY * imageHeight - getHeight() / 2) / scrollYFactor);
 		}
+	}
+
+	/**
+	 * Multiply the zoom property by the given factor.
+	 *
+	 * @param factor
+	 *            The factor.
+	 */
+	protected final void multiplyZoomProperty(final double factor) {
+		zoomProperty.set(zoomProperty.get() * factor);
 	}
 
 	/**

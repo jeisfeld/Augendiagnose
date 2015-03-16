@@ -6,6 +6,10 @@
 	-fx-alignment: center;
 }
 
+.button:pressed {
+	-fx-background-color: linear-gradient(#ffa265, #BF1600);
+}
+
 .button .color-picker-label .text {
     -fx-fill: white;
 }
@@ -19,6 +23,9 @@
 
 .toggle-button:selected {
 	-fx-background-color: linear-gradient(#ffa265, #BF1600);
+}
+
+.toggleOverlay {
 }
 
 .imageButton {
