@@ -296,7 +296,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		clarityButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				// TODO Auto-generated method stub
+				imageView.showFullResolutionSnapshot();
 			}
 		});
 

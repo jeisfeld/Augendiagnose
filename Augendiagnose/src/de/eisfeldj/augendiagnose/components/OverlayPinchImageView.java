@@ -141,6 +141,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private boolean mHasViewPosition = false;
 
 	/**
+	 * Flag indicating if the view is showing a full resolution snapshot.
+	 */
+	private boolean mIsFullResolutionShapshot = false;
+
+	/**
 	 * Callback class to update the GUI elements from the view.
 	 */
 	private GuiElementUpdater mGuiElementUpdater;
@@ -347,7 +352,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		mLayerDrawable.draw(mCanvas);
 
-		super.setImageBitmap(mCanvasBitmap);
+		setImageBitmap(mCanvasBitmap);
 		invalidate();
 	}
 
@@ -761,6 +766,11 @@ public class OverlayPinchImageView extends PinchImageView {
 			justification = "Using floating point equality to see if value has changed")
 	@Override
 	protected final boolean handlePointerMove(final MotionEvent ev) {
+		if (mIsFullResolutionShapshot) {
+			setImageBitmap(mCanvasBitmap);
+			mIsFullResolutionShapshot = false;
+		}
+
 		if (pinchAll()) {
 			return super.handlePointerMove(ev);
 		}
@@ -868,6 +878,52 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final JpegMetadata getMetadata() {
 		return mMetadata;
+	}
+
+	/**
+	 * Show the current view in full resolution.
+	 */
+	public final void showFullResolutionSnapshot() {
+		// The image pixels which are in the corners of the view
+		float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
+		float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
+		float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
+		float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
+
+		// The image part which needs to be displayed
+		float minX = Math.max(0, leftX / mBitmap.getWidth());
+		float maxX = Math.min(1, rightX / mBitmap.getWidth());
+		float minY = Math.max(0, upperY / mBitmap.getHeight());
+		float maxY = Math.min(1, lowerY / mBitmap.getHeight());
+
+		if (maxX <= minX || maxY <= minY) {
+			// Image is outside of the view
+			return;
+		}
+
+		// The distance of the displayed image from the view borders.
+		int offsetX = Math.round(-Math.min(0, leftX) * mScaleFactor);
+		int offsetY = Math.round(-Math.min(0, upperY) * mScaleFactor);
+		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
+		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
+
+		Bitmap partialBitmap =
+				mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
+		Bitmap scaledPartialBitmap =
+				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight() - offsetMaxY
+						- offsetY, false);
+		Bitmap partialBitmapWithBrightness =
+				changeBitmapContrastBrightness(scaledPartialBitmap, mContrast, mBrightness);
+
+		Bitmap fullViewBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(fullViewBitmap);
+		canvas.drawBitmap(partialBitmapWithBrightness, offsetX, offsetY, null);
+
+		// Make a straight display of this bitmap withoht any matrix transformation.
+		// Will be reset by regular view as soon as the screen is touched again.
+		setImageBitmap(fullViewBitmap);
+		setImageMatrix(null);
+		mIsFullResolutionShapshot = true;
 	}
 
 	/**

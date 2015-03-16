@@ -160,6 +160,34 @@ public final class ImageUtil {
 	}
 
 	/**
+	 * Retrieve a part of a bitmap in full resolution.
+	 *
+	 * @param path
+	 *            The file path of the image.
+	 * @param minX
+	 *            The minimum X position to retrieve.
+	 * @param maxX
+	 *            The maximum X position to retrieve.
+	 * @param minY
+	 *            The minimum Y position to retrieve.
+	 * @param maxY
+	 *            The maximum Y position to retrieve.
+	 * @return The bitmap.
+	 */
+	public static Bitmap getPartialBitmap(final String path, final float minX, final float maxX, final float minY,
+			final float maxY) {
+		Bitmap fullBitmap = BitmapFactory.decodeFile(path);
+
+		Bitmap partialBitmap =
+				Bitmap.createBitmap(fullBitmap, Math.round(minX * fullBitmap.getWidth()),
+						Math.round(minY * fullBitmap.getHeight()),
+						Math.round((maxX - minX) * fullBitmap.getWidth()),
+						Math.round((maxY - minY) * fullBitmap.getHeight()));
+
+		return partialBitmap;
+	}
+
+	/**
 	 * Utility to retrieve the sample size for BitmapFactory.decodeFile.
 	 *
 	 * @param filepath

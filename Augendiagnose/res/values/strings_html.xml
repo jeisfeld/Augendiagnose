@@ -286,6 +286,9 @@
 		<li>Store the position and zoom (via &ldquo;save&rdquo; button on action bar)</li>
 
 		<li>Change the comment of the photo (via &ldquo;document&rdquo; button on action bar)</li>
+
+		<li>If the picture is displayed in big magnification, it may be that some details are lost. The
+			&ldquo;magnifier&rdquo; button allows to display the current picture detail in full resolution.</li>
 	</ul>
 
 	<p>These features may be enabled or disabled via the context menu (long click on photo) at &ldquo;Show/Hide

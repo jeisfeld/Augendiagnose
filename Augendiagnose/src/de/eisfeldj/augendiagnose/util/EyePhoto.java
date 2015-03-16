@@ -465,6 +465,24 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Retrieve a part of this photo in full resolution.
+	 *
+	 * @param minX
+	 *            The minimum X position to retrieve.
+	 * @param maxX
+	 *            The maximum X position to retrieve.
+	 * @param minY
+	 *            The minimum Y position to retrieve.
+	 * @param maxY
+	 *            The maximum Y position to retrieve.
+	 *
+	 * @return The bitmap.
+	 */
+	public final Bitmap getPartialBitmap(final float minX, final float maxX, final float minY, final float maxY) {
+		return ImageUtil.getPartialBitmap(getAbsolutePath(), minX, maxX, minY, maxY);
+	}
+
+	/**
 	 * Get the metadata stored in the file.
 	 *
 	 * @return the metadata.

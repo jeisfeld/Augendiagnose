@@ -287,6 +287,9 @@
 		<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; en la barra de acciones)</li>
 
 		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; en la barra de acciones)</li>
+
+		<li>Si la imagen se muestra en gran aumento, es posible que algunos detalles se pierden. la botón
+			&laquo;lupa&raquo; permite visualizar el detalle actual de la imagen en la plena resolución.</li>
 	</ul>
 
 	<p>Estas funciones pueden activarse o desactivarse mediante el menú contextual (larga pulsación en la foto) a
