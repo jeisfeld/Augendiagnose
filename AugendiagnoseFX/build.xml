@@ -155,7 +155,9 @@
 		<fx:deploy embedJNLP="false" extension="false" includeDT="false"
 			offlineAllowed="true" outdir="${basedir}/deploy" outfile="Augendiagnose${buildtype}"
 			nativeBundles="exe" updatemode="background">
-			<fx:platform basedir="${java.home}" />
+			<fx:platform basedir="${java.home}">
+				<fx:jvmarg value="-Xmx1024m" />
+			</fx:platform>
 			<fx:info title="Augendiagnose" vendor="Jörg Eisfeld">
 				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
 					height="48" kind="default" width="48" />
