@@ -1,5 +1,9 @@
 package de.eisfeldj.augendiagnose.components;
 
+import static de.eisfeldj.augendiagnose.components.OverlayPinchImageView.Resolution.FULL;
+import static de.eisfeldj.augendiagnose.components.OverlayPinchImageView.Resolution.HIGH;
+import static de.eisfeldj.augendiagnose.components.OverlayPinchImageView.Resolution.LOW;
+
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -126,6 +130,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private Bitmap mBitmapSmall;
 
 	/**
+	 * The partial bitmap with full resolution.
+	 */
+	private Bitmap mBitmapFullResolution;
+
+	/**
 	 * The metadata of the image.
 	 */
 	private JpegMetadata mMetadata;
@@ -144,6 +153,21 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Flag indicating if the view is showing a full resolution snapshot.
 	 */
 	private boolean mIsFullResolutionShapshot = false;
+
+	/**
+	 * Flag indicating if brightness/contrast is changed, but not yet applied to mBitmap.
+	 */
+	private boolean mRequiresBrightnessContrastUpdate = false;
+
+	/**
+	 * Last height of the view. Used to make sure that full resolution is abandoned as soon as view size changes.
+	 */
+	private int mLastHeight;
+
+	/**
+	 * Last width of the view. Used to make sure that full resolution is abandoned as soon as view size changes.
+	 */
+	private int mLastWidth;
 
 	/**
 	 * Callback class to update the GUI elements from the view.
@@ -257,7 +281,7 @@ public class OverlayPinchImageView extends PinchImageView {
 							mCanvas = new Canvas(mCanvasBitmap);
 							doInitialScaling();
 							updateScaleGestureDetector();
-							refresh(true);
+							refresh(HIGH);
 						}
 					});
 				}
@@ -269,7 +293,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mCanvas = new Canvas(mCanvasBitmap);
 			doInitialScaling();
 			updateScaleGestureDetector();
-			refresh(true);
+			refresh(HIGH);
 		}
 
 	}
@@ -301,13 +325,18 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Update the bitmap with the correct set of overlays.
 	 *
-	 * @param strict
-	 *            indicates if full resolution is required
+	 * @param resolution
+	 *            indicates what resolution is required
 	 */
-	public final void refresh(final boolean strict) {
+	private void refresh(final Resolution resolution) {
 		if (mCanvas == null || !mInitialized) {
 			return;
 		}
+		if (resolution == FULL) {
+			showFullResolutionSnapshot();
+			return;
+		}
+
 		// Determine overlays to be shown
 		ArrayList<Integer> overlayPositions = new ArrayList<Integer>();
 
@@ -321,13 +350,15 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		Drawable[] layers = new Drawable[overlayPositions.size() + 1];
 		Bitmap modBitmap;
-		if (strict) {
-			modBitmap = changeBitmapContrastBrightness(mBitmap, mContrast, mBrightness);
-		}
-		else {
+
+		if (resolution == LOW) {
 			// for performance reasons, use only low resolution bitmap while pinching
 			modBitmap = changeBitmapContrastBrightness(mBitmapSmall, mContrast, mBrightness);
 		}
+		else {
+			modBitmap = changeBitmapContrastBrightness(mBitmap, mContrast, mBrightness);
+		}
+
 		layers[0] = new BitmapDrawable(getResources(), modBitmap);
 
 		for (int i = 0; i < overlayPositions.size(); i++) {
@@ -354,6 +385,15 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		setImageBitmap(mCanvasBitmap);
 		invalidate();
+
+		mRequiresBrightnessContrastUpdate = false;
+	}
+
+	/**
+	 * Refresh with high resolution (or full resolution if applicable).
+	 */
+	public final void refresh() {
+		refresh(mIsFullResolutionShapshot ? FULL : HIGH);
 	}
 
 	/**
@@ -376,7 +416,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void showOverlay(final int position, final boolean show) {
 		mShowOverlay[position] = show;
-		refresh(true);
+		refresh(HIGH);
 		updateScaleGestureDetector();
 	}
 
@@ -396,7 +436,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mShowOverlay[i] = false;
 			}
 		}
-		refresh(true);
+		refresh(HIGH);
 		updateScaleGestureDetector();
 	}
 
@@ -622,7 +662,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
-		refresh(false);
+		mRequiresBrightnessContrastUpdate = true;
+		refresh(mIsFullResolutionShapshot ? FULL : LOW);
 	}
 
 	/**
@@ -634,7 +675,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setContrast(final float contrast) {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
-		refresh(false);
+		mRequiresBrightnessContrastUpdate = true;
+		refresh(mIsFullResolutionShapshot ? FULL : LOW);
 	}
 
 	/**
@@ -647,7 +689,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		mOverlayColor = overlayColor;
 		mOverlayCache = new Drawable[OVERLAY_COUNT];
 		mGuiElementUpdater.updateOverlayColorButton(overlayColor);
-		refresh(true);
+		refresh(HIGH);
 	}
 
 	/**
@@ -825,7 +867,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mOverlayY = 1f;
 		}
 
-		refresh(false);
+		refresh(LOW);
 		return moved;
 	}
 
@@ -834,7 +876,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	@Override
 	protected final void finishPointerMove(final MotionEvent ev) {
-		refresh(true);
+		refresh(HIGH);
 	}
 
 	/**
@@ -885,46 +927,53 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Show the current view in full resolution.
 	 */
 	public final void showFullResolutionSnapshot() {
-		// The image pixels which are in the corners of the view
-		float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
-		float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
-		float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
-		float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
+		if (!mIsFullResolutionShapshot) {
+			// create the full resolution snapshot from the full image.
 
-		// The image part which needs to be displayed
-		float minX = Math.max(0, leftX / mBitmap.getWidth());
-		float maxX = Math.min(1, rightX / mBitmap.getWidth());
-		float minY = Math.max(0, upperY / mBitmap.getHeight());
-		float maxY = Math.min(1, lowerY / mBitmap.getHeight());
+			// The image pixels which are in the corners of the view
+			float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
+			float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
+			float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
+			float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
 
-		if (maxX <= minX || maxY <= minY) {
-			// Image is outside of the view
-			return;
+			// The image part which needs to be displayed
+			float minX = Math.max(0, leftX / mBitmap.getWidth());
+			float maxX = Math.min(1, rightX / mBitmap.getWidth());
+			float minY = Math.max(0, upperY / mBitmap.getHeight());
+			float maxY = Math.min(1, lowerY / mBitmap.getHeight());
+
+			if (maxX <= minX || maxY <= minY) {
+				// Image is outside of the view
+				return;
+			}
+
+			// The distance of the displayed image from the view borders.
+			int offsetX = Math.round(-Math.min(0, leftX) * mScaleFactor);
+			int offsetY = Math.round(-Math.min(0, upperY) * mScaleFactor);
+			int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
+			int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
+
+			Bitmap partialBitmap =
+					mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
+			Bitmap scaledPartialBitmap =
+					Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
+							- offsetMaxY
+							- offsetY, false);
+
+			mBitmapFullResolution = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(mBitmapFullResolution);
+			canvas.drawBitmap(scaledPartialBitmap, offsetX, offsetY, null);
+
+			mIsFullResolutionShapshot = true;
 		}
 
-		// The distance of the displayed image from the view borders.
-		int offsetX = Math.round(-Math.min(0, leftX) * mScaleFactor);
-		int offsetY = Math.round(-Math.min(0, upperY) * mScaleFactor);
-		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
-		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
-
-		Bitmap partialBitmap =
-				mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
-		Bitmap scaledPartialBitmap =
-				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight() - offsetMaxY
-						- offsetY, false);
 		Bitmap partialBitmapWithBrightness =
-				changeBitmapContrastBrightness(scaledPartialBitmap, mContrast, mBrightness);
+				changeBitmapContrastBrightness(mBitmapFullResolution, mContrast, mBrightness);
 
-		Bitmap fullViewBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(fullViewBitmap);
-		canvas.drawBitmap(partialBitmapWithBrightness, offsetX, offsetY, null);
-
-		// Make a straight display of this bitmap withoht any matrix transformation.
+		// Make a straight display of this bitmap without any matrix transformation.
 		// Will be reset by regular view as soon as the screen is touched again.
-		setImageBitmap(fullViewBitmap);
+		setImageBitmap(partialBitmapWithBrightness);
 		setImageMatrix(null);
-		mIsFullResolutionShapshot = true;
 	}
 
 	/**
@@ -932,8 +981,15 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void showNormalResolution() {
 		if (mIsFullResolutionShapshot) {
-			setImageBitmap(mCanvasBitmap);
+			mBitmapFullResolution = null;
 			mIsFullResolutionShapshot = false;
+
+			if (mRequiresBrightnessContrastUpdate) {
+				refresh(HIGH);
+			}
+			else {
+				setImageBitmap(mCanvasBitmap);
+			}
 		}
 	}
 
@@ -942,8 +998,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	@Override
 	public final void requestLayout() {
-		showNormalResolution();
+		if (getWidth() != mLastWidth || getHeight() != mLastHeight) {
+			// if view size changed, then leave full resolution mode.
+			showNormalResolution();
+		}
 		super.requestLayout();
+		mLastHeight = getHeight();
+		mLastWidth = getWidth();
 	}
 
 	/**
@@ -1112,6 +1173,17 @@ public class OverlayPinchImageView extends PinchImageView {
 			return fragment;
 		}
 
+	}
+
+	/**
+	 * Enumeration giving the resolution with which the picture is displayed.
+	 */
+	public enum Resolution {
+		/**
+		 * The three resolution values. LOW corresponds to thumbnail resolution, while FULL applies to full resolution
+		 * of the current part of the picture.
+		 */
+		LOW, HIGH, FULL;
 	}
 
 }

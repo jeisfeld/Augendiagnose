@@ -586,7 +586,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 		@Override
 		public void onStopTrackingTouch(final SeekBar seekBar) {
-			imageView.refresh(true);
+			imageView.refresh();
 		}
 
 		@Override
