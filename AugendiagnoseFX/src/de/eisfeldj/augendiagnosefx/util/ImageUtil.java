@@ -170,6 +170,10 @@ public final class ImageUtil {
 			final Image baseImage, final Integer overlayType, final RightLeft side,
 			final Color color, final double xPosition, final double yPosition, final double scaleFactor,
 			final float brightness, final float contrast, final Resolution resolution) {
+		if (brightness == 0 && contrast == 1 && overlayType == null) {
+			return baseImage;
+		}
+
 		double width = baseImage.getWidth();
 		double height = baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
@@ -180,58 +184,60 @@ public final class ImageUtil {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.drawImage(baseImage, 0, 0, width, height);
 
-		// The offset which needs to be added after multiplying by contrast.
-		float offset = 1f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER
+		if (contrast != 1 || brightness != 0) {
+			// The offset which needs to be added after multiplying by contrast.
+			float offset = 1f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER
 
-		// The following just wants to multiply by contrast, followed by addition of offset.
-		// We achieve this by overlaying grey rectangles with varying blend mode.
-		// Various cases to ensure that all intermediate values are in the range [0,1]
-		if (contrast <= 1) {
-			gc.setGlobalBlendMode(BlendMode.MULTIPLY);
-			gc.setFill(new Color(contrast, contrast, contrast, 1));
-			gc.fillRect(0, 0, width, height);
-			if (offset > 0) {
-				gc.setGlobalBlendMode(BlendMode.ADD);
-				gc.setFill(new Color(offset, offset, offset, 1));
+			// The following just wants to multiply by contrast, followed by addition of offset.
+			// We achieve this by overlaying grey rectangles with varying blend mode.
+			// Various cases to ensure that all intermediate values are in the range [0,1]
+			if (contrast <= 1) {
+				gc.setGlobalBlendMode(BlendMode.MULTIPLY);
+				gc.setFill(new Color(contrast, contrast, contrast, 1));
 				gc.fillRect(0, 0, width, height);
+				if (offset > 0) {
+					gc.setGlobalBlendMode(BlendMode.ADD);
+					gc.setFill(new Color(offset, offset, offset, 1));
+					gc.fillRect(0, 0, width, height);
+				}
+				else {
+					// Subtract is achieved by difference - add - difference.
+					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+					gc.setFill(Color.WHITE);
+					gc.fillRect(0, 0, width, height);
+					gc.setGlobalBlendMode(BlendMode.ADD);
+					gc.setFill(new Color(-offset, -offset, -offset, 1));
+					gc.fillRect(0, 0, width, height);
+					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+					gc.setFill(Color.WHITE);
+					gc.fillRect(0, 0, width, height);
+				}
 			}
 			else {
-				// Subtract is achieved by difference - add - difference.
-				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-				gc.setFill(Color.WHITE);
-				gc.fillRect(0, 0, width, height);
-				gc.setGlobalBlendMode(BlendMode.ADD);
-				gc.setFill(new Color(-offset, -offset, -offset, 1));
-				gc.fillRect(0, 0, width, height);
-				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-				gc.setFill(Color.WHITE);
-				gc.fillRect(0, 0, width, height);
-			}
-		}
-		else {
-			float invContrast = 1 - (1 / contrast);
-			if (offset >= 0) {
-				gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
-				gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
-				gc.fillRect(0, 0, width, height);
-				gc.setGlobalBlendMode(BlendMode.ADD);
-				gc.setFill(new Color(offset, offset, offset, 1));
-				gc.fillRect(0, 0, width, height);
-			}
-			else {
-				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-				gc.setFill(Color.WHITE);
-				gc.fillRect(0, 0, width, height);
-				float delta = -offset / contrast;
-				gc.setGlobalBlendMode(BlendMode.ADD);
-				gc.setFill(new Color(delta, delta, delta, 1));
-				gc.fillRect(0, 0, width, height);
-				gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-				gc.setFill(Color.WHITE);
-				gc.fillRect(0, 0, width, height);
-				gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
-				gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
-				gc.fillRect(0, 0, width, height);
+				float invContrast = 1 - (1 / contrast);
+				if (offset >= 0) {
+					gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
+					gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
+					gc.fillRect(0, 0, width, height);
+					gc.setGlobalBlendMode(BlendMode.ADD);
+					gc.setFill(new Color(offset, offset, offset, 1));
+					gc.fillRect(0, 0, width, height);
+				}
+				else {
+					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+					gc.setFill(Color.WHITE);
+					gc.fillRect(0, 0, width, height);
+					float delta = -offset / contrast;
+					gc.setGlobalBlendMode(BlendMode.ADD);
+					gc.setFill(new Color(delta, delta, delta, 1));
+					gc.fillRect(0, 0, width, height);
+					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
+					gc.setFill(Color.WHITE);
+					gc.fillRect(0, 0, width, height);
+					gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
+					gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
+					gc.fillRect(0, 0, width, height);
+				}
 			}
 		}
 

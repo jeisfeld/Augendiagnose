@@ -850,6 +850,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private static Bitmap
 			changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
+		if (contrast == 1 && brightness == 0) {
+			return bmp;
+		}
+
 		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
 		ColorMatrix cm = new ColorMatrix(new float[] { //
 				contrast, 0, 0, 0, offset, //
