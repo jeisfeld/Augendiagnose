@@ -10,6 +10,7 @@
     <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>
     <string name="pref_title_sort_by_last_name">Ordenar por apellido</string>
     <string name="pref_title_store_options">Guardar datos adicionales en JPG</string>
+    <string name="pref_title_full_resolution">Mostrar imagen en alta resolución</string>
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
     <string name="pref_title_user_key">Clave de usuario</string>
@@ -40,6 +41,11 @@
         <item>Guardar en EXIF</item>
         <item>Guardar en campos personalizados</item>
         <item>No guarde datos en imágenes</item>
+    </string-array>
+    <string-array name="pref_list_titles_full_resolution">
+        <item>Cargar sólo si se solicita</item>
+        <item>Cargar foto detalle cada vez que la imagen no se mueve</item>
+        <item>Mantener lleno imagen en la memoria</item>
     </string-array>
     <string-array name="pref_list_titles_language">
         <item>Idioma del sistema</item>

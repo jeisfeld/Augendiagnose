@@ -16,6 +16,8 @@
     <string name="pref_default_sort_by_last_name" translatable="false">false</string>
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
+    <string name="pref_title_full_resolution">Show image in full resolution</string>
+    <string name="pref_default_full_resolution" translatable="false">1</string>
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_default_language" translatable="false">0</string>
@@ -67,6 +69,16 @@
         <item>1</item>
         <item>0</item>
     </string-array>
+    <string-array name="pref_list_titles_full_resolution">
+        <item>Load only on demand</item>
+        <item>Load picture detail whenever image is not moved</item>
+        <item>Keep full image in memory</item>
+    </string-array>
+    <string-array name="pref_list_values_full_resolution" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     <string-array name="pref_list_titles_language">
         <item>System language</item>
         <item>English</item>
@@ -86,6 +98,7 @@
     <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
     <string name="key_sort_by_last_name" translatable="false">sort_by_last_name</string>
     <string name="key_store_option" translatable="false">store_option</string>
+    <string name="key_full_resolution" translatable="false">full_resolution</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>
     <string name="key_user_key" translatable="false">user_key</string>

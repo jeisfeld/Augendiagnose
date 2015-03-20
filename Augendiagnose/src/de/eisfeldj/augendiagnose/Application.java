@@ -94,6 +94,24 @@ public class Application extends android.app.Application {
 	}
 
 	/**
+	 * Retrieve a String shared preference, setting a default value if the preference is not set.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param defaultId
+	 *            the String key of the default value.
+	 * @return the corresponding preference value.
+	 */
+	public static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
+		String result = getSharedPreferences().getString(context.getString(preferenceId), null);
+		if (result == null) {
+			result = context.getString(defaultId);
+			setSharedPreferenceString(preferenceId, result);
+		}
+		return result;
+	}
+
+	/**
 	 * Set a String shared preference.
 	 *
 	 * @param preferenceId

@@ -10,6 +10,7 @@
     <string name="pref_title_eye_sequence_choice">Letztes Foto ist rechtes Auge</string>
     <string name="pref_title_sort_by_last_name">Sortieren nach Nachname</string>
     <string name="pref_title_store_options">Speichern von Daten in JPG-Dateien</string>
+    <string name="pref_title_full_resolution">Anzeige in voller Auflösung</string>
     <string name="pref_title_overlay_color">Standardfarbe für Overlays</string>
     <string name="pref_title_language">Sprache</string>
     <string name="pref_title_user_key">Nutzerschlüssel</string>
@@ -40,6 +41,11 @@
         <item>Speichern in EXIF</item>
         <item>Speichern in Extra-Feldern</item>
         <item>Nicht in Fotos speichern</item>
+    </string-array>
+    <string-array name="pref_list_titles_full_resolution">
+        <item>Nur auf Anfrage</item>
+        <item>Ausschnitt laden, wenn das Bild nicht bewegt wird</item>
+        <item>Ganzes Bild im Speicher lassen</item>
     </string-array>
     <string-array name="pref_list_titles_language">
         <item>Systemsprache</item>

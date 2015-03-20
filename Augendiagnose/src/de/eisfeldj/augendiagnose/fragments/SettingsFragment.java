@@ -26,17 +26,15 @@ public class SettingsFragment extends PreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.pref_general);
 
-		// Ensure that language is set
-		languageString = Application.getSharedPreferenceString(R.string.key_language);
-		if (languageString == null || languageString.length() == 0) {
-			languageString = getString(R.string.pref_default_language);
-			Application.setSharedPreferenceString(R.string.key_language, languageString);
-		}
+		// Ensure that default values are set.
+		languageString = Application.getSharedPreferenceString(R.string.key_language, R.string.pref_default_language);
+		Application.getSharedPreferenceString(R.string.key_full_resolution, R.string.pref_default_full_resolution);
 
 		bindPreferenceSummaryToValue(R.string.key_folder_input);
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);
 		bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
 		bindPreferenceSummaryToValue(R.string.key_store_option);
+		bindPreferenceSummaryToValue(R.string.key_full_resolution);
 		bindPreferenceSummaryToValue(R.string.key_language);
 	}
 

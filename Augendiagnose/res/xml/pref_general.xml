@@ -43,6 +43,14 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_store_options" />
+    <ListPreference
+        android:defaultValue="@string/pref_default_full_resolution"
+        android:entries="@array/pref_list_titles_full_resolution"
+        android:entryValues="@array/pref_list_values_full_resolution"
+        android:key="@string/key_full_resolution"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_full_resolution" />
 
     <de.eisfeldj.augendiagnose.components.colorpicker.ColorDialogPreference
         android:key="@string/key_overlay_color"
