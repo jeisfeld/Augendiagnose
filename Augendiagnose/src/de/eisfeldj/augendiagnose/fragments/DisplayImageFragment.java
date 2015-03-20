@@ -21,6 +21,7 @@ import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpda
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -241,7 +242,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			showUtilities = getDefaultShowUtilities();
-			overlayColor = Application.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+			overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		}
 
 		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
@@ -294,7 +295,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 
 		String fullResolutionFlag =
-				Application.getSharedPreferenceString(R.string.key_full_resolution,
+				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution,
 						R.string.pref_default_full_resolution);
 
 		if (fullResolutionFlag.equals("0")) {
@@ -524,7 +525,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @return The value indicating if utilities should be shown.
 	 */
 	private int getDefaultShowUtilitiesValue() {
-		int level = Application.getSharedPreferenceInt(R.string.key_internal_show_utilities, -1);
+		int level = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_show_utilities, -1);
 
 		if (level == -1) {
 			// call this method only if no value is set
@@ -550,7 +551,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			level = getShowUtilitiesLimitLevel() - 1;
 		}
 
-		Application.setSharedPreferenceInt(R.string.key_internal_show_utilities, level);
+		PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_show_utilities, level);
 	}
 
 	@Override

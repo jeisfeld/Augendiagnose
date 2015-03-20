@@ -9,6 +9,7 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
 import de.eisfeldj.augendiagnose.util.JpegSynchronizationUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Fragment for displaying the settings.
@@ -27,8 +28,9 @@ public class SettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.pref_general);
 
 		// Ensure that default values are set.
-		languageString = Application.getSharedPreferenceString(R.string.key_language, R.string.pref_default_language);
-		Application.getSharedPreferenceString(R.string.key_full_resolution, R.string.pref_default_full_resolution);
+		languageString =
+				PreferenceUtil.getSharedPreferenceString(R.string.key_language, R.string.pref_default_language);
+		PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution, R.string.pref_default_full_resolution);
 
 		bindPreferenceSummaryToValue(R.string.key_folder_input);
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);
@@ -99,7 +101,7 @@ public class SettingsFragment extends PreferenceFragment {
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
 						if (!languageString.equals(value)) {
 							Application.setLanguage();
-							Application.setSharedPreferenceString(R.string.key_language, (String) value);
+							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
 
 							// Workaround to get rid of all kinds of cashing
 							if (!JpegSynchronizationUtil.isSaving()) {

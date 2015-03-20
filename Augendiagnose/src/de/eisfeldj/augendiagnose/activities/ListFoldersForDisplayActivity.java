@@ -15,6 +15,7 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplayFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPicturesForNameFragmentHolder;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
@@ -70,7 +71,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 				getFragmentManager().beginTransaction().add(R.id.fragment_list, getListFoldersFragment(), FRAGMENT_TAG)
 						.commit();
 
-				String defaultName = Application.getSharedPreferenceString(R.string.key_internal_last_name);
+				String defaultName = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_last_name);
 				if (defaultName.length() > 0 && new File(getParentFolder(), defaultName).exists()) {
 					listPicturesForName(defaultName);
 				}
@@ -130,8 +131,8 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		}
 
 		// Store the name so that it may be opened automatically next time
-		Application.setSharedPreferenceString(R.string.key_internal_last_name, name);
-		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
+		PreferenceUtil.setSharedPreferenceString(R.string.key_internal_last_name, name);
+		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 	}
 
 	/**

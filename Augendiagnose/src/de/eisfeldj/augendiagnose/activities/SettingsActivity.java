@@ -11,6 +11,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
 import de.eisfeldj.augendiagnose.util.FileUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Activity to display the settings page.
@@ -70,39 +71,39 @@ public class SettingsActivity extends BaseActivity {
 	public static final void setDefaultSharedPreferences(final Context context) {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.pref_general, false);
 
-		if (Application.getSharedPreferenceString(R.string.key_folder_input).equals(
+		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_value))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
 			if (Application.isEyeFiInstalled()) {
 				// If Eye-Fi is available, use Eye-Fi folder, which is the first selection
-				Application.setSharedPreferenceString(R.string.key_folder_input,
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
 						context.getString(R.string.pref_default_folder_input));
 			}
 			else {
 				// Otherwise, use Camera foldder.
-				Application.setSharedPreferenceString(R.string.key_folder_input, FileUtil.getDefaultCameraFolder());
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, FileUtil.getDefaultCameraFolder());
 			}
 		}
 
 		// TODO: remove duplications from DirectorySelectionPreference
 		for (int id : PATH_RESOURCES) {
-			String path = Application.getSharedPreferenceString(id);
+			String path = PreferenceUtil.getSharedPreferenceString(id);
 			if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
 				path = Environment.getExternalStorageDirectory().getAbsolutePath()
 						+ path.substring(EXTERNAL_STORAGE_PREFIX.length());
-				Application.setSharedPreferenceString(id, path);
+				PreferenceUtil.setSharedPreferenceString(id, path);
 			}
 		}
 
 		// Delta setting for storeOption - required after upgrade to version 0.3
-		String storeOption = Application.getSharedPreferenceString(R.string.key_store_option);
+		String storeOption = PreferenceUtil.getSharedPreferenceString(R.string.key_store_option);
 		if (storeOption == null || storeOption.length() == 0) {
-			Application.setSharedPreferenceString(R.string.key_store_option,
+			PreferenceUtil.setSharedPreferenceString(R.string.key_store_option,
 					Application.getAppContext().getString(R.string.pref_default_store_options));
 		}
 
 		// Inform PinchImageView about maxBitmapSize
-		pushMaxBitmapSize(Application.getSharedPreferenceString(R.string.key_max_bitmap_size));
+		pushMaxBitmapSize(PreferenceUtil.getSharedPreferenceString(R.string.key_max_bitmap_size));
 	}
 
 	/**
@@ -126,7 +127,7 @@ public class SettingsActivity extends BaseActivity {
 		catch (NumberFormatException e) {
 			// Override preference with default value
 			String defaultMaxBitmapSize = Application.getAppContext().getString(R.string.pref_default_max_bitmap_size);
-			Application.setSharedPreferenceString(R.string.key_max_bitmap_size, defaultMaxBitmapSize);
+			PreferenceUtil.setSharedPreferenceString(R.string.key_max_bitmap_size, defaultMaxBitmapSize);
 			maxBitmapSize = Integer.parseInt(defaultMaxBitmapSize);
 		}
 		PinchImageView.setMaxBitmapSize(maxBitmapSize);

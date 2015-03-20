@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
@@ -28,6 +27,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Fragment to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -179,7 +179,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 						// delete images
 						boolean success =
-								pairToModify.moveToFolder(Application
+								pairToModify.moveToFolder(PreferenceUtil
 										.getSharedPreferenceString(R.string.key_folder_input));
 						// update list of images
 						updateEyePhotoPairs();

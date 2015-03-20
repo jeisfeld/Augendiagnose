@@ -29,6 +29,7 @@ import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.FileUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Base listFoldersFragment to display the list of subfolders of a folder Abstract class - child classes determine the
@@ -196,7 +197,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	private static String getFilenameForSorting(final File f) {
 		String name = f.getName().toUpperCase(Locale.getDefault());
 
-		boolean sortByLastName = Application.getSharedPreferenceBoolean(R.string.key_sort_by_last_name);
+		boolean sortByLastName = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_sort_by_last_name);
 		if (sortByLastName) {
 			int index = name.lastIndexOf(' ');
 			if (index >= 0) {

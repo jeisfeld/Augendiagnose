@@ -99,7 +99,7 @@ public abstract class ReleaseNotesUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							int version = Application.getVersion();
-							Application.setSharedPreferenceString(R.string.key_internal_stored_version,
+							PreferenceUtil.setSharedPreferenceString(R.string.key_internal_stored_version,
 									Integer.toString(version));
 							dialog.dismiss();
 						}

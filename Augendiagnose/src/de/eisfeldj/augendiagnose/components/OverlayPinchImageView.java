@@ -27,13 +27,13 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.
@@ -186,7 +186,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * A String indicating if full resolution image should be automatically loaded or even kept in memory.
 	 */
 	private String mFullResolutionFlag =
-			Application.getSharedPreferenceString(R.string.key_full_resolution,
+			PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution,
 					R.string.pref_default_full_resolution);
 
 	// JAVADOC:OFF

@@ -16,6 +16,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
 
 /**
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
 
 		SettingsActivity.setDefaultSharedPreferences(this);
 
-		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
+		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 
 		Application.setLanguage();
 
@@ -50,9 +51,9 @@ public class MainActivity extends Activity {
 						fileNames.add(fileName);
 					}
 				}
-				boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+				boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]),
-						Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
+						PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 			}
 		}
 
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
 			boolean firstStart = false;
 			// When starting from launcher, check if started the first time in this version. If yes, display release
 			// notes.
-			String storedVersionString = Application.getSharedPreferenceString(R.string.key_internal_stored_version);
+			String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
 			if (storedVersionString == null || storedVersionString.length() == 0) {
 				storedVersionString = "17";
 				firstStart = true;
@@ -141,7 +142,7 @@ public class MainActivity extends Activity {
 	 */
 	public final void listFoldersForDisplayActivity(final View view) {
 		ListFoldersForDisplayActivity.startActivity(this,
-				Application.getSharedPreferenceString(R.string.key_folder_photos));
+				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
 	}
 
 	/**
@@ -151,9 +152,10 @@ public class MainActivity extends Activity {
 	 *            the button to organize new folders.
 	 */
 	public final void organizeNewFoldersActivity(final View view) {
-		boolean rightEyeLast = Application.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-		OrganizeNewPhotosActivity.startActivity(this, Application.getSharedPreferenceString(R.string.key_folder_input),
-				Application.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
+		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+		OrganizeNewPhotosActivity.startActivity(this,
+				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
+				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
 	}
 
 	/**

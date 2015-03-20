@@ -33,6 +33,7 @@ import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**
@@ -445,8 +446,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		targetPhotoLeft.addToMediaStore();
 
 		// Store the name so that it may be opened automatically
-		Application.setSharedPreferenceString(R.string.key_internal_last_name, name);
-		Application.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
+		PreferenceUtil.setSharedPreferenceString(R.string.key_internal_last_name, name);
+		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
 
 		setPicturesAndValues(true);
 	}

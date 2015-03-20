@@ -4,19 +4,17 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import de.eisfeldj.augendiagnose.util.EncryptionUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -74,116 +72,12 @@ public class Application extends android.app.Application {
 	}
 
 	/**
-	 * Retrieve the default shared preferences of the application.
-	 *
-	 * @return the default shared preferences.
-	 */
-	public static SharedPreferences getSharedPreferences() {
-		return PreferenceManager.getDefaultSharedPreferences(context);
-	}
-
-	/**
-	 * Retrieve a String shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @return the corresponding preference value.
-	 */
-	public static String getSharedPreferenceString(final int preferenceId) {
-		return getSharedPreferences().getString(context.getString(preferenceId), "");
-	}
-
-	/**
-	 * Retrieve a String shared preference, setting a default value if the preference is not set.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultId
-	 *            the String key of the default value.
-	 * @return the corresponding preference value.
-	 */
-	public static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
-		String result = getSharedPreferences().getString(context.getString(preferenceId), null);
-		if (result == null) {
-			result = context.getString(defaultId);
-			setSharedPreferenceString(preferenceId, result);
-		}
-		return result;
-	}
-
-	/**
-	 * Set a String shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param s
-	 *            the target value of the preference.
-	 */
-	public static void setSharedPreferenceString(final int preferenceId, final String s) {
-		Editor editor = getSharedPreferences().edit();
-		editor.putString(context.getString(preferenceId), s);
-		editor.commit();
-	}
-
-	/**
-	 * Retrieve a boolean shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @return the corresponding preference value.
-	 */
-	public static boolean getSharedPreferenceBoolean(final int preferenceId) {
-		return getSharedPreferences().getBoolean(context.getString(preferenceId), false);
-	}
-
-	/**
-	 * Set a Boolean shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param b
-	 *            the target value of the preference.
-	 */
-	public static void setSharedPreferenceBoolean(final int preferenceId, final boolean b) {
-		Editor editor = getSharedPreferences().edit();
-		editor.putBoolean(context.getString(preferenceId), b);
-		editor.commit();
-	}
-
-	/**
-	 * Retrieve an integer shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultValue
-	 *            the default value of the shared preference.
-	 * @return the corresponding preference value.
-	 */
-	public static int getSharedPreferenceInt(final int preferenceId, final int defaultValue) {
-		return getSharedPreferences().getInt(context.getString(preferenceId), defaultValue);
-	}
-
-	/**
-	 * Set an integer shared preference.
-	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param i
-	 *            the target value of the preference.
-	 */
-	public static void setSharedPreferenceInt(final int preferenceId, final int i) {
-		Editor editor = getSharedPreferences().edit();
-		editor.putInt(context.getString(preferenceId), i);
-		editor.commit();
-	}
-
-	/**
 	 * Check if the application has an authorized user key.
 	 *
 	 * @return true if the application has an authorized user key.
 	 */
 	public static boolean isAuthorized() {
-		String userKey = getSharedPreferenceString(R.string.key_user_key);
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
 		return EncryptionUtil.validateUserKey(userKey);
 	}
 
@@ -255,7 +149,7 @@ public class Application extends android.app.Application {
 	 * Set the language.
 	 */
 	public static void setLanguage() {
-		String languageString = Application.getSharedPreferenceString(R.string.key_language);
+		String languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 		if (languageString == null || languageString.length() < 1) {
 			return;
 		}
