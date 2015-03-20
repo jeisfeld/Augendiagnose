@@ -293,12 +293,21 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		clarityButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				imageView.showFullResolutionSnapshot(false);
-			}
-		});
+		String fullResolutionFlag =
+				Application.getSharedPreferenceString(R.string.key_full_resolution,
+						R.string.pref_default_full_resolution);
+
+		if (fullResolutionFlag.equals("0")) {
+			clarityButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					imageView.showFullResolutionSnapshot(false);
+				}
+			});
+		}
+		else {
+			clarityButton.setVisibility(View.GONE);
+		}
 
 		commentButton.setOnClickListener(new OnClickListener() {
 			@Override

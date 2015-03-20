@@ -27,6 +27,7 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
@@ -139,7 +140,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The full bitmap (full resolution).
 	 */
-	private Bitmap mBitmapFull;
+	private Bitmap mBitmapFull = null;
 
 	/**
 	 * The metadata of the image.
@@ -180,6 +181,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Callback class to update the GUI elements from the view.
 	 */
 	private GuiElementUpdater mGuiElementUpdater;
+
+	/**
+	 * A String indicating if full resolution image should be automatically loaded or even kept in memory.
+	 */
+	private String mFullResolutionFlag =
+			Application.getSharedPreferenceString(R.string.key_full_resolution,
+					R.string.pref_default_full_resolution);
 
 	// JAVADOC:OFF
 	/**
@@ -986,11 +994,19 @@ public class OverlayPinchImageView extends PinchImageView {
 		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
 		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
 
+		Bitmap bitmapFull;
 		if (mBitmapFull == null) {
-			mBitmapFull = mEyePhoto.getFullBitmap();
+			bitmapFull = mEyePhoto.getFullBitmap();
+			// Fill mBitmapFull only if storage flag indicates this kind of caching.
+			if (mFullResolutionFlag.equals("2")) {
+				mBitmapFull = bitmapFull;
+			}
+		}
+		else {
+			bitmapFull = mBitmapFull;
 		}
 		Bitmap partialBitmap =
-				ImageUtil.getPartialBitmap(mBitmapFull, minX, maxX, minY, maxY);
+				ImageUtil.getPartialBitmap(bitmapFull, minX, maxX, minY, maxY);
 		Bitmap scaledPartialBitmap =
 				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
 						- offsetMaxY
@@ -1012,6 +1028,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void showFullResolutionSnapshot(final boolean async) {
 		if (async && hasOverlay()) {
 			// Do not trigger full resolution thread if there is an overlay.
+			return;
+		}
+		if (async && mFullResolutionFlag.equals("0")) {
+			// Do not trigger full resolution thread if flag is configured for manual handling of full resolution.
 			return;
 		}
 
