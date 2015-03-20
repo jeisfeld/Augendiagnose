@@ -5,6 +5,7 @@ import static de.eisfeldj.augendiagnose.components.OverlayPinchImageView.Resolut
 import static de.eisfeldj.augendiagnose.components.OverlayPinchImageView.Resolution.LOW;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -150,11 +151,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	private boolean mHasViewPosition = false;
 
 	/**
-	 * Flag indicating if the view is showing a full resolution snapshot.
-	 */
-	private boolean mIsFullResolutionShapshot = false;
-
-	/**
 	 * Flag indicating if brightness/contrast is changed, but not yet applied to mBitmap.
 	 */
 	private boolean mRequiresBrightnessContrastUpdate = false;
@@ -168,6 +164,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Last width of the view. Used to make sure that full resolution is abandoned as soon as view size changes.
 	 */
 	private int mLastWidth;
+
+	/**
+	 * Thread showing the view in full resolution. The first is the running thread. Another one may be queuing.
+	 */
+	private List<Thread> mFullResolutionThreads = new ArrayList<Thread>();
 
 	/**
 	 * Callback class to update the GUI elements from the view.
@@ -333,20 +334,12 @@ public class OverlayPinchImageView extends PinchImageView {
 			return;
 		}
 		if (resolution == FULL) {
-			showFullResolutionSnapshot();
+			showFullResolutionSnapshot(false);
 			return;
 		}
 
 		// Determine overlays to be shown
-		ArrayList<Integer> overlayPositions = new ArrayList<Integer>();
-
-		if (canHandleOverlays()) {
-			for (int i = 0; i < mShowOverlay.length; i++) {
-				if (mShowOverlay[i]) {
-					overlayPositions.add(i);
-				}
-			}
-		}
+		List<Integer> overlayPositions = getOverlayPositions();
 
 		Drawable[] layers = new Drawable[overlayPositions.size() + 1];
 		Bitmap modBitmap;
@@ -393,7 +386,26 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Refresh with high resolution (or full resolution if applicable).
 	 */
 	public final void refresh() {
-		refresh(mIsFullResolutionShapshot ? FULL : HIGH);
+		refresh(mBitmapFullResolution == null ? HIGH : FULL);
+	}
+
+	/**
+	 * Get the list of currently displayed overlay indices.
+	 *
+	 * @return The current overlay indices.
+	 */
+	private List<Integer> getOverlayPositions() {
+		ArrayList<Integer> overlayPositions = new ArrayList<Integer>();
+
+		if (canHandleOverlays()) {
+			for (int i = 0; i < mShowOverlay.length; i++) {
+				if (mShowOverlay[i]) {
+					overlayPositions.add(i);
+				}
+			}
+		}
+
+		return overlayPositions;
 	}
 
 	/**
@@ -404,20 +416,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final boolean canHandleOverlays() {
 		return mEyePhoto != null && mEyePhoto.getRightLeft() != null;
-	}
-
-	/**
-	 * Change the status of an overlay.
-	 *
-	 * @param position
-	 *            number of the overlay
-	 * @param show
-	 *            flag indicating if the overlay should be shown
-	 */
-	public final void showOverlay(final int position, final boolean show) {
-		mShowOverlay[position] = show;
-		refresh(HIGH);
-		updateScaleGestureDetector();
 	}
 
 	/**
@@ -438,6 +436,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		refresh(HIGH);
 		updateScaleGestureDetector();
+		showFullResolutionSnapshot(true);
 	}
 
 	/**
@@ -663,7 +662,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
 		mRequiresBrightnessContrastUpdate = true;
-		refresh(mIsFullResolutionShapshot ? FULL : LOW);
+		refresh(mBitmapFullResolution == null ? LOW : FULL);
 	}
 
 	/**
@@ -676,7 +675,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
 		mRequiresBrightnessContrastUpdate = true;
-		refresh(mIsFullResolutionShapshot ? FULL : LOW);
+		refresh(mBitmapFullResolution == null ? LOW : FULL);
 	}
 
 	/**
@@ -875,8 +874,17 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Overridden to refresh the view in full details.
 	 */
 	@Override
+	protected final void startPointerMove(final MotionEvent ev) {
+		showNormalResolution();
+	}
+
+	/*
+	 * Overridden to refresh the view in full details.
+	 */
+	@Override
 	protected final void finishPointerMove(final MotionEvent ev) {
 		refresh(HIGH);
+		showFullResolutionSnapshot(true);
 	}
 
 	/**
@@ -924,72 +932,153 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Show the current view in full resolution.
+	 * Create a bitmap containing the current view in full resolution (incl. brightness/contrast).
+	 *
+	 * @return The bitmap in full resolution.
 	 */
-	public final void showFullResolutionSnapshot() {
-		if (!mIsFullResolutionShapshot) {
-			// create the full resolution snapshot from the full image.
+	private Bitmap createFullResolutionBitmap() {
+		float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
+		float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
+		float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
+		float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
 
-			// The image pixels which are in the corners of the view
-			float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
-			float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
-			float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
-			float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
+		// The image part which needs to be displayed
+		float minX = Math.max(0, leftX / mBitmap.getWidth());
+		float maxX = Math.min(1, rightX / mBitmap.getWidth());
+		float minY = Math.max(0, upperY / mBitmap.getHeight());
+		float maxY = Math.min(1, lowerY / mBitmap.getHeight());
 
-			// The image part which needs to be displayed
-			float minX = Math.max(0, leftX / mBitmap.getWidth());
-			float maxX = Math.min(1, rightX / mBitmap.getWidth());
-			float minY = Math.max(0, upperY / mBitmap.getHeight());
-			float maxY = Math.min(1, lowerY / mBitmap.getHeight());
-
-			if (maxX <= minX || maxY <= minY) {
-				// Image is outside of the view
-				return;
-			}
-
-			// The distance of the displayed image from the view borders.
-			int offsetX = Math.round(-Math.min(0, leftX) * mScaleFactor);
-			int offsetY = Math.round(-Math.min(0, upperY) * mScaleFactor);
-			int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
-			int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
-
-			Bitmap partialBitmap =
-					mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
-			Bitmap scaledPartialBitmap =
-					Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
-							- offsetMaxY
-							- offsetY, false);
-
-			mBitmapFullResolution = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-			Canvas canvas = new Canvas(mBitmapFullResolution);
-			canvas.drawBitmap(scaledPartialBitmap, offsetX, offsetY, null);
-
-			mIsFullResolutionShapshot = true;
+		if (maxX <= minX || maxY <= minY) {
+			// Image is outside of the view
+			return null;
 		}
 
-		Bitmap partialBitmapWithBrightness =
-				changeBitmapContrastBrightness(mBitmapFullResolution, mContrast, mBrightness);
+		// The distance of the displayed image from the view borders.
+		int offsetX = Math.round(-Math.min(0, leftX) * mScaleFactor);
+		int offsetY = Math.round(-Math.min(0, upperY) * mScaleFactor);
+		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
+		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
 
-		// Make a straight display of this bitmap without any matrix transformation.
-		// Will be reset by regular view as soon as the screen is touched again.
-		setImageBitmap(partialBitmapWithBrightness);
-		setImageMatrix(null);
+		Bitmap partialBitmap =
+				mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
+		Bitmap scaledPartialBitmap =
+				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
+						- offsetMaxY
+						- offsetY, false);
+
+		Bitmap bitmapFullResolution = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmapFullResolution);
+		canvas.drawBitmap(scaledPartialBitmap, offsetX, offsetY, null);
+
+		return bitmapFullResolution;
+	}
+
+	/**
+	 * Show the current view in full resolution.
+	 *
+	 * @param async
+	 *            A flag indicating if the bitmap creation should happen in a separate thread.
+	 */
+	public final void showFullResolutionSnapshot(final boolean async) {
+		if (async && getOverlayPositions().size() > 0) {
+			// Do not start asynchronous full resolution view if there is an overlay.
+			interruptFullResolutionThread();
+			return;
+		}
+
+		Thread fullResolutionThread = new Thread() {
+			@Override
+			public final void run() {
+				if (mBitmapFullResolution == null) {
+					mBitmapFullResolution = createFullResolutionBitmap();
+
+					if (mBitmapFullResolution == null) {
+						return;
+					}
+				}
+
+				final Bitmap partialBitmapWithBrightness =
+						changeBitmapContrastBrightness(mBitmapFullResolution, mContrast, mBrightness);
+
+				if (isInterrupted()) {
+					// Do not display the result if the thread has been interrupted.
+					mBitmapFullResolution = null;
+				}
+				else {
+					// Make a straight display of this bitmap without any matrix transformation.
+					// Will be reset by regular view as soon as the screen is touched again.
+					post(new Runnable() {
+						@Override
+						public void run() {
+							if (mBitmapFullResolution != null) {
+								setImageBitmap(partialBitmapWithBrightness);
+								setImageMatrix(null);
+							}
+						}
+
+					});
+				}
+
+				synchronized (OverlayPinchImageView.this) {
+					mFullResolutionThreads.remove(Thread.currentThread());
+					if (mFullResolutionThreads.size() > 0) {
+						mFullResolutionThreads.get(0).start();
+					}
+				}
+			}
+		};
+
+		if (async) {
+			synchronized (OverlayPinchImageView.this) {
+				if (mFullResolutionThreads.size() >= 2) {
+					// at most two threads in list
+					mFullResolutionThreads.remove(1);
+				}
+				mFullResolutionThreads.add(fullResolutionThread);
+				if (mFullResolutionThreads.size() == 1) {
+					// only start if no thread is running
+					fullResolutionThread.start();
+				}
+			}
+		}
+		else {
+			try {
+				fullResolutionThread.start();
+				fullResolutionThread.join();
+			}
+			catch (InterruptedException e) {
+				// do nothing
+			}
+		}
+
+	}
+
+	/**
+	 * Interrupt the full resolution shapshot creation, if in process.
+	 */
+	private void interruptFullResolutionThread() {
+		synchronized (OverlayPinchImageView.this) {
+			if (mFullResolutionThreads.size() > 0) {
+				mFullResolutionThreads.get(0).interrupt();
+				if (mFullResolutionThreads.size() > 1) {
+					mFullResolutionThreads.remove(1);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Show normal resolution again after having the full resolution snapshot.
 	 */
 	public final void showNormalResolution() {
-		if (mIsFullResolutionShapshot) {
-			mBitmapFullResolution = null;
-			mIsFullResolutionShapshot = false;
+		interruptFullResolutionThread();
+		mBitmapFullResolution = null;
 
-			if (mRequiresBrightnessContrastUpdate) {
-				refresh(HIGH);
-			}
-			else {
-				setImageBitmap(mCanvasBitmap);
-			}
+		if (mRequiresBrightnessContrastUpdate) {
+			refresh(HIGH);
+		}
+		else {
+			setImageBitmap(mCanvasBitmap);
 		}
 	}
 
@@ -998,9 +1087,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	@Override
 	public final void requestLayout() {
-		if (getWidth() != mLastWidth || getHeight() != mLastHeight) {
-			// if view size changed, then leave full resolution mode.
+		if (mBitmap != null && (getWidth() != mLastWidth || getHeight() != mLastHeight)) {
+			// if view size changed, then calculate full resolution image again
 			showNormalResolution();
+			showFullResolutionSnapshot(true);
 		}
 		super.requestLayout();
 		mLastHeight = getHeight();

@@ -324,6 +324,7 @@ public class PinchImageView extends ImageView {
 		final int action = ev.getActionMasked();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
+			startPointerMove(ev);
 			mHasMoved = false;
 			mLastTouchX = ev.getX();
 			mLastTouchY = ev.getY();
@@ -398,6 +399,17 @@ public class PinchImageView extends ImageView {
 		else {
 			return true;
 		}
+	}
+
+	/**
+	 * Utility method to allow actions after starting the pointer move.
+	 *
+	 * @param ev
+	 *            The motion event.
+	 */
+	// OVERRIDABLE
+	protected void startPointerMove(final MotionEvent ev) {
+		// do nothing
 	}
 
 	/**
