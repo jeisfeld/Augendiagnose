@@ -69,14 +69,14 @@
         <item>0</item>
     </string-array>
     <string-array name="pref_list_titles_full_resolution">
-        <item>Load only on demand</item>
-        <item>Load picture detail whenever image is not moved</item>
         <item>Keep full image in memory</item>
+        <item>Load picture detail whenever image is not moved</item>
+        <item>Load only on demand</item>
     </string-array>
     <string-array name="pref_list_values_full_resolution" translatable="false">
-        <item>0</item>
-        <item>1</item>
         <item>2</item>
+        <item>1</item>
+        <item>0</item>
     </string-array>
     <string-array name="pref_list_titles_language">
         <item>System language</item>

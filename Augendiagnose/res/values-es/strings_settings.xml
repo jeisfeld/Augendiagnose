@@ -43,9 +43,9 @@
         <item>No guarde datos en imágenes</item>
     </string-array>
     <string-array name="pref_list_titles_full_resolution">
-        <item>Cargar sólo si se solicita</item>
+        <item>Mantener imagen completa en la memoria</item>
         <item>Cargar foto detalle cada vez que la imagen no se mueve</item>
-        <item>Mantener lleno imagen en la memoria</item>
+        <item>Cargar sólo si se solicita</item>
     </string-array>
     <string-array name="pref_list_titles_language">
         <item>Idioma del sistema</item>

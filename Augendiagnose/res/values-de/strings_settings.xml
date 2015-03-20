@@ -43,9 +43,9 @@
         <item>Nicht in Fotos speichern</item>
     </string-array>
     <string-array name="pref_list_titles_full_resolution">
-        <item>Nur auf Anfrage</item>
-        <item>Ausschnitt laden, wenn das Bild nicht bewegt wird</item>
         <item>Ganzes Bild im Speicher lassen</item>
+        <item>Ausschnitt laden, wenn das Bild nicht bewegt wird</item>
+        <item>Nur auf Anfrage</item>
     </string-array>
     <string-array name="pref_list_titles_language">
         <item>Systemsprache</item>
