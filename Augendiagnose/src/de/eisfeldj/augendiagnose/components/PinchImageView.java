@@ -292,7 +292,8 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Redo the scaling.
 	 */
-	private void setMatrix() {
+	// OVERRIDABLE
+	protected void setMatrix() {
 		Matrix matrix = new Matrix();
 		matrix.setTranslate(-mPosX * mBitmap.getWidth(), -mPosY * mBitmap.getHeight());
 		matrix.postScale(mScaleFactor, mScaleFactor);

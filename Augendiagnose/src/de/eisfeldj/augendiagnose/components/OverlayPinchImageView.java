@@ -282,7 +282,9 @@ public class OverlayPinchImageView extends PinchImageView {
 							mCanvas = new Canvas(mCanvasBitmap);
 							doInitialScaling();
 							updateScaleGestureDetector();
+
 							refresh(HIGH);
+							showFullResolutionSnapshot(true);
 						}
 					});
 				}
@@ -290,11 +292,13 @@ public class OverlayPinchImageView extends PinchImageView {
 			thread.start();
 		}
 		else {
+			// orientation change
 			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 			mCanvas = new Canvas(mCanvasBitmap);
 			doInitialScaling();
 			updateScaleGestureDetector();
 			refresh(HIGH);
+			showFullResolutionSnapshot(true);
 		}
 
 	}
@@ -409,6 +413,15 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Get information if an overlay is shown.
+	 *
+	 * @return true if an overlay is snown.
+	 */
+	private boolean hasOverlay() {
+		return getOverlayPositions().size() > 0;
+	}
+
+	/**
 	 * Get information if the view can handle overlays.
 	 *
 	 * @return true if the view can handle overlays. This is possible only if the right/left position of the eye photo
@@ -436,7 +449,13 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		refresh(HIGH);
 		updateScaleGestureDetector();
-		showFullResolutionSnapshot(true);
+
+		if (hasOverlay()) {
+			showNormalResolution();
+		}
+		else {
+			showFullResolutionSnapshot(true);
+		}
 	}
 
 	/**
@@ -980,9 +999,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            A flag indicating if the bitmap creation should happen in a separate thread.
 	 */
 	public final void showFullResolutionSnapshot(final boolean async) {
-		if (async && getOverlayPositions().size() > 0) {
-			// Do not start asynchronous full resolution view if there is an overlay.
-			interruptFullResolutionThread();
+		if (async && hasOverlay()) {
+			// Do not trigger full resolution thread if there is an overlay.
 			return;
 		}
 
@@ -1019,18 +1037,21 @@ public class OverlayPinchImageView extends PinchImageView {
 					});
 				}
 
-				synchronized (OverlayPinchImageView.this) {
-					mFullResolutionThreads.remove(Thread.currentThread());
-					if (mFullResolutionThreads.size() > 0) {
-						mFullResolutionThreads.get(0).start();
+				if (async) {
+					// start next thread in queue
+					synchronized (mFullResolutionThreads) {
+						mFullResolutionThreads.remove(Thread.currentThread());
+						if (mFullResolutionThreads.size() > 0) {
+							mFullResolutionThreads.get(0).start();
+						}
 					}
 				}
 			}
 		};
 
 		if (async) {
-			synchronized (OverlayPinchImageView.this) {
-				if (mFullResolutionThreads.size() >= 2) {
+			synchronized (mFullResolutionThreads) {
+				if (mFullResolutionThreads.size() > 1) {
 					// at most two threads in list
 					mFullResolutionThreads.remove(1);
 				}
@@ -1057,7 +1078,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Interrupt the full resolution shapshot creation, if in process.
 	 */
 	private void interruptFullResolutionThread() {
-		synchronized (OverlayPinchImageView.this) {
+		synchronized (mFullResolutionThreads) {
 			if (mFullResolutionThreads.size() > 0) {
 				mFullResolutionThreads.get(0).interrupt();
 				if (mFullResolutionThreads.size() > 1) {
@@ -1065,6 +1086,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 			}
 		}
+		mBitmapFullResolution = null;
 	}
 
 	/**
@@ -1079,6 +1101,17 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else {
 			setImageBitmap(mCanvasBitmap);
+			setMatrix();
+		}
+	}
+
+	@Override
+	protected final void setMatrix() {
+		if (mBitmapFullResolution != null) {
+			setImageMatrix(null);
+		}
+		else {
+			super.setMatrix();
 		}
 	}
 
