@@ -465,21 +465,12 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve a part of this photo in full resolution.
-	 *
-	 * @param minX
-	 *            The minimum X position to retrieve.
-	 * @param maxX
-	 *            The maximum X position to retrieve.
-	 * @param minY
-	 *            The minimum Y position to retrieve.
-	 * @param maxY
-	 *            The maximum Y position to retrieve.
+	 * Retrieve a bitmap of this photo in full resolution.
 	 *
 	 * @return The bitmap.
 	 */
-	public final Bitmap getPartialBitmap(final float minX, final float maxX, final float minY, final float maxY) {
-		return ImageUtil.getPartialBitmap(getAbsolutePath(), minX, maxX, minY, maxY);
+	public final Bitmap getFullBitmap() {
+		return ImageUtil.getImageBitmap(getAbsolutePath(), 0);
 	}
 
 	/**

@@ -643,4 +643,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 	}
 
+	/*
+	 * Ensure that the full size bitmap is cleaned from memory if memory is low.
+	 */
+	@Override
+	public final void onTrimMemory(final int level) {
+		imageView.cleanFullBitmap();
+		super.onTrimMemory(level);
+	}
+
 }

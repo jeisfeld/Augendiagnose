@@ -109,6 +109,9 @@ public final class ImageUtil {
 	 */
 	public static Bitmap getImageBitmap(final String path, final int maxSize) {
 		Bitmap bitmap = null;
+		if (maxSize <= 0) {
+			return BitmapFactory.decodeFile(path);
+		}
 
 		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
 			bitmap = MediaStoreUtil.getThumbnailFromPath(path, maxSize);
@@ -162,8 +165,8 @@ public final class ImageUtil {
 	/**
 	 * Retrieve a part of a bitmap in full resolution.
 	 *
-	 * @param path
-	 *            The file path of the image.
+	 * @param fullBitmap
+	 *            The bitmap from which to get the part.
 	 * @param minX
 	 *            The minimum X position to retrieve.
 	 * @param maxX
@@ -174,10 +177,9 @@ public final class ImageUtil {
 	 *            The maximum Y position to retrieve.
 	 * @return The bitmap.
 	 */
-	public static Bitmap getPartialBitmap(final String path, final float minX, final float maxX, final float minY,
+	public static Bitmap getPartialBitmap(final Bitmap fullBitmap, final float minX, final float maxX,
+			final float minY,
 			final float maxY) {
-		Bitmap fullBitmap = BitmapFactory.decodeFile(path);
-
 		Bitmap partialBitmap =
 				Bitmap.createBitmap(fullBitmap, Math.round(minX * fullBitmap.getWidth()),
 						Math.round(minY * fullBitmap.getHeight()),

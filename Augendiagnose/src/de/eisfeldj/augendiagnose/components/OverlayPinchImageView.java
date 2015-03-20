@@ -30,6 +30,7 @@ import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 
@@ -133,7 +134,12 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The partial bitmap with full resolution.
 	 */
-	private Bitmap mBitmapFullResolution;
+	private Bitmap mPartialBitmapFullResolution;
+
+	/**
+	 * The full bitmap (full resolution).
+	 */
+	private Bitmap mBitmapFull;
 
 	/**
 	 * The metadata of the image.
@@ -223,6 +229,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				cacheIndex);
 		mBitmap = retainFragment.getBitmap();
 		mBitmapSmall = retainFragment.getBitmapSmall();
+		mBitmapFull = null;
+		mPartialBitmapFullResolution = null;
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
 			mHasOverlayPosition = false;
@@ -390,7 +398,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Refresh with high resolution (or full resolution if applicable).
 	 */
 	public final void refresh() {
-		refresh(mBitmapFullResolution == null ? HIGH : FULL);
+		refresh(mPartialBitmapFullResolution == null ? HIGH : FULL);
 	}
 
 	/**
@@ -681,7 +689,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
 		mRequiresBrightnessContrastUpdate = true;
-		refresh(mBitmapFullResolution == null ? LOW : FULL);
+		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
 	/**
@@ -694,7 +702,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
 		mRequiresBrightnessContrastUpdate = true;
-		refresh(mBitmapFullResolution == null ? LOW : FULL);
+		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
 	/**
@@ -978,8 +986,11 @@ public class OverlayPinchImageView extends PinchImageView {
 		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
 		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
 
+		if (mBitmapFull == null) {
+			mBitmapFull = mEyePhoto.getFullBitmap();
+		}
 		Bitmap partialBitmap =
-				mEyePhoto.getPartialBitmap(minX, maxX, minY, maxY);
+				ImageUtil.getPartialBitmap(mBitmapFull, minX, maxX, minY, maxY);
 		Bitmap scaledPartialBitmap =
 				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
 						- offsetMaxY
@@ -1007,20 +1018,20 @@ public class OverlayPinchImageView extends PinchImageView {
 		Thread fullResolutionThread = new Thread() {
 			@Override
 			public final void run() {
-				if (mBitmapFullResolution == null) {
-					mBitmapFullResolution = createFullResolutionBitmap();
+				if (mPartialBitmapFullResolution == null) {
+					mPartialBitmapFullResolution = createFullResolutionBitmap();
 
-					if (mBitmapFullResolution == null) {
+					if (mPartialBitmapFullResolution == null) {
 						return;
 					}
 				}
 
 				final Bitmap partialBitmapWithBrightness =
-						changeBitmapContrastBrightness(mBitmapFullResolution, mContrast, mBrightness);
+						changeBitmapContrastBrightness(mPartialBitmapFullResolution, mContrast, mBrightness);
 
 				if (isInterrupted()) {
 					// Do not display the result if the thread has been interrupted.
-					mBitmapFullResolution = null;
+					mPartialBitmapFullResolution = null;
 				}
 				else {
 					// Make a straight display of this bitmap without any matrix transformation.
@@ -1028,7 +1039,7 @@ public class OverlayPinchImageView extends PinchImageView {
 					post(new Runnable() {
 						@Override
 						public void run() {
-							if (mBitmapFullResolution != null) {
+							if (mPartialBitmapFullResolution != null) {
 								setImageBitmap(partialBitmapWithBrightness);
 								setImageMatrix(null);
 							}
@@ -1086,7 +1097,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 			}
 		}
-		mBitmapFullResolution = null;
+		mPartialBitmapFullResolution = null;
 	}
 
 	/**
@@ -1094,7 +1105,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void showNormalResolution() {
 		interruptFullResolutionThread();
-		mBitmapFullResolution = null;
+		mPartialBitmapFullResolution = null;
 
 		if (mRequiresBrightnessContrastUpdate) {
 			refresh(HIGH);
@@ -1107,7 +1118,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	@Override
 	protected final void setMatrix() {
-		if (mBitmapFullResolution != null) {
+		if (mPartialBitmapFullResolution != null) {
 			setImageMatrix(null);
 		}
 		else {
@@ -1141,6 +1152,13 @@ public class OverlayPinchImageView extends PinchImageView {
 			mMetadata.comment = comment;
 			mEyePhoto.storeImageMetadata(mMetadata);
 		}
+	}
+
+	/**
+	 * Remove cached full bitmap from memory.
+	 */
+	public final void cleanFullBitmap() {
+		mBitmapFull = null;
 	}
 
 	/*
