@@ -1,9 +1,12 @@
 package de.eisfeldj.augendiagnose.util;
 
-import de.eisfeldj.augendiagnose.Application;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.R;
 
 /**
  * Utility class for handling the shared preferences.
@@ -112,6 +115,23 @@ public abstract class PreferenceUtil {
 		Editor editor = getSharedPreferences().edit();
 		editor.putInt(Application.getAppContext().getString(preferenceId), i);
 		editor.commit();
+	}
+
+	/**
+	 * Set the default setting for handling of full resolution, if no value is set.
+	 */
+	public static void setFullResolutionSetting() {
+		String fullResolutionSetting = getSharedPreferenceString(R.string.key_full_resolution);
+
+		if (fullResolutionSetting == null || fullResolutionSetting.length() == 0) {
+			ActivityManager manager =
+					(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+			// Only if 512 MB are accessible, then full resolution image should be stored.
+			fullResolutionSetting = (manager.getLargeMemoryClass() >= 512) ? "2" : "1"; // MAGIC_NUMBER
+
+			setSharedPreferenceString(R.string.key_full_resolution, fullResolutionSetting);
+		}
 	}
 
 }

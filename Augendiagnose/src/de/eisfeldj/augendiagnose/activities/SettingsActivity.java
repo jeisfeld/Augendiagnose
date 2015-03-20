@@ -102,6 +102,9 @@ public class SettingsActivity extends BaseActivity {
 					Application.getAppContext().getString(R.string.pref_default_store_options));
 		}
 
+		// Delta setting for full resolution setting - required after upgrade to version 0.5.1
+		PreferenceUtil.setFullResolutionSetting();
+
 		// Inform PinchImageView about maxBitmapSize
 		pushMaxBitmapSize(PreferenceUtil.getSharedPreferenceString(R.string.key_max_bitmap_size));
 	}

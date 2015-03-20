@@ -150,7 +150,8 @@ public class Application extends android.app.Application {
 	 */
 	public static void setLanguage() {
 		String languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
-		if (languageString == null || languageString.length() < 1) {
+		if (languageString == null || languageString.length() == 0) {
+			PreferenceUtil.setSharedPreferenceString(R.string.key_language, "0");
 			return;
 		}
 

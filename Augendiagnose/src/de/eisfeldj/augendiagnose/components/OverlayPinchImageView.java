@@ -186,8 +186,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * A String indicating if full resolution image should be automatically loaded or even kept in memory.
 	 */
 	private String mFullResolutionFlag =
-			PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution,
-					R.string.pref_default_full_resolution);
+			PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
 
 	// JAVADOC:OFF
 	/**

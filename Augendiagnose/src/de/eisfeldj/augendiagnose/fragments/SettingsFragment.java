@@ -28,9 +28,7 @@ public class SettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.pref_general);
 
 		// Ensure that default values are set.
-		languageString =
-				PreferenceUtil.getSharedPreferenceString(R.string.key_language, R.string.pref_default_language);
-		PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution, R.string.pref_default_full_resolution);
+		languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 
 		bindPreferenceSummaryToValue(R.string.key_folder_input);
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);

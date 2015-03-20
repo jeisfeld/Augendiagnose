@@ -17,7 +17,6 @@
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
     <string name="pref_title_full_resolution">Show image in full resolution</string>
-    <string name="pref_default_full_resolution" translatable="false">1</string>
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_default_language" translatable="false">0</string>

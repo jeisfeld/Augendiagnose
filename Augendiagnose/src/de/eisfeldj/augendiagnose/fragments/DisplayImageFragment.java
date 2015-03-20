@@ -295,8 +295,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 
 		String fullResolutionFlag =
-				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution,
-						R.string.pref_default_full_resolution);
+				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
 
 		if (fullResolutionFlag.equals("0")) {
 			clarityButton.setOnClickListener(new OnClickListener() {
