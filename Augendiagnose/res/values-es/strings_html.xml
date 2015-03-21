@@ -120,68 +120,75 @@
 
 	<h3>Carpeta de entrada para nuevas fotos</h3>
 
-	<p>Esta es la carpeta, de donde las nuevas fotos son importadas. Como
-		configuración predeterminada, este es o bien la carpeta de destino de la
-		aplicación Eye-Fi o la carpeta norma de la aplicación de la cámara. Sin
-		embargo, puede configurar aquí cualquiera otra carpeta.</p>
+	<p>Esta es la carpeta, de donde las nuevas fotos son importadas. Como configuración predeterminada, este es o bien
+		la carpeta de destino de la aplicación Eye-Fi o la carpeta norma de la aplicación de la cámara. Sin embargo, puede
+		configurar aquí cualquiera otra carpeta.</p>
 
-	<p>Bagaje con respecto a la aplicación Eye-Fi: normalmente, la cámara del
-		dispositivo celular no es suficiente para tomar fotos oculares en alta
-		calidad. Un enfoque más práctico es utilizar una cámara externa con SD Eye-Fi,
-		que transfiere las fotos a través de WLAN en el dispositivo celular.</p>
+	<p>Bagaje con respecto a la aplicación Eye-Fi: normalmente, la cámara del dispositivo celular no es suficiente para
+		tomar fotos oculares en alta calidad. Un enfoque más práctico es utilizar una cámara externa con SD Eye-Fi, que
+		transfiere las fotos a través de WLAN en el dispositivo celular.</p>
 
 	<h3>Carpeta de fotos oculares</h3>
 
-	<p>Esta es la carpeta en la que la aplicación administra las fotos de ojos.
-		Normalmente, usted no tiene que cambiar esto. Desde aquí, puede copiar las
-		fotos a otros dispositivos.</p>
+	<p>Esta es la carpeta en la que la aplicación administra las fotos de ojos. Normalmente, usted no tiene que cambiar
+		esto. Desde aquí, puede copiar las fotos a otros dispositivos.</p>
 
 	<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
 
-	<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo
-		o en una tarjeta SD. En Android 4.4 (Kitkat), almacenamiento en la tarjeta SD
-		tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.</p>
-
-	<h3>Tamaño máximo de mapas de bits</h3>
-
-	Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se
-	requiere para ahorrar memoria del dispositivo. El valor predeterminado es 2048.
-	En dispositivos con poca memoria, puede ser necesario para configurar un valor
-	menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la
-	aplicación.
+	<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
+		(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.</p>
 
 	<h3>Última foto es ojo derecho</h3>
 
-	Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como
-	configuración predeterminada este es el ojo izquierdo (lo que significa que
-	usted hizo primero una foto del ojo derecho y luego del ojo izquierdo).
+	Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como configuración predeterminada este es el
+	ojo izquierdo (lo que significa que usted hizo primero una foto del ojo derecho y luego del ojo izquierdo).
 
 	<h3>Ordenar por apellido</h3>
 
 	Aquí se puede establecer si la lista de nombres será ordenada por apellido.
 
-	<h3>Guardar datos adicionales en JPG</h3>
+	<h3>Tamaño máximo de mapas de bits</h3>
 
-	Aquí puede limitar el almacenamiento de datos en los archivos JPG de la
-	aplicación.
+	Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se requiere para ahorrar memoria del
+	dispositivo. El valor predeterminado es 2048. En dispositivos con poca memoria, puede ser necesario para configurar un
+	valor menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la aplicación.
+
+	<h3>Mostrar imagen en alta resolución</h3>
+
+	Aquí usted puede decidir en qué circunstancias se muestra la foto en alta resolución, que permite ver más detalles en
+	la foto, pero consume memoria y tiempo de cálculo.
 
 	<ul>
-		<li>Guardar en EXIF (recomendado): La aplicación guarda la información
-			relevante en el archivo JPG, incluso en campos estándar que son visibles en
-			Windows.</li>
+		<li>Mantener imagen completa en la memoria: La aplicación siempre almacena las fotos en resolución completa en la
+			memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a fallos si
+			no hay suficiente memoria disponible.</li>
 
-		<li>Guardar en campos personalizados: La aplicación guarda la información
-			en el archivo JPG, pero sólo en campos separados. Campos estándar se
-			mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
+		<li>Cargar foto detalle cada vez que la imagen no se mueve: La aplicación carga una vista alta resolución cada
+			vez que la foto no se mueve. Esto requiere menos memoria, pero puede llevar a tiempos de espera.</li>
 
-		<li>No guarde datos en imágenes: La aplicación no almacena información en
-			archivos JPG. (Esto limita la funcionalidad de la aplicación.)</Li>
+		<li>Cargar sólo si se solicita: La aplicación no muestra la imagen en alta resolución. Esto requiere menos
+			memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. la botón &laquo;lupa&raquo; permite
+			visualizar el detalle actual de la imagen en la plena resolución.</li>
+	</ul>
+
+	<h3>Guardar datos adicionales en JPG</h3>
+
+	Aquí puede limitar el almacenamiento de datos en los archivos JPG de la aplicación.
+
+	<ul>
+		<li>Guardar en EXIF (recomendado): La aplicación guarda la información relevante en el archivo JPG, incluso en
+			campos estándar que son visibles en Windows.</li>
+
+		<li>Guardar en campos personalizados: La aplicación guarda la información en el archivo JPG, pero sólo en campos
+			separados. Campos estándar se mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
+
+		<li>No guarde datos en imágenes: La aplicación no almacena información en archivos JPG. (Esto limita la
+			funcionalidad de la aplicación.)</Li>
 	</ul>
 
 	<h3>Color predeterminado de superposiciones</h3>
 
-	Aquí puede definir el color predeterminado para los superposiciones de
-	topografías del iris. (Estándar: rojo)
+	Aquí puede definir el color predeterminado para los superposiciones de topografías del iris. (Estándar: rojo)
 
 	<h3>Idioma</h3>
 
@@ -287,9 +294,6 @@
 		<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; en la barra de acciones)</li>
 
 		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; en la barra de acciones)</li>
-
-		<li>Si la imagen se muestra en gran aumento, es posible que algunos detalles se pierden. la botón
-			&laquo;lupa&raquo; permite visualizar el detalle actual de la imagen en la plena resolución.</li>
 	</ul>
 
 	<p>Estas funciones pueden activarse o desactivarse mediante el menú contextual (larga pulsación en la foto) a

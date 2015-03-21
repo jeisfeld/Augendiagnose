@@ -122,68 +122,73 @@
 
 	<h3>Input folder for new eye photos</h3>
 
-	This is the folder, from which the app imports new eye photos. By default, this
-	is the target folder of the Eye-Fi app. However, you can configure here any
-	other folder, such as the camera folder.
+	<p>This is the folder, from which the app imports new eye photos. By default, this is either the target folder of
+		the Eye-Fi app or the standard folder of the Camera app. However, you can configure here any other folder.</p>
 
-	<p>This is the folder, from which the app imports new eye photos. By
-		default, this is either the target folder of the Eye-Fi app or the standard
-		folder of the Camera app. However, you can configure here any other folder,
-		such as the camera folder.</p>
-
-	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile
-		device is not sufficient to capture eye photos in high quality. A more
-		practical approach is to use an external camera which Eye-Fi SD card, which
-		transfers the photos via WLAN to the mobile device.</p>
+	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile device is not sufficient to capture eye
+		photos in high quality. A more practical approach is to use an external camera with Eye-Fi SD card, which transfers
+		the photos via WLAN to the mobile device.</p>
 
 	<h3>Eye Photo Folder</h3>
 
-	<p>This is the folder in which the app manages the eye photos. Normally,
-		you need not change this. From here, you can copy the photos to other devices.</p>
+	<p>This is the folder in which the app manages the eye photos. Normally, you need not change this. From here, you
+		can copy the photos to other devices.</p>
 
 	<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
 
-	<p>You can select here a folder either on your device memory or on an SD
-		card. In Android 4.4 (Kitkat), storage on SD card has some limitations,
-		therefore some operations will take longer.</p>
-
-	<h3>Max Bitmap size</h3>
-
-	This is the size to which photos are scaled down before displaying. This
-	downscaling is required to save device memory. The default value is 2048. In
-	devices with little memory, it may be required to configure a smaller value
-	(such as 1024). Too big values may crash the application.
+	<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on
+		SD card has some limitations, therefore some operations will take longer.</p>
 
 	<h3>Last photo is right eye</h3>
 
-	Here you can define if the last photo is the right or the left eye. By default
-	this is the left eye (which means that you made first a photo of the right eye
-	and then of the left eye).
+	Here you can define if the last photo is the right or the left eye. By default this is the left eye (which means that
+	you made first a photo of the right eye and then of the left eye).
 
 	<h3>Sort by last name</h3>
 
 	Here you may decide that names are not ordered strictly alphabetically as given, but by the last name.
+
+	<h3>Max Bitmap size</h3>
+
+	This is the size to which photos are scaled down before displaying. This downscaling is required to save device memory.
+	The default value is 2048. In devices with little memory, it may be required to configure a smaller value (such as
+	1024). Too big values may crash the application.
+
+	<h3>Show image in full resolution</h3>
+
+	Here you can decide under which circumstances the photo is displayed in full resolution, which allows to see more
+	details on the photo, but consumes memory and computing time.
+
+	<ul>
+		<li>Keep full image in memory: The app always stores the photos in full resolution in memory. This gives the best
+			user experience on high end devices, but may lead to crashes if there is not enough memory available.</li>
+
+		<li>Load picture detail whenever image is not moved: The app loads a high resolution view whenever you do not
+			resize or move the photo. This requires less memory, but may lead to waiting times.</li>
+
+		<li>Load only on demand: The app does not show the image in full resolution. This requires least memory and CPU,
+			but details in the photo may be lost. The &ldquo;magnifier&rdquo; button allows to display the current picture detail
+			in full resolution.</li>
+	</ul>
 
 	<h3>Save additional data in jpeg</h3>
 
 	Here you can limit the storage of data in the JPG files by the app.
 
 	<ul>
-		<li>Store in EXIF (recommended): The app stores relevant information in
-			the JPG file, even in standard fields which are visible in Windows.</li>
+		<li>Store in EXIF (recommended): The app stores relevant information in the JPG file, even in standard fields
+			which are visible in Windows.</li>
 
-		<li>Store in custom fields: The app stores information in the JPG file,
-			but only in separate fields. Standard fields remain unchanged; the data
-			exchange with Windows is not possible.</li>
+		<li>Store in custom fields: The app stores information in the JPG file, but only in separate fields. Standard
+			fields remain unchanged; the data exchange with Windows is not possible.</li>
 
-		<li>Don&amp;apos;t store data in images: The app does not store
-			information in JPG files. (This limits the functionality of the app.)</li>
+		<li>Don&amp;apos;t store data in images: The app does not store information in JPG files. (This limits the
+			functionality of the app.)</li>
 	</ul>
 
 	<h3>Default overlay color</h3>
 
-	Here you can define the default color for iris topography overlays. (Standard:
-	red)
+	Here you can define the default color for iris topography overlays. (Standard: red)
 
 	<h3>Language</h3>
 
@@ -286,9 +291,6 @@
 		<li>Store the position and zoom (via &ldquo;save&rdquo; button on action bar)</li>
 
 		<li>Change the comment of the photo (via &ldquo;document&rdquo; button on action bar)</li>
-
-		<li>If the picture is displayed in big magnification, it may be that some details are lost. The
-			&ldquo;magnifier&rdquo; button allows to display the current picture detail in full resolution.</li>
 	</ul>
 
 	<p>These features may be enabled or disabled via the context menu (long click on photo) at &ldquo;Show/Hide
