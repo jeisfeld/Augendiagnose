@@ -63,6 +63,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.4.13</item>
         <item>0.5</item>
         <item>0.5.1</item>
+        <item>0.5.2</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -97,6 +98,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enable language change. Enable sorting by last name. Enabled deletion of photos from input folder. Display latest eye photo pairs on top. Bugfixes</item>
         <item>When displaying images, instead of using a context menu, there is now an action bar. Display of the current picture detail in full resolution. Bugfixes.</item>
         <item>Display automatically in full resolution. Note: If this update leads to crashes or to bad performance of the app on your device, you should change the setting &amp;ldquo;Show image in full resolution&amp;rdquo;</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

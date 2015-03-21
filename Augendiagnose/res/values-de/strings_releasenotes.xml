@@ -67,6 +67,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Wechsel der Sprache ist möglich. Sortieren nach Nachnamen ist möglich. Löschen von Fotos im Eingangsverzeichnis is möglich. Anzeige der neuestsen Augenfotopaare am oberen Ende der Liste. Bugfixes</item>
         <item>Bei der Anzeige von Fotos gibt es jetzt statt des Kontextmenüs ein Menü am oberen Rand. Anzeige des aktuellen Ausschnitts in voller Auflösung. Bugfixes</item>
         <item>Automatsche Anzeige des Bildes in voller Auflösung. Hinweis: Falls dieses Update in Ihrem Gerät zu Abstürzen oder Ruckeln führt, sollten Sie die Einstellung &amp;bdquo;Anzeige in voller Auflösung&amp;ldquo; ändern.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
