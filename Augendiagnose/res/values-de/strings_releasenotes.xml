@@ -68,6 +68,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Bei der Anzeige von Fotos gibt es jetzt statt des Kontextmenüs ein Menü am oberen Rand. Anzeige des aktuellen Ausschnitts in voller Auflösung. Bugfixes</item>
         <item>Automatsche Anzeige des Bildes in voller Auflösung. Hinweis: Falls dieses Update in Ihrem Gerät zu Abstürzen oder Ruckeln führt, sollten Sie die Einstellung &amp;bdquo;Anzeige in voller Auflösung&amp;ldquo; ändern.</item>
         <item>Änderung des Verhaltens hinsichtlich automatischer Anzeige in voller Auflösung aufgrund von Problemen bei Geräten mit geringem Speicher.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

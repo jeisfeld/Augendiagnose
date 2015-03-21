@@ -66,6 +66,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Cuando se visualizan imágenes, en lugar de utilizar un menú contextual, ahora hay una barra de acción en la parte superior. Visualización de el detalle actual de la imagen en plena resolución. Corrección de errores</item>
         <item>Mostrar imágenes automáticamente en la resolución completa. Nota: Si esta actualización lleva a fallos o baja velocidad de la aplicación en su dispositivo, debe cambiar el ajuste &amp;laquo;Mostrar imagen en alta resolución&amp;raquo;</item>
         <item>Opciones modificadas para su visualización en resolución completa debido a problemas con los dispositivos de memoria baja</item>
+        <item>Corrección de errores</item>
     </string-array>
 
 </resources>
