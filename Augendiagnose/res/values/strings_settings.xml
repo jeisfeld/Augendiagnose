@@ -69,8 +69,8 @@
         <item>0</item>
     </string-array>
     <string-array name="pref_list_titles_full_resolution">
-        <item>Keep full image in memory</item>
-        <item>Load picture detail whenever image is not moved</item>
+        <item>Always load automatically</item>
+        <item>Load automatically when displaying single photo</item>
         <item>Load only on demand</item>
     </string-array>
     <string-array name="pref_list_values_full_resolution" translatable="false">

@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
+import de.eisfeldj.augendiagnose.activities.DisplayOneActivity;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpdater;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
@@ -247,6 +248,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		imageView.setGuiElementUpdater(this);
+		imageView.allowFullResolution(allowFullResolution());
 
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
 		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
@@ -294,10 +296,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		String fullResolutionFlag =
-				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
-
-		if (fullResolutionFlag.equals("0")) {
+		if (!allowFullResolution()) {
 			clarityButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -587,6 +586,23 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				imageView.invalidate();
 			}
 		});
+	}
+
+	/**
+	 * Method indicating if images should be displayed in full resolution automatically.
+	 *
+	 * @return true if should be shown in full resoltion.
+	 */
+	public final boolean allowFullResolution() {
+		String fullResolutionFlag =
+				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
+
+		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
+			return !fullResolutionFlag.equals("0");
+		}
+		else {
+			return fullResolutionFlag.equals("2");
+		}
 	}
 
 	/**

@@ -128,7 +128,16 @@ public abstract class PreferenceUtil {
 					(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
 
 			// Only if 512 MB are accessible, then full resolution image should be stored.
-			fullResolutionSetting = (manager.getLargeMemoryClass() >= 512) ? "2" : "1"; // MAGIC_NUMBER
+			int memoryClass = manager.getLargeMemoryClass();
+			if (memoryClass >= 512) { // MAGIC_NUMBER
+				fullResolutionSetting = "2";
+			}
+			else if (memoryClass >= 256) { // MAGIC_NUMBER
+				fullResolutionSetting = "1";
+			}
+			else {
+				fullResolutionSetting = "0";
+			}
 
 			setSharedPreferenceString(R.string.key_full_resolution, fullResolutionSetting);
 		}

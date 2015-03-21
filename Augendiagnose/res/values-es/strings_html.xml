@@ -159,12 +159,12 @@
 	la foto, pero consume memoria y tiempo de cálculo.
 
 	<ul>
-		<li>Mantener imagen completa en la memoria: La aplicación siempre almacena las fotos en resolución completa en la
+		<li>Siempre cargar automáticamente: La aplicación siempre almacena las fotos en resolución completa en la
 			memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a fallos si
 			no hay suficiente memoria disponible.</li>
 
-		<li>Cargar foto detalle cada vez que la imagen no se mueve: La aplicación carga una vista alta resolución cada
-			vez que la foto no se mueve. Esto requiere menos memoria, pero puede llevar a tiempos de espera.</li>
+		<li>Cargar automáticamente cuando se muestra sola foto: La aplicación muestra la resolución completa sólo cuando
+			se muestre un único imagen. Esto requiere un medio de la memoria.</li>
 
 		<li>Cargar sólo si se solicita: La aplicación no muestra la imagen en alta resolución. Esto requiere menos
 			memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. la botón &laquo;lupa&raquo; permite

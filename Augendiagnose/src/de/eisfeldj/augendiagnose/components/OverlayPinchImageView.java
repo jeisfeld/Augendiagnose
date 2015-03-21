@@ -33,7 +33,6 @@ import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
 import de.eisfeldj.augendiagnose.util.JpegMetadata;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
-import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.
@@ -185,8 +184,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * A String indicating if full resolution image should be automatically loaded or even kept in memory.
 	 */
-	private String mFullResolutionFlag =
-			PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
+	private boolean mFullResolutionFlag;
 
 	// JAVADOC:OFF
 	/**
@@ -993,16 +991,12 @@ public class OverlayPinchImageView extends PinchImageView {
 		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
 		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
 
-		Bitmap bitmapFull;
-		if (mBitmapFull == null) {
+		Bitmap bitmapFull = mBitmapFull;
+		if (bitmapFull == null) {
 			bitmapFull = mEyePhoto.getFullBitmap();
-			// Fill mBitmapFull only if storage flag indicates this kind of caching.
-			if (mFullResolutionFlag.equals("2")) {
+			if (mFullResolutionFlag) {
 				mBitmapFull = bitmapFull;
 			}
-		}
-		else {
-			bitmapFull = mBitmapFull;
 		}
 		Bitmap partialBitmap =
 				ImageUtil.getPartialBitmap(bitmapFull, minX, maxX, minY, maxY);
@@ -1019,6 +1013,16 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Tell the view if it should automatically display in full resolution.
+	 *
+	 * @param fullResolutionFlag
+	 *            if true, view shows automatically in full resolution.
+	 */
+	public final void allowFullResolution(final boolean fullResolutionFlag) {
+		mFullResolutionFlag = fullResolutionFlag;
+	}
+
+	/**
 	 * Show the current view in full resolution.
 	 *
 	 * @param async
@@ -1029,7 +1033,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			// Do not trigger full resolution thread if there is an overlay.
 			return;
 		}
-		if (async && mFullResolutionFlag.equals("0")) {
+		if (async && !mFullResolutionFlag) {
 			// Do not trigger full resolution thread if flag is configured for manual handling of full resolution.
 			return;
 		}

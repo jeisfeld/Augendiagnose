@@ -166,13 +166,12 @@
 	Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
 
 	<ul>
-		<li>Ganzes Bild im Speicher lassen: Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt
-			dazu, dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht
-			genug Speicher zur Verfügung steht.</li>
+		<li>Immer automatisch laden: Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt dazu, dass
+			man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht genug
+			Speicher zur Verfügung steht.</li>
 
-		<li>Ausschnitt laden, wenn das Bild nicht bewegt wird: Immer wenn Sie das Foto nicht zoomen oder beweten, lädt
-			die App die aktuelle Ansicht in hoher Auflösung nach. Dies verbraucht weniger Speicher, kann aber zu Wartezeiten
-			führen.</li>
+		<li>Automatisch laden, wenn nur ein Foto angezeigt wird: Das Foto wird nur bei Anzeige eines einzigen Fotos in
+			voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
 
 		<li>Nur auf Anfrage: Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher und
 			Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons kann der

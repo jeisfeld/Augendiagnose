@@ -160,11 +160,11 @@
 	details on the photo, but consumes memory and computing time.
 
 	<ul>
-		<li>Keep full image in memory: The app always stores the photos in full resolution in memory. This gives the best
+		<li>Always load automatically: The app always stores the photos in full resolution in memory. This gives the best
 			user experience on high end devices, but may lead to crashes if there is not enough memory available.</li>
 
-		<li>Load picture detail whenever image is not moved: The app loads a high resolution view whenever you do not
-			resize or move the photo. This requires less memory, but may lead to waiting times.</li>
+		<li>Load automatically when displaying single photo: The app shows full resolution only when displaying a single
+			image. This requires half of the memory.</li>
 
 		<li>Load only on demand: The app does not show the image in full resolution. This requires least memory and CPU,
 			but details in the photo may be lost. The &ldquo;magnifier&rdquo; button allows to display the current picture detail
