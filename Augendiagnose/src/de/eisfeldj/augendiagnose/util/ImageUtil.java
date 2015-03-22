@@ -143,15 +143,18 @@ public final class ImageUtil {
 			return bitmap;
 		}
 
-		if (bitmap.getWidth() > bitmap.getHeight()) {
-			int targetWidth = maxSize;
-			int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
-			bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-		}
-		else {
-			int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
-			int targetHeight = maxSize;
-			bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+		if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
+			// Only if bitmap is bigger than maxSize, then resize it.
+			if (bitmap.getWidth() > bitmap.getHeight()) {
+				int targetWidth = maxSize;
+				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
+				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+			}
+			else {
+				int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
+				int targetHeight = maxSize;
+				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+			}
 		}
 
 		int rotation = getExifRotation(path);
