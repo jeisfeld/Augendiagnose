@@ -294,11 +294,13 @@ public class PinchImageView extends ImageView {
 	 */
 	// OVERRIDABLE
 	protected void setMatrix() {
-		Matrix matrix = new Matrix();
-		matrix.setTranslate(-mPosX * mBitmap.getWidth(), -mPosY * mBitmap.getHeight());
-		matrix.postScale(mScaleFactor, mScaleFactor);
-		matrix.postTranslate(getWidth() / 2, getHeight() / 2);
-		setImageMatrix(matrix);
+		if (mBitmap != null) {
+			Matrix matrix = new Matrix();
+			matrix.setTranslate(-mPosX * mBitmap.getWidth(), -mPosY * mBitmap.getHeight());
+			matrix.postScale(mScaleFactor, mScaleFactor);
+			matrix.postTranslate(getWidth() / 2, getHeight() / 2);
+			setImageMatrix(matrix);
+		}
 	}
 
 	/**
@@ -308,9 +310,7 @@ public class PinchImageView extends ImageView {
 	@Override
 	public void requestLayout() {
 		super.requestLayout();
-		if (mBitmap != null) {
-			setMatrix();
-		}
+		setMatrix();
 	}
 
 	/*
