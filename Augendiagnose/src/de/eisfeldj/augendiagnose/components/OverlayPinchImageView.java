@@ -25,8 +25,10 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
@@ -969,6 +971,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @return The bitmap in full resolution.
 	 */
 	private Bitmap createFullResolutionBitmap() {
+		if (mBitmap == null) {
+			return null;
+		}
+
 		float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
 		float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
 		float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
@@ -1042,7 +1048,13 @@ public class OverlayPinchImageView extends PinchImageView {
 			@Override
 			public final void run() {
 				if (mPartialBitmapFullResolution == null) {
-					mPartialBitmapFullResolution = createFullResolutionBitmap();
+					try {
+						mPartialBitmapFullResolution = createFullResolutionBitmap();
+					}
+					catch (OutOfMemoryError e) {
+						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap", e);
+						mPartialBitmapFullResolution = null;
+					}
 
 					if (mPartialBitmapFullResolution == null) {
 						return;
