@@ -311,7 +311,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		commentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				// TODO Auto-generated method stub
 				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
 						imageView.getMetadata().comment);
 			}

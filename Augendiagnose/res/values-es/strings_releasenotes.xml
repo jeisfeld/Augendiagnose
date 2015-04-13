@@ -67,7 +67,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Mostrar imágenes automáticamente en la resolución completa. Nota: Si esta actualización lleva a fallos o baja velocidad de la aplicación en su dispositivo, debe cambiar el ajuste &amp;laquo;Mostrar imagen en alta resolución&amp;raquo;</item>
         <item>Opciones modificadas para su visualización en resolución completa debido a problemas con los dispositivos de memoria baja</item>
         <item>Corrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Habilitado ahorro en la tarjeta SD para Android 5. Corrección de errores</item>
     </string-array>
 
 </resources>

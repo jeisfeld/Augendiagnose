@@ -1,5 +1,13 @@
 package de.eisfeldj.augendiagnose.fragments;
 
+import java.io.File;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -8,17 +16,34 @@ import android.preference.PreferenceManager;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
+import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.JpegSynchronizationUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
+import de.eisfeldj.augendiagnose.util.VersionUtil;
 
 /**
  * Fragment for displaying the settings.
  */
 public class SettingsFragment extends PreferenceFragment {
 	/**
+	 * The requestCode with which the storage access framework is triggered.
+	 */
+	public static final int REQUEST_CODE_STORAGE_ACCESS = 3;
+
+	/**
 	 * Field holding the value of the language preference, in order to detect a real change.
 	 */
 	private String languageString;
+	/**
+	 * Field holding the value of the input folder preference, in order to detect a real change.
+	 */
+	private String folderInput;
+	/**
+	 * Field holding the value of the photo folder preference, in order to detect a real change.
+	 */
+	private String folderPhotos;
 
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
@@ -29,6 +54,8 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// Ensure that default values are set.
 		languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
+		folderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
+		folderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
 
 		bindPreferenceSummaryToValue(R.string.key_folder_input);
 		bindPreferenceSummaryToValue(R.string.key_folder_photos);
@@ -95,6 +122,20 @@ public class SettingsFragment extends PreferenceFragment {
 						SettingsActivity.pushMaxBitmapSize(stringValue);
 					}
 
+					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
+					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
+						if (!folderPhotos.equals(value)) {
+							checkFolder(stringValue);
+							folderPhotos = stringValue;
+						}
+					}
+					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
+						if (!folderInput.equals(value)) {
+							checkFolder(stringValue);
+							folderInput = stringValue;
+						}
+					}
+
 					// Apply change of language
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
 						if (!languageString.equals(value)) {
@@ -111,5 +152,76 @@ public class SettingsFragment extends PreferenceFragment {
 
 					return true;
 				}
+
+				/**
+				 * In Android 5, check the folder for writeability. If not, retrieve Uri vor extsdcard via Storage
+				 * Access Framework.
+				 *
+				 * @param folderName
+				 *            The folder to be checked.
+				 */
+				private void checkFolder(final String folderName) {
+					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folderName)) {
+						// Check writeability
+						File targetFolder = new File(folderName);
+						File dummyFile = new File(targetFolder, "Augendiagnose-Dummy-File");
+						if (
+						// Case 1: Folder does not exist, and cannot be written
+						!targetFolder.exists() && !FileUtil.isWritable(targetFolder)
+								&& !FileUtil.isSafWritable(targetFolder)
+								||
+								// Case 2: Folder exists, and subfiles cannot be written
+								targetFolder.exists() && !FileUtil.isWritable(dummyFile)
+								&& !FileUtil.isSafWritable(dummyFile)
+						) {
+							// Ensure via listener that storage access framework is called only after information
+							// message.
+							MessageDialogListener listener = new MessageDialogListener() {
+								/**
+								 * Default serial version id.
+								 */
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void onDialogClick(final DialogFragment dialog) {
+									triggerStorageAccessFramework();
+								}
+							};
+
+							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard,
+									FileUtil.getExtSdCardFolder(folderName));
+						}
+					}
+				}
+
+				/**
+				 * Trigger the storage access framework to access the base folder of the ext sd card.
+				 *
+				 * @param requestCode
+				 */
+				@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+				private void triggerStorageAccessFramework() {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS);
+				}
 			};
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	@Override
+	public final void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
+		if (requestCode == SettingsFragment.REQUEST_CODE_STORAGE_ACCESS && resultCode == Activity.RESULT_OK) {
+			// Get Uri from Storage Access Framework.
+			Uri treeUri = resultData.getData();
+
+			// Persist access permissions.
+			final int takeFlags = resultData.getFlags()
+					& (Intent.FLAG_GRANT_READ_URI_PERMISSION
+					| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+			getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+
+			// Persist URI.
+			PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, treeUri);
+		}
+	}
+
 }

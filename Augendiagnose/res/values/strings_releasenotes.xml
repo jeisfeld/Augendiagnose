@@ -102,7 +102,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Display automatically in full resolution. Note: If this update leads to crashes or to bad performance of the app on your device, you should change the setting &amp;ldquo;Show image in full resolution&amp;rdquo;</item>
         <item>Changed options for display in full resolution due to issues with low memory devices</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled saving on ext sd card for Android 5. Bugfixes</item>
     </string-array>
 
 </resources>

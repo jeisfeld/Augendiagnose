@@ -8,14 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
@@ -72,6 +77,7 @@ public abstract class FileUtil {
 		try {
 			inStream = new FileInputStream(source);
 
+			// First try the normal way
 			if (isWritable(target)) {
 				// standard way
 				outStream = new FileOutputStream(target);
@@ -80,14 +86,30 @@ public abstract class FileUtil {
 				inChannel.transferTo(0, inChannel.size(), outChannel);
 			}
 			else {
-				// Workaround for Kitkat ext SD card
-				Uri uri = MediaStoreUtil.getUriFromFile(target.getAbsolutePath());
-				outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
-				byte[] buffer = new byte[4096]; // MAGIC_NUMBER
-				int bytesRead;
-				while ((bytesRead = inStream.read(buffer)) != -1) {
-					outStream.write(buffer, 0, bytesRead);
+				if (VersionUtil.isAndroid5()) {
+					// Storage Access Framework
+					DocumentFile targetDocument = getDocumentFile(target, false);
+					outStream =
+							Application.getAppContext().getContentResolver().openOutputStream(targetDocument.getUri());
 				}
+				else if (VersionUtil.isKitkat()) {
+					// Workaround for Kitkat ext SD card
+					Uri uri = MediaStoreUtil.getUriFromFile(target.getAbsolutePath());
+					outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
+				}
+				else {
+					return false;
+				}
+
+				if (outStream != null) {
+					// Both for SAF and for Kitkat, write to output stream.
+					byte[] buffer = new byte[4096]; // MAGIC_NUMBER
+					int bytesRead;
+					while ((bytesRead = inStream.read(buffer)) != -1) {
+						outStream.write(buffer, 0, bytesRead);
+					}
+				}
+
 			}
 		}
 		catch (Exception e) {
@@ -137,18 +159,28 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		// Try via media store.
-		ContentResolver resolver = Application.getAppContext().getContentResolver();
+		// Try with Storage Access Framework.
+		if (VersionUtil.isAndroid5()) {
+			DocumentFile document = getDocumentFile(file, false);
+			return document.delete();
+		}
 
-		try {
-			Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
-			resolver.delete(uri, null, null);
-			return !file.exists();
+		// Try the Kitkat workaround.
+		if (VersionUtil.isKitkat()) {
+			ContentResolver resolver = Application.getAppContext().getContentResolver();
+
+			try {
+				Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
+				resolver.delete(uri, null, null);
+				return !file.exists();
+			}
+			catch (Exception e) {
+				Log.e(Application.TAG, "Error when deleting file " + file.getAbsolutePath(), e);
+				return false;
+			}
 		}
-		catch (Exception e) {
-			Log.e(Application.TAG, "Error when deleting file " + file.getAbsolutePath(), e);
-			return false;
-		}
+
+		return !file.exists();
 	}
 
 	/**
@@ -191,12 +223,24 @@ public abstract class FileUtil {
 			return false;
 		}
 
-		// Try the workaround.
+		// Try the Storage Access Framework if it is just a rename within the same parent folder.
+		if (VersionUtil.isAndroid5() && source.getParent().equals(target.getParent())) {
+			DocumentFile document = getDocumentFile(source, true);
+			if (document.renameTo(target.getName())) {
+				return true;
+			}
+		}
+
+		// Try the manual way, moving files individually.
 		if (!mkdir(target)) {
 			return false;
 		}
 
 		File[] sourceFiles = source.listFiles();
+
+		if (sourceFiles == null) {
+			return true;
+		}
 
 		for (File sourceFile : sourceFiles) {
 			String fileName = sourceFile.getName();
@@ -247,34 +291,45 @@ public abstract class FileUtil {
 			return true;
 		}
 
+		// Try with Storage Access Framework.
+		if (VersionUtil.isAndroid5()) {
+			DocumentFile document = getDocumentFile(file, true);
+			// getDocumentFile implicitly creates the directory.
+			return document.exists();
+		}
+
 		// Try the Kitkat workaround.
-		ContentResolver resolver = Application.getAppContext().getContentResolver();
-		File tempFile = new File(file, "dummyImage.jpg");
+		if (VersionUtil.isKitkat()) {
+			ContentResolver resolver = Application.getAppContext().getContentResolver();
+			File tempFile = new File(file, "dummyImage.jpg");
 
-		File dummySong = copyDummyFiles();
-		int albumId = MediaStoreUtil.getAlbumIdFromAudioFile(dummySong);
-		Uri albumArtUri = Uri.parse("content://media/external/audio/albumart/" + albumId);
+			File dummySong = copyDummyFiles();
+			int albumId = MediaStoreUtil.getAlbumIdFromAudioFile(dummySong);
+			Uri albumArtUri = Uri.parse("content://media/external/audio/albumart/" + albumId);
 
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(MediaStore.MediaColumns.DATA, tempFile.getAbsolutePath());
-		contentValues.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
+			ContentValues contentValues = new ContentValues();
+			contentValues.put(MediaStore.MediaColumns.DATA, tempFile.getAbsolutePath());
+			contentValues.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
 
-		if (resolver.update(albumArtUri, contentValues, null, null) == 0) {
-			resolver.insert(Uri.parse("content://media/external/audio/albumart"), contentValues);
-		}
-		try {
-			ParcelFileDescriptor fd = resolver.openFileDescriptor(albumArtUri, "r");
-			fd.close();
-		}
-		catch (Exception e) {
-			Log.e(Application.TAG, "Could not open file", e);
-			return false;
-		}
-		finally {
-			FileUtil.deleteFile(tempFile);
+			if (resolver.update(albumArtUri, contentValues, null, null) == 0) {
+				resolver.insert(Uri.parse("content://media/external/audio/albumart"), contentValues);
+			}
+			try {
+				ParcelFileDescriptor fd = resolver.openFileDescriptor(albumArtUri, "r");
+				fd.close();
+			}
+			catch (Exception e) {
+				Log.e(Application.TAG, "Could not open file", e);
+				return false;
+			}
+			finally {
+				FileUtil.deleteFile(tempFile);
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -292,7 +347,8 @@ public abstract class FileUtil {
 		if (!file.isDirectory()) {
 			return false;
 		}
-		if (file.list() != null && file.list().length > 0) {
+		String[] fileList = file.list();
+		if (fileList != null && fileList.length > 0) {
 			// Delete only empty folder.
 			return false;
 		}
@@ -302,14 +358,23 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		ContentResolver resolver = Application.getAppContext().getContentResolver();
-		ContentValues values = new ContentValues();
-		values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
-		resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+		// Try with Storage Access Framework.
+		if (VersionUtil.isAndroid5()) {
+			DocumentFile document = getDocumentFile(file, true);
+			return document.delete();
+		}
 
-		// Delete the created entry, such that content provider will delete the file.
-		resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
-				new String[] { file.getAbsolutePath() });
+		// Try the Kitkat workaround.
+		if (VersionUtil.isKitkat()) {
+			ContentResolver resolver = Application.getAppContext().getContentResolver();
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+			resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+			// Delete the created entry, such that content provider will delete the file.
+			resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
+					new String[] { file.getAbsolutePath() });
+		}
 
 		return !file.exists();
 	}
@@ -384,6 +449,8 @@ public abstract class FileUtil {
 	 * @return true if the file is writable.
 	 */
 	public static final boolean isWritable(final File file) {
+		boolean isExisting = file.exists();
+
 		try {
 			FileOutputStream output = new FileOutputStream(file, true);
 			try {
@@ -396,11 +463,165 @@ public abstract class FileUtil {
 		catch (FileNotFoundException e) {
 			return false;
 		}
-		return file.canWrite();
+		boolean result = file.canWrite();
+
+		// Ensure that file is not created during this process.
+		if (!isExisting) {
+			file.delete();
+		}
+
+		return result;
+	}
+
+	// Utility methods for Android 5
+
+	/**
+	 * Check is a file is writable via storage access framework.
+	 *
+	 * @param file
+	 *            The file
+	 * @return true if the file is writable.
+	 */
+	public static final boolean isSafWritable(final File file) {
+		boolean isExisting = file.exists();
+
+		DocumentFile document = getDocumentFile(file, false);
+
+		if (document == null) {
+			return false;
+		}
+
+		boolean result = document.canWrite();
+
+		// Ensure that file is not created during this process.
+		if (!isExisting) {
+			document.delete();
+		}
+
+		return result;
 	}
 
 	/**
-	 * Copy a resource file into a private target directory, if the target does not yet exist.
+	 * Get a list of external SD card paths. (Kitkat or higher.)
+	 *
+	 * @return A list of external SD card paths.
+	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	private static String[] getExtSdCardPaths() {
+		List<String> paths = new ArrayList<String>();
+		for (File file : Application.getAppContext().getExternalFilesDirs("external")) {
+			if (!file.equals(Application.getAppContext().getExternalFilesDir("external"))) {
+				int index = file.getAbsolutePath().lastIndexOf("/Android/data");
+				if (index < 0) {
+					Log.w(Application.TAG, "Unexpected external file dir: " + file.getAbsolutePath());
+				}
+				else {
+					String path = file.getAbsolutePath().substring(0, index);
+					try {
+						path = new File(path).getCanonicalPath();
+					}
+					catch (IOException e) {
+						// Keep non-canonical path.
+					}
+					paths.add(path);
+				}
+			}
+		}
+		return paths.toArray(new String[0]);
+	}
+
+	/**
+	 * Determine the main folder of the external SD card containing the given file.
+	 *
+	 * @param fileName
+	 *            the name of the file.
+	 * @return The main folder of the external SD card containing this file, if the file is on an SD card. Otherwise,
+	 *         null is returned.
+	 */
+	public static String getExtSdCardFolder(final String fileName) {
+		String[] extSdPaths = getExtSdCardPaths();
+		try {
+			for (int i = 0; i < extSdPaths.length; i++) {
+				if (new File(fileName).getCanonicalPath().startsWith(extSdPaths[i])) {
+					return extSdPaths[i];
+				}
+			}
+		}
+		catch (IOException e) {
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * Determine if a file is on external sd card. (Kitkat or higher.)
+	 *
+	 * @param fileName
+	 *            The path of the file.
+	 * @return true if on external sd card.
+	 */
+	public static boolean isOnExtSdCard(final String fileName) {
+		return getExtSdCardFolder(fileName) != null;
+	}
+
+	/**
+	 * Get a DocumentFile corresponding to the given file (for writing on ExtSdCard on Android 5). If the file is not
+	 * existing, it is created.
+	 *
+	 * @param file
+	 *            The file.
+	 * @param isDirectory
+	 *            flag indicating if the file should be a directory.
+	 * @return The DocumentFile
+	 */
+	public static DocumentFile getDocumentFile(final File file, final boolean isDirectory) {
+		String baseFolder = getExtSdCardFolder(file.getAbsolutePath());
+
+		if (baseFolder == null) {
+			return null;
+		}
+
+		String relativePath = null;
+		try {
+			String fullPath = file.getCanonicalPath();
+			relativePath = fullPath.substring(baseFolder.length() + 1);
+		}
+		catch (IOException e) {
+			return null;
+		}
+
+		Uri treeUri = PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard);
+
+		if (treeUri == null) {
+			return null;
+		}
+
+		// start with root of SD card and then parse through document tree.
+		DocumentFile document = DocumentFile.fromTreeUri(Application.getAppContext(), treeUri);
+
+		String[] parts = relativePath.split("\\/");
+		for (int i = 0; i < parts.length; i++) {
+			DocumentFile nextDocument = document.findFile(parts[i]);
+
+			if (nextDocument == null) {
+				if ((i < parts.length - 1) || isDirectory) {
+					nextDocument = document.createDirectory(parts[i]);
+				}
+				else {
+					nextDocument = document.createFile("image", parts[i]);
+				}
+			}
+			document = nextDocument;
+		}
+
+		return document;
+	}
+
+	// Utility methods for Kitkat
+
+	/**
+	 * Copy a resource file into a private target directory, if the target does not yet exist. Required for the Kitkat
+	 * workaround.
 	 *
 	 * @param resource
 	 *            The resource file.
@@ -454,7 +675,7 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * Copy the dummy image and dummy mp3 into the private folder, if not yet there.
+	 * Copy the dummy image and dummy mp3 into the private folder, if not yet there. Required for the Kitkat workaround.
 	 *
 	 * @return the dummy mp3.
 	 */

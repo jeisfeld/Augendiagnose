@@ -12,6 +12,7 @@
     <string name="title_activity_select_two_pictures">Seleccionar dos nuevas fotos</string>
     <string name="title_dialog_change_name">Cambiar nombre</string>
     <string name="title_dialog_error">Error</string>
+    <string name="title_dialog_info">Información</string>
     <string name="title_dialog_confirmation">Confirmación</string>
     <string name="title_dialog_select_folder">Seleccionar carpeta</string>
     <string name="title_settings">Ajustes</string>
@@ -35,6 +36,7 @@
     <string name="message_dialog_failed_to_change_date">No se pudo cambiar la fecha para las fotos de %1$s de %2$s a %3$s</string>
     <string name="message_dialog_failed_to_store_metadata">No se ha podido almacenar los metadatos en el archivo %1$s</string>
     <string name="message_dialog_failed_to_store_exif">No se ha podido almacenar los EXIF metadatos en el archivo %1$s - por favor póngase en contacto con el productor.</string>
+    <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (no una subcarpeta, pero la carpeta principal \&quot;%1$s\&quot;) y confirme en la parte inferior.</string>
     <string name="message_dialog_unformatted_file">El archivo %1$s no está formateado correctamente</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi no está instalado</string>
     <string name="message_dialog_confirm_delete_date">¿Realmente desea borrar las fotos de %1$s de %2$s?</string>
@@ -50,7 +52,7 @@
     <string name="button_open_eyefi_app">Abrir aplicación Eye-Fi</string>
     <string name="button_display_pictures">Visualizar las fotos</string>
     <string name="button_organize_new_photos">Organizar nuevas fotos</string>
-    <string name="button_ok">Aceptar</string>
+    <string name="button_ok">OK</string>
     <string name="button_back">Atrás</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_clear">Borrar</string>

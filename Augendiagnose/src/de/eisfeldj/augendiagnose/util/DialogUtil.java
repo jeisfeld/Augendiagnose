@@ -14,11 +14,16 @@ import android.widget.Toast;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
+import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 
 /**
  * Helper class to show standard dialogs.
  */
 public abstract class DialogUtil {
+	/**
+	 * Parameter to pass the title to the DialogFragment.
+	 */
+	private static final String PARAM_TITLE = "title";
 	/**
 	 * Parameter to pass the message to the DialogFragment (of all types).
 	 */
@@ -33,7 +38,33 @@ public abstract class DialogUtil {
 	private static final String PARAM_LISTENER = "listener";
 
 	/**
-	 * Display an error and go back to the current activity.
+	 * Display an information message and go back to the current activity.
+	 *
+	 * @param activity
+	 *            the current activity
+	 * @param listener
+	 *            an optional listener waiting for the dialog response.
+	 * @param resource
+	 *            the error message
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayInfo(final Activity activity, final MessageDialogListener listener, final int resource,
+			final Object... args) {
+		DialogFragment fragment = new DisplayMessageDialogFragment();
+		String message = String.format(activity.getString(resource), args);
+		Bundle bundle = new Bundle();
+		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_info));
+		if (listener != null) {
+			bundle.putSerializable(PARAM_LISTENER, listener);
+		}
+		fragment.setArguments(bundle);
+		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+	}
+
+	/**
+	 * Display an error and either go back to the current activity or finish the current activity.
 	 *
 	 * @param activity
 	 *            the current activity
@@ -51,12 +82,13 @@ public abstract class DialogUtil {
 			fragment = new DisplayErrorDialogAndReturnFragment();
 		}
 		else {
-			fragment = new DisplayErrorDialogFragment();
+			fragment = new DisplayMessageDialogFragment();
 		}
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
 		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_error));
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -101,23 +133,43 @@ public abstract class DialogUtil {
 		bundle.putInt(PARAM_BUTTON_RESOURCE, buttonResource);
 		bundle.putSerializable(PARAM_LISTENER, listener);
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), DisplayErrorDialogFragment.class.toString());
+		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
 
 	/**
 	 * Fragment to display an error and go back to the current activity.
 	 */
-	public static class DisplayErrorDialogFragment extends DialogFragment {
+	public static class DisplayMessageDialogFragment extends DialogFragment {
+		/**
+		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
+		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
+		 */
+		public interface MessageDialogListener extends Serializable {
+			/**
+			 * Callback method for ok click from the dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogClick(final DialogFragment dialog);
+		}
+
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString(PARAM_MESSAGE);
+			String title = getArguments().getString(PARAM_TITLE);
+			final MessageDialogListener listener = (MessageDialogListener) getArguments().getSerializable(
+					PARAM_LISTENER);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.title_dialog_error) //
+			builder.setTitle(title) //
 					.setMessage(message) //
-					.setPositiveButton(R.string.button_back, new DialogInterface.OnClickListener() {
+					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
+							if (listener != null) {
+								listener.onDialogClick(DisplayMessageDialogFragment.this);
+							}
 							dialog.dismiss();
 						}
 					});
