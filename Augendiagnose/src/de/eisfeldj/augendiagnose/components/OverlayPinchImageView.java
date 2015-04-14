@@ -997,25 +997,31 @@ public class OverlayPinchImageView extends PinchImageView {
 		int offsetMaxX = Math.round(Math.max(rightX - mBitmap.getWidth(), 0) * mScaleFactor);
 		int offsetMaxY = Math.round(Math.max(lowerY - mBitmap.getHeight(), 0) * mScaleFactor);
 
-		Bitmap bitmapFull = mBitmapFull;
-		if (bitmapFull == null) {
-			bitmapFull = mEyePhoto.getFullBitmap();
-			if (mFullResolutionFlag) {
-				mBitmapFull = bitmapFull;
+		try {
+			Bitmap bitmapFull = mBitmapFull;
+			if (bitmapFull == null) {
+				bitmapFull = mEyePhoto.getFullBitmap();
+				if (mFullResolutionFlag) {
+					mBitmapFull = bitmapFull;
+				}
 			}
+			Bitmap partialBitmap =
+					ImageUtil.getPartialBitmap(bitmapFull, minX, maxX, minY, maxY);
+			Bitmap scaledPartialBitmap =
+					Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
+							- offsetMaxY
+							- offsetY, false);
+
+			Bitmap bitmapFullResolution = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(bitmapFullResolution);
+			canvas.drawBitmap(scaledPartialBitmap, offsetX, offsetY, null);
+
+			return bitmapFullResolution;
 		}
-		Bitmap partialBitmap =
-				ImageUtil.getPartialBitmap(bitmapFull, minX, maxX, minY, maxY);
-		Bitmap scaledPartialBitmap =
-				Bitmap.createScaledBitmap(partialBitmap, getWidth() - offsetMaxX - offsetX, getHeight()
-						- offsetMaxY
-						- offsetY, false);
-
-		Bitmap bitmapFullResolution = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(bitmapFullResolution);
-		canvas.drawBitmap(scaledPartialBitmap, offsetX, offsetY, null);
-
-		return bitmapFullResolution;
+		catch (Exception e) {
+			// NullPointerExceptions might occur in parallel scenarios.
+			return null;
+		}
 	}
 
 	/**
