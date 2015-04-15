@@ -491,7 +491,8 @@ public abstract class FileUtil {
 			return false;
 		}
 
-		boolean result = document.canWrite();
+		// Check also if really the expected file has been created.
+		boolean result = document.canWrite() && file.exists();
 
 		// Ensure that file is not created during this process.
 		if (!isExisting) {
