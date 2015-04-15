@@ -136,7 +136,9 @@
 	<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
 
 	<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
-		(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.</p>
+		(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.
+		En Android 5, al seleccionar una carpeta en la tarjeta SD, usted tendrá que conceder derechos de acceso a la tarjeta
+		SD a través del &laquo;Storage Access Framework&raquo; de Android.</p>
 
 	<h3>Última foto es ojo derecho</h3>
 

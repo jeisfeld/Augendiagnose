@@ -143,7 +143,9 @@
 	<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
 
 	<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der SD-Karte wählen. Unter Android 4.4
-		(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger.</p>
+		(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger. In
+		Android 5 müssen Sie bei der Auswahl eines Verzeichnisses der SD-Karte zunächst der App den Zugriff auf die SD-Karte
+		gewähren (mittels des Storage Access Frameworks von Android).</p>
 
 	<h3>Letztes Foto ist rechtes Auge</h3>
 

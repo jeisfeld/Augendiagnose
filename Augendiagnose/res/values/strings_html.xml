@@ -136,8 +136,9 @@
 
 	<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
 
-	<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on
-		SD card has some limitations, therefore some operations will take longer.</p>
+	<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on SD
+		card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on SD
+		card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p>
 
 	<h3>Last photo is right eye</h3>
 
