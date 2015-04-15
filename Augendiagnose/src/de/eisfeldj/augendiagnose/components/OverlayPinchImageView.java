@@ -188,6 +188,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private boolean mFullResolutionFlag;
 
+	/**
+	 * The retain fragment.
+	 */
+	private RetainFragment mRetainFragment;
+
 	// JAVADOC:OFF
 	/**
 	 * Standard constructor to be implemented for all views.
@@ -234,9 +239,10 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
+		mRetainFragment = retainFragment;
 		mBitmap = retainFragment.getBitmap();
 		mBitmapSmall = retainFragment.getBitmapSmall();
-		mBitmapFull = null;
+		mBitmapFull = retainFragment.getBitmapFullResolution();
 		mPartialBitmapFullResolution = null;
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
@@ -1003,6 +1009,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				bitmapFull = mEyePhoto.getFullBitmap();
 				if (mFullResolutionFlag) {
 					mBitmapFull = bitmapFull;
+					mRetainFragment.setBitmapFullResolution(bitmapFull);
 				}
 			}
 			Bitmap partialBitmap =
@@ -1200,6 +1207,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void cleanFullBitmap() {
 		mBitmapFull = null;
+		mRetainFragment.setBitmapFullResolution(null);
 	}
 
 	/*
@@ -1335,6 +1343,19 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		private void setBitmapSmall(final Bitmap bitmapSmall) {
 			this.bitmapSmall = bitmapSmall;
+		}
+
+		/**
+		 * The full resolution bitmap.
+		 */
+		private Bitmap bitmapFullResolution;
+
+		private Bitmap getBitmapFullResolution() {
+			return bitmapFullResolution;
+		}
+
+		private void setBitmapFullResolution(final Bitmap bitmapFullResolution) {
+			this.bitmapFullResolution = bitmapFullResolution;
 		}
 
 		/**
