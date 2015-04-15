@@ -153,7 +153,27 @@ public abstract class PreferenceUtil {
 	/**
 	 * Set the default setting for handling of full resolution, if no value is set.
 	 */
-	public static void setFullResolutionSetting() {
+	public static void setDefaultResolutionSettings() {
+		// Max bitmap size
+		String maxBitmapSize = getSharedPreferenceString(R.string.key_max_bitmap_size);
+
+		if (maxBitmapSize == null || maxBitmapSize.length() == 0) {
+			ActivityManager manager =
+					(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+			// Only if 512 MB are accessible, then full resolution image should be stored.
+			int memoryClass = manager.getLargeMemoryClass();
+			if (memoryClass >= 256) { // MAGIC_NUMBER
+				maxBitmapSize = "2048";
+			}
+			else {
+				maxBitmapSize = "1024";
+			}
+
+			setSharedPreferenceString(R.string.key_max_bitmap_size, maxBitmapSize);
+		}
+
+		// Full resolution setting
 		String fullResolutionSetting = getSharedPreferenceString(R.string.key_full_resolution);
 
 		if (fullResolutionSetting == null || fullResolutionSetting.length() == 0) {

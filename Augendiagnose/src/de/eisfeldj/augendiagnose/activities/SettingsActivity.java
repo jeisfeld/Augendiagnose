@@ -18,15 +18,6 @@ import de.eisfeldj.augendiagnose.util.PreferenceUtil;
  */
 public class SettingsActivity extends BaseActivity {
 	/**
-	 * Minimum value of maxBitmapSize.
-	 */
-	private static final int MIN_MAX_BITMAP_SIZE = 512;
-	/**
-	 * Minimum value of maxBitmapSize.
-	 */
-	private static final int MAX_MAX_BITMAP_SIZE = 4096;
-
-	/**
 	 * Tag to be replaced by the external storage root.
 	 */
 	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
@@ -102,8 +93,8 @@ public class SettingsActivity extends BaseActivity {
 					Application.getAppContext().getString(R.string.pref_default_store_options));
 		}
 
-		// Delta setting for full resolution setting - required after upgrade to version 0.5.1
-		PreferenceUtil.setFullResolutionSetting();
+		// Delta setting for full resolution setting and for max bitmap size - dependent on available memory.
+		PreferenceUtil.setDefaultResolutionSettings();
 
 		// Inform PinchImageView about maxBitmapSize
 		pushMaxBitmapSize(PreferenceUtil.getSharedPreferenceString(R.string.key_max_bitmap_size));
@@ -117,22 +108,7 @@ public class SettingsActivity extends BaseActivity {
 	 * @return the maxBitmapSize
 	 */
 	public static int pushMaxBitmapSize(final String value) {
-		int maxBitmapSize;
-		try {
-			maxBitmapSize = Integer.parseInt(value);
-			if (maxBitmapSize < MIN_MAX_BITMAP_SIZE) {
-				maxBitmapSize = MIN_MAX_BITMAP_SIZE;
-			}
-			if (maxBitmapSize > MAX_MAX_BITMAP_SIZE) {
-				maxBitmapSize = MAX_MAX_BITMAP_SIZE;
-			}
-		}
-		catch (NumberFormatException e) {
-			// Override preference with default value
-			String defaultMaxBitmapSize = Application.getAppContext().getString(R.string.pref_default_max_bitmap_size);
-			PreferenceUtil.setSharedPreferenceString(R.string.key_max_bitmap_size, defaultMaxBitmapSize);
-			maxBitmapSize = Integer.parseInt(defaultMaxBitmapSize);
-		}
+		int maxBitmapSize = Integer.parseInt(value);
 		PinchImageView.setMaxBitmapSize(maxBitmapSize);
 		return maxBitmapSize;
 	}
