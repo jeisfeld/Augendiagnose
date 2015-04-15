@@ -70,6 +70,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Änderung des Verhaltens hinsichtlich automatischer Anzeige in voller Auflösung aufgrund von Problemen bei Geräten mit geringem Speicher.</item>
         <item>Bugfixes</item>
         <item>Speichern der Daten auf externer SD-Karte in Android 5. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
