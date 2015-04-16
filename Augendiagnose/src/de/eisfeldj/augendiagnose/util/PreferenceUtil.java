@@ -94,7 +94,12 @@ public abstract class PreferenceUtil {
 	 */
 	public static void setSharedPreferenceUri(final int preferenceId, final Uri uri) {
 		Editor editor = getSharedPreferences().edit();
-		editor.putString(Application.getAppContext().getString(preferenceId), uri.toString());
+		if (uri == null) {
+			editor.putString(Application.getAppContext().getString(preferenceId), null);
+		}
+		else {
+			editor.putString(Application.getAppContext().getString(preferenceId), uri.toString());
+		}
 		editor.commit();
 	}
 

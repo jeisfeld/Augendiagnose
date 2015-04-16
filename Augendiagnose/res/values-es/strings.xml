@@ -21,6 +21,7 @@
     <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles para %1$s</string>
     <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
+    <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente o asegúrese de conceder derechos de acceso a la tarjeta SD.</string>
     <string name="message_dialog_folder_does_not_exist">Carpeta %1$s no existe. Por favor, verifique las ajustes.</string>
     <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización.</string>
     <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>

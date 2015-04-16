@@ -45,6 +45,17 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private String folderPhotos;
 
+	/**
+	 * Field for temporarily storing the key which is currently processed. This is required while handling Storage
+	 * Access Framework.
+	 */
+	private String currentKey;
+
+	/**
+	 * Field for temporarily storing the folder used for Storage Access Framework.
+	 */
+	private File currentFolder;
+
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -125,14 +136,16 @@ public class SettingsFragment extends PreferenceFragment {
 					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
 						if (!folderPhotos.equals(value)) {
-							checkFolder(stringValue);
-							folderPhotos = stringValue;
+							currentKey = preference.getKey();
+							currentFolder = new File(stringValue);
+							checkFolder(currentFolder);
 						}
 					}
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
 						if (!folderInput.equals(value)) {
-							checkFolder(stringValue);
-							folderInput = stringValue;
+							currentKey = preference.getKey();
+							currentFolder = new File(stringValue);
+							checkFolder(currentFolder);
 						}
 					}
 
@@ -160,20 +173,13 @@ public class SettingsFragment extends PreferenceFragment {
 				 * @param folderName
 				 *            The folder to be checked.
 				 */
-				private void checkFolder(final String folderName) {
-					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folderName)) {
-						// Check writeability
-						File targetFolder = new File(folderName);
-						File dummyFile = new File(targetFolder, "Augendiagnose-Dummy-File");
-						if (
-						// Case 1: Folder does not exist, and cannot be written
-						!targetFolder.exists() && !FileUtil.isWritable(targetFolder)
-								&& !FileUtil.isSafWritable(targetFolder)
-								||
-								// Case 2: Folder exists, and subfiles cannot be written
-								targetFolder.exists() && !FileUtil.isWritable(dummyFile)
-								&& !FileUtil.isSafWritable(dummyFile)
-						) {
+				private void checkFolder(final File folder) {
+					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
+						if (!folder.exists() || !folder.isDirectory()) {
+							return;
+						}
+
+						if (!FileUtil.isWritableNormalOrSaf(folder)) {
 							// Ensure via listener that storage access framework is called only after information
 							// message.
 							MessageDialogListener listener = new MessageDialogListener() {
@@ -189,7 +195,7 @@ public class SettingsFragment extends PreferenceFragment {
 							};
 
 							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard,
-									FileUtil.getExtSdCardFolder(folderName));
+									FileUtil.getExtSdCardFolder(folder));
 						}
 					}
 				}
@@ -206,12 +212,53 @@ public class SettingsFragment extends PreferenceFragment {
 				}
 			};
 
+	/*
+	 * After triggering the Storage Access Framework, ensure that folder is really writable. Set preferences
+	 * accordingly.
+	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	public final void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
-		if (requestCode == SettingsFragment.REQUEST_CODE_STORAGE_ACCESS && resultCode == Activity.RESULT_OK) {
-			// Get Uri from Storage Access Framework.
-			Uri treeUri = resultData.getData();
+		if (requestCode == SettingsFragment.REQUEST_CODE_STORAGE_ACCESS) {
+			Uri oldUri = PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard);
+
+			Uri treeUri = null;
+			if (resultCode == Activity.RESULT_OK) {
+				// Get Uri from Storage Access Framework.
+				treeUri = resultData.getData();
+				// Persist URI - this is required for verification of writability.
+				PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, treeUri);
+			}
+
+			// If not confirmed SAF, or if still not writable, then revert settings.
+			if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(currentFolder)) {
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
+						currentFolder);
+
+				// revert settings
+				if (currentKey.equals(getActivity().getString(R.string.key_folder_photos))) {
+					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, folderPhotos);
+					bindPreferenceSummaryToValue(R.string.key_folder_photos);
+				}
+				if (currentKey.equals(getActivity().getString(R.string.key_folder_input))) {
+					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, folderInput);
+					bindPreferenceSummaryToValue(R.string.key_folder_input);
+				}
+				currentKey = null;
+				currentFolder = null;
+				PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, oldUri);
+				return;
+			}
+
+			// After confirmation, update stored value of folder.
+			if (currentKey.equals(getActivity().getString(R.string.key_folder_photos))) {
+				folderPhotos = currentFolder.getAbsolutePath();
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, folderPhotos);
+			}
+			if (currentKey.equals(getActivity().getString(R.string.key_folder_input))) {
+				folderInput = currentFolder.getAbsolutePath();
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, folderInput);
+			}
 
 			// Persist access permissions.
 			final int takeFlags = resultData.getFlags()
@@ -219,8 +266,6 @@ public class SettingsFragment extends PreferenceFragment {
 					| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 			getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
 
-			// Persist URI.
-			PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, treeUri);
 		}
 	}
 

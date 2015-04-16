@@ -476,28 +476,45 @@ public abstract class FileUtil {
 	// Utility methods for Android 5
 
 	/**
-	 * Check is a file is writable via storage access framework.
+	 * Check for a directory if it is possible to create files within this directory, either via normal writing or via
+	 * Storage Access Framework.
 	 *
-	 * @param file
-	 *            The file
-	 * @return true if the file is writable.
+	 * @param folder
+	 *            The directory
+	 * @return true if it is possible to write in this directory.
 	 */
-	public static final boolean isSafWritable(final File file) {
-		boolean isExisting = file.exists();
+	public static final boolean isWritableNormalOrSaf(final File folder) {
+		// Verify that this is a directory.
+		if (!folder.exists() || !folder.isDirectory()) {
+			return false;
+		}
 
+		// Find a non-existing file in this directory.
+		int i = 0;
+		File file;
+		do {
+			String fileName = "AugendiagnoseDummyFile" + (++i);
+			file = new File(folder, fileName);
+		}
+		while (file.exists());
+
+		// First check regular writability
+		if (isWritable(file)) {
+			return true;
+		}
+
+		// Next check SAF writability.
 		DocumentFile document = getDocumentFile(file, false);
 
 		if (document == null) {
 			return false;
 		}
 
-		// Check also if really the expected file has been created.
+		// This should have created the file - otherwise something is wrong with access URL.
 		boolean result = document.canWrite() && file.exists();
 
-		// Ensure that file is not created during this process.
-		if (!isExisting) {
-			document.delete();
-		}
+		// Ensure that the dummy file is not remaining.
+		document.delete();
 
 		return result;
 	}
@@ -534,16 +551,16 @@ public abstract class FileUtil {
 	/**
 	 * Determine the main folder of the external SD card containing the given file.
 	 *
-	 * @param fileName
-	 *            the name of the file.
+	 * @param file
+	 *            the file.
 	 * @return The main folder of the external SD card containing this file, if the file is on an SD card. Otherwise,
 	 *         null is returned.
 	 */
-	public static String getExtSdCardFolder(final String fileName) {
+	public static String getExtSdCardFolder(final File file) {
 		String[] extSdPaths = getExtSdCardPaths();
 		try {
 			for (int i = 0; i < extSdPaths.length; i++) {
-				if (new File(fileName).getCanonicalPath().startsWith(extSdPaths[i])) {
+				if (file.getCanonicalPath().startsWith(extSdPaths[i])) {
 					return extSdPaths[i];
 				}
 			}
@@ -557,12 +574,12 @@ public abstract class FileUtil {
 	/**
 	 * Determine if a file is on external sd card. (Kitkat or higher.)
 	 *
-	 * @param fileName
-	 *            The path of the file.
+	 * @param file
+	 *            The file.
 	 * @return true if on external sd card.
 	 */
-	public static boolean isOnExtSdCard(final String fileName) {
-		return getExtSdCardFolder(fileName) != null;
+	public static boolean isOnExtSdCard(final File file) {
+		return getExtSdCardFolder(file) != null;
 	}
 
 	/**
@@ -576,7 +593,7 @@ public abstract class FileUtil {
 	 * @return The DocumentFile
 	 */
 	public static DocumentFile getDocumentFile(final File file, final boolean isDirectory) {
-		String baseFolder = getExtSdCardFolder(file.getAbsolutePath());
+		String baseFolder = getExtSdCardFolder(file);
 
 		if (baseFolder == null) {
 			return null;
