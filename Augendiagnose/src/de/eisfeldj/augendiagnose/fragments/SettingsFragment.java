@@ -88,8 +88,7 @@ public class SettingsFragment extends PreferenceFragment {
 		// Set the listener to watch for value changes.
 		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
-		// Trigger the listener immediately with the preference's
-		// current value.
+		// Trigger the listener immediately with the preference's current value.
 		sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
 				.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
 	}
@@ -112,21 +111,7 @@ public class SettingsFragment extends PreferenceFragment {
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
 					String stringValue = value.toString();
-
-					if (preference.getClass().equals(ListPreference.class)) {
-						// For list preferences (except customized ones), look up the correct display value in
-						// the preference's 'entries' list.
-						ListPreference listPreference = (ListPreference) preference;
-						int index = listPreference.findIndexOfValue(stringValue);
-
-						preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
-					}
-					else {
-						// For all other preferences, set the summary to the value's
-						// simple string representation.
-						preference.setSummary(stringValue);
-
-					}
+					boolean acceptChange = true;
 
 					// For maxBitmapSize, check format and inform PinchImageView
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
@@ -134,23 +119,23 @@ public class SettingsFragment extends PreferenceFragment {
 					}
 
 					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
-					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
+					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
 						if (!folderPhotos.equals(value)) {
 							currentKey = preference.getKey();
 							currentFolder = new File(stringValue);
-							checkFolder(currentFolder);
+							acceptChange = checkFolder(currentFolder);
 						}
 					}
-					if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
+					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
 						if (!folderInput.equals(value)) {
 							currentKey = preference.getKey();
 							currentFolder = new File(stringValue);
-							checkFolder(currentFolder);
+							acceptChange = checkFolder(currentFolder);
 						}
 					}
 
 					// Apply change of language
-					if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
+					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
 						if (!languageString.equals(value)) {
 							Application.setLanguage();
 							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
@@ -163,22 +148,42 @@ public class SettingsFragment extends PreferenceFragment {
 						}
 					}
 
-					return true;
+					// set summary
+					if (acceptChange) {
+						if (preference.getClass().equals(ListPreference.class)) {
+							// For list preferences (except customized ones), look up the correct display value in
+							// the preference's 'entries' list.
+							ListPreference listPreference = (ListPreference) preference;
+							int index = listPreference.findIndexOfValue(stringValue);
+
+							preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
+						}
+						else {
+							// For all other preferences, set the summary to the value's
+							// simple string representation.
+							preference.setSummary(stringValue);
+						}
+					}
+
+					return acceptChange;
 				}
 
 				/**
-				 * In Android 5, check the folder for writeability. If not, retrieve Uri vor extsdcard via Storage
+				 * Check the folder for writeability. If not, then on Android 5 retrieve Uri for extsdcard via Storage
 				 * Access Framework.
 				 *
 				 * @param folderName
 				 *            The folder to be checked.
+				 *
+				 * @return true if the check was successful or if SAF has been triggered.
 				 */
-				private void checkFolder(final File folder) {
+				private boolean checkFolder(final File folder) {
 					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
 						if (!folder.exists() || !folder.isDirectory()) {
-							return;
+							return false;
 						}
 
+						// On Android 5, trigger storage access framework.
 						if (!FileUtil.isWritableNormalOrSaf(folder)) {
 							// Ensure via listener that storage access framework is called only after information
 							// message.
@@ -197,6 +202,22 @@ public class SettingsFragment extends PreferenceFragment {
 							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard,
 									FileUtil.getExtSdCardFolder(folder));
 						}
+						return true;
+					}
+					else if (VersionUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
+						// Assume that Kitkat workaround works
+						return true;
+					}
+					else if (FileUtil.isWritable(new File(folder, "DummyFile"))) {
+						return true;
+					}
+					else {
+						DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
+								currentFolder);
+
+						currentKey = null;
+						currentFolder = null;
+						return false;
 					}
 				}
 
@@ -232,17 +253,17 @@ public class SettingsFragment extends PreferenceFragment {
 
 			// If not confirmed SAF, or if still not writable, then revert settings.
 			if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(currentFolder)) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false,
 						currentFolder);
 
 				// revert settings
 				if (currentKey.equals(getActivity().getString(R.string.key_folder_photos))) {
 					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, folderPhotos);
-					bindPreferenceSummaryToValue(R.string.key_folder_photos);
+					findPreference(getString(R.string.key_folder_photos)).setSummary(folderPhotos);
 				}
 				if (currentKey.equals(getActivity().getString(R.string.key_folder_input))) {
 					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, folderInput);
-					bindPreferenceSummaryToValue(R.string.key_folder_input);
+					findPreference(getString(R.string.key_folder_input)).setSummary(folderInput);
 				}
 				currentKey = null;
 				currentFolder = null;

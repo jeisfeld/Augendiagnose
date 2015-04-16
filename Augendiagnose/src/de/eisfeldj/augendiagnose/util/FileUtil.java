@@ -556,6 +556,7 @@ public abstract class FileUtil {
 	 * @return The main folder of the external SD card containing this file, if the file is on an SD card. Otherwise,
 	 *         null is returned.
 	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static String getExtSdCardFolder(final File file) {
 		String[] extSdPaths = getExtSdCardPaths();
 		try {
@@ -578,6 +579,7 @@ public abstract class FileUtil {
 	 *            The file.
 	 * @return true if on external sd card.
 	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static boolean isOnExtSdCard(final File file) {
 		return getExtSdCardFolder(file) != null;
 	}
