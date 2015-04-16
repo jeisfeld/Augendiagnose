@@ -67,6 +67,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.3</item>
         <item>0.5.4</item>
         <item>0.5.5</item>
+        <item>0.5.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -104,6 +105,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Changed options for display in full resolution due to issues with low memory devices</item>
         <item>Bugfixes</item>
         <item>Enabled saving on ext sd card for Android 5. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
