@@ -29,6 +29,10 @@ public abstract class DialogUtil {
 	 */
 	private static final String PARAM_MESSAGE = "message";
 	/**
+	 * Parameter to pass the icon to the DialogFragment (of all types).
+	 */
+	private static final String PARAM_ICON = "icon";
+	/**
 	 * Parameter to pass the text resource for the confirmation button to the ConfirmDialogFragment.
 	 */
 	private static final String PARAM_BUTTON_RESOURCE = "buttonResource";
@@ -56,6 +60,7 @@ public abstract class DialogUtil {
 		Bundle bundle = new Bundle();
 		bundle.putString(PARAM_MESSAGE, message);
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_info));
+		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
 		if (listener != null) {
 			bundle.putSerializable(PARAM_LISTENER, listener);
 		}
@@ -89,6 +94,7 @@ public abstract class DialogUtil {
 		Bundle bundle = new Bundle();
 		bundle.putString(PARAM_MESSAGE, message);
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_error));
+		bundle.putInt(PARAM_ICON, R.drawable.ic_title_error);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -158,11 +164,14 @@ public abstract class DialogUtil {
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			String message = getArguments().getString(PARAM_MESSAGE);
 			String title = getArguments().getString(PARAM_TITLE);
+			int iconResource = getArguments().getInt(PARAM_ICON);
+
 			final MessageDialogListener listener = (MessageDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(title) //
+					.setIcon(iconResource) //
 					.setMessage(message) //
 					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
@@ -173,7 +182,8 @@ public abstract class DialogUtil {
 							dialog.dismiss();
 						}
 					});
-			return builder.create();
+			Dialog dialog = builder.create();
+			return dialog;
 		}
 	}
 
@@ -187,8 +197,9 @@ public abstract class DialogUtil {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_error) //
+					.setIcon(R.drawable.ic_title_error) //
 					.setMessage(message) //
-					.setPositiveButton(R.string.button_back, new DialogInterface.OnClickListener() {
+					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							getActivity().finish();
@@ -240,6 +251,7 @@ public abstract class DialogUtil {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_confirmation) //
+					.setIcon(R.drawable.ic_title_warning) //
 					.setMessage(message) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
