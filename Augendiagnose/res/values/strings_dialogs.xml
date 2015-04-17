@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="title_dialog_change_name">Change Name</string>
+    <string name="title_dialog_error">Error</string>
+    <string name="title_dialog_info">Information</string>
+    <string name="title_dialog_confirmation">Confirmation</string>
+    <string name="title_dialog_select_folder">Select Folder</string>
+    <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
+    <string name="message_dialog_no_photos_for_name">No eye photos available for %1$s</string>
+    <string name="message_dialog_select_name">Please select a name</string>
+    <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>
+    <string name="message_dialog_cannot_write_to_folder">Cannot write to folder %1$s. Please select a different folder.</string>
+    <string name="message_dialog_cannot_write_to_folder_saf">Cannot write to folder %1$s. Please ensure that you grant access rights for the full SD card.</string>
+    <string name="message_dialog_folder_does_not_exist">Folder %1$s does not exist. Please check the settings.</string>
+    <string name="message_dialog_no_organized_photos">There are no organized photos available for display.</string>
+    <string name="message_dialog_file_does_not_exist">File %1$s does not exist</string>
+    <string name="message_dialog_file_already_exists">File %1$s already exists. Please select a different name or date.</string>
+    <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
+    <string name="message_dialog_failed_to_move_folder_partially">Error while moving folder %1$s to %2$s - please check folders and move files to appropriate folder.</string>
+    <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
+    <string name="message_dialog_failed_to_delete_file">Failed to delete the photo %1$s</string>
+    <string name="message_dialog_failed_to_delete_all_files">Failed to delete all files of input folder</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Failed to delete the photos of %1$s from %2$s</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Failed to move the photos of %1$s from %2$s</string>
+    <string name="message_dialog_failed_to_delete_folder">Failed to delete the folder of %1$s</string>
+    <string name="message_dialog_failed_to_change_date">Could not change date for photos of %1$s from %2$s to %3$s</string>
+    <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
+    <string name="message_dialog_failed_to_store_exif">Failed to store EXIF metadata in file %1$s - please contact the developer!</string>
+    <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (not a subfolder, but the main folder \&quot;%1$s\&quot;) and confirm at the bottom.</string>
+    <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
+    <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
+    <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
+    <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
+    <string name="message_dialog_confirm_delete_photo">Do you really want to delete the photo %1$s?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Do you really want to delete all photos from the input folder?</string>
+    <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
+
+</resources>
