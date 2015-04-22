@@ -35,6 +35,9 @@ public class MainActivity extends Activity {
 
 		Application.setLanguage();
 
+		// Initial tip is triggered first, so that it is hidden behind release notes.
+		DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
+
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) && intent.getType() != null) {
 			// Application was started from other application by passing a list of images - open
@@ -63,7 +66,7 @@ public class MainActivity extends Activity {
 			// notes.
 			String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
 			if (storedVersionString == null || storedVersionString.length() == 0) {
-				storedVersionString = "17";
+				storedVersionString = "30";
 				firstStart = true;
 			}
 			int storedVersion = Integer.parseInt(storedVersionString);

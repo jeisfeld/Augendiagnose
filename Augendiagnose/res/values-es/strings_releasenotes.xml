@@ -4,8 +4,6 @@
     <string name="releasenotes_title">Notas de la versión</string>
     <string name="releasenotes_changes">Cambios recientes</string>
     <string name="releasenotes_release">Versión</string>
-    <string name="button_dont_show">No mostrar de nuevo</string>
-    <string name="button_show_later">Mostrar de nuevo</string>
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Información para nuevos usuarios:</h3>

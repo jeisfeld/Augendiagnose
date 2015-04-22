@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="key_tip_firstuse" translatable="false">key_tip_firstuse</string>
+    <string name="message_tip_firstuse">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>First steps:</h2>
+	<p><b>Step 1:</b> Go to settings and set the &ldquo;Input folder for new eye photos&rdquo; to the folder where your new eye photos are located.</p>
+	<p><b>Step 2:</b> Go to the action &ldquo;Organize New Photos&rdquo; and assign names and dates to your eye photos.
+			Be aware that the photos will be renamed and moved to the &ldquo;Eye Photo Folder&rdquo;.
+			On first use, it is recommended to keep backups of the photos somewhere else.
+	</p>
+	<p><b>Step 3:</b> Go to the action &ldquo;Display Photos&rdquo; and select a name for which you want to see the photos.
+			Then click on the Photo to display the photos.
+			See the corresponding help pages for more information.
+	</p>
+</body>
+</html>
+]]>
+    </string>
+
+</resources>

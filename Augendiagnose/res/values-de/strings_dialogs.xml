@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
     <string name="title_dialog_change_name">Namen ändern</string>
     <string name="title_dialog_error">Fehler</string>
     <string name="title_dialog_info">Information</string>
     <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
+    <string name="title_dialog_tip">Tipp</string>
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>

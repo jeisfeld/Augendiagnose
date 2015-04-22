@@ -28,6 +28,8 @@
     <string name="button_delete">Löschen</string>
     <string name="button_move">Verschieben</string>
     <string name="button_other_pictures">Andere Fotos</string>
+    <string name="button_dont_show">Nicht mehr zeigen</string>
+    <string name="button_show_later">Erneut zeigen</string>
     <string name="content_description_right_eye">Rechtes Auge</string>
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>

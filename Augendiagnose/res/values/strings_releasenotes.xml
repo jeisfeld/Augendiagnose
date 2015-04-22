@@ -4,8 +4,6 @@
     <string name="releasenotes_title">Release Notes</string>
     <string name="releasenotes_changes">Latest Changes</string>
     <string name="releasenotes_release">Release</string>
-    <string name="button_dont_show">Do not show again</string>
-    <string name="button_show_later">Show again</string>
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Information for new users:</h3>

@@ -29,6 +29,8 @@
     <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_select_color" translatable="false">\u25a0</string>
+    <string name="button_dont_show">Do not show again</string>
+    <string name="button_show_later">Show again</string>
     <string name="toggle_circle" translatable="false">\u2299</string>
     <string name="toggle_overlay_1" translatable="false">\u2460</string>
     <string name="toggle_overlay_2" translatable="false">\u2461</string>

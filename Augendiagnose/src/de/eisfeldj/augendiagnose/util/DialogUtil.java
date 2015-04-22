@@ -9,6 +9,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 import de.eisfeldj.augendiagnose.Application;
@@ -40,6 +41,10 @@ public abstract class DialogUtil {
 	 * Parameter to pass the callback listener to the ConfirmDialogFragment.
 	 */
 	private static final String PARAM_LISTENER = "listener";
+	/**
+	 * Parameter to pass the key for the shared preference indicating if the tip should be shown.
+	 */
+	private static final String PARAM_PREFERENCE_KEY = "keyPrefTip";
 
 	/**
 	 * Display an information message and go back to the current activity.
@@ -140,6 +145,32 @@ public abstract class DialogUtil {
 		bundle.putSerializable(PARAM_LISTENER, listener);
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+	}
+
+	/**
+	 * Display a tip.
+	 *
+	 * @param activity
+	 *            the triggering activity
+	 * @param messageResource
+	 *            The resource containing the text of the tip.
+	 * @param preferenceResource
+	 *            The resource for the key of the preference storing the information if the tip should be skipped later.
+	 */
+	public static void displayTip(final Activity activity, final int messageResource,
+			final int preferenceResource) {
+		String message = activity.getString(messageResource);
+
+		boolean skip = PreferenceUtil.getSharedPreferenceBoolean(preferenceResource);
+
+		if (!skip) {
+			DisplayTipFragment fragment = new DisplayTipFragment();
+			Bundle bundle = new Bundle();
+			bundle.putString(PARAM_MESSAGE, message);
+			bundle.putInt(PARAM_PREFERENCE_KEY, preferenceResource);
+			fragment.setArguments(bundle);
+			fragment.show(activity.getFragmentManager(), DisplayTipFragment.class.toString());
+		}
 	}
 
 	/**
@@ -265,6 +296,36 @@ public abstract class DialogUtil {
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the negative button event back to the host activity
 							listener.onDialogPositiveClick(ConfirmDialogFragment.this);
+						}
+					});
+			return builder.create();
+		}
+	}
+
+	/**
+	 * Fragment to display a tip - the user may decide if to show it again later.
+	 */
+	public static class DisplayTipFragment extends DialogFragment {
+		@Override
+		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
+			String message = getArguments().getString(PARAM_MESSAGE);
+			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle(R.string.title_dialog_tip) //
+					.setIcon(R.drawable.ic_title_tipp) //
+					.setMessage(Html.fromHtml(message)) //
+					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(final DialogInterface dialog, final int id) {
+							PreferenceUtil.setSharedPreferenceBoolean(key, false);
+							dialog.dismiss();
+						}
+					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(final DialogInterface dialog, final int id) {
+							PreferenceUtil.setSharedPreferenceBoolean(key, true);
+							dialog.dismiss();
 						}
 					});
 			return builder.create();

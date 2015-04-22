@@ -89,6 +89,7 @@ public abstract class ReleaseNotesUtil {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.releasenotes_title) //
+					.setIcon(R.drawable.ic_title_info) //
 					.setMessage(Html.fromHtml(message)) //
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
