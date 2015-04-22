@@ -30,7 +30,11 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">Diese Version führt kleine Dialoge ein, in denen Tipps angezeigt
+        werden, die neuen Nutzern bei der Benutzung der App helfen sollen. Diese Dialoge sollen auch dabei helfen,
+        neue Funktionalitäten zu nutzen.
+        Jeder solche Dialog wird zumindest einmal erscheinen. Wenn Sie ihn anschließend nicht mehr sehen wollen, können
+        Sie ihn mit &amp;bdquo;Nicht mehr zeigen&amp;ldquo; bestätigen.	</string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
@@ -69,7 +73,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Bugfixes</item>
         <item>Speichern der Daten auf externer SD-Karte in Android 5. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Bugfixes</item>
     </string-array>
 
 </resources>

@@ -28,7 +28,9 @@ seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
 primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">Esta versión introduce pequeños diálogos con consejos que son
+         destinado a ayudar a los nuevos usuarios a utilizar la aplicación. Esto también ayudará al introducir nuevas funcionalidades.
+         Cada diálogo aparecerá al menos una vez. Si confirma que con &amp;laquo;No mostrar de nuevo&amp;raquo;, no volverá a aparecer.	</string>
 
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
@@ -67,7 +69,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores</item>
         <item>Habilitado ahorro en la tarjeta SD para Android 5. Corrección de errores</item>
         <item>Corrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Añadido diálogos con consejos. Corrección de errores</item>
     </string-array>
 
 </resources>

@@ -26,7 +26,9 @@ even destroys the JPG file. Therefore, it is recommended that you keep backups o
 when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">This version introduces small dialogs with tips that are
+        intended to help new users to use the app. This feature will also help when introducing new functionality.
+        Each dialog will appear at least once. If you confirm it with &amp;ldquo;Do not show again&amp;rdquo;, it will not appear again.	</string>
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
@@ -104,7 +106,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Enabled saving on ext sd card for Android 5. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Added dialogs with tips. Bugfixes.</item>
     </string-array>
 
 </resources>
