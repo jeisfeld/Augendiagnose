@@ -15,8 +15,69 @@
 	</p>
 	<p><b>Step 3:</b> Go to the action &ldquo;Display Photos&rdquo; and select a name for which you want to see the photos.
 			Then click on the Photo to display the photos.
-			See the corresponding help pages for more information.
 	</p>
+	<p>See the corresponding help pages for more information.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_organizephotos" translatable="false">key_tip_organizephotos</string>
+    <string name="message_tip_organizephotos">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Organize new photos:</h2>
+	<p>Select one pair of eye photos of one person and arrange the right and left eye correctly.</p>
+	<p>Then enter the name of the person.</p>
+	<p>The date of the photos is preselected from the photos - you may change it.</p>
+	<p>Finally press &ldquo;OK&rdquo; to move the photos into the application folder from where you can then view and compare them.</p>
+	<p>See the corresponding help pages for more information.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_displaynames" translatable="false">key_tip_displaynames</string>
+    <string name="message_tip_displaynames">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Display Photos:</h2>
+	<p>You see the list of all names for which you have eye photos (previously organized).</p>
+	<p>Click on a name - then you see the list of eye photo pairs for this name, ordered by date.</p>
+	<p>Then you can select either one or two photos to view them in detail.</p>
+	<p>See the corresponding help pages for more information.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_displaypictures" translatable="false">key_tip_displaypictures</string>
+    <string name="message_tip_displaypictures">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Display Photos:</h2>
+	<p>You see the list of eye photo pairs for one person.</p>
+	<p>Click on one photo to display it in detail.</p>
+	<p>Click on a date to display both photos in detail.</p>
+	<p>Make a long click on one photo and then select a different photo in order to compare two photos.</p>
+	<p>See the corresponding help pages for more information.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_displaydetails" translatable="false">key_tip_displaydetails</string>
+    <string name="message_tip_displaydetails">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Display Details:</h2>
+	<p>You see one or two photos. Using two fingers, you can resize or move the photo(s).</p>
+	<p>There are slide controls by which you can change brightness and contrast, and there are buttons by which you can display iris topographies as overlays over the photos. These controls may be faded in or out.</p>
+	<p>Moreover, there are buttons for editing a comment for a photo, and for saving view details.</p>
 </body>
 </html>
 ]]>

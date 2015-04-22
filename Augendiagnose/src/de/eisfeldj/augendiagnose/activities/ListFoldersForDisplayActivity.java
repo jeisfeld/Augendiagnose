@@ -14,6 +14,7 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplayFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPicturesForNameFragmentHolder;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
@@ -90,6 +91,8 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 		}
+
+		DialogUtil.displayTip(this, R.string.message_tip_displaynames, R.string.key_tip_displaynames);
 	}
 
 	@Override

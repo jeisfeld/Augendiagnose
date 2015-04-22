@@ -9,6 +9,7 @@ import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragmentHalfscreen;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.util.AutoKeyboardLayoutUtility;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves).
@@ -128,6 +129,8 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 		// ensure that layout is refreshed if view gets resized
 		AutoKeyboardLayoutUtility.assistActivity(this);
+
+		DialogUtil.displayTip(this, R.string.message_tip_displaydetails, R.string.key_tip_displaydetails);
 	}
 
 	/**

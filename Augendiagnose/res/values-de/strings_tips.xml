@@ -14,8 +14,65 @@
 	</p>
 	<p><b>Step 3:</b> Klicken Sie auf &bdquo;Fotos anzeigen&ldquo; und wählen Sie einen Namen, von dem Sie die Fotos anschauen wollen.
 			Anschließend berühren Sie das Foto, um es anzuschauen.
-			Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.
 	</p>
+	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_organizephotos">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Neue Fotos einordnen:</h2>
+	<p>Wählen Sie ein Paar Augenfotos aus und ordnen Sie das rechte und linke Auge korrekt an.</p>
+	<p>Geben Sie anschließend den Namen der Person ein.</p>
+	<p>Außerdem können Sie das Datum ändern - es wird mit dem Datum des Fotos vorbefüllt.</p>
+	<p>Klicken Sie zuletzt auf &bdquo;OK&ldquo;, um die Fotos in das App-Verzeichnis zu verschieben, von wo Sie die Fotos anschließend anschauen können.</p>
+	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaynames">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fotos anzeigen:</h2>
+	<p>Zunächst sehen Sie eine Liste aller Namen, für die Sie Augenfotos eingeordnet haben.</p>
+	<p>Klicken Sie auf einen Namen - dann sehen Sie die Liste aller Augenfotopaare zu diesem Namen, angeordnet nach Datum.</p>
+	<p>Dann können Sie ein oder zwei Fotos auswählen, um sie im Detail anzuschauen.</p>
+	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaypictures">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fotos anzeigen:</h2>
+	<p>Sie sehen die Liste der Augenfotopaare einer Person.</p>
+	<p>Klicken Sie auf ein Foto, um es im Detail zu sehen.</p>
+	<p>Klicken Sie auf ein Datum, um beide Fotos im Detail zu sehen.</p>
+	<p>Klicken Sie lange auf ein Foto und wählen Sie anschließend ein anderes Foto aus, um die beiden Fotos zu vergleichen.</p>
+	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaydetails">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fotos im Detail anschauen:</h2>
+	<p>Sie sehen ein oder zwei Fotos. Mit zwei Fingern können sie die Größe ändern oder die Fotos verschieben.</p>
+	<p>Es gibt Schieberegler, mit denen Sie Helligkeit und Kontrast ändern können, und es gibt Knöpfe, über die Sie Iristopographien einblenden können. Diese Regler und Knöpfe lassen sich ein- und ausblenden.</p>
+	<p>Außerdem gibt es Knöpfe, mit denen Sie einen Bildkommentar bearbeiten oder Anzeigedetails speichern können.</p>
 </body>
 </html>
 ]]>

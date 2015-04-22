@@ -205,6 +205,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 		}
 
+		DialogUtil.displayTip(this, R.string.message_tip_organizephotos, R.string.key_tip_organizephotos);
 	}
 
 	@Override

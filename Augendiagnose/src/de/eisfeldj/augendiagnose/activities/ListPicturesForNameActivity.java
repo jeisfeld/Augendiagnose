@@ -3,8 +3,10 @@ package de.eisfeldj.augendiagnose.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 
 /**
@@ -46,6 +48,8 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
+
+		DialogUtil.displayTip(this, R.string.message_tip_displaypictures, R.string.key_tip_displaypictures);
 	}
 
 }

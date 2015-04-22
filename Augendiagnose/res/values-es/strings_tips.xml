@@ -13,8 +13,65 @@
 			El primer uso, se recomienda mantener las copias de seguridad de las fotos en alguna otra parte.
 	</p>
 	<p><b>Paso 3:</b> Vaya a la acción &laquo;Visualizar las fotos&raquo; y seleccione un nombre para el que desea ver las fotos.
-		Luego haga clic en la foto para ver las fotos. Vea las páginas de ayuda correspondientes para obtener más información.
+		Luego haga clic en la foto para ver las fotos.
 	</p>
+	<p>Vea las páginas de ayuda correspondientes para obtener más información.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_organizephotos">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Organizar nuevas fotos</h2>
+	<p>Seleccione un par de fotos de los ojos de una persona y arreglar el ojo derecho e izquierdo correctamente<p>
+	<p>A continuación, introduzca el nombre de la persona</p>
+	<p>La fecha de las fotos se preselecciona en las fotos - usted puede cambiarlo</p>
+	<p>Por último pulse &laquo;OK&raquo; para mover las fotos en la carpeta de la aplicación desde la que se puede ver y comparar ellos.</p>
+	<p>Consulte las páginas de ayuda correspondientes para obtener más información.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaynames">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Visualizar las fotos:</h2>
+	<p>Usted ve la lista de todos los nombres para los que tiene fotos de los ojos (organizadas previamente).</p>
+	<p>Haga clic en un nombre - entonces usted ve la lista de pares de fotos ojo de este nombre, por fecha</p>
+	<p>A continuación, puede seleccionar una o dos fotos para ver en detalle.</p>
+	<p>Consulte las páginas de ayuda correspondientes para obtener más información.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaypictures">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Visualizar las fotos:</h2>
+	<p>Usted ve la lista de pares de fotos ojo para una persona.</p>
+	<p>Haga clic en una foto para verla en detalle.</p>
+	<p>Haga clic en una fecha para mostrar ambas fotos en detalle.</p>
+	<p>Haga un clic largo en una foto y luego seleccione una foto diferente con el fin de comparar las dos fotos.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_displaydetails">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Visualizar detalles:</h2>
+	<p>Usted ve una o dos fotos. Usando dos dedos, se puede cambiar el tamaño o mover la(s) foto(s).</p>
+	<p>Hay controles deslizantes en que usted puede cambiar el brillo y el contraste, y hay botones mediante los cuales se pueden visualizar iris topografías como superposiciones sobre las fotos. Estos controles se pueden ocultar o mostrar.</p>
+	<p>Además, hay botones para la editar el comentario de la foto, y para grabar detalles de la vista.</p>
 </body>
 </html>
 ]]>

@@ -8,6 +8,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayImageFragment;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.util.AutoKeyboardLayoutUtility;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -129,6 +130,8 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		// ensure that layout is refreshed if view gets resized
 		AutoKeyboardLayoutUtility.assistActivity(this);
+
+		DialogUtil.displayTip(this, R.string.message_tip_displaydetails, R.string.key_tip_displaydetails);
 	}
 
 	@Override
