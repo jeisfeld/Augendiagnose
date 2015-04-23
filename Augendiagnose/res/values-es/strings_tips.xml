@@ -92,5 +92,44 @@
 </html>
 ]]>
     </string>
-
-</resources>
+    <string name="message_tip_editcomment">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Editar comentario:</h2>
+	<p>Aquí puede añadir cualquier comentario a la foto (por ejemplo, los resultados de su diagnóstico del ojo).</p>
+	<p>El comentario se guardará en el archivo JPG. Por lo tanto, si copia el archivo a Windows, todavía puede ver y editar el comentario allí.</p>
+	<p>Nota: Guardar sólo funciona en archivos JPG.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_overlay">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Topografías de iris:.</h2>
+	<p>Cuando se muestra por primera vez una topografía de iris como superposición, puede moverla con dos dedos por encima de la foto del ojo para que sea apropiado para el iris</p>
+	<p>Si la superposición se ajusta al iris, puede pulsar el botón &laquo;cerradura&raquo; en la esquina inferior derecha con el fin de guardar la posición de la superposición. A continuación, el overlay se mantiene en esta posición, y se puede acercar o alejar la imagen de forma segura</p>
+	<p>También puede cambiar el color de la superposición mediante el botón &laquo;color&raquo;.</ p>
+	<p>Nota: Guardar sólo funciona en archivos JPG.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_saveview">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Guardar detalles de vista:</h2>
+	<p>Aquí puede guardar la posición en la que ve la foto de los ojos, o los ajustes de brillo/contraste, por lo que estos ajustes se mantienen cuando se observa la misma foto de nuevo.</p>
+	<p>También puede restablecer la configuración a los valores predeterminados.</p>
+	<p>Nota: Guardar sólo funciona en archivos JPG.</p>
+</body>
+</html>
+]]>
+    </string>
+</resources>

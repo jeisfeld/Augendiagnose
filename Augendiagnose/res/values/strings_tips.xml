@@ -98,5 +98,48 @@
 </html>
 ]]>
     </string>
+    <string name="key_tip_editcomment" translatable="false">key_tip_editcomment</string>
+    <string name="message_tip_editcomment">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Edit comment:</h2>
+	<p>Here you can add any comment to the photo (such as the results of your eye diagnosis).</p>
+	<p>The comment will be saved within the JPG file. Therefore, if you copy the File to Windows, you can still see and edit the comment there.</p>
+	<p>Note: Saving works only on JPG files.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_overlay" translatable="false">key_tip_overlay</string>
+    <string name="message_tip_overlay">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Iris Topograph Overlays:</h2>
+	<p>When first displaying an iris topography as overlay, you can move it with two fingers above the eye photo to make it fitting to the iris.</p>
+	<p>If the overlay fits to the iris, you can press the &ldquo;lock&rdquo; button in the right bottom corner in order to store the position of the overlay on the photo. Then the overlay stays at this position, and you can safely zoom the image.</p>
+	<p>You can also change the color of the overlay by means of the &ldquo;color&rdquo; button. (The default color can be changed in the settings.)</p>
+	<p>Note: Saving works only on JPG files.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_saveview" translatable="false">key_tip_saveview</string>
+    <string name="message_tip_saveview">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Saving view details:</h2>
+	<p>Here you can save the position in which you view the eye photo, or the settings for brightness/contrast, so that these settings are maintained when you watch the same photo again.</p>
+	<p>You may also reset these settings to the default again.</p>
+	<p>Note: Saving works only on JPG files.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>

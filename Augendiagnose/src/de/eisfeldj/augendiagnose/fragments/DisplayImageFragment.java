@@ -22,6 +22,7 @@ import de.eisfeldj.augendiagnose.components.OverlayPinchImageView.GuiElementUpda
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
@@ -313,6 +314,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			public void onClick(final View v) {
 				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
 						imageView.getMetadata().comment);
+				DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
 			}
 		});
 
@@ -320,6 +322,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onClick(final View v) {
 				showSaveMenu(v);
+				DialogUtil.displayTip(getActivity(), R.string.message_tip_saveview, R.string.key_tip_saveview);
 			}
 		});
 
@@ -362,13 +365,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            The number of the overlay button.
 	 */
 	private void onToggleOverlayClicked(final View view, final int position) {
+		boolean buttonGetsUnchecked = false;
+
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			if (position != i) {
-				toggleOverlayButtons[i].setChecked(false);
+				if (toggleOverlayButtons[i].isChecked()) {
+					toggleOverlayButtons[i].setChecked(false);
+					buttonGetsUnchecked = true;
+				}
 			}
 		}
 
 		imageView.triggerOverlay(position);
+
+		if (toggleOverlayButtons[position].isChecked() && !buttonGetsUnchecked) {
+			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay, R.string.key_tip_overlay);
+		}
 	}
 
 	/**

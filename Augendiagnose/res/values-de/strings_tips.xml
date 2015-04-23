@@ -93,5 +93,45 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_editcomment">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Kommentar bearbeiten:</h2>
+	<p>Hier können Sie einen Text zum Foto hinzufügen (z.B. das Ergebnis Ihrer Iris-Diagnose)</p>
+	<p>Der Text wird in der JPG-Datei gespeichert. Wenn Sie das Foto also z.B. nach Windows kopieren, können Sie auch dort den Kommentar sehen und bearbeiten.</p>
+	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_overlay">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Iristopographie-Overlays:</h2>
+	<p>Wenn Sie eine Iristopographie über dem Foto anzeigen, können Sie sie mit zwei Fingern so bewegen, dass sie über der Iris liegt.</p>
+	<p>Wenn die Position zur Iris korrekt ist, können Sie auf das &bdquo;Schloss&ldquo; rechts unten drücken, um die Position zu speichern. Anschließend können Sie das Bild vergrößern oder verschieben, und die Position der Iristopographie auf dem Bild bleibt erhalten.</p>
+	<p>Sie können auch die Farbe des Overlays mit Hilfe des &ldquo;Farb&rdquo;-Buttons ändern. (Die Standardfarbe können Sie in den Einstellungen ändern.)</p>
+	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_saveview">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Speichern der Ansicht:</h2>
+	<p>Hier können Sie Ihre Einstellungen für Helligkeit/Kontrast speichern, oder auch die Ausschnittsvergrößerung des Fotos, so dass diese Einstellungen erhalten bleiben, wenn Sie das Foto erneut ansehen.</p>
+	<p>Sie können über dieses Menü auch die Einstellungen zurücksetzen.</p>
+	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>
