@@ -68,6 +68,22 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_displaypicturestablet">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Display Photos:</h2>
+	<p>On the left, you see the list of all names for which you have eye photos (previously organized).</p>
+	<p>Click on a name - then you see on the right the list of eye photo pairs for this name, ordered by date.</p>
+	<p>Click on one photo to display it in detail.</p>
+	<p>Click on a date to display both photos in detail.</p>
+	<p>Make a long click on one photo and then select a different photo in order to compare two photos.</p>
+	<p>See the corresponding help pages for more information.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="key_tip_displaydetails" translatable="false">key_tip_displaydetails</string>
     <string name="message_tip_displaydetails">
 <![CDATA[

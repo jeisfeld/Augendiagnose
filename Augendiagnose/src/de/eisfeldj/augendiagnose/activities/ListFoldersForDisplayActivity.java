@@ -81,9 +81,13 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 
 				// In tablet view, different title is more appropriate
 				setTitle(getString(R.string.title_activity_list_pictures_for_name));
+
+				DialogUtil.displayTip(this, R.string.message_tip_displaypicturestablet, R.string.key_tip_displaynames);
 			}
 			else {
 				displayOnFullScreen(getListFoldersFragment(), FRAGMENT_TAG);
+
+				DialogUtil.displayTip(this, R.string.message_tip_displaynames, R.string.key_tip_displaynames);
 			}
 		}
 
@@ -91,8 +95,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 		}
-
-		DialogUtil.displayTip(this, R.string.message_tip_displaynames, R.string.key_tip_displaynames);
 	}
 
 	@Override

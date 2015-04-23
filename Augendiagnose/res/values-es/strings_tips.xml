@@ -63,6 +63,22 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_displaypicturestablet">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Visualizar las fotos:</h2>
+	<p>A la izquierda, usted ve la lista de todos los nombres para los que tiene fotos de los ojos (organizadas previamente).</p>
+	<p>Haga clic en un nombre - entonces usted ve a la derecha la lista de pares de fotos ojo de este nombre, por fecha</p>
+	<p>Haga clic en una foto para verla en detalle.</p>
+	<p>Haga clic en una fecha para mostrar ambas fotos en detalle.</p>
+	<p>Haga un clic largo en una foto y luego seleccione una foto diferente con el fin de comparar las dos fotos.</p>
+	<p>Consulte las páginas de ayuda correspondientes para obtener más información.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="message_tip_displaydetails">
 <![CDATA[
 <!DOCTYPE html>

@@ -64,6 +64,22 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_displaypicturestablet">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fotos anzeigen:</h2>
+	<p>Auf der linken Seite sehen Sie eine Liste aller Namen, für die Sie Augenfotos eingeordnet haben.</p>
+	<p>Klicken Sie auf einen Namen - dann sehen Sie rechts die Liste aller Augenfotopaare zu diesem Namen, angeordnet nach Datum.</p>
+	<p>Klicken Sie auf ein Foto, um es im Detail zu sehen.</p>
+	<p>Klicken Sie auf ein Datum, um beide Fotos im Detail zu sehen.</p>
+	<p>Klicken Sie lange auf ein Foto und wählen Sie anschließend ein anderes Foto aus, um die beiden Fotos zu vergleichen.</p>
+	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="message_tip_displaydetails">
 <![CDATA[
 <!DOCTYPE html>
