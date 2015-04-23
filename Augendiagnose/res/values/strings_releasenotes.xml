@@ -106,7 +106,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Enabled saving on ext sd card for Android 5. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Added dialogs with tips. Bugfixes.</item>
+        <item>Added dialogs with tips. Improved error handling.</item>
     </string-array>
 
 </resources>

@@ -36,5 +36,6 @@
     <string name="message_dialog_confirm_delete_photo">¿Realmente desea eliminar la foto %1$s?</string>
     <string name="message_dialog_confirm_delete_all_photos">¿Realmente desea eliminar todas las fotos de la carpeta de entrada?</string>
     <string name="message_dialog_confirm_move_to_input_folder">¿Realmente desea mover las fotos de %1$s de %2$s a la carpeta de entrada?</string>
+    <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
 
 </resources>

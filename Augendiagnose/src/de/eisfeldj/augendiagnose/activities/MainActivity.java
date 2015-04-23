@@ -85,6 +85,8 @@ public class MainActivity extends Activity {
 			params.weight = 2;
 		}
 
+		DialogUtil.checkOutOfMemoryError(this);
+
 		test();
 	}
 

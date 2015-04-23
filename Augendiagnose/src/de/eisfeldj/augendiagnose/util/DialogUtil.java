@@ -174,6 +174,22 @@ public abstract class DialogUtil {
 	}
 
 	/**
+	 * Check if there was an out of memory error, and if so, display a corresponding message.
+	 *
+	 * @param activity
+	 *            the triggering activity
+	 */
+	public static void checkOutOfMemoryError(final Activity activity) {
+		boolean hadOutOfMemoryError = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror);
+
+		if (hadOutOfMemoryError) {
+			displayError(activity, R.string.message_dialog_outofmemoryerror, false);
+
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror, false);
+		}
+	}
+
+	/**
 	 * Fragment to display an error and go back to the current activity.
 	 */
 	public static class DisplayMessageDialogFragment extends DialogFragment {

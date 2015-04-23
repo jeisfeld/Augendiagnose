@@ -1,14 +1,23 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
 
 /**
  * Base activity being the subclass of most application activities. Handles the help menu.
  */
 public abstract class BaseActivity extends Activity {
+
+	// OVERRIDABLE
+	@Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		DialogUtil.checkOutOfMemoryError(this);
+	}
 
 	/*
 	 * Inflate options menu.

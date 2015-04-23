@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 
 import android.content.Context;
@@ -39,6 +40,30 @@ public class Application extends android.app.Application {
 		super.onCreate();
 		Application.context = getApplicationContext();
 		setLanguage();
+		setExceptionHandler();
+	}
+
+	/**
+	 * Define custom ExceptionHandler which takes action on OutOfMemoryError.
+	 */
+	private void setExceptionHandler() {
+		final UncaughtExceptionHandler defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+
+		UncaughtExceptionHandler customExceptionHandler =
+				new UncaughtExceptionHandler() {
+					@Override
+					public void uncaughtException(final Thread thread, final Throwable ex) {
+						if (ex instanceof OutOfMemoryError) {
+							// Store info about OutOfMemoryError
+							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror, true);
+						}
+
+						// re-throw critical exception further to the os
+						defaultExceptionHandler.uncaughtException(thread, ex);
+					}
+				};
+
+		Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 	}
 
 	/**

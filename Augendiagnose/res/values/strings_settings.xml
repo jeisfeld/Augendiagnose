@@ -105,5 +105,6 @@
     <string name="key_internal_last_name" translatable="false">last_name</string>
     <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
     <string name="key_internal_show_utilities" translatable="false">show_utilities</string>
+    <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
 
 </resources>
