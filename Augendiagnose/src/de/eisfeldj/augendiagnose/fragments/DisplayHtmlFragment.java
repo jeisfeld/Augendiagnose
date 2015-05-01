@@ -74,9 +74,18 @@ public class DisplayHtmlFragment extends Fragment {
 			html = getString(resource);
 		}
 
+		// remove link containing stylesheet
+		int linkIndex1 = html.indexOf("<link");
+		int linkIndex2 = html.indexOf(">", linkIndex1);
+		int headIndex = html.indexOf("</head>", linkIndex2);
+		if (linkIndex1 > 0 && linkIndex2 > 0 && headIndex > 0) {
+			html = html.substring(0, linkIndex1) + html.substring(linkIndex2 + 1);
+		}
+
+		// add style
 		int index = html.indexOf("</head>");
 		html = html.substring(0, index) + STYLE + html.substring(index);
+
 		webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");
 	}
-
 }
