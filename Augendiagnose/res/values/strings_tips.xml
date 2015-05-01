@@ -141,5 +141,17 @@
 </html>
 ]]>
     </string>
-
-</resources>
+    <string name="key_tip_clarity" translatable="false">key_tip_clarity</string>
+    <string name="message_tip_clarity">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Display with full resolution:</h2>
+	<p>With this button, you can display the currently displayed part of the image with full resolution.</p>
+	<p>This may also be automated in the settings. However, for devices with little memory, display in full resolution may lead to issues.</p>
+</body>
+</html>
+]]>
+    </string>
+</resources>

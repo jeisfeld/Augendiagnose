@@ -309,6 +309,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				@Override
 				public void onClick(final View v) {
 					imageView.showFullResolutionSnapshot(false);
+					DialogUtil.displayTip(getActivity(), R.string.message_tip_clarity, R.string.key_tip_clarity);
 				}
 			});
 		}

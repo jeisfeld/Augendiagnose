@@ -133,5 +133,17 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_clarity">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Anzeige in voller Auflösung:</h2>
+	<p>Mit diesem Button können Sie die aktuelle Ansicht in voller Auflösung anschauen.</p>
+	<p>Dies kann in den Einstellungen automatisiert werden. Dies kann aber zu Problemen führen, falls das Gerät zu wenig Speicher hat.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>

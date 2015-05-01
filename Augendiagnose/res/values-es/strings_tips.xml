@@ -132,4 +132,17 @@
 </html>
 ]]>
     </string>
-</resources>
+    <string name="message_tip_clarity">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Mostrar imagen en alta resolución:</h2>
+	<p>Con este botón, puede mostrar la parte de la imagen que se muestra actualmente con resolución completa.</p>
+    <p>Esto también puede ser automatizado en las ajustes. Sin embargo, para los dispositivos con poca memoria, visualización en resolución completa puede llevar a problemas.</p>
+</body>
+</html>
+]]>
+    </string>
+
+</resources>
