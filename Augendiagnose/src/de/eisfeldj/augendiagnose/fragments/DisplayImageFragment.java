@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.DisplayHtmlActivity;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
 import de.eisfeldj.augendiagnose.activities.DisplayOneActivity;
 import de.eisfeldj.augendiagnose.components.OverlayPinchImageView;
@@ -131,6 +132,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The button for showing or hiding the tools.
 	 */
 	private Button toolsButton;
+
+	/**
+	 * The button for showing or hiding the tools.
+	 */
+	private Button helpButton;
 
 	/**
 	 * The array of overlay buttons.
@@ -269,6 +275,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		commentButton = (Button) getView().findViewById(R.id.buttonComment);
 		saveButton = (Button) getView().findViewById(R.id.buttonSave);
 		toolsButton = (Button) getView().findViewById(R.id.buttonTools);
+		helpButton = (Button) getView().findViewById(R.id.buttonHelp);
 
 		showUtilities(showUtilities);
 
@@ -332,6 +339,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				boolean newShowUtilities = !showUtilities;
 				showUtilities(newShowUtilities);
 				updateDefaultShowUtilities(newShowUtilities);
+			}
+		});
+
+		helpButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				DisplayHtmlActivity.startActivity(getActivity(), R.string.html_display_photos);
 			}
 		});
 
