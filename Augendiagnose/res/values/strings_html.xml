@@ -109,11 +109,11 @@
     </string>
     <string name="html_settings">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Eye Diagnosis - Settings</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Settings</h2>
@@ -136,8 +136,8 @@
 
 	<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
 
-	<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on SD
-		card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on SD
+	<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on
+		SD card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on SD
 		card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p>
 
 	<h3>Last photo is right eye</h3>
@@ -168,8 +168,9 @@
 			image. This requires half of the memory.</li>
 
 		<li>Load only on demand: The app does not show the image in full resolution. This requires least memory and CPU,
-			but details in the photo may be lost. The &ldquo;magnifier&rdquo; button allows to display the current picture detail
-			in full resolution.</li>
+			but details in the photo may be lost. The &ldquo;magnifier&rdquo; button <img src="../drawable/ic_clarity.png" />
+			allows to display the current picture detail in full resolution.
+		</li>
 	</ul>
 
 	<h3>Save additional data in jpeg</h3>

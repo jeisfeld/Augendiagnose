@@ -107,11 +107,11 @@
     </string>
     <string name="html_settings">
 <![CDATA[
-<! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 Transitional // EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Diagnóstico ocular - Ajustes</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Ajustes</h2>
@@ -169,8 +169,9 @@
 			se muestre un único imagen. Esto requiere un medio de la memoria.</li>
 
 		<li>Cargar sólo si se solicita: La aplicación no muestra la imagen en alta resolución. Esto requiere menos
-			memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. la botón &laquo;lupa&raquo; permite
-			visualizar el detalle actual de la imagen en la plena resolución.</li>
+			memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. La botón &laquo;lupa&raquo; <img
+			src="../drawable/ic_clarity.png" /> permite visualizar el detalle actual de la imagen en la plena resolución.
+		</li>
 	</ul>
 
 	<h3>Guardar datos adicionales en JPG</h3>

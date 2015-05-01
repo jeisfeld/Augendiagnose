@@ -113,11 +113,11 @@
     </string>
     <string name="html_settings">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Augendiagnose - Einstellungen</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Einstellungen</h2>
@@ -176,8 +176,9 @@
 			voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
 
 		<li>Nur auf Anfrage: Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher und
-			Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons kann der
-			aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.</li>
+			Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons <img
+			src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.
+		</li>
 	</ul>
 
 	<h3>Speichern von Daten in JPG-Dateien</h3>
