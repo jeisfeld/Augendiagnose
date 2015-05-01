@@ -17,7 +17,8 @@ public class DisplayHtmlFragment extends Fragment {
 	/**
 	 * The style tag to be inserted into the HTML.
 	 */
-	private static final String STYLE = "<style type=\"text/css\">body{color: #fff}</style>";
+	private static final String STYLE =
+			"<style type=\"text/css\">body{color: #ffffff;} img {width: 24px; height: 24px; vertical-align: middle;}</style>";
 
 	/**
 	 * The resource key for the resource to be displayed (for storage in the bundle).
@@ -75,7 +76,7 @@ public class DisplayHtmlFragment extends Fragment {
 
 		int index = html.indexOf("</head>");
 		html = html.substring(0, index) + STYLE + html.substring(index);
-		webView.loadData(html, "text/html; charset=UTF-8", "utf-8");
+		webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");
 	}
 
 }

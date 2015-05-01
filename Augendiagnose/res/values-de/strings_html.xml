@@ -253,6 +253,7 @@
 <html>
 <head>
 <title>Augendiagnose - Fotos betrachten</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Betrachten der Fotos</h2>
@@ -293,21 +294,30 @@
 	<p>In der Detailansicht (von einem oder zwei Fotos) bestehen noch folgende Möglichkeiten:</p>
 
 	<ul>
-		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler</li>
+		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img
+			src="../drawable/ic_seek_brightness.png" /><img src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Anzeige von Iristopographien als Overlay, Anpassen der Overlays an die Iris, Speichern der Position der
-			Overlays (Lock-Button)</li>
+		<li>Anzeige von Iristopographien als Overlay (nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern
+			der Position der Overlays (Lock-Button <img src="../drawable/ic_lock_open.png" />)
+		</li>
 
-		<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button im
-			Action-Menü)</li>
+		<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button <img
+			src="../drawable/ic_action_save.png" /> im Action-Menü)
+		</li>
 
-		<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button im Action-Menü)</li>
+		<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button <img
+			src="../drawable/ic_action_save.png" /> im Action-Menü)
+		</li>
 
-		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button im Action-Menü)</li>
+		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img
+			src="../drawable/ic_comment.png" /> im Action-Menü)
+		</li>
 	</ul>
 
-	<p>Die zugehörigen Tools können im Kontextmenü (lange auf das Foto klicken) über die Option &bdquo;Hilfsmittel
-		anzeigen/verbergen&ldquo; aktiviert oder deaktiviert werden.</p>
+	<p>
+		Die zugehörigen Tools können über den Button &bdquo;Hilfsmittel anzeigen/verbergen&ldquo; <img
+			src="../drawable/ic_tools_up.png" /> aktiviert oder deaktiviert werden.
+	</p>
 </body>
 </html>
 ]]>

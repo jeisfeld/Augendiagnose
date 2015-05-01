@@ -244,6 +244,7 @@
 <html>
 <head>
 <title>Eye Diagnosis - Visualize Photos</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Visualize the photos</h2>
@@ -282,20 +283,30 @@
 	<p>In the detail view (one or two photos), you have the following further possibilities:</p>
 
 	<ul>
-		<li>Change of brightness and contrast via sliders</li>
+		<li>Change of brightness and contrast via sliders <img src="../drawable/ic_seek_brightness.png" /><img
+			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Display of iris topographies as overlay, adaption of the overlay to the iris and storage of overlay position
-			(lock button)</li>
+		<li>Display of iris topographies as overlay (numbered buttons), adaption of the overlay to the iris and storage
+			of overlay position (lock button <img src="../drawable/ic_lock_open.png" />)
+		</li>
 
-		<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; button on action bar)</li>
+		<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; <img
+			src="../drawable/ic_action_save.png" /> button on action bar)
+		</li>
 
-		<li>Store the position and zoom (via &ldquo;save&rdquo; button on action bar)</li>
+		<li>Store the position and zoom (via &ldquo;save&rdquo; <img src="../drawable/ic_action_save.png" /> button on
+			action bar)
+		</li>
 
-		<li>Change the comment of the photo (via &ldquo;document&rdquo; button on action bar)</li>
+		<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button
+			on action bar)
+		</li>
 	</ul>
 
-	<p>These features may be enabled or disabled via the context menu (long click on photo) at &ldquo;Show/Hide
-		utilities&rdquo;.</p>
+	<p>
+		These features may be enabled or disabled via the button &ldquo;Show/Hide utilities&rdquo; <img
+			src="../drawable/ic_tools_up.png" />.
+	</p>
 </body>
 </html>
 ]]>

@@ -246,6 +246,7 @@
 <html>
 <head>
 <title>Diagnóstico ocular - Visualizar las fotos</title>
+<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Visualizar las fotos</h2>
@@ -285,21 +286,31 @@
 	<p>En la vista de detalle (una o dos fotos), tiene las siguientes más posibilidades:</p>
 
 	<ul>
-		<li>Cambio de brillo y contraste mediante correderas</li>
+		<li>Cambio de brillo y contraste mediante correderas <img src="../drawable/ic_seek_brightness.png" /><img
+			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Visualización de una topografía de iris como superposición, adaptación de la superposición al iris y
-			almacenamiento de la posición de superposición (botón de cerradura)</li>
+		<li>Visualización de una topografía de iris como superposición (botones numerados), adaptación de la
+			superposición al iris y almacenamiento de la posición de superposición (botón de cerradura <img
+			src="../drawable/ic_lock_open.png" />)
+		</li>
 
-		<li>Guardar los ajustes seleccionados de brillo y contraste (por medio del botón &laquo;guardar&raquo; en la
-			barra de acciones)</li>
+		<li>Guardar los ajustes seleccionados de brillo y contraste (por medio del botón &laquo;guardar&raquo; <img
+			src="../drawable/ic_action_save.png" /> en la barra de acciones)
+		</li>
 
-		<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; en la barra de acciones)</li>
+		<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; <img
+			src="../drawable/ic_action_save.png" /> en la barra de acciones)
+		</li>
 
-		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; en la barra de acciones)</li>
+		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; <img
+			src="../drawable/ic_comment.png" /> en la barra de acciones)
+		</li>
 	</ul>
 
-	<p>Estas funciones pueden activarse o desactivarse mediante el menú contextual (larga pulsación en la foto) a
-		&laquo;Mostrar/Ocultar herramientas&raquo;.</p>
+	<p>
+		Estas funciones pueden activarse o desactivarse mediante el botón &laquo;Mostrar/Ocultar herramientas&raquo; <img
+			src="../drawable/ic_tools_up.png" />.
+	</p>
 </body>
 </html>
 ]]>
