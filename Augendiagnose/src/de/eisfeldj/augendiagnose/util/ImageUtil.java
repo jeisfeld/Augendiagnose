@@ -109,52 +109,57 @@ public final class ImageUtil {
 	 */
 	public static Bitmap getImageBitmap(final String path, final int maxSize) {
 		Bitmap bitmap = null;
+
 		if (maxSize <= 0) {
-			return BitmapFactory.decodeFile(path);
+			bitmap = BitmapFactory.decodeFile(path);
 		}
+		else {
 
-		if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
-			bitmap = MediaStoreUtil.getThumbnailFromPath(path, maxSize);
-		}
+			if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
+				bitmap = MediaStoreUtil.getThumbnailFromPath(path, maxSize);
+			}
 
-		if (bitmap == null) {
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = getBitmapFactor(path, maxSize);
-			// options.inPurgeable = true;
-			bitmap = BitmapFactory.decodeFile(path, options);
 			if (bitmap == null) {
-				// cannot create bitmap - try once more in case that the image was just in process of saving metadata
-				try {
-					Thread.sleep(BITMAP_RETRY);
-				}
-				catch (InterruptedException e) {
-					// ignore exception
-				}
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inSampleSize = getBitmapFactor(path, maxSize);
+				// options.inPurgeable = true;
 				bitmap = BitmapFactory.decodeFile(path, options);
-
 				if (bitmap == null) {
-					// cannot create bitmap - return dummy
-					Log.w(Application.TAG, "Cannot create bitmap from path " + path + " - return dummy bitmap");
-					return getDummyBitmap();
+					// cannot create bitmap - try once more in case that the image was just in process of saving
+					// metadata
+					try {
+						Thread.sleep(BITMAP_RETRY);
+					}
+					catch (InterruptedException e) {
+						// ignore exception
+					}
+					bitmap = BitmapFactory.decodeFile(path, options);
+
+					if (bitmap == null) {
+						// cannot create bitmap - return dummy
+						Log.w(Application.TAG, "Cannot create bitmap from path " + path + " - return dummy bitmap");
+						return getDummyBitmap();
+					}
 				}
 			}
-		}
-		if (bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
-			return bitmap;
-		}
+			if (bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
+				return bitmap;
+			}
 
-		if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
-			// Only if bitmap is bigger than maxSize, then resize it.
-			if (bitmap.getWidth() > bitmap.getHeight()) {
-				int targetWidth = maxSize;
-				int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
-				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+			if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
+				// Only if bitmap is bigger than maxSize, then resize it.
+				if (bitmap.getWidth() > bitmap.getHeight()) {
+					int targetWidth = maxSize;
+					int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
+					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+				}
+				else {
+					int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
+					int targetHeight = maxSize;
+					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+				}
 			}
-			else {
-				int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
-				int targetHeight = maxSize;
-				bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-			}
+
 		}
 
 		int rotation = getExifRotation(path);
