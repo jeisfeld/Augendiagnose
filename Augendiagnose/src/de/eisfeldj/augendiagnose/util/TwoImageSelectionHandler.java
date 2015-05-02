@@ -63,6 +63,8 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *            the EyeImageView.
 	 */
 	public void highlightIfSelected(final EyeImageView view) {
+		// TODO: fix issue on selecting first image - somehow this method is called then again with different view,
+		// which leads to wrong highlighting on deselecting.
 		if ((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
@@ -83,7 +85,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 				if (selectedView == null) {
 					selectView(view);
 				}
-				else if (selectedView == view) {
+				else if (selectedView.getEyePhoto().equals(view.getEyePhoto())) {
 					cleanSelectedView();
 				}
 				else {
