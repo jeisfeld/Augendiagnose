@@ -36,6 +36,7 @@
     <string name="message_dialog_confirm_delete_photo">Wollen Sie das Foto %1$s wirklich löschen?</string>
     <string name="message_dialog_confirm_delete_all_photos">Wollen Sie wirklich alle Fotos im Eingangsverzeichnis löschen?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
+    <string name="message_dialog_confirm_no_jpeg">Die gewählten Fotos sind keine JPG-Fotos. Daher werden Teile der App (wie Speichern von Daten) nicht funktionieren. Wollen Sie trotzdem fortsetzen?</string>
     <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
 
 </resources>

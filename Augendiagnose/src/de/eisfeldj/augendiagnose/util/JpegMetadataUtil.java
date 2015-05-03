@@ -96,11 +96,17 @@ public final class JpegMetadataUtil {
 	 *             thrown if the file is no jpg.
 	 * @throws ImageReadException
 	 */
-	protected static void checkJpeg(final String jpegImageFileName) throws IOException, ImageReadException {
+	public static void checkJpeg(final String jpegImageFileName) throws IOException {
 		File file = new File(jpegImageFileName);
-		String mimeType = Imaging.getImageInfo(file).getMimeType();
-		if (!"image/jpeg".equals(mimeType)) {
-			throw new IOException("Bad MIME type " + mimeType + " - can handle metadata only for image/jpeg.");
+		String mimeType;
+		try {
+			mimeType = Imaging.getImageInfo(file).getMimeType();
+			if (!"image/jpeg".equals(mimeType)) {
+				throw new IOException("Bad MIME type " + mimeType + " - can handle metadata only for image/jpeg.");
+			}
+		}
+		catch (ImageReadException e) {
+			throw new IOException(e);
 		}
 	}
 

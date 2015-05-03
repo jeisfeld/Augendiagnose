@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,10 +29,12 @@ import de.eisfeldj.augendiagnose.components.InstantAutoCompleteTextView;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.EyePhoto;
 import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.ImageUtil;
+import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
 import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
@@ -361,13 +364,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	}
 
 	/**
-	 * onClick action for Button "Ok". Moves and renames the selected files.
+	 * onClick action for Button "Ok". Moves and renames the selected files after making JPG validation.
 	 *
 	 * @param view
 	 *            The view triggering the onClick action.
 	 */
-	public final void movePhotos(final View view) {
-		String name = editName.getText().toString();
+	public final void validateAndMovePhotos(final View view) {
+		final String name = editName.getText().toString();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;
@@ -391,9 +394,52 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 		}
 
-		EyePhoto targetPhotoRight = new EyePhoto(targetFolder.getAbsolutePath(), name, date, RightLeft.RIGHT,
+		final EyePhoto targetPhotoRight = new EyePhoto(targetFolder.getAbsolutePath(), name, date, RightLeft.RIGHT,
 				suffixRight);
-		EyePhoto targetPhotoLeft = new EyePhoto(targetFolder.getAbsolutePath(), name, date, RightLeft.LEFT, suffixLeft);
+		final EyePhoto targetPhotoLeft =
+				new EyePhoto(targetFolder.getAbsolutePath(), name, date, RightLeft.LEFT, suffixLeft);
+
+		try {
+			JpegMetadataUtil.checkJpeg(photoRight.getAbsolutePath());
+			JpegMetadataUtil.checkJpeg(photoLeft.getAbsolutePath());
+		}
+		catch (IOException e) {
+			ConfirmDialogListener confirmationListener = new ConfirmDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = -3186094978749077352L;
+
+				@Override
+				public void onDialogPositiveClick(final DialogFragment dialog) {
+					movePhotos(targetPhotoRight, targetPhotoLeft, name);
+				}
+
+				@Override
+				public void onDialogNegativeClick(final DialogFragment dialog) {
+					// Do nothing
+				}
+			};
+
+			DialogUtil.displayConfirmationMessage(this, confirmationListener, R.string.button_move,
+					R.string.message_dialog_confirm_no_jpeg);
+			return;
+		}
+
+		movePhotos(targetPhotoRight, targetPhotoLeft, name);
+	}
+
+	/**
+	 * Move and rename the selected files.
+	 *
+	 * @param targetPhotoRight
+	 *            The right eye photo.
+	 * @param targetPhotoLeft
+	 *            The left eye photo.
+	 * @param name
+	 *            The selected name.
+	 */
+	public final void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
 
 		if (!photoRight.exists()) {
 			displayError(R.string.message_dialog_file_does_not_exist, photoRight.getAbsolutePath());
