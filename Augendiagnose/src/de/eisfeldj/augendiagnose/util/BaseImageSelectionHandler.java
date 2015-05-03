@@ -1,17 +1,21 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.view.View;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
 
 /**
- * Base handler for the selection of images. Contains only methods to handle the highlighting.
+ * Base handler for the selection of images. Contains only methods to handle the highlighting. Multiple views may be
+ * selected, but currently only one image is supported.
  */
 public abstract class BaseImageSelectionHandler {
 	/**
-	 * The view containing the first selected image.
+	 * The views containing the selected image.
 	 */
-	private EyeImageView selectedView = null;
+	private List<EyeImageView> selectedViews = new ArrayList<EyeImageView>();
 
 	/**
 	 * Get the activity holding the images.
@@ -21,17 +25,19 @@ public abstract class BaseImageSelectionHandler {
 	protected abstract Activity getActivity();
 
 	/**
-	 * Change highlight setting of the selected view.
+	 * Change highlight setting of the selected views.
 	 *
 	 * @param highlight
-	 *            indicator if the view should be highlighted
+	 *            indicator if the views should be highlighted
 	 */
-	protected final void highlightSelectedView(final boolean highlight) {
-		if (highlight) {
-			selectedView.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
-		}
-		else {
-			selectedView.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent));
+	protected final void highlightSelectedViews(final boolean highlight) {
+		for (EyeImageView view : selectedViews) {
+			if (highlight) {
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
+			}
+			else {
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent));
+			}
 		}
 	}
 
@@ -39,10 +45,10 @@ public abstract class BaseImageSelectionHandler {
 	 * Unselect the selected view.
 	 */
 	// OVERRIDABLE
-	public void cleanSelectedView() {
+	public void cleanSelectedViews() {
 		if (hasSelectedView()) {
-			highlightSelectedView(false);
-			selectedView = null;
+			highlightSelectedViews(false);
+			selectedViews.clear();
 		}
 	}
 
@@ -54,8 +60,8 @@ public abstract class BaseImageSelectionHandler {
 	 */
 	// OVERRIDABLE
 	protected void selectView(final EyeImageView view) {
-		selectedView = view;
-		highlightSelectedView(true);
+		selectedViews.add(view);
+		highlightSelectedViews(true);
 	}
 
 	/**
@@ -64,7 +70,7 @@ public abstract class BaseImageSelectionHandler {
 	 * @return true if a view is selected.
 	 */
 	protected final boolean hasSelectedView() {
-		return selectedView != null;
+		return selectedViews.size() > 0;
 	}
 
 	/**
@@ -75,17 +81,17 @@ public abstract class BaseImageSelectionHandler {
 	 * @return true if the given view is selected.
 	 */
 	protected final boolean isSelectedView(final View view) {
-		return selectedView == view;
+		return selectedViews.contains(view);
 	}
 
 	/**
-	 * Get the selected eye photo, if existing.
+	 * Get a selected eye photo, if existing.
 	 *
 	 * @return The selected eye photo.
 	 */
 	protected final EyePhoto getSelectedImage() {
 		if (hasSelectedView()) {
-			return selectedView.getEyePhoto();
+			return selectedViews.get(0).getEyePhoto();
 		}
 		else {
 			return null;

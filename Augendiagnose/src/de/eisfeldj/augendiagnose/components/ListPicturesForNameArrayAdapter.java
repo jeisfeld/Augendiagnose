@@ -75,7 +75,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedView();
+				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedViews();
 				DisplayTwoActivity.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
 						.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye().getAbsolutePath());
 

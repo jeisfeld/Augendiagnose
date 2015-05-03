@@ -113,13 +113,13 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else if (isSelectedView(view)) {
-					cleanSelectedView();
+					cleanSelectedViews();
 					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else {
 					DisplayTwoActivity.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
 							.getAbsolutePath());
-					cleanSelectedView();
+					cleanSelectedViews();
 				}
 			}
 		});
@@ -128,10 +128,10 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 			@Override
 			public boolean onLongClick(final View v) {
 				if (isSelectedView(view)) {
-					cleanSelectedView();
+					cleanSelectedViews();
 				}
 				else {
-					cleanSelectedView();
+					cleanSelectedViews();
 					selectView(view);
 				}
 				return true;
@@ -152,7 +152,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 				DisplayTwoActivity
 						.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
 								.getAbsolutePath());
-				cleanSelectedView();
+				cleanSelectedViews();
 				secondActivity.finish();
 			}
 		});
@@ -162,9 +162,9 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 * Unselect the selected view.
 	 */
 	@Override
-	public void cleanSelectedView() {
+	public void cleanSelectedViews() {
 		if (hasSelectedView()) {
-			super.cleanSelectedView();
+			super.cleanSelectedViews();
 
 			if (fragment != null) {
 				fragment.deactivateButtonAdditionalPictures();

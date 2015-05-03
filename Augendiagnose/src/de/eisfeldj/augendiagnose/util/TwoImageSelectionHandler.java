@@ -86,11 +86,11 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 					selectView(view);
 				}
 				else if (getSelectedImage().equals(view.getEyePhoto())) {
-					cleanSelectedView();
+					cleanSelectedViews();
 				}
 				else {
 					createResponse(getSelectedImage(), view.getEyePhoto());
-					cleanSelectedView();
+					cleanSelectedViews();
 				}
 			}
 		});
