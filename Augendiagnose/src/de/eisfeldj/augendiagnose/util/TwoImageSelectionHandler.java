@@ -65,7 +65,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	public void highlightIfSelected(final EyeImageView view) {
 		// TODO: fix issue on selecting first image - somehow this method is called then again with different view,
 		// which leads to wrong highlighting on deselecting.
-		if ((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
+		if (hasSelectedView() && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
 	}
@@ -82,14 +82,14 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				if (selectedView == null) {
+				if (!hasSelectedView()) {
 					selectView(view);
 				}
-				else if (selectedView.getEyePhoto().equals(view.getEyePhoto())) {
+				else if (getSelectedImage().equals(view.getEyePhoto())) {
 					cleanSelectedView();
 				}
 				else {
-					createResponse(selectedView, view);
+					createResponse(getSelectedImage(), view.getEyePhoto());
 					cleanSelectedView();
 				}
 			}
@@ -103,14 +103,13 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Return the paths of the two selected files to the parent activity.
 	 *
-	 * @param view1
-	 *            the first selected path.
-	 * @param view2
-	 *            the second selected path.
+	 * @param image1
+	 *            the first selected image.
+	 * @param image2
+	 *            the second selected image.
 	 */
-	private void createResponse(final EyeImageView view1, final EyeImageView view2) {
-		activity.returnResult(view1.getEyePhoto().getAbsolutePath(), view2.getEyePhoto()
-				.getAbsolutePath());
+	private void createResponse(final EyePhoto image1, final EyePhoto image2) {
+		activity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());
 	}
 
 	@Override

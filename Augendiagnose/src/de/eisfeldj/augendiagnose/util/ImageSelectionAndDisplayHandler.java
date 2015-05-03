@@ -97,7 +97,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
 		// Ensure that selected view stays selected after rotating device
-		if ((selectedView != null) && selectedView.getEyePhoto().equals(view.getEyePhoto())) {
+		if (hasSelectedView() && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
 
@@ -109,15 +109,15 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 					return;
 				}
 
-				if (selectedView == null) {
+				if (!hasSelectedView()) {
 					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
-				else if (selectedView == view) {
+				else if (isSelectedView(view)) {
 					cleanSelectedView();
 					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
 				}
 				else {
-					DisplayTwoActivity.startActivity(activity, getSelectedImagePath(), view.getEyePhoto()
+					DisplayTwoActivity.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
 							.getAbsolutePath());
 					cleanSelectedView();
 				}
@@ -127,7 +127,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 		view.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(final View v) {
-				if (selectedView == view) {
+				if (isSelectedView(view)) {
 					cleanSelectedView();
 				}
 				else {
@@ -150,7 +150,8 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 			@Override
 			public void onClick(final View v) {
 				DisplayTwoActivity
-						.startActivity(activity, getSelectedImagePath(), view.getEyePhoto().getAbsolutePath());
+						.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
+								.getAbsolutePath());
 				cleanSelectedView();
 				secondActivity.finish();
 			}
@@ -162,7 +163,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 */
 	@Override
 	public void cleanSelectedView() {
-		if (selectedView != null) {
+		if (hasSelectedView()) {
 			super.cleanSelectedView();
 
 			if (fragment != null) {
@@ -183,20 +184,6 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 
 		if (fragment != null) {
 			fragment.activateButtonAdditionalPictures();
-		}
-	}
-
-	/**
-	 * Retrieve the path of the selected image.
-	 *
-	 * @return the path of the selected image.
-	 */
-	public String getSelectedImagePath() {
-		if (selectedView == null) {
-			return null;
-		}
-		else {
-			return selectedView.getEyePhoto().getAbsolutePath();
 		}
 	}
 

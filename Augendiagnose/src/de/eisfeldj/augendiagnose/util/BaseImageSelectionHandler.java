@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
 import android.app.Activity;
+import android.view.View;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
 
 /**
@@ -10,10 +11,7 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * The view containing the first selected image.
 	 */
-	// PUBLIC_FIELDS:START
-	protected EyeImageView selectedView = null;
-
-	// PUBLIC_FIELDS:END
+	private EyeImageView selectedView = null;
 
 	/**
 	 * Get the activity holding the images.
@@ -42,7 +40,7 @@ public abstract class BaseImageSelectionHandler {
 	 */
 	// OVERRIDABLE
 	public void cleanSelectedView() {
-		if (selectedView != null) {
+		if (hasSelectedView()) {
 			highlightSelectedView(false);
 			selectedView = null;
 		}
@@ -58,6 +56,40 @@ public abstract class BaseImageSelectionHandler {
 	protected void selectView(final EyeImageView view) {
 		selectedView = view;
 		highlightSelectedView(true);
+	}
+
+	/**
+	 * Get information if any view is selected.
+	 *
+	 * @return true if a view is selected.
+	 */
+	protected final boolean hasSelectedView() {
+		return selectedView != null;
+	}
+
+	/**
+	 * Get information if a given view is selected.
+	 *
+	 * @param view
+	 *            The given view.
+	 * @return true if the given view is selected.
+	 */
+	protected final boolean isSelectedView(final View view) {
+		return selectedView == view;
+	}
+
+	/**
+	 * Get the selected eye photo, if existing.
+	 *
+	 * @return The selected eye photo.
+	 */
+	protected final EyePhoto getSelectedImage() {
+		if (hasSelectedView()) {
+			return selectedView.getEyePhoto();
+		}
+		else {
+			return null;
+		}
 	}
 
 }
