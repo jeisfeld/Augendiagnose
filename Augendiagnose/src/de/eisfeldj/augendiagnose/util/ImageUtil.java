@@ -76,7 +76,14 @@ public final class ImageUtil {
 		int rotation = 0;
 		try {
 			ExifInterface exif = new ExifInterface(path);
-			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+			if (orientation == ExifInterface.ORIENTATION_UNDEFINED) {
+				// Use custom implementation, as the previous one is not always reliable
+				orientation = JpegMetadataUtil.getExifOrientation(new File(path));
+			}
+
+			Logger.log("Orientation: " + orientation);
 
 			switch (orientation) {
 			case ExifInterface.ORIENTATION_ROTATE_270:

@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType.TIFF_DIRECTORY_IFD0;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,10 +21,13 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
+import android.media.ExifInterface;
 import android.util.Log;
 
 import com.adobe.xmp.XMPException;
@@ -70,7 +75,43 @@ public final class JpegMetadataUtil {
 		for (TiffImageMetadata.Item item : items) {
 			Log.i(Application.TAG, item.getTiffField().toString());
 		}
+	}
 
+	/**
+	 * Retrieve the orientation of a file from the EXIF data. Required, as built-in ExifInterface is not always
+	 * reliable.
+	 *
+	 * @param imageFile
+	 *            the image file.
+	 * @return the orientation value.
+	 */
+	protected static int getExifOrientation(final File imageFile) {
+		try {
+			final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+			TiffImageMetadata tiffImageMetadata = null;
+
+			if (metadata instanceof JpegImageMetadata) {
+				tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
+			}
+			else if (metadata instanceof TiffImageMetadata) {
+				tiffImageMetadata = (TiffImageMetadata) metadata;
+			}
+			else {
+				return ExifInterface.ORIENTATION_UNDEFINED;
+			}
+
+			TagInfo tagInfo = new TagInfoShort("Orientation", 274, 1, TIFF_DIRECTORY_IFD0); // MAGIC_NUMBER
+			TiffField field = tiffImageMetadata.findField(tagInfo);
+			if (field != null) {
+				return field.getIntValue();
+			}
+			else {
+				return ExifInterface.ORIENTATION_UNDEFINED;
+			}
+		}
+		catch (Exception e) {
+			return ExifInterface.ORIENTATION_UNDEFINED;
+		}
 	}
 
 	/**
