@@ -151,7 +151,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify
 											.getLeftEye().getPersonName(), pairToModify
-											.getDateDisplayString("dd.MM.yyyy"));
+											.getDateDisplayString());
 
 						}
 					}
@@ -164,7 +164,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 				DialogUtil.displayConfirmationMessage(getActivity(), listenerDelete, R.string.button_delete,
 						R.string.message_dialog_confirm_delete_date, pairToModify.getLeftEye().getPersonName(),
-						pairToModify.getDateDisplayString("dd.MM.yyyy"));
+						pairToModify.getDateDisplayString());
 				return true;
 
 			case R.id.action_move_to_input_folder:
@@ -188,7 +188,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
 											.getLeftEye().getPersonName(), pairToModify
-											.getDateDisplayString("dd.MM.yyyy"));
+											.getDateDisplayString());
 
 						}
 					}
@@ -202,7 +202,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				DialogUtil.displayConfirmationMessage(getActivity(), listenerMove, R.string.button_move,
 						R.string.message_dialog_confirm_move_to_input_folder,
 						pairToModify.getLeftEye().getPersonName(),
-						pairToModify.getDateDisplayString("dd.MM.yyyy"));
+						pairToModify.getDateDisplayString());
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -253,7 +253,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							if (!success) {
 								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date, false,
 										pairToUpdate.getLeftEye().getPersonName(),
-										pairToUpdate.getDateDisplayString("dd.MM.yyyy"),
+										pairToUpdate.getDateDisplayString(),
 										DateUtil.format(newDate, "dd.MM.yyyy"));
 							}
 						}

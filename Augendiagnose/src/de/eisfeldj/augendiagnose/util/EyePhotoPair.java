@@ -58,12 +58,10 @@ public class EyePhotoPair {
 	/**
 	 * Return the date as String for display (Assumption: both photos should have the same date.).
 	 *
-	 * @param format
-	 *            the date format
 	 * @return the formatted date.
 	 */
-	public final String getDateDisplayString(final String format) {
-		return DateUtil.format(getDate(), format);
+	public final String getDateDisplayString() {
+		return DateUtil.format(getDate());
 	}
 
 	/**
