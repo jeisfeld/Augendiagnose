@@ -224,6 +224,15 @@ public class OverlayPinchImageView extends PinchImageView {
 	// JAVADOC:ON
 
 	/**
+	 * Get the EyePhoto displayed in the view.
+	 *
+	 * @return the EyePhoto
+	 */
+	public final EyePhoto getEyePhoto() {
+		return mEyePhoto;
+	}
+
+	/**
 	 * Fill with an image, initializing from metadata.
 	 *
 	 * @param pathName

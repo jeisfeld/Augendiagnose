@@ -233,6 +233,15 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Retrieve the date as a string with default date format.
+	 *
+	 * @return the date string.
+	 */
+	public final String getDateString() {
+		return DateUtil.format(getDate());
+	}
+
+	/**
 	 * Set the date from a String.
 	 *
 	 * @param dateString

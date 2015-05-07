@@ -4,6 +4,7 @@
     <string name="title_dialog_change_name">Namen ändern</string>
     <string name="title_dialog_error">Fehler</string>
     <string name="title_dialog_info">Information</string>
+    <string name="title_dialog_image_info">Bildinformation</string>
     <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
     <string name="title_dialog_tip">Tipp</string>
@@ -38,5 +39,9 @@
     <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
     <string name="message_dialog_confirm_no_jpeg">Die gewählten Fotos sind keine JPG-Fotos. Daher werden Teile der App (wie Speichern von Daten) nicht funktionieren. Wollen Sie trotzdem fortsetzen?</string>
     <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
+    <string name="imageinfo_line_filename">Dateiname:</string>
+    <string name="imageinfo_line_filedate">Dateidatum:</string>
+    <string name="imageinfo_line_name">Name:</string>
+    <string name="imageinfo_line_comment">Kommentar:</string>
 
 </resources>

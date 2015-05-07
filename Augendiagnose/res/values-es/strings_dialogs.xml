@@ -4,6 +4,7 @@
     <string name="title_dialog_change_name">Cambiar nombre</string>
     <string name="title_dialog_error">Error</string>
     <string name="title_dialog_info">Información</string>
+    <string name="title_dialog_image_info">Datos de la imagen</string>
     <string name="title_dialog_confirmation">Confirmación</string>
     <string name="title_dialog_select_folder">Seleccionar carpeta</string>
     <string name="title_dialog_tip">Consejo</string>

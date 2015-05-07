@@ -24,6 +24,11 @@
             android:drawableBottom="@drawable/ic_clarity" />
 
         <Button
+            android:id="@+id/buttonInfo"
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_action_info" />
+
+        <Button
             android:id="@+id/buttonComment"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_comment" />

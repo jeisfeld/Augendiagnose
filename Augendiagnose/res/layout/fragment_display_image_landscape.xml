@@ -24,6 +24,11 @@
             android:drawableRight="@drawable/ic_clarity" />
 
         <Button
+            android:id="@+id/buttonInfo"
+            style="@style/ActionBarButtonLandscape"
+            android:drawableRight="@drawable/ic_action_info" />
+
+        <Button
             android:id="@+id/buttonComment"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_comment" />

@@ -4,6 +4,7 @@
     <string name="title_dialog_change_name">Change Name</string>
     <string name="title_dialog_error">Error</string>
     <string name="title_dialog_info">Information</string>
+    <string name="title_dialog_image_info">Image Information</string>
     <string name="title_dialog_confirmation">Confirmation</string>
     <string name="title_dialog_select_folder">Select Folder</string>
     <string name="title_dialog_tip">Tip</string>

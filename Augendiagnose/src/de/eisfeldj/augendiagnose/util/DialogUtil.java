@@ -1,13 +1,14 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.Serializable;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -63,7 +64,7 @@ public abstract class DialogUtil {
 		DialogFragment fragment = new DisplayMessageDialogFragment();
 		String message = String.format(activity.getString(resource), args);
 		Bundle bundle = new Bundle();
-		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_info));
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
 		if (listener != null) {
@@ -97,7 +98,7 @@ public abstract class DialogUtil {
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
-		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_error));
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_error);
 		fragment.setArguments(bundle);
@@ -140,7 +141,7 @@ public abstract class DialogUtil {
 		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
 		String message = String.format(activity.getString(messageResource), args);
 		Bundle bundle = new Bundle();
-		bundle.putString(PARAM_MESSAGE, message);
+		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putInt(PARAM_BUTTON_RESOURCE, buttonResource);
 		bundle.putSerializable(PARAM_LISTENER, listener);
 		fragment.setArguments(bundle);
@@ -166,11 +167,76 @@ public abstract class DialogUtil {
 		if (!skip) {
 			DisplayTipFragment fragment = new DisplayTipFragment();
 			Bundle bundle = new Bundle();
-			bundle.putString(PARAM_MESSAGE, message);
+			bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message));
 			bundle.putInt(PARAM_PREFERENCE_KEY, preferenceResource);
 			fragment.setArguments(bundle);
 			fragment.show(activity.getFragmentManager(), DisplayTipFragment.class.toString());
 		}
+	}
+
+	/**
+	 * Format one line of the image display.
+	 *
+	 * @param activity
+	 *            the triggering activity.
+	 * @param resource
+	 *            The resource containing the label of the line.
+	 * @param value
+	 *            The value of the parameter.
+	 * @return The formatted line.
+	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private static String formatImageInfoLine(final Activity activity, final int resource, final String value) {
+		StringBuilder line = new StringBuilder("<b>");
+		line.append(activity.getString(resource));
+		line.append("</b><br>");
+
+		if (VersionUtil.isAtLeastVersion(Build.VERSION_CODES.JELLY_BEAN)) {
+			// Workaround to escape html, but transfer line breaks to HTML
+			line.append(Html.escapeHtml(value.replace("\n", "|||LINEBREAK|||")).replace("|||LINEBREAK|||", "<br>"));
+		}
+		else {
+			line.append(value.replace("&", "&amp;").replace("\n", "<br>").replace("<", "&lt;").replace(">", "&gt;"));
+		}
+
+		line.append("<br><br>");
+		return line.toString();
+	}
+
+	/**
+	 * Display the info of this photo.
+	 *
+	 * @param activity
+	 *            the triggering activity
+	 * @param eyePhoto
+	 *            the photo for which the image should be displayed.
+	 */
+	public static void displayImageInfo(final Activity activity, final EyePhoto eyePhoto) {
+		StringBuffer message = new StringBuffer();
+		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filename, eyePhoto.getFilename()));
+		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString()));
+
+		try {
+			JpegMetadata metadata = JpegMetadataUtil.getMetadata(eyePhoto.getAbsolutePath());
+
+			if (metadata.person != null) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.person));
+			}
+			if (metadata.comment != null) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.comment));
+			}
+		}
+		catch (Exception e) {
+			// cannot append metadata.
+		}
+
+		DialogFragment fragment = new DisplayMessageDialogFragment();
+		Bundle bundle = new Bundle();
+		bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message.toString()));
+		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_image_info));
+		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
+		fragment.setArguments(bundle);
+		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
 
 	/**
@@ -209,7 +275,7 @@ public abstract class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
@@ -240,7 +306,7 @@ public abstract class DialogUtil {
 	public static class DisplayErrorDialogAndReturnFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_error) //
@@ -291,7 +357,7 @@ public abstract class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
 			final ConfirmDialogListener listener = (ConfirmDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
@@ -324,13 +390,13 @@ public abstract class DialogUtil {
 	public static class DisplayTipFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_tip) //
 					.setIcon(R.drawable.ic_title_tipp) //
-					.setMessage(Html.fromHtml(message)) //
+					.setMessage(message) //
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {

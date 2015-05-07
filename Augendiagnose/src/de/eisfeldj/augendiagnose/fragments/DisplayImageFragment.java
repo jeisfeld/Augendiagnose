@@ -124,6 +124,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private Button commentButton;
 
 	/**
+	 * The button for showing the image info.
+	 */
+	private Button infoButton;
+
+	/**
 	 * The button for saving image metadata.
 	 */
 	private Button saveButton;
@@ -272,6 +277,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		selectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
 
 		clarityButton = (Button) getView().findViewById(R.id.buttonClarity);
+		infoButton = (Button) getView().findViewById(R.id.buttonInfo);
 		commentButton = (Button) getView().findViewById(R.id.buttonComment);
 		saveButton = (Button) getView().findViewById(R.id.buttonSave);
 		toolsButton = (Button) getView().findViewById(R.id.buttonTools);
@@ -316,6 +322,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		else {
 			clarityButton.setVisibility(View.GONE);
 		}
+
+		infoButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				DialogUtil.displayImageInfo(getActivity(), imageView.getEyePhoto());
+			}
+		});
 
 		commentButton.setOnClickListener(new OnClickListener() {
 			@Override
