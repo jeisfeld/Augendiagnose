@@ -92,7 +92,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		}
 
 		final TextView textView = (TextView) rowView.findViewById(R.id.textPictureDate);
-		textView.setText(eyePhotoPairs[position].getDateDisplayString());
+		textView.setText(eyePhotoPairs[position].getDateDisplayString("dd.MM.yyyy"));
 
 		// Fill pictures in separate thread, for performance reasons
 		final EyeImageView imageListRight = (EyeImageView) rowView.findViewById(R.id.imageListRight);
