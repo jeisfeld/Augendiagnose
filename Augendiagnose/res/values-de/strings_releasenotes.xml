@@ -70,7 +70,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Speichern der Daten auf externer SD-Karte in Android 5. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Verbesserte Fehlerbehandlung.</item>
-        <item>Bugfixes</item>
+        <item>Anzeige von Bildinformationen während der Detailansicht. Bugfixes</item>
     </string-array>
 
 </resources>

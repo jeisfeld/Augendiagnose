@@ -39,5 +39,9 @@
     <string name="message_dialog_confirm_move_to_input_folder">¿Realmente desea mover las fotos de %1$s de %2$s a la carpeta de entrada?</string>
     <string name="message_dialog_confirm_no_jpeg">Las fotos seleccionadas no son JPG fotos. Por lo tanto, parte de la funcionalidad (tal como almacenamiento de información) no funcionará. ¿Quiere continuar?</string>
     <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
+    <string name="imageinfo_line_filename">Nombre del archivo:</string>
+    <string name="imageinfo_line_filedate">Fecha del archivo:</string>
+    <string name="imageinfo_line_name">Nombre:</string>
+    <string name="imageinfo_line_comment">Comentario:</string>
 
 </resources>
