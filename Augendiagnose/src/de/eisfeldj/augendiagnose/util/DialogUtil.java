@@ -217,7 +217,7 @@ public abstract class DialogUtil {
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString()));
 
 		try {
-			JpegMetadata metadata = JpegMetadataUtil.getMetadata(eyePhoto.getAbsolutePath());
+			JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(eyePhoto.getAbsolutePath());
 
 			if (metadata.person != null) {
 				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.person));
