@@ -72,6 +72,11 @@ public final class PreferenceUtil {
 	public static final String KEY_SORT_BY_LAST_NAME = "key_sort_by_last_name";
 
 	/**
+	 * Preference key for the last known version that has already been checked.
+	 */
+	public static final String KEY_LAST_KNOWN_VERSION = "key_last_known_version";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -94,6 +99,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_THUMBNAIL_SIZE, 1024); // MAGIC_NUMBER
 		DEFAULT_MAP.put(KEY_OVERLAY_COLOR, "#FF0000FF"); // RED
 		DEFAULT_MAP.put(KEY_SORT_BY_LAST_NAME, false);
+		DEFAULT_MAP.put(KEY_LAST_KNOWN_VERSION, VersioningUtil.CURRENT_VERSION.getVersionNumber());
 	}
 
 	/**

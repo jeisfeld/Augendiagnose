@@ -1,5 +1,7 @@
 package de.eisfeldj.augendiagnosefx.util;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -79,7 +81,10 @@ public final class VersioningUtil {
 			return;
 		}
 
-		boolean requiresNewVersion = latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber();
+		// Prompt only if the same version has not yet been refused.
+		boolean requiresNewVersion =
+				latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber()
+						&& latestVersion.getVersionNumber() > PreferenceUtil.getPreferenceInt(KEY_LAST_KNOWN_VERSION);
 
 		if (requiresNewVersion) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
@@ -95,7 +100,7 @@ public final class VersioningUtil {
 
 				@Override
 				public void onDialogNegativeClick() {
-					// do nothing
+					PreferenceUtil.setPreference(KEY_LAST_KNOWN_VERSION, latestVersion.versionNumber);
 				}
 			};
 
