@@ -14,6 +14,7 @@ import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -73,6 +74,8 @@ public class Application extends javafx.application.Application {
 		primaryStage.show();
 
 		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
+
+		VersioningUtil.checkForNewerVersion();
 	}
 
 	/**
