@@ -37,6 +37,7 @@
 		<Menu text="%menu_help"> 
 			<items>
 				<MenuItem text="%menu_online_manual" disable="true"/> 
+				<MenuItem text="%menu_check_updates" onAction="#checkUpdates"/> 
 				<SeparatorMenuItem/> 
 				<MenuItem text="%menu_about" disable="true"/> 
 			</items>

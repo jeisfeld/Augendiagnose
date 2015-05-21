@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 
 /**
  * BaseController class for the menu.
@@ -123,6 +124,19 @@ public class MenuController extends BaseController implements Initializable {
 			controller.showOverlayPane(menuOverlayPane.isSelected());
 			PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuOverlayPane.isSelected());
 		}
+	}
+
+	/**
+	 * Handler for menu entry "Check for updates".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void checkUpdates(final ActionEvent event) {
+		PreferenceUtil.setPreference(PreferenceUtil.KEY_LAST_KNOWN_VERSION,
+				VersioningUtil.CURRENT_VERSION.getVersionNumber());
+		VersioningUtil.checkForNewerVersion();
 	}
 
 	/**

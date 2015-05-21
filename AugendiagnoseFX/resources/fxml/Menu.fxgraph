@@ -59,6 +59,10 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 						text : rstring "menu_online_manual",
 						disable : true
 					},
+					MenuItem {
+						text : rstring "menu_check_updates",
+						onAction : controllermethod checkUpdates
+					},
 					SeparatorMenuItem,
 					MenuItem {
 						text : rstring "menu_about",

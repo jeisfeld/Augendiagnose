@@ -3,11 +3,14 @@ package de.eisfeldj.augendiagnosefx.util;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -44,6 +47,20 @@ public final class VersioningUtil {
 	 */
 	private static boolean is64Bit() {
 		return System.getProperty("sun.arch.data.model").equals("64");
+	}
+
+	/**
+	 * Get the path of the jar file.
+	 *
+	 * @return The path of the jar file.
+	 */
+	public static File getJarPath() {
+		try {
+			return new File(Application.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+		}
+		catch (URISyntaxException e) {
+			return null;
+		}
 	}
 
 	/**
