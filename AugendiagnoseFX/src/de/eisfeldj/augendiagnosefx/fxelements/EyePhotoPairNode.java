@@ -77,7 +77,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	public EyePhotoPairNode(final EyePhotoPair pair) {
 		FXMLUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
 
-		labelDate.setText(pair.getDateDisplayString("dd.MM.yyyy"));
+		labelDate.setText(pair.getDateDisplayString());
 
 		imageViewRight.setImageView(getImageView(pair.getRightEye()));
 		imageViewLeft.setImageView(getImageView(pair.getLeftEye()));

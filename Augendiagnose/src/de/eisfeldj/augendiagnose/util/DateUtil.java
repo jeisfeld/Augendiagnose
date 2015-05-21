@@ -13,12 +13,6 @@ import de.eisfeldj.augendiagnose.Application;
  * Utility class for handling dates.
  */
 public final class DateUtil {
-	/**
-	 * The date format to be used for display.
-	 *
-	 * TODO: use locale default format
-	 */
-	private static final String DATE_FORMAT_DISPLAY = "d. MMMM yyyy";
 
 	/**
 	 * Hide default constructor.
@@ -76,7 +70,8 @@ public final class DateUtil {
 	 * @return the date formatted for display
 	 */
 	public static String getDisplayDate(final Calendar calendar) {
-		return format(calendar.getTime(), DATE_FORMAT_DISPLAY);
+		DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(Application.getAppContext());
+		return dateFormat.format(calendar.getTime());
 	}
 
 }
