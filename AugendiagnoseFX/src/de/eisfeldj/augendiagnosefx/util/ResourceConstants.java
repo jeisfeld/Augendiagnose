@@ -16,6 +16,7 @@ public final class ResourceConstants {
 	public static final String APP_NAME = "app_name";
 	public static final String BUTTON_BACK = "button_back";
 	public static final String BUTTON_CANCEL = "button_cancel";
+	public static final String BUTTON_DOWNLOAD = "button_download";
 	public static final String BUTTON_EDIT_COMMENT = "button_edit_comment";
 	public static final String BUTTON_OK = "button_ok";
 	public static final String BUTTON_OVERLAY_1 = "button_overlay_1";
@@ -51,6 +52,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTO = "message_dialog_loading_photo";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
+	public static final String MESSAGE_DIALOG_NEW_VERSION = "message_dialog_new_version";
 	public static final String MESSAGE_DIALOG_UNKNOWN_ERROR = "message_dialog_unknown_error";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
