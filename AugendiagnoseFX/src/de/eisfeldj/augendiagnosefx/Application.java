@@ -82,7 +82,7 @@ public class Application extends javafx.application.Application {
 
 		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 
-		VersioningUtil.checkForNewerVersion();
+		VersioningUtil.checkForNewerVersion(false);
 	}
 
 	/**

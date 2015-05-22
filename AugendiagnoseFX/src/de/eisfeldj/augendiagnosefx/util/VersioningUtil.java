@@ -145,8 +145,12 @@ public final class VersioningUtil {
 
 	/**
 	 * Check if there is a newer version of the application.
+	 *
+	 * @param fromMenu
+	 *            give information if started from menu. If started from menu, than failure to find new version will be
+	 *            reported, and previous cancellation is ignored.
 	 */
-	public static void checkForNewerVersion() {
+	public static void checkForNewerVersion(final boolean fromMenu) {
 		VersionInfo latestVersion = getLatestVersionInfo();
 
 		if (latestVersion == null) {
@@ -155,8 +159,16 @@ public final class VersioningUtil {
 
 		// Prompt only if the same version has not yet been refused.
 		boolean requiresNewVersion =
-				latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber()
-						&& latestVersion.getVersionNumber() > PreferenceUtil.getPreferenceInt(KEY_LAST_KNOWN_VERSION);
+				latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber();
+
+		if (fromMenu) {
+			PreferenceUtil.setPreference(PreferenceUtil.KEY_LAST_KNOWN_VERSION,
+					VersioningUtil.CURRENT_VERSION.getVersionNumber());
+		}
+		else {
+			requiresNewVersion = requiresNewVersion
+					&& latestVersion.getVersionNumber() > PreferenceUtil.getPreferenceInt(KEY_LAST_KNOWN_VERSION);
+		}
 
 		if (requiresNewVersion) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
@@ -178,6 +190,11 @@ public final class VersioningUtil {
 
 			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_DOWNLOAD,
 					ResourceConstants.MESSAGE_DIALOG_NEW_VERSION, latestVersion.getVersionString());
+		}
+		else {
+			if (fromMenu) {
+				DialogUtil.displayInfo(ResourceConstants.MESSAGE_DIALOG_NO_NEW_VERSION);
+			}
 		}
 	}
 

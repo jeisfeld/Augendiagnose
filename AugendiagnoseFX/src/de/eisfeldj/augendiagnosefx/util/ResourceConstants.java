@@ -55,6 +55,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
 	public static final String MESSAGE_DIALOG_LOADING_UPDATE = "message_dialog_loading_update";
 	public static final String MESSAGE_DIALOG_NEW_VERSION = "message_dialog_new_version";
+	public static final String MESSAGE_DIALOG_NO_NEW_VERSION = "message_dialog_no_new_version";
 	public static final String MESSAGE_DIALOG_UNKNOWN_ERROR = "message_dialog_unknown_error";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
@@ -66,6 +67,7 @@ public final class ResourceConstants {
 	public static final String SUFFIX_TITLE_RIGHT = "suffix_title_right";
 	public static final String TITLE_DIALOG_CONFIRMATION = "title_dialog_confirmation";
 	public static final String TITLE_DIALOG_ERROR = "title_dialog_error";
+	public static final String TITLE_DIALOG_INFO = "title_dialog_info";
 	public static final String TITLE_DIALOG_PROGRESS = "title_dialog_progress";
 	public static final String TITLE_SETTINGS = "title_settings";
 	// JAVADOC:ON

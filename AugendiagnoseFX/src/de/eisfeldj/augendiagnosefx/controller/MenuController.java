@@ -134,9 +134,7 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void checkUpdates(final ActionEvent event) {
-		PreferenceUtil.setPreference(PreferenceUtil.KEY_LAST_KNOWN_VERSION,
-				VersioningUtil.CURRENT_VERSION.getVersionNumber());
-		VersioningUtil.checkForNewerVersion();
+		VersioningUtil.checkForNewerVersion(true);
 	}
 
 	/**

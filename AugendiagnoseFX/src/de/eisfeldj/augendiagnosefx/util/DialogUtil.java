@@ -39,23 +39,25 @@ public abstract class DialogUtil {
 	}
 
 	/**
-	 * Display an error and go back to the current activity.
+	 * Display a message and go back to the current activity.
 	 *
+	 * @param title
+	 *            the title resource
 	 * @param resource
 	 *            the error message resource
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayError(final String resource, final Object... args) {
+	public static void displayMessage(final String title, final String resource, final Object... args) {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				String message = String.format(ResourceUtil.getString(resource), args);
-				Logger.warning("Dialog message: " + message);
+				Logger.info("Dialog message: " + message);
 
-				MessageDialogController controller = (MessageDialogController) createDialog("DialogError.fxml");
+				MessageDialogController controller = (MessageDialogController) createDialog("DialogMessage.fxml");
 
-				controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_ERROR));
+				controller.setHeading(ResourceUtil.getString(title));
 				controller.setMessage(message);
 
 				controller.getBtnBack().setOnAction(new EventHandler<ActionEvent>() {
@@ -68,6 +70,30 @@ public abstract class DialogUtil {
 				controller.show();
 			}
 		});
+	}
+
+	/**
+	 * Display an error and go back to the current activity.
+	 *
+	 * @param resource
+	 *            the error message resource
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayError(final String resource, final Object... args) {
+		displayMessage(ResourceConstants.TITLE_DIALOG_ERROR, resource, args);
+	}
+
+	/**
+	 * Display an information message and go back to the current activity.
+	 *
+	 * @param resource
+	 *            the error message resource
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayInfo(final String resource, final Object... args) {
+		displayMessage(ResourceConstants.TITLE_DIALOG_INFO, resource, args);
 	}
 
 	/**
