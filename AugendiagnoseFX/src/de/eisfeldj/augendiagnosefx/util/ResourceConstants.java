@@ -64,6 +64,7 @@ public final class ResourceConstants {
 	public static final String PREF_TITLE_OVERLAY_COLOR = "pref_title_overlay_color";
 	public static final String PREF_TITLE_SORT_BY_LAST_NAME = "pref_title_sort_by_last_name";
 	public static final String PREF_TITLE_THUMBNAIL_SIZE = "pref_title_thumbnail_size";
+	public static final String PREF_TITLE_UPDATE_AUTOMATICALLY = "pref_title_update_automatically";
 	public static final String SUFFIX_TITLE_LEFT = "suffix_title_left";
 	public static final String SUFFIX_TITLE_RIGHT = "suffix_title_right";
 	public static final String TITLE_DIALOG_CONFIRMATION = "title_dialog_confirmation";

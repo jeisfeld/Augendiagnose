@@ -108,10 +108,22 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static columnSpan : 2
 			},
 
+			Label {
+				text : rstring "pref_title_update_automatically",
+				static columnIndex : 0,
+				static rowIndex : 6
+			},
+
+			CheckBox id checkBoxUpdateAutomatically {
+				static columnIndex : 1,
+				static rowIndex : 6,
+				static columnSpan : 2
+			},
+
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 6,
+				static rowIndex : 7,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -119,7 +131,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 6,
+				static rowIndex : 7,
 				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit

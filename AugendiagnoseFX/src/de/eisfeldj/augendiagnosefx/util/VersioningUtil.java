@@ -121,11 +121,7 @@ public final class VersioningUtil {
 							dialog.setProgress(1.0 * currentSize / totalSize);
 						}
 					}
-				}
-				catch (IOException e) {
-					Logger.error("Exception while downloading from " + url, e);
-				}
-				finally {
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -134,6 +130,16 @@ public final class VersioningUtil {
 									currentJarFile.getAbsolutePath());
 
 							Platform.exit();
+						}
+					});
+
+				}
+				catch (IOException e) {
+					Logger.error("Exception while downloading from " + url, e);
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							dialog.close();
 						}
 					});
 				}
@@ -152,6 +158,7 @@ public final class VersioningUtil {
 	 */
 	public static void checkForNewerVersion(final boolean fromMenu) {
 		VersionInfo latestVersion = getLatestVersionInfo();
+		boolean updateAutomatically = PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_UPDATE_AUTOMATICALLY);
 
 		if (latestVersion == null) {
 			return;
@@ -161,6 +168,13 @@ public final class VersioningUtil {
 		boolean requiresNewVersion =
 				latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber();
 
+		// In case of automatic updates, just do the update if existing.
+		if (requiresNewVersion && updateAutomatically) {
+			downloadUpdate(latestVersion);
+			return;
+		}
+
+		// Otherwise, differentiate between check on startup and check via menu.
 		if (fromMenu) {
 			PreferenceUtil.setPreference(PreferenceUtil.KEY_LAST_KNOWN_VERSION,
 					VersioningUtil.CURRENT_VERSION.getVersionNumber());

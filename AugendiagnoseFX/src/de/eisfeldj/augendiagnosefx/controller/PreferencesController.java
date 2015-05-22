@@ -5,6 +5,7 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZ
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_UPDATE_AUTOMATICALLY;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +71,12 @@ public class PreferencesController extends DialogController implements Initializ
 	private CheckBox checkBoxSortByLastName;
 
 	/**
+	 * Checkbox for "update automatically" flag.
+	 */
+	@FXML
+	private CheckBox checkBoxUpdateAutomatically;
+
+	/**
 	 * Color picker for the default overlay color.
 	 */
 	@FXML
@@ -91,6 +98,7 @@ public class PreferencesController extends DialogController implements Initializ
 
 		oldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
 		checkBoxSortByLastName.setSelected(oldSortByLastName);
+		checkBoxUpdateAutomatically.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_UPDATE_AUTOMATICALLY));
 	}
 
 	/**
@@ -120,6 +128,7 @@ public class PreferencesController extends DialogController implements Initializ
 		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, choiceThumbnailSize.getValue());
 		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, colorPicker.getValue());
 		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, checkBoxSortByLastName.isSelected());
+		PreferenceUtil.setPreference(KEY_UPDATE_AUTOMATICALLY, checkBoxUpdateAutomatically.isSelected());
 
 		if (requireRefreshMainPage) {
 			Application.refreshMainPage();

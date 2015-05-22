@@ -67,7 +67,9 @@
 		<ColorPicker fx:id="colorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_sort_by_last_name" GridPane.columnIndex="0" GridPane.rowIndex="5"/> 
 		<CheckBox fx:id="checkBoxSortByLastName" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="2"/> 
-		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.halignment="LEFT"/> 
-		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
+		<Label text="%pref_title_update_automatically" GridPane.columnIndex="0" GridPane.rowIndex="6"/> 
+		<CheckBox fx:id="checkBoxUpdateAutomatically" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="2"/> 
+		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.halignment="LEFT"/> 
+		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
 	</children>
 </GridPane>
