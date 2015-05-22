@@ -5,12 +5,18 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import javafx.application.Platform;
 import de.eisfeldj.augendiagnosefx.Application;
 
 /**
  * Utility class for interaction with operating system.
  */
 public final class SystemUtil {
+	/**
+	 * Waiting time in seconds before it is assumed that application has been successfully closed.
+	 */
+	private static final int WAITING_TIME = 1;
+
 	/**
 	 * Hide default constructor.
 	 */
@@ -106,6 +112,31 @@ public final class SystemUtil {
 	}
 
 	/**
+	 * Get the path of the executable for uninstalling the application.
+	 *
+	 * @return The path of the application executable
+	 */
+	public static String getUninstallExecutable() {
+		File javaHome = new File(System.getProperties().getProperty("java.home"));
+
+		File applicationDir = javaHome.getParentFile().getParentFile();
+
+		File[] files = applicationDir.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(final File dir, final String name) {
+				return name.startsWith("unins") && name.endsWith(".exe");
+			}
+		});
+
+		if (files != null && files.length > 0) {
+			return files[0].getAbsolutePath();
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Get the current classpath.
 	 *
 	 * @return The classpath.
@@ -115,21 +146,19 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Run multiple Windows commands in one shell.
+	 * Run multiple Windows commands in one shell after a short waiting time.
 	 *
 	 * @param commands
 	 *            The Windows commands.
 	 */
 	public static void runMultipleWindowsCommands(final String... commands) {
-		if (commands.length < 1) {
-			return;
-		}
-
 		StringBuilder command = new StringBuilder();
-		command.append(commands[0]);
 
-		if (commands.length > 1) {
-			for (int i = 1; i < commands.length; i++) {
+		// Waiting shortly.
+		command.append("ping -n " + (WAITING_TIME + 1) + " 127.0.0.1 > NUL");
+
+		if (commands.length > 0) {
+			for (int i = 0; i < commands.length; i++) {
 				command.append(" && ");
 				command.append(commands[i]);
 			}
@@ -148,28 +177,25 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Move a file via Windows command after a certain waiting time.
+	 * Move the jar file via Windows command, and then restart the application.
 	 *
-	 * @param waitingTime
-	 *            The waiting time in seconds
 	 * @param sourcePath
 	 *            The source file
 	 * @param targetPath
 	 *            The target file
 	 */
-	public static void updateApplication(final int waitingTime, final String sourcePath, final String targetPath) {
+	public static void updateApplication(final String sourcePath, final String targetPath) {
 		String javaExecutable = getJavaExecutable();
 		String applicationExecutable = getApplicationExecutable();
 
 		if (javaExecutable != null) {
 			runMultipleWindowsCommands(
-					"ping -n " + (waitingTime + 1) + " 127.0.0.1 > NUL",
 					"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
 					"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
 							+ Application.class.getCanonicalName());
 		}
 		else if (applicationExecutable != null) {
-			runMultipleWindowsCommands("ping -n " + (waitingTime + 1) + " 127.0.0.1 > NUL",
+			runMultipleWindowsCommands(
 					"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
 					"\"" + applicationExecutable + "\"");
 		}
@@ -178,6 +204,19 @@ public final class SystemUtil {
 			return;
 		}
 
+	}
+
+	/**
+	 * Uninstall the application via Windows command.
+	 */
+	public static void uninstallApplication() {
+		String uninstallExecutable = getUninstallExecutable();
+
+		// Need no confirmation dialog, as the uninstall executable will ask for confirmation.
+		if (uninstallExecutable != null) {
+			Platform.exit();
+			runMultipleWindowsCommands("\"" + uninstallExecutable + "\"");
+		}
 	}
 
 }

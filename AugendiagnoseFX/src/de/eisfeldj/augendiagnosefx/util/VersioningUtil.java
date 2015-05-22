@@ -42,11 +42,6 @@ public final class VersioningUtil {
 	private static final int DOWNLOAD_BUFFER = 4096;
 
 	/**
-	 * Waiting time before moving jar file.
-	 */
-	private static final int WAITING_TIME = 1;
-
-	/**
 	 * Hide default constructor.
 	 */
 	private VersioningUtil() {
@@ -126,7 +121,7 @@ public final class VersioningUtil {
 						@Override
 						public void run() {
 							dialog.close();
-							SystemUtil.updateApplication(WAITING_TIME, tempJarFile.getAbsolutePath(),
+							SystemUtil.updateApplication(tempJarFile.getAbsolutePath(),
 									currentJarFile.getAbsolutePath());
 
 							Platform.exit();
@@ -203,7 +198,7 @@ public final class VersioningUtil {
 			};
 
 			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_DOWNLOAD,
-					ResourceConstants.MESSAGE_DIALOG_NEW_VERSION, latestVersion.getVersionString());
+					ResourceConstants.MESSAGE_CONFIRM_NEW_VERSION, latestVersion.getVersionString());
 		}
 		else {
 			if (fromMenu) {
