@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
@@ -23,6 +24,10 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
 		justification = "Intentionally using same name as superclass")
 public class Application extends javafx.application.Application {
+	/**
+	 * The name of the application.
+	 */
+	public static final String APPLICATION_NAME = "Augendiagnose";
 
 	/**
 	 * The primary scene.
@@ -41,6 +46,8 @@ public class Application extends javafx.application.Application {
 	 *            The command line arguments.
 	 */
 	public static void main(final String[] args) {
+		// launch the application.
+		Logger.info("Launching application.");
 		launch(args);
 	}
 

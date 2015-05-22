@@ -4,18 +4,21 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VER
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import de.eisfeldj.augendiagnosefx.Application;
+import javafx.application.Platform;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Utility class for handling dates.
+ * Utility class for handling the download of new application version.
  */
 public final class VersioningUtil {
 	/**
@@ -34,33 +37,20 @@ public final class VersioningUtil {
 	private static final String CURRENT_VERSION_URL = DOWNLOAD_BASE_URL + "currentVersion.txt";
 
 	/**
+	 * Size of the buffer for downloading the jar file.
+	 */
+	private static final int DOWNLOAD_BUFFER = 4096;
+
+	/**
+	 * Waiting time before moving jar file.
+	 */
+	private static final int WAITING_TIME = 1;
+
+	/**
 	 * Hide default constructor.
 	 */
 	private VersioningUtil() {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Find out if application is running on 64bit java.
-	 *
-	 * @return true if 64bit
-	 */
-	private static boolean is64Bit() {
-		return System.getProperty("sun.arch.data.model").equals("64");
-	}
-
-	/**
-	 * Get the path of the jar file.
-	 *
-	 * @return The path of the jar file.
-	 */
-	public static File getJarPath() {
-		try {
-			return new File(Application.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-		}
-		catch (URISyntaxException e) {
-			return null;
-		}
 	}
 
 	/**
@@ -84,8 +74,73 @@ public final class VersioningUtil {
 			return new VersionInfo(versionNumber, versionString);
 		}
 		catch (Exception e) {
+			Logger.error("Error while determining latest application version.", e);
 			return null;
 		}
+	}
+
+	/**
+	 * Download a version update.
+	 *
+	 * @param version
+	 *            The version to be downloaded.
+	 */
+	public static void downloadUpdate(final VersionInfo version) {
+		String url = version.getJarDownloadUrl();
+		final File currentJarFile = SystemUtil.getJarPath();
+		final File tempJarFile;
+		final ProgressDialog dialog =
+				DialogUtil
+						.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_UPDATE, version.versionString);
+		final URLConnection connection;
+		try {
+			connection = new URL(url).openConnection();
+			tempJarFile = new File(SystemUtil.getTempDir(), "temp.jar");
+		}
+		catch (IOException e) {
+			Logger.error("Could not open URL " + url, e);
+			return;
+		}
+
+		Thread downloadThread = new Thread() {
+			@Override
+			public void run() {
+				Logger.info("Downloading update to file " + tempJarFile.getAbsolutePath());
+				try (InputStream input = connection.getInputStream();
+						OutputStream output = new FileOutputStream(tempJarFile);) {
+					long totalSize = connection.getContentLengthLong();
+					long currentSize = 0;
+
+					byte[] buffer = new byte[DOWNLOAD_BUFFER];
+					int n = -1;
+
+					while ((n = input.read(buffer)) != -1) {
+						if (n > 0) {
+							output.write(buffer, 0, n);
+							currentSize += n;
+							dialog.setProgress(1.0 * currentSize / totalSize);
+						}
+					}
+				}
+				catch (IOException e) {
+					Logger.error("Exception while downloading from " + url, e);
+				}
+				finally {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							dialog.close();
+							SystemUtil.updateApplication(WAITING_TIME, tempJarFile.getAbsolutePath(),
+									currentJarFile.getAbsolutePath());
+
+							Platform.exit();
+						}
+					});
+				}
+			}
+		};
+
+		downloadThread.start();
 	}
 
 	/**
@@ -112,7 +167,7 @@ public final class VersioningUtil {
 
 				@Override
 				public void onDialogPositiveClick() {
-					// TODO download
+					downloadUpdate(latestVersion);
 				}
 
 				@Override
@@ -167,20 +222,32 @@ public final class VersioningUtil {
 		}
 
 		/**
-		 * Retrieve the download URL for this version of the application.
+		 * Retrieve the download URL for this version of the application (exe file).
 		 *
 		 * @return The download URL.
 		 */
-		public String getDownloadUrl() {
+		public String getExeDownloadUrl() {
 			StringBuffer result = new StringBuffer(DOWNLOAD_BASE_URL);
 			result.append("Augendiagnose-");
-			if (is64Bit()) {
+			if (SystemUtil.is64Bit()) {
 				result.append("x64");
 			}
 			else {
 				result.append("x86");
 			}
 			result.append("-").append(getVersionString()).append(".exe");
+			return result.toString();
+		}
+
+		/**
+		 * Retrieve the download URL for this version of the application (jar file).
+		 *
+		 * @return The download URL.
+		 */
+		public String getJarDownloadUrl() {
+			StringBuffer result = new StringBuffer(DOWNLOAD_BASE_URL);
+			result.append("AugendiagnoseFX-");
+			result.append(getVersionString()).append(".jar");
 			return result.toString();
 		}
 	}

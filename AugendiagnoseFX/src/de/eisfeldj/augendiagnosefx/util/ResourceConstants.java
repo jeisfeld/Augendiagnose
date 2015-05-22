@@ -34,6 +34,7 @@ public final class ResourceConstants {
 	public static final String LABEL_COMMENT = "label_comment";
 	public static final String LABEL_OVERLAYS = "label_overlays";
 	public static final String MENU_ABOUT = "menu_about";
+	public static final String MENU_CHECK_UPDATES = "menu_check_updates";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
 	public static final String MENU_EXIT = "menu_exit";
@@ -52,6 +53,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTO = "message_dialog_loading_photo";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTOS = "message_dialog_loading_photos";
+	public static final String MESSAGE_DIALOG_LOADING_UPDATE = "message_dialog_loading_update";
 	public static final String MESSAGE_DIALOG_NEW_VERSION = "message_dialog_new_version";
 	public static final String MESSAGE_DIALOG_UNKNOWN_ERROR = "message_dialog_unknown_error";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";

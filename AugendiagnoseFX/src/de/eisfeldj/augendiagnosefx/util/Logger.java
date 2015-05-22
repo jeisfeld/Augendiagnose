@@ -7,6 +7,8 @@ import java.util.logging.SimpleFormatter;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import de.eisfeldj.augendiagnosefx.Application;
+
 /**
  * Utility class for debugging.
  */
@@ -25,8 +27,8 @@ public final class Logger {
 		File logDir = null;
 		File logFile = new File("");
 		try {
-			logDir = new File(new File(System.getProperty("java.io.tmpdir")), "Augendiagnose");
-			logFile = new File(logDir, "Augendiagnose.log");
+			logDir = SystemUtil.getTempDir();
+			logFile = new File(logDir, Application.APPLICATION_NAME + ".log");
 			logDir.mkdirs();
 			FileHandler fileHandler = new FileHandler(logFile.getAbsolutePath(), 1000000, 5, true); // MAGIC_NUMBER
 			fileHandler.setFormatter(new SimpleFormatter());

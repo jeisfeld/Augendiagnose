@@ -162,7 +162,7 @@
 				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
 					height="48" kind="default" width="48" />
 			</fx:info>
-			<fx:preferences menu="true" install="true" shortcut="true" />
+			<fx:preferences menu="true" install="false" shortcut="true" />
 			<fx:application refId="fxApplication" />
 			<fx:resources refid="appRes" />
 			<fx:permissions elevated="true" />
