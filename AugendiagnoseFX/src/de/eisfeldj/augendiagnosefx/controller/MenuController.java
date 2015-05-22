@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 
 /**
@@ -135,6 +136,18 @@ public class MenuController extends BaseController implements Initializable {
 	@FXML
 	public final void checkUpdates(final ActionEvent event) {
 		VersioningUtil.checkForNewerVersion(true);
+	}
+
+	/**
+	 * Handler for menu entry "About".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void displayAboutMessage(final ActionEvent event) {
+		DialogUtil.displayInfo(ResourceConstants.MESSAGE_DIALOG_APP_ABOUT,
+				VersioningUtil.CURRENT_VERSION.getVersionString());
 	}
 
 	/**

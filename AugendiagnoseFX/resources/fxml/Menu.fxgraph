@@ -66,7 +66,7 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 					SeparatorMenuItem,
 					MenuItem {
 						text : rstring "menu_about",
-						disable : true
+						onAction : controllermethod displayAboutMessage
 					}
 				]
 			}

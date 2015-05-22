@@ -49,6 +49,7 @@ public final class ResourceConstants {
 	public static final String MENU_STORE_POSITION = "menu_store_position";
 	public static final String MENU_VIEW = "menu_view";
 	public static final String MENU_WINDOW = "menu_window";
+	public static final String MESSAGE_DIALOG_APP_ABOUT = "message_dialog_app_about";
 	public static final String MESSAGE_DIALOG_COULD_NOT_OPEN_LOG_FILE = "message_dialog_could_not_open_log_file";
 	public static final String MESSAGE_DIALOG_FAILED_TO_STORE_METADATA = "message_dialog_failed_to_store_metadata";
 	public static final String MESSAGE_DIALOG_LOADING_PHOTO = "message_dialog_loading_photo";
