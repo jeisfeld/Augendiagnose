@@ -15,7 +15,7 @@ component DialogMessage controlledby MessageDialogController resourcefile "../bu
 			text : rstring "title_dialog_error"
 		}, Text id dialogMessage {
 			static columnIndex : 0, static rowIndex : 1, static halignment : "CENTER",
-			text : rstring "message_dialog_unknown_error", static margin : Insets {
+			text : rstring "message_error_unknown_error", static margin : Insets {
 				left : 5,
 				right : 5,
 				bottom : 5,

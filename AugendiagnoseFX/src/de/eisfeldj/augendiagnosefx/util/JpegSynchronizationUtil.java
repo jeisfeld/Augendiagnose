@@ -164,7 +164,7 @@ public final class JpegSynchronizationUtil {
 			}
 			catch (Exception e) {
 				Logger.error("Failed to save file " + pathname, e);
-				DialogUtil.displayError(ResourceConstants.MESSAGE_DIALOG_FAILED_TO_STORE_METADATA, pathname);
+				DialogUtil.displayError(ResourceConstants.MESSAGE_ERROR_FAILED_TO_STORE_METADATA, pathname);
 			}
 			triggerNextFromQueue(pathname);
 		}

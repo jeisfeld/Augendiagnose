@@ -86,7 +86,7 @@ public final class VersioningUtil {
 		final File tempJarFile;
 		final ProgressDialog dialog =
 				DialogUtil
-						.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_UPDATE, version.versionString);
+						.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_UPDATE, version.versionString);
 		final URLConnection connection;
 		try {
 			connection = new URL(url).openConnection();
@@ -202,7 +202,7 @@ public final class VersioningUtil {
 		}
 		else {
 			if (fromMenu) {
-				DialogUtil.displayInfo(ResourceConstants.MESSAGE_DIALOG_NO_NEW_VERSION);
+				DialogUtil.displayInfo(ResourceConstants.MESSAGE_INFO_NO_NEW_VERSION);
 			}
 		}
 	}

@@ -15,7 +15,7 @@
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:id="dialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" vgap="10">
 
 	<Label fx:id="dialogHeading" text="%title_dialog_error" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
-	<Text fx:id="dialogMessage" text="%message_dialog_unknown_error" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
+	<Text fx:id="dialogMessage" text="%message_error_unknown_error" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 		<GridPane.margin>
 			<Insets left="5" right="5" bottom="5" top="5"/> 
 		</GridPane.margin>

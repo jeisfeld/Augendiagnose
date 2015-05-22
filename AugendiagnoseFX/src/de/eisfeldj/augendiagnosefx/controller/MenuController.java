@@ -158,7 +158,7 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void displayAboutMessage(final ActionEvent event) {
-		DialogUtil.displayInfo(ResourceConstants.MESSAGE_DIALOG_APP_ABOUT,
+		DialogUtil.displayInfo(ResourceConstants.MESSAGE_INFO_APP_ABOUT,
 				VersioningUtil.CURRENT_VERSION.getVersionString());
 	}
 

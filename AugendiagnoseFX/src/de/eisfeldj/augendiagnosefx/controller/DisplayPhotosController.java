@@ -110,7 +110,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	private void showPicturesForName(final String name) {
 		File nameFolder = new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS), name);
 
-		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTOS, name);
+		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTOS, name);
 
 		EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
 

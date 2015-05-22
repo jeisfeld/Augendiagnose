@@ -35,7 +35,7 @@ public final class Logger {
 			LOGGER.addHandler(fileHandler);
 		}
 		catch (SecurityException | IOException e) {
-			DialogUtil.displayError(ResourceConstants.MESSAGE_DIALOG_COULD_NOT_OPEN_LOG_FILE,
+			DialogUtil.displayError(ResourceConstants.MESSAGE_ERROR_COULD_NOT_OPEN_LOG_FILE,
 					logFile.getAbsolutePath(), ExceptionUtils.getStackTrace(e));
 			e.printStackTrace();
 		}

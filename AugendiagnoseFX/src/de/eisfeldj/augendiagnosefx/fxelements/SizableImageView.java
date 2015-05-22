@@ -198,7 +198,7 @@ public class SizableImageView extends ScrollPane {
 		else {
 			ProgressDialog dialog =
 					DialogUtil
-							.displayProgressDialog(ResourceConstants.MESSAGE_DIALOG_LOADING_PHOTO,
+							.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTO,
 									eyePhoto.getFilename());
 
 			image.progressProperty().addListener(new ChangeListener<Number>() {
