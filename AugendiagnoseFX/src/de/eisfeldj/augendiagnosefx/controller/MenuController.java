@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -26,6 +27,11 @@ import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
  * BaseController class for the menu.
  */
 public class MenuController extends BaseController implements Initializable {
+	/**
+	 * The Home Page of the application documentation.
+	 */
+	private static final String DOCUMENTATION_URL = "http://augendiagnose.jeisfeld.de";
+
 	/**
 	 * The main menu bar.
 	 */
@@ -126,6 +132,17 @@ public class MenuController extends BaseController implements Initializable {
 			controller.showOverlayPane(menuOverlayPane.isSelected());
 			PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuOverlayPane.isSelected());
 		}
+	}
+
+	/**
+	 * Handler for menu entry "Online Help".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void showHelp(final ActionEvent event) {
+		Application.getApplicationHostServices().showDocument(DOCUMENTATION_URL);
 	}
 
 	/**

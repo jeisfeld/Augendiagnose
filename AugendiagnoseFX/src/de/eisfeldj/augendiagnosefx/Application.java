@@ -6,6 +6,7 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
 
 import java.io.IOException;
 
+import javafx.application.HostServices;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -38,6 +39,11 @@ public class Application extends javafx.application.Application {
 	 * The primary stage.
 	 */
 	private static Stage stage;
+
+	/**
+	 * The application host services.
+	 */
+	private static HostServices hostServices;
 
 	/**
 	 * Application method to start the application.
@@ -82,6 +88,8 @@ public class Application extends javafx.application.Application {
 
 		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
 
+		hostServices = getHostServices();
+
 		VersioningUtil.checkForNewerVersion(false);
 	}
 
@@ -109,6 +117,15 @@ public class Application extends javafx.application.Application {
 	 */
 	public static Stage getStage() {
 		return stage;
+	}
+
+	/**
+	 * Get the host services.
+	 *
+	 * @return The host services.
+	 */
+	public static HostServices getApplicationHostServices() {
+		return hostServices;
 	}
 
 }
