@@ -177,6 +177,36 @@ public final class SystemUtil {
 	}
 
 	/**
+	 * Run multiple Unix commands in one shell after a short waiting time.
+	 *
+	 * @param commands
+	 *            The Unix commands.
+	 */
+	public static void runMultipleUnixCommands(final String... commands) {
+		StringBuilder command = new StringBuilder();
+
+		// Waiting shortly.
+		command.append("sleep " + WAITING_TIME);
+
+		if (commands.length > 0) {
+			for (int i = 0; i < commands.length; i++) {
+				command.append("; ");
+				command.append(commands[i]);
+			}
+		}
+
+		ProcessBuilder processBuilder = new ProcessBuilder(command.toString());
+
+		try {
+			processBuilder.start();
+			Logger.info("Started application process " + command.toString());
+		}
+		catch (IOException e) {
+			Logger.error("Could not start application process " + command.toString());
+		}
+	}
+
+	/**
 	 * Move the jar file via Windows command, and then restart the application.
 	 *
 	 * @param sourcePath
@@ -189,10 +219,18 @@ public final class SystemUtil {
 		String applicationExecutable = getApplicationExecutable();
 
 		if (javaExecutable != null) {
-			runMultipleWindowsCommands(
-					"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
-					"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
-							+ Application.class.getCanonicalName());
+			if (System.getProperty("os.name").startsWith("Win")) {
+				runMultipleWindowsCommands(
+						"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
+						"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+								+ Application.class.getCanonicalName());
+			}
+			else {
+				runMultipleUnixCommands(
+						"mv " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
+						"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+								+ Application.class.getCanonicalName());
+			}
 		}
 		else if (applicationExecutable != null) {
 			runMultipleWindowsCommands(
