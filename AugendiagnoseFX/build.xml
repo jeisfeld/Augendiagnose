@@ -2,6 +2,8 @@
 <project name="AugendiagnoseFX" default="do-deploy" basedir="."
 	xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
+		<property name="application.version">0.1</property>
+
 		<path id="fxant">
 			<filelist>
 				<file name="${java.home}\..\lib\ant-javafx.jar" />
@@ -15,7 +17,6 @@
 	<target name="setup-staging-area">
 		<delete dir="externalLibs" />
 		<delete dir="project" />
-		<delete dir="projectRefs" />
 
 		<mkdir dir="externalLibs" />
 
@@ -46,25 +47,12 @@
 				<include name="resources/**" />
 			</fileset>
 		</copy>
-
-		<mkdir dir="projectRefs" />
 	</target>
 	<target name='do-compile'>
 		<delete dir="build" />
 		<mkdir dir="build/src" />
 		<mkdir dir="build/libs" />
 		<mkdir dir="build/classes" />
-
-		<!-- Copy project-libs references -->
-		<copy todir="build/libs">
-			<fileset dir="externalLibs">
-				<include name="commons-lang3-3.3.2.jar" />
-				<include name="xmpcore.jar" />
-				<include name="annotations.jar" />
-			</fileset>
-		</copy>
-
-		<!-- Copy project references -->
 
 		<!-- Copy project sources itself -->
 		<copy todir="build/src">
@@ -81,7 +69,7 @@
 		<javac includeantruntime="false" source="1.8" target="1.8"
 			srcdir="build/src" destdir="build/classes" encoding="Cp1252">
 			<classpath>
-				<fileset dir="build/libs">
+				<fileset dir="externalLibs">
 					<include name="*" />
 				</fileset>
 			</classpath>
@@ -97,45 +85,38 @@
 			</fileset>
 		</copy>
 
-
-	</target>
-	<target name="do-deploy" depends="setup-staging-area, do-compile, init-fx-tasks">
-		<delete file="dist" />
-		<delete file="deploy" />
-
-		<mkdir dir="dist" />
-		<mkdir dir="dist/libs" />
-
-		<copy todir="dist/libs">
+		<!-- Extract project-libs references -->
+		<unzip dest="build/classes">
 			<fileset dir="externalLibs">
-				<include name="*" />
+				<include name="commons-lang3-3.3.2.jar" />
+				<include name="xmpcore.jar" />
+				<include name="annotations.jar" />
 			</fileset>
-		</copy>
-
+		</unzip>
+	</target>
+	<target name="do-build" depends="setup-staging-area, do-compile, init-fx-tasks">
+		<delete dir="jar" />
+		<mkdir dir="jar" />
 
 		<fx:resources id="appRes">
-			<fx:fileset dir="dist" includes="AugendiagnoseFX.jar" />
-			<fx:fileset dir="dist" includes="libs/*" />
+			<fx:fileset dir="jar" includes="AugendiagnoseFX.jar" />
 		</fx:resources>
 
-		<fx:application id="fxApplication" name="Augendiagnose${buildtype}"
-			version="0.1" mainClass="de.eisfeldj.augendiagnosefx.Application"
+		<fx:application id="fxApplication" name="AugendiagnoseFX${buildtype}"
+			version="${application.version}" mainClass="de.eisfeldj.augendiagnosefx.Application"
 			toolkit="fx" />
 
 		<mkdir dir="build/classes/META-INF" />
 
-
-
-		<fx:jar destfile="dist/AugendiagnoseFX.jar">
+		<fx:jar destfile="jar/AugendiagnoseFX.jar">
 			<fx:application refid="fxApplication" />
-			<fileset dir="build/classes">
-			</fileset>
+			<fileset dir="build/classes" />
 			<fx:resources refid="appRes" />
 
 			<manifest>
 				<attribute name="Implementation-Vendor" value="Jörg Eisfeld" />
-				<attribute name="Implementation-Title" value="Augendiagnose" />
-				<attribute name="Implementation-Version" value="0.1" />
+				<attribute name="Implementation-Title" value="AugendiagnoseFX" />
+				<attribute name="Implementation-Version" value="${application.version}" />
 				<attribute name="JavaFX-Feature-Proxy" value="None" />
 			</manifest>
 		</fx:jar>
@@ -143,22 +124,25 @@
 		<!-- Need to use ${basedir} because somehow the ant task is calculating
 			the directory differently -->
 		<fx:signjar keystore="D:\Jörg\Miscellaneous\Keystores\jekeystore1"
-			alias="jeisfeld.de" keypass="supila1" storepass="supila1" destDir="${basedir}/dist">
-			<fileset dir='dist'>
+			alias="jeisfeld.de" keypass="supila1" storepass="supila1" destDir="${basedir}/jar">
+			<fileset dir='jar'>
 				<include name='**/*.jar' />
 			</fileset>
 		</fx:signjar>
-
+	</target>
+	<target name="do-deploy" depends="do-build">
+		<delete dir="deploy" />
 		<mkdir dir="deploy" />
+
 		<!-- Need to use ${basedir} because somehow the ant task is calculating
 			the directory differently -->
 		<fx:deploy embedJNLP="false" extension="false" includeDT="false"
-			offlineAllowed="true" outdir="${basedir}/deploy" outfile="Augendiagnose${buildtype}"
+			offlineAllowed="true" outdir="${basedir}/deploy" outfile="AugendiagnoseFX${buildtype}"
 			nativeBundles="exe" updatemode="background">
 			<fx:platform basedir="${java.home}">
 				<fx:jvmarg value="-Xmx1024m" />
 			</fx:platform>
-			<fx:info title="Augendiagnose" vendor="Jörg Eisfeld">
+			<fx:info title="AugendiagnoseFX" vendor="Jörg Eisfeld">
 				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
 					height="48" kind="default" width="48" />
 			</fx:info>
@@ -168,6 +152,22 @@
 			<fx:permissions elevated="true" />
 		</fx:deploy>
 
+		<mkdir dir="dist" />
 
+		<copy todir="dist">
+			<fileset dir="jar">
+				<filename name="*.jar" />
+			</fileset>
+			<fileset dir="deploy/bundles">
+				<filename name="*.exe" />
+			</fileset>
+		</copy>
+		<copy todir="dist">
+			<fileset dir="jar">
+				<filename name="*.jar" />
+			</fileset>
+			<globmapper from="*.jar" to="*-${application.version}.jar" />
+		</copy>
 	</target>
+
 </project>
