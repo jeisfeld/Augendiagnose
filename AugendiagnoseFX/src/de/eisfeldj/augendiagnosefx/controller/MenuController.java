@@ -30,7 +30,7 @@ public class MenuController extends BaseController implements Initializable {
 	/**
 	 * The Home Page of the application documentation.
 	 */
-	private static final String DOCUMENTATION_URL = "http://augendiagnose.jeisfeld.de";
+	private static final String DOCUMENTATION_URL = "http://augendiagnose.jeisfeld.de/?page=windowsapp";
 
 	/**
 	 * The main menu bar.
