@@ -19,6 +19,10 @@ in das Augenfoto-Verzeichnis der App zu verschieben.</p>
 
 <p>Auf den meisten Seiten der App befindet sich rechts oben ein Fragezeichen - hier erreichen Sie die Hilfe.</p>
 
+<p>Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App
+organisiert haben, auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
+
 <p><b>Wichtiger Hinweis:</b> Die App verändert Ihre JPG-Bilddateien, um Informationen (wie Irisposition
 oder Kommentare) direkt in den Bilddateien zu speichern.
 Dies hat den Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos
@@ -30,14 +34,7 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[
-		<h3>Aktueller Hinweis</h3>
-		Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App
-		organisiert haben, auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
-        <a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.
-]]>
-    </string>
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
@@ -78,6 +75,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Bugfixes</item>
         <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Verbesserte Fehlerbehandlung.</item>
         <item>Anzeige von Bildinformationen während der Detailansicht. Veröffentlichung der Windows-Applikation. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

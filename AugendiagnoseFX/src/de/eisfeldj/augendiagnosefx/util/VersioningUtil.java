@@ -24,7 +24,7 @@ public final class VersioningUtil {
 	/**
 	 * The current version of the application.
 	 */
-	public static final VersionInfo CURRENT_VERSION = new VersionInfo(1, "0.1");
+	public static final VersionInfo CURRENT_VERSION = new VersionInfo(2, "0.2");
 
 	/**
 	 * Base URL for downloading the application.

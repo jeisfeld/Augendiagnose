@@ -17,6 +17,10 @@ hacer lo siguiente: </p>
 
 <p>En la mayoría de las páginas de la aplicación hay un signo de interrogación en la esquina superior derecha - aquí se puede acceder a la página de ayuda.</p>
 
+<p>Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido
+organizada con esta aplicación. Para obtener más información, consulte
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
+
 <p><b> Nota importante:</b> Esta aplicación modifica los archivos JPG de forma no destructiva, con el fin de almacenar los metadatos dentro
 los archivos. Esto tiene la ventaja de que toda la información está disponible si usted
 copie las imágenes desde un dispositivo a otro. Hasta cierto punto, la información como comentarios
@@ -28,14 +32,7 @@ seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
 primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[
-		<h3>Noticia reciente</h3>
-        Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido
-        organizada con esta aplicación. Para obtener más información, consulte
-        <a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.
-]]>
-    </string>
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
@@ -76,6 +73,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores</item>
         <item>Añadido diálogos con consejos. Mejora de la gestión de errores.</item>
         <item>Habilitado mostrar información de la imagen durante la vista detallada. Lanzamiento de la aplicación de Windows. Corrección de errores</item>
+        <item>Corrección de errores</item>
     </string-array>
 
 </resources>

@@ -17,6 +17,10 @@ to do the following:</p>
 
 <p>On most pages of the app you find a question mark on the top right corner - here you can access the help page.</p>
 
+<p>There is an accompanying Windows application that can be used to view the photos that have been
+organized with this app. For more information, see
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
+
 <p><b>Important remark:</b> This app modifies your JPG files in a non-destructive way, in order to store metadata within
 the files. This has the advantage that all such information is still available if you
 copy the pictures from one device to another one. To some extent, information like comments
@@ -26,14 +30,7 @@ even destroys the JPG file. Therefore, it is recommended that you keep backups o
 when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[
-		<h3>Recent news</h3>
-        There is an accompanying Windows application that can be used to view the photos that have been
-        organized with this app. For more information, see
-        <a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.
-]]>
-    </string>
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
@@ -74,6 +71,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.5</item>
         <item>0.5.6</item>
         <item>0.5.7</item>
+        <item>0.5.8</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -114,6 +112,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added dialogs with tips. Improved error handling.</item>
         <item>Allow to display image info while looking at image. Released Windows application. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
