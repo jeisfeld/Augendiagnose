@@ -528,7 +528,7 @@ public abstract class FileUtil {
 	private static String[] getExtSdCardPaths() {
 		List<String> paths = new ArrayList<String>();
 		for (File file : Application.getAppContext().getExternalFilesDirs("external")) {
-			if (!file.equals(Application.getAppContext().getExternalFilesDir("external"))) {
+			if (file != null && !file.equals(Application.getAppContext().getExternalFilesDir("external"))) {
 				int index = file.getAbsolutePath().lastIndexOf("/Android/data");
 				if (index < 0) {
 					Log.w(Application.TAG, "Unexpected external file dir: " + file.getAbsolutePath());
