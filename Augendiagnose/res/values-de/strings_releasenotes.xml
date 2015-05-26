@@ -30,7 +30,14 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">
+<![CDATA[
+		<h3>Aktueller Hinweis</h3>
+		Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App
+		organisiert haben, auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
+        <a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.
+]]>
+    </string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
@@ -70,7 +77,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Speichern der Daten auf externer SD-Karte in Android 5. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Verbesserte Fehlerbehandlung.</item>
-        <item>Anzeige von Bildinformationen während der Detailansicht. Bugfixes</item>
+        <item>Anzeige von Bildinformationen während der Detailansicht. Veröffentlichung der Windows-Applikation. Bugfixes</item>
     </string-array>
 
 </resources>

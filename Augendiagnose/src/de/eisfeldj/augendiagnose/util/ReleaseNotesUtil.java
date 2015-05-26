@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 
@@ -105,7 +107,16 @@ public abstract class ReleaseNotesUtil {
 							dialog.dismiss();
 						}
 					});
+
 			return builder.create();
+		}
+
+		@Override
+		public final void onStart() {
+			super.onStart();
+			// Make links clickable
+			((TextView) getDialog().findViewById(android.R.id.message))
+					.setMovementMethod(LinkMovementMethod.getInstance());
 		}
 	}
 

@@ -28,9 +28,14 @@ seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
 primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
 ]]>
     </string>
-    <string name="releasenotes_current_remark">Esta versión introduce pequeños diálogos con consejos que son
-         destinado a ayudar a los nuevos usuarios a utilizar la aplicación. Esto también ayudará al introducir nuevas funcionalidades.
-         Cada diálogo aparecerá al menos una vez. Si confirma que con &amp;laquo;No mostrar de nuevo&amp;raquo;, no volverá a aparecer.	</string>
+    <string name="releasenotes_current_remark">
+<![CDATA[
+		<h3>Noticia reciente</h3>
+        Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido
+        organizada con esta aplicación. Para obtener más información, consulte
+        <a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.
+]]>
+    </string>
 
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
@@ -70,7 +75,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Habilitado ahorro en la tarjeta SD para Android 5. Corrección de errores</item>
         <item>Corrección de errores</item>
         <item>Añadido diálogos con consejos. Mejora de la gestión de errores.</item>
-        <item>Habilitado mostrar información de la imagen durante la vista detallada. Corrección de errores</item>
+        <item>Habilitado mostrar información de la imagen durante la vista detallada. Lanzamiento de la aplicación de Windows. Corrección de errores</item>
     </string-array>
 
 </resources>
