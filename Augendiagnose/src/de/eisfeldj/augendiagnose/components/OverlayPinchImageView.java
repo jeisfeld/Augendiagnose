@@ -1259,6 +1259,16 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Set the reference that allows GUI updates.
+	 *
+	 * @param updater
+	 *            The GUI Element updater
+	 */
+	public final void setGuiElementUpdater(final GuiElementUpdater updater) {
+		mGuiElementUpdater = updater;
+	}
+
+	/**
 	 * A listener determining the scale factor.
 	 */
 	private class OverlayScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -1271,16 +1281,6 @@ public class OverlayPinchImageView extends PinchImageView {
 			invalidate();
 			return true;
 		}
-	}
-
-	/**
-	 * Set the reference that allows GUI updates.
-	 *
-	 * @param updater
-	 *            The GUI Element updater
-	 */
-	public final void setGuiElementUpdater(final GuiElementUpdater updater) {
-		mGuiElementUpdater = updater;
 	}
 
 	/**

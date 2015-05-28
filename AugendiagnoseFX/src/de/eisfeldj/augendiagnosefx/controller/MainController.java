@@ -12,7 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
@@ -104,7 +104,7 @@ public class MainController extends BaseController {
 		enableClose(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				FXMLUtil.removeSubpage(controller);
+				FxmlUtil.removeSubpage(controller);
 			}
 		});
 	}

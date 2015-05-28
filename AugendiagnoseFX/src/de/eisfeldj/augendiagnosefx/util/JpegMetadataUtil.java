@@ -168,19 +168,17 @@ public final class JpegMetadataUtil {
 				return result;
 			}
 
-			TiffField title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
-			TiffField comment = tiffImageMetadata.findField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
-			TiffField comment2 = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
-			TiffField subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
-
 			// EXIF data have precedence only if saving EXIF is allowed
+			TiffField title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
 			if (title != null && (changeExifAllowed() || result.title == null)) {
 				result.title = title.getStringValue().trim();
 			}
 			String exifComment = null;
+			TiffField comment = tiffImageMetadata.findField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
 			if (comment != null && comment.getStringValue().trim().length() > 0) {
 				exifComment = comment.getStringValue().trim();
 			}
+			TiffField comment2 = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
 			if (comment2 != null && comment2.getStringValue().trim().length() > 0) {
 				// XPComment takes precedence if existing
 				exifComment = comment2.getStringValue().trim();
@@ -188,6 +186,7 @@ public final class JpegMetadataUtil {
 			if (exifComment != null && (changeExifAllowed() || result.comment == null)) {
 				result.comment = exifComment;
 			}
+			TiffField subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
 			if (subject != null && (changeExifAllowed() || result.subject == null)) {
 				result.subject = subject.getStringValue().trim();
 			}
@@ -268,16 +267,16 @@ public final class JpegMetadataUtil {
 			// note that metadata might be null if no metadata is found.
 			final IImageMetadata imageMetadata = Imaging.getMetadata(jpegImageFile);
 			final JpegImageMetadata jpegMetadata = (JpegImageMetadata) imageMetadata;
-			if (null != jpegMetadata) {
+			if (jpegMetadata != null) {
 				// note that exif might be null if no Exif metadata is found.
 				final TiffImageMetadata exif = jpegMetadata.getExif();
 
-				if (null != exif) {
+				if (exif != null) {
 					outputSet = exif.getOutputSet();
 				}
 			}
 
-			if (null == outputSet) {
+			if (outputSet == null) {
 				outputSet = new TiffOutputSet();
 			}
 

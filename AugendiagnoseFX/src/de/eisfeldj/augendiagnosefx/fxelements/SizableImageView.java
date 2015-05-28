@@ -27,7 +27,7 @@ public class SizableImageView extends ScrollPane {
 	/**
 	 * The zoom factor to be applied for each zoom event.
 	 *
-	 * (480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
+	 * <p>(480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
 	 */
 	private static final double ZOOM_FACTOR = 1.0014450997779993488675056142818;
 
@@ -144,10 +144,10 @@ public class SizableImageView extends ScrollPane {
 				double verticalCorrection = (postScrollYFactor / sourceHeight) * event.getDeltaY();
 
 				// New scrollbar positions keeping the mouse position.
-				double newHvalue = postScrollXFactor > 0
+				double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
 						? ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor
 						: oldHvalue;
-				double newVvalue = postScrollYFactor > 0
+				double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
 						? ((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
 								/ postScrollYFactor
 						: oldVvalue;

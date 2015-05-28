@@ -170,7 +170,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		});
 
 		if (folders == null) {
-			return null;
+			return new ArrayList<String>();
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
@@ -230,7 +230,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		final File newFolder = new File(parentFolder, newName.trim());
 
 		// rename folder and ensure that list is refreshed
-		boolean success = FileUtil.renameFolder(oldFolder, newFolder);
+		boolean success = FileUtil.renameFolder(oldFolder, newFolder); // STORE_PROPERTY
 
 		directoryListAdapter.clear();
 		createList();
@@ -257,6 +257,9 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		// rename files in the new folder
 		File[] files = newFolder.listFiles();
+		if (files == null) {
+			files = new File[0];
+		}
 		for (File f : files) {
 			EyePhoto source = new EyePhoto(f.getAbsolutePath());
 			if (!source.isFormatted()) {

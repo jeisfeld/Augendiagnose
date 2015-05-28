@@ -394,11 +394,11 @@ public class PinchImageView extends ImageView {
 	 */
 	@Override
 	public final boolean performLongClick() {
-		if (!mHasMoved) {
-			return super.performLongClick();
+		if (mHasMoved) {
+			return true;
 		}
 		else {
-			return true;
+			return super.performLongClick();
 		}
 	}
 

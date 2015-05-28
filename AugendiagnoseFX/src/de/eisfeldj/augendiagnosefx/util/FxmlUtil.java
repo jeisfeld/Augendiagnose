@@ -20,11 +20,11 @@ import de.eisfeldj.augendiagnosefx.controller.MainController;
 /**
  * Utility class for reading FXML files.
  */
-public final class FXMLUtil {
+public final class FxmlUtil {
 	/**
 	 * Private constructor to prevent instantiation.
 	 */
-	private FXMLUtil() {
+	private FxmlUtil() {
 		throw new UnsupportedOperationException();
 	}
 

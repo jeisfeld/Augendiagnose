@@ -6,8 +6,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import javafx.scene.image.Image;
+import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
@@ -619,8 +619,7 @@ public class EyePhoto {
 		 * @return the converted RightString.
 		 */
 		public static final RightLeft fromString(final String rightLeftString) {
-			if (rightLeftString != null && (rightLeftString.startsWith("r") || rightLeftString.startsWith("R")
-					|| rightLeftString.startsWith("d") || rightLeftString.startsWith("D"))) {
+			if (rightLeftString != null && rightLeftString.matches("[rRdD].*")) {
 				return RIGHT;
 			}
 			else {
@@ -628,5 +627,4 @@ public class EyePhoto {
 			}
 		}
 	}
-
 }

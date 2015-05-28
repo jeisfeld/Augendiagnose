@@ -43,7 +43,7 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming)
  *
- * The activity can be started either with a folder name, or with an array of file names.
+ * <p>The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends BaseActivity {
 
@@ -535,11 +535,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void openDateDialog(final View view) {
-		DateDialogFragment fragment = new DateDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
 		bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
 		bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
+		DateDialogFragment fragment = new DateDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(getFragmentManager(), DateDialogFragment.class.toString());
 

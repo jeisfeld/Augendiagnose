@@ -139,6 +139,15 @@ public final class JpegSynchronizationUtil {
 	}
 
 	/**
+	 * Get information if there is an image in the process of being saved.
+	 *
+	 * @return true if an image is currently saved.
+	 */
+	public static boolean isSaving() {
+		return runningSaveRequests.size() > 0;
+	}
+
+	/**
 	 * Task to save a JPEG file asynchronously with changed metadata.
 	 */
 	private static class JpegSaverTask extends AsyncTask<Void, Void, Exception> {
@@ -200,14 +209,4 @@ public final class JpegSynchronizationUtil {
 			triggerNextFromQueue(pathname);
 		}
 	}
-
-	/**
-	 * Get information if there is an image in the process of being saved.
-	 *
-	 * @return true if an image is currently saved.
-	 */
-	public static boolean isSaving() {
-		return runningSaveRequests.size() > 0;
-	}
-
 }

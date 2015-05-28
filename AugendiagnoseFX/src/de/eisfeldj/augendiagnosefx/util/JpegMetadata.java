@@ -9,8 +9,9 @@ import de.eisfeldj.augendiagnosefx.util.EyePhoto.RightLeft;
  */
 public final class JpegMetadata {
 	// JAVADOC:OFF
-	// PUBLIC_FIELDS:START
+	private static final String LINE_BREAK = "\n";
 
+	// PUBLIC_FIELDS:START
 	public String title = null;
 	public String description = null;
 	public String subject = null;
@@ -147,22 +148,22 @@ public final class JpegMetadata {
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
-		str.append("Title: " + title + "\n");
-		str.append("Description: " + description + "\n");
-		str.append("Subject: " + subject + "\n");
-		str.append("Comment: " + comment + "\n");
-		str.append("Person: " + person + "\n");
-		str.append("X-Center: " + xCenter + "\n");
-		str.append("Y-Center: " + yCenter + "\n");
-		str.append("OverlayScaleFactor: " + overlayScaleFactor + "\n");
-		str.append("X-Position: " + xPosition + "\n");
-		str.append("Y-Position: " + yPosition + "\n");
-		str.append("ZoomFactor: " + zoomFactor + "\n");
-		str.append("OrganizeDate: " + organizeDate + "\n");
-		str.append("RightLeft: " + rightLeft + "\n");
-		str.append("Brightness: " + brightness + "\n");
-		str.append("Contrast: " + contrast + "\n");
-		str.append("OverlayColor: " + getOverlayColorString() + "\n");
+		str.append("Title: " + title + LINE_BREAK);
+		str.append("Description: " + description + LINE_BREAK);
+		str.append("Subject: " + subject + LINE_BREAK);
+		str.append("Comment: " + comment + LINE_BREAK);
+		str.append("Person: " + person + LINE_BREAK);
+		str.append("X-Center: " + xCenter + LINE_BREAK);
+		str.append("Y-Center: " + yCenter + LINE_BREAK);
+		str.append("OverlayScaleFactor: " + overlayScaleFactor + LINE_BREAK);
+		str.append("X-Position: " + xPosition + LINE_BREAK);
+		str.append("Y-Position: " + yPosition + LINE_BREAK);
+		str.append("ZoomFactor: " + zoomFactor + LINE_BREAK);
+		str.append("OrganizeDate: " + organizeDate + LINE_BREAK);
+		str.append("RightLeft: " + rightLeft + LINE_BREAK);
+		str.append("Brightness: " + brightness + LINE_BREAK);
+		str.append("Contrast: " + contrast + LINE_BREAK);
+		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
 		return str.toString();
 	}
 

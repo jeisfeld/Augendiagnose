@@ -3,7 +3,7 @@ package de.eisfeldj.augendiagnosefx.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 
 /**
  * Generic controller class.
@@ -26,7 +26,7 @@ public abstract class BaseController implements Controller {
 	 */
 	// OVERRIDABLE
 	public void close() {
-		FXMLUtil.remove(this.getRoot());
+		FxmlUtil.remove(this.getRoot());
 		controllerRegistry.remove(this);
 	}
 

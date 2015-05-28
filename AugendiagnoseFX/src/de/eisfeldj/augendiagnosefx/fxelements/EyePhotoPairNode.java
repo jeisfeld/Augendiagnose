@@ -18,7 +18,7 @@ import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.util.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
-import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -75,7 +75,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 */
 	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
 	public EyePhotoPairNode(final EyePhotoPair pair) {
-		FXMLUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
+		FxmlUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
 
 		labelDate.setText(pair.getDateDisplayString());
 
@@ -111,7 +111,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 						? "DisplayImageWide.fxml"
 						: "DisplayImageNarrow.fxml";
 				DisplayImageController controller =
-						(DisplayImageController) FXMLUtil.displaySubpage(fxmlName);
+						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName);
 				controller.setEyePhoto(eyePhoto);
 			}
 		});

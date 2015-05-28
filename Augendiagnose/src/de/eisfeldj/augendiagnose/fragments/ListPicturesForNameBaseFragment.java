@@ -119,11 +119,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		for (File f : files) {
 			EyePhoto eyePhoto = new EyePhoto(f);
 
-			if (!eyePhoto.isFormatted()) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file, false,
-						f.getAbsolutePath());
-			}
-			else {
+			if (eyePhoto.isFormatted()) {
 				Date date = eyePhoto.getDate();
 
 				if (eyePhotoMap.containsKey(date)) {
@@ -136,7 +132,10 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 					eyePhotoMap.put(date, eyePhotoPair);
 				}
 			}
-
+			else {
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_unformatted_file, false,
+						f.getAbsolutePath());
+			}
 		}
 
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException

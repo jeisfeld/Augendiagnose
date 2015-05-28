@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
-import de.eisfeldj.augendiagnosefx.util.FXMLUtil;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
@@ -64,7 +64,7 @@ public class Application extends javafx.application.Application {
 		Application.stage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		MainController mainController = (MainController) FXMLUtil.getRootFromFxml("Main.fxml");
+		MainController mainController = (MainController) FxmlUtil.getRootFromFxml("Main.fxml");
 		scene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
 						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
@@ -86,7 +86,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
-		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
+		FxmlUtil.displaySubpage("DisplayPhotos.fxml");
 
 		hostServices = getHostServices();
 
@@ -97,8 +97,8 @@ public class Application extends javafx.application.Application {
 	 * Redisplay the main page.
 	 */
 	public static final void refreshMainPage() {
-		FXMLUtil.removeAllSubpages();
-		FXMLUtil.displaySubpage("DisplayPhotos.fxml");
+		FxmlUtil.removeAllSubpages();
+		FxmlUtil.displaySubpage("DisplayPhotos.fxml");
 	}
 
 	/**

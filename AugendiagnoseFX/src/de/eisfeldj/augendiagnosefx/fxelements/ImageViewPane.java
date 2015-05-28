@@ -52,14 +52,14 @@ public class ImageViewPane extends Region {
 	public ImageViewPane() {
 		imageViewProperty.addListener(new ChangeListener<ImageView>() {
 			@Override
-			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldIV,
-					final ImageView newIV) {
+			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldImageView,
+					final ImageView newImageView) {
 
-				if (oldIV != null) {
-					getChildren().remove(oldIV);
+				if (oldImageView != null) {
+					getChildren().remove(oldImageView);
 				}
-				if (newIV != null) {
-					getChildren().add(newIV);
+				if (newImageView != null) {
+					getChildren().add(newImageView);
 				}
 			}
 		});

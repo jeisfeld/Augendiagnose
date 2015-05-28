@@ -18,6 +18,11 @@ public final class SystemUtil {
 	private static final int WAITING_TIME = 1;
 
 	/**
+	 * Quote string required in cmd shell.
+	 */
+	private static final String QUOTE = "\"";
+
+	/**
 	 * Hide default constructor.
 	 */
 	private SystemUtil() {
@@ -30,7 +35,7 @@ public final class SystemUtil {
 	 * @return true if 64bit
 	 */
 	public static boolean is64Bit() {
-		return System.getProperty("sun.arch.data.model").equals("64");
+		return "64".equals(System.getProperty("sun.arch.data.model"));
 	}
 
 	/**
@@ -221,21 +226,21 @@ public final class SystemUtil {
 		if (javaExecutable != null) {
 			if (System.getProperty("os.name").startsWith("Win")) {
 				runMultipleWindowsCommands(
-						"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
-						"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+						"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
+						QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
 								+ Application.class.getCanonicalName());
 			}
 			else {
 				runMultipleUnixCommands(
-						"mv " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
-						"\"" + javaExecutable + "\"" + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+						"mv " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
+						QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
 								+ Application.class.getCanonicalName());
 			}
 		}
 		else if (applicationExecutable != null) {
 			runMultipleWindowsCommands(
-					"move /Y " + "\"" + sourcePath + "\" \"" + targetPath + "\"",
-					"\"" + applicationExecutable + "\"");
+					"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
+					QUOTE + applicationExecutable + QUOTE);
 		}
 		else {
 			Logger.error("Did not find executable.");
@@ -253,7 +258,7 @@ public final class SystemUtil {
 		// Need no confirmation dialog, as the uninstall executable will ask for confirmation.
 		if (uninstallExecutable != null) {
 			Platform.exit();
-			runMultipleWindowsCommands("\"" + uninstallExecutable + "\"");
+			runMultipleWindowsCommands(QUOTE + uninstallExecutable + QUOTE);
 		}
 	}
 

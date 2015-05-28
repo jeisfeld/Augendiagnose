@@ -649,8 +649,8 @@ public abstract class FileUtil {
 	 *            The folder below app folder where the file is copied to.
 	 * @param targetName
 	 *            The name of the target file.
-	 * @throws IOException
 	 * @return the dummy file.
+	 * @throws IOException
 	 */
 	private static File copyDummyFile(final int resource, final String folderName, final String targetName)
 			throws IOException {

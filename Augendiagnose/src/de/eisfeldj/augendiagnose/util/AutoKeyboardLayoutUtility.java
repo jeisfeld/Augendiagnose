@@ -9,11 +9,11 @@ import android.widget.FrameLayout;
 /**
  * Utility class that ensures that the activity is resized when the keyboard appears, in full screen mode.
  *
- * android:windowSoftInputMode="adjustResize" does not work in full screen mode.
+ * <p>android:windowSoftInputMode="adjustResize" does not work in full screen mode.
  *
- * Thanks to Joseph Johnson for this class.
+ * <p>Thanks to Joseph Johnson for this class.
  *
- * For more information, see https://code.google.com/p/android/issues/detail?id=5497 To use this class, simply invoke
+ * <p>For more information, see https://code.google.com/p/android/issues/detail?id=5497 To use this class, simply invoke
  * assistActivity() on an Activity that already has its content view set.
  */
 public final class AutoKeyboardLayoutUtility {

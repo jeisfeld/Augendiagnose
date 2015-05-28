@@ -18,6 +18,7 @@ import com.adobe.xmp.options.PropertyOptions;
  */
 public class XmpHandler {
 	// JAVADOC:OFF
+	private static final String USER_COMMENT = "UserComment";
 
 	// Standard namespaces
 	private static final String NS_DC = "http://purl.org/dc/elements/1.1/";
@@ -194,7 +195,7 @@ public class XmpHandler {
 	 */
 	public final String getUserComment() {
 		try {
-			return xmpMeta.getArrayItem(NS_EXIF, "UserComment", 1).getValue();
+			return xmpMeta.getArrayItem(NS_EXIF, USER_COMMENT, 1).getValue();
 		}
 		catch (Exception e) {
 			return null;
@@ -339,11 +340,11 @@ public class XmpHandler {
 	 */
 	public final void setUserComment(final String userComment) throws XMPException {
 		if (userComment != null) {
-			if (xmpMeta.doesArrayItemExist(NS_EXIF, "UserComment", 1)) {
-				xmpMeta.setArrayItem(NS_EXIF, "UserComment", 1, userComment);
+			if (xmpMeta.doesArrayItemExist(NS_EXIF, USER_COMMENT, 1)) {
+				xmpMeta.setArrayItem(NS_EXIF, USER_COMMENT, 1, userComment);
 			}
 			else {
-				xmpMeta.appendArrayItem(NS_EXIF, "UserComment", new PropertyOptions().setArray(true), userComment, null);
+				xmpMeta.appendArrayItem(NS_EXIF, USER_COMMENT, new PropertyOptions().setArray(true), userComment, null);
 			}
 		}
 	}

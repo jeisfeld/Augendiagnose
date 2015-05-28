@@ -35,6 +35,10 @@ import de.eisfeldj.augendiagnose.util.PreferenceUtil;
  */
 public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment {
 	/**
+	 * The date format shown in the view.
+	 */
+	private static final String DATE_FORMAT = "dd.MM.yyyy";
+	/**
 	 * The Button for selecting an additional picture.
 	 */
 	private Button buttonAdditionalPictures;
@@ -126,12 +130,12 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
 
 				pictureDate.setTime(pairToModify.getDate());
-				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
 				Bundle bundle = new Bundle();
 				bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
 				bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
 				bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
 				bundle.putInt("position", contextMenuPosition);
+				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
 				fragment.setArguments(bundle);
 				fragment.show(getFragmentManager(), DateChangeDialogFragment.class.toString());
 				return true;
@@ -151,7 +155,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify
 											.getLeftEye().getPersonName(), pairToModify
-											.getDateDisplayString("dd.MM.yyyy"));
+											.getDateDisplayString(DATE_FORMAT));
 
 						}
 					}
@@ -164,7 +168,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 				DialogUtil.displayConfirmationMessage(getActivity(), listenerDelete, R.string.button_delete,
 						R.string.message_dialog_confirm_delete_date, pairToModify.getLeftEye().getPersonName(),
-						pairToModify.getDateDisplayString("dd.MM.yyyy"));
+						pairToModify.getDateDisplayString(DATE_FORMAT));
 				return true;
 
 			case R.id.action_move_to_input_folder:
@@ -188,7 +192,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
 											.getLeftEye().getPersonName(), pairToModify
-											.getDateDisplayString("dd.MM.yyyy"));
+											.getDateDisplayString(DATE_FORMAT));
 
 						}
 					}
@@ -202,7 +206,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				DialogUtil.displayConfirmationMessage(getActivity(), listenerMove, R.string.button_move,
 						R.string.message_dialog_confirm_move_to_input_folder,
 						pairToModify.getLeftEye().getPersonName(),
-						pairToModify.getDateDisplayString("dd.MM.yyyy"));
+						pairToModify.getDateDisplayString(DATE_FORMAT));
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -253,8 +257,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							if (!success) {
 								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date, false,
 										pairToUpdate.getLeftEye().getPersonName(),
-										pairToUpdate.getDateDisplayString("dd.MM.yyyy"),
-										DateUtil.format(newDate, "dd.MM.yyyy"));
+										pairToUpdate.getDateDisplayString(DATE_FORMAT),
+										DateUtil.format(newDate, DATE_FORMAT));
 							}
 						}
 					});

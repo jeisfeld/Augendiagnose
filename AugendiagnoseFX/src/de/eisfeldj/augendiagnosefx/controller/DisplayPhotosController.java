@@ -110,7 +110,8 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	private void showPicturesForName(final String name) {
 		File nameFolder = new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS), name);
 
-		ProgressDialog dialog = DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTOS, name);
+		ProgressDialog dialog =
+				DialogUtil.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTOS, name);
 
 		EyePhotoPair[] eyePhotos = createEyePhotoList(nameFolder);
 
@@ -236,10 +237,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		for (File f : files) {
 			EyePhoto eyePhoto = new EyePhoto(f);
 
-			if (!eyePhoto.isFormatted()) {
-				Logger.error("Eye photo is not formatted correctly: " + f.getAbsolutePath());
-			}
-			else {
+			if (eyePhoto.isFormatted()) {
 				Date date = eyePhoto.getDate();
 
 				if (eyePhotoMap.containsKey(date)) {
@@ -251,6 +249,9 @@ public class DisplayPhotosController extends BaseController implements Initializ
 					eyePhotoPair.setEyePhoto(eyePhoto);
 					eyePhotoMap.put(date, eyePhotoPair);
 				}
+			}
+			else {
+				Logger.error("Eye photo is not formatted correctly: " + f.getAbsolutePath());
 			}
 
 		}

@@ -222,7 +222,7 @@ public final class StringConverter {
 		SAXParser parser;
 		try {
 			parser = factory.newSAXParser();
-			SAXHandler handler = new SAXHandler(key);
+			SaxHandler handler = new SaxHandler(key);
 			parser.parse(file, handler);
 			result = handler.getValue();
 		}
@@ -236,7 +236,7 @@ public final class StringConverter {
 	/**
 	 * SAX handler to parse the strings.xml file.
 	 */
-	private static class SAXHandler extends DefaultHandler {
+	private static class SaxHandler extends DefaultHandler {
 		/**
 		 * Storage for the resource key.
 		 */
@@ -257,14 +257,14 @@ public final class StringConverter {
 		 * @param searchKey
 		 *            The String to be looked for.
 		 */
-		public SAXHandler(final String searchKey) {
+		public SaxHandler(final String searchKey) {
 			this.searchKey = searchKey;
 		}
 
 		@Override
 		public void startElement(final String uri, final String localName, final String qName,
 				final Attributes attributes) throws SAXException {
-			if (qName.equals("string")) {
+			if ("string".equals(qName)) {
 				key = attributes.getValue("name");
 			}
 		}
@@ -279,7 +279,7 @@ public final class StringConverter {
 		@Override
 		public void endElement(final String uri, final String localName,
 				final String qName) throws SAXException {
-			if (qName.equals("string")) {
+			if ("string".equals(qName)) {
 				key = null;
 			}
 		}

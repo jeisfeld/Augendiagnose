@@ -27,7 +27,7 @@ public abstract class DialogUtil {
 	 */
 	private static DialogController createDialog(final String fxmlString) {
 		DialogController controller;
-		controller = (DialogController) FXMLUtil.getRootFromFxml(fxmlString);
+		controller = (DialogController) FxmlUtil.getRootFromFxml(fxmlString);
 
 		Scene scene = new Scene(controller.getRoot());
 		Stage dialog = new Stage();

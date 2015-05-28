@@ -61,7 +61,6 @@ public abstract class DialogUtil {
 	 */
 	public static void displayInfo(final Activity activity, final MessageDialogListener listener, final int resource,
 			final Object... args) {
-		DialogFragment fragment = new DisplayMessageDialogFragment();
 		String message = String.format(activity.getString(resource), args);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
@@ -70,6 +69,7 @@ public abstract class DialogUtil {
 		if (listener != null) {
 			bundle.putSerializable(PARAM_LISTENER, listener);
 		}
+		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -138,12 +138,12 @@ public abstract class DialogUtil {
 	public static void displayConfirmationMessage(final Activity activity,
 			final ConfirmDialogListener listener, final int buttonResource,
 			final int messageResource, final Object... args) {
-		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
 		String message = String.format(activity.getString(messageResource), args);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putInt(PARAM_BUTTON_RESOURCE, buttonResource);
 		bundle.putSerializable(PARAM_LISTENER, listener);
+		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -230,11 +230,11 @@ public abstract class DialogUtil {
 			// cannot append metadata.
 		}
 
-		DialogFragment fragment = new DisplayMessageDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message.toString()));
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_image_info));
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
+		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
 	}
@@ -259,20 +259,6 @@ public abstract class DialogUtil {
 	 * Fragment to display an error and go back to the current activity.
 	 */
 	public static class DisplayMessageDialogFragment extends DialogFragment {
-		/**
-		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
-		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
-		 */
-		public interface MessageDialogListener extends Serializable {
-			/**
-			 * Callback method for ok click from the dialog.
-			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
-			 */
-			void onDialogClick(final DialogFragment dialog);
-		}
-
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
@@ -297,6 +283,20 @@ public abstract class DialogUtil {
 					});
 			Dialog dialog = builder.create();
 			return dialog;
+		}
+
+		/**
+		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
+		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
+		 */
+		public interface MessageDialogListener extends Serializable {
+			/**
+			 * Callback method for ok click from the dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogClick(final DialogFragment dialog);
 		}
 	}
 
@@ -333,28 +333,6 @@ public abstract class DialogUtil {
 	 * Fragment to display a confirmation message.
 	 */
 	public static class ConfirmDialogFragment extends DialogFragment {
-		/**
-		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
-		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
-		 */
-		public interface ConfirmDialogListener extends Serializable {
-			/**
-			 * Callback method for positive click from the confirmation dialog.
-			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
-			 */
-			void onDialogPositiveClick(final DialogFragment dialog);
-
-			/**
-			 * Callback method for negative click from the confirmation dialog.
-			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
-			 */
-			void onDialogNegativeClick(final DialogFragment dialog);
-		}
-
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
@@ -381,6 +359,28 @@ public abstract class DialogUtil {
 						}
 					});
 			return builder.create();
+		}
+
+		/**
+		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
+		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
+		 */
+		public interface ConfirmDialogListener extends Serializable {
+			/**
+			 * Callback method for positive click from the confirmation dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogPositiveClick(final DialogFragment dialog);
+
+			/**
+			 * Callback method for negative click from the confirmation dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogNegativeClick(final DialogFragment dialog);
 		}
 	}
 

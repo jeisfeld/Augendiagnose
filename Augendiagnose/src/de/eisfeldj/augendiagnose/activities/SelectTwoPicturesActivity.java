@@ -169,6 +169,9 @@ public class SelectTwoPicturesActivity extends Activity {
 		if (isStartedWithInputFolder()) {
 			// Get files from folder
 			files = folder.listFiles(new ImageUtil.ImageFileFilter());
+			if (files == null) {
+				files = new File[0];
+			}
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
 				public int compare(final File f1, final File f2) {
@@ -271,15 +274,14 @@ public class SelectTwoPicturesActivity extends Activity {
 						boolean success = FileUtil.deleteFilesInFolder(folder);
 						updateEyePhotoList();
 
-						if (!success) {
+						if (success) {
+							finish();
+							parentActivity.finish();
+						}
+						else {
 							DialogUtil.displayError(SelectTwoPicturesActivity.this,
 									R.string.message_dialog_failed_to_delete_all_files, false, selectedView
 											.getEyePhoto().getFilename());
-
-						}
-						else {
-							finish();
-							parentActivity.finish();
 						}
 					}
 				}

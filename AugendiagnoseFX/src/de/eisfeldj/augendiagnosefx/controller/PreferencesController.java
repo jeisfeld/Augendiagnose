@@ -121,7 +121,7 @@ public class PreferencesController extends DialogController implements Initializ
 	@FXML
 	public final void submit(final ActionEvent event) {
 		// Check if main page needs to be refreshed, before updating values.
-		boolean requireRefreshMainPage = requireRefreshMainPage();
+		boolean requireRefreshMainPage = requireRefreshMainPage(); // STORE_PROPERTY
 
 		PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
 		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());

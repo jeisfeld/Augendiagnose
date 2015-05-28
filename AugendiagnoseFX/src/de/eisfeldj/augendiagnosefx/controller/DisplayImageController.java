@@ -98,6 +98,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	/**
 	 * The button for displaying the view in full resolution.
 	 *
+	 * <p>
 	 * This is a ToggleButton, as it is incompatible with overlays.
 	 */
 	@FXML
@@ -288,7 +289,7 @@ public class DisplayImageController extends BaseController implements Initializa
 			String newComment = txtImageComment.getText();
 
 			// Save only if comment changed.
-			if (!((newComment == null && oldComment == null) || (newComment != null && newComment.equals(oldComment)))) {
+			if (!(newComment == null && oldComment == null) && !(newComment != null && newComment.equals(oldComment))) {
 				JpegMetadata metadata = eyePhoto.getImageMetadata();
 				metadata.comment = newComment;
 				eyePhoto.storeImageMetadata(metadata);

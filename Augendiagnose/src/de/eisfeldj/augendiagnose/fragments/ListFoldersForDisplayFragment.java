@@ -39,17 +39,6 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 		listView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
-	/**
-	 * Item click listener showing the pictures of the selected folder (in eye photo pairs) for selection of one or two
-	 * pictures.
-	 */
-	private class ShowContentsOnClickListener implements OnItemClickListener {
-		@Override
-		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(((TextView) view).getText().toString());
-		}
-	}
-
 	@Override
 	public final void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -92,7 +81,16 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 		else {
 			return super.onContextItemSelected(item);
 		}
-
 	}
 
+	/**
+	 * Item click listener showing the pictures of the selected folder (in eye photo pairs) for selection of one or two
+	 * pictures.
+	 */
+	private class ShowContentsOnClickListener implements OnItemClickListener {
+		@Override
+		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(((TextView) view).getText().toString());
+		}
+	}
 }

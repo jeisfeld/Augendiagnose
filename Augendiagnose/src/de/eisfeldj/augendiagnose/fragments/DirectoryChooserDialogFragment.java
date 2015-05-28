@@ -37,9 +37,15 @@ import de.eisfeldj.augendiagnose.R;
 /**
  * Class to present a dialog for selection of a directory.
  *
+ * <p>
  * Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
+	/**
+	 * Path separator String.
+	 */
+	private static final String SLASH = "/";
+
 	/**
 	 * The text view showing the current folder.
 	 */
@@ -69,24 +75,6 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	 * The backstack of last browsed folders.
 	 */
 	private Stack<String> mBackStack = new Stack<String>();
-
-	/**
-	 * Callback interface for selected directory.
-	 */
-	public interface ChosenDirectoryListener extends Serializable {
-		/**
-		 * Called when a folder is selected.
-		 *
-		 * @param chosenDir
-		 *            The selected folder.
-		 */
-		void onChosenDir(final String chosenDir);
-
-		/**
-		 * Called when the dialog is cancelled.
-		 */
-		void onCancelled();
-	}
 
 	/**
 	 * Create a DirectoryChooserDialogFragment.
@@ -156,7 +144,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				mBackStack.push(mDir);
-				mDir += "/" + mListAdapter.getItem(position);
+				mDir += SLASH + mListAdapter.getItem(position);
 				updateDirectory();
 			}
 		});
@@ -220,7 +208,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	private List<String> getDirectories(final String dir) {
 		List<String> dirs = new ArrayList<String>();
 
-		if (dir != null && dir.startsWith("/") && !dir.equals("/")) {
+		if (dir != null && dir.startsWith(SLASH) && !dir.equals(SLASH)) {
 			dirs.add("..");
 		}
 
@@ -229,8 +217,12 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			if (!dirFile.exists() || !dirFile.isDirectory()) {
 				return dirs;
 			}
+			File[] files = dirFile.listFiles();
+			if (files == null) {
+				return dirs;
+			}
 
-			for (File file : dirFile.listFiles()) {
+			for (File file : files) {
 				if (file.isDirectory()) {
 					dirs.add(file.getName());
 				}
@@ -260,8 +252,8 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		catch (IOException e) {
 			// i
 		}
-		if (mDir == null || mDir.equals("")) {
-			mDir = "/";
+		if (mDir == null || "".equals(mDir)) {
+			mDir = SLASH;
 		}
 
 		mSubdirs.clear();
@@ -310,5 +302,23 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			Log.e(Application.TAG, "Could not get SD directory", ioe);
 		}
 		return sdCardDirectory;
+	}
+
+	/**
+	 * Callback interface for selected directory.
+	 */
+	public interface ChosenDirectoryListener extends Serializable {
+		/**
+		 * Called when a folder is selected.
+		 *
+		 * @param chosenDir
+		 *            The selected folder.
+		 */
+		void onChosenDir(final String chosenDir);
+
+		/**
+		 * Called when the dialog is cancelled.
+		 */
+		void onCancelled();
 	}
 }

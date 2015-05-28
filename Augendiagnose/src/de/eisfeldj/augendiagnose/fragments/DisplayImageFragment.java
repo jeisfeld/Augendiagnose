@@ -557,6 +557,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Get the value indicating if utilities should be shown.
 	 *
+	 * <p>
 	 * 1 means: don't show. 2 means: show only on full screen. 3 means: show always.
 	 *
 	 * @return The value indicating if utilities should be shown.
@@ -637,25 +638,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
 
 		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
-			return !fullResolutionFlag.equals("0");
+			return !"0".equals(fullResolutionFlag);
 		}
 		else {
-			return fullResolutionFlag.equals("2");
-		}
-	}
-
-	/**
-	 * Base implementation of OnSeekBarChangeListener, used for brightness and contrast seekbars.
-	 */
-	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
-		@Override
-		public void onStopTrackingTouch(final SeekBar seekBar) {
-			imageView.refresh();
-		}
-
-		@Override
-		public void onStartTrackingTouch(final SeekBar seekBar) {
-			// do nothing
+			return "2".equals(fullResolutionFlag);
 		}
 	}
 
@@ -716,4 +702,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		super.onTrimMemory(level);
 	}
 
+	/**
+	 * Base implementation of OnSeekBarChangeListener, used for brightness and contrast seekbars.
+	 */
+	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+		@Override
+		public void onStopTrackingTouch(final SeekBar seekBar) {
+			imageView.refresh();
+		}
+
+		@Override
+		public void onStartTrackingTouch(final SeekBar seekBar) {
+			// do nothing
+		}
+	}
 }

@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 				ArrayList<String> fileNames = new ArrayList<String>();
 				for (int i = 0; i < imageUris.size(); i++) {
 					if (ImageUtil.getMimeType(imageUris.get(i)).startsWith("image/")) {
-						String fileName = MediaStoreUtil.getRealPathFromURI(imageUris.get(i));
+						String fileName = MediaStoreUtil.getRealPathFromUri(imageUris.get(i));
 						if (fileName == null) {
 							fileName = imageUris.get(i).getPath();
 						}

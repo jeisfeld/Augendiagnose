@@ -106,9 +106,9 @@ public final class ImageUtil {
 		default:
 		}
 
-		URL imageURL = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
+		URL imageUrl = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
 
-		Image image = new Image(imageURL.toExternalForm());
+		Image image = new Image(imageUrl.toExternalForm());
 
 		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
 		Color colorNoAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);

@@ -33,46 +33,6 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 	private OnColorSelectedListener mOnColorSelectedListener;
 
 	/**
-	 * Interface for a callback when a color square is selected.
-	 */
-	public interface OnColorSelectedListener {
-
-		/**
-		 * Called when a specific color square has been selected.
-		 *
-		 * @param color
-		 *            the selected color.
-		 */
-		void onColorSelected(int color);
-	}
-
-	/**
-	 * Constructor initializing the swatch.
-	 *
-	 * @param context
-	 *            The application context.
-	 * @param color
-	 *            The color of the swatch.
-	 * @param checked
-	 *            Flag indicating if the swatch is flagged.
-	 * @param listener
-	 *            A listener called if the swatch is selected.
-	 */
-	public ColorPickerSwatch(final Context context, final int color, final boolean checked,
-			final OnColorSelectedListener listener) {
-		super(context);
-		mColor = color;
-		mOnColorSelectedListener = listener;
-
-		LayoutInflater.from(context).inflate(R.layout.color_picker_swatch, this);
-		mSwatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
-		mCheckmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
-		setColor(color);
-		setChecked(checked);
-		setOnClickListener(this);
-	}
-
-	/**
 	 * Set the color of the swatch.
 	 *
 	 * @param color
@@ -104,5 +64,45 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 		if (mOnColorSelectedListener != null) {
 			mOnColorSelectedListener.onColorSelected(mColor);
 		}
+	}
+
+	/**
+	 * Constructor initializing the swatch.
+	 *
+	 * @param context
+	 *            The application context.
+	 * @param color
+	 *            The color of the swatch.
+	 * @param checked
+	 *            Flag indicating if the swatch is flagged.
+	 * @param listener
+	 *            A listener called if the swatch is selected.
+	 */
+	public ColorPickerSwatch(final Context context, final int color, final boolean checked,
+			final OnColorSelectedListener listener) {
+		super(context);
+		mColor = color;
+		mOnColorSelectedListener = listener;
+
+		LayoutInflater.from(context).inflate(R.layout.color_picker_swatch, this);
+		mSwatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
+		mCheckmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
+		setColor(color);
+		setChecked(checked);
+		setOnClickListener(this);
+	}
+
+	/**
+	 * Interface for a callback when a color square is selected.
+	 */
+	public interface OnColorSelectedListener {
+
+		/**
+		 * Called when a specific color square has been selected.
+		 *
+		 * @param color
+		 *            the selected color.
+		 */
+		void onColorSelected(int color);
 	}
 }

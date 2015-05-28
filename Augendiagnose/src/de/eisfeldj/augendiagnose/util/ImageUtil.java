@@ -83,8 +83,6 @@ public final class ImageUtil {
 				orientation = JpegMetadataUtil.getExifOrientation(new File(path));
 			}
 
-			Logger.log("Orientation: " + orientation);
-
 			switch (orientation) {
 			case ExifInterface.ORIENTATION_ROTATE_270:
 				rotation = ROTATION_270;
