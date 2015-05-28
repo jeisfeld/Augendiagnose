@@ -120,10 +120,22 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static columnSpan : 2
 			},
 
+			Label {
+				text : rstring "pref_title_language",
+				static columnIndex : 0,
+				static rowIndex : 7
+			},
+
+			ChoiceBox<String> id choiceLanguage {
+				static columnIndex : 1,
+				static rowIndex : 7,
+				static columnSpan : 2
+			},
+
 			Button {
 				text : rstring "button_cancel",
 				static columnIndex : 0,
-				static rowIndex : 7,
+				static rowIndex : 8,
 				static halignment : "LEFT",
 				onAction : controllermethod cancel
 			},
@@ -131,7 +143,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			Button {
 				text : rstring "button_ok",
 				static columnIndex : 1,
-				static rowIndex : 7,
+				static rowIndex : 8,
 				static columnSpan : 2,
 				static halignment : "RIGHT",
 				onAction : controllermethod submit

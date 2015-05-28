@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx.util;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -11,9 +12,31 @@ import javafx.scene.image.Image;
  */
 public final class ResourceUtil {
 	/**
+	 * The path of the resource bundle.
+	 */
+	private static final String BUNDLE_NAME = "bundles/Strings";
+
+	/**
 	 * The resource bundle used for retrieving localized strings.
 	 */
-	public static final ResourceBundle STRINGS_BUNDLE = ResourceBundle.getBundle("bundles/Strings");
+	public static final ResourceBundle STRINGS_BUNDLE;
+
+	static {
+		switch (PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_LANGUAGE)) {
+		case 1:
+			// English bundle is the unlocalized one.
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(""));
+			break;
+		case 2:
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("de"));
+			break;
+		case 3: // MAGIC_NUMBER
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("es"));
+			break;
+		default:
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+		}
+	}
 
 	/**
 	 * Private constructor to disable instantiation.

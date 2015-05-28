@@ -1,17 +1,21 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LANGUAGE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_UPDATE_AUTOMATICALLY;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,11 +29,24 @@ import javafx.stage.DirectoryChooser;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.SystemUtil;
 
 /**
  * BaseController for the Preferences page.
  */
 public class PreferencesController extends DialogController implements Initializable {
+	/**
+	 * A map of language ids to language Strings.
+	 */
+	public static final Map<Integer, String> LANGUAGE_MAP = new HashMap<Integer, String>();
+
+	/**
+	 * A map of language Strings to language ids.
+	 */
+	private static final Map<String, Integer> LANGUAGE_MAP_BACK = new HashMap<String, Integer>();
+
 	/**
 	 * The main pane.
 	 */
@@ -45,6 +62,11 @@ public class PreferencesController extends DialogController implements Initializ
 	 * The "sort by last name" value when starting the activity.
 	 */
 	private boolean oldSortByLastName;
+
+	/**
+	 * The "language" value when starting the activity.
+	 */
+	private int oldLanguage;
 
 	/**
 	 * Text field for the eye photos folder.
@@ -82,6 +104,12 @@ public class PreferencesController extends DialogController implements Initializ
 	@FXML
 	private ColorPicker colorPicker;
 
+	/**
+	 * Choice box for language.
+	 */
+	@FXML
+	private ChoiceBox<String> choiceLanguage;
+
 	@Override
 	public final Parent getRoot() {
 		return settingsPane;
@@ -89,6 +117,13 @@ public class PreferencesController extends DialogController implements Initializ
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
+		LANGUAGE_MAP.put(0, ResourceUtil.getString(ResourceConstants.PREF_VALUE_LANGUAGE_DEFAULT));
+		LANGUAGE_MAP.put(1, "English");
+		LANGUAGE_MAP.put(2, "Deutsch");
+		LANGUAGE_MAP.put(3, "Español"); // MAGIC_NUMBER
+
+		LANGUAGE_MAP.forEach((key, value) -> LANGUAGE_MAP_BACK.put(value, key));
+
 		oldPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
 		textFolderPhotos.setText(oldPhotosFolder);
 
@@ -99,6 +134,11 @@ public class PreferencesController extends DialogController implements Initializ
 		oldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
 		checkBoxSortByLastName.setSelected(oldSortByLastName);
 		checkBoxUpdateAutomatically.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_UPDATE_AUTOMATICALLY));
+
+		// Fill language choice box from LANGUAGE_MAP
+		LANGUAGE_MAP.forEach((key, value) -> choiceLanguage.getItems().add(key, value));
+		oldLanguage = PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
+		choiceLanguage.setValue(languageIdToString(oldLanguage));
 	}
 
 	/**
@@ -120,21 +160,34 @@ public class PreferencesController extends DialogController implements Initializ
 	 */
 	@FXML
 	public final void submit(final ActionEvent event) {
-		// Check if main page needs to be refreshed, before updating values.
-		boolean requireRefreshMainPage = requireRefreshMainPage(); // STORE_PROPERTY
-
 		PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
 		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
 		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, choiceThumbnailSize.getValue());
 		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, colorPicker.getValue());
 		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, checkBoxSortByLastName.isSelected());
 		PreferenceUtil.setPreference(KEY_UPDATE_AUTOMATICALLY, checkBoxUpdateAutomatically.isSelected());
+		PreferenceUtil.setPreference(KEY_LANGUAGE, languageStringToId(choiceLanguage.getValue()));
 
-		if (requireRefreshMainPage) {
-			Application.refreshMainPage();
+		if (requiresRestartApplication()) {
+			SystemUtil.restartApplication();
+			Platform.exit();
 		}
+		if (requireRefreshMainPage()) {
+			Application.refreshMainPage();
+			close();
+		}
+		else {
+			close();
+		}
+	}
 
-		close();
+	/**
+	 * Check if the application needs to be restarted.
+	 *
+	 * @return true if the application needs to be restarted.
+	 */
+	private boolean requiresRestartApplication() {
+		return oldLanguage != PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
 	}
 
 	/**
@@ -143,10 +196,10 @@ public class PreferencesController extends DialogController implements Initializ
 	 * @return true if the main page needs to be refreshed.
 	 */
 	private boolean requireRefreshMainPage() {
-		String newPhotosFolder = textFolderPhotos.getText();
+		String newPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
 		boolean changedPhotosFolder = newPhotosFolder != null && !newPhotosFolder.equals(oldPhotosFolder);
 
-		boolean newSortByLastName = checkBoxSortByLastName.isSelected();
+		boolean newSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
 		boolean changedSortByLastName = newSortByLastName != oldSortByLastName;
 
 		return changedPhotosFolder || changedSortByLastName;
@@ -174,6 +227,28 @@ public class PreferencesController extends DialogController implements Initializ
 			}
 			textFolderPhotos.setText(selectedFolderString);
 		}
+	}
+
+	/**
+	 * Determine the language string from the language id.
+	 *
+	 * @param id
+	 *            The language id
+	 * @return The language string
+	 */
+	public static String languageIdToString(final int id) {
+		return LANGUAGE_MAP.get(id);
+	}
+
+	/**
+	 * Determine the language id from the language string.
+	 *
+	 * @param s
+	 *            The language string
+	 * @return The language id
+	 */
+	public static int languageStringToId(final String s) {
+		return LANGUAGE_MAP_BACK.get(s);
 	}
 
 }

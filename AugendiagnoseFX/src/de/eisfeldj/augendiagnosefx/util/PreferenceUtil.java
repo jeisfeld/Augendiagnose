@@ -77,6 +77,11 @@ public final class PreferenceUtil {
 	public static final String KEY_UPDATE_AUTOMATICALLY = "key_update_automatically";
 
 	/**
+	 * Preference key for the flag if sorting should be by last name.
+	 */
+	public static final String KEY_LANGUAGE = "key_language";
+
+	/**
 	 * Preference key for the last known version that has already been checked.
 	 */
 	public static final String KEY_LAST_KNOWN_VERSION = "key_last_known_version";
@@ -105,6 +110,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_OVERLAY_COLOR, "#FF0000FF"); // RED
 		DEFAULT_MAP.put(KEY_SORT_BY_LAST_NAME, false);
 		DEFAULT_MAP.put(KEY_UPDATE_AUTOMATICALLY, false);
+		DEFAULT_MAP.put(KEY_LANGUAGE, 0);
 		DEFAULT_MAP.put(KEY_LAST_KNOWN_VERSION, VersioningUtil.CURRENT_VERSION.getVersionNumber());
 	}
 
@@ -241,4 +247,5 @@ public final class PreferenceUtil {
 		String colorString = prefs.get(key, (String) DEFAULT_MAP.get(key));
 		return Color.web(colorString);
 	}
+
 }

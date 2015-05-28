@@ -183,7 +183,7 @@ public final class StringConverter {
 				+ "		// do nothing.\n"
 				+ "	}\n\n"
 				+ "	// JAVADOC:OFF\n";
-		String footer = "	// JAVADOC:ON\n}\n";
+		String footer = "	// JAVADOC:ON\n}";
 
 		File tmpResourceClass = new File(RESOURCE_CLASS.getAbsolutePath() + FILE_SUFFIX);
 		RESOURCE_CLASS.renameTo(tmpResourceClass);
@@ -199,7 +199,7 @@ public final class StringConverter {
 				writer.println("	public static final String " + key.toUpperCase() + " = \"" + key + "\";");
 			}
 
-			writer.print(footer);
+			writer.println(footer);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();

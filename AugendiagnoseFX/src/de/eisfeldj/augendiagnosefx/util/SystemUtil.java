@@ -153,14 +153,16 @@ public final class SystemUtil {
 	/**
 	 * Run multiple Windows commands in one shell after a short waiting time.
 	 *
+	 * @param waitingTime
+	 *            The waiting time (in seconds)
 	 * @param commands
 	 *            The Windows commands.
 	 */
-	public static void runMultipleWindowsCommands(final String... commands) {
+	public static void runMultipleWindowsCommands(final int waitingTime, final String... commands) {
 		StringBuilder command = new StringBuilder();
 
 		// Waiting shortly.
-		command.append("ping -n " + (WAITING_TIME + 1) + " 127.0.0.1 > NUL");
+		command.append("ping -n " + (waitingTime + 1) + " 127.0.0.1 > NUL");
 
 		if (commands.length > 0) {
 			for (int i = 0; i < commands.length; i++) {
@@ -184,14 +186,16 @@ public final class SystemUtil {
 	/**
 	 * Run multiple Unix commands in one shell after a short waiting time.
 	 *
+	 * @param waitingTime
+	 *            The waiting time (in seconds)
 	 * @param commands
 	 *            The Unix commands.
 	 */
-	public static void runMultipleUnixCommands(final String... commands) {
+	public static void runMultipleUnixCommands(final int waitingTime, final String... commands) {
 		StringBuilder command = new StringBuilder();
 
 		// Waiting shortly.
-		command.append("sleep " + WAITING_TIME);
+		command.append("sleep " + waitingTime);
 
 		if (commands.length > 0) {
 			for (int i = 0; i < commands.length; i++) {
@@ -224,23 +228,50 @@ public final class SystemUtil {
 		String applicationExecutable = getApplicationExecutable();
 
 		if (javaExecutable != null) {
+			String command = QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+					+ Application.class.getCanonicalName();
 			if (System.getProperty("os.name").startsWith("Win")) {
-				runMultipleWindowsCommands(
+				runMultipleWindowsCommands(WAITING_TIME,
 						"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
-						QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
-								+ Application.class.getCanonicalName());
+						command);
 			}
 			else {
-				runMultipleUnixCommands(
+				runMultipleUnixCommands(WAITING_TIME,
 						"mv " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
-						QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
-								+ Application.class.getCanonicalName());
+						command);
 			}
 		}
 		else if (applicationExecutable != null) {
-			runMultipleWindowsCommands(
+			runMultipleWindowsCommands(WAITING_TIME,
 					"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
 					QUOTE + applicationExecutable + QUOTE);
+		}
+		else {
+			Logger.error("Did not find executable.");
+			return;
+		}
+
+	}
+
+	/**
+	 * Restart the application.
+	 */
+	public static void restartApplication() {
+		String javaExecutable = getJavaExecutable();
+		String applicationExecutable = getApplicationExecutable();
+
+		if (javaExecutable != null) {
+			String command = QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
+					+ Application.class.getCanonicalName();
+			if (System.getProperty("os.name").startsWith("Win")) {
+				runMultipleWindowsCommands(0, command);
+			}
+			else {
+				runMultipleUnixCommands(0, command);
+			}
+		}
+		else if (applicationExecutable != null) {
+			runMultipleWindowsCommands(0, QUOTE + applicationExecutable + QUOTE);
 		}
 		else {
 			Logger.error("Did not find executable.");
@@ -258,7 +289,7 @@ public final class SystemUtil {
 		// Need no confirmation dialog, as the uninstall executable will ask for confirmation.
 		if (uninstallExecutable != null) {
 			Platform.exit();
-			runMultipleWindowsCommands(QUOTE + uninstallExecutable + QUOTE);
+			runMultipleWindowsCommands(WAITING_TIME, QUOTE + uninstallExecutable + QUOTE);
 		}
 	}
 
