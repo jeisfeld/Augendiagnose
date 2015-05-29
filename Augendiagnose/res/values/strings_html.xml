@@ -33,30 +33,26 @@
 <body>
 	<h2>Eye Diagnosis - Overview</h2>
 
-	This App has the purpose to support the visualization of eye photographs on an
-	Android device, in order to do medical diagnosis.
+	This App has the purpose to support the visualization of eye photographs on an Android device, in order to do medical
+	diagnosis.
 
 	<h3>Key Features</h3>
 
 	<ul>
 		<li>Organization of eye photos by name, date and side (right/left)</li>
 
-		<li>Display of two eye photos in parallel (with full support of
-			individual resizing), so that comparisons are possible (such as right-left
-			comparison, earlier-later comparison, different person comparison, or
-			comparison to an iris topography).</li>
+		<li>Display of two eye photos in parallel (with full support of individual resizing), so that comparisons are
+			possible (such as right-left comparison, earlier-later comparison, different person comparison, or comparison to an
+			iris topography).</li>
 
-		<li>Change of brightness and contrast of the photo during display, and
-			overlay with an iris topography.</li>
+		<li>Change of brightness and contrast of the photo during display, and overlay with an iris topography.</li>
 
-		<li>You can also save information in the photos, such as brightness
-			adaptions and comments. To be able to store information and use the full
-			functionality of the app, you need photos in JPG format.</li>
+		<li>You can also save information in the photos, such as brightness adaptions and comments. To be able to store
+			information and use the full functionality of the app, you need photos in JPG format.</li>
 
 	</ul>
 
-	This is just a beta version of the app. Further features are to come. Ideas for
-	further features are welcome.
+	This is just a beta version of the app. Further features are to come. Ideas for further features are welcome.
 
 	<h3>Main activities</h3>
 
@@ -64,47 +60,49 @@
 
 	<p>In this step, you can organize eye photos.</p>
 
-	<p>The App expects new eye photos in an input folder which is preconfigured
-		as the target folder of the Eye-Fi app, but can be changed via the settings.</p>
+	<p>The App expects new eye photos in an input folder which is preconfigured as the target folder of the Eye-Fi app,
+		but can be changed via the settings.</p>
 
-	<p>In the &ldquo;Organize new photos&rdquo; activity, you can assign new
-		eye photos from the input folder to a person and a date and prepare them in
-		this way for the app. Then the photos will be renamed and moved to the eye
-		photo folder.</p>
+	<p>In the &ldquo;Organize new photos&rdquo; activity, you can assign new eye photos from the input folder to a
+		person and a date and prepare them in this way for the app. Then the photos will be renamed and moved to the eye photo
+		folder.</p>
 
-	<p>As an alternative, you may select two photos in a file browser or photo
-		app and send these photos to the Eye Diagnosis app. Then you can organize
-		these photos in the app. In this case, the photos will not be deleted from
-		their old location.</p>
+	<p>As an alternative, you may select two photos in a file browser or photo app and send these photos to the Eye
+		Diagnosis app. Then you can organize these photos in the app. In this case, the photos will not be deleted from their
+		old location.</p>
 
 	<h4>Step 2: Visualize the photos.</h4>
 
-	<p>This is the main purpose of the app, but it requires the photos to be
-		organized via step 1.</p>
+	<p>This is the main purpose of the app, but it requires the photos to be organized via step 1.</p>
 
 	<p>In this activity, you can</p>
 
 	<ul>
-		<li>Show one of the photos in detail. Here you can also change brightness
-			and contrast of the photo, show iris topographies as overlay, or write a
-			comment to a photo.</li>
+		<li>Show one of the photos in detail. Here you can also change brightness and contrast of the photo, show iris
+			topographies as overlay, or write a comment to a photo.</li>
 
 		<li>Display two photos for comparison (and pinch them independently).</li>
 	</ul>
 
+	<h3>Windows application</h3>
+
+	<p>
+		There is an accompanying Windows application that can be used to view the photos that have been organized with this
+		app. For more information, see
+		<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp" target="_top">http://augendiagnose.jeisfeld.de/en/?page=windowsapp</a>
+		.
+	</p>
+
 	<h3>Data storage</h3>
 
-	<p>The app stores information (like iris position or comments) directly in
-		the JPG image files. This has the advantage that all such information is still
-		available if you copy the pictures from one device to another one. To some
-		extent, information like comments will be even available when viewing the
-		files in MS Windows.</p>
+	<p>The app stores information (like iris position or comments) directly in the JPG image files. This has the
+		advantage that all such information is still available if you copy the pictures from one device to another one. To
+		some extent, information like comments will be even available when viewing the files in MS Windows.</p>
 
-	<p>However, this kind of storage imposes a small risk. It may happen that
-		on some devices, or for pictures from some cameras, storage of information in
-		the JPG fails, or possibly even destroys the JPG file. Therefore, it is
-		recommended that you keep backups of your JPG files at least when using the
-		app for the first time with a new device or with a new camera.</p>
+	<p>However, this kind of storage imposes a small risk. It may happen that on some devices, or for pictures from
+		some cameras, storage of information in the JPG fails, or possibly even destroys the JPG file. Therefore, it is
+		recommended that you keep backups of your JPG files at least when using the app for the first time with a new device
+		or with a new camera.</p>
 </body>
 </html>
 ]]>
