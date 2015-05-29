@@ -1,11 +1,14 @@
 package de.eisfeldj.augendiagnosefx.tools;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -110,12 +113,12 @@ public final class StringConverter {
 		PROP_FILE_DE.renameTo(tmpPropFileDe);
 		PROP_FILE_ES.renameTo(tmpPropFileEs);
 
-		try (FileReader reader = new FileReader(tmpPropFile);
-				FileWriter writer = new FileWriter(PROP_FILE_GLOBAL);
-				FileReader readerDe = new FileReader(tmpPropFileDe);
-				FileWriter writerDe = new FileWriter(PROP_FILE_DE);
-				FileReader readerEs = new FileReader(tmpPropFileEs);
-				FileWriter writerEs = new FileWriter(PROP_FILE_ES)) {
+		try (Reader reader = new FileReader(tmpPropFile);
+				Writer writer = new FilteredFileWriter(PROP_FILE_GLOBAL);
+				Reader readerDe = new FileReader(tmpPropFileDe);
+				Writer writerDe = new FilteredFileWriter(PROP_FILE_DE);
+				Reader readerEs = new FileReader(tmpPropFileEs);
+				Writer writerEs = new FilteredFileWriter(PROP_FILE_ES)) {
 
 			AlphabeticProperties props = new AlphabeticProperties();
 			props.load(reader);
@@ -308,4 +311,30 @@ public final class StringConverter {
 			return Collections.enumeration(new TreeSet<Object>(super.keySet()));
 		}
 	}
+
+	/**
+	 * Utility writer to remove the date string from the Properties output.
+	 */
+	private static class FilteredFileWriter extends BufferedWriter {
+		/**
+		 * Constructor.
+		 *
+		 * @param file
+		 *            The file to be written.
+		 * @throws IOException
+		 */
+		@SuppressWarnings("resource")
+		protected FilteredFileWriter(final File file) throws IOException {
+			super(new FileWriter(file));
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void write(final String str) throws IOException {
+			if (!str.startsWith("#") || !str.matches("#.*[0-9][0-9]:[0-9][0-9]:[0-9][0-9].*")) {
+				super.write(str);
+			}
+		}
+	}
+
 }
