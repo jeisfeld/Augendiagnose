@@ -67,7 +67,7 @@ public class DisplayHtmlFragment extends Fragment {
 		if (resource == R.string.html_release_notes_base) {
 			int indexBody = html.indexOf("</body>");
 			String releaseNotes =
-					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), true, 1, Application.getVersion());
+					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), false, 1, Application.getVersion());
 			html = html.substring(0, indexBody) + releaseNotes + html.substring(indexBody);
 		}
 		else {
