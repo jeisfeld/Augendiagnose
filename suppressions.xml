@@ -5,6 +5,6 @@
 <suppressions>
     <suppress checks=".*" files="de[/\\]eisfeldj[/\\]augendiagnose[/\\]R\.java" />
     <suppress checks=".*" files="de[/\\]eisfeldj[/\\]augendiagnose[/\\]BuildConfig\.java" />
-    <suppress checks="UncommentedMain" files="de[/\\]eisfeldj[/\\]augendiagnosefx[/\\]tools[/\\]StringConverter\.java" />
+    <suppress checks="UncommentedMain" files="de[/\\]eisfeldj[/\\]augendiagnosefx[/\\]tools[/\\].*\.java" />
     <suppress checks="UncommentedMain" files="de[/\\]eisfeldj[/\\]augendiagnosefx[/\\]Application\.java" />
 </suppressions>
