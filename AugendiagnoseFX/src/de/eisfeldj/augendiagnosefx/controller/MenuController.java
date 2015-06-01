@@ -20,6 +20,7 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.SystemUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 
@@ -27,11 +28,6 @@ import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
  * BaseController class for the menu.
  */
 public class MenuController extends BaseController implements Initializable {
-	/**
-	 * The Home Page of the application documentation.
-	 */
-	private static final String DOCUMENTATION_URL = "http://augendiagnose.jeisfeld.de/?page=windowsapp";
-
 	/**
 	 * The main menu bar.
 	 */
@@ -142,7 +138,8 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void showHelp(final ActionEvent event) {
-		Application.getApplicationHostServices().showDocument(DOCUMENTATION_URL);
+		Application.getApplicationHostServices().showDocument(
+				ResourceUtil.getString(ResourceConstants.DOCUMENTATION_URL));
 	}
 
 	/**
