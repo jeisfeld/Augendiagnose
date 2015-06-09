@@ -98,7 +98,7 @@ public abstract class FileUtil {
 			else {
 				if (VersionUtil.isAndroid5()) {
 					// Storage Access Framework
-					DocumentFile targetDocument = getDocumentFile(target, false);
+					DocumentFile targetDocument = getDocumentFile(target, false, true);
 					outStream =
 							Application.getAppContext().getContentResolver().openOutputStream(targetDocument.getUri());
 				}
@@ -171,7 +171,7 @@ public abstract class FileUtil {
 
 		// Try with Storage Access Framework.
 		if (VersionUtil.isAndroid5()) {
-			DocumentFile document = getDocumentFile(file, false);
+			DocumentFile document = getDocumentFile(file, false, true);
 			return document.delete();
 		}
 
@@ -235,7 +235,7 @@ public abstract class FileUtil {
 
 		// Try the Storage Access Framework if it is just a rename within the same parent folder.
 		if (VersionUtil.isAndroid5() && source.getParent().equals(target.getParent())) {
-			DocumentFile document = getDocumentFile(source, true);
+			DocumentFile document = getDocumentFile(source, true, true);
 			if (document.renameTo(target.getName())) {
 				return true;
 			}
@@ -303,7 +303,7 @@ public abstract class FileUtil {
 
 		// Try with Storage Access Framework.
 		if (VersionUtil.isAndroid5()) {
-			DocumentFile document = getDocumentFile(file, true);
+			DocumentFile document = getDocumentFile(file, true, true);
 			// getDocumentFile implicitly creates the directory.
 			return document.exists();
 		}
@@ -370,7 +370,7 @@ public abstract class FileUtil {
 
 		// Try with Storage Access Framework.
 		if (VersionUtil.isAndroid5()) {
-			DocumentFile document = getDocumentFile(file, true);
+			DocumentFile document = getDocumentFile(file, true, true);
 			return document.delete();
 		}
 
@@ -514,7 +514,7 @@ public abstract class FileUtil {
 		}
 
 		// Next check SAF writability.
-		DocumentFile document = getDocumentFile(file, false);
+		DocumentFile document = getDocumentFile(file, false, false);
 
 		if (document == null) {
 			return false;
@@ -594,7 +594,6 @@ public abstract class FileUtil {
 		return getExtSdCardFolder(file) != null;
 	}
 
-
 	/**
 	 * Get a DocumentFile corresponding to the given file (for writing on ExtSdCard on Android 5). If the file is not
 	 * existing, it is created.
@@ -603,12 +602,16 @@ public abstract class FileUtil {
 	 *            The file.
 	 * @param isDirectory
 	 *            flag indicating if the file should be a directory.
+	 * @param createDirectories
+	 *            flag indicating if intermediate path directories should be created if not existing.
 	 * @return The DocumentFile
 	 */
-	public static DocumentFile getDocumentFile(final File file, final boolean isDirectory) {
-		Uri treeUri = PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard);
+	private static DocumentFile getDocumentFile(final File file, final boolean isDirectory,
+			final boolean createDirectories) {
+		Uri[] treeUris = PreferenceUtil.getTreeUris();
+		Uri treeUri = null;
 
-		if (treeUri == null) {
+		if (treeUris == null || treeUris.length == 0) {
 			return null;
 		}
 
@@ -620,12 +623,21 @@ public abstract class FileUtil {
 			return null;
 		}
 
-		// First try to get the base folder via unofficial StorageVolume API from the URI.
+		String baseFolder = null;
 
-		String baseFolder = getFullPathFromTreeUri(treeUri);
+		// First try to get the base folder via unofficial StorageVolume API from the URIs.
 
-		if (baseFolder == null || !fullPath.startsWith(baseFolder)) {
-			// Alternatively, take root folder from device.
+		for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
+			String treeBase = getFullPathFromTreeUri(treeUris[i]);
+			if (fullPath.startsWith(treeBase)) {
+				treeUri = treeUris[i];
+				baseFolder = treeBase;
+			}
+		}
+
+		if (baseFolder == null) {
+			// Alternatively, take root folder from device and assume that base URI works.
+			treeUri = treeUris[0];
 			baseFolder = getExtSdCardFolder(file);
 		}
 
@@ -643,7 +655,15 @@ public abstract class FileUtil {
 			DocumentFile nextDocument = document.findFile(parts[i]);
 
 			if (nextDocument == null) {
-				if ((i < parts.length - 1) || isDirectory) {
+				if (i < parts.length - 1) {
+					if (createDirectories) {
+						nextDocument = document.createDirectory(parts[i]);
+					}
+					else {
+						return null;
+					}
+				}
+				else if (isDirectory) {
 					nextDocument = document.createDirectory(parts[i]);
 				}
 				else {
@@ -663,7 +683,10 @@ public abstract class FileUtil {
 	 *            The tree RI.
 	 * @return The path (without trailing file separator).
 	 */
-	public static String getFullPathFromTreeUri(final Uri treeUri) {
+	private static String getFullPathFromTreeUri(final Uri treeUri) {
+		if (treeUri == null) {
+			return null;
+		}
 		String volumePath = FileUtil.getVolumePath(FileUtil.getVolumeIdFromTreeUri(treeUri));
 		if (volumePath == null) {
 			return File.separator;

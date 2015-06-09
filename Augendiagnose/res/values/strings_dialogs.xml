@@ -29,7 +29,7 @@
     <string name="message_dialog_failed_to_change_date">Could not change date for photos of %1$s from %2$s to %3$s</string>
     <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
     <string name="message_dialog_failed_to_store_exif">Failed to store EXIF metadata in file %1$s - please contact the developer!</string>
-    <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (not a subfolder, but the main folder \&quot;%1$s\&quot;) and confirm at the bottom.</string>
+    <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi is not installed</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>

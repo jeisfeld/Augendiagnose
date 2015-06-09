@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -82,6 +85,26 @@ public abstract class PreferenceUtil {
 		else {
 			return Uri.parse(uriString);
 		}
+	}
+
+	/**
+	 * Get the stored tree URIs.
+	 *
+	 * @return The tree URIs.
+	 */
+	public static Uri[] getTreeUris() {
+		List<Uri> uris = new ArrayList<Uri>();
+
+		Uri uri1 = getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos);
+		if (uri1 != null) {
+			uris.add(uri1);
+		}
+
+		Uri uri2 = getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_input);
+		if (uri2 != null) {
+			uris.add(uri2);
+		}
+		return uris.toArray(new Uri[0]);
 	}
 
 	/**

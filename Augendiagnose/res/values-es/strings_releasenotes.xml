@@ -73,7 +73,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores</item>
         <item>Añadido diálogos con consejos. Mejora de la gestión de errores.</item>
         <item>Habilitado mostrar información de la imagen durante la vista detallada. Lanzamiento de la aplicación de Windows. Corrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Permitir el uso de diferentes tarjetas SD para la carpeta de entrada y la carpeta de fotos. Corrección de errores</item>
     </string-array>
 
 </resources>

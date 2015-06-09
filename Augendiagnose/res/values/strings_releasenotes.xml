@@ -112,7 +112,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added dialogs with tips. Improved error handling.</item>
         <item>Allow to display image info while looking at image. Released Windows application. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Allow use of different SD cards for Input and Photos. Bugfixes</item>
     </string-array>
 
 </resources>

@@ -259,13 +259,18 @@ public abstract class DialogUtil {
 	 * Fragment to display an error and go back to the current activity.
 	 */
 	public static class DisplayMessageDialogFragment extends DialogFragment {
+		/**
+		 * The listener called when the dialog is ended.
+		 */
+		private MessageDialogListener listener = null;
+
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
-			final MessageDialogListener listener = (MessageDialogListener) getArguments().getSerializable(
+			listener = (MessageDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -285,6 +290,14 @@ public abstract class DialogUtil {
 			return dialog;
 		}
 
+		@Override
+		public final void onCancel(final DialogInterface dialogInterface) {
+			if (listener != null) {
+				listener.onDialogCancel(DisplayMessageDialogFragment.this);
+			}
+			super.onCancel(dialogInterface);
+		}
+
 		/**
 		 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in
 		 * order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
@@ -297,6 +310,14 @@ public abstract class DialogUtil {
 			 *            the confirmation dialog fragment.
 			 */
 			void onDialogClick(final DialogFragment dialog);
+
+			/**
+			 * Callback method for cancellation of the dialog.
+			 *
+			 * @param dialog
+			 *            the confirmation dialog fragment.
+			 */
+			void onDialogCancel(final DialogFragment dialog);
 		}
 	}
 

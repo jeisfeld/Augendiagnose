@@ -122,12 +122,18 @@ public class SettingsFragment extends PreferenceFragment {
 						if (!folderPhotos.equals(value)) {
 							currentFolder = new File(stringValue);
 							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+							if (acceptChange) {
+								folderPhotos = currentFolder.getAbsolutePath();
+							}
 						}
 					}
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
 						if (!folderInput.equals(value)) {
 							currentFolder = new File(stringValue);
 							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+							if (acceptChange) {
+								folderInput = currentFolder.getAbsolutePath();
+							}
 						}
 					}
 
@@ -196,11 +202,17 @@ public class SettingsFragment extends PreferenceFragment {
 								public void onDialogClick(final DialogFragment dialog) {
 									triggerStorageAccessFramework(code);
 								}
+
+								@Override
+								public void onDialogCancel(final DialogFragment dialog) {
+									return;
+								}
 							};
 
-							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard,
-									FileUtil.getExtSdCardFolder(folder));
+							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard);
+							return false;
 						}
+						// Only accept after SAF stuff is done.
 						return true;
 					}
 					else if (VersionUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
@@ -245,12 +257,12 @@ public class SettingsFragment extends PreferenceFragment {
 		int preferenceKeyFolder;
 		String oldFolder;
 		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_PHOTOS) {
-			preferenceKeyUri = R.string.key_internal_uri_extsdcard;
+			preferenceKeyUri = R.string.key_internal_uri_extsdcard_photos;
 			preferenceKeyFolder = R.string.key_folder_photos;
 			oldFolder = folderPhotos;
 		}
 		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
-			preferenceKeyUri = R.string.key_internal_uri_extsdcard;
+			preferenceKeyUri = R.string.key_internal_uri_extsdcard_input;
 			preferenceKeyFolder = R.string.key_folder_input;
 			oldFolder = folderInput;
 		}
@@ -259,6 +271,10 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 
 		Uri oldUri = PreferenceUtil.getSharedPreferenceUri(preferenceKeyUri);
+		if (oldUri == null) {
+			// Backward compatibility to the version where only the base key existed
+			oldUri = PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos);
+		}
 		Uri treeUri = null;
 
 		if (resultCode == Activity.RESULT_OK) {
@@ -289,6 +305,7 @@ public class SettingsFragment extends PreferenceFragment {
 			folderInput = currentFolder.getAbsolutePath();
 		}
 		PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, currentFolder.getAbsolutePath());
+		findPreference(getString(preferenceKeyFolder)).setSummary(currentFolder.getAbsolutePath());
 
 		// Persist access permissions.
 		final int takeFlags = resultData.getFlags()
