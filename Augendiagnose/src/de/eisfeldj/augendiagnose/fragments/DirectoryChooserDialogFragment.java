@@ -42,11 +42,6 @@ import de.eisfeldj.augendiagnose.R;
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
-	 * Path separator String.
-	 */
-	private static final String SLASH = "/";
-
-	/**
 	 * The text view showing the current folder.
 	 */
 	private TextView mCurrentFolderView;
@@ -144,7 +139,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				mBackStack.push(mDir);
-				mDir += SLASH + mListAdapter.getItem(position);
+				mDir += File.separator + mListAdapter.getItem(position);
 				updateDirectory();
 			}
 		});
@@ -208,7 +203,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	private List<String> getDirectories(final String dir) {
 		List<String> dirs = new ArrayList<String>();
 
-		if (dir != null && dir.startsWith(SLASH) && !dir.equals(SLASH)) {
+		if (dir != null && dir.startsWith(File.separator) && !dir.equals(File.separator)) {
 			dirs.add("..");
 		}
 
@@ -253,7 +248,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			// i
 		}
 		if (mDir == null || "".equals(mDir)) {
-			mDir = SLASH;
+			mDir = File.separator;
 		}
 
 		mSubdirs.clear();

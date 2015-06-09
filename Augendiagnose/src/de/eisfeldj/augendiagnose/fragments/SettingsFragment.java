@@ -28,9 +28,14 @@ import de.eisfeldj.augendiagnose.util.VersionUtil;
  */
 public class SettingsFragment extends PreferenceFragment {
 	/**
-	 * The requestCode with which the storage access framework is triggered.
+	 * The requestCode with which the storage access framework is triggered for photo folder.
 	 */
-	public static final int REQUEST_CODE_STORAGE_ACCESS = 3;
+	public static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 3;
+
+	/**
+	 * The requestCode with which the storage access framework is triggered for input folder.
+	 */
+	public static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
 	 * Field holding the value of the language preference, in order to detect a real change.
@@ -44,12 +49,6 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Field holding the value of the photo folder preference, in order to detect a real change.
 	 */
 	private String folderPhotos;
-
-	/**
-	 * Field for temporarily storing the key which is currently processed. This is required while handling Storage
-	 * Access Framework.
-	 */
-	private String currentKey;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
@@ -121,16 +120,14 @@ public class SettingsFragment extends PreferenceFragment {
 					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
 						if (!folderPhotos.equals(value)) {
-							currentKey = preference.getKey();
 							currentFolder = new File(stringValue);
-							acceptChange = checkFolder(currentFolder);
+							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
 						}
 					}
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
 						if (!folderInput.equals(value)) {
-							currentKey = preference.getKey();
 							currentFolder = new File(stringValue);
-							acceptChange = checkFolder(currentFolder);
+							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT);
 						}
 					}
 
@@ -174,10 +171,12 @@ public class SettingsFragment extends PreferenceFragment {
 				 *
 				 * @param folderName
 				 *            The folder to be checked.
+				 * @param code
+				 *            The request code of the type of folder check.
 				 *
 				 * @return true if the check was successful or if SAF has been triggered.
 				 */
-				private boolean checkFolder(final File folder) {
+				private boolean checkFolder(final File folder, final int code) {
 					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
 						if (!folder.exists() || !folder.isDirectory()) {
 							return false;
@@ -195,7 +194,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 								@Override
 								public void onDialogClick(final DialogFragment dialog) {
-									triggerStorageAccessFramework();
+									triggerStorageAccessFramework(code);
 								}
 							};
 
@@ -215,7 +214,6 @@ public class SettingsFragment extends PreferenceFragment {
 						DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
 								currentFolder);
 
-						currentKey = null;
 						currentFolder = null;
 						return false;
 					}
@@ -224,12 +222,15 @@ public class SettingsFragment extends PreferenceFragment {
 				/**
 				 * Trigger the storage access framework to access the base folder of the ext sd card.
 				 *
+				 * @param code
+				 *            The request code to be used.
+				 *
 				 * @param requestCode
 				 */
 				@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-				private void triggerStorageAccessFramework() {
+				private void triggerStorageAccessFramework(final int code) {
 					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS);
+					startActivityForResult(intent, code);
 				}
 			};
 
@@ -240,54 +241,60 @@ public class SettingsFragment extends PreferenceFragment {
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	public final void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
-		if (requestCode == SettingsFragment.REQUEST_CODE_STORAGE_ACCESS) {
-			Uri oldUri = PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard);
-
-			Uri treeUri = null;
-			if (resultCode == Activity.RESULT_OK) {
-				// Get Uri from Storage Access Framework.
-				treeUri = resultData.getData();
-				// Persist URI - this is required for verification of writability.
-				PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, treeUri);
-			}
-
-			// If not confirmed SAF, or if still not writable, then revert settings.
-			if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(currentFolder)) {
-				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false,
-						currentFolder);
-
-				// revert settings
-				if (currentKey.equals(getActivity().getString(R.string.key_folder_photos))) {
-					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, folderPhotos);
-					findPreference(getString(R.string.key_folder_photos)).setSummary(folderPhotos);
-				}
-				if (currentKey.equals(getActivity().getString(R.string.key_folder_input))) {
-					PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, folderInput);
-					findPreference(getString(R.string.key_folder_input)).setSummary(folderInput);
-				}
-				currentKey = null;
-				currentFolder = null;
-				PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard, oldUri);
-				return;
-			}
-
-			// After confirmation, update stored value of folder.
-			if (currentKey.equals(getActivity().getString(R.string.key_folder_photos))) {
-				folderPhotos = currentFolder.getAbsolutePath();
-				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, folderPhotos);
-			}
-			if (currentKey.equals(getActivity().getString(R.string.key_folder_input))) {
-				folderInput = currentFolder.getAbsolutePath();
-				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, folderInput);
-			}
-
-			// Persist access permissions.
-			final int takeFlags = resultData.getFlags()
-					& (Intent.FLAG_GRANT_READ_URI_PERMISSION
-					| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-			getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
-
+		int preferenceKeyUri;
+		int preferenceKeyFolder;
+		String oldFolder;
+		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_PHOTOS) {
+			preferenceKeyUri = R.string.key_internal_uri_extsdcard;
+			preferenceKeyFolder = R.string.key_folder_photos;
+			oldFolder = folderPhotos;
 		}
+		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
+			preferenceKeyUri = R.string.key_internal_uri_extsdcard;
+			preferenceKeyFolder = R.string.key_folder_input;
+			oldFolder = folderInput;
+		}
+		else {
+			return;
+		}
+
+		Uri oldUri = PreferenceUtil.getSharedPreferenceUri(preferenceKeyUri);
+		Uri treeUri = null;
+
+		if (resultCode == Activity.RESULT_OK) {
+			// Get Uri from Storage Access Framework.
+			treeUri = resultData.getData();
+			// Persist URI - this is required for verification of writability.
+			PreferenceUtil.setSharedPreferenceUri(preferenceKeyUri, treeUri);
+		}
+
+		// If not confirmed SAF, or if still not writable, then revert settings.
+		if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(currentFolder)) {
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false,
+					currentFolder);
+
+			PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, oldFolder);
+			findPreference(getString(preferenceKeyFolder)).setSummary(oldFolder);
+
+			currentFolder = null;
+			PreferenceUtil.setSharedPreferenceUri(preferenceKeyUri, oldUri);
+			return;
+		}
+
+		// After confirmation, update stored value of folder.
+		if (preferenceKeyFolder == R.string.key_folder_photos) {
+			folderPhotos = currentFolder.getAbsolutePath();
+		}
+		if (preferenceKeyFolder == R.string.key_folder_input) {
+			folderInput = currentFolder.getAbsolutePath();
+		}
+		PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, currentFolder.getAbsolutePath());
+
+		// Persist access permissions.
+		final int takeFlags = resultData.getFlags()
+				& (Intent.FLAG_GRANT_READ_URI_PERMISSION
+				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
 	}
 
 }
