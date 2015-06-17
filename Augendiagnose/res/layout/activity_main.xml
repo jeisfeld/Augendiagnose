@@ -2,12 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/layout_main_margin"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity" >
+
+    <Button
+        android:id="@+id/mainButtonTakePictures"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="@dimen/buttons_main_margin"
+        android:layout_weight="1"
+        android:onClick="takePicturesActivity"
+        android:text="@string/button_take_pictures" />
 
     <Button
         android:id="@+id/mainButtonOpenEyeFiApp"
@@ -32,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_margin="@dimen/buttons_main_margin"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:onClick="listFoldersForDisplayActivity"
         android:text="@string/button_display_pictures" />
 

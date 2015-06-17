@@ -10,6 +10,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -168,6 +169,16 @@ public class Application extends android.app.Application {
 	public static boolean isEyeFiInstalled() {
 		Intent eyeFiIntent = getAppContext().getPackageManager().getLaunchIntentForPackage("fi.eye.android");
 		return eyeFiIntent != null;
+	}
+
+	/**
+	 * Determine if the device has a camera activity.
+	 *
+	 * @return true if the device has a camera activity.
+	 */
+	public static boolean hasCameraActivity() {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		return takePictureIntent.resolveActivity(getAppContext().getPackageManager()) != null;
 	}
 
 	/**

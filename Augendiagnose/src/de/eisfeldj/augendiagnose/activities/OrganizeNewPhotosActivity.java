@@ -158,11 +158,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		String inputFolderString = getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER);
 		if (inputFolderString != null) {
-			inputFolder = new File(getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER));
+			inputFolder = new File(inputFolderString);
 		}
 
 		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
-		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, true);
+		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, false);
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		if (savedInstanceState != null && savedInstanceState.getString("rightEyePhoto") != null) {
@@ -521,6 +521,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 				photoRight = new EyePhoto(filePair.getFile1());
 				photoLeft = new EyePhoto(filePair.getFile2());
 				updateImages(true);
+			}
+			else {
+				setPicturesAndValues(true);
 			}
 			break;
 		default:

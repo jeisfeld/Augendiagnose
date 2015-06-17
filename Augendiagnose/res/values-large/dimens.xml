@@ -2,7 +2,8 @@
 
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">32dp</dimen>
-    <dimen name="buttons_main_margin">60dp</dimen>
+    <dimen name="buttons_main_margin">30dp</dimen>
+    <dimen name="layout_main_margin">20dp</dimen>
     <dimen name="grid_pictures_size">180dp</dimen>
     <dimen name="icon_overlay_color_size">36sp</dimen>
     <dimen name="list_picture_height">160dp</dimen>

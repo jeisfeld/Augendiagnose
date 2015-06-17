@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
@@ -80,9 +79,11 @@ public class MainActivity extends Activity {
 		if (!Application.isEyeFiInstalled()) {
 			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
-			Button buttonOrganize = (Button) findViewById(R.id.mainButtonOrganizeNewPhotos);
-			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buttonOrganize.getLayoutParams();
-			params.weight = 2;
+		}
+
+		if (!Application.hasCameraActivity()) {
+			Button buttonTakePhotos = (Button) findViewById(R.id.mainButtonTakePictures);
+			buttonTakePhotos.setVisibility(View.GONE);
 		}
 
 		DialogUtil.checkOutOfMemoryError(this);
@@ -140,6 +141,17 @@ public class MainActivity extends Activity {
 	}
 
 	/**
+	 * onClick action for Button to start the activity to take pictures.
+	 *
+	 * @param view
+	 *            the button to take pictures.
+	 */
+	public final void takePicturesActivity(final View view) {
+		TakePicturesActivity.startActivity(this, PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
+				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
+	}
+
+	/**
 	 * onClick action for Button to display eye photos.
 	 *
 	 * @param view
@@ -157,10 +169,10 @@ public class MainActivity extends Activity {
 	 *            the button to organize new folders.
 	 */
 	public final void organizeNewFoldersActivity(final View view) {
-		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 		OrganizeNewPhotosActivity.startActivity(this,
 				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
-				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
+				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos),
+				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
 	}
 
 	/**

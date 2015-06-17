@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.io.Serializable;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,7 +54,8 @@ public abstract class DialogUtil {
 	 * @param activity
 	 *            the current activity
 	 * @param listener
-	 *            an optional listener waiting for the dialog response.
+	 *            an optional listener waiting for the dialog response. If a listener is given, then the dialog will not
+	 *            be automatically recreated on orientation change!
 	 * @param resource
 	 *            the error message
 	 * @param args
@@ -273,6 +275,16 @@ public abstract class DialogUtil {
 			listener = (MessageDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
 
+			// Listeners cannot retain functionality when automatically recreated.
+			// Therefore, dialogs with listeners must be re-created by the activity on orientation change.
+			boolean isRecreated = false;
+			if (savedInstanceState != null) {
+				isRecreated = savedInstanceState.getBoolean("isRecreated");
+			}
+			if (isRecreated && listener != null) {
+				dismiss();
+			}
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(title) //
 					.setIcon(iconResource) //
@@ -296,6 +308,12 @@ public abstract class DialogUtil {
 				listener.onDialogCancel(DisplayMessageDialogFragment.this);
 			}
 			super.onCancel(dialogInterface);
+		}
+
+		@Override
+		public final void onSaveInstanceState(final Bundle outState) {
+			super.onSaveInstanceState(outState);
+			outState.putBoolean("isRecreated", true);
 		}
 
 		/**

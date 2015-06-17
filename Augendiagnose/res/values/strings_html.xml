@@ -60,16 +60,17 @@
 
 	<p>In this step, you can organize eye photos.</p>
 
-	<p>The App expects new eye photos in an input folder which is preconfigured as the target folder of the Eye-Fi app,
-		but can be changed via the settings.</p>
+	<p>The App expects new eye photos in an input folder. This folder is preconfigured as the target folder of the
+		Eye-Fi app or as the default folder of the camera, but can be changed via the settings.</p>
 
 	<p>In the &ldquo;Organize new photos&rdquo; activity, you can assign new eye photos from the input folder to a
 		person and a date and prepare them in this way for the app. Then the photos will be renamed and moved to the eye photo
 		folder.</p>
 
-	<p>As an alternative, you may select two photos in a file browser or photo app and send these photos to the Eye
-		Diagnosis app. Then you can organize these photos in the app. In this case, the photos will not be deleted from their
-		old location.</p>
+	<p>As further alternative, you may take pictures directly from the app with the device camera. This will normally
+		not give photos in adequate quality, but it serves as an alternative to a professional camera.</p>
+
+	<p>As third alternative,</p>
 
 	<h4>Step 2: Visualize the photos.</h4>
 

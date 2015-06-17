@@ -7,6 +7,7 @@
     <string name="title_activity_list_folders_for_display">Seleccionar nombre</string>
     <string name="title_activity_list_folders_for_display_second">Seleccionar segundo nombre</string>
     <string name="title_activity_organize_new_photos">Organizar nuevas fotos</string>
+    <string name="title_activity_take_pictures">Tomar fotografías</string>
     <string name="title_activity_list_pictures_for_name">Seleccionar fotos</string>
     <string name="title_activity_list_pictures_for_second_name">Seleccionar segunda foto</string>
     <string name="title_activity_select_two_pictures">Seleccionar dos nuevas fotos</string>
@@ -20,6 +21,7 @@
     <string name="button_open_eyefi_app">Abrir aplicación Eye-Fi</string>
     <string name="button_display_pictures">Visualizar las fotos</string>
     <string name="button_organize_new_photos">Organizar nuevas fotos</string>
+    <string name="button_take_pictures">Tomar fotografías</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_clear">Borrar</string>

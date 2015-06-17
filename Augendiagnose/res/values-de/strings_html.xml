@@ -63,7 +63,8 @@
 	<p>In diesem Schritt können Sie Ihre Augenfotos organisieren.</p>
 
 	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das
-		Zielverzeichnis der Eye-Fi App, kann aber über die Einstellungen geändert werden.</p>
+		Zielverzeichnis der Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen
+		geändert werden.</p>
 
 	<p>In der Aktivität &bdquo;Neue Fotos einordnen&ldquo; können Sie neue Augenfotos aus dem Eingangsverzeichnis einer
 		Person und einem Datum zuordnen und so für die App vorbereiten. Dabei werden die Fotos Umbenannt und in das
@@ -72,6 +73,10 @@
 	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses, können Sie auch zwei Fotos in einem Dateibrowser oder
 		einer Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In
 		diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
+
+	<p>Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies
+		wird normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer
+		professionellen Kamera.</p>
 
 	<h4>Schritt 2: Betrachten der Fotos</h4>
 

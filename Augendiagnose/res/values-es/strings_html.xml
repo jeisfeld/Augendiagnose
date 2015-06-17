@@ -57,8 +57,9 @@
 
 	<p>En este paso, puede organizar las fotos de ojos.</p>
 
-	<p>La aplicación espera nuevas fotos de los ojos en una carpeta de entrada que está preconfigurada como la carpeta
-		de destino de la aplicación Eye-Fi, pero se puede cambiarlo por medio de la configuración.</p>
+	<p>La aplicación espera nuevas fotos de los ojos en una carpeta de entrada. Esta está preconfigurada como la
+		carpeta de destino de la aplicación Eye-Fi o como la carpeta predeterminada de la cámara, pero se puede cambiarlo por
+		medio de la configuración.</p>
 
 	<p>En el actividad &laquo;Organizar nuevas fotos&raquo;, puede asignar nuevas fotos de los ojos de la carpeta de
 		entrada a una persona y una fecha y prepararlos en esta manera para la aplicación. De este modo, las fotos serán
@@ -67,6 +68,10 @@
 	<p>Como alternativa, puede seleccionar dos fotos en un explorador de archivos o en una aplicación de fotos, y
 		enviar estas fotos a la aplicación Diagnóstico del ojo. A continuación, puede organizar estas fotos en la aplicación.
 		En este caso, las fotos no se eliminarán de su ubicación anterior.</p>
+
+	<p>Como alternativa adicional, es posible tomar imágenes directamente desde la aplicación con la cámara del
+		dispositivo. Esto normalmente no le dé fotos en una calidad adecuada, pero sirve como una alternativa a una cámara
+		profesional.</p>
 
 	<h4>Paso 2:. Visualizar las fotos</h4>
 

@@ -75,7 +75,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Bugfixes</item>
         <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Verbesserte Fehlerbehandlung.</item>
         <item>Anzeige von Bildinformationen während der Detailansicht. Veröffentlichung der Windows-Applikation. Bugfixes</item>
-        <item>Für Eingangsverzeichnis und Foto-Verzeichnis können unterschiedliche SD-Karten gewählt werden. Bugfixes</item>
+        <item>Aufnahme von Fotos direkt aus der App heraus. Für Eingangsverzeichnis und Foto-Verzeichnis können unterschiedliche SD-Karten gewählt werden. Bugfixes</item>
     </string-array>
 
 </resources>
