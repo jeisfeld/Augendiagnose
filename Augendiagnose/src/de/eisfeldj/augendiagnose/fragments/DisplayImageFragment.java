@@ -91,6 +91,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private int imageIndex;
 
 	/**
+	 * Flag indicating if overlays are allowed.
+	 */
+	private boolean allowOverlays = true;
+
+	/**
 	 * Flag holding information if fragment is shown in landscape mode.
 	 */
 	private boolean isLandscape;
@@ -179,7 +184,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private int overlayColor = Color.RED;
 
 	/**
-	 * Initialize the listFoldersFragment with the file name.
+	 * Initialize the fragment with the file name.
 	 *
 	 * @param initialFile
 	 *            the file path.
@@ -197,7 +202,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
-	 * Initialize the listFoldersFragment with the file resource.
+	 * Initialize the fragment with the file resource.
 	 *
 	 * @param initialFileResource
 	 *            The file resource.
@@ -382,6 +387,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		// The following also updates the selectColorButton
 		imageView.setOverlayColor(overlayColor);
+
 	}
 
 	/**
@@ -514,7 +520,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+			if (allowOverlays) {
+				getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+			}
 		}
 		else {
 			if (isLandscape) {
@@ -612,6 +620,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (!imageView.canHandleOverlays()) {
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+			allowOverlays = false;
 		}
 	}
 
