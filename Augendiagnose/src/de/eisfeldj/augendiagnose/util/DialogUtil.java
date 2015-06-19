@@ -274,6 +274,7 @@ public abstract class DialogUtil {
 
 			listener = (MessageDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
+			getArguments().putSerializable(PARAM_LISTENER, null);
 
 			// Listeners cannot retain functionality when automatically recreated.
 			// Therefore, dialogs with listeners must be re-created by the activity on orientation change.
