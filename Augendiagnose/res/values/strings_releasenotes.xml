@@ -73,6 +73,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.7</item>
         <item>0.5.8</item>
         <item>0.5.9</item>
+        <item>0.5.10</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -114,6 +115,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added dialogs with tips. Improved error handling.</item>
         <item>Allow to display image info while looking at image. Released Windows application. Bugfixes</item>
         <item>Take pictures directly from the app. Allow use of different SD cards for Input and Photos. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
