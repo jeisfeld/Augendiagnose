@@ -277,11 +277,11 @@ public abstract class DialogUtil {
 
 			// Listeners cannot retain functionality when automatically recreated.
 			// Therefore, dialogs with listeners must be re-created by the activity on orientation change.
-			boolean isRecreated = false;
+			boolean preventRecreation = false;
 			if (savedInstanceState != null) {
-				isRecreated = savedInstanceState.getBoolean("isRecreated");
+				preventRecreation = savedInstanceState.getBoolean("preventRecreation");
 			}
-			if (isRecreated && listener != null) {
+			if (preventRecreation) {
 				dismiss();
 			}
 
@@ -312,8 +312,12 @@ public abstract class DialogUtil {
 
 		@Override
 		public final void onSaveInstanceState(final Bundle outState) {
+			if (listener != null) {
+				// Typically cannot serialize the listener due to its reference to the activity.
+				listener = null;
+				outState.putBoolean("preventRecreation", true);
+			}
 			super.onSaveInstanceState(outState);
-			outState.putBoolean("isRecreated", true);
 		}
 
 		/**
