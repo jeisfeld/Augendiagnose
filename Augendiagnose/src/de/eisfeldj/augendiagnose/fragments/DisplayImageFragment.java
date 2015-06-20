@@ -24,6 +24,7 @@ import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
@@ -60,6 +61,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The resource kay for the image index (in case of multiple images).
 	 */
 	protected static final String STRING_IMAGEINDEX = "de.eisfeldj.augendiagnose.IMAGEINDEX";
+	/**
+	 * The resource kay for the rightleft information (if not contained in the image).
+	 */
+	protected static final String STRING_RIGHTLEFT = "de.eisfeldj.augendiagnose.RIGHTLEFT";
 
 	/**
 	 * Type value set if the fragment shows an image by filename.
@@ -89,6 +94,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The image index.
 	 */
 	private int imageIndex;
+
+	/**
+	 * Information if right or left image.
+	 */
+	private RightLeft rightLeft;
 
 	/**
 	 * Flag indicating if overlays are allowed.
@@ -190,13 +200,19 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            the file path.
 	 * @param initialImageIndex
 	 *            The index of the view (required if there are multiple such fragments)
+	 * @param initialRightLeft
+	 *            Information if it is the right or left eye (if not in image metadata)
 	 * @return
 	 */
-	public final void setParameters(final String initialFile, final int initialImageIndex) {
+	public final void setParameters(final String initialFile, final int initialImageIndex,
+			final RightLeft initialRightLeft) {
 		Bundle args = new Bundle();
 		args.putString(STRING_FILE, initialFile);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
 		args.putInt(STRING_IMAGEINDEX, initialImageIndex);
+		if (initialRightLeft != null) {
+			args.putSerializable(STRING_RIGHTLEFT, initialRightLeft);
+		}
 
 		setArguments(args);
 	}
@@ -229,6 +245,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		file = getArguments().getString(STRING_FILE);
 		fileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
 		imageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
+		rightLeft = (RightLeft) getArguments().getSerializable(STRING_RIGHTLEFT);
 	}
 
 	/*
@@ -616,6 +633,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			imageView.setImage(file, getActivity(), imageIndex);
+		}
+
+		if (imageView.getEyePhoto().getRightLeft() == null && rightLeft != null) {
+			imageView.getEyePhoto().setRightLeft(rightLeft);
 		}
 
 		if (!imageView.canHandleOverlays()) {

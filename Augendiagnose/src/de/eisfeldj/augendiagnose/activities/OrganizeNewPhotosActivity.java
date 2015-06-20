@@ -580,7 +580,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void displayNewImages(final View view) {
-		DisplayTwoActivity.startActivity(this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath());
+		DisplayTwoActivity.startActivity(this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath(), true);
 	}
 
 	/**

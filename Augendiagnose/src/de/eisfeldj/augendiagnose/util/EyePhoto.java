@@ -192,7 +192,7 @@ public class EyePhoto {
 		return rightLeft;
 	}
 
-	private void setRightLeft(final RightLeft rightLeft) {
+	public final void setRightLeft(final RightLeft rightLeft) {
 		this.rightLeft = rightLeft;
 	}
 

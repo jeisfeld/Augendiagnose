@@ -118,7 +118,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 				}
 				else {
 					DisplayTwoActivity.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
-							.getAbsolutePath());
+							.getAbsolutePath(), false);
 					cleanSelectedViews();
 				}
 			}
@@ -151,7 +151,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 			public void onClick(final View v) {
 				DisplayTwoActivity
 						.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
-								.getAbsolutePath());
+								.getAbsolutePath(), false);
 				cleanSelectedViews();
 				secondActivity.finish();
 			}

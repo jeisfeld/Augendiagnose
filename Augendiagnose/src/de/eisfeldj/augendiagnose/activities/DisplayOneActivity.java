@@ -101,7 +101,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 		if (fragmentImage == null) {
 			fragmentImage = new DisplayImageFragment();
 			if (type == TYPE_FILENAME) {
-				fragmentImage.setParameters(file, 1);
+				fragmentImage.setParameters(file, 1, null);
 			}
 			else {
 				fragmentImage.setParameters(fileResource, 1);

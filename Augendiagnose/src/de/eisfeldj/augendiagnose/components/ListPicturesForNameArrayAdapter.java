@@ -76,8 +76,10 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 			@Override
 			public void onClick(final View v) {
 				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedViews();
-				DisplayTwoActivity.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
-						.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye().getAbsolutePath());
+				DisplayTwoActivity
+						.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
+								.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye()
+								.getAbsolutePath(), true);
 
 			}
 		});
