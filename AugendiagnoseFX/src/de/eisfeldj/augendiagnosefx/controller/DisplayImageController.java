@@ -1,13 +1,13 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.FULL;
-import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.NORMAL;
-import static de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution.THUMB;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_EDIT_COMMENT;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_SAVE_COMMENT;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.FULL;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.NORMAL;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.THUMB;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,9 +31,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
-import de.eisfeldj.augendiagnosefx.util.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
-import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 

@@ -1,8 +1,8 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.util.Date;
 
-import de.eisfeldj.augendiagnosefx.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Helper class holding the metadata to be written into the file.

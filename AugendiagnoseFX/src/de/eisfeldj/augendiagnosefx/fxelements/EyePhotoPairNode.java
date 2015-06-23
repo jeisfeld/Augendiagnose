@@ -16,10 +16,10 @@ import javafx.scene.layout.GridPane;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
-import de.eisfeldj.augendiagnosefx.util.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

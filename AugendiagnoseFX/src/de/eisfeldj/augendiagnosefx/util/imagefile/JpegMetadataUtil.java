@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -24,6 +24,9 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
 import com.adobe.xmp.XMPException;
+
+import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 
 /**
  * Helper clase to retrieve and save metadata in a JPEG file.

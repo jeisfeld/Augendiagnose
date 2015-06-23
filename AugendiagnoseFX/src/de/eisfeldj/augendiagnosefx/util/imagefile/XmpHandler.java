@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +12,8 @@ import com.adobe.xmp.XMPMetaFactory;
 import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
+
+import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
  * Helper class to handle XML data in a JPEG file.

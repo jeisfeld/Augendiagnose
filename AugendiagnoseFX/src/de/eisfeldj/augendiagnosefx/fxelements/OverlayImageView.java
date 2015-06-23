@@ -2,8 +2,8 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 
 /**
  * Pane containing an image that can be resized and can display overlays.

@@ -1,9 +1,11 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+
+import de.eisfeldj.augendiagnosefx.util.Logger;
 
 /**
  * Utility class for helping parsing file systems.

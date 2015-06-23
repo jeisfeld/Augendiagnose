@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -7,7 +7,11 @@ import java.util.Date;
 import java.util.Locale;
 
 import javafx.scene.image.Image;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.DateUtil;
+import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.

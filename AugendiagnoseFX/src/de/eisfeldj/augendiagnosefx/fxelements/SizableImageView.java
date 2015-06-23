@@ -15,9 +15,9 @@ import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-import de.eisfeldj.augendiagnosefx.util.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.ImageUtil.Resolution;
-import de.eisfeldj.augendiagnosefx.util.JpegMetadata;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**

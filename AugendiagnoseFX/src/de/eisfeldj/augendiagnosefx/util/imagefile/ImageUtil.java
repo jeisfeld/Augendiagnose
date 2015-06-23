@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnosefx.util;
+package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
 
@@ -12,7 +12,9 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import de.eisfeldj.augendiagnosefx.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Utility for handling images.
