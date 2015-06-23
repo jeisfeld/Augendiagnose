@@ -107,5 +107,20 @@
     <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
     <string name="key_internal_show_utilities" translatable="false">show_utilities</string>
     <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
+    <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
+    <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
+    <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
+    <string name="key_statistics_countmain" translatable="false">statistics_countmain</string>
+    <string name="key_statistics_countorganizestart" translatable="false">statistics_countorganizestart</string>
+    <string name="key_statistics_countorganizeend" translatable="false">statistics_countorganizeend</string>
+    <string name="key_statistics_countlistnames" translatable="false">statistics_countlistnames</string>
+    <string name="key_statistics_countlistpictures" translatable="false">statistics_countlistpictures</string>
+    <string name="key_statistics_countdisplay" translatable="false">statistics_countdisplay</string>
+    <string name="key_statistics_countlock" translatable="false">statistics_countlock</string>
+    <string name="key_statistics_countcomment" translatable="false">statistics_countcomment</string>
+    <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
+    <string name="key_statistics_counttakephoto" translatable="false">statistics_counttakephoto</string>
+    <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
+    <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
 
 </resources>

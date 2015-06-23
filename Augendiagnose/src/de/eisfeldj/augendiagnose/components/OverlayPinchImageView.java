@@ -30,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadata;
@@ -512,6 +513,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.overlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
 						* OVERLAY_SIZE;
 				mEyePhoto.storeImageMetadata(mMetadata);
+
+				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
 			}
 		}
 	}
@@ -1208,6 +1211,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mInitialized && mMetadata != null) {
 			mMetadata.comment = comment;
 			mEyePhoto.storeImageMetadata(mMetadata);
+
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countcomment);
 		}
 	}
 

@@ -37,6 +37,19 @@ public class Application extends android.app.Application {
 		Application.context = getApplicationContext();
 		setLanguage();
 		setExceptionHandler();
+
+		// Set statistics
+		int initialVersion = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_initialversion, -1);
+		if (initialVersion == -1) {
+			PreferenceUtil.setSharedPreferenceInt(R.string.key_statistics_initialversion, getVersion());
+		}
+
+		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
+		if (firstStartTime == -1) {
+			PreferenceUtil.setSharedPreferenceLong(R.string.key_statistics_firststarttime, System.currentTimeMillis());
+		}
+
+		PreferenceUtil.incrementCounter(R.string.key_statistics_countstarts);
 	}
 
 	/**

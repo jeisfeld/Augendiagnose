@@ -45,6 +45,10 @@ public class SettingsActivity extends BaseActivity {
 
 		// Display the listFoldersFragment as the main content.
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
+		}
 	}
 
 	@Override

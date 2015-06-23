@@ -193,6 +193,7 @@ public class TakePicturesActivity extends BaseActivity {
 				File targetFile = new File(photoFolder, tempFile.getName());
 				FileUtil.moveFile(tempFile, targetFile);
 				countCapturedPictures++;
+				PreferenceUtil.incrementCounter(R.string.key_statistics_counttakephoto);
 
 				if (countCapturedPictures == 1) {
 					askForTakingPicture(false, rightEyeLast);

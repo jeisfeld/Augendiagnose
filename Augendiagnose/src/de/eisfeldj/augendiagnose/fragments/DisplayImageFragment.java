@@ -321,7 +321,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		lockButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				onToggleLinkClicked(v);
+				onToggleLockClicked(v);
 			}
 		});
 
@@ -440,7 +440,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @param view
 	 *            The view of the link button.
 	 */
-	private void onToggleLinkClicked(final View view) {
+	private void onToggleLockClicked(final View view) {
 		ToggleButton button = (ToggleButton) view;
 		imageView.lockOverlay(button.isChecked(), true);
 	}

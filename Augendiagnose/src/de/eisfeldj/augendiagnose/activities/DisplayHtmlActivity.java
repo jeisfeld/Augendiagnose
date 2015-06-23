@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayHtmlFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayHelpNavigatonFragment;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
@@ -83,6 +84,9 @@ public class DisplayHtmlActivity extends Activity {
 			}
 		}
 
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_counthelp);
+		}
 	}
 
 	/**

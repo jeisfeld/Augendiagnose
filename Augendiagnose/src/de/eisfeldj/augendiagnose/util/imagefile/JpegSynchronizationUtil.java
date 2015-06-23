@@ -7,6 +7,7 @@ import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadataUtil.ExifStorageException;
 
 /**
@@ -137,6 +138,8 @@ public final class JpegSynchronizationUtil {
 		runningSaveRequests.put(pathname, metadata);
 		JpegSaverTask task = new JpegSaverTask(pathname, metadata);
 		task.execute();
+
+		PreferenceUtil.incrementCounter(R.string.key_statistics_countsave);
 	}
 
 	/**

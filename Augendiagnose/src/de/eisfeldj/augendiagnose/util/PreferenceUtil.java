@@ -185,6 +185,46 @@ public final class PreferenceUtil {
 	}
 
 	/**
+	 * Increment a counter shared preference, and return the new value.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @return the new value.
+	 */
+	public static int incrementCounter(final int preferenceId) {
+		int newValue = getSharedPreferenceInt(preferenceId, 0) + 1;
+		setSharedPreferenceInt(preferenceId, newValue);
+		return newValue;
+	}
+
+	/**
+	 * Retrieve a long shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param defaultValue
+	 *            the default value of the shared preference.
+	 * @return the corresponding preference value.
+	 */
+	public static long getSharedPreferenceLong(final int preferenceId, final long defaultValue) {
+		return getSharedPreferences().getLong(Application.getAppContext().getString(preferenceId), defaultValue);
+	}
+
+	/**
+	 * Set a long shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param i
+	 *            the target value of the preference.
+	 */
+	public static void setSharedPreferenceLong(final int preferenceId, final long i) {
+		Editor editor = getSharedPreferences().edit();
+		editor.putLong(Application.getAppContext().getString(preferenceId), i);
+		editor.commit();
+	}
+
+	/**
 	 * Set the default setting for handling of full resolution, if no value is set.
 	 */
 	public static void setDefaultResolutionSettings() {

@@ -91,6 +91,10 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			}
 		}
 
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countlistnames);
+		}
+
 		if (SystemUtil.isTablet()) {
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);

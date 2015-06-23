@@ -43,7 +43,8 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming)
  *
- * <p>The activity can be started either with a folder name, or with an array of file names.
+ * <p>
+ * The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends BaseActivity {
 
@@ -206,6 +207,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			if (!success) {
 				Log.w(Application.TAG, "Failed to create folder" + parentFolder);
 			}
+		}
+
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizestart);
 		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_organizephotos, R.string.key_tip_organizephotos);
@@ -495,6 +500,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		// Store the name so that it may be opened automatically
 		PreferenceUtil.setSharedPreferenceString(R.string.key_internal_last_name, name);
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
+
+		PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizeend);
 
 		setPicturesAndValues(true);
 	}

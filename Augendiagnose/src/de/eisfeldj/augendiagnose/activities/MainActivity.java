@@ -87,6 +87,10 @@ public class MainActivity extends Activity {
 			buttonTakePhotos.setVisibility(View.GONE);
 		}
 
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countmain);
+		}
+
 		DialogUtil.checkOutOfMemoryError(this);
 
 		test();

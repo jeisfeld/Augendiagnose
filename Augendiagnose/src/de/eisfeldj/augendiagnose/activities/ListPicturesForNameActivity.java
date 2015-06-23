@@ -8,6 +8,7 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -48,6 +49,10 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
+
+		if (savedInstanceState == null) {
+			PreferenceUtil.incrementCounter(R.string.key_statistics_countlistpictures);
+		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaypictures, R.string.key_tip_displaypictures);
 	}
