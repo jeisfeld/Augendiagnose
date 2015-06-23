@@ -22,6 +22,7 @@ import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegSynchronizationUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -100,6 +101,11 @@ public class Application extends javafx.application.Application {
 	 * Exit the application after asking for confirmation if there are unsaved data.
 	 */
 	public static void exitAfterConfirmation() {
+		if (JpegSynchronizationUtil.hasRunningSaveRequests()) {
+			DialogUtil.displayInfo(ResourceConstants.MESSAGE_INFO_SAVING_PHOTO);
+			return;
+		}
+
 		if (BaseController.hasDirtyInstance()) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
 				@Override

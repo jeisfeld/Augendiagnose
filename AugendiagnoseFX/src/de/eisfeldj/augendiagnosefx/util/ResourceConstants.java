@@ -58,6 +58,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_ERROR_UNKNOWN_ERROR = "message_error_unknown_error";
 	public static final String MESSAGE_INFO_APP_ABOUT = "message_info_app_about";
 	public static final String MESSAGE_INFO_NO_NEW_VERSION = "message_info_no_new_version";
+	public static final String MESSAGE_INFO_SAVING_PHOTO = "message_info_saving_photo";
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTO = "message_progress_loading_photo";
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTOS = "message_progress_loading_photos";
 	public static final String MESSAGE_PROGRESS_LOADING_UPDATE = "message_progress_loading_update";
