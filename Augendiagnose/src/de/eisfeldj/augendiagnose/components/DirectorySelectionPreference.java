@@ -11,7 +11,7 @@ import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment;
 import de.eisfeldj.augendiagnose.fragments.DirectoryChooserDialogFragment.ChosenDirectoryListener;
-import de.eisfeldj.augendiagnose.util.FileUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 
 /**
  * A variant of ListPreference that allows to choose from a list of given folders (conigured in the menu configuration)

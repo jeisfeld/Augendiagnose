@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType.TIFF_DIRECTORY_IFD0;
 
@@ -34,6 +34,7 @@ import com.adobe.xmp.XMPException;
 
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Helper clase to retrieve and save metadata in a JPEG file.

@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
 
 /**
  * A view for displaying an eye image.

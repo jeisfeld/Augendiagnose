@@ -15,9 +15,9 @@ import android.widget.TextView;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
 
 /**
  * Base listFoldersFragment to display the pictures in an eye photo folder (in pairs) Abstract class - child classes

@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.io.File;
 import java.util.Date;
@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.DateUtil;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.

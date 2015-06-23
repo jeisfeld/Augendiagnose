@@ -11,8 +11,8 @@ import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayTwoActivity;
 import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
 
 /**
  * Array adapter class to display an eye photo pair in a list (initial display).

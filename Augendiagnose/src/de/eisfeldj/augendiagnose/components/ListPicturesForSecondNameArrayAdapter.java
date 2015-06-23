@@ -3,8 +3,8 @@ package de.eisfeldj.augendiagnose.components;
 import android.app.Activity;
 import android.content.Context;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
 
 /**
  * Array adapter class to display an eye photo pair in a list (display for selection of second picture).

@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 
 /**
  * Base handler for the selection of images. Contains only methods to handle the highlighting. Multiple views may be

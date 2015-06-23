@@ -1,6 +1,8 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.util.Date;
+
+import de.eisfeldj.augendiagnose.util.DateUtil;
 
 /**
  * Utility class to handle a pair of eye photos (right and left).

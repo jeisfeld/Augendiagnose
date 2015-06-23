@@ -18,6 +18,9 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadata;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegSynchronizationUtil;
 
 /**
  * Helper class to show standard dialogs.

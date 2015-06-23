@@ -30,12 +30,12 @@ import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
-import de.eisfeldj.augendiagnose.util.FileUtil;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
-import de.eisfeldj.augendiagnose.util.JpegMetadataUtil;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadataUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 

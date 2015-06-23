@@ -19,9 +19,9 @@ import de.eisfeldj.augendiagnose.components.EyeImageView;
 import de.eisfeldj.augendiagnose.components.SelectTwoPicturesArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.FileUtil;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 
 /**

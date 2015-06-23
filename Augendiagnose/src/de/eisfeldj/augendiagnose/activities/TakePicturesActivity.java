@@ -17,9 +17,9 @@ import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 
 /**
  * Activity to take pictures of two eye photos.

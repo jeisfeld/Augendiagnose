@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
 
 /**
  * Array adapter class to display an eye photo pair in a list.

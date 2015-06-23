@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.util.HashMap;
 
@@ -6,7 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.JpegMetadataUtil.ExifStorageException;
+import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadataUtil.ExifStorageException;
 
 /**
  * Utility class to help storing metadata in jpg files in a synchronized way, preventing to store the same file twice in

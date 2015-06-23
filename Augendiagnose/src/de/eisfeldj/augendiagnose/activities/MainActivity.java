@@ -13,10 +13,10 @@ import android.widget.Button;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
 
 /**
  * Main activity of the application.

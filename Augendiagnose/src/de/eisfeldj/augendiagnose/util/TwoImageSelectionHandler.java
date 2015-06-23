@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity;
 import de.eisfeldj.augendiagnose.components.EyeImageView;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 
 /**
  * A class handling the selection two pictures, returning the pictures.

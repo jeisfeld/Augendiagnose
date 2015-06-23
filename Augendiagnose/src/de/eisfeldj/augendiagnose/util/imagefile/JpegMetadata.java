@@ -1,10 +1,10 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Helper class holding the metadata to be written into the file.

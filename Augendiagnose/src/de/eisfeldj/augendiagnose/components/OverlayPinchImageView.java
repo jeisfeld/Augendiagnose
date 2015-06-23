@@ -30,11 +30,11 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
-import de.eisfeldj.augendiagnose.util.JpegMetadata;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegMetadata;
+import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Extension of PinchImageView which adds the Iristopography overlays to the view.

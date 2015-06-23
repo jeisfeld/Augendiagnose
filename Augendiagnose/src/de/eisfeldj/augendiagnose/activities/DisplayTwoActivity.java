@@ -10,7 +10,7 @@ import de.eisfeldj.augendiagnose.fragments.DisplayImageFragmentHalfscreen;
 import de.eisfeldj.augendiagnose.fragments.EditCommentFragment;
 import de.eisfeldj.augendiagnose.util.AutoKeyboardLayoutUtility;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.EyePhoto.RightLeft;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Activity to display two pictures on full screen (screen split in two halves).

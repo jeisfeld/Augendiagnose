@@ -1,4 +1,4 @@
-package de.eisfeldj.augendiagnose.util;
+package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -15,6 +15,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.DateUtil;
 
 /**
  * Utility class for operations with images.

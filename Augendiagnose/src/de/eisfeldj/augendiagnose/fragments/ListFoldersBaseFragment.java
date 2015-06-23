@@ -27,9 +27,9 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
 import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.EyePhoto;
-import de.eisfeldj.augendiagnose.util.FileUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 
 /**
  * Base listFoldersFragment to display the list of subfolders of a folder Abstract class - child classes determine the

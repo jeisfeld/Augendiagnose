@@ -18,8 +18,8 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
-import de.eisfeldj.augendiagnose.util.FileUtil;
-import de.eisfeldj.augendiagnose.util.JpegSynchronizationUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegSynchronizationUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.VersionUtil;
 

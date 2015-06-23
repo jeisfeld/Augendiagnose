@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
-import de.eisfeldj.augendiagnose.util.ImageUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
 
 /**
  * A view for displaying an image, allowing moving and resizing with pinching.

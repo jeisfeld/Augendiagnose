@@ -25,8 +25,8 @@ import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
-import de.eisfeldj.augendiagnose.util.EyePhotoPair;
-import de.eisfeldj.augendiagnose.util.MediaStoreUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
+import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
