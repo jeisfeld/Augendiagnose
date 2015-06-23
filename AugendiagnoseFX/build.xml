@@ -2,7 +2,7 @@
 <project name="AugendiagnoseFX" default="do-deploy" basedir="."
 	xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
-		<property name="application.version">0.1.2</property>
+		<property name="application.version">0.1.3</property>
 
 		<path id="fxant">
 			<filelist>
