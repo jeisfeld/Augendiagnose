@@ -203,7 +203,7 @@ public final class DialogUtil {
 		line.append(activity.getString(resource));
 		line.append("</b><br>");
 
-		if (VersionUtil.isAtLeastVersion(Build.VERSION_CODES.JELLY_BEAN)) {
+		if (SystemUtil.isAtLeastVersion(Build.VERSION_CODES.JELLY_BEAN)) {
 			// Workaround to escape html, but transfer line breaks to HTML
 			line.append(Html.escapeHtml(value.replace("\n", "|||LINEBREAK|||")).replace("|||LINEBREAK|||", "<br>"));
 		}

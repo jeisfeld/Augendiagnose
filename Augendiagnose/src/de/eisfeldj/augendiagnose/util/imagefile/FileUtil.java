@@ -31,7 +31,7 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
-import de.eisfeldj.augendiagnose.util.VersionUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Utility class for helping parsing file systems.
@@ -106,13 +106,13 @@ public final class FileUtil {
 				inChannel.transferTo(0, inChannel.size(), outChannel);
 			}
 			else {
-				if (VersionUtil.isAndroid5()) {
+				if (SystemUtil.isAndroid5()) {
 					// Storage Access Framework
 					DocumentFile targetDocument = getDocumentFile(target, false, true);
 					outStream =
 							Application.getAppContext().getContentResolver().openOutputStream(targetDocument.getUri());
 				}
-				else if (VersionUtil.isKitkat()) {
+				else if (SystemUtil.isKitkat()) {
 					// Workaround for Kitkat ext SD card
 					Uri uri = MediaStoreUtil.getUriFromFile(target.getAbsolutePath());
 					outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
@@ -180,13 +180,13 @@ public final class FileUtil {
 		}
 
 		// Try with Storage Access Framework.
-		if (VersionUtil.isAndroid5()) {
+		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, false, true);
 			return document.delete();
 		}
 
 		// Try the Kitkat workaround.
-		if (VersionUtil.isKitkat()) {
+		if (SystemUtil.isKitkat()) {
 			ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 			try {
@@ -244,7 +244,7 @@ public final class FileUtil {
 		}
 
 		// Try the Storage Access Framework if it is just a rename within the same parent folder.
-		if (VersionUtil.isAndroid5() && source.getParent().equals(target.getParent())) {
+		if (SystemUtil.isAndroid5() && source.getParent().equals(target.getParent())) {
 			DocumentFile document = getDocumentFile(source, true, true);
 			if (document.renameTo(target.getName())) {
 				return true;
@@ -312,14 +312,14 @@ public final class FileUtil {
 		}
 
 		// Try with Storage Access Framework.
-		if (VersionUtil.isAndroid5()) {
+		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, true, true);
 			// getDocumentFile implicitly creates the directory.
 			return document.exists();
 		}
 
 		// Try the Kitkat workaround.
-		if (VersionUtil.isKitkat()) {
+		if (SystemUtil.isKitkat()) {
 			ContentResolver resolver = Application.getAppContext().getContentResolver();
 			File tempFile = new File(file, "dummyImage.jpg");
 
@@ -379,13 +379,13 @@ public final class FileUtil {
 		}
 
 		// Try with Storage Access Framework.
-		if (VersionUtil.isAndroid5()) {
+		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, true, true);
 			return document.delete();
 		}
 
 		// Try the Kitkat workaround.
-		if (VersionUtil.isKitkat()) {
+		if (SystemUtil.isKitkat()) {
 			ContentResolver resolver = Application.getAppContext().getContentResolver();
 			ContentValues values = new ContentValues();
 			values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());

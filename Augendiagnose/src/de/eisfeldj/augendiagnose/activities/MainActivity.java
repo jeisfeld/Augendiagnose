@@ -15,6 +15,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
 
@@ -76,12 +77,12 @@ public class MainActivity extends Activity {
 			}
 		}
 
-		if (!Application.isEyeFiInstalled()) {
+		if (!SystemUtil.isEyeFiInstalled()) {
 			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
 		}
 
-		if (!Application.hasCameraActivity()) {
+		if (!SystemUtil.hasCameraActivity()) {
 			Button buttonTakePhotos = (Button) findViewById(R.id.mainButtonTakePictures);
 			buttonTakePhotos.setVisibility(View.GONE);
 		}
@@ -125,7 +126,7 @@ public class MainActivity extends Activity {
 	 *            the button to open the Eye-Fi app.
 	 */
 	public final void openEyeFiApp(final View view) {
-		if (Application.isEyeFiInstalled()) {
+		if (SystemUtil.isEyeFiInstalled()) {
 			startActivity(getPackageManager().getLaunchIntentForPackage("fi.eye.android"));
 		}
 		else {

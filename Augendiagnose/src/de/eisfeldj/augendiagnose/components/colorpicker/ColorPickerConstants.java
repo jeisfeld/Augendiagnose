@@ -1,7 +1,7 @@
 package de.eisfeldj.augendiagnose.components.colorpicker;
 
 import android.graphics.Color;
-import de.eisfeldj.augendiagnose.Application;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Constants used for the color picker by its clients.
@@ -32,7 +32,7 @@ public final class ColorPickerConstants {
 	/**
 	 * Size of symbols in the color picker dialog.
 	 */
-	public static final int COLOR_PICKER_SIZE = Application.isTablet() ? ColorPickerDialog.SIZE_LARGE
+	public static final int COLOR_PICKER_SIZE = SystemUtil.isTablet() ? ColorPickerDialog.SIZE_LARGE
 			: ColorPickerDialog.SIZE_SMALL;
 
 }

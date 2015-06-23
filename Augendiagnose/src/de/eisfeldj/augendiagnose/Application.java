@@ -4,17 +4,12 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Point;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 import de.eisfeldj.augendiagnose.util.EncryptionUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -77,27 +72,6 @@ public class Application extends android.app.Application {
 	}
 
 	/**
-	 * Retrieve the default display.
-	 *
-	 * @return the default display.
-	 */
-	private static Display getDefaultDisplay() {
-		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		return wm.getDefaultDisplay();
-	}
-
-	/**
-	 * Retrieve the display size in pixels (max of x and y value).
-	 *
-	 * @return the display size.
-	 */
-	public static int getDisplaySize() {
-		Point p = new Point();
-		getDefaultDisplay().getSize(p);
-		return Math.max(p.x, p.y);
-	}
-
-	/**
 	 * Check if the application has an authorized user key.
 	 *
 	 * @return true if the application has an authorized user key.
@@ -133,52 +107,6 @@ public class Application extends android.app.Application {
 			Log.e(TAG, "Did not find application version", e);
 			return 0;
 		}
-	}
-
-	/**
-	 * Determine if the device is a tablet (i.e. it has a large screen).
-	 *
-	 * @return true if the app is running on a tablet.
-	 */
-	public static boolean isTablet() {
-		return (getAppContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
-		>= Configuration.SCREENLAYOUT_SIZE_LARGE;
-	}
-
-	/**
-	 * Determine if the screen is shown in landscape mode (i.e. width > height)
-	 *
-	 * @return true if the app runs in landscape mode
-	 */
-	public static boolean isLandscape() {
-		// use screen width as criterion rather than getRotation
-		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-		return width > height;
-	}
-
-	/**
-	 * Determine if Eye-Fi is installed.
-	 *
-	 * @return true if Eye-Fi is installed.
-	 */
-	public static boolean isEyeFiInstalled() {
-		Intent eyeFiIntent = getAppContext().getPackageManager().getLaunchIntentForPackage("fi.eye.android");
-		return eyeFiIntent != null;
-	}
-
-	/**
-	 * Determine if the device has a camera activity.
-	 *
-	 * @return true if the device has a camera activity.
-	 */
-	public static boolean hasCameraActivity() {
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		return takePictureIntent.resolveActivity(getAppContext().getPackageManager()) != null;
 	}
 
 	/**

@@ -11,6 +11,7 @@ import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 
 /**
@@ -65,7 +66,7 @@ public class SettingsActivity extends BaseActivity {
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_value))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
-			if (Application.isEyeFiInstalled()) {
+			if (SystemUtil.isEyeFiInstalled()) {
 				// If Eye-Fi is available, use Eye-Fi folder, which is the first selection
 				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
 						context.getString(R.string.pref_default_folder_input));

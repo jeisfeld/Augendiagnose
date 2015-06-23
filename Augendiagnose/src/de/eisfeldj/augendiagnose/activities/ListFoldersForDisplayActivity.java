@@ -8,7 +8,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersBaseFragment;
 import de.eisfeldj.augendiagnose.fragments.ListFoldersForDisplayFragment;
@@ -17,6 +16,7 @@ import de.eisfeldj.augendiagnose.fragments.ListPicturesForNameFragment.ListPictu
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.ImageSelectionAndDisplayHandler;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
@@ -55,7 +55,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		if (Application.isTablet()) {
+		if (SystemUtil.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);
 		}
 		else {
@@ -68,7 +68,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			setListFoldersFragment(new ListFoldersForDisplayFragment());
 			setFragmentParameters(getListFoldersFragment());
 
-			if (Application.isTablet()) {
+			if (SystemUtil.isTablet()) {
 				getFragmentManager().beginTransaction().add(R.id.fragment_list, getListFoldersFragment(), FRAGMENT_TAG)
 						.commit();
 
@@ -91,7 +91,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			}
 		}
 
-		if (Application.isTablet()) {
+		if (SystemUtil.isTablet()) {
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 		}
@@ -110,7 +110,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 *            The name for which pictures should be shown.
 	 */
 	public final void listPicturesForName(final String name) {
-		if (Application.isTablet()) {
+		if (SystemUtil.isTablet()) {
 			listPicturesFragment =
 					(ListPicturesForNameFragment) getFragmentManager().findFragmentByTag(FRAGMENT_LISTPICTURES_TAG);
 			if (listPicturesFragment != null && name.equals(listPicturesFragment.getName())) {
@@ -144,7 +144,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 * Remove the back stack on the "ListPicturesForName" pane and clean the pane.
 	 */
 	public final void popBackStack() {
-		if (Application.isTablet()) {
+		if (SystemUtil.isTablet()) {
 			getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
 			Fragment fragment = getFragmentManager().findFragmentByTag(FRAGMENT_LISTPICTURES_TAG);

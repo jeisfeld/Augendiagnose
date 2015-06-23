@@ -21,7 +21,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.Me
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.JpegSynchronizationUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
-import de.eisfeldj.augendiagnose.util.VersionUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Fragment for displaying the settings.
@@ -183,7 +183,7 @@ public class SettingsFragment extends PreferenceFragment {
 				 * @return true if the check was successful or if SAF has been triggered.
 				 */
 				private boolean checkFolder(final File folder, final int code) {
-					if (VersionUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
+					if (SystemUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
 						if (!folder.exists() || !folder.isDirectory()) {
 							return false;
 						}
@@ -215,7 +215,7 @@ public class SettingsFragment extends PreferenceFragment {
 						// Only accept after SAF stuff is done.
 						return true;
 					}
-					else if (VersionUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
+					else if (SystemUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
 						// Assume that Kitkat workaround works
 						return true;
 					}

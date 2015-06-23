@@ -12,9 +12,9 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
@@ -167,7 +167,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
 
 		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !Application.isTablet(),
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !SystemUtil.isTablet(),
 					name);
 			if (dismissIfEmpty) {
 				dismiss = true;

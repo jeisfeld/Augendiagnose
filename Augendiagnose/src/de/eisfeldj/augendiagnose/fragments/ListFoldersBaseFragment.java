@@ -22,12 +22,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.ListFoldersBaseActivity;
 import de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
 
@@ -274,7 +274,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		}
 
 		// In two-pane mode, refresh right pane
-		if (getActivity() instanceof ListFoldersForDisplayActivity && Application.isTablet()) {
+		if (getActivity() instanceof ListFoldersForDisplayActivity && SystemUtil.isTablet()) {
 			ListFoldersForDisplayActivity activity = (ListFoldersForDisplayActivity) getActivity();
 			activity.popBackStack();
 			activity.listPicturesForName(newName);

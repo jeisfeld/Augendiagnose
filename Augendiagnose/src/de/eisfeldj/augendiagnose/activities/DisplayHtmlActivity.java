@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.fragments.DisplayHtmlFragment;
 import de.eisfeldj.augendiagnose.fragments.DisplayHelpNavigatonFragment;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Activity to display an HTML page. Used for display of help pages.
@@ -67,7 +67,7 @@ public class DisplayHtmlActivity extends Activity {
 
 		int resource = getIntent().getIntExtra(STRING_EXTRA_RESOURCE, NO_RESOURCE);
 
-		if (Application.isTablet()) {
+		if (SystemUtil.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);
 		}
 		else {
@@ -75,7 +75,7 @@ public class DisplayHtmlActivity extends Activity {
 		}
 
 		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
-			if (Application.isTablet() || resource == NO_RESOURCE) {
+			if (SystemUtil.isTablet() || resource == NO_RESOURCE) {
 				displayNavigation();
 			}
 			if (resource != NO_RESOURCE) {
@@ -89,7 +89,7 @@ public class DisplayHtmlActivity extends Activity {
 	 * Display the navigation page.
 	 */
 	public final void displayNavigation() {
-		int containerViewId = Application.isTablet() ? R.id.fragment_list : R.id.fragment_container;
+		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_list : R.id.fragment_container;
 		DisplayHelpNavigatonFragment fragment = new DisplayHelpNavigatonFragment();
 		getFragmentManager().beginTransaction()
 				.replace(containerViewId, fragment, FRAGMENT_TAG)
@@ -104,8 +104,8 @@ public class DisplayHtmlActivity extends Activity {
 	 *            The resource to be shown in the details.
 	 */
 	public final void displayDetails(final int resourceId) {
-		int containerViewId = Application.isTablet() ? R.id.fragment_detail : R.id.fragment_container;
-		String fragmentTag = Application.isTablet() ? FRAGMENT_DETAILS_TAG : FRAGMENT_TAG;
+		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_detail : R.id.fragment_container;
+		String fragmentTag = SystemUtil.isTablet() ? FRAGMENT_DETAILS_TAG : FRAGMENT_TAG;
 
 		DisplayHtmlFragment detailFragment = new DisplayHtmlFragment();
 		detailFragment.setParameters(resourceId);
@@ -120,7 +120,7 @@ public class DisplayHtmlActivity extends Activity {
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
-		if (!Application.isTablet()) {
+		if (!SystemUtil.isTablet()) {
 			// Allow navigation to help overview page on smartphones
 			getMenuInflater().inflate(R.menu.menu_only_help, menu);
 		}

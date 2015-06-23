@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 
 /**
  * Variant of DisplayImageFragment that is intended for a half screen.
@@ -17,7 +17,7 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 			final Bundle savedInstanceState) {
-		if (Application.isLandscape()) {
+		if (SystemUtil.isLandscape()) {
 			setLandscape(false);
 			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}

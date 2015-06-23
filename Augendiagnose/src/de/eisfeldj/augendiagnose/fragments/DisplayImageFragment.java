@@ -13,7 +13,6 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.DisplayHtmlActivity;
 import de.eisfeldj.augendiagnose.activities.DisplayImageActivity;
@@ -24,6 +23,7 @@ import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerConstants;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerDialog;
 import de.eisfeldj.augendiagnose.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
+import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto.RightLeft;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
@@ -254,7 +254,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	// OVERRIDABLE
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		if (Application.isLandscape()) {
+		if (SystemUtil.isLandscape()) {
 			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
@@ -592,7 +592,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (level == -1) {
 			// call this method only if no value is set
-			level = Application.isTablet() ? UTILITIES_SHOW_ALWAYS : UTILITIES_SHOW_FULLSCREEN;
+			level = SystemUtil.isTablet() ? UTILITIES_SHOW_ALWAYS : UTILITIES_SHOW_FULLSCREEN;
 		}
 
 		return level;
