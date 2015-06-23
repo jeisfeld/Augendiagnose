@@ -19,6 +19,11 @@
 		<children>
 			<fx:include fx:id="menuBar" source="/fxml/Menu.fxml" />
 			<HBox fx:id="menuButtons" maxWidth="0"> 
+				<ImageView fx:id="imageSave" visible="false"> 
+					<image>
+						<Image url="@img/save.png"/> 
+					</image>
+				</ImageView>
 				<Button fx:id="closeButton" styleClass="imageButton" visible="false"> 
 					<graphic>
 						<ImageView> 

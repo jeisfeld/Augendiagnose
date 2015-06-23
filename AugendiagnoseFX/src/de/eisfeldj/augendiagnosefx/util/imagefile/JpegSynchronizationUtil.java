@@ -2,6 +2,8 @@ package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.util.HashMap;
 
+import javafx.application.Platform;
+import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
@@ -91,6 +93,8 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
+			MainController.showSaveIcon();
+
 			if (runningSaveRequests.containsKey(pathname)) {
 				queuedSaveRequests.put(pathname, metadata);
 			}
@@ -98,6 +102,15 @@ public final class JpegSynchronizationUtil {
 				triggerJpegSaverTask(pathname, metadata);
 			}
 		}
+	}
+
+	/**
+	 * Get information if there is a running or pending save request.
+	 *
+	 * @return true if there is a running or pending save request.
+	 */
+	public static boolean hasRunningSaveRequests() {
+		return runningSaveRequests.size() > 0 || queuedSaveRequests.size() > 0;
 	}
 
 	/**
@@ -114,6 +127,14 @@ public final class JpegSynchronizationUtil {
 				JpegMetadata newMetadata = queuedSaveRequests.get(pathname);
 				queuedSaveRequests.remove(pathname);
 				triggerJpegSaverTask(pathname, newMetadata);
+			}
+			if (!hasRunningSaveRequests()) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						MainController.hideSaveIcon();
+					}
+				});
 			}
 		}
 	}
@@ -172,7 +193,6 @@ public final class JpegSynchronizationUtil {
 			}
 			triggerNextFromQueue(pathname);
 		}
-
 	}
 
 }

@@ -17,6 +17,12 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 				include fxml.Menu as menuBar,
 				HBox id menuButtons {
 					maxWidth : 0,
+					ImageView id imageSave {
+						image : Image {
+							url : location "img/save.png"
+						},
+						visible : false
+					},
 					Button id closeButton {
 						styleClass : "imageButton",
 						visible : false,

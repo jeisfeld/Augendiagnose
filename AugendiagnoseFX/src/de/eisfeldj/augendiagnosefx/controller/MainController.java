@@ -17,6 +17,7 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import javafx.scene.image.ImageView;
 
 /**
  * The controller of the main window.
@@ -51,6 +52,12 @@ public class MainController extends BaseController {
 	 */
 	@FXML
 	private Button closeButton;
+
+	/**
+	 * The save icon.
+	 */
+	@FXML
+	private ImageView imageSave;
 
 	/**
 	 * The list of subpages.
@@ -193,6 +200,20 @@ public class MainController extends BaseController {
 		closeHandlerList.clear();
 		MenuController.getInstance().setMenuClose(false, null);
 		closeButton.setVisible(false);
+	}
+
+	/**
+	 * Show the save icon.
+	 */
+	public static void showSaveIcon() {
+		getInstance().imageSave.setVisible(true);
+	}
+
+	/**
+	 * Hide the save icon.
+	 */
+	public static void hideSaveIcon() {
+		getInstance().imageSave.setVisible(false);
 	}
 
 }
