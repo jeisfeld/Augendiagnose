@@ -33,11 +33,18 @@ import de.eisfeldj.augendiagnose.R;
 /**
  * Utility class for helping parsing file systems.
  */
-public abstract class FileUtil {
+public final class FileUtil {
 	/**
 	 * The name of the primary volume (LOLLIPOP).
 	 */
 	private static final String PRIMARY_VOLUME_NAME = "primary";
+
+	/**
+	 * Hide default constructor.
+	 */
+	private FileUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Determine the camera folder. There seems to be no Android API to work for real devices, so this is a best guess.
@@ -163,7 +170,7 @@ public abstract class FileUtil {
 	 *            the file to be deleted.
 	 * @return True if successfully deleted.
 	 */
-	public static final boolean deleteFile(final File file) {
+	public static boolean deleteFile(final File file) {
 		// First try the normal deletion.
 		if (file.delete()) {
 			return true;
@@ -202,7 +209,7 @@ public abstract class FileUtil {
 	 *            The target file
 	 * @return true if the copying was successful.
 	 */
-	public static final boolean moveFile(final File source, final File target) {
+	public static boolean moveFile(final File source, final File target) {
 		// First try the normal rename.
 		if (source.renameTo(target)) {
 			return true;
@@ -224,7 +231,7 @@ public abstract class FileUtil {
 	 *            The target folder.
 	 * @return true if the renaming was successful.
 	 */
-	public static final boolean renameFolder(final File source, final File target) {
+	public static boolean renameFolder(final File source, final File target) {
 		// First try the normal rename.
 		if (source.renameTo(target)) {
 			return true;
@@ -277,7 +284,7 @@ public abstract class FileUtil {
 	 *            The base file for which to create a temp file.
 	 * @return The temp file.
 	 */
-	public static final File getTempFile(final File file) {
+	public static File getTempFile(final File file) {
 		File extDir = Application.getAppContext().getExternalFilesDir(null);
 		File tempFile = new File(extDir, file.getName());
 		return tempFile;
@@ -396,7 +403,7 @@ public abstract class FileUtil {
 	 *            the folder
 	 * @return true if successful.
 	 */
-	public static final boolean deleteFilesInFolder(final File folder) {
+	public static boolean deleteFilesInFolder(final File folder) {
 		boolean totalSuccess = true;
 
 		String[] children = folder.list();
@@ -458,7 +465,7 @@ public abstract class FileUtil {
 	 *            The file
 	 * @return true if the file is writable.
 	 */
-	public static final boolean isWritable(final File file) {
+	public static boolean isWritable(final File file) {
 		boolean isExisting = file.exists();
 
 		try {
@@ -493,7 +500,7 @@ public abstract class FileUtil {
 	 *            The directory
 	 * @return true if it is possible to write in this directory.
 	 */
-	public static final boolean isWritableNormalOrSaf(final File folder) {
+	public static boolean isWritableNormalOrSaf(final File folder) {
 		// Verify that this is a directory.
 		if (!folder.exists() || !folder.isDirectory()) {
 			return false;

@@ -17,11 +17,18 @@ import de.eisfeldj.augendiagnose.Application;
 /**
  * Utility class for handling the media store.
  */
-public abstract class MediaStoreUtil {
+public final class MediaStoreUtil {
 	/**
 	 * The size of a mini thumbnail.
 	 */
 	public static final int MINI_THUMB_SIZE = 512;
+
+	/**
+	 * Hide default constructor.
+	 */
+	private MediaStoreUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Get a real file path from the URI of the media store.
@@ -31,7 +38,7 @@ public abstract class MediaStoreUtil {
 	 * @return the file path.
 	 */
 	@SuppressWarnings("static-access")
-	public static final String getRealPathFromUri(final Uri contentUri) {
+	public static String getRealPathFromUri(final Uri contentUri) {
 		Cursor cursor = null;
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -157,7 +164,7 @@ public abstract class MediaStoreUtil {
 	 * @param path
 	 *            the path of the image.
 	 */
-	public static final void addFileToMediaStore(final String path) {
+	public static void addFileToMediaStore(final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		File file = new File(path);
 		Uri contentUri = Uri.fromFile(file);
@@ -174,7 +181,7 @@ public abstract class MediaStoreUtil {
 	 *            The maximum size of this bitmap (used for selecting the sample size)
 	 * @return the thumbnail.
 	 */
-	public static final Bitmap getThumbnailFromPath(final String path, final int maxSize) {
+	public static Bitmap getThumbnailFromPath(final String path, final int maxSize) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		try {
@@ -198,7 +205,7 @@ public abstract class MediaStoreUtil {
 	 * @param path
 	 *            the path of the image.
 	 */
-	public static final void addPictureToMediaStore(final String path) {
+	public static void addPictureToMediaStore(final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		File file = new File(path);
 		Uri contentUri = Uri.fromFile(file);
@@ -212,7 +219,7 @@ public abstract class MediaStoreUtil {
 	 * @param path
 	 *            The path of the image
 	 */
-	public static final void deleteThumbnail(final String path) {
+	public static void deleteThumbnail(final String path) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		try {

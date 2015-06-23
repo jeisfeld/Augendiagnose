@@ -5,7 +5,14 @@ import android.os.Build;
 /**
  * Utility class for getting information about Android version.
  */
-public abstract class VersionUtil {
+public final class VersionUtil {
+	/**
+	 * Hide default constructor.
+	 */
+	private VersionUtil() {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Get information if Android version is Kitkat (4.4).
 	 *

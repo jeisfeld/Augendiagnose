@@ -16,11 +16,18 @@ import de.eisfeldj.augendiagnose.R;
 /**
  * Helper class to show standard dialogs.
  */
-public abstract class ReleaseNotesUtil {
+public final class ReleaseNotesUtil {
 	/**
 	 * Parameter to pass the message to the DialogFragment (of all types).
 	 */
 	private static final String PARAM_MESSAGE = "message";
+
+	/**
+	 * Hide default constructor.
+	 */
+	private ReleaseNotesUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Create the release notes.

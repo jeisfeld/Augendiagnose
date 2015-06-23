@@ -15,7 +15,13 @@ import de.eisfeldj.augendiagnose.R;
 /**
  * Utility class for handling the shared preferences.
  */
-public abstract class PreferenceUtil {
+public final class PreferenceUtil {
+	/**
+	 * Hide default constructor.
+	 */
+	private PreferenceUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Retrieve the default shared preferences of the application.

@@ -22,7 +22,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.Me
 /**
  * Helper class to show standard dialogs.
  */
-public abstract class DialogUtil {
+public final class DialogUtil {
 	/**
 	 * Parameter to pass the title to the DialogFragment.
 	 */
@@ -47,6 +47,13 @@ public abstract class DialogUtil {
 	 * Parameter to pass the key for the shared preference indicating if the tip should be shown.
 	 */
 	private static final String PARAM_PREFERENCE_KEY = "keyPrefTip";
+
+	/**
+	 * Hide default constructor.
+	 */
+	private DialogUtil() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Display an information message and go back to the current activity.
