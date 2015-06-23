@@ -1,11 +1,14 @@
 package de.eisfeldj.augendiagnose.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
@@ -62,6 +65,21 @@ public class DisplayHtmlFragment extends Fragment {
 
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
+
+		// Open links in external browser
+		webView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+				if (url != null && url.startsWith("http://")) {
+					view.getContext().startActivity(
+							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		});
 
 		String html = getString(resource);
 		if (resource == R.string.html_release_notes_base) {
