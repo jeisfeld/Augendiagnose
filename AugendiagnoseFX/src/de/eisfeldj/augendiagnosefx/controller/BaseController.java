@@ -15,6 +15,16 @@ public abstract class BaseController implements Controller {
 	private static List<BaseController> controllerRegistry = new ArrayList<BaseController>();
 
 	/**
+	 * Indicator if there is data pending to be saved.
+	 */
+	private boolean isDirty = false;
+
+	/**
+	 * Counter for number of instances with data pending to be saved.
+	 */
+	private static int dirtyInstanceCounter = 0;
+
+	/**
 	 * Constructor of controllers. Adds the controller to the registry.
 	 */
 	public BaseController() {
@@ -77,6 +87,40 @@ public abstract class BaseController implements Controller {
 			throw new MissingControllerException();
 		}
 		return controllers.get(0);
+	}
+
+	/**
+	 * Get information if the controller has data pending for save.
+	 *
+	 * @return true if the controller has data pending for save.
+	 */
+	public final boolean isDirty() {
+		return isDirty;
+	}
+
+	/**
+	 * Indicate if the controller has data pending for save.
+	 *
+	 * @param dirty
+	 *            value true indicates that there is data pending for save.
+	 */
+	protected final void setDirty(final boolean dirty) {
+		if (dirty && !isDirty()) {
+			dirtyInstanceCounter++;
+		}
+		if (!dirty && isDirty()) {
+			dirtyInstanceCounter--;
+		}
+		isDirty = dirty;
+	}
+
+	/**
+	 * Get information if there is data pending to be saved in any instance.
+	 *
+	 * @return true if there is data pending to be saved.
+	 */
+	public static boolean hasDirtyInstance() {
+		return dirtyInstanceCounter > 0;
 	}
 
 	/**

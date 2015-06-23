@@ -181,11 +181,6 @@ public final class VersioningUtil {
 
 		if (requiresNewVersion) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
-				/**
-				 * The serial version id.
-				 */
-				private static final long serialVersionUID = 1L;
-
 				@Override
 				public void onDialogPositiveClick() {
 					downloadUpdate(latestVersion);

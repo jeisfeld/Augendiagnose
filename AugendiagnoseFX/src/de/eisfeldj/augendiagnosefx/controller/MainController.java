@@ -12,8 +12,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
  * The controller of the main window.
@@ -104,7 +107,25 @@ public class MainController extends BaseController {
 		enableClose(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				FxmlUtil.removeSubpage(controller);
+				if (controller.isDirty()) {
+					ConfirmDialogListener listener = new ConfirmDialogListener() {
+						@Override
+						public void onDialogPositiveClick() {
+							controller.setDirty(false);
+							FxmlUtil.removeSubpage(controller);
+						}
+
+						@Override
+						public void onDialogNegativeClick() {
+							// do nothing.
+						}
+					};
+					DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
+							ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
+				}
+				else {
+					FxmlUtil.removeSubpage(controller);
+				}
 			}
 		});
 	}

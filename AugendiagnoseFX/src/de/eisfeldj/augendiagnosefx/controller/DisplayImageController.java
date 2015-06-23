@@ -31,11 +31,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 /**
  * BaseController for the "Display Image" page.
@@ -283,6 +283,7 @@ public class DisplayImageController extends BaseController implements Initializa
 			txtImageComment.requestFocus();
 
 			btnEditComment.setText(ResourceUtil.getString(BUTTON_SAVE_COMMENT));
+			setDirty(true);
 		}
 		else {
 			txtImageComment.setEditable(false);
@@ -296,6 +297,7 @@ public class DisplayImageController extends BaseController implements Initializa
 			}
 
 			btnEditComment.setText(ResourceUtil.getString(BUTTON_EDIT_COMMENT));
+			setDirty(false);
 		}
 	}
 

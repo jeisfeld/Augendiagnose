@@ -6,7 +6,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_P
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -88,7 +87,7 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	protected final void exitApplication(final ActionEvent event) {
-		Platform.exit();
+		Application.exitAfterConfirmation();
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package de.eisfeldj.augendiagnosefx.util;
 
-import java.io.Serializable;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -229,7 +227,7 @@ public abstract class DialogUtil {
 	 * The activity that creates an instance of this dialog listFoldersFragment must implement this interface in order
 	 * to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it.
 	 */
-	public interface ConfirmDialogListener extends Serializable {
+	public interface ConfirmDialogListener {
 		/**
 		 * Callback method for positive click from the confirmation dialog.
 		 */

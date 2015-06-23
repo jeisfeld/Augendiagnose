@@ -7,14 +7,19 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
 import java.io.IOException;
 
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -74,11 +79,9 @@ public class Application extends javafx.application.Application {
 				new EventHandler<WindowEvent>() {
 					@Override
 					public void handle(final WindowEvent event) {
-						PreferenceUtil.setPreference(KEY_WINDOW_MAXIMIZED, primaryStage.isMaximized());
-						if (!primaryStage.isMaximized()) {
-							PreferenceUtil.setPreference(KEY_WINDOW_SIZE_X, scene.getWidth());
-							PreferenceUtil.setPreference(KEY_WINDOW_SIZE_Y, scene.getHeight());
-						}
+						// do not close window.
+						event.consume();
+						exitAfterConfirmation();
 					}
 				});
 
@@ -91,6 +94,43 @@ public class Application extends javafx.application.Application {
 		hostServices = getHostServices();
 
 		VersioningUtil.checkForNewerVersion(false);
+	}
+
+	/**
+	 * Exit the application after asking for confirmation if there are unsaved data.
+	 */
+	public static void exitAfterConfirmation() {
+		if (BaseController.hasDirtyInstance()) {
+			ConfirmDialogListener listener = new ConfirmDialogListener() {
+				@Override
+				public void onDialogPositiveClick() {
+					storeWindowDimensions();
+					Platform.exit();
+				}
+
+				@Override
+				public void onDialogNegativeClick() {
+					// do nothing.
+				}
+			};
+			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
+					ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
+		}
+		else {
+			storeWindowDimensions();
+			Platform.exit();
+		}
+	}
+
+	/**
+	 * Store the dimensions of the application window.
+	 */
+	private static void storeWindowDimensions() {
+		PreferenceUtil.setPreference(KEY_WINDOW_MAXIMIZED, stage.isMaximized());
+		if (!stage.isMaximized()) {
+			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_X, scene.getWidth());
+			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_Y, scene.getHeight());
+		}
 	}
 
 	/**
