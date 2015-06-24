@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_MAXIMIZED;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_X;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
@@ -12,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
@@ -71,6 +71,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
 		MainController mainController = (MainController) FxmlUtil.getRootFromFxml("Main.fxml");
+
 		scene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
 						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
@@ -90,7 +91,8 @@ public class Application extends javafx.application.Application {
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
-		FxmlUtil.displaySubpage("DisplayPhotos.fxml");
+		mainController.setSplitPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW));
+		MainController.displayNameList();
 
 		hostServices = getHostServices();
 
@@ -106,7 +108,7 @@ public class Application extends javafx.application.Application {
 			return;
 		}
 
-		if (BaseController.hasDirtyInstance()) {
+		if (MainController.hasDirtyBaseController()) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
 				@Override
 				public void onDialogPositiveClick() {
@@ -144,7 +146,7 @@ public class Application extends javafx.application.Application {
 	 */
 	public static final void refreshMainPage() {
 		FxmlUtil.removeAllSubpages();
-		FxmlUtil.displaySubpage("DisplayPhotos.fxml");
+		MainController.displayNameList();
 	}
 
 	/**

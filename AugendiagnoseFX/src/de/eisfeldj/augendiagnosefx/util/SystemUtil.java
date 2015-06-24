@@ -5,7 +5,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javafx.application.Platform;
 import de.eisfeldj.augendiagnosefx.Application;
 
 /**
@@ -288,7 +287,7 @@ public final class SystemUtil {
 
 		// Need no confirmation dialog, as the uninstall executable will ask for confirmation.
 		if (uninstallExecutable != null) {
-			Platform.exit();
+			Application.exitAfterConfirmation();
 			runMultipleWindowsCommands(WAITING_TIME, QUOTE + uninstallExecutable + QUOTE);
 		}
 	}

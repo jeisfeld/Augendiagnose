@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import javafx.application.Platform;
+import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -124,7 +125,7 @@ public final class VersioningUtil {
 							SystemUtil.updateApplication(tempJarFile.getAbsolutePath(),
 									currentJarFile.getAbsolutePath());
 
-							Platform.exit();
+							Application.exitAfterConfirmation();
 						}
 					});
 

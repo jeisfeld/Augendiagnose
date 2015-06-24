@@ -35,6 +35,11 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 						selected : true,
 						disable : true,
 						onAction : controllermethod toggleCommentPane
+					},
+					CheckMenuItem id menuSplitWindow {
+						text : rstring "menu_split_window",
+						selected : false,
+						onAction : controllermethod toggleSplitWindow
 					}
 				]
 			},

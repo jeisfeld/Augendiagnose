@@ -42,6 +42,11 @@ public final class PreferenceUtil {
 	public static final String KEY_SHOW_OVERLAY_PANE = "key_show_overlay_pane";
 
 	/**
+	 * Preference key for the flag indicating if the comment pane should be shown.
+	 */
+	public static final String KEY_SHOW_SPLIT_WINDOW = "key_show_split_window";
+
+	/**
 	 * Preference key for the Window maximized property.
 	 */
 	public static final String KEY_LAST_NAME = "key_last_name";
@@ -103,6 +108,7 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_WINDOW_MAXIMIZED, false);
 		DEFAULT_MAP.put(KEY_SHOW_COMMENT_PANE, true);
 		DEFAULT_MAP.put(KEY_SHOW_OVERLAY_PANE, true);
+		DEFAULT_MAP.put(KEY_SHOW_SPLIT_WINDOW, false);
 		DEFAULT_MAP.put(KEY_LAST_NAME, null);
 		DEFAULT_MAP.put(KEY_FOLDER_PHOTOS, "D:\\");
 		DEFAULT_MAP.put(KEY_MAX_BITMAP_SIZE, 2048); // MAGIC_NUMBER

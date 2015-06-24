@@ -20,9 +20,17 @@ public abstract class BaseController implements Controller {
 	private boolean isDirty = false;
 
 	/**
-	 * Counter for number of instances with data pending to be saved.
+	 * The pane in which this element is shown.
 	 */
-	private static int dirtyInstanceCounter = 0;
+	private int paneIndex = 0;
+
+	public final int getPaneIndex() {
+		return paneIndex;
+	}
+
+	public final void setPaneIndex(final int newPaneIndex) {
+		paneIndex = newPaneIndex;
+	}
 
 	/**
 	 * Constructor of controllers. Adds the controller to the registry.
@@ -105,22 +113,7 @@ public abstract class BaseController implements Controller {
 	 *            value true indicates that there is data pending for save.
 	 */
 	protected final void setDirty(final boolean dirty) {
-		if (dirty && !isDirty()) {
-			dirtyInstanceCounter++;
-		}
-		if (!dirty && isDirty()) {
-			dirtyInstanceCounter--;
-		}
 		isDirty = dirty;
-	}
-
-	/**
-	 * Get information if there is data pending to be saved in any instance.
-	 *
-	 * @return true if there is data pending to be saved.
-	 */
-	public static boolean hasDirtyInstance() {
-		return dirtyInstanceCounter > 0;
 	}
 
 	/**

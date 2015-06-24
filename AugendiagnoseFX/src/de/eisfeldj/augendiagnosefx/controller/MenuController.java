@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnosefx.controller;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
@@ -58,6 +60,12 @@ public class MenuController extends BaseController implements Initializable {
 	public final CheckMenuItem getMenuCommentPane() {
 		return menuCommentPane;
 	}
+
+	/**
+	 * The Menu entry "Split window".
+	 */
+	@FXML
+	private CheckMenuItem menuSplitWindow;
 
 	@Override
 	public final Parent getRoot() {
@@ -109,9 +117,9 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void toggleCommentPane(final ActionEvent event) {
+		PreferenceUtil.setPreference(KEY_SHOW_COMMENT_PANE, menuCommentPane.isSelected());
 		for (DisplayImageController controller : getControllers(DisplayImageController.class)) {
 			controller.showCommentPane(menuCommentPane.isSelected());
-			PreferenceUtil.setPreference(KEY_SHOW_COMMENT_PANE, menuCommentPane.isSelected());
 		}
 	}
 
@@ -123,9 +131,40 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void toggleOverlayPane(final ActionEvent event) {
+		PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuOverlayPane.isSelected());
 		for (DisplayImageController controller : getControllers(DisplayImageController.class)) {
 			controller.showOverlayPane(menuOverlayPane.isSelected());
-			PreferenceUtil.setPreference(KEY_SHOW_OVERLAY_PANE, menuOverlayPane.isSelected());
+		}
+	}
+
+	/**
+	 * Handler for menu entry "Split window".
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void toggleSplitWindow(final ActionEvent event) {
+		if (!menuSplitWindow.isSelected() && MainController.hasDirtyBaseController()) {
+			ConfirmDialogListener listener = new ConfirmDialogListener() {
+				@Override
+				public void onDialogPositiveClick() {
+					PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, menuSplitWindow.isSelected());
+					MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
+				}
+
+				@Override
+				public void onDialogNegativeClick() {
+					// revert
+					menuSplitWindow.setSelected(!menuSplitWindow.isSelected());
+				}
+			};
+			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
+					ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
+		}
+		else {
+			PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, menuSplitWindow.isSelected());
+			MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
 		}
 	}
 
@@ -192,6 +231,7 @@ public class MenuController extends BaseController implements Initializable {
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		menuCommentPane.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 		menuOverlayPane.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
+		menuSplitWindow.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW));
 	}
 
 }

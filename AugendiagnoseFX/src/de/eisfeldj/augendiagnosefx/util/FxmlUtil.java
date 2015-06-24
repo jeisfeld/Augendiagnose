@@ -79,13 +79,18 @@ public final class FxmlUtil {
 	 *
 	 * @param fxmlFile
 	 *            The name of the FXML file.
+	 * @param paneIndex
+	 *            The pane where to display it in case of multiple panes.
+	 * @param isClosable
+	 *            Indicator if this is a closable page. (-1 means end)
 	 * @return the controller of the subpage.
 	 * @throws IOException
 	 */
-	public static BaseController displaySubpage(final String fxmlFile) {
+	public static BaseController displaySubpage(final String fxmlFile, final int paneIndex, final boolean isClosable) {
 		BaseController controller;
 		controller = (BaseController) getRootFromFxml(fxmlFile);
-		MainController.getInstance().addSubPage(controller);
+		controller.setPaneIndex(paneIndex);
+		MainController.getInstance().addSubPage(controller, paneIndex, isClosable);
 
 		return controller;
 	}

@@ -14,8 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
+import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
@@ -26,6 +28,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Special GridPane for displaying a pair of eye photos.
  */
 public class EyePhotoPairNode extends GridPane implements Controller {
+	/**
+	 * The parent controller.
+	 */
+	private BaseController parentController;
+
 	/**
 	 * Height of the left image.
 	 */
@@ -72,9 +79,13 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 *
 	 * @param pair
 	 *            The eye photo pair.
+	 * @param initialParentController
+	 *            The parent controller.
 	 */
 	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
-	public EyePhotoPairNode(final EyePhotoPair pair) {
+	public EyePhotoPairNode(final EyePhotoPair pair, final BaseController initialParentController) {
+		parentController = initialParentController;
+
 		FxmlUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
 
 		labelDate.setText(pair.getDateDisplayString());
@@ -107,11 +118,13 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				String fxmlName = Application.getScene().getWidth() > Application.getScene().getHeight()
-						? "DisplayImageWide.fxml"
-						: "DisplayImageNarrow.fxml";
+				String fxmlName =
+						!MainController.isSplitPane()
+								&& Application.getScene().getWidth() > Application.getScene().getHeight()
+								? "DisplayImageWide.fxml"
+								: "DisplayImageNarrow.fxml";
 				DisplayImageController controller =
-						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName);
+						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, parentController.getPaneIndex(), true);
 				controller.setEyePhoto(eyePhoto);
 			}
 		});

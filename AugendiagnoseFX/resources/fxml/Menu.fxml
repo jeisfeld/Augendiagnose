@@ -25,6 +25,7 @@
 			<items>
 				<CheckMenuItem fx:id="menuOverlayPane" text="%menu_overlay_pane" selected="true" disable="true" onAction="#toggleOverlayPane"/> 
 				<CheckMenuItem fx:id="menuCommentPane" text="%menu_comment_pane" selected="true" disable="true" onAction="#toggleCommentPane"/> 
+				<CheckMenuItem fx:id="menuSplitWindow" text="%menu_split_window" selected="false" onAction="#toggleSplitWindow"/> 
 			</items>
 		</Menu>
 		<Menu text="%menu_window"> 

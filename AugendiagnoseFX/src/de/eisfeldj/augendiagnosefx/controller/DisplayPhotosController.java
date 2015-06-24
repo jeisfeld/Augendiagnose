@@ -51,6 +51,11 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	protected static final String[] FOLDERS_TOP = { "TOPOGRAPH", "TOPOGRAF", "IRIDOLOG" };
 
 	/**
+	 * The previous selected name.
+	 */
+	private String previousName;
+
+	/**
 	 * The full "Display Photos" pane.
 	 */
 	@FXML
@@ -118,7 +123,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	@FXML
 	private void handleNameClick(final MouseEvent event) throws IOException {
 		String name = listNames.getSelectionModel().getSelectedItem();
-		if (name != null && !name.equals(PreferenceUtil.getPreferenceString(KEY_LAST_NAME))) {
+		if (name != null && !name.equals(previousName)) {
 			showPicturesForName(name);
 		}
 		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
@@ -159,7 +164,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		ObservableList<GridPane> valuesPhotos = FXCollections.observableList(new ArrayList<GridPane>());
 
 		for (int i = 0; i < eyePhotos.length; i++) {
-			EyePhotoPairNode eyePhotoPairNode = new EyePhotoPairNode(eyePhotos[i]);
+			EyePhotoPairNode eyePhotoPairNode = new EyePhotoPairNode(eyePhotos[i], this);
 			valuesPhotos.add(eyePhotoPairNode);
 
 			// Workaround to ensure that the scrollbar is correctly resized after the images are loaded.
@@ -180,6 +185,8 @@ public class DisplayPhotosController extends BaseController implements Initializ
 				}
 			});
 		}
+
+		previousName = name;
 
 		Platform.runLater(new Runnable() {
 			@Override
