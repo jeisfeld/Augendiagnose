@@ -229,7 +229,7 @@ public class SizableImageView extends ScrollPane {
 				synchronized (imageView) {
 					// Initialization after window is sized and image is loaded.
 					if (imageView.getImage() != null && !initialized) {
-						doInitialScaling();
+						doInitialScaling(eyePhoto.getImageMetadata());
 					}
 				}
 				heightProperty().removeListener(this);
@@ -249,7 +249,7 @@ public class SizableImageView extends ScrollPane {
 		synchronized (imageView) {
 			// Initialization after window is sized and image is loaded.
 			if (getHeight() > 0 && !initialized) {
-				doInitialScaling();
+				doInitialScaling(eyePhoto.getImageMetadata());
 			}
 		}
 	}
@@ -257,14 +257,19 @@ public class SizableImageView extends ScrollPane {
 	/**
 	 * Display a pre-loaded image generated from an eye photo.
 	 *
-	 * @param relatedEyePhoto
-	 *            The eye photo.
+	 * @param metadata
+	 *            The metadata to be used for scaling.
 	 * @param image
 	 *            The pre-loaded image.
 	 */
-	public final void setImage(final EyePhoto relatedEyePhoto, final Image image) {
-		eyePhoto = relatedEyePhoto;
-		displayImage(image);
+	public final void setImage(final JpegMetadata metadata, final Image image) {
+		imageView.setImage(image);
+		synchronized (imageView) {
+			// Initialization after window is sized and image is loaded.
+			if (getHeight() > 0 && !initialized) {
+				doInitialScaling(metadata);
+			}
+		}
 
 		// Size the image only after this pane is sized
 		heightProperty().addListener(new ChangeListener<Number>() {
@@ -274,7 +279,12 @@ public class SizableImageView extends ScrollPane {
 				synchronized (imageView) {
 					// Initialization after window is sized and image is loaded.
 					if (imageView.getImage() != null && !initialized) {
-						displayImage(image);
+						synchronized (imageView) {
+							// Initialization after window is sized and image is loaded.
+							if (getHeight() > 0 && !initialized) {
+								doInitialScaling(metadata);
+							}
+						}
 					}
 				}
 				heightProperty().removeListener(this);
@@ -285,9 +295,11 @@ public class SizableImageView extends ScrollPane {
 
 	/**
 	 * Do the initial scaling of the image.
+	 *
+	 * @param metadata
+	 *            The metadata by which to do the scaling.
 	 */
-	private void doInitialScaling() {
-		JpegMetadata metadata = eyePhoto.getImageMetadata();
+	private void doInitialScaling(final JpegMetadata metadata) {
 		if (metadata != null && metadata.hasViewPosition()) {
 			zoomProperty.set(getDefaultScaleFactor() * metadata.zoomFactor);
 		}

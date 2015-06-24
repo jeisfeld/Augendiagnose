@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 /**
  * BaseController for the "Display Image on Full window" page.
@@ -22,13 +22,15 @@ public class DisplayImageFullController extends BaseController {
 	}
 
 	/**
-	 * Setter for the eye photo. Initializes the view.
+	 * Initialize the view.
 	 *
-	 * @param eyePhoto
-	 *            The eye photo.
+	 * @param metadata
+	 *            The metadata used for scaling.
+	 * @param image
+	 *            the image to be displayed.
 	 */
-	public final void setImage(final EyePhoto eyePhoto, final Image image) {
-		displayImageView.setImage(eyePhoto, image);
+	public final void setImage(final JpegMetadata metadata, final Image image) {
+		displayImageView.setImage(metadata, image);
 	}
 
 }

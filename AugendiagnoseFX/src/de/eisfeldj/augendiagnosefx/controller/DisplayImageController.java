@@ -455,7 +455,18 @@ public class DisplayImageController extends BaseController implements Initializa
 				(DisplayImageFullController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_FULL,
 						MainController.getInstance().isSplitPane() ? 2 : 0, true);
 
-		controller.setImage(eyePhoto, displayImageView.getImageView().getImage());
+		if (isInitialized()) {
+			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			if (metadata != null) {
+				MetadataPosition position = displayImageView.getPosition();
+				metadata.xPosition = position.xCenter;
+				metadata.yPosition = position.yCenter;
+				metadata.zoomFactor = position.zoom;
+
+				controller.setImage(metadata, displayImageView.getImageView().getImage());
+			}
+		}
+
 	}
 
 	/**
