@@ -177,6 +177,17 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 						}
 					},
 					toggleGroup : idref overlayGroup
+				},
+				Separator,
+				Button id fullScreenButton {
+					alignment : "CENTER",
+					maxWidth : const Double#MAX_VALUE,
+					onAction : controllermethod displayInFullWindow,
+					graphic : ImageView {
+						image : Image {
+							url: location "img/fullscreen.png"
+						}
+					}
 				}
 			},
 			Slider id sliderBrightness {

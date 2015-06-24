@@ -26,6 +26,7 @@
 }
 
 .toggleOverlay {
+	-fx-font-size: 12pt;
 }
 
 .imageButton {

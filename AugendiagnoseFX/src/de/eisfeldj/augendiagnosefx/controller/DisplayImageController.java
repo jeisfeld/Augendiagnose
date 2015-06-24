@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
@@ -105,6 +106,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	private ToggleButton clarityButton;
+
+	/**
+	 * The button for displaying the image on full screen.
+	 */
+	@FXML
+	private Button fullScreenButton;
 
 	/**
 	 * The slider for brightness.
