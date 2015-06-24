@@ -1,11 +1,14 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -20,12 +23,13 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
  * The controller of the main window.
  */
-public class MainController extends BaseController {
+public class MainController extends BaseController implements Initializable {
 	/**
 	 * The root of the main page.
 	 */
@@ -68,21 +72,31 @@ public class MainController extends BaseController {
 	private StackPane[] bodies = new StackPane[0];
 
 	/**
-	 * Indicator if two panes are shown.
-	 */
-	private boolean isSplitPane = false;
-
-	/**
 	 * Number of subpages that cannot be closed.
 	 */
 	private int unclosablePages = 0;
+
+	/**
+	 * The list of subpages.
+	 */
+	private List<BaseController> subPageRegistry = new ArrayList<BaseController>();
+
+	/**
+	 * A list storing the handlers for closing windows.
+	 */
+	private List<EventHandler<ActionEvent>> closeHandlerList = new ArrayList<EventHandler<ActionEvent>>();
+
+	/**
+	 * Indicator if two panes are shown.
+	 */
+	private boolean isSplitPane = false;
 
 	/**
 	 * Get information if two panes are shown.
 	 *
 	 * @return True if two panes are shown.
 	 */
-	public static final boolean isSplitPane() {
+	public final boolean isSplitPane() {
 		return getInstance().isSplitPane;
 	}
 
@@ -94,7 +108,6 @@ public class MainController extends BaseController {
 	 */
 	public final void setSplitPane(final boolean newIsSplitPane) {
 		isSplitPane = newIsSplitPane;
-		boolean isInitialized = bodies != null && bodies.length > 0;
 
 		if (isSplitPane()) {
 			StackPane body1 = new StackPane();
@@ -107,11 +120,9 @@ public class MainController extends BaseController {
 
 			bodies = new StackPane[] { body1, body2 };
 
-			if (isInitialized) {
-				// retain old body as left pane.
-				body1.getChildren().addAll(body.getChildren());
-				FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
-			}
+			// retain old body as left pane.
+			body1.getChildren().addAll(body.getChildren());
+			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
 
 			body.getChildren().clear();
 			body.getChildren().add(splitPane);
@@ -119,41 +130,23 @@ public class MainController extends BaseController {
 		}
 		else {
 			body.getChildren().clear();
-			if (isInitialized) {
-				// retain old left pane.
-				removeSubPage(subPageRegistry.get(1));
-				body.getChildren().addAll(bodies[0].getChildren());
-			}
+
+			// retain old left pane.
+			removeSubPage(subPageRegistry.get(1));
+			body.getChildren().addAll(bodies[0].getChildren());
+
 			bodies = new StackPane[] { body };
 		}
 	}
 
-	/**
-	 * Display the list of names.
-	 */
-	public static void displayNameList() {
-		if (isSplitPane()) {
-			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
-			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
-		}
-		else {
-			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
-		}
-	}
-
-	/**
-	 * The list of subpages.
-	 */
-	private List<BaseController> subPageRegistry = new ArrayList<BaseController>();
-
-	/**
-	 * A list storing the handlers for closing windows.
-	 */
-	private List<EventHandler<ActionEvent>> closeHandlerList = new ArrayList<EventHandler<ActionEvent>>();
-
 	@Override
 	public final Parent getRoot() {
 		return mainPane;
+	}
+
+	@Override
+	public final void initialize(final URL location, final ResourceBundle resources) {
+		bodies = new StackPane[] { body };
 	}
 
 	/**
@@ -246,6 +239,12 @@ public class MainController extends BaseController {
 		}
 		subPageRegistry.remove(controller);
 		disableClose(index);
+
+		if (PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SHOW_SPLIT_WINDOW)
+				&& MainController.getInstance().isSplitPane() && !hasClosablePage()) {
+			MainController.getInstance().setSplitPane(false);
+		}
+
 	}
 
 	/**

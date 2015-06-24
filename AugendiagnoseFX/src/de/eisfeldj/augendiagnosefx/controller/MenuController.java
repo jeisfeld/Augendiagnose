@@ -150,7 +150,10 @@ public class MenuController extends BaseController implements Initializable {
 				@Override
 				public void onDialogPositiveClick() {
 					PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, menuSplitWindow.isSelected());
-					MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
+
+					if (MainController.getInstance().hasClosablePage()) {
+						MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
+					}
 				}
 
 				@Override
@@ -164,7 +167,9 @@ public class MenuController extends BaseController implements Initializable {
 		}
 		else {
 			PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, menuSplitWindow.isSelected());
-			MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
+			if (MainController.getInstance().hasClosablePage()) {
+				MainController.getInstance().setSplitPane(menuSplitWindow.isSelected());
+			}
 		}
 	}
 

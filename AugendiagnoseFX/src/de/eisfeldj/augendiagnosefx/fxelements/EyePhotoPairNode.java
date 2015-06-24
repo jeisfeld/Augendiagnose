@@ -20,6 +20,7 @@ import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
@@ -119,8 +120,13 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
+				if (PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SHOW_SPLIT_WINDOW)
+						&& !MainController.getInstance().isSplitPane()) {
+					MainController.getInstance().setSplitPane(true);
+				}
+
 				String fxmlName =
-						!MainController.isSplitPane()
+						!MainController.getInstance().isSplitPane()
 								&& Application.getScene().getWidth() > Application.getScene().getHeight()
 								? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
 								: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;

@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnosefx;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_MAXIMIZED;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_X;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
@@ -92,8 +91,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
-		mainController.setSplitPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW));
-		MainController.displayNameList();
+		FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
 
 		hostServices = getHostServices();
 
@@ -147,7 +145,7 @@ public class Application extends javafx.application.Application {
 	 */
 	public static final void refreshMainPage() {
 		FxmlUtil.removeAllSubpages();
-		MainController.displayNameList();
+		FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
 	}
 
 	/**
