@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
 import javafx.scene.control.ScrollPane
+import javafx.scene.control.TextField
 import de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController
 
 component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css"  {
@@ -26,15 +27,21 @@ component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bu
 			}
 		],
 		children : [
+			TextField id searchField {
+				static columnIndex : 0,
+				static rowIndex : 0,
+				onKeyTyped : controllermethod handleSearchText
+			},
 			ListView < String > id listNames {
-			static columnIndex : 0,
-			static rowIndex : 0,
+				static columnIndex : 0,
+				static rowIndex : 1,
 				styleClass : "listNames",
 				onMouseClicked : controllermethod handleNameClick
 			},
 			ListView < GridPane > id listPhotos {
 				static columnIndex : 1,
 				static rowIndex : 0,
+				static rowSpan : 2,
 				styleClass : "listPhotos"
 			}
 		]

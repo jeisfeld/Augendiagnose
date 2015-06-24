@@ -6,6 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
@@ -21,7 +22,8 @@
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<children>
-		<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
-		<ListView fx:id="listPhotos" styleClass="listPhotos" GridPane.columnIndex="1" GridPane.rowIndex="0"/> 
+		<TextField fx:id="searchField" onKeyTyped="#handleSearchText" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+		<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
+		<ListView fx:id="listPhotos" styleClass="listPhotos" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
 	</children>
 </GridPane>

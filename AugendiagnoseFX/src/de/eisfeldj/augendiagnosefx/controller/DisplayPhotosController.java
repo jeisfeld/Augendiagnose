@@ -38,6 +38,8 @@ import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 /**
  * BaseController for the "Display Photos" page.
@@ -66,14 +68,35 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	@FXML
 	private ListView<GridPane> listPhotos;
 
+	/**
+	 * The field for searching names.
+	 */
+	@FXML
+	private TextField searchField;
+
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
-		List<String> valuesNames = getFolderNames(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)));
+		initializeNames("", true);
+	}
+
+	/**
+	 * Initialize the list of names with the search string.
+	 *
+	 * @param searchString
+	 *            A search string for the names.
+	 * @param loadPhotos
+	 *            indicator if photos from the preselected name should be loaded.
+	 */
+	private void initializeNames(final String searchString, final boolean loadPhotos) {
+		List<String> valuesNames =
+				getFolderNames(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)), searchString);
 		listNames.setItems(FXCollections.observableList(valuesNames));
 
 		String lastName = PreferenceUtil.getPreferenceString(KEY_LAST_NAME);
 		if (lastName != null && valuesNames.contains(lastName)) {
-			showPicturesForName(lastName);
+			if (loadPhotos) {
+				showPicturesForName(lastName);
+			}
 			int selectedIndex = valuesNames.indexOf(lastName);
 			listNames.getSelectionModel().select(selectedIndex);
 			listNames.scrollTo(selectedIndex);
@@ -93,12 +116,30 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 * @throws IOException
 	 */
 	@FXML
-	protected final void handleNameClick(final MouseEvent event) throws IOException {
+	private void handleNameClick(final MouseEvent event) throws IOException {
 		String name = listNames.getSelectionModel().getSelectedItem();
 		if (name != null && !name.equals(PreferenceUtil.getPreferenceString(KEY_LAST_NAME))) {
 			showPicturesForName(name);
 		}
 		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
+	}
+
+	/**
+	 * Handler for change of search text. Filters displayed eye photo pairs.
+	 *
+	 * @param event
+	 *            The action event.
+	 * @throws IOException
+	 */
+	@FXML
+	private void handleSearchText(final KeyEvent event) {
+		// Need to be in main thread to ensure that text field is already updated
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				initializeNames(searchField.getText(), false);
+			}
+		});
 	}
 
 	/**
@@ -156,13 +197,15 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 *
 	 * @param parentFolder
 	 *            The parent folder.
+	 * @param searchString
+	 *            A search String for the name.
 	 * @return The list of subfolders.
 	 */
-	public static final List<String> getFolderNames(final File parentFolder) {
+	public static final List<String> getFolderNames(final File parentFolder, final String searchString) {
 		File[] folders = parentFolder.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(final File pathname) {
-				return pathname.isDirectory();
+				return pathname.isDirectory() && nameStartsWith(pathname.getName(), searchString);
 			}
 		});
 
@@ -181,6 +224,26 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			folderNames.add(f.getName());
 		}
 		return folderNames;
+	}
+
+	/**
+	 * Check if a name part starts with the given String (case insensitive).
+	 *
+	 * @param name
+	 *            The name.
+	 * @param searchString
+	 *            The search string.
+	 * @return True if a name part starts with the given String.
+	 */
+	private static boolean nameStartsWith(final String name, final String searchString) {
+		String[] nameParts = name.toLowerCase().split(" ");
+		String searchStringCaseIndependent = searchString.toLowerCase();
+		for (int i = 0; i < nameParts.length; i++) {
+			if (nameParts[i].startsWith(searchStringCaseIndependent)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
