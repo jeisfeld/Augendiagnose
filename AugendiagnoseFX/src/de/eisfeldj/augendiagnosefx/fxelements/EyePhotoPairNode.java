@@ -18,6 +18,7 @@ import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
@@ -86,7 +87,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	public EyePhotoPairNode(final EyePhotoPair pair, final BaseController initialParentController) {
 		parentController = initialParentController;
 
-		FxmlUtil.loadFromFxml(this, "EyePhotoPairNode.fxml");
+		FxmlUtil.loadFromFxml(this, FxmlConstants.FXML_EYE_PHOTO_PAIR_NODE);
 
 		labelDate.setText(pair.getDateDisplayString());
 
@@ -121,10 +122,11 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				String fxmlName =
 						!MainController.isSplitPane()
 								&& Application.getScene().getWidth() > Application.getScene().getHeight()
-								? "DisplayImageWide.fxml"
-								: "DisplayImageNarrow.fxml";
+								? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
+								: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;
 				DisplayImageController controller =
-						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, parentController.getPaneIndex(), true);
+						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, parentController.getPaneIndex(),
+								true);
 				controller.setEyePhoto(eyePhoto);
 			}
 		});

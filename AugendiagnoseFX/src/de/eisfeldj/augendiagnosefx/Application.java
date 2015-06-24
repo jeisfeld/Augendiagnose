@@ -16,6 +16,7 @@ import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -70,7 +71,7 @@ public class Application extends javafx.application.Application {
 		Application.stage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
-		MainController mainController = (MainController) FxmlUtil.getRootFromFxml("Main.fxml");
+		MainController mainController = (MainController) FxmlUtil.getRootFromFxml(FxmlConstants.FXML_MAIN);
 
 		scene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),

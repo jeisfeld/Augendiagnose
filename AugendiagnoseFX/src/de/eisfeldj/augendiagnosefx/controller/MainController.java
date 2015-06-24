@@ -17,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
@@ -25,11 +26,6 @@ import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
  * The controller of the main window.
  */
 public class MainController extends BaseController {
-	/**
-	 * The name of the FXML file to display photos.
-	 */
-	private static final String FXML_DISPLAY_PHOTOS = "DisplayPhotos.fxml";
-
 	/**
 	 * The root of the main page.
 	 */
@@ -114,7 +110,7 @@ public class MainController extends BaseController {
 			if (isInitialized) {
 				// retain old body as left pane.
 				body1.getChildren().addAll(body.getChildren());
-				FxmlUtil.displaySubpage(FXML_DISPLAY_PHOTOS, 1, false);
+				FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
 			}
 
 			body.getChildren().clear();
@@ -137,11 +133,11 @@ public class MainController extends BaseController {
 	 */
 	public static void displayNameList() {
 		if (isSplitPane()) {
-			FxmlUtil.displaySubpage(FXML_DISPLAY_PHOTOS, 0, false);
-			FxmlUtil.displaySubpage(FXML_DISPLAY_PHOTOS, 1, false);
+			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
+			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
 		}
 		else {
-			FxmlUtil.displaySubpage(FXML_DISPLAY_PHOTOS, 0, false);
+			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
 		}
 	}
 

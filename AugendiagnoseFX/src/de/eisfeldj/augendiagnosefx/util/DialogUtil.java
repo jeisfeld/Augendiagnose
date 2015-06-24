@@ -53,7 +53,8 @@ public abstract class DialogUtil {
 				String message = String.format(ResourceUtil.getString(resource), args);
 				Logger.info("Dialog message: " + message);
 
-				MessageDialogController controller = (MessageDialogController) createDialog("DialogMessage.fxml");
+				MessageDialogController controller =
+						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_MESSAGE);
 
 				controller.setHeading(ResourceUtil.getString(title));
 				controller.setMessage(message);
@@ -116,7 +117,8 @@ public abstract class DialogUtil {
 
 				String message = String.format(ResourceUtil.getString(messageResource), args);
 
-				MessageDialogController controller = (MessageDialogController) createDialog("DialogConfirm.fxml");
+				MessageDialogController controller =
+						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_CONFIRM);
 
 				controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_CONFIRMATION));
 				controller.setMessage(message);
@@ -150,7 +152,7 @@ public abstract class DialogUtil {
 	 * Display the settings dialog.
 	 */
 	public static void displayPreferencesDialog() {
-		createDialog("Preferences.fxml").show();
+		createDialog(FxmlConstants.FXML_PREFERENCES).show();
 	}
 
 	/**
@@ -165,7 +167,7 @@ public abstract class DialogUtil {
 	public static ProgressDialog displayProgressDialog(final String messageResource, final Object... args) {
 		String message = String.format(ResourceUtil.getString(messageResource), args);
 
-		MessageDialogController controller = (MessageDialogController) createDialog("DialogProgress.fxml");
+		MessageDialogController controller = (MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_PROGRESS);
 
 		controller.getStage().initStyle(StageStyle.UNDECORATED);
 		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_PROGRESS));
