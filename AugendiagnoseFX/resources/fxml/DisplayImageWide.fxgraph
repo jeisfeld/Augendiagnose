@@ -66,6 +66,10 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					MenuItem {
 						text : rstring "menu_reset_position",
 						onAction : controllermethod resetViewPosition
+					},
+					MenuItem {
+						text : rstring "menu_display_full",
+						onAction : controllermethod displayInFullWindow
 					}
 				]
 			}

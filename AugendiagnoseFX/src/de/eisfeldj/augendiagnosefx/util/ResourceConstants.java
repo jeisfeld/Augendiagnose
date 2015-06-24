@@ -38,6 +38,7 @@ public final class ResourceConstants {
 	public static final String MENU_CHECK_UPDATES = "menu_check_updates";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
+	public static final String MENU_DISPLAY_FULL = "menu_display_full";
 	public static final String MENU_EXIT = "menu_exit";
 	public static final String MENU_FILE = "menu_file";
 	public static final String MENU_HELP = "menu_help";

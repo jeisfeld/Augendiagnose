@@ -9,6 +9,7 @@ public final class FxmlConstants {
 	public static final String FXML_DIALOG_CONFIRM = "DialogConfirm.fxml";
 	public static final String FXML_DIALOG_MESSAGE = "DialogMessage.fxml";
 	public static final String FXML_DIALOG_PROGRESS = "DialogProgress.fxml";
+	public static final String FXML_DISPLAY_IMAGE_FULL = "DisplayImageFull.fxml";
 	public static final String FXML_DISPLAY_IMAGE_NARROW = "DisplayImageNarrow.fxml";
 	public static final String FXML_DISPLAY_IMAGE_WIDE = "DisplayImageWide.fxml";
 	public static final String FXML_DISPLAY_PHOTOS = "DisplayPhotos.fxml";

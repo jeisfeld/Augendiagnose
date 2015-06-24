@@ -31,6 +31,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
@@ -432,6 +434,21 @@ public class DisplayImageController extends BaseController implements Initializa
 				displayImageView.setEyePhoto(eyePhoto);
 			}
 		}
+	}
+
+	/**
+	 * Action method for displaying the image on the full window.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void displayInFullWindow(final ActionEvent event) {
+		DisplayImageFullController controller =
+				(DisplayImageFullController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_FULL,
+						MainController.getInstance().isSplitPane() ? 2 : 0, true);
+
+		controller.setImage(eyePhoto, displayImageView.getImageView().getImage());
 	}
 
 	/**

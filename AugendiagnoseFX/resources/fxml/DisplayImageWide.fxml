@@ -36,6 +36,7 @@
 					<MenuItem text="%menu_reset_brightness" onAction="#resetBrightnessContrast"/> 
 					<MenuItem text="%menu_store_position" onAction="#storeViewPosition"/> 
 					<MenuItem text="%menu_reset_position" onAction="#resetViewPosition"/> 
+					<MenuItem text="%menu_display_full" onAction="#displayInFullWindow"/> 
 				</items>
 			</ContextMenu>
 		</contextMenu>

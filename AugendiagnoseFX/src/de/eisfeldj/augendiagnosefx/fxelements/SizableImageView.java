@@ -15,10 +15,10 @@ import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 /**
  * Pane containing an image that can be resized.
@@ -27,7 +27,8 @@ public class SizableImageView extends ScrollPane {
 	/**
 	 * The zoom factor to be applied for each zoom event.
 	 *
-	 * <p>(480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
+	 * <p>
+	 * (480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
 	 */
 	private static final double ZOOM_FACTOR = 1.0014450997779993488675056142818;
 
@@ -65,7 +66,7 @@ public class SizableImageView extends ScrollPane {
 	 */
 	private ImageView imageView;
 
-	protected final ImageView getImageView() {
+	public final ImageView getImageView() {
 		return imageView;
 	}
 
@@ -145,11 +146,11 @@ public class SizableImageView extends ScrollPane {
 
 				// New scrollbar positions keeping the mouse position.
 				double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
-						? ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor
+				? ((mouseXPosition * targetWidth) - mouseXProperty.get()) / postScrollXFactor
 						: oldHvalue;
 				double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
-						? ((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
-								/ postScrollYFactor
+				? ((mouseYPosition * targetHeight) - mouseYProperty.get() + verticalCorrection)
+						/ postScrollYFactor
 						: oldVvalue;
 
 				imageView.setFitWidth(targetWidth);
@@ -251,6 +252,35 @@ public class SizableImageView extends ScrollPane {
 				doInitialScaling();
 			}
 		}
+	}
+
+	/**
+	 * Display a pre-loaded image generated from an eye photo.
+	 *
+	 * @param relatedEyePhoto
+	 *            The eye photo.
+	 * @param image
+	 *            The pre-loaded image.
+	 */
+	public final void setImage(final EyePhoto relatedEyePhoto, final Image image) {
+		eyePhoto = relatedEyePhoto;
+		displayImage(image);
+
+		// Size the image only after this pane is sized
+		heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				synchronized (imageView) {
+					// Initialization after window is sized and image is loaded.
+					if (imageView.getImage() != null && !initialized) {
+						displayImage(image);
+					}
+				}
+				heightProperty().removeListener(this);
+			}
+		});
+
 	}
 
 	/**

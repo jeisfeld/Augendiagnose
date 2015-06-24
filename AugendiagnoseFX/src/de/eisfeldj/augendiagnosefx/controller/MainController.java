@@ -118,7 +118,7 @@ public class MainController extends BaseController implements Initializable {
 			splitPane.getItems().add(body1);
 			splitPane.getItems().add(body2);
 
-			bodies = new StackPane[] { body1, body2 };
+			bodies = new StackPane[] { body1, body2, body };
 
 			// retain old body as left pane.
 			body1.getChildren().addAll(body.getChildren());
