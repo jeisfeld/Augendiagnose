@@ -133,6 +133,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
+        <activity
+            android:name="com.admarvel.android.ads.AdMarvelActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.admarvel.android.ads.AdMarvelVideoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <provider
+            android:name="com.admarvel.android.ads.AdMarvelLocalFileContentProvider"
+            android:authorities="de.eisfeldj.augendiagnose.AdMarvelLocalFileContentProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

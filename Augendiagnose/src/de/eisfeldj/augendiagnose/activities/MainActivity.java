@@ -2,7 +2,6 @@ package de.eisfeldj.augendiagnose.activities;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,12 +21,12 @@ import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
 /**
  * Main activity of the application.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AdMarvelActivity {
 
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		// setContentView(R.layout.activity_main);
 
 		SettingsActivity.setDefaultSharedPreferences(this);
 
@@ -93,7 +92,14 @@ public class MainActivity extends Activity {
 
 		DialogUtil.checkOutOfMemoryError(this);
 
+		requestBannerAdIfEligible();
+
 		test();
+	}
+
+	@Override
+	protected final int getLayoutResId() {
+		return R.layout.activity_main;
 	}
 
 	/*

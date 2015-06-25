@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:admarvel="http://schemas.android.com/apk/lib/com.eisfeldj.augendiagnose"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/layout_main_margin"
@@ -56,10 +57,18 @@
         <Button
             android:id="@+id/mainButtonListFolders"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dip"
             android:layout_margin="@dimen/buttons_main_margin"
+            android:layout_weight="1"
             android:onClick="listFoldersForDisplayActivity"
-            android:text="@string/button_display_pictures" />
+            android:text="@string/button_display_pictures"
+            tools:ignore="NestedWeights" />
+
+        <com.admarvel.android.ads.AdMarvelView
+            android:id="@+id/admarvel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/buttons_main_margin" />
     </LinearLayout>
 
 </LinearLayout>

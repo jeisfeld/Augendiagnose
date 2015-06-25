@@ -122,5 +122,8 @@
     <string name="key_statistics_counttakephoto" translatable="false">statistics_counttakephoto</string>
     <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
     <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
+    <string name="key_admarvel_countclicks" translatable="false">admarvel_countclicks</string>
+    <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
+    <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>
 
 </resources>
