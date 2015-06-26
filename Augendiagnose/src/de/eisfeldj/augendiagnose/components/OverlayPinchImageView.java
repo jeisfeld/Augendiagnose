@@ -1021,7 +1021,9 @@ public class OverlayPinchImageView extends PinchImageView {
 				bitmapFull = mEyePhoto.getFullBitmap();
 				if (mFullResolutionFlag) {
 					mBitmapFull = bitmapFull;
-					mRetainFragment.setBitmapFullResolution(bitmapFull);
+					if (mRetainFragment != null) {
+						mRetainFragment.setBitmapFullResolution(bitmapFull);
+					}
 				}
 			}
 			Bitmap partialBitmap =
@@ -1221,7 +1223,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void cleanFullBitmap() {
 		mBitmapFull = null;
-		mRetainFragment.setBitmapFullResolution(null);
+		if (mRetainFragment != null) {
+			mRetainFragment.setBitmapFullResolution(null);
+		}
 	}
 
 	/*
