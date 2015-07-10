@@ -32,6 +32,13 @@ public class MainActivity extends AdMarvelActivity {
 
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 
+		// Track if AdMarvel has been clicked in the current session.
+		boolean isAdMarvelClicked = false;
+		if (savedInstanceState != null) {
+			isAdMarvelClicked = savedInstanceState.getBoolean("isAdMarvelClicked");
+		}
+		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked, isAdMarvelClicked);
+
 		Application.setLanguage();
 
 		// Initial tip is triggered first, so that it is hidden behind release notes.
@@ -95,6 +102,13 @@ public class MainActivity extends AdMarvelActivity {
 		requestBannerAdIfEligible();
 
 		test();
+	}
+
+	@Override
+	protected final void onSaveInstanceState(final Bundle outState) {
+		super.onSaveInstanceState(outState);
+		boolean isAdMarvelClicked = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked);
+		outState.putBoolean("isAdMarvelClicked", isAdMarvelClicked);
 	}
 
 	/*

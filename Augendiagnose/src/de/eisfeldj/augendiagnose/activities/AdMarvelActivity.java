@@ -1,12 +1,14 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import android.app.Activity;
+import android.view.View;
 import android.view.ViewManager;
 
 import com.admarvel.android.ads.AdMarvelView;
 
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.util.AdMarvelUtil;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * An activity showing AdMarvel ads.
@@ -46,8 +48,16 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (adMarvelView != null) {
-			adMarvelView.start(this);
+		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
+			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)) {
+				// do not trigger again after it was once clicked.
+				adMarvelView.setVisibility(View.GONE);
+				adMarvelView.destroy();
+				adMarvelView = null;
+			}
+			else {
+				adMarvelView.start(this);
+			}
 		}
 	}
 
@@ -55,7 +65,7 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (adMarvelView != null) {
+		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
 			adMarvelView.resume(this);
 		}
 	}
@@ -64,7 +74,7 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (adMarvelView != null) {
+		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
 			adMarvelView.pause(this);
 		}
 	}
@@ -73,7 +83,7 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (adMarvelView != null) {
+		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
 			adMarvelView.stop(this);
 		}
 	}
@@ -82,7 +92,7 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (adMarvelView != null) {
+		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
 			adMarvelView.destroy();
 		}
 	}

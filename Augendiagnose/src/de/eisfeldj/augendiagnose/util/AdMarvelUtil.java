@@ -58,7 +58,7 @@ public final class AdMarvelUtil {
 	 * @return true if eligible.
 	 */
 	public static boolean isEligibleForAd() {
-		int checksSinceLastClick = PreferenceUtil.incrementCounter(R.string.key_admarvel_checkssincelastclick);
+		// int checksSinceLastClick = PreferenceUtil.incrementCounter(R.string.key_admarvel_checkssincelastclick);
 		if (Application.isAuthorized()) {
 			return false;
 		}
@@ -67,7 +67,9 @@ public final class AdMarvelUtil {
 			return false;
 		}
 
-		return checksSinceLastClick > PreferenceUtil.getSharedPreferenceInt(R.string.key_admarvel_countclicks, 0);
+		// return checksSinceLastClick > PreferenceUtil.getSharedPreferenceInt(R.string.key_admarvel_countclicks, 0);
+
+		return !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked);
 	}
 
 	/**
@@ -137,6 +139,7 @@ public final class AdMarvelUtil {
 		public void onClickAd(final AdMarvelView arg0, final String arg1) {
 			PreferenceUtil.incrementCounter(R.string.key_admarvel_countclicks);
 			PreferenceUtil.setSharedPreferenceInt(R.string.key_admarvel_checkssincelastclick, 0);
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked, true);
 		}
 
 		@Override
