@@ -1,7 +1,6 @@
 package de.eisfeldj.augendiagnose.activities;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.ViewManager;
 
 import com.admarvel.android.ads.AdMarvelView;
@@ -18,27 +17,13 @@ public abstract class AdMarvelActivity extends Activity {
 	 */
 	private AdMarvelView adMarvelView;
 
-	// OVERRIDABLE
-	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(getLayoutResId());
-		adMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
-	}
-
 	/**
 	 * Display a banner ad.
 	 */
-	protected final void requestBannerAdIfEligible() {
+	public final void requestBannerAdIfEligible() {
+		getAdMarvelView();
 		AdMarvelUtil.requestBannerAdIfEligible(this);
 	}
-
-	/**
-	 * The resource id of the layout.
-	 *
-	 * @return The resource id of the layout.
-	 */
-	protected abstract int getLayoutResId();
 
 	/**
 	 * Delete the ad view.
@@ -57,44 +42,61 @@ public abstract class AdMarvelActivity extends Activity {
 		});
 	}
 
+	// OVERRIDABLE
 	@Override
-	protected final void onStart() {
+	protected void onStart() {
 		super.onStart();
 		if (adMarvelView != null) {
 			adMarvelView.start(this);
 		}
 	}
 
+	// OVERRIDABLE
 	@Override
-	protected final void onResume() {
+	protected void onResume() {
 		super.onResume();
 		if (adMarvelView != null) {
 			adMarvelView.resume(this);
 		}
 	}
 
+	// OVERRIDABLE
 	@Override
-	protected final void onPause() {
+	protected void onPause() {
 		super.onPause();
 		if (adMarvelView != null) {
 			adMarvelView.pause(this);
 		}
 	}
 
+	// OVERRIDABLE
 	@Override
-	public final void onStop() {
+	public void onStop() {
 		super.onStop();
 		if (adMarvelView != null) {
 			adMarvelView.stop(this);
 		}
 	}
 
+	// OVERRIDABLE
 	@Override
-	protected final void onDestroy() {
+	protected void onDestroy() {
 		super.onDestroy();
 		if (adMarvelView != null) {
 			adMarvelView.destroy();
 		}
+	}
+
+	/**
+	 * Get the AdMarvelView.
+	 *
+	 * @return The AdMarvelView.
+	 */
+	public final AdMarvelView getAdMarvelView() {
+		if (adMarvelView == null) {
+			adMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
+		}
+		return adMarvelView;
 	}
 
 }

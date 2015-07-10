@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.AdMarvelActivity;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
@@ -75,6 +76,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
 		getListView().setAdapter(adapter);
+
+		((AdMarvelActivity) getActivity()).requestBannerAdIfEligible();
 	}
 
 	/**

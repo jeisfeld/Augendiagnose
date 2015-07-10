@@ -26,7 +26,7 @@ public class MainActivity extends AdMarvelActivity {
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 
 		SettingsActivity.setDefaultSharedPreferences(this);
 
@@ -95,11 +95,6 @@ public class MainActivity extends AdMarvelActivity {
 		requestBannerAdIfEligible();
 
 		test();
-	}
-
-	@Override
-	protected final int getLayoutResId() {
-		return R.layout.activity_main;
 	}
 
 	/*

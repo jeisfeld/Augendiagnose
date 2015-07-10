@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +9,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 /**
  * Base activity being the subclass of most application activities. Handles the help menu.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AdMarvelActivity {
 
 	// OVERRIDABLE
 	@Override

@@ -16,6 +16,7 @@ import com.admarvel.android.ads.AdMarvelView.AdMarvelViewListener;
 
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
+import de.eisfeldj.augendiagnose.activities.AdMarvelActivity;
 
 /**
  * Utility class for handling AdMarvel ads.
@@ -42,7 +43,7 @@ public final class AdMarvelUtil {
 	/**
 	 * The countries where ads are displayed.
 	 */
-	public static final String[] AD_COUNTRIES = { "US" };
+	public static final String[] AD_COUNTRIES = { "DE", "US" };
 
 	/**
 	 * Hide default constructor.
@@ -87,12 +88,12 @@ public final class AdMarvelUtil {
 	 * @param activity
 	 *            The triggering activity.
 	 */
-	public static void requestBannerAd(final Activity activity) {
+	public static void requestBannerAd(final AdMarvelActivity activity) {
 		try {
 			Map<String, Object> targetParams = new HashMap<String, Object>();
 			targetParams.put("KEYWORDS", "games");
 			targetParams.put("APP_VERSION", "1.0.0"); // version of your app
-			AdMarvelView adMarvelView = (AdMarvelView) activity.findViewById(R.id.admarvel);
+			AdMarvelView adMarvelView = activity.getAdMarvelView();
 			adMarvelView.setListener(new AdMarvelListener(activity));
 			adMarvelView.requestNewAd(targetParams, PARTNER_ID, SystemUtil.isTablet() ? SITE_LDR : SITE_BNR);
 		}
@@ -107,13 +108,15 @@ public final class AdMarvelUtil {
 	 * @param activity
 	 *            The triggering activity.
 	 */
-	public static void requestBannerAdIfEligible(final Activity activity) {
+	public static void requestBannerAdIfEligible(final AdMarvelActivity activity) {
 		if (AdMarvelUtil.isEligibleForAd()) {
 			AdMarvelUtil.requestBannerAd(activity);
 		}
 		else {
-			AdMarvelView adMarvelView = (AdMarvelView) activity.findViewById(R.id.admarvel);
-			adMarvelView.setVisibility(View.GONE);
+			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			if (adMarvelView != null) {
+				adMarvelView.setVisibility(View.GONE);
+			}
 		}
 	}
 

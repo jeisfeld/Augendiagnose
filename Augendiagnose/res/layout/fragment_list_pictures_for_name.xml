@@ -16,11 +16,17 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <com.admarvel.android.ads.AdMarvelView
+        android:id="@+id/admarvel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
     <Button
         android:id="@+id/buttonSelectAdditionalPicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/admarvel"
         android:onClick="selectDifferentPictureActivity"
         android:text="@string/button_other_pictures"
         android:visibility="gone" />
@@ -29,10 +35,10 @@
         android:id="@+id/listViewForName"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/textTitleName"
         android:layout_above="@id/buttonSelectAdditionalPicture"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="8dp" >
+        android:layout_below="@id/textTitleName"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="12dp" >
     </ListView>
 
 </RelativeLayout>
