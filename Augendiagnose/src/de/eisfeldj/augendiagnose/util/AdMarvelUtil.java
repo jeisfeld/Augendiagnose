@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose.util;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +40,11 @@ public final class AdMarvelUtil {
 	public static final String SITE_LDR = "130362";
 
 	/**
+	 * The countries where ads are displayed.
+	 */
+	public static final String[] AD_COUNTRIES = { "US" };
+
+	/**
 	 * Hide default constructor.
 	 */
 	private AdMarvelUtil() {
@@ -55,6 +61,11 @@ public final class AdMarvelUtil {
 		if (Application.isAuthorized()) {
 			return false;
 		}
+		String country = SystemUtil.getUserCountry();
+		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)) {
+			return false;
+		}
+
 		return checksSinceLastClick > PreferenceUtil.getSharedPreferenceInt(R.string.key_admarvel_countclicks, 0);
 	}
 
