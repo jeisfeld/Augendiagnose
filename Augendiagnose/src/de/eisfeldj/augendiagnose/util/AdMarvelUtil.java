@@ -43,7 +43,12 @@ public final class AdMarvelUtil {
 	/**
 	 * The countries where ads are displayed.
 	 */
-	public static final String[] AD_COUNTRIES = { "DE", "US" };
+	public static final String[] AD_COUNTRIES = { "US" };
+
+	/**
+	 * User key prefix that overrides the country setting for displaying the ad.
+	 */
+	public static final String FORCE_AD_USER = "AdMarvel";
 
 	/**
 	 * Hide default constructor.
@@ -63,7 +68,8 @@ public final class AdMarvelUtil {
 			return false;
 		}
 		String country = SystemUtil.getUserCountry();
-		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)) {
+		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)
+				&& !PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
 			return false;
 		}
 
@@ -112,9 +118,12 @@ public final class AdMarvelUtil {
 	 */
 	public static void requestBannerAdIfEligible(final AdMarvelActivity activity) {
 		if (AdMarvelUtil.isEligibleForAd()) {
-			DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
-
-			AdMarvelUtil.requestBannerAd(activity);
+			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			if (adMarvelView != null) {
+				DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
+				adMarvelView.setVisibility(View.VISIBLE);
+				requestBannerAd(activity);
+			}
 		}
 		else {
 			AdMarvelView adMarvelView = activity.getAdMarvelView();

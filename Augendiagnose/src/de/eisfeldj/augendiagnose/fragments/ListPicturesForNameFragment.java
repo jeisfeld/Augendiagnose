@@ -21,14 +21,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.activities.AdMarvelActivity;
 import de.eisfeldj.augendiagnose.components.ListPicturesForNameArrayAdapter;
 import de.eisfeldj.augendiagnose.util.DateUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
+import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
-import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 
 /**
  * Fragment to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -76,8 +75,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
 		getListView().setAdapter(adapter);
-
-		((AdMarvelActivity) getActivity()).requestBannerAdIfEligible();
 	}
 
 	/**

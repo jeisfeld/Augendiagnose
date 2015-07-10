@@ -99,6 +99,8 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 		}
+
+		requestBannerAdIfEligible();
 	}
 
 	@Override

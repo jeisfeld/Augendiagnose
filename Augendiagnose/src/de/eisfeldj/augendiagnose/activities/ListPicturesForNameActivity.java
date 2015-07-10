@@ -55,6 +55,8 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaypictures, R.string.key_tip_displaypictures);
+
+		requestBannerAdIfEligible();
 	}
 
 }
