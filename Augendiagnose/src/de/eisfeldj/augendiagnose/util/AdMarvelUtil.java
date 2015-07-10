@@ -112,6 +112,8 @@ public final class AdMarvelUtil {
 	 */
 	public static void requestBannerAdIfEligible(final AdMarvelActivity activity) {
 		if (AdMarvelUtil.isEligibleForAd()) {
+			DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
+
 			AdMarvelUtil.requestBannerAd(activity);
 		}
 		else {

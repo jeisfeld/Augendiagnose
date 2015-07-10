@@ -144,5 +144,17 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_admarvel">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>anuncios:</h2>
+	<p>Por favor, apoye el desarrollo de la aplicación mediante la comprobación de la publicidad de vez en cuando.</p>
+	<p>Si ha hecho clic en el anuncio, no volverá a aparecer hasta el próximo inicio de la aplicación.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>

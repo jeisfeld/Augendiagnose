@@ -154,4 +154,18 @@
 </html>
 ]]>
     </string>
-</resources>
+    <string name="key_tip_admarvel" translatable="false">key_tip_admarvel</string>
+    <string name="message_tip_admarvel">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Advertisements:</h2>
+	<p>Please support the development of the app by checking the advertisement every now and then.</p>
+	<p>If you clicked on the advertisement, it will not reappear until the next app start.</p>
+</body>
+</html>
+]]>
+    </string>
+
+</resources>
