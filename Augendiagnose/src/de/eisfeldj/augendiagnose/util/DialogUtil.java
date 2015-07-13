@@ -379,7 +379,9 @@ public final class DialogUtil {
 		@Override
 		public final void onDismiss(final DialogInterface dialog) {
 			super.onDismiss(dialog);
-			getActivity().finish();
+			if (getActivity() != null) {
+				getActivity().finish();
+			}
 		}
 	}
 
