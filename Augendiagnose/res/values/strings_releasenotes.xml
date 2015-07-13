@@ -76,6 +76,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.10</item>
         <item>0.5.11</item>
         <item>0.5.12</item>
+        <item>0.5.13</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -120,6 +121,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Added advertisements (US only). Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
