@@ -46,6 +46,11 @@ public final class AdMarvelUtil {
 	public static final String[] AD_COUNTRIES = { "US" };
 
 	/**
+	 * Frequency after how many ad displays the tip is displayed.
+	 */
+	public static final int TIP_FREQUENCY = 5;
+
+	/**
 	 * User key prefix that overrides the country setting for displaying the ad.
 	 */
 	public static final String FORCE_AD_USER = "AdMarvel";
@@ -129,8 +134,6 @@ public final class AdMarvelUtil {
 		if (AdMarvelUtil.isEligibleForAd()) {
 			AdMarvelView adMarvelView = activity.getAdMarvelView();
 			if (adMarvelView != null) {
-				DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
-				adMarvelView.setVisibility(View.VISIBLE);
 				requestBannerAd(activity);
 			}
 		}
@@ -147,12 +150,18 @@ public final class AdMarvelUtil {
 	 */
 	private static class AdMarvelListener implements AdMarvelViewListener {
 		/**
+		 * The triggering activity.
+		 */
+		private AdMarvelActivity activity;
+
+		/**
 		 * Constructor handing over the activity.
 		 *
 		 * @param activity
 		 *            The triggering activity.
 		 */
-		public AdMarvelListener(final Activity activity) {
+		public AdMarvelListener(final AdMarvelActivity activity) {
+			this.activity = activity;
 		}
 
 		@Override
@@ -173,13 +182,25 @@ public final class AdMarvelUtil {
 		}
 
 		@Override
-		public void onFailedToReceiveAd(final AdMarvelView arg0, final int arg1, final ErrorReason arg2) {
-			// do nothing.
+		public void onFailedToReceiveAd(final AdMarvelView arg0, final int arg1, final ErrorReason errorReason) {
+			Log.w(Application.TAG, "Failed to receive ad: " + errorReason.toString());
+			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			if (adMarvelView != null) {
+				adMarvelView.setVisibility(View.GONE);
+			}
 		}
 
 		@Override
 		public void onReceiveAd(final AdMarvelView arg0) {
-			PreferenceUtil.incrementCounter(R.string.key_admarvel_countdisplays);
+			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			if (adMarvelView != null) {
+				adMarvelView.setVisibility(View.VISIBLE);
+
+				int counter = PreferenceUtil.incrementCounter(R.string.key_admarvel_countdisplays);
+				if (counter % TIP_FREQUENCY == 0) {
+					DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
+				}
+			}
 		}
 
 		@Override
