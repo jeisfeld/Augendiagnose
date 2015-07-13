@@ -113,8 +113,8 @@ public final class AdMarvelUtil {
 	public static void requestBannerAd(final AdMarvelActivity activity) {
 		try {
 			Map<String, Object> targetParams = new HashMap<String, Object>();
-			targetParams.put("KEYWORDS", "games");
-			targetParams.put("APP_VERSION", "1.0.0"); // version of your app
+			targetParams.put("KEYWORDS", "HCP");
+			targetParams.put("APP_VERSION", Application.getVersionString());
 			AdMarvelView adMarvelView = activity.getAdMarvelView();
 			adMarvelView.setListener(new AdMarvelListener(activity));
 			adMarvelView.requestNewAd(targetParams, PARTNER_ID, SystemUtil.isTablet() ? SITE_LDR : SITE_BNR);

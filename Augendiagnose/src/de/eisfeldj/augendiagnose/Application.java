@@ -123,6 +123,23 @@ public class Application extends android.app.Application {
 	}
 
 	/**
+	 * Retrieve the version String of the app.
+	 *
+	 * @return the app version String.
+	 */
+	public static String getVersionString() {
+		PackageInfo pInfo;
+		try {
+			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			return pInfo.versionName;
+		}
+		catch (NameNotFoundException e) {
+			Log.e(TAG, "Did not find application version", e);
+			return null;
+		}
+	}
+
+	/**
 	 * Set the language.
 	 */
 	public static void setLanguage() {
