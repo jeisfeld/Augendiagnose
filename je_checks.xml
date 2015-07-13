@@ -242,7 +242,7 @@ JE Customizations of Sun Checks (Eclipse)
   </module>
   <module name="RegexpSingleline">
     <metadata name="net.sf.eclipsecs.core.comment" value="Do not use System.out.println"/>
-    <property name="format" value="System.(out|err).println"/>
+    <property name="format" value="System.(out|err).print"/>
     <property name="message" value="Do not use System.out.println"/>
   </module>
   <module name="RegexpSingleline">
@@ -254,5 +254,10 @@ JE Customizations of Sun Checks (Eclipse)
     <metadata name="net.sf.eclipsecs.core.comment" value="STORE_PROPERTY"/>
     <property name="commentFormat" value="STORE_PROPERTY"/>
     <property name="checkFormat" value="VariableDeclarationUsageDistance"/>
+  </module>
+  <module name="SuppressWithNearbyCommentFilter">
+    <metadata name="net.sf.eclipsecs.core.comment" value="SYSTEMOUT"/>
+    <property name="commentFormat" value="SYSTEMOUT"/>
+    <property name="checkFormat" value="RegexpSingleline"/>
   </module>
 </module>
