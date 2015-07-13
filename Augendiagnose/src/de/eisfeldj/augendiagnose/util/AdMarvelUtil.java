@@ -64,12 +64,21 @@ public final class AdMarvelUtil {
 	 */
 	public static boolean isEligibleForAd() {
 		// int checksSinceLastClick = PreferenceUtil.incrementCounter(R.string.key_admarvel_checkssincelastclick);
+
+		// no ads for authorized users
 		if (Application.isAuthorized()) {
 			return false;
 		}
+
+		// no ads except for certain countries. (Exception for special user key, in order to allow testing.)
 		String country = SystemUtil.getUserCountry();
 		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)
 				&& !PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
+			return false;
+		}
+
+		// no ads before user has had some minimum usage of app
+		if (PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countdisplay, 0) < 2) {
 			return false;
 		}
 
