@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.fragments;
 
 import java.io.File;
+import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -11,15 +12,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+
+import com.android.vending.billing.PurchasedSku;
+import com.android.vending.billing.SkuDetails;
+
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
+import de.eisfeldj.augendiagnose.util.GoogleBillingHelper;
+import de.eisfeldj.augendiagnose.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
@@ -40,6 +48,11 @@ public class SettingsFragment extends PreferenceFragment {
 	public static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
+	 * A prefix put before the productId to define the according preference key.
+	 */
+	private static final String SKU_KEY_PREFIX = "sku_";
+
+	/**
 	 * Field holding the value of the language preference, in order to detect a real change.
 	 */
 	private String languageString;
@@ -51,6 +64,11 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Field holding the value of the photo folder preference, in order to detect a real change.
 	 */
 	private String folderPhotos;
+
+	/**
+	 * The preference screen handling donations.
+	 */
+	private PreferenceScreen screenDonate;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
@@ -76,8 +94,12 @@ public class SettingsFragment extends PreferenceFragment {
 		bindPreferenceSummaryToValue(R.string.key_full_resolution);
 		bindPreferenceSummaryToValue(R.string.key_language);
 
-		addHintButtonListener(R.string.key_show_hints, false);
-		addHintButtonListener(R.string.key_hide_hints, true);
+		addHintButtonListener(R.string.key_dummy_show_hints, false);
+		addHintButtonListener(R.string.key_dummy_hide_hints, true);
+
+		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_donate));
+
+		GoogleBillingHelper.initialize(getActivity(), onInventoryFinishedListener);
 	}
 
 	/**
@@ -94,7 +116,8 @@ public class SettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				PreferenceUtil.setAllHints(hintPreferenceValue);
-				((PreferenceScreen) findPreference(getActivity().getString(R.string.key_screen_hints))).getDialog()
+				((PreferenceScreen) findPreference(getActivity().getString(R.string.key_dummy_screen_hints)))
+						.getDialog()
 						.dismiss();
 				return true;
 			}
@@ -111,10 +134,10 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void bindPreferenceSummaryToValue(final Preference preference) {
 		// Set the listener to watch for value changes.
-		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+		preference.setOnPreferenceChangeListener(bindPreferenceSummaryToValueListener);
 
 		// Trigger the listener immediately with the preference's current value.
-		sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
+		bindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
 				.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
 	}
 
@@ -131,8 +154,8 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A preference value change listener that updates the preference's summary to reflect its new value.
 	 */
-	private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
-			new Preference.OnPreferenceChangeListener() {
+	private OnPreferenceChangeListener bindPreferenceSummaryToValueListener =
+			new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
 					String stringValue = value.toString();
@@ -272,13 +295,71 @@ public class SettingsFragment extends PreferenceFragment {
 				}
 			};
 
-	/*
+	/**
+	 * A listener handling the response after reading the in-add purchase inventory.
+	 */
+	private OnInventoryFinishedListener onInventoryFinishedListener = new OnInventoryFinishedListener() {
+		@Override
+		public void handlePurchases(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+				final boolean isPremium) {
+			for (PurchasedSku purchase : purchases) {
+				Preference purchasePreference = new Preference(getActivity());
+				String title =
+						String.format(getString(R.string.button_purchased_item), purchase.getSkuDetails()
+								.getTitle());
+				purchasePreference.setTitle(title);
+				purchasePreference.setEnabled(false);
+				screenDonate.addItemFromInflater(purchasePreference);
+			}
+			for (SkuDetails skuDetails : availableProducts) {
+				Preference skuPreference = new Preference(getActivity());
+				if (skuDetails.getSku().startsWith("android.test")) {
+					skuPreference.setTitle(skuDetails.getSku());
+				}
+				else {
+					skuPreference.setTitle(skuDetails.getTitle());
+				}
+				skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
+				skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+					@Override
+					public boolean onPreferenceClick(final Preference preference) {
+						String productId = preference.getKey().substring(SKU_KEY_PREFIX.length());
+						GoogleBillingHelper.launchPurchaseFlow(productId);
+						return false;
+					}
+				});
+				screenDonate.addItemFromInflater(skuPreference);
+			}
+			if (isPremium || Application.isAuthorized()) {
+				Preference preferenceRemoveAds = findPreference(getString(R.string.key_remove_ads));
+				preferenceRemoveAds.setEnabled(true);
+			}
+		}
+	};
+
+	@Override
+	public final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (SystemUtil.isAndroid5()) {
+			onActivityResultLollipop(requestCode, resultCode, data);
+		}
+	}
+
+	/**
 	 * After triggering the Storage Access Framework, ensure that folder is really writable. Set preferences
 	 * accordingly.
+	 *
+	 * @param requestCode
+	 *            The integer request code originally supplied to startActivityForResult(), allowing you to identify who
+	 *            this result came from.
+	 * @param resultCode
+	 *            The integer result code returned by the child activity through its setResult().
+	 * @param data
+	 *            An Intent, which can return result data to the caller (various data can be attached to Intent
+	 *            "extras").
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	@Override
-	public final void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
+	public final void onActivityResultLollipop(final int requestCode, final int resultCode, final Intent data) {
 		int preferenceKeyUri;
 		int preferenceKeyFolder;
 		String oldFolder;
@@ -305,7 +386,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 		if (resultCode == Activity.RESULT_OK) {
 			// Get Uri from Storage Access Framework.
-			treeUri = resultData.getData();
+			treeUri = data.getData();
 			// Persist URI - this is required for verification of writability.
 			PreferenceUtil.setSharedPreferenceUri(preferenceKeyUri, treeUri);
 		}
@@ -334,7 +415,7 @@ public class SettingsFragment extends PreferenceFragment {
 		findPreference(getString(preferenceKeyFolder)).setSummary(currentFolder.getAbsolutePath());
 
 		// Persist access permissions.
-		final int takeFlags = resultData.getFlags()
+		final int takeFlags = data.getFlags()
 				& (Intent.FLAG_GRANT_READ_URI_PERMISSION
 				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);

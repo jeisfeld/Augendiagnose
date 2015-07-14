@@ -4,4 +4,8 @@
   <fileset name="all" enabled="true" check-config-name="JE Checks" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
+  <filter name="FilesFromPackage" enabled="true">
+    <filter-data value="src/com/android/vending/billing"/>
+    <filter-data value="gen"/>
+  </filter>
 </fileset-config>

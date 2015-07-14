@@ -7,6 +7,7 @@
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
     <string name="pref_screen_hints">Consejos</string>
+    <string name="pref_screen_donate">Eliminar anuncios / Donar</string>
 
     <!-- Strings related to Settings -->
 
@@ -20,6 +21,7 @@
     <string name="pref_title_full_resolution">Mostrar imagen en alta resolución</string>
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
+    <string name="pref_title_remove_ads">Quitar anuncios</string>
     <string name="pref_title_user_key">Clave de usuario</string>
 
     <!-- Strings related to Setting arrays -->

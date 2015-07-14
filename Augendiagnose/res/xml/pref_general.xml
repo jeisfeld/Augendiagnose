@@ -33,13 +33,13 @@
             android:title="@string/pref_title_language" />
 
         <PreferenceScreen
-            android:key="@string/key_screen_hints"
+            android:key="@string/key_dummy_screen_hints"
             android:title="@string/pref_screen_hints" >
             <Preference
-                android:key="@string/key_show_hints"
+                android:key="@string/key_dummy_show_hints"
                 android:title="@string/menu_show_all_hints" />
             <Preference
-                android:key="@string/key_hide_hints"
+                android:key="@string/key_dummy_hide_hints"
                 android:title="@string/menu_hide_all_hints" />
         </PreferenceScreen>
     </PreferenceScreen>
@@ -77,6 +77,15 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_store_options" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="@string/key_dummy_screen_donate"
+        android:title="@string/pref_screen_donate" >
+        <CheckBoxPreference
+            android:defaultValue="@string/pref_default_remove_ads"
+            android:enabled="false"
+            android:key="@string/key_remove_ads"
+            android:title="@string/pref_title_remove_ads" />
     </PreferenceScreen>
 
     <EditTextPreference

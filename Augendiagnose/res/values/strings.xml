@@ -13,6 +13,7 @@
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
     <string name="title_settings">Settings</string>
     <string name="title_help">Help</string>
+    <string name="title_donate">Donate</string>
     <string name="section_select_photos">Select Photos</string>
     <string name="section_select_name">Select Name</string>
     <string name="section_select_date">Select Date</string>
@@ -28,11 +29,13 @@
     <string name="button_select">Select</string>
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
+    <string name="button_donate">Donate</string>
     <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_select_color" translatable="false">\u25a0</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
+    <string name="button_purchased_item">%1$s (bought)</string>
     <string name="toggle_circle" translatable="false">\u2299</string>
     <string name="toggle_overlay_1" translatable="false">\u2460</string>
     <string name="toggle_overlay_2" translatable="false">\u2461</string>

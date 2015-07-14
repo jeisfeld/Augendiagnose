@@ -71,7 +71,7 @@ public final class AdMarvelUtil {
 		// int checksSinceLastClick = PreferenceUtil.incrementCounter(R.string.key_admarvel_checkssincelastclick);
 
 		// no ads for authorized users
-		if (Application.isAuthorized()) {
+		if (Application.isAuthorized() || PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {
 			return false;
 		}
 

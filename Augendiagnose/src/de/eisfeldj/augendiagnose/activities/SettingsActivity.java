@@ -10,6 +10,7 @@ import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.components.PinchImageView;
 import de.eisfeldj.augendiagnose.fragments.SettingsFragment;
+import de.eisfeldj.augendiagnose.util.GoogleBillingHelper;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
@@ -118,4 +119,15 @@ public class SettingsActivity extends BaseActivity {
 		return maxBitmapSize;
 	}
 
+	@Override
+	public final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public final void onDestroy() {
+		super.onDestroy();
+		GoogleBillingHelper.dispose();
+	}
 }

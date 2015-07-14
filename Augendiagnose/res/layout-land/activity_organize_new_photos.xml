@@ -158,7 +158,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="finishActivity"
-            android:text="@string/button_cancel" />
+            android:text="@string/button_cancel"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonOrganizeOk"
@@ -166,7 +167,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="validateAndMovePhotos"
-            android:text="@string/button_ok" />
+            android:text="@string/button_ok"
+            tools:ignore="ButtonStyle" />
+
     </LinearLayout>
 
 </LinearLayout>

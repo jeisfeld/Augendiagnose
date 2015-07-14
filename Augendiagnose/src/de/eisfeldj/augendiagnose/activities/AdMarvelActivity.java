@@ -49,7 +49,8 @@ public abstract class AdMarvelActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
-			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)) {
+			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)
+					|| PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {
 				// do not trigger again after it was once clicked.
 				adMarvelView.setVisibility(View.GONE);
 				adMarvelView.destroy();

@@ -12,6 +12,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.annotation.SuppressLint;
 import android.util.Base64;
 import android.util.Log;
 import de.eisfeldj.augendiagnose.Application;
@@ -74,17 +75,25 @@ public final class EncryptionUtil {
 		KEY = key;
 
 		if (foundPrivateConstants) {
-			try {
-				cipherEncrypt = Cipher.getInstance(ALGORITHM);
-				Key symKey = new SecretKeySpec(Base64.decode(KEY, Base64.DEFAULT), ALGORITHM);
-				cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
+			initializeCipher();
+		}
+	}
 
-				messageDigest = MessageDigest.getInstance("MD5");
-				initialized = true;
-			}
-			catch (Exception e) {
-				Log.e(Application.TAG, "Failed to initialize EncryptionUtil", e);
-			}
+	/**
+	 * Initialize the encryption cipher.
+	 */
+	@SuppressLint("TrulyRandom")
+	private static void initializeCipher() {
+		try {
+			cipherEncrypt = Cipher.getInstance(ALGORITHM);
+			Key symKey = new SecretKeySpec(Base64.decode(KEY, Base64.DEFAULT), ALGORITHM);
+			cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
+
+			messageDigest = MessageDigest.getInstance("MD5");
+			initialized = true;
+		}
+		catch (Exception e) {
+			Log.e(Application.TAG, "Failed to initialize EncryptionUtil", e);
 		}
 	}
 

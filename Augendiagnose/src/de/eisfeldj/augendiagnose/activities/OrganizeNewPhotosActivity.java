@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -183,6 +183,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		editDate = (EditText) findViewById(R.id.editDate);
 		editDate.setInputType(InputType.TYPE_NULL);
 		editDate.setOnTouchListener(new View.OnTouchListener() {
+			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(final View v, final MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {

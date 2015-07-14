@@ -6,6 +6,7 @@
 
     <string name="pref_screen_storage_settings">Storage and Memory Settings</string>
     <string name="pref_screen_display_settings">Display Settings</string>
+    <string name="pref_screen_donate">Remove Ads / Donate</string>
     <string name="pref_screen_hints">Hints</string>
 
     <!-- Strings related to Settings -->
@@ -26,6 +27,8 @@
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_default_language" translatable="false">0</string>
+    <string name="pref_title_remove_ads">Remove ads</string>
+    <string name="pref_default_remove_ads" translatable="false">false</string>
     <string name="pref_title_user_key">User key</string>
 
     <!-- Strings related to Setting arrays -->
@@ -110,10 +113,12 @@
     <string name="key_full_resolution" translatable="false">full_resolution</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>
+    <string name="key_remove_ads" translatable="false">remove_ads</string>
     <string name="key_user_key" translatable="false">user_key</string>
-    <string name="key_screen_hints" translatable="false">screen_hints</string>
-    <string name="key_show_hints" translatable="false">show_hints</string>
-    <string name="key_hide_hints" translatable="false">hide_hints</string>
+    <string name="key_dummy_screen_hints" translatable="false">dummy_screen_hints</string>
+    <string name="key_dummy_screen_donate" translatable="false">dummy_screen_donate</string>
+    <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
+    <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
