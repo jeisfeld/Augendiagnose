@@ -13,7 +13,6 @@
     <string name="title_activity_select_two_pictures">Seleccionar dos nuevas fotos</string>
     <string name="title_settings">Ajustes</string>
     <string name="title_help">Ayuda</string>
-    <string name="title_donate">Donar</string>
     <string name="section_select_photos">Seleccionar Fotos</string>
     <string name="section_select_name">Seleccionar Nombre</string>
     <string name="section_select_date">Seleccionar Fecha</string>
@@ -29,7 +28,6 @@
     <string name="button_select">Seleccionar</string>
     <string name="button_switch">Cambiar</string>
     <string name="button_delete">Eliminar</string>
-    <string name="button_donate">Donar</string>
     <string name="button_move">Mover</string>
     <string name="button_other_pictures">Otras Fotos</string>
     <string name="button_dont_show">No mostrar de nuevo</string>
