@@ -14,14 +14,10 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.preference.PreferenceScreen;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
-import de.eisfeldj.augendiagnose.components.ButtonPreference;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
@@ -80,49 +76,29 @@ public class SettingsFragment extends PreferenceFragment {
 		bindPreferenceSummaryToValue(R.string.key_full_resolution);
 		bindPreferenceSummaryToValue(R.string.key_language);
 
-		addHintButtonListener();
+		addHintButtonListener(R.string.key_show_hints, false);
+		addHintButtonListener(R.string.key_hide_hints, true);
 	}
 
 	/**
-	 * Add the listener for the "hints" button.
+	 * Add the listener for a "hints" button.
+	 *
+	 * @param preferenceId
+	 *            The id of the button.
+	 * @param hintPreferenceValue
+	 *            The value to be set to all the hints preferences.
 	 */
-	private void addHintButtonListener() {
-		Preference myPreference = findPreference(getString(R.string.key_hints));
-		myPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	private void addHintButtonListener(final int preferenceId, final boolean hintPreferenceValue) {
+		Preference showPreference = findPreference(getString(preferenceId));
+		showPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
-				ButtonPreference buttonPreference = (ButtonPreference) preference;
-				showHintMenu(buttonPreference.getView());
+				PreferenceUtil.setAllHints(hintPreferenceValue);
+				((PreferenceScreen) findPreference(getActivity().getString(R.string.key_screen_hints))).getDialog()
+						.dismiss();
 				return true;
 			}
 		});
-	}
-
-	/**
-	 * Show the popup menu for disabling or enabling all hints.
-	 *
-	 * @param v
-	 *            The view being the anchor of the menu.
-	 */
-	private void showHintMenu(final View v) {
-		PopupMenu popup = new PopupMenu(getActivity(), v);
-		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(final MenuItem item) {
-				switch (item.getItemId()) {
-				case R.id.action_show_all_hints:
-					PreferenceUtil.setAllHints(false);
-					return true;
-				case R.id.action_hide_all_hints:
-					PreferenceUtil.setAllHints(true);
-					return true;
-				default:
-					return true;
-				}
-			}
-		});
-		popup.inflate(R.menu.pref_hints);
-		popup.show();
 	}
 
 	/**

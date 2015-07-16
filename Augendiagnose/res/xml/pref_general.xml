@@ -32,9 +32,16 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_language" />
 
-        <de.eisfeldj.augendiagnose.components.ButtonPreference
-            android:key="@string/key_hints"
-            android:title="@string/pref_button_hints" />
+        <PreferenceScreen
+            android:key="@string/key_screen_hints"
+            android:title="@string/pref_screen_hints" >
+            <Preference
+                android:key="@string/key_show_hints"
+                android:title="@string/menu_show_all_hints" />
+            <Preference
+                android:key="@string/key_hide_hints"
+                android:title="@string/menu_hide_all_hints" />
+        </PreferenceScreen>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_screen_storage_settings" >
         <de.eisfeldj.augendiagnose.components.DirectorySelectionPreference

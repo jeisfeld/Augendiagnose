@@ -6,6 +6,7 @@
 
     <string name="pref_screen_storage_settings">Storage and Memory Settings</string>
     <string name="pref_screen_display_settings">Display Settings</string>
+    <string name="pref_screen_hints">Hints</string>
 
     <!-- Strings related to Settings -->
 
@@ -26,7 +27,6 @@
     <string name="pref_title_language">Language</string>
     <string name="pref_default_language" translatable="false">0</string>
     <string name="pref_title_user_key">User key</string>
-    <string name="pref_button_hints">Hints</string>
 
     <!-- Strings related to Setting arrays -->
 
@@ -111,7 +111,9 @@
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>
     <string name="key_user_key" translatable="false">user_key</string>
-    <string name="key_hints" translatable="false">hints</string>
+    <string name="key_screen_hints" translatable="false">screen_hints</string>
+    <string name="key_show_hints" translatable="false">show_hints</string>
+    <string name="key_hide_hints" translatable="false">hide_hints</string>
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>

@@ -6,6 +6,7 @@
 
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
+    <string name="pref_screen_hints">Consejos</string>
 
     <!-- Strings related to Settings -->
 
@@ -20,7 +21,6 @@
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
     <string name="pref_title_user_key">Clave de usuario</string>
-    <string name="pref_button_hints">Consejos</string>
 
     <!-- Strings related to Setting arrays -->
 
