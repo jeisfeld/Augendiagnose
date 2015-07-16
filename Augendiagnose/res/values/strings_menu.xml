@@ -14,5 +14,7 @@
     <string name="menu_change_date">Change date</string>
     <string name="menu_move_to_input_folder">Move to input folder</string>
     <string name="menu_change_name">Change name</string>
+    <string name="menu_hide_all_hints">Do not display hints</string>
+    <string name="menu_show_all_hints">Display all hints</string>
 
 </resources>

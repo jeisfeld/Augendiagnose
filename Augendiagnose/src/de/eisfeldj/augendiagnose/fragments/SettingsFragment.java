@@ -11,17 +11,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
 import de.eisfeldj.augendiagnose.activities.SettingsActivity;
+import de.eisfeldj.augendiagnose.components.ButtonPreference;
 import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
-import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
-import de.eisfeldj.augendiagnose.util.imagefile.JpegSynchronizationUtil;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
+import de.eisfeldj.augendiagnose.util.imagefile.JpegSynchronizationUtil;
 
 /**
  * Fragment for displaying the settings.
@@ -62,7 +68,7 @@ public class SettingsFragment extends PreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.pref_general);
 
-		// Ensure that default values are set.
+		// Fill variables in order to detect changed values.
 		languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 		folderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
 		folderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
@@ -73,6 +79,50 @@ public class SettingsFragment extends PreferenceFragment {
 		bindPreferenceSummaryToValue(R.string.key_store_option);
 		bindPreferenceSummaryToValue(R.string.key_full_resolution);
 		bindPreferenceSummaryToValue(R.string.key_language);
+
+		addHintButtonListener();
+	}
+
+	/**
+	 * Add the listener for the "hints" button.
+	 */
+	private void addHintButtonListener() {
+		Preference myPreference = findPreference(getString(R.string.key_hints));
+		myPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				ButtonPreference buttonPreference = (ButtonPreference) preference;
+				showHintMenu(buttonPreference.getView());
+				return true;
+			}
+		});
+	}
+
+	/**
+	 * Show the popup menu for disabling or enabling all hints.
+	 *
+	 * @param v
+	 *            The view being the anchor of the menu.
+	 */
+	private void showHintMenu(final View v) {
+		PopupMenu popup = new PopupMenu(getActivity(), v);
+		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(final MenuItem item) {
+				switch (item.getItemId()) {
+				case R.id.action_show_all_hints:
+					PreferenceUtil.setAllHints(false);
+					return true;
+				case R.id.action_hide_all_hints:
+					PreferenceUtil.setAllHints(true);
+					return true;
+				default:
+					return true;
+				}
+			}
+		});
+		popup.inflate(R.menu.pref_hints);
+		popup.show();
 	}
 
 	/**

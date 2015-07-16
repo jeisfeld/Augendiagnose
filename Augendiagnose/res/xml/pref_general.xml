@@ -8,61 +8,69 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_folder_input" />
-    <de.eisfeldj.augendiagnose.components.DirectorySelectionPreference
-        android:defaultValue="@string/pref_default_folder_photos"
-        android:entries="@array/pref_list_titles_folder_photos"
-        android:entryValues="@array/pref_list_values_folder_photos"
-        android:key="@string/key_folder_photos"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_folder_photos" />
 
-    <CheckBoxPreference
-        android:defaultValue="@string/pref_default_eye_sequence_value"
-        android:key="@string/key_eye_sequence_choice"
-        android:title="@string/pref_title_eye_sequence_choice" />
-    <CheckBoxPreference
-        android:defaultValue="@string/pref_default_sort_by_last_name"
-        android:key="@string/key_sort_by_last_name"
-        android:title="@string/pref_title_sort_by_last_name" />
+    <PreferenceScreen android:title="@string/pref_screen_display_settings" >
+        <CheckBoxPreference
+            android:defaultValue="@string/pref_default_eye_sequence_value"
+            android:key="@string/key_eye_sequence_choice"
+            android:title="@string/pref_title_eye_sequence_choice" />
+        <CheckBoxPreference
+            android:defaultValue="@string/pref_default_sort_by_last_name"
+            android:key="@string/key_sort_by_last_name"
+            android:title="@string/pref_title_sort_by_last_name" />
 
-    <ListPreference
-        android:defaultValue="@null"
-        android:entries="@array/pref_list_titles_max_bitmap_size"
-        android:entryValues="@array/pref_list_values_max_bitmap_size"
-        android:key="@string/key_max_bitmap_size"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_max_bitmap_size" />
-    <ListPreference
-        android:defaultValue="@null"
-        android:entries="@array/pref_list_titles_full_resolution"
-        android:entryValues="@array/pref_list_values_full_resolution"
-        android:key="@string/key_full_resolution"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_full_resolution" />
-    <ListPreference
-        android:defaultValue="@string/pref_default_store_options"
-        android:entries="@array/pref_list_titles_store_options"
-        android:entryValues="@array/pref_list_values_store_options"
-        android:key="@string/key_store_option"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_store_options" />
+        <de.eisfeldj.augendiagnose.components.colorpicker.ColorDialogPreference
+            android:key="@string/key_overlay_color"
+            android:title="@string/pref_title_overlay_color" />
 
-    <de.eisfeldj.augendiagnose.components.colorpicker.ColorDialogPreference
-        android:key="@string/key_overlay_color"
-        android:title="@string/pref_title_overlay_color" />
+        <ListPreference
+            android:defaultValue="@string/pref_default_language"
+            android:entries="@array/pref_list_titles_language"
+            android:entryValues="@array/pref_list_values_language"
+            android:key="@string/key_language"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_language" />
 
-    <ListPreference
-        android:defaultValue="@string/pref_default_language"
-        android:entries="@array/pref_list_titles_language"
-        android:entryValues="@array/pref_list_values_language"
-        android:key="@string/key_language"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_language" />
+        <de.eisfeldj.augendiagnose.components.ButtonPreference
+            android:key="@string/key_hints"
+            android:title="@string/pref_button_hints" />
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/pref_screen_storage_settings" >
+        <de.eisfeldj.augendiagnose.components.DirectorySelectionPreference
+            android:defaultValue="@string/pref_default_folder_photos"
+            android:entries="@array/pref_list_titles_folder_photos"
+            android:entryValues="@array/pref_list_values_folder_photos"
+            android:key="@string/key_folder_photos"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_folder_photos" />
+
+        <ListPreference
+            android:defaultValue="@null"
+            android:entries="@array/pref_list_titles_max_bitmap_size"
+            android:entryValues="@array/pref_list_values_max_bitmap_size"
+            android:key="@string/key_max_bitmap_size"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_max_bitmap_size" />
+        <ListPreference
+            android:defaultValue="@null"
+            android:entries="@array/pref_list_titles_full_resolution"
+            android:entryValues="@array/pref_list_values_full_resolution"
+            android:key="@string/key_full_resolution"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_full_resolution" />
+        <ListPreference
+            android:defaultValue="@string/pref_default_store_options"
+            android:entries="@array/pref_list_titles_store_options"
+            android:entryValues="@array/pref_list_values_store_options"
+            android:key="@string/key_store_option"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_store_options" />
+    </PreferenceScreen>
 
     <EditTextPreference
         android:defaultValue=""

@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.ActivityManager;
@@ -16,6 +17,20 @@ import de.eisfeldj.augendiagnose.R;
  * Utility class for handling the shared preferences.
  */
 public final class PreferenceUtil {
+	/**
+	 * The list of preferences used for switching on and off hints.
+	 */
+	private static final Integer[] HINT_PREFERENCES = { R.string.key_tip_admarvel,
+			R.string.key_tip_clarity,
+			R.string.key_tip_displaydetails,
+			R.string.key_tip_displaynames,
+			R.string.key_tip_displaypictures,
+			R.string.key_tip_editcomment,
+			R.string.key_tip_firstuse,
+			R.string.key_tip_organizephotos,
+			R.string.key_tip_overlay,
+			R.string.key_tip_saveview };
+
 	/**
 	 * Hide default constructor.
 	 */
@@ -222,6 +237,18 @@ public final class PreferenceUtil {
 		Editor editor = getSharedPreferences().edit();
 		editor.putLong(Application.getAppContext().getString(preferenceId), i);
 		editor.commit();
+	}
+
+	/**
+	 * Set all hint preferences to the given value.
+	 *
+	 * @param value
+	 *            The value.
+	 */
+	public static void setAllHints(final boolean value) {
+		for (int preferenceId : Arrays.asList(HINT_PREFERENCES)) {
+			setSharedPreferenceBoolean(preferenceId, value);
+		}
 	}
 
 	/**

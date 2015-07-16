@@ -2,7 +2,13 @@
 
     <string name="title_activity_settings">Ajustes</string>
 
+    <!-- Strings related to Subscreens -->
+
+    <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
+    <string name="pref_screen_display_settings">Ajustes de la visualización</string>
+
     <!-- Strings related to Settings -->
+
     <string name="pref_title_folder_photos">Carpeta de fotos oculares</string>
     <string name="pref_default_folder_photos">__ext_storage__/FotosOcular</string>
     <string name="pref_title_folder_input">Carpeta de entrada para nuevas fotos</string>
@@ -14,6 +20,9 @@
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
     <string name="pref_title_user_key">Clave de usuario</string>
+    <string name="pref_button_hints">Consejos</string>
+
+    <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
         <item>Carpeta Eye-Fi</item>
