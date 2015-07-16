@@ -11,6 +11,5 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="libsExtra/xmpcore.jar"/>
 	<classpathentry kind="lib" path="libsExtra/annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="libsExtra/admarvel-android-sdk-core.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
