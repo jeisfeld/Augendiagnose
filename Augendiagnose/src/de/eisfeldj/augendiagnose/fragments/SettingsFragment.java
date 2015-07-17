@@ -18,6 +18,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
+import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
 
@@ -28,6 +29,7 @@ import de.eisfeldj.augendiagnose.util.DialogUtil;
 import de.eisfeldj.augendiagnose.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.eisfeldj.augendiagnose.util.GoogleBillingHelper;
 import de.eisfeldj.augendiagnose.util.GoogleBillingHelper.OnInventoryFinishedListener;
+import de.eisfeldj.augendiagnose.util.GoogleBillingHelper.OnPurchaseSuccessListener;
 import de.eisfeldj.augendiagnose.util.PreferenceUtil;
 import de.eisfeldj.augendiagnose.util.SystemUtil;
 import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
@@ -300,31 +302,28 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private OnInventoryFinishedListener onInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
-		public void handlePurchases(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
 				final boolean isPremium) {
 			for (PurchasedSku purchase : purchases) {
 				Preference purchasePreference = new Preference(getActivity());
 				String title =
 						String.format(getString(R.string.button_purchased_item), purchase.getSkuDetails()
-								.getTitle());
+								.getDisplayTitle(getActivity()));
 				purchasePreference.setTitle(title);
+				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
 				screenDonate.addItemFromInflater(purchasePreference);
 			}
 			for (SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
-				if (skuDetails.getSku().startsWith("android.test")) {
-					skuPreference.setTitle(skuDetails.getSku());
-				}
-				else {
-					skuPreference.setTitle(skuDetails.getTitle());
-				}
+				skuPreference.setTitle(skuDetails.getDisplayTitle(getActivity()));
 				skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
+				skuPreference.setSummary(skuDetails.getDescription());
 				skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 					@Override
 					public boolean onPreferenceClick(final Preference preference) {
 						String productId = preference.getKey().substring(SKU_KEY_PREFIX.length());
-						GoogleBillingHelper.launchPurchaseFlow(productId);
+						GoogleBillingHelper.launchPurchaseFlow(productId, onPurchaseSuccessListener);
 						return false;
 					}
 				});
@@ -334,6 +333,34 @@ public class SettingsFragment extends PreferenceFragment {
 				Preference preferenceRemoveAds = findPreference(getString(R.string.key_remove_ads));
 				preferenceRemoveAds.setEnabled(true);
 			}
+		}
+	};
+
+	/**
+	 * A listener handling the response after purchasing a product.
+	 */
+	private OnPurchaseSuccessListener onPurchaseSuccessListener = new OnPurchaseSuccessListener() {
+		@Override
+		public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
+			int messageResource =
+					addedPremiumProduct ? R.string.message_dialog_donation_thanks_premium
+							: R.string.message_dialog_donation_thanks;
+
+			MessageDialogListener listener = new MessageDialogListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					getActivity().finish();
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					getActivity().finish();
+				}
+			};
+
+			DialogUtil.displayInfo(getActivity(), listener, messageResource);
 		}
 	};
 

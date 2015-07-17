@@ -3,6 +3,9 @@ package com.android.vending.billing;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.eisfeldj.augendiagnose.R;
+import android.content.Context;
+
 /**
  * Represents an in-app product's listing details.
  */
@@ -51,6 +54,19 @@ public class SkuDetails {
 
 	public final String getTitle() {
 		return mTitle;
+	}
+
+	public final String getDisplayTitle(Context context) {
+		if(mSku.startsWith("android.test")) {
+			return mSku;
+		}
+		String applicationNamePostfix = " (" + context.getString(R.string.app_name) + ")";
+		if(mTitle.endsWith(applicationNamePostfix)) {
+			return mTitle.substring(0, mTitle.length() - applicationNamePostfix.length());
+		}
+		else {
+			return mTitle;
+		}
 	}
 
 	public final String getDescription() {

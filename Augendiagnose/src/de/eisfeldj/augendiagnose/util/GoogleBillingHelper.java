@@ -59,9 +59,14 @@ public final class GoogleBillingHelper {
 	private Activity activity;
 
 	/**
-	 * A listener called after inventory has been retrieved.
+	 * An onInventoryFinishedListener called after inventory has been retrieved.
 	 */
-	private OnInventoryFinishedListener listener;
+	private OnInventoryFinishedListener onInventoryFinishedListener;
+
+	/**
+	 * An onPurchaseSuccessListener called after a purchase has been completed.
+	 */
+	private OnPurchaseSuccessListener onPurchaseSuccessListener;
 
 	/**
 	 * The list of purchases.
@@ -105,7 +110,7 @@ public final class GoogleBillingHelper {
 			}
 			instance = new GoogleBillingHelper();
 			instance.activity = activity;
-			instance.listener = listener;
+			instance.onInventoryFinishedListener = listener;
 		}
 		instance.initialize();
 	}
@@ -133,7 +138,7 @@ public final class GoogleBillingHelper {
 			public void onIabSetupFinished(final IabResult result) {
 				if (result.isSuccess()) {
 					Log.d(TAG, "Finished IAB setup");
-					iabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), mGotInventoryListener);
+					iabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), gotInventoryListener);
 				}
 				else {
 					Log.e(TAG, "Problem setting up In-app Billing: " + result);
@@ -147,14 +152,17 @@ public final class GoogleBillingHelper {
 	 *
 	 * @param productId
 	 *            The productId.
+	 * @param listener
+	 *            a listener called after the purchase has been completed.
 	 */
-	public static void launchPurchaseFlow(final String productId) {
+	public static void launchPurchaseFlow(final String productId, final OnPurchaseSuccessListener listener) {
 		if (instance == null || instance.iabHelper == null) {
 			throw new NullPointerException(
 					"Tried to launch purchase flow without having GoogleBillingHelper initialized");
 		}
+		instance.onPurchaseSuccessListener = listener;
 		instance.iabHelper.launchPurchaseFlow(instance.activity, productId, REQUEST_CODE,
-				instance.mPurchaseFinishedListener);
+				instance.purchaseFinishedListener);
 	}
 
 	/**
@@ -192,9 +200,9 @@ public final class GoogleBillingHelper {
 	}
 
 	/**
-	 * The listener started after the inventory is loaded.
+	 * The onInventoryFinishedListener started after the inventory is loaded.
 	 */
-	private IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
+	private IabHelper.QueryInventoryFinishedListener gotInventoryListener =
 			new IabHelper.QueryInventoryFinishedListener() {
 				@Override
 				public void onQueryInventoryFinished(final IabResult result, final Inventory inventory) {
@@ -241,15 +249,16 @@ public final class GoogleBillingHelper {
 
 					}
 
-					listener.handlePurchases(purchases, nonPurchases, isPremium);
-
+					if (onInventoryFinishedListener != null) {
+						onInventoryFinishedListener.handleProducts(purchases, nonPurchases, isPremium);
+					}
 				}
 			};
 
 	/**
 	 * Callback for when a purchase is finished.
 	 */
-	private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
+	private IabHelper.OnIabPurchaseFinishedListener purchaseFinishedListener =
 			new IabHelper.OnIabPurchaseFinishedListener() {
 				@Override
 				public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
@@ -266,6 +275,12 @@ public final class GoogleBillingHelper {
 					}
 
 					Log.d(TAG, "Purchase successful.");
+
+					if (onPurchaseSuccessListener != null) {
+						boolean isPremiumProduct = Arrays.asList(PREMIUM_IDS).contains(purchase.getSku());
+						onPurchaseSuccessListener.handlePurchase(purchase, isPremiumProduct && !isPremium);
+						isPremium = isPremium || isPremiumProduct;
+					}
 				}
 			};
 
@@ -283,7 +298,21 @@ public final class GoogleBillingHelper {
 		 * @param isPremium
 		 *            Flag indicating if there is a purchase setting premium status.
 		 */
-		void handlePurchases(List<PurchasedSku> purchases, List<SkuDetails> availableProducts, boolean isPremium);
+		void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts, boolean isPremium);
 	}
 
+	/**
+	 * Listener to be called after a purchase has been successfully completed.
+	 */
+	public interface OnPurchaseSuccessListener {
+		/**
+		 * Handler called after a purchase has been successfully completed.
+		 *
+		 * @param purchase
+		 *            The completed purchase.
+		 * @param addedPremiumProduct
+		 *            Flag indicating if there was a premium upgrade.
+		 */
+		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
+	}
 }

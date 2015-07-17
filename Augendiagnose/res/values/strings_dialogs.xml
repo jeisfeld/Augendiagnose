@@ -29,6 +29,8 @@
     <string name="message_dialog_failed_to_change_date">Could not change date for photos of %1$s from %2$s to %3$s</string>
     <string name="message_dialog_failed_to_store_metadata">Failed to store metadata in file %1$s</string>
     <string name="message_dialog_failed_to_store_exif">Failed to store EXIF metadata in file %1$s - please contact the developer!</string>
+    <string name="message_dialog_donation_thanks">Thanks for your donation!</string>
+    <string name="message_dialog_donation_thanks_premium">Thanks for your donation! You may not switch off ads in the settings.</string>
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_take_photo_first">Please take first a photo of the %1$s.</string>
     <string name="message_dialog_take_photo_second">Please take now a photo of the %1$s.</string>
