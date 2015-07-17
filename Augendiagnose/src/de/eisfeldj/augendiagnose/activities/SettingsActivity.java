@@ -20,6 +20,10 @@ import de.eisfeldj.augendiagnose.util.imagefile.FileUtil;
  */
 public class SettingsActivity extends BaseActivity {
 	/**
+	 * The fragment tag.
+	 */
+	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+	/**
 	 * Tag to be replaced by the external storage root.
 	 */
 	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
@@ -44,12 +48,19 @@ public class SettingsActivity extends BaseActivity {
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Display the listFoldersFragment as the main content.
-		getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+		// Display the SettingsFragment as the main content.
 
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
+		SettingsFragment fragment = (SettingsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		if (fragment == null) {
+			getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment(), FRAGMENT_TAG)
+					.commit();
+			getFragmentManager().executePendingTransactions();
+
+			if (savedInstanceState == null) {
+				PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
+			}
 		}
+
 	}
 
 	@Override
