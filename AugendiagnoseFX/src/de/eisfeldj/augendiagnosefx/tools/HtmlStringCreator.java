@@ -110,7 +110,7 @@ public final class HtmlStringCreator {
 	 */
 	private String replaceStringResource(final String resourceString, final String resourceKey,
 			final String resourceValue) {
-		String beginString = "<string name=\"" + resourceKey + "\">\n<![CDATA[\n";
+		String beginString = "<string name=\"" + resourceKey + "\" formatted=\"false\">\n<![CDATA[\n";
 		String endString = "]]>\n    </string>";
 		int indexStart = resourceString.indexOf(beginString);
 		if (indexStart < 0) {

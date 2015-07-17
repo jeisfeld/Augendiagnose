@@ -20,7 +20,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_overview">
+    <string name="html_overview" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -114,7 +114,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_settings">
+    <string name="html_settings" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -140,84 +140,125 @@
 		Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte, die die Fotos per WiFi auf das
 		Smartphone schickt.</p>
 
-	<h3>Verzeichnis der Augenfotos</h3>
+	<h3>Anzeigeeinstellungen</h3>
 
-	<p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss normalerweise nicht geändert
-		werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Letztes Foto ist rechtes Auge</td>
+			<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge
+				ist. Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das
+				linke Auge fotografiert haben).</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Sortieren nach Nachname</td>
+			<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert
+				werden soll.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Standardfarbe für Overlays</td>
+			<td width="70%" valign="top">Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays normalerweise
+				angezeigt werden. (Voreinstellung: rot)</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Sprache</td>
+			<td width="70%" valign="top">Hier können Sie die Anzeigesprache der Applikation ändern. Eine Änderung des Wertes
+				erzwingt einen Neustart der App.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Tipps</td>
+			<td width="70%" valign="top">Hier können Sie alle Tipps reaktivieren, oder Sie können alle vorhandenen Tipps
+				deaktivieren (was nützlich ist, wenn Sie die App schon kennen, aber neu installieren).</td>
+		</tr>
+	</table>
 
-	<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
+	<h3>Speichereinstellungen</h3>
 
-	<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der SD-Karte wählen. Unter Android 4.4
-		(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger. In
-		Android 5 müssen Sie bei der Auswahl eines Verzeichnisses der SD-Karte zunächst der App den Zugriff auf die SD-Karte
-		gewähren (mittels des Storage Access Frameworks von Android).</p>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Verzeichnis der Augenfotos</td>
+			<td width="70%" valign="top"><p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses
+					muss normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
 
-	<h3>Letztes Foto ist rechtes Auge</h3>
+				<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
 
-	Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge ist. Standardmäßig ist hier das linke
-	Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das linke Auge fotografiert haben).
+				<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der SD-Karte wählen. Unter Android 4.4
+					(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger. In
+					Android 5 müssen Sie bei der Auswahl eines Verzeichnisses der SD-Karte zunächst der App den Zugriff auf die
+					SD-Karte gewähren (mittels des Storage Access Frameworks von Android).</p></td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Maximale Bitmap-Größe</td>
+			<td width="70%" valign="top">Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist
+				nötig, um Speicherplatz zu sparen. Als Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein
+				kleinerer Wert (z.B. 1024) konfiguriert werden. Zu große Werte können zu Abstürzen führen.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Anzeige in voller Auflösung</td>
+			<td width="70%" valign="top">Hier können Sie festlegen, unter welchen Umständen das Foto in voller Auflösung
+				angezeigt wird. Dies erlaubt es, mehr Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
 
-	<h3>Sortieren nach Nachname</h3>
+				<ul>
+					<li><b>Immer automatisch laden:</b> Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt
+						dazu, dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht
+						genug Speicher zur Verfügung steht.</li>
 
-	Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden soll.
+					<li><b>Automatisch laden, wenn nur ein Foto angezeigt wird:</b> Das Foto wird nur bei Anzeige eines einzigen
+						Fotos in voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
 
-	<h3>Maximale Bitmap-Größe</h3>
+					<li><b>Nur auf Anfrage:</b> Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten
+						Speicher und Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des
+						&bdquo;Lupen&ldquo;-Buttons <img src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller
+						Bildauflösung angezeigt werden.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Speichern von Daten in JPG-Dateien</td>
+			<td width="70%" valign="top">Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien speichert.
 
-	Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist nötig, um Speicherplatz zu sparen. Als
-	Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein kleinerer Wert (z.B. 1024) konfiguriert
-	werden. Zu große Werte können zu Abstürzen führen.
+				<ul>
+					<li><b>Speichern in EXIF (empfohlen):</b> Die Applikation speichert verfügbare Informationen in der JPG-Datei,
+						auch in Standardfeldern, die z.B. in Windows sichtbar sind.</li>
 
-	<h3>Anzeige in voller Auflösung</h3>
+					<li><b>Speichern in Extra-Feldern:</b> Die Applikation speichert Informationen in der JPG-Datei, aber nur in
+						neuen Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
 
-	Hier können Sie festlegen, unter welchen Umständen das Foto in voller Auflösung angezeigt wird. Dies erlaubt es, mehr
-	Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
+					<li><b>Nicht in Fotos speichern:</b> Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur
+						Teile der Funktionalität der App zur Verfügng.)</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 
-	<ul>
-		<li>Immer automatisch laden: Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt dazu, dass
-			man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht genug
-			Speicher zur Verfügung steht.</li>
+	<h3>Werbung entfernen / Spenden</h3>
 
-		<li>Automatisch laden, wenn nur ein Foto angezeigt wird: Das Foto wird nur bei Anzeige eines einzigen Fotos in
-			voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
+	<p>Diese Seite bietet einige Optionen, um eine Spende an den Entwickler zu machen - die Entwicklung dieser App
+		kostet viel Zeit; daher wäre es schön, von den Anwendern der App etwas zurückzubekommen.</p>
 
-		<li>Nur auf Anfrage: Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher und
-			Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons <img
-			src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.
-		</li>
-	</ul>
+	<p>Darüberhinaus gibt es folgende Optionen:</p>
 
-	<h3>Speichern von Daten in JPG-Dateien</h3>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Werbung entfernen</td>
+			<td width="70%" valign="top">Hier können Sie die Werbung entfernen (vorerst nur in den USA). Diese Möglichkeit
+				kann per Spende oder Nutzerschlüssel freigeschaltet werden.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Kontakt mit dem Entwickler</td>
+			<td width="70%" valign="top">Hier können Sie eine E-Mail an den Entwickler schreiben, falls Sie Wünsche oder
+				Probleme haben.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Nutzerschlüssel</td>
+			<td width="70%" valign="top">Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.</td>
+		</tr>
+	</table>
 
-	Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien speichert.
-
-	<ul>
-		<li>Speichern in EXIF (empfohlen): Die Applikation speichert verfügbare Informationen in der JPG-Datei, auch in
-			Standardfeldern, die z.B. in Windows sichtbar sind.</li>
-
-		<li>Speichern in Extra-Feldern: Die Applikation speichert Informationen in der JPG-Datei, aber nur in neuen
-			Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
-
-		<li>Nicht in Fotos speichern: Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur Teile der
-			Funktionalität der App zur Verfügng.)</li>
-	</ul>
-
-	<h3>Standardfarbe für Overlays</h3>
-
-	Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays normalerweise angezeigt werden. (Voreinstellung:
-	rot)
-
-	<h3>Sprache</h3>
-
-	Hier können Sie die Anzeigesprache der Applikation ändern. Eine Änderung des Wertes erzwingt einen Neustart der App.
-
-	<h3>Nutzerschlüssel</h3>
-
-	Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.
 </body>
 </html>
 ]]>
     </string>
-    <string name="html_organize_photos">
+    <string name="html_organize_photos" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -254,7 +295,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_display_photos">
+    <string name="html_display_photos" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

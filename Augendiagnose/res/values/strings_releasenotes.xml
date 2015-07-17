@@ -122,7 +122,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added advertisements (US only). Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Added donations via in-app purchase. Allowed disabling of ads. Reorganized settings. Bugfixes.</item>
     </string-array>
 
 </resources>

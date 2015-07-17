@@ -2,7 +2,7 @@
 <resources>
 
     <string name="html_navigation_overview">Información general</string>
-    <string name="html_navigation_settings">Configuración</string>
+    <string name="html_navigation_settings">Ajustes</string>
     <string name="html_navigation_organize_photos">Organizar nuevas fotos</string>
     <string name="html_navigation_display_photos">Visualizar las fotos</string>
     <string name="html_navigation_release_notes">Notas de la versión</string>
@@ -20,7 +20,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_overview">
+    <string name="html_overview" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -109,7 +109,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_settings">
+    <string name="html_settings" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -134,84 +134,125 @@
 		tomar fotos oculares en alta calidad. Un enfoque más práctico es utilizar una cámara externa con SD Eye-Fi, que
 		transfiere las fotos a través de WLAN en el dispositivo celular.</p>
 
-	<h3>Carpeta de fotos oculares</h3>
+	<h3>Ajustes de la visualización</h3>
 
-	<p>Esta es la carpeta en la que la aplicación administra las fotos de ojos. Normalmente, usted no tiene que cambiar
-		esto. Desde aquí, puede copiar las fotos a otros dispositivos.</p>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Última foto es ojo derecho</td>
+			<td width="70%" valign="top">Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como
+				configuración predeterminada este es el ojo izquierdo (lo que significa que usted hizo primero una foto del ojo
+				derecho y luego del ojo izquierdo).</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Ordenar por apellido</td>
+			<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Color predeterminado de superposiciones</td>
+			<td width="70%" valign="top">Aquí puede definir el color predeterminado para los superposiciones de topografías
+				del iris. (Estándar: rojo)</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Idioma</td>
+			<td width="70%" valign="top">Aquí puede cambiar el idioma en el que se mostrará la aplicación. Un cambio de
+				valor fuerza un reinicio de la aplicación.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Consejos</td>
+			<td width="70%" valign="top">Aquí se puede volver a habilitar todos los consejos, o puede desactivar todas
+				consejos existentes (que es útile después de la nueva instalación si ya conoce la aplicación).</td>
+		</tr>
+	</table>
 
-	<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
+	<h3>Ajustes de almacenamiento y memoria</h3>
 
-	<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
-		(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán más.
-		En Android 5, al seleccionar una carpeta en la tarjeta SD, usted tendrá que conceder derechos de acceso a la tarjeta
-		SD a través del &laquo;Storage Access Framework&raquo; de Android.</p>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Carpeta de fotos oculares</td>
+			<td width="70%" valign="top"><p>Esta es la carpeta en la que la aplicación administra las fotos de ojos.
+					Normalmente, usted no tiene que cambiar esto. Desde aquí, puede copiar las fotos a otros dispositivos.</p>
 
-	<h3>Última foto es ojo derecho</h3>
+				<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
 
-	Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como configuración predeterminada este es el
-	ojo izquierdo (lo que significa que usted hizo primero una foto del ojo derecho y luego del ojo izquierdo).
+				<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
+					(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán
+					más. En Android 5, al seleccionar una carpeta en la tarjeta SD, usted tendrá que conceder derechos de acceso a la
+					tarjeta SD a través del &laquo;Storage Access Framework&raquo; de Android.</p></td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Tamaño máximo de mapas de bits</td>
+			<td width="70%" valign="top">Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se requiere
+				para ahorrar memoria del dispositivo. El valor predeterminado es 2048. En dispositivos con poca memoria, puede ser
+				necesario para configurar un valor menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la
+				aplicación.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Mostrar imagen en alta resolución</td>
+			<td width="70%" valign="top">Aquí usted puede decidir en qué circunstancias se muestra la foto en alta
+				resolución, que permite ver más detalles en la foto, pero consume memoria y tiempo de cálculo.
 
-	<h3>Ordenar por apellido</h3>
+				<ul>
+					<li><b>Siempre cargar automáticamente:</b> La aplicación siempre almacena las fotos en resolución completa en
+						la memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a
+						fallos si no hay suficiente memoria disponible.</li>
 
-	Aquí se puede establecer si la lista de nombres será ordenada por apellido.
+					<li><b>Cargar automáticamente cuando se muestra sola foto:</b> La aplicación muestra la resolución completa
+						sólo cuando se muestre un único imagen. Esto requiere un medio de la memoria.</li>
 
-	<h3>Tamaño máximo de mapas de bits</h3>
+					<li><b>Cargar sólo si se solicita:</b> La aplicación no muestra la imagen en alta resolución. Esto requiere
+						menos memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. La botón &laquo;lupa&raquo; <img
+						src="../drawable/ic_clarity.png" /> permite visualizar el detalle actual de la imagen en la plena resolución.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Guardar datos adicionales en JPG</td>
+			<td width="70%" valign="top">Aquí puede limitar el almacenamiento de datos en los archivos JPG de la aplicación.
 
-	Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se requiere para ahorrar memoria del
-	dispositivo. El valor predeterminado es 2048. En dispositivos con poca memoria, puede ser necesario para configurar un
-	valor menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la aplicación.
+				<ul>
+					<li><b>Guardar en EXIF (recomendado):</b> La aplicación guarda la información relevante en el archivo JPG,
+						incluso en campos estándar que son visibles en Windows.</li>
 
-	<h3>Mostrar imagen en alta resolución</h3>
+					<li><b>Guardar en campos personalizados:</b> La aplicación guarda la información en el archivo JPG, pero sólo
+						en campos separados. Campos estándar se mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
 
-	Aquí usted puede decidir en qué circunstancias se muestra la foto en alta resolución, que permite ver más detalles en
-	la foto, pero consume memoria y tiempo de cálculo.
+					<li><b>No guarde datos en imágenes:</b> La aplicación no almacena información en archivos JPG. (Esto limita la
+						funcionalidad de la aplicación.)</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 
-	<ul>
-		<li>Siempre cargar automáticamente: La aplicación siempre almacena las fotos en resolución completa en la
-			memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a fallos si
-			no hay suficiente memoria disponible.</li>
+	<h3>Eliminar anuncios / Donar</h3>
 
-		<li>Cargar automáticamente cuando se muestra sola foto: La aplicación muestra la resolución completa sólo cuando
-			se muestre un único imagen. Esto requiere un medio de la memoria.</li>
+	<p>Esta página ofrece varios botones por los quales usted puede hacer una donación al desarrollador - el desarrollo
+		de esta aplicación toma mucho tiempo, y por eso, sería bueno recuperar algo de las personas que usan esta aplicación.</p>
 
-		<li>Cargar sólo si se solicita: La aplicación no muestra la imagen en alta resolución. Esto requiere menos
-			memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. La botón &laquo;lupa&raquo; <img
-			src="../drawable/ic_clarity.png" /> permite visualizar el detalle actual de la imagen en la plena resolución.
-		</li>
-	</ul>
+	<p>Además, hay las siguientes funciones:</p>
 
-	<h3>Guardar datos adicionales en JPG</h3>
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Quitar anuncios</td>
+			<td width="70%" valign="top">Aquí usted puede desactivar todos los anuncios (actualmente sólo en los Estados
+				Unidos). Esta función se puede activar a través de una donación o mediante clave de usuario.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Póngase en contacto co el desarrollador</td>
+			<td width="70%" valign="top">Aquí usted puede enviar un correo electrónico al desarrollador en caso de tener
+				deseos o problemas.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Clave de usuario</td>
+			<td width="70%" valign="top">Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.</td>
+		</tr>
+	</table>
 
-	Aquí puede limitar el almacenamiento de datos en los archivos JPG de la aplicación.
 
-	<ul>
-		<li>Guardar en EXIF (recomendado): La aplicación guarda la información relevante en el archivo JPG, incluso en
-			campos estándar que son visibles en Windows.</li>
-
-		<li>Guardar en campos personalizados: La aplicación guarda la información en el archivo JPG, pero sólo en campos
-			separados. Campos estándar se mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
-
-		<li>No guarde datos en imágenes: La aplicación no almacena información en archivos JPG. (Esto limita la
-			funcionalidad de la aplicación.)</Li>
-	</ul>
-
-	<h3>Color predeterminado de superposiciones</h3>
-
-	Aquí puede definir el color predeterminado para los superposiciones de topografías del iris. (Estándar: rojo)
-
-	<h3>Idioma</h3>
-
-	Aquí puede cambiar el idioma en el que se mostrará la aplicación. Un cambio de valor fuerza un reinicio de la
-	aplicación.
-
-	<h3>Clave de usuario</h3>
-
-	Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.
 </body>
 </html>
 ]]>
     </string>
-    <string name="html_organize_photos">
+    <string name="html_organize_photos" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -248,7 +289,7 @@
 </html>
 ]]>
     </string>
-    <string name="html_display_photos">
+    <string name="html_display_photos" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

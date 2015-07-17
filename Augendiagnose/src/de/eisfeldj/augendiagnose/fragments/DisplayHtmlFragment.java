@@ -21,7 +21,12 @@ public class DisplayHtmlFragment extends Fragment {
 	 * The style tag to be inserted into the HTML.
 	 */
 	private static final String STYLE =
-			"<style type=\"text/css\">body{color: #ffffff;} img {width: 24px; height: 24px; vertical-align: middle;} a {color: #7fffff;}</style>";
+			"<style type=\"text/css\">"
+			+ "body{color: #ffffff;} "
+			+ "img {width: 24px; height: 24px; vertical-align: middle;} "
+			+ "a {color: #7fffff;} "
+			+ "li {margin-top: 6px; }"
+			+ "</style>";
 
 	/**
 	 * The resource key for the resource to be displayed (for storage in the bundle).
