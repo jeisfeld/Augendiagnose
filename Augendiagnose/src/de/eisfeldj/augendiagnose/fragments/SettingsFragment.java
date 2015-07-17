@@ -127,6 +127,50 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
+	 * Add an entry for variable donation.
+	 */
+	private void addVariableDonation() {
+		Preference variableDonationPreference = new Preference(getActivity());
+		variableDonationPreference.setTitle(getString(R.string.menu_title_variable_donation));
+		variableDonationPreference.setSummary(getString(R.string.menu_detail_variable_donation));
+
+		variableDonationPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				Intent browserIntent =
+						new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.menu_target_variable_donation)));
+				startActivity(browserIntent);
+				return true;
+			}
+		});
+
+		screenDonate.addItemFromInflater(variableDonationPreference);
+	}
+
+	/**
+	 * Add an entry for developer contact.
+	 */
+	private void addDeveloperContact() {
+		Preference contactPreference = new Preference(getActivity());
+		contactPreference.setTitle(getString(R.string.menu_title_contact_developer));
+		contactPreference.setSummary(getString(R.string.menu_detail_contact_developer));
+
+		contactPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+						"mailto", getString(R.string.menu_email_contact_developer), null));
+				intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.menu_subject_contact_developer));
+
+				startActivity(intent);
+				return true;
+			}
+		});
+
+		screenDonate.addItemFromInflater(contactPreference);
+	}
+
+	/**
 	 * Binds a preference's summary to its value. More specifically, when the preference's value is changed, its summary
 	 * (line of text below the preference title) is updated to reflect the value. The summary is also immediately
 	 * updated upon calling this method. The exact display format is dependent on the type of preference.
@@ -304,6 +348,7 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
 				final boolean isPremium) {
+			// List inventory items.
 			for (PurchasedSku purchase : purchases) {
 				Preference purchasePreference = new Preference(getActivity());
 				String title =
@@ -329,10 +374,15 @@ public class SettingsFragment extends PreferenceFragment {
 				});
 				screenDonate.addItemFromInflater(skuPreference);
 			}
+
+			// Enable ad removal if applicable.
 			if (isPremium || Application.isAuthorized()) {
 				Preference preferenceRemoveAds = findPreference(getString(R.string.key_remove_ads));
 				preferenceRemoveAds.setEnabled(true);
 			}
+
+			addVariableDonation();
+			addDeveloperContact();
 		}
 	};
 
