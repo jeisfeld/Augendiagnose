@@ -86,12 +86,12 @@
             android:enabled="false"
             android:key="@string/key_remove_ads"
             android:title="@string/pref_title_remove_ads" />
-    </PreferenceScreen>
 
-    <EditTextPreference
-        android:defaultValue=""
-        android:inputType="textPassword"
-        android:key="@string/key_user_key"
-        android:title="@string/pref_title_user_key" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:inputType="textPassword"
+            android:key="@string/key_user_key"
+            android:title="@string/pref_title_user_key" />
+    </PreferenceScreen>
 
 </PreferenceScreen>

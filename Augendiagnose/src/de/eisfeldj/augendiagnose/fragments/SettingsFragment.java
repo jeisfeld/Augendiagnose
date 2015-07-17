@@ -357,7 +357,7 @@ public class SettingsFragment extends PreferenceFragment {
 				purchasePreference.setTitle(title);
 				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
-				screenDonate.addItemFromInflater(purchasePreference);
+				screenDonate.addPreference(purchasePreference);
 			}
 			for (SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
@@ -372,7 +372,7 @@ public class SettingsFragment extends PreferenceFragment {
 						return false;
 					}
 				});
-				screenDonate.addItemFromInflater(skuPreference);
+				screenDonate.addPreference(skuPreference);
 			}
 
 			// Enable ad removal if applicable.
@@ -383,6 +383,12 @@ public class SettingsFragment extends PreferenceFragment {
 
 			addVariableDonation();
 			addDeveloperContact();
+
+			// Move User Key to end of list.
+			Preference preferenceUserKey = findPreference(getString(R.string.key_user_key));
+			preferenceUserKey.setOrder(screenDonate.getPreferenceCount());
+//			screenDonate.removePreference(preferenceUserKey);
+//			screenDonate.addPreference(preferenceUserKey);
 		}
 	};
 
