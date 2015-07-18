@@ -14,7 +14,7 @@
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">No se puede escribir en la carpeta %1$s. Por favor, asegúrese de conceder derechos de acceso a la tarjeta SD completa.</string>
-    <string name="message_dialog_folder_does_not_exist">Carpeta %1$s no existe. Por favor, verifique las ajustes.</string>
+    <string name="message_dialog_folder_does_not_exist">Carpeta %1$s no existe. Por favor, verifique los ajustes.</string>
     <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización.</string>
     <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>
     <string name="message_dialog_file_already_exists">El archivo %1$s ya existe. Por favor seleccione un nombre o fecha diferente.</string>
@@ -30,7 +30,7 @@
     <string name="message_dialog_failed_to_store_metadata">No se ha podido almacenar los metadatos en el archivo %1$s</string>
     <string name="message_dialog_failed_to_store_exif">No se ha podido almacenar los EXIF metadatos en el archivo %1$s - por favor póngase en contacto con el productor.</string>
     <string name="message_dialog_donation_thanks">¡Gracias por su donación!</string>
-    <string name="message_dialog_donation_thanks_premium">¡Gracias por su donación! Ahora puede desactivar anuncios en las ajustes.</string>
+    <string name="message_dialog_donation_thanks_premium">¡Gracias por su donación! Ahora puede desactivar anuncios en los ajustes.</string>
     <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
     <string name="message_dialog_take_photo_first">Por favor, haga primero una fotografía del %1$s.</string>
     <string name="message_dialog_take_photo_second">Por favor, haga ahora una foto del %1$s.</string>

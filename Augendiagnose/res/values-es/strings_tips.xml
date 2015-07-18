@@ -139,7 +139,7 @@
 <body>
 	<h2>Mostrar imagen en alta resolución:</h2>
 	<p>Con este botón, puede mostrar la parte de la imagen que se muestra actualmente con resolución completa.</p>
-    <p>Esto también puede ser automatizado en las ajustes. Sin embargo, para los dispositivos con poca memoria, visualización en resolución completa puede llevar a problemas.</p>
+    <p>Esto también puede ser automatizado en los ajustes. Sin embargo, para los dispositivos con poca memoria, visualización en resolución completa puede llevar a problemas.</p>
 </body>
 </html>
 ]]>
@@ -152,6 +152,7 @@
 	<h2>anuncios:</h2>
 	<p>Por favor, apoye el desarrollo de la aplicación mediante la comprobación de la publicidad de vez en cuando.</p>
 	<p>Si ha hecho clic en el anuncio, no volverá a aparecer hasta el próximo inicio de la aplicación.</p>
+	<p>La sección &laquo;donar&raquo; de los ajustes ofrece la posibilidad de apagar los anuncios.</p>
 </body>
 </html>
 ]]>
