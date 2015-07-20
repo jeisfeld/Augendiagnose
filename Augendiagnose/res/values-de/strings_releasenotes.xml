@@ -34,7 +34,7 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark">In den Einstellungen gibt es die Option einer Spende an den Entwickler. Bitte unterstützen Sie die Weiterentwicklung der App, falls die App für sie nützlich ist.</string>
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
