@@ -30,7 +30,7 @@ even destroys the JPG file. Therefore, it is recommended that you keep backups o
 when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark">In the settings, there is an option to make a donation to the developer. Please consider supporting the advancement of the app if it is useful for you.</string>
+    <string name="releasenotes_current_remark"></string>
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
@@ -77,6 +77,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.11</item>
         <item>0.5.12</item>
         <item>0.5.13</item>
+        <item>0.5.14</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -123,6 +124,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added advertisements (US only). Bugfixes</item>
         <item>Bugfixes</item>
         <item>Added donations via in-app purchase. Allowed disabling of ads. Reorganized settings. Bugfixes.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
