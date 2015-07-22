@@ -44,6 +44,12 @@ public final class GoogleBillingHelper {
 			new String[] { "donation_monthly_small", "donation_big", "donation_medium" };
 
 	/**
+	 * The product ids which are subscriptions.
+	 */
+	private static final String[] SUBSCRIPTION_IDS =
+			new String[] { "donation_monthly_small" };
+
+	/**
 	 * An instance of GoogleBillingHelper.
 	 */
 	private static GoogleBillingHelper instance;
@@ -161,8 +167,17 @@ public final class GoogleBillingHelper {
 					"Tried to launch purchase flow without having GoogleBillingHelper initialized");
 		}
 		instance.onPurchaseSuccessListener = listener;
-		instance.iabHelper.launchPurchaseFlow(instance.activity, productId, REQUEST_CODE,
-				instance.purchaseFinishedListener);
+
+		if (Arrays.asList(SUBSCRIPTION_IDS).contains(productId)) {
+			Log.d(TAG, "Starting subscription purchase flow for " + productId);
+			instance.iabHelper.launchSubscriptionPurchaseFlow(instance.activity, productId, REQUEST_CODE,
+					instance.purchaseFinishedListener);
+		}
+		else {
+			Log.d(TAG, "Starting product purchase flow for " + productId);
+			instance.iabHelper.launchPurchaseFlow(instance.activity, productId, REQUEST_CODE,
+					instance.purchaseFinishedListener);
+		}
 	}
 
 	/**
