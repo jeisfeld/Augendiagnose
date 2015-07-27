@@ -68,19 +68,24 @@ public final class MediaStoreUtil {
 	private static int getImageId(final String path) throws ImageNotFoundException {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
-		Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-				new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + " = ?",
-				new String[] { path }, MediaStore.Images.Media.DATE_ADDED + " desc");
-		imagecursor.moveToFirst();
+		try {
+			Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + " = ?",
+					new String[] { path }, MediaStore.Images.Media.DATE_ADDED + " desc");
+			imagecursor.moveToFirst();
 
-		if (!imagecursor.isAfterLast()) {
-			int imageId = imagecursor.getInt(imagecursor.getColumnIndex(MediaStore.Images.Media._ID));
-			imagecursor.close();
-			return imageId;
+			if (!imagecursor.isAfterLast()) {
+				int imageId = imagecursor.getInt(imagecursor.getColumnIndex(MediaStore.Images.Media._ID));
+				imagecursor.close();
+				return imageId;
+			}
+			else {
+				imagecursor.close();
+				throw new ImageNotFoundException();
+			}
 		}
-		else {
-			imagecursor.close();
-			throw new ImageNotFoundException();
+		catch (Exception e) {
+			throw new ImageNotFoundException(e);
 		}
 	}
 
@@ -240,6 +245,13 @@ public final class MediaStoreUtil {
 		 * The default serial version id.
 		 */
 		private static final long serialVersionUID = 1L;
+
+		public ImageNotFoundException() {
+		}
+
+		public ImageNotFoundException(final Throwable e) {
+			super(e);
+		}
 	}
 
 }

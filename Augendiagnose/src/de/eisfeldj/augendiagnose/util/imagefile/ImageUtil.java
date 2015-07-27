@@ -216,7 +216,7 @@ public final class ImageUtil {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filepath, options);
-		int size = Math.max(options.outWidth, options.outWidth);
+		int size = Math.max(options.outWidth, options.outHeight);
 		return size / targetSize;
 	}
 

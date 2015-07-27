@@ -11,7 +11,7 @@ import de.eisfeldj.augendiagnose.util.TwoImageSelectionHandler;
 import de.eisfeldj.augendiagnose.util.imagefile.EyePhoto;
 
 /**
- * Array adapter class to display an eye photo pair in a list.
+ * Array adapter class to display a list of eye photos in order to select two of them.
  */
 public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	/**
@@ -45,7 +45,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 *            The Context the view is running in.
 	 */
 	public SelectTwoPicturesArrayAdapter(final Context context) {
-		super(context, R.layout.adapter_list_pictures_for_name);
+		super(context, R.layout.text_view_initializing);
 		this.activity = (SelectTwoPicturesActivity) context;
 	}
 
