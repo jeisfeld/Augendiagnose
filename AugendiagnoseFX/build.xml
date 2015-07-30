@@ -21,29 +21,29 @@
 		<mkdir dir="externalLibs" />
 
 		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Android\AugendiagnoseFX\lib">
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
 				<filename name="annotations.jar" />
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Android\AugendiagnoseFX\lib">
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
 				<filename name="xmpcore.jar" />
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Android\AugendiagnoseFX\lib">
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
 				<filename name="commons-lang3-3.3.2.jar" />
 			</fileset>
 		</copy>
 
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="D:\Git\Android\AugendiagnoseFX">
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX">
 				<include name="src/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
-			<fileset dir="D:\Git\Android\AugendiagnoseFX">
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX">
 				<include name="resources/**" />
 			</fileset>
 		</copy>

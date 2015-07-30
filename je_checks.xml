@@ -216,7 +216,7 @@ JE Customizations of Sun Checks (Eclipse)
     <property name="checkFormat" value="MagicNumber"/>
   </module>
   <module name="SuppressionFilter">
-    <property name="file" value="D:\Git\Android\suppressions.xml"/>
+    <property name="file" value="D:\Git\Augendiagnose\suppressions.xml"/>
   </module>
   <module name="SuppressionCommentFilter">
     <metadata name="net.sf.eclipsecs.core.comment" value="JAVADOC"/>
