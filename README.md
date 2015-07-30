@@ -1,7 +1,8 @@
-Android
-=======
+Augendiagnose
+=============
 
-Project for Android development.
+Project for development of the Augendiagnose / Eye Diagnosis app.
 
 Contains
-- Augendiagnose App
+- the Android app (Augendiagnose)
+- the accompanying JavaFX application (AugendiagnoseFX)
