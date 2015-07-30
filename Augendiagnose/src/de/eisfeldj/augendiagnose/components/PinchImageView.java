@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
@@ -92,6 +93,11 @@ public class PinchImageView extends ImageView {
 	 * A ScaleGestureDetector detecting the scale change.
 	 */
 	protected ScaleGestureDetector mScaleDetector;
+
+	/**
+	 * An additional GestureDetector which may be applied.
+	 */
+	protected GestureDetector mGestureDetector = null;
 
 	/**
 	 * The path name of the displayed image.
@@ -322,6 +328,12 @@ public class PinchImageView extends ImageView {
 	public boolean onTouchEvent(final MotionEvent ev) {
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
+
+		// If available, do the same for the Gesture Detector.
+		if (mGestureDetector != null) {
+			mGestureDetector.onTouchEvent(ev);
+		}
+
 		final int action = ev.getActionMasked();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
@@ -477,6 +489,10 @@ public class PinchImageView extends ImageView {
 		setMatrix();
 		invalidate();
 		return moved;
+	}
+
+	public final void setGestureDetector(final GestureDetector gestureDetector) {
+		this.mGestureDetector = gestureDetector;
 	}
 
 	/*
