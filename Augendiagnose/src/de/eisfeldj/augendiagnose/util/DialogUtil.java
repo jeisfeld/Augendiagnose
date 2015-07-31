@@ -67,7 +67,7 @@ public final class DialogUtil {
 	 *            an optional listener waiting for the dialog response. If a listener is given, then the dialog will not
 	 *            be automatically recreated on orientation change!
 	 * @param resource
-	 *            the error message
+	 *            the message resource
 	 * @param args
 	 *            arguments for the error message
 	 */

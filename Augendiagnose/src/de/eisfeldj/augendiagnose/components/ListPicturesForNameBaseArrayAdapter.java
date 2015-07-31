@@ -40,8 +40,10 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Constructor for the adapter.
 	 *
-	 * @param activity The activity using the adapter.
-	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
+	 * @param activity
+	 *            The activity using the adapter.
+	 * @param eyePhotoPairs
+	 *            The array of eye photo pairs to be displayed.
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
@@ -52,7 +54,8 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Default adapter to be used by the framework.
 	 *
-	 * @param context The Context the view is running in.
+	 * @param context
+	 *            The Context the view is running in.
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
@@ -82,6 +85,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View rowView;
+
 		// Reuse views if they are already created and in the cached range
 		if (convertView != null && cacheRange.isInRange(position)) {
 			rowView = convertView;
@@ -170,6 +174,11 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			return (start <= n) && (n < start + length);
 		}
 
+		@Override
+		public final String toString() {
+			return "[" + start + "," + (start + length - 1) + "]";
+		}
+
 		/**
 		 * Push a given number into the cache. The start position of the cache is adapted accordingly.
 		 *
@@ -181,7 +190,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 				start = n;
 			}
 			else if (n >= start + length) {
-				start = n - 1 - length;
+				start = n + 1 - length;
 			}
 		}
 
