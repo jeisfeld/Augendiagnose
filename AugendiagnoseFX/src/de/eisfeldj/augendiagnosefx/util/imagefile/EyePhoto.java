@@ -524,8 +524,6 @@ public class EyePhoto {
 
 	/**
 	 * Store person, date and rightLeft in the metadata.
-	 *
-	 * @return
 	 */
 	public final void storeDefaultMetadata() {
 		JpegMetadata metadata = getImageMetadata();

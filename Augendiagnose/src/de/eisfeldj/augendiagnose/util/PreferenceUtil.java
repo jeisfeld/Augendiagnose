@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
@@ -259,11 +257,8 @@ public final class PreferenceUtil {
 		String maxBitmapSize = getSharedPreferenceString(R.string.key_max_bitmap_size);
 
 		if (maxBitmapSize == null || maxBitmapSize.length() == 0) {
-			ActivityManager manager =
-					(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
-
 			// Only if 512 MB are accessible, then full resolution image should be stored.
-			int memoryClass = manager.getLargeMemoryClass();
+			int memoryClass = SystemUtil.getLargeMemoryClass();
 			if (memoryClass >= 256) { // MAGIC_NUMBER
 				maxBitmapSize = "2048";
 			}
@@ -278,11 +273,8 @@ public final class PreferenceUtil {
 		String fullResolutionSetting = getSharedPreferenceString(R.string.key_full_resolution);
 
 		if (fullResolutionSetting == null || fullResolutionSetting.length() == 0) {
-			ActivityManager manager =
-					(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
-
 			// Only if 512 MB are accessible, then full resolution image should be stored.
-			int memoryClass = manager.getLargeMemoryClass();
+			int memoryClass = SystemUtil.getLargeMemoryClass();
 			if (memoryClass >= 512) { // MAGIC_NUMBER
 				fullResolutionSetting = "2";
 			}

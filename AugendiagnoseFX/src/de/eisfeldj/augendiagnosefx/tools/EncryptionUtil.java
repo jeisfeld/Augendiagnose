@@ -6,16 +6,14 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.security.Key;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
-
-import java.util.Base64;
 
 /**
  * Utility for handling user keys.
@@ -150,9 +148,8 @@ public final class EncryptionUtil {
 	 * @param input
 	 *            the input for the hash creation.
 	 * @return the hash.
-	 * @throws NoSuchAlgorithmException
 	 */
-	private static byte[] createHash(final byte[] input) throws NoSuchAlgorithmException {
+	private static byte[] createHash(final byte[] input) {
 		return messageDigest.digest(input);
 	}
 
@@ -174,7 +171,12 @@ public final class EncryptionUtil {
 	 *            the String to be encrypted.
 	 * @return the encrypted String.
 	 * @throws BadPaddingException
+	 *             if this cipher is in decryption mode, and (un)padding has been requested, but the decrypted data is
+	 *             not bounded by the appropriate padding bytes
 	 * @throws IllegalBlockSizeException
+	 *             if this cipher is a block cipher, no padding has been requested (only in encryption mode), and the
+	 *             total input length of the data processed by this cipher is not a multiple of block size; or if this
+	 *             encryption algorithm is unable to process the input data provided.
 	 */
 	private static byte[] encrypt(final String input) throws BadPaddingException, IllegalBlockSizeException {
 		return cipherEncrypt.doFinal(input.getBytes());
@@ -186,6 +188,7 @@ public final class EncryptionUtil {
 	 * @param args
 	 *            Command line arguments - not used.
 	 * @throws IOException
+	 *             thrown if there are issues with text input.
 	 */
 	public static void main(final String[] args) throws IOException {
 		System.out.print("Enter name: "); // SYSTEMOUT

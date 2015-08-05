@@ -6,7 +6,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,19 +26,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 
 /**
  * BaseController for the "Display Photos" page.
@@ -118,10 +117,9 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 *
 	 * @param event
 	 *            The action event.
-	 * @throws IOException
 	 */
 	@FXML
-	private void handleNameClick(final MouseEvent event) throws IOException {
+	private void handleNameClick(final MouseEvent event) {
 		String name = listNames.getSelectionModel().getSelectedItem();
 		if (name != null && !name.equals(previousName)) {
 			showPicturesForName(name);
@@ -134,7 +132,6 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 *
 	 * @param event
 	 *            The action event.
-	 * @throws IOException
 	 */
 	@FXML
 	private void handleSearchText(final KeyEvent event) {

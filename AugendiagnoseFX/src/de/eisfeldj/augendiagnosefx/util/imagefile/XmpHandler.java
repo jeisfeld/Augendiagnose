@@ -241,6 +241,7 @@ public class XmpHandler {
 	 * @param value
 	 *            the value of the entry.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setJeItem(final String item, final String value) throws XMPException {
 		if (value != null) {
@@ -259,6 +260,7 @@ public class XmpHandler {
 	 * @param date
 	 *            the value of the entry.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setJeDate(final String item, final Date date) throws XMPException {
 		if (date != null) {
@@ -275,6 +277,7 @@ public class XmpHandler {
 	 * @param item
 	 *            the name of the entry.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void removeJeItem(final String item) throws XMPException {
 		xmpMeta.deleteProperty(NS_JE, item);
@@ -288,6 +291,7 @@ public class XmpHandler {
 	 * @param value
 	 *            the value of the entry.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	private void setDcItem(final String item, final String value) throws XMPException {
 		if (value != null) {
@@ -306,6 +310,7 @@ public class XmpHandler {
 	 * @param title
 	 *            the image title.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setDcTitle(final String title) throws XMPException {
 		setDcItem("title", title);
@@ -317,6 +322,7 @@ public class XmpHandler {
 	 * @param description
 	 *            the image description.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setDcDescription(final String description) throws XMPException {
 		setDcItem("description", description);
@@ -328,6 +334,7 @@ public class XmpHandler {
 	 * @param subject
 	 *            the image subject.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setDcSubject(final String subject) throws XMPException {
 		setDcItem("subject", subject);
@@ -339,6 +346,7 @@ public class XmpHandler {
 	 * @param userComment
 	 *            the user comment.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setUserComment(final String userComment) throws XMPException {
 		if (userComment != null) {
@@ -357,6 +365,7 @@ public class XmpHandler {
 	 * @param name
 	 *            the image person name.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final void setMicrosoftPerson(final String name) throws XMPException {
 		if (name != null) {
@@ -378,6 +387,7 @@ public class XmpHandler {
 	 *
 	 * @return the XMP String.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public final String getXmpString() throws XMPException {
 		return XMPMetaFactory.serializeToString(xmpMeta, null);

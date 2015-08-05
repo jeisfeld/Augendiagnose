@@ -51,6 +51,8 @@ import android.util.Log;
 public class IabHelper {
 	// JAVADOC:OFF
 
+	private static final String OPERATION_CONSUME = "consume";
+
 	// Is debug logging enabled?
 	private boolean mDebugLog = false;
 	private String mDebugTag = "IabHelper";
@@ -644,7 +646,7 @@ public class IabHelper {
 	 */
 	private void consume(final Purchase itemInfo) throws IabException {
 		checkNotDisposed();
-		checkSetupDone("consume");
+		checkSetupDone(OPERATION_CONSUME);
 
 		if (!itemInfo.getItemType().equals(ITEM_TYPE_INAPP)) {
 			throw new IabException(IABHELPER_INVALID_CONSUMPTION,
@@ -654,7 +656,7 @@ public class IabHelper {
 		try {
 			String token = itemInfo.getToken();
 			String sku = itemInfo.getSku();
-			if (token == null || token.equals("")) {
+			if (token == null || "".equals(token)) {
 				logError("Can't consume " + sku + ". No token.");
 				throw new IabException(IABHELPER_MISSING_TOKEN, "PurchaseInfo is missing token for sku: "
 						+ sku + " " + itemInfo);
@@ -687,7 +689,7 @@ public class IabHelper {
 	 */
 	public final void consumeAsync(final Purchase purchase, final OnConsumeFinishedListener listener) {
 		checkNotDisposed();
-		checkSetupDone("consume");
+		checkSetupDone(OPERATION_CONSUME);
 		List<Purchase> purchases = new ArrayList<Purchase>();
 		purchases.add(purchase);
 		consumeAsyncInternal(purchases, listener, null);
@@ -703,7 +705,7 @@ public class IabHelper {
 	 */
 	public final void consumeAsync(final List<Purchase> purchases, final OnConsumeMultiFinishedListener listener) {
 		checkNotDisposed();
-		checkSetupDone("consume");
+		checkSetupDone(OPERATION_CONSUME);
 		consumeAsyncInternal(purchases, null, listener);
 	}
 
@@ -797,8 +799,8 @@ public class IabHelper {
 
 	private void flagStartAsync(final String operation) {
 		if (mAsyncInProgress) {
-			throw new IllegalStateException("Can't start async operation (" +
-					operation + ") because another async operation(" + mAsyncOperation + ") is in progress.");
+			throw new IllegalStateException("Can't start async operation ("
+					+ operation + ") because another async operation(" + mAsyncOperation + ") is in progress.");
 		}
 		mAsyncOperation = operation;
 		mAsyncInProgress = true;
@@ -925,7 +927,7 @@ public class IabHelper {
 			final OnConsumeFinishedListener singleListener,
 			final OnConsumeMultiFinishedListener multiListener) {
 		final Handler handler = new Handler();
-		flagStartAsync("consume");
+		flagStartAsync(OPERATION_CONSUME);
 		(new Thread(new Runnable() {
 			@Override
 			public void run() {

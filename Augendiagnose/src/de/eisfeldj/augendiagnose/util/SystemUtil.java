@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnose.util;
 import java.util.Locale;
 
 import de.eisfeldj.augendiagnose.Application;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -75,7 +76,7 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Determine if the screen is shown in landscape mode (i.e. width > height)
+	 * Determine if the screen is shown in landscape mode (i.e. width &gt; height)
 	 *
 	 * @return true if the app runs in landscape mode
 	 */
@@ -159,4 +160,17 @@ public final class SystemUtil {
 
 		return locale;
 	}
+
+	/**
+	 * Get the large memory class of the device.
+	 *
+	 * @return the memory class - the maximal available memory for the app (in MB).
+	 */
+	public static int getLargeMemoryClass() {
+		ActivityManager manager =
+				(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+		return manager.getLargeMemoryClass();
+	}
+
 }

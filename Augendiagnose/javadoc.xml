@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc" >
+
+    <target name="javadoc" >
+
+        <javadoc
+            access="private"
+            author="false"
+            classpath="bin/classes;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;libs/android-support-v13.jar;libsExtra/xmpcore.jar;libsExtra/annotations.jar;libs/admarvel-android-sdk-core.jar"
+            destdir="doc"
+            linksource="true"
+            nodeprecated="false"
+            nodeprecatedlist="false"
+            noindex="false"
+            nonavbar="false"
+            notree="false"
+            packagenames="de.eisfeldj.augendiagnose.util.imagefile,de.eisfeldj.augendiagnose.activities,de.eisfeldj.augendiagnose.components.colorpicker,de.eisfeldj.augendiagnose.components,de.eisfeldj.augendiagnose.util,com.android.vending.billing,de.eisfeldj.augendiagnose.fragments,de.eisfeldj.augendiagnose"
+            source="1.7"
+            sourcepath="src"
+            splitindex="true"
+            use="true"
+            version="true" >
+
+            <link href="file:/D:/Jörg/Eclipse/Android/XMPCore/doc/" />
+
+            <link
+                href="http://android-javadoc.localhost/reference/"
+                offline="true"
+                packagelistLoc="C:\Program Files (x86)\Android\android-sdk\docs\reference" />
+
+            <link href="file:/D:/Git/Augendiagnose/Augendiagnose/doc/" />
+        </javadoc>
+    </target>
+
+</project>

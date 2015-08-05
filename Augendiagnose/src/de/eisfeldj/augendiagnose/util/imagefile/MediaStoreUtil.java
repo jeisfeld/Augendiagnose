@@ -63,6 +63,8 @@ public final class MediaStoreUtil {
 	 * @param path
 	 *            The path of the image
 	 * @return the image id.
+	 * @throws ImageNotFoundException
+	 *             thrown if the image is not found in the media store.
 	 */
 	@SuppressWarnings("static-access")
 	private static int getImageId(final String path) throws ImageNotFoundException {

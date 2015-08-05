@@ -26,7 +26,7 @@ public final class DateUtil {
 	 * @param format
 	 *            the date format
 	 * @return the date object
-	 * @throws ParseException
+	 * @throws ParseException thrown if the date string cannog be parsed.
 	 */
 	public static Date parse(final String date, final String format) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());

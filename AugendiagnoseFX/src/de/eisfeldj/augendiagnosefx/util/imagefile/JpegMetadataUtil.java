@@ -46,7 +46,9 @@ public final class JpegMetadataUtil {
 	 * @param imageFile
 	 *            the image file.
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 */
 	public static void printAllExifData(final File imageFile) throws ImageReadException, IOException {
 		final IImageMetadata metadata = Imaging.getMetadata(imageFile);
@@ -77,8 +79,11 @@ public final class JpegMetadataUtil {
 	 * @param imageFile
 	 *            the file.
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public static void printAllXmpData(final File imageFile) throws ImageReadException, IOException, XMPException {
 		final String xmpString = Imaging.getXmpXml(imageFile);
@@ -93,6 +98,7 @@ public final class JpegMetadataUtil {
 	 * @throws IOException
 	 *             thrown if the file is no jpg.
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 */
 	protected static void checkJpeg(final String jpegImageFileName) throws IOException, ImageReadException {
 		File file = new File(jpegImageFileName);
@@ -108,8 +114,10 @@ public final class JpegMetadataUtil {
 	 * @param jpegImageFileName
 	 *            the file for which metadata should be retrieved.
 	 * @return the metadata of the file.
-	 * @throws IOException
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
+	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 */
 	public static JpegMetadata getMetadata(final String jpegImageFileName) throws ImageReadException, IOException {
 		checkJpeg(jpegImageFileName);
@@ -225,10 +233,14 @@ public final class JpegMetadataUtil {
 	 *            the file for which metadata should be changed.
 	 * @param metadata
 	 *            the new metadata.
-	 * @throws IOException
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 * @throws ImageWriteException
+	 *             thrown if the metadata cannot be written.
+	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	public static void changeMetadata(final String jpegImageFileName, final JpegMetadata metadata) throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
@@ -249,14 +261,16 @@ public final class JpegMetadataUtil {
 	 *            the file for which metadata should be changed.
 	 * @param metadata
 	 *            the new metadata
-	 * @throws IOException
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 * @throws ImageWriteException
+	 *             thrown if the metadata cannot be written.
+	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 */
 	@SuppressWarnings("resource")
 	private static void changeExifMetadata(final String jpegImageFileName, final JpegMetadata metadata)
-			throws IOException,
-			ImageReadException, ImageWriteException {
+			throws IOException, ImageReadException, ImageWriteException {
 		File jpegImageFile = new File(jpegImageFileName);
 		String tempFileName = jpegImageFileName + ".temp";
 		File tempFile = new File(tempFileName);
@@ -338,15 +352,18 @@ public final class JpegMetadataUtil {
 	 * @param metadata
 	 *            the new metadata.
 	 *
-	 * @throws IOException
 	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
 	 * @throws ImageWriteException
+	 *             thrown if the metadata cannot be written.
+	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
 	 * @throws XMPException
+	 *             thrown in case of issues with XML handling.
 	 */
 	@SuppressWarnings("resource")
 	private static void changeXmpMetadata(final String jpegImageFileName, final JpegMetadata metadata)
-			throws IOException,
-			ImageReadException, ImageWriteException, XMPException {
+			throws IOException, ImageReadException, ImageWriteException, XMPException {
 		File jpegImageFile = new File(jpegImageFileName);
 		String tempFileName = jpegImageFileName + ".temp";
 		File tempFile = new File(tempFileName);

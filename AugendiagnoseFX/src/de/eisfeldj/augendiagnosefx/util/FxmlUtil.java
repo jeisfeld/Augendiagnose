@@ -34,7 +34,6 @@ public final class FxmlUtil {
 	 * @param fxmlFile
 	 *            The name of the FXML file.
 	 * @return The controller handling the expanded page.
-	 * @throws IOException
 	 */
 	public static Controller getRootFromFxml(final String fxmlFile) {
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -84,7 +83,6 @@ public final class FxmlUtil {
 	 * @param isClosable
 	 *            Indicator if this is a closable page. (-1 means end)
 	 * @return the controller of the subpage.
-	 * @throws IOException
 	 */
 	public static BaseController displaySubpage(final String fxmlFile, final int paneIndex, final boolean isClosable) {
 		BaseController controller;
@@ -129,9 +127,8 @@ public final class FxmlUtil {
 	 *
 	 * @param fxmlFile
 	 *            The name of the FXML file.
-	 * @throws IOException
 	 */
-	public static void displayMenu(final String fxmlFile) throws IOException {
+	public static void displayMenu(final String fxmlFile) {
 		MenuBar root = (MenuBar) getRootFromFxml(fxmlFile).getRoot();
 		MainController.getInstance().setMenuBarContents(root);
 	}

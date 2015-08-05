@@ -20,11 +20,12 @@ public class EyeImageView extends ImageView {
 	 */
 	private boolean initialized = false;
 
-	// JAVADOC:OFF
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @see #View(Context)
+	 * @param context
+	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @see android.view.View#View(Context)
 	 */
 	public EyeImageView(final Context context) {
 		this(context, null, 0);
@@ -33,7 +34,11 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @see #View(Context, AttributeSet)
+	 * @param context
+	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs
+	 *            The attributes of the XML tag that is inflating the view.
+	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public EyeImageView(final Context context, final AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -42,13 +47,18 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @see #View(Context, AttributeSet, int)
+	 * @param context
+	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs
+	 *            The attributes of the XML tag that is inflating the view.
+	 * @param defStyle
+	 *            An attribute in the current theme that contains a reference to a style resource that supplies default
+	 *            values for the view. Can be 0 to not look for defaults.
+	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public EyeImageView(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 	}
-
-	// JAVADOC:ON
 
 	/**
 	 * Set the eye photo and create the bitmap.

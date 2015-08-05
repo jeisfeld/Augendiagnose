@@ -117,6 +117,7 @@ public class TakePicturesActivity extends BaseActivity {
 	 *
 	 * @return The image file.
 	 * @throws IOException
+	 *             thrown in case of issues with file creation.
 	 */
 	private static File createImageFile() throws IOException {
 		// Create an image file name

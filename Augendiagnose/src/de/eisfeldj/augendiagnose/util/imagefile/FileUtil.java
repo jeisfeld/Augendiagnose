@@ -827,6 +827,7 @@ public final class FileUtil {
 	 *            The name of the target file.
 	 * @return the dummy file.
 	 * @throws IOException
+	 *             thrown if there are issues while copying.
 	 */
 	private static File copyDummyFile(final int resource, final String folderName, final String targetName)
 			throws IOException {

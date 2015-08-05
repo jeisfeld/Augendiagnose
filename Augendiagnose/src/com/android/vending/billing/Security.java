@@ -42,6 +42,7 @@ public final class Security {
 	 *            the signed JSON string (signed, not encrypted)
 	 * @param signature
 	 *            the signature for the data, signed with the private key
+	 * @return true if verification was successful.
 	 */
 	public static boolean verifyPurchase(final String base64PublicKey, final String signedData, final String signature) {
 		if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey)) {
@@ -49,16 +50,16 @@ public final class Security {
 			return false;
 		}
 
-        boolean verified = false;
-        if (!TextUtils.isEmpty(signature)) {
-            PublicKey key = Security.generatePublicKey(base64PublicKey);
-            verified = Security.verify(key, signedData, signature);
-            if (!verified) {
-                Log.w(TAG, "signature does not match data.");
-                return false;
-            }
-        }
-        return true;
+		boolean verified = false;
+		if (!TextUtils.isEmpty(signature)) {
+			PublicKey key = Security.generatePublicKey(base64PublicKey);
+			verified = Security.verify(key, signedData, signature);
+			if (!verified) {
+				Log.w(TAG, "signature does not match data.");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -66,8 +67,7 @@ public final class Security {
 	 *
 	 * @param encodedPublicKey
 	 *            Base64-encoded public key
-	 * @throws IllegalArgumentException
-	 *             if encodedPublicKey is invalid
+	 * @return the PublicKey instance.
 	 */
 	public static PublicKey generatePublicKey(final String encodedPublicKey) {
 		try {

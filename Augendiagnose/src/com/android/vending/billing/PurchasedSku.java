@@ -5,19 +5,33 @@ package com.android.vending.billing;
  */
 public class PurchasedSku {
 
+	/**
+	 * The purchase.
+	 */
 	private Purchase purchase;
 
-	public Purchase getPurchase() {
+	public final Purchase getPurchase() {
 		return purchase;
 	}
 
+	/**
+	 * The SKU details of the purchase.
+	 */
 	private SkuDetails skuDetails;
 
-	public SkuDetails getSkuDetails() {
+	public final SkuDetails getSkuDetails() {
 		return skuDetails;
 	}
 
-	public PurchasedSku(SkuDetails skuDetails, Purchase purchase) {
+	/**
+	 * Constructor, passing the SKU details and the purchase.
+	 *
+	 * @param skuDetails
+	 *            The SKU details
+	 * @param purchase
+	 *            The purchase.
+	 */
+	public PurchasedSku(final SkuDetails skuDetails, final Purchase purchase) {
 		this.skuDetails = skuDetails;
 		this.purchase = purchase;
 	}

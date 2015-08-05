@@ -322,6 +322,7 @@ public final class StringConverter {
 		 * @param file
 		 *            The file to be written.
 		 * @throws IOException
+		 *             thrown if there are issues writing the file.
 		 */
 		@SuppressWarnings("resource")
 		protected FilteredFileWriter(final File file) throws IOException {

@@ -68,6 +68,8 @@ public final class HtmlStringCreator {
 	 *
 	 * @param args
 	 *            The command line arguments.
+	 * @throws IOException
+	 *             thrown if there any read/write issues.
 	 */
 	public static void main(final String[] args) throws IOException {
 		instance = new HtmlStringCreator();
@@ -83,6 +85,7 @@ public final class HtmlStringCreator {
 	 * @param language
 	 *            The language.
 	 * @throws IOException
+	 *             thrown if there are issues writing the file.
 	 */
 	private void updateResourceFile(final String language) throws IOException {
 		String resourceFileEncoding = "UTF-8";
@@ -134,6 +137,7 @@ public final class HtmlStringCreator {
 	 *            The name of the page.
 	 * @return The content of the page.
 	 * @throws IOException
+	 *             thrown if there are issues reading the file.
 	 */
 	private String readHtmlFile(final String language, final String fileName) throws IOException {
 		File file = new File(new File(WEB_BASE_FOLDER, language), fileName);
@@ -149,6 +153,7 @@ public final class HtmlStringCreator {
 	 *            The encoding to be used.
 	 * @return The contents of the file.
 	 * @throws IOException
+	 *             thrown if there are issues reading the file.
 	 */
 	private String readFile(final File file, final String encoding) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
@@ -178,6 +183,7 @@ public final class HtmlStringCreator {
 	 * @param encoding
 	 *            The encoding to be used.
 	 * @throws IOException
+	 *             thrown if there are issues writing the file.
 	 */
 	private void writeFile(final File file, final String content, final String encoding) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding));

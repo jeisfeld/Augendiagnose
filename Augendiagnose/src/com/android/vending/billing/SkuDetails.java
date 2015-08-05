@@ -56,12 +56,12 @@ public class SkuDetails {
 		return mTitle;
 	}
 
-	public final String getDisplayTitle(Context context) {
-		if(mSku.startsWith("android.test")) {
+	public final String getDisplayTitle(final Context context) {
+		if (mSku.startsWith("android.test")) {
 			return mSku;
 		}
 		String applicationNamePostfix = " (" + context.getString(R.string.app_name) + ")";
-		if(mTitle.endsWith(applicationNamePostfix)) {
+		if (mTitle.endsWith(applicationNamePostfix)) {
 			return mTitle.substring(0, mTitle.length() - applicationNamePostfix.length());
 		}
 		else {

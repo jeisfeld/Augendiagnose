@@ -30,6 +30,7 @@ public final class DateUtil {
 	 *            the date format
 	 * @return the date object
 	 * @throws ParseException
+	 *             thrown if the date string cannot be parsed.
 	 */
 	public static Date parse(final String date, final String format) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
