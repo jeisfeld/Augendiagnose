@@ -238,6 +238,18 @@ public final class PreferenceUtil {
 	}
 
 	/**
+	 * Remove a shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 */
+	public static void removeSharedPreference(final int preferenceId) {
+		Editor editor = getSharedPreferences().edit();
+		editor.remove(Application.getAppContext().getString(preferenceId));
+		editor.commit();
+	}
+
+	/**
 	 * Set all hint preferences to the given value.
 	 *
 	 * @param value

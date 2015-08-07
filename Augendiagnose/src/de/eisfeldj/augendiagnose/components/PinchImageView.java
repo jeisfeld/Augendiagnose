@@ -184,16 +184,20 @@ public class PinchImageView extends ImageView {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
-		mBitmap = retainFragment.bitmap;
+		if (!pathName.equals(mPathName)) {
+			retainFragment.setBitmap(null);
+		}
 
-		if (mBitmap == null || !pathName.equals(mPathName)) {
+		mBitmap = retainFragment.getBitmap();
+
+		if (mBitmap == null) {
 			// populate bitmaps in separate thread, so that screen keeps fluid.
 			// This also ensures that this happens only after view is visible and sized.
 			Thread thread = new Thread() {
 				@Override
 				public void run() {
 					mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
-					retainFragment.bitmap = mBitmap;
+					retainFragment.setBitmap(mBitmap);
 					mPathName = pathName;
 					post(new Runnable() {
 						@Override
@@ -226,14 +230,18 @@ public class PinchImageView extends ImageView {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
-		mBitmap = retainFragment.bitmap;
+		if (imageResource != mImageResource) {
+			retainFragment.setBitmap(null);
+		}
 
-		if (mBitmap == null || imageResource != mImageResource) {
+		mBitmap = retainFragment.getBitmap();
+
+		if (mBitmap == null) {
 			Thread thread = new Thread() {
 				@Override
 				public void run() {
 					mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
-					retainFragment.bitmap = mBitmap;
+					retainFragment.setBitmap(mBitmap);
 					mImageResource = imageResource;
 					post(new Runnable() {
 						@Override
@@ -245,8 +253,6 @@ public class PinchImageView extends ImageView {
 				}
 			};
 			thread.start();
-			mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
-			mImageResource = imageResource;
 		}
 		else {
 			super.setImageBitmap(mBitmap);
@@ -264,7 +270,7 @@ public class PinchImageView extends ImageView {
 		float heightFactor = 1f * getHeight() / mBitmap.getHeight();
 		float widthFactor = 1f * getWidth() / mBitmap.getWidth();
 		float result = Math.min(widthFactor, heightFactor);
-		return result == 0 ? 1f : result;
+		return result;
 	}
 
 	/**
@@ -288,11 +294,13 @@ public class PinchImageView extends ImageView {
 			mPosX = ONE_HALF;
 			mPosY = ONE_HALF;
 			mScaleFactor = getNaturalScaleFactor();
-			mInitialized = true;
+			if (mScaleFactor > 0) {
+				mInitialized = true;
+				mLastScaleFactor = mScaleFactor;
+				requestLayout();
+				invalidate();
+			}
 		}
-		mLastScaleFactor = mScaleFactor;
-		requestLayout();
-		invalidate();
 	}
 
 	/**
@@ -327,6 +335,14 @@ public class PinchImageView extends ImageView {
 	public void requestLayout() {
 		super.requestLayout();
 		setMatrix();
+	}
+
+	@Override
+	protected final void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		if (mBitmap != null && !mInitialized) {
+			doInitialScaling();
+		}
 	}
 
 	/*
@@ -457,6 +473,10 @@ public class PinchImageView extends ImageView {
 	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
 			justification = "Using floating point equality to see if value has changed")
 	protected boolean handlePointerMove(final MotionEvent ev) {
+		if (!mInitialized) {
+			return false;
+		}
+
 		boolean moved = false;
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
 		final float x = ev.getX(pointerIndex);
@@ -496,8 +516,9 @@ public class PinchImageView extends ImageView {
 			moved = true;
 		}
 
+		// setMatrix invalidates if matrix is changed.
 		setMatrix();
-		invalidate();
+
 		return moved;
 	}
 

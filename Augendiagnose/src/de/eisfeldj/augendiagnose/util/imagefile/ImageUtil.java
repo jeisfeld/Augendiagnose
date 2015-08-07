@@ -2,7 +2,10 @@ package de.eisfeldj.augendiagnose.util.imagefile;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentResolver;
@@ -33,6 +36,12 @@ public final class ImageUtil {
 	 * Number of milliseconds for retry of getting bitmap.
 	 */
 	private static final long BITMAP_RETRY = 50;
+
+	/**
+	 * The file endings considered as image files.
+	 */
+	private static final List<String> IMAGE_SUFFIXES = Arrays.asList(
+			new String[] { "JPG", "JPEG", "PNG", "BMP", "TIF", "TIFF", "GIF" });
 
 	/**
 	 * Hide default constructor.
@@ -152,8 +161,9 @@ public final class ImageUtil {
 				return bitmap;
 			}
 
-			if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
-				// Only if bitmap is bigger than maxSize, then resize it.
+			if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize
+					|| maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
+				// Only if bitmap is bigger than maxSize, then resize it - but don't trust the thumbs from media store.
 				if (bitmap.getWidth() > bitmap.getHeight()) {
 					int targetWidth = maxSize;
 					int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
@@ -256,6 +266,67 @@ public final class ImageUtil {
 			}
 		}
 		return mimeType;
+	}
+
+	/**
+	 * Check if a file is an image file.
+	 *
+	 * @param file
+	 *            The file
+	 * @param strict
+	 *            if true, then the file content will be checked, otherwise the suffix is sufficient.
+	 * @return true if it is an image file.
+	 */
+	public static boolean isImage(final File file, final boolean strict) {
+		if (file == null || !file.exists() || file.isDirectory()) {
+			return false;
+		}
+		if (!strict) {
+			String fileName = file.getName();
+			int index = fileName.lastIndexOf('.');
+			if (index >= 0) {
+				String suffix = fileName.substring(index + 1);
+				if (IMAGE_SUFFIXES.contains(suffix.toUpperCase(Locale.getDefault()))) {
+					return true;
+				}
+			}
+		}
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(file.getPath(), options);
+		return options.outWidth >= 0 - 1 && options.outHeight >= 0;
+	}
+
+	/**
+	 * Get the list of image files in a folder.
+	 *
+	 * @param folderName
+	 *            The folder name.
+	 * @return The list of image files in this folder.
+	 */
+	public static ArrayList<String> getImagesInFolder(final String folderName) {
+		ArrayList<String> fileNames = new ArrayList<String>();
+		if (folderName == null) {
+			return fileNames;
+		}
+		File folder = new File(folderName);
+		if (!folder.exists() || !folder.isDirectory()) {
+			return fileNames;
+		}
+		File[] imageFiles = folder.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(final File file) {
+				return isImage(file, false);
+			}
+		});
+		if (imageFiles == null) {
+			return fileNames;
+		}
+
+		for (File file : imageFiles) {
+			fileNames.add(file.getAbsolutePath());
+		}
+		return fileNames;
 	}
 
 	/**

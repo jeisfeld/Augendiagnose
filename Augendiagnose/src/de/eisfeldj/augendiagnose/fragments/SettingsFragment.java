@@ -387,8 +387,6 @@ public class SettingsFragment extends PreferenceFragment {
 			// Move User Key to end of list.
 			Preference preferenceUserKey = findPreference(getString(R.string.key_user_key));
 			preferenceUserKey.setOrder(screenDonate.getPreferenceCount());
-//			screenDonate.removePreference(preferenceUserKey);
-//			screenDonate.addPreference(preferenceUserKey);
 		}
 	};
 
