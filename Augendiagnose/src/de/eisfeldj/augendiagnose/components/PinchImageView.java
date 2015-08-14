@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -50,9 +51,14 @@ public class PinchImageView extends ImageView {
 	protected static final int INVALID_POINTER_ID = -1;
 
 	/**
-	 * Indicator if the view is initialized with the image bitmap.
+	 * Indicator if the view is initialized with the image bitmap, i.e. the initial scaling has been done.
 	 */
 	protected boolean mInitialized = false;
+
+	/**
+	 * Indicator if the view has been populated with the bitmap.
+	 */
+	protected boolean mIsBitmapSet = false;
 
 	/**
 	 * Field used to check if a gesture was moving the image (then no context menu will appear).
@@ -191,24 +197,26 @@ public class PinchImageView extends ImageView {
 		mBitmap = retainFragment.getBitmap();
 
 		if (mBitmap == null) {
+			final Handler handler = new Handler();
 			// populate bitmaps in separate thread, so that screen keeps fluid.
 			// This also ensures that this happens only after view is visible and sized.
-			Thread thread = new Thread() {
+			new Thread() {
 				@Override
 				public void run() {
 					mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
-					retainFragment.setBitmap(mBitmap);
+
+					retainFragment.bitmap = mBitmap;
 					mPathName = pathName;
-					post(new Runnable() {
+					handler.post(new Runnable() {
 						@Override
 						public void run() {
 							PinchImageView.super.setImageBitmap(mBitmap);
+							mIsBitmapSet = true;
 							doInitialScaling();
 						}
 					});
 				}
-			};
-			thread.start();
+			}.start();
 		}
 		else {
 			super.setImageBitmap(mBitmap);
@@ -236,23 +244,25 @@ public class PinchImageView extends ImageView {
 
 		mBitmap = retainFragment.getBitmap();
 
-		if (mBitmap == null) {
-			Thread thread = new Thread() {
+		if (mBitmap == null || imageResource != mImageResource) {
+			final Handler handler = new Handler();
+
+			new Thread() {
 				@Override
 				public void run() {
 					mBitmap = BitmapFactory.decodeResource(getResources(), imageResource);
 					retainFragment.setBitmap(mBitmap);
 					mImageResource = imageResource;
-					post(new Runnable() {
+					handler.post(new Runnable() {
 						@Override
 						public void run() {
 							PinchImageView.super.setImageBitmap(mBitmap);
+							mIsBitmapSet = true;
 							doInitialScaling();
 						}
 					});
 				}
-			};
-			thread.start();
+			}.start();
 		}
 		else {
 			super.setImageBitmap(mBitmap);
@@ -290,7 +300,7 @@ public class PinchImageView extends ImageView {
 	 */
 	// OVERRIDABLE
 	protected void doInitialScaling() {
-		if (!mInitialized) {
+		if (mIsBitmapSet && !mInitialized) {
 			mPosX = ONE_HALF;
 			mPosY = ONE_HALF;
 			mScaleFactor = getNaturalScaleFactor();
@@ -340,7 +350,7 @@ public class PinchImageView extends ImageView {
 	@Override
 	protected final void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (mBitmap != null && !mInitialized) {
+		if (mIsBitmapSet && !mInitialized) {
 			doInitialScaling();
 		}
 	}
