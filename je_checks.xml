@@ -226,7 +226,7 @@ JE Customizations of Sun Checks (Eclipse)
   <module name="SuppressWithNearbyCommentFilter">
     <metadata name="net.sf.eclipsecs.core.comment" value="OVERRIDABLE"/>
     <property name="commentFormat" value="OVERRIDABLE"/>
-    <property name="checkFormat" value="DesignForExtension"/>
+    <property name="checkFormat" value="DesignForExtension|OverridableMethodInConstructor"/>
     <property name="influenceFormat" value="1"/>
   </module>
   <module name="SuppressionCommentFilter">

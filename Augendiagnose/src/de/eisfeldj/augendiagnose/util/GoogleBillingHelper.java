@@ -135,6 +135,7 @@ public final class GoogleBillingHelper {
 		}
 		catch (Exception e) {
 			Log.e(TAG, "Did not find PrivateConstants", e);
+			return;
 		}
 		// compute your public key and store it in base64EncodedPublicKey
 		iabHelper = new IabHelper(activity, base64EncodedPublicKey);

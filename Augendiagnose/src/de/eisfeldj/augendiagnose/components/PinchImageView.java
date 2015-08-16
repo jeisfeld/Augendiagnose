@@ -220,6 +220,7 @@ public class PinchImageView extends ImageView {
 		}
 		else {
 			super.setImageBitmap(mBitmap);
+			mIsBitmapSet = true;
 			doInitialScaling();
 		}
 	}
@@ -266,6 +267,7 @@ public class PinchImageView extends ImageView {
 		}
 		else {
 			super.setImageBitmap(mBitmap);
+			mIsBitmapSet = true;
 			doInitialScaling();
 		}
 
