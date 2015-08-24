@@ -101,9 +101,6 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="AbbreviationAsWordInName">
       <property name="allowedAbbreviationLength" value="1"/>
     </module>
-    <module name="AvoidConstantAsFirstOperandInConditionCheck">
-      <property name="targetConstantTypes" value="LITERAL_NULL,LITERAL_TRUE,LITERAL_FALSE,NUM_INT,NUM_DOUBLE,NUM_LONG,NUM_FLOAT"/>
-    </module>
     <module name="AvoidHidingCauseException"/>
     <module name="ConfusingConditionCheck"/>
     <module name="EmptyPublicCtorInClassCheck"/>
@@ -195,6 +192,10 @@ JE Customizations of Sun Checks (Eclipse)
       <property name="max" value="15"/>
     </module>
     <module name="UncommentedMain"/>
+    <module name="AvoidConstantAsFirstOperandInConditionCheck">
+      <property name="severity" value="ignore"/>
+      <property name="targetConstantTypes" value="LITERAL_NULL,LITERAL_TRUE,LITERAL_FALSE,NUM_INT,NUM_DOUBLE,NUM_LONG,NUM_FLOAT"/>
+    </module>
   </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
