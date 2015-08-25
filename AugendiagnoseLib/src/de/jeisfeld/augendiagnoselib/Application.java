@@ -21,20 +21,48 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 		justification = "Intentionally using same name as superclass")
 public class Application extends android.app.Application {
 	/**
-	 * A utility field to store a context statically.
+	 * An instance of this application.
 	 */
-	private static Context context;
+	private static Application application;
+
 	/**
 	 * The default tag for logging.
 	 */
 	public static final String TAG = "Application";
 
+	/**
+	 * The version names for the release notes.
+	 */
+	private String[] releaseNotesVersionNames = new String[0];
+
+	public static String[] getReleaseNotesVersionNames() {
+		return application.releaseNotesVersionNames;
+	}
+
+	protected final void setReleaseNotesVersionNames(final String[] releaseNotesVersionNames) {
+		this.releaseNotesVersionNames = releaseNotesVersionNames;
+	}
+
+	/**
+	 * The release notes entries.
+	 */
+	private String[] releaseNotesVersionNotes = new String[0];
+
+	public static String[] getReleaseNotesVersionNotes() {
+		return application.releaseNotesVersionNotes;
+	}
+
+	protected final void setReleaseNotesVersionNotes(final String[] releaseNotesVersionNotes) {
+		this.releaseNotesVersionNotes = releaseNotesVersionNotes;
+	}
+
+	// OVERRIDABLE
 	@Override
 	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
 			justification = "Make some context visible statically (no matter which one)")
-	public final void onCreate() {
+	public void onCreate() {
 		super.onCreate();
-		Application.context = getApplicationContext();
+		Application.application = this;
 		setLanguage();
 		setExceptionHandler();
 
@@ -81,7 +109,7 @@ public class Application extends android.app.Application {
 	 * @return The (statically stored) application context
 	 */
 	public static Context getAppContext() {
-		return Application.context;
+		return Application.application.getApplicationContext();
 	}
 
 	/**
@@ -113,7 +141,7 @@ public class Application extends android.app.Application {
 	public static int getVersion() {
 		PackageInfo pInfo;
 		try {
-			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			pInfo = getAppContext().getPackageManager().getPackageInfo(getAppContext().getPackageName(), 0);
 			return pInfo.versionCode;
 		}
 		catch (NameNotFoundException e) {
@@ -130,7 +158,7 @@ public class Application extends android.app.Application {
 	public static String getVersionString() {
 		PackageInfo pInfo;
 		try {
-			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			pInfo = getAppContext().getPackageManager().getPackageInfo(getAppContext().getPackageName(), 0);
 			return pInfo.versionName;
 		}
 		catch (NameNotFoundException e) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">Eye Diagnosis</string>
+    <string name="app_name" translatable="false">AugendiagnoseLib</string>
     <string name="title_activity_display_two">Compare Photos</string>
     <string name="title_activity_display_one">Display Photo</string>
     <string name="title_activity_list_folders_for_display">Select Name</string>

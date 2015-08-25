@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="releasenotes_title" translatable="false">Release Notes</string>
-    <string name="releasenotes_changes" translatable="false">Latest Changes</string>
-    <string name="releasenotes_release" translatable="false">Release</string>
+    <string name="releasenotes_title">Release Notes</string>
+    <string name="releasenotes_changes">Latest Changes</string>
+    <string name="releasenotes_release">Release</string>
     <string name="releasenotes_first_usage" translatable="false"></string>
     <string name="releasenotes_current_remark" translatable="false"></string>
-    <string-array name="releasenotes_version_names" translatable="false"></string-array>
-    <string-array name="releasenotes_version_notes" translatable="false"></string-array>
 
 </resources>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="releasenotes_title">Notas de la versión</string>
-    <string name="releasenotes_changes">Cambios recientes</string>
-    <string name="releasenotes_release">Versión</string>
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Información para nuevos usuarios:</h3>

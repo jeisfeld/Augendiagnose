@@ -8,5 +8,14 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
 		justification = "Intentionally using same name as superclass")
 public class Application extends de.jeisfeld.augendiagnoselib.Application {
+	@Override
+	public final void onCreate() {
+		super.onCreate();
+
+		setReleaseNotesVersionNames(
+				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_names));
+		setReleaseNotesVersionNotes(
+				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_notes));
+	}
 
 }

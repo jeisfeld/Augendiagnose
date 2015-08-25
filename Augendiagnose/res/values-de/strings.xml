@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <string name="app_name">Augendiagnose</string>
     <string name="button_open_eyefi_app">Eye-Fi App öffnen</string>
     <string name="button_display_pictures">Fotos anzeigen</string>
     <string name="button_organize_new_photos">Neue Fotos einordnen</string>
