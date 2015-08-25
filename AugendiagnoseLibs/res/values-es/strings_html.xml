@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="html_navigation_overview">Información general</string>
+    <string name="html_navigation_settings">Ajustes</string>
+    <string name="html_navigation_organize_photos">Organizar nuevas fotos</string>
+    <string name="html_navigation_display_photos">Visualizar las fotos</string>
+    <string name="html_navigation_release_notes">Notas de la versión</string>
+
+</resources>

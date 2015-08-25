@@ -1,0 +1,11 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+    <dimen name="grid_pictures_size">180dp</dimen>
+    <dimen name="icon_overlay_color_size">36sp</dimen>
+    <dimen name="list_picture_height">160dp</dimen>
+    <dimen name="list_second_picture_height">140dp</dimen>
+    <dimen name="togglebutton_circlesize">24sp</dimen>
+
+</resources>

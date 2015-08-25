@@ -7,7 +7,7 @@
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.DisplayTwoActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity"
             android:label="@string/title_activity_display_two"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
@@ -58,7 +58,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.DisplayOneActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity"
             android:label="@string/title_activity_display_one"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
@@ -68,7 +68,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForDisplayActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity"
             android:label="@string/title_activity_list_folders_for_display"
             android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
@@ -77,7 +77,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.ListFoldersForDisplaySecondActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplaySecondActivity"
             android:label="@string/title_activity_list_folders_for_display_second"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.Dialog"
@@ -88,7 +88,7 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.OrganizeNewPhotosActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity"
             android:label="@string/title_activity_organize_new_photos"
             android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
@@ -98,7 +98,7 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.TakePicturesActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.TakePicturesActivity"
             android:label="@string/title_activity_take_pictures"
             android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
@@ -108,7 +108,7 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.ListPicturesForNameActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity"
             android:label="@string/title_activity_list_pictures_for_name"
             android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
@@ -118,7 +118,7 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.ListPicturesForSecondNameActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity"
             android:label="@string/title_activity_list_pictures_for_second_name"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.Dialog"
@@ -128,7 +128,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.SelectTwoPicturesActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity"
             android:label="@string/title_activity_select_two_pictures"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
@@ -137,11 +137,11 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.SettingsActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="de.eisfeldj.augendiagnose.activities.DisplayHtmlActivity"
+            android:name="de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity"
             android:label="@string/title_help"
             android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
@@ -164,7 +164,7 @@
 
         <provider
             android:name="com.admarvel.android.ads.AdMarvelLocalFileContentProvider"
-            android:authorities="de.eisfeldj.augendiagnose.AdMarvelLocalFileContentProvider"
+            android:authorities="de.jeisfeld.augendiagnoselib.AdMarvelLocalFileContentProvider"
             android:exported="false" />
     </application>
 

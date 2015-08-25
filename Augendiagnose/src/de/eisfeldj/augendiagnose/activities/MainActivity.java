@@ -9,14 +9,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import de.eisfeldj.augendiagnose.Application;
 import de.eisfeldj.augendiagnose.R;
-import de.eisfeldj.augendiagnose.util.DialogUtil;
-import de.eisfeldj.augendiagnose.util.PreferenceUtil;
-import de.eisfeldj.augendiagnose.util.ReleaseNotesUtil;
-import de.eisfeldj.augendiagnose.util.SystemUtil;
-import de.eisfeldj.augendiagnose.util.imagefile.ImageUtil;
-import de.eisfeldj.augendiagnose.util.imagefile.MediaStoreUtil;
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.activities.AdMarvelActivity;
+import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
+import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
+import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
+import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
+import de.jeisfeld.augendiagnoselib.activities.TakePicturesActivity;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
 /**
  * Main activity of the application.

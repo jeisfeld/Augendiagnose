@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_dialog_change_name">Namen ändern</string>
+    <string name="title_dialog_error">Fehler</string>
+    <string name="title_dialog_info">Information</string>
+    <string name="title_dialog_image_info">Bildinformation</string>
+    <string name="title_dialog_confirmation">Bestätigung</string>
+    <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
+    <string name="title_dialog_tip">Tipp</string>
+    <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
+    <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
+    <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
+    <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
+    <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis.</string>
+    <string name="message_dialog_cannot_write_to_folder_saf">Verzeichnis %1$s ist nicht schreibbar. Bitte stellen Sie sicher, dass Sie Schreibrechte für die ganze SD-Karte erteilen.</string>
+    <string name="message_dialog_folder_does_not_exist">Verzeichnis %1$s existiert nicht. Bitte überprüfen Sie die Einstellungen.</string>
+    <string name="message_dialog_no_organized_photos">Es sind keine eingeordneten Fotos zum anzeigen vorhanden.</string>
+    <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>
+    <string name="message_dialog_file_already_exists">Datei %1$s existiert schon. Bitte wählen Sie einen anderen Namen oder ein anderes Datum.</string>
+    <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
+    <string name="message_dialog_failed_to_move_folder_partially">Beim Verschieben des Verzeichnisses %1$s in %2$s sind Probleme aufgetreten - bitte überprüfen und korrigieren Sie diese Verzeichnisse.</string>
+    <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
+    <string name="message_dialog_failed_to_delete_file">Löschen des Fotos %1$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_delete_all_files">Konnte nicht alle Fotos des Eingangsverzeichnisses löschen</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Löschen der Fotos von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Verschieben der Fotos von %1$s vom %2$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_delete_folder">Löschen des Verzeichnisses von %1$s fehlgeschlagen</string>
+    <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
+    <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
+    <string name="message_dialog_failed_to_store_exif">Konnte EXIF-Informationen nicht in Datei %1$s speichern - bitte Kontaktieren Sie den Entwickler!</string>
+    <string name="message_dialog_donation_thanks">Danke für Ihre Spende!</string>
+    <string name="message_dialog_donation_thanks_premium">Danke für Ihre Spende! Sie können nun in den Einstellungen die Werbung abschalten.</string>
+    <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>
+    <string name="message_dialog_take_photo_first">Bitte machen Sie zunächst ein Foto des %1$s.</string>
+    <string name="message_dialog_take_photo_second">Bitte machen Sie nun ein Foto des %1$s.</string>
+    <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
+    <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
+    <string name="message_dialog_confirm_delete_folder">Wollen Sie %1$s wirklich mit allen Fotos löschen?</string>
+    <string name="message_dialog_confirm_delete_photo">Wollen Sie das Foto %1$s wirklich löschen?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Wollen Sie wirklich alle Fotos im Eingangsverzeichnis löschen?</string>
+    <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
+    <string name="message_dialog_confirm_no_jpeg">Die gewählten Fotos sind keine JPG-Fotos. Daher werden Teile der App (wie Speichern von Daten) nicht funktionieren. Wollen Sie trotzdem fortsetzen?</string>
+    <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
+    <string name="imageinfo_line_filename">Dateiname:</string>
+    <string name="imageinfo_line_filedate">Dateidatum:</string>
+    <string name="imageinfo_line_name">Name:</string>
+    <string name="imageinfo_line_comment">Kommentar:</string>
+    <string name="param_right_eye">rechten Auges</string>
+    <string name="param_left_eye">linken Auges</string>
+
+</resources>

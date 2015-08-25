@@ -1,53 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title_dialog_change_name">Cambiar nombre</string>
-    <string name="title_dialog_error">Error</string>
-    <string name="title_dialog_info">Información</string>
-    <string name="title_dialog_image_info">Datos de la imagen</string>
-    <string name="title_dialog_confirmation">Confirmación</string>
-    <string name="title_dialog_select_folder">Seleccionar carpeta</string>
-    <string name="title_dialog_tip">Consejo</string>
-    <string name="message_dialog_no_picture">No hay suficientes fotos (min. 2 requerido)</string>
-    <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles para %1$s</string>
-    <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
-    <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
-    <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>
-    <string name="message_dialog_cannot_write_to_folder_saf">No se puede escribir en la carpeta %1$s. Por favor, asegúrese de conceder derechos de acceso a la tarjeta SD completa.</string>
-    <string name="message_dialog_folder_does_not_exist">Carpeta %1$s no existe. Por favor, verifique los ajustes.</string>
-    <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización.</string>
-    <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>
-    <string name="message_dialog_file_already_exists">El archivo %1$s ya existe. Por favor seleccione un nombre o fecha diferente.</string>
-    <string name="message_dialog_failed_to_move_file">Error al mover el archivo %1$s a %2$s</string>
-    <string name="message_dialog_failed_to_move_folder_partially">Error mientras se mueve la carpeta %1$s a %2$s - Por favor, consulte las carpetas y mover archivos a la carpeta apropiada.</string>
-    <string name="message_dialog_failed_to_rename_file">Error al cambiar el nombre de archivo %1$s a %2$s</string>
-    <string name="message_dialog_failed_to_delete_file">No se ha podido eliminar la foto %1$s</string>
-    <string name="message_dialog_failed_to_delete_all_files">No se ha podido eliminar todos los archivos de la carpeta de entrada</string>
-    <string name="message_dialog_failed_to_delete_file_for_date">No se ha podido eliminar las fotos de %1$s de %2$s</string>
-    <string name="message_dialog_failed_to_move_file_for_date">Error al mover las fotos de %1$s de %2$s</string>
-    <string name="message_dialog_failed_to_delete_folder">No se ha podido eliminar la carpeta de %1$s</string>
-    <string name="message_dialog_failed_to_change_date">No se pudo cambiar la fecha para las fotos de %1$s de %2$s a %3$s</string>
-    <string name="message_dialog_failed_to_store_metadata">No se ha podido almacenar los metadatos en el archivo %1$s</string>
-    <string name="message_dialog_failed_to_store_exif">No se ha podido almacenar los EXIF metadatos en el archivo %1$s - por favor póngase en contacto con el productor.</string>
-    <string name="message_dialog_donation_thanks">¡Gracias por su donación!</string>
-    <string name="message_dialog_donation_thanks_premium">¡Gracias por su donación! Ahora puede desactivar anuncios en los ajustes.</string>
-    <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
-    <string name="message_dialog_take_photo_first">Por favor, haga primero una fotografía del %1$s.</string>
-    <string name="message_dialog_take_photo_second">Por favor, haga ahora una foto del %1$s.</string>
-    <string name="message_dialog_unformatted_file">El archivo %1$s no está formateado correctamente</string>
     <string name="message_dialog_eyefi_not_installed">Eye-Fi no está instalado</string>
-    <string name="message_dialog_confirm_delete_date">¿Realmente desea borrar las fotos de %1$s de %2$s?</string>
-    <string name="message_dialog_confirm_delete_folder">¿Realmente desea eliminar %1$s con todas las fotos?</string>
-    <string name="message_dialog_confirm_delete_photo">¿Realmente desea eliminar la foto %1$s?</string>
-    <string name="message_dialog_confirm_delete_all_photos">¿Realmente desea eliminar todas las fotos de la carpeta de entrada?</string>
-    <string name="message_dialog_confirm_move_to_input_folder">¿Realmente desea mover las fotos de %1$s de %2$s a la carpeta de entrada?</string>
-    <string name="message_dialog_confirm_no_jpeg">Las fotos seleccionadas no son JPG fotos. Por lo tanto, parte de la funcionalidad (tal como almacenamiento de información) no funcionará. ¿Quiere continuar?</string>
-    <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
-    <string name="imageinfo_line_filename">Nombre del archivo:</string>
-    <string name="imageinfo_line_filedate">Fecha del archivo:</string>
-    <string name="imageinfo_line_name">Nombre:</string>
-    <string name="imageinfo_line_comment">Comentario:</string>
-    <string name="param_right_eye">ojo derecho</string>
-    <string name="param_left_eye">ojo izquierdo</string>
 
 </resources>
