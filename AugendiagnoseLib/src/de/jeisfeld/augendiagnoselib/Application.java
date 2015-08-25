@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.PrivateConstants;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -54,6 +55,19 @@ public class Application extends android.app.Application {
 
 	protected final void setReleaseNotesVersionNotes(final String[] releaseNotesVersionNotes) {
 		this.releaseNotesVersionNotes = releaseNotesVersionNotes;
+	}
+
+	/**
+	 * The private constants of this app.
+	 */
+	private PrivateConstants privateConstants = null;
+
+	public static PrivateConstants getPrivateConstants() {
+		return application.privateConstants;
+	}
+
+	protected final void setPrivateConstants(final PrivateConstants privateConstants) {
+		this.privateConstants = privateConstants;
 	}
 
 	// OVERRIDABLE

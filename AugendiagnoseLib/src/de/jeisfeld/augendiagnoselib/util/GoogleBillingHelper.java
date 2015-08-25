@@ -1,13 +1,8 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 
 import com.android.vending.billing.IabHelper;
 import com.android.vending.billing.IabResult;
@@ -15,6 +10,11 @@ import com.android.vending.billing.Inventory;
 import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import de.jeisfeld.augendiagnoselib.Application;
 
 /**
  * Utility class to support in-ad purchases via Google Billing.
@@ -128,15 +128,14 @@ public final class GoogleBillingHelper {
 
 		String base64EncodedPublicKey = null;
 		try {
-			// Looking for a class PrivateConstants with field LICENSE_KEY - not in repository.
-			Class<?> privateConstants = Class.forName("de.jeisfeld.augendiagnoselib.util.PrivateConstants");
-			Field specialKeysField = privateConstants.getDeclaredField("LICENSE_KEY");
-			base64EncodedPublicKey = (String) specialKeysField.get(null);
+			PrivateConstants privateConstants = Application.getPrivateConstants();
+			base64EncodedPublicKey = privateConstants.getLicenseKey();
 		}
 		catch (Exception e) {
 			Log.e(TAG, "Did not find PrivateConstants", e);
 			return;
 		}
+
 		// compute your public key and store it in base64EncodedPublicKey
 		iabHelper = new IabHelper(activity, base64EncodedPublicKey);
 		iabHelper.enableDebugLogging(false, TAG);
@@ -304,31 +303,32 @@ public final class GoogleBillingHelper {
 	 * Listener to be called after inventory has been retrieved.
 	 */
 	public interface OnInventoryFinishedListener {
-		/**
-		 * Handler called after inventory has been retrieved.
-		 *
-		 * @param purchases
-		 *            The list of bought purchases.
-		 * @param availableProducts
-		 *            The list of available products.
-		 * @param isPremium
-		 *            Flag indicating if there is a purchase setting premium status.
-		 */
-		void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts, boolean isPremium);
+				/**
+				 * Handler called after inventory has been retrieved.
+				 *
+				 * @param purchases
+				 *            The list of bought purchases.
+				 * @param availableProducts
+				 *            The list of available products.
+				 * @param isPremium
+				 *            Flag indicating if there is a purchase setting premium status.
+				 */
+				void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts,
+						boolean isPremium);
 	}
 
 	/**
 	 * Listener to be called after a purchase has been successfully completed.
 	 */
 	public interface OnPurchaseSuccessListener {
-		/**
-		 * Handler called after a purchase has been successfully completed.
-		 *
-		 * @param purchase
-		 *            The completed purchase.
-		 * @param addedPremiumProduct
-		 *            Flag indicating if there was a premium upgrade.
-		 */
-		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
+				/**
+				 * Handler called after a purchase has been successfully completed.
+				 *
+				 * @param purchase
+				 *            The completed purchase.
+				 * @param addedPremiumProduct
+				 *            Flag indicating if there was a premium upgrade.
+				 */
+				void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
 	}
 }

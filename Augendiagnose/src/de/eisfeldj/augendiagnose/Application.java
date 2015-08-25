@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnose;
 
+import android.util.Log;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -16,6 +17,17 @@ public class Application extends de.jeisfeld.augendiagnoselib.Application {
 				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_names));
 		setReleaseNotesVersionNotes(
 				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_notes));
+
+		try {
+			PrivateConstants privateConstants =
+					(PrivateConstants) Class.forName("de.eisfeldj.augendiagnose.PrivateConstants")
+							.getDeclaredMethod("getInstance", new Class<?>[0])
+							.invoke(null, new Object[0]);
+			setPrivateConstants(privateConstants);
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Error in getting PrivateConstants", e);
+		}
 	}
 
 }

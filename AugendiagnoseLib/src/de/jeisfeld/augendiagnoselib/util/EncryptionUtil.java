@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.lang.reflect.Field;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import de.jeisfeld.augendiagnoselib.Application;
 /**
  * Utility for handling user keys.
  */
-@SuppressWarnings("unchecked")
 public final class EncryptionUtil {
 	// JAVADOC:OFF
 	// parameters for encryption
@@ -59,12 +57,9 @@ public final class EncryptionUtil {
 		List<String> specialKeys = new ArrayList<String>();
 		String key = "";
 		try {
-			// Looking for a class PrivateConstants with fields SPECIAL_KEYS and KEY_STRING - not in repository
-			Class<?> privateConstants = Class.forName("de.jeisfeld.augendiagnoselib.util.PrivateConstants");
-			Field specialKeysField = privateConstants.getDeclaredField("SPECIAL_KEYS");
-			specialKeys = (List<String>) specialKeysField.get(null);
-			Field keyField = privateConstants.getDeclaredField("KEY_STRING");
-			key = (String) keyField.get(null);
+			PrivateConstants privateConstants = Application.getPrivateConstants();
+			specialKeys = privateConstants.getSpecialKeys();
+			key = privateConstants.getKeyString();
 			foundPrivateConstants = true;
 		}
 		catch (Exception e) {
