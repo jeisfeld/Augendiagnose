@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+<h3>Information for new users:</h3>
+
+<p>The purpose of this app is the organization and display of eye photos. On first usage, you need
+to do the following:</p>
+<p>1. Define an incoming folder for new eye photos and copy all your existing eye photos into this folder</p>
+<p>2. Configure this folder as &ldquo;Input folder&rdquo; in the settings (first entry).</p>
+<p>3. Assign these photos to persons and dates and shift them to the app&apos;s eye photo folder, using the &ldquo;Organize new photos&rdquo; functionality.</p>
+<p>After this preparation, you can use the &ldquo;Display photos&rdquo; functionality to view and analyze your photos.</p>
+
+<p>On most pages of the app you find a question mark on the top right corner - here you can access the help page.</p>
+
+<p>There is an accompanying Windows application that can be used to view the photos that have been
+organized with this app. For more information, see
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
+
+<p><b>Important remark:</b> This app modifies your JPG files in a non-destructive way, in order to store metadata within
+the files. This has the advantage that all such information is still available if you
+copy the pictures from one device to another one. To some extent, information like comments
+will be even available when viewing the files in MS Windows. However, this kind of storage imposes a small risk.
+It may happen that on some devices, or for pictures from some cameras, storing information in the JPG fails, or possibly
+even destroys the JPG file. Therefore, it is recommended that you keep backups of your JPG files
+when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
+]]>
+    </string>
+    <string name="releasenotes_current_remark"></string>
+
+    <string-array name="releasenotes_version_names" translatable="false">
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.2.1</item>
+        <item>0.2.2</item>
+        <item>0.2.3</item>
+        <item>0.2.4</item>
+        <item>0.2.5</item>
+        <item>0.2.6</item>
+        <item>0.2.7</item>
+        <item>0.2.8</item>
+        <item>0.2.9</item>
+        <item>0.2.10</item>
+        <item>0.3</item>
+        <item>0.3.1</item>
+        <item>0.3.2</item>
+        <item>0.3.3</item>
+        <item>0.4</item>
+        <item>0.4.1</item>
+        <item>0.4.2</item>
+        <item>0.4.3</item>
+        <item>0.4.4</item>
+        <item>0.4.5</item>
+        <item>0.4.6</item>
+        <item>0.4.7</item>
+        <item>0.4.8</item>
+        <item>0.4.9</item>
+        <item>0.4.10</item>
+        <item>0.4.11</item>
+        <item>0.4.12</item>
+        <item>0.4.13</item>
+        <item>0.5</item>
+        <item>0.5.1</item>
+        <item>0.5.2</item>
+        <item>0.5.3</item>
+        <item>0.5.4</item>
+        <item>0.5.5</item>
+        <item>0.5.6</item>
+        <item>0.5.7</item>
+        <item>0.5.8</item>
+        <item>0.5.9</item>
+        <item>0.5.10</item>
+        <item>0.5.11</item>
+        <item>0.5.12</item>
+        <item>0.5.13</item>
+        <item>0.5.14</item>
+    </string-array>
+    <string-array name="releasenotes_version_notes">
+        <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
+        <item>Added basic overlay functionality.</item>
+        <item>Minor fixes.</item>
+        <item>Added custom overlay.</item>
+        <item>Added selection of alternative photos when organizing.</item>
+        <item>Improved mapping of brightness/contrast.</item>
+        <item>Various minor improvements and fixes.</item>
+        <item>Added English version of overlay.</item>
+        <item>Enabled starting the App from outside with a set of images</item>
+        <item>Enable non-JPG images. Consider EXIF orientation of image.</item>
+        <item>Added a second custom overlay. Improved overlay pinching. Corrected some display issues.</item>
+        <item>Added various help screens.</item>
+        <item>Enabled storage of Overlay position within JPG file.</item>
+        <item>Added one more (Italian) overlay. Added start screen for new users. Bugfixes.</item>
+        <item>Added context menu in image view. Allowed storage of contrast and brightness. Allowed editing of image comments. Minor improvements.</item>
+        <item>Enabled to delete photos and change dates via context menu. Minor improvements and bugfixes.</item>
+        <item>Introduced special design for tablets - merged list of names with list of photos per name</item>
+        <item>Allowed storage of image position and zoom. Enablement of overlays and scrollbars in two-image view.</item>
+        <item>While editing the comment, the image is still shown. Bugfixes.</item>
+        <item>It is now possible to search for names. When organizing photos, new names can be entered more directly.</item>
+        <item>Bugfixes</item>
+        <item>Simplified folder selection in settings.</item>
+        <item>Enabled moving photos back to the input folder. The app stays with organizing photos if there are more photos to be organized.</item>
+        <item>Added navigation on help pages. Bugfixes.</item>
+        <item>New overlays. Choose color of overlays. Bugfixes.</item>
+        <item>Added one more overlay. Help page for release notes. Bugfixes.</item>
+        <item>Changed scale on contrast bar. Enabled saving on ext sd card for Android 4.4. Spanish localization.</item>
+        <item>Added one more overlay.</item>
+        <item>Bugfixes - among others, fixed issues with upper case file extensions ("JPG")</item>
+        <item>Enable language change. Enable sorting by last name. Enabled deletion of photos from input folder. Display latest eye photo pairs on top. Bugfixes</item>
+        <item>When displaying images, instead of using a context menu, there is now an action bar. Display of the current picture detail in full resolution. Bugfixes.</item>
+        <item>Display automatically in full resolution. Note: If this update leads to crashes or to bad performance of the app on your device, you should change the setting &amp;ldquo;Show image in full resolution&amp;rdquo;</item>
+        <item>Changed options for display in full resolution due to issues with low memory devices</item>
+        <item>Bugfixes</item>
+        <item>Enabled saving on ext sd card for Android 5. Bugfixes</item>
+        <item>Bugfixes</item>
+        <item>Added dialogs with tips. Improved error handling.</item>
+        <item>Allow to display image info while looking at image. Released Windows application. Bugfixes</item>
+        <item>Take pictures directly from the app. Allow use of different SD cards for Input and Photos. Bugfixes</item>
+        <item>Bugfixes</item>
+        <item>Bugfixes</item>
+        <item>Added advertisements (US only). Bugfixes</item>
+        <item>Bugfixes</item>
+        <item>Added donations via in-app purchase. Allowed disabling of ads. Reorganized settings. Bugfixes.</item>
+        <item>Bugfixes</item>
+    </string-array>
+
+</resources>

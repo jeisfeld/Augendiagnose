@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+<h3>Información para nuevos usuarios:</h3>
+
+<p>El objetivo de esta aplicación es la organización y visualización de fotos en los ojos. Antes del primer uso, es necesario
+hacer lo siguiente: </p>
+<p>1. Definir una carpeta de entrada para nuevas fotos oculares y copiar todas sus fotos oculares existentes en esta carpeta.</p>
+<p>2. Configurar esta carpeta como &laquo;carpeta de entrada&raquo; en los ajustes (primera entrada). </p>
+<p>3. Asignar estas fotos a las personas y las fechas y cambiar a la carpeta de fotos ojo de la aplicación, utilizando la funcionalidad &laquo;Organizar nuevas fotos&raquo;.</p>
+<p>Después de esta preparación, puede utilizar la funcionalidad &laquo;Visualizar las fotos&raquo; para ver y analizar sus fotos.</p>
+
+<p>En la mayoría de las páginas de la aplicación hay un signo de interrogación en la esquina superior derecha - aquí se puede acceder a la página de ayuda.</p>
+
+<p>Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido
+organizada con esta aplicación. Para obtener más información, consulte
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
+
+<p><b> Nota importante:</b> Esta aplicación modifica los archivos JPG de forma no destructiva, con el fin de almacenar los metadatos dentro
+los archivos. Esto tiene la ventaja de que toda la información está disponible si usted
+copie las imágenes desde un dispositivo a otro. Hasta cierto punto, la información como comentarios
+será aún disponible en MS Windows.Sin embargo, este tipo de almacenamiento impone un pequeño riesgo. Puede
+suceder que en algunos dispositivos, o para los cuadros del algunas cámaras,
+el almacenamiento de información en el JPG falla, o posiblemente hasta
+destruye el archivo JPG. Por lo tanto, es recomendado que mantenga copias de
+seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
+primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
+]]>
+    </string>
+    <string name="releasenotes_current_remark"></string>
+
+    <string-array name="releasenotes_version_notes">
+        <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
+        <item>Funcionalidad básica de superposiciones</item>
+        <item>Correcciones menores.</item>
+        <item>Añadido superposición.</item>
+        <item>Selección de fotos alternativos en la organización.</item>
+        <item>Mejora de la asignación de brillo / contraste.</item>
+        <item>Varias pequeñas mejoras y correcciones.</item>
+        <item>Versión Inglés de la superposición.</item>
+        <item>Comienzo de la App desde el exterior con un conjunto de imágenes</item>
+        <item>Permitir imágenes no JPG. Consideración de la orientación EXIF de la imagen.</item>
+        <item>Segunda superposición personalizada. Mejora pellizcos superposición. Corregidos algunos problemas de visualización.</item>
+        <item>Varias pantallas de ayuda.</item>
+        <item>Almacenamiento de la posición de superposición en archivo JPG.</item>
+        <item>Añadido una más superposición (italiano). Añadido pantalla de inicio para los nuevos usuarios. Corrección de errores.</item>
+        <item>Menú contextual en vista de la imagen. Se permite el almacenamiento de contraste y brillo. Edición de los comentarios de imagen. Pequeñas mejoras.</item>
+        <item>Eliminar fotos y cambiar las fechas a través del menú contextual. Pequeñas mejoras y correcciones de errores.</item>
+        <item>Introducido diseño especial para tabletas - lista de nombres se fusionó con la lista de fotos por nombre</item>
+        <item>Permitida almacenamiento de posición y zoom de la imagen. Cambio de brillo y contraste en vista de dos imágenes.</item>
+        <item>Al editar el comentario, todavía se muestra la imagen. Corrección de errores.</item>
+        <item>Ahora es posible buscar nombres. Al organizar fotos, nuevos nombres se pueden introducir de forma más directa.</item>
+        <item>Corrección de errores</item>
+        <item>Selección de carpetas simplificado en la configuración.</item>
+        <item>Activado mover fotografías a la carpeta de entrada. La aplicación se queda con la organización de fotos si hay más fotos que se organizarán.</item>
+        <item>Añadido navegación en las páginas de ayuda. Corrección de errores.</item>
+        <item>Nuevas superposiciones. Elige el color de las superposiciones. Corrección de errores.</item>
+        <item>Añadida una superposición más. Página de ayuda para las notas de la versión. Corrección de errores.</item>
+        <item>Mejora de la escala de contraste. Habilitado ahorro en la tarjeta SD para Android 4.4. Localización española.</item>
+        <item>Nueva superposición.</item>
+        <item>Corrección de errores - entre otros, se ha solucionado el problema con mayúsculas en la extensión del archivo ("JPG")</item>
+        <item>Habilitación del cambio de idioma. Habilitación del ordenar por apellido. Habilitación de eliminación de las fotos de la carpeta de entrada. Mostrar últimos pares de fotos ojo en la parte superior. Corrección de errores</item>
+        <item>Cuando se visualizan imágenes, en lugar de utilizar un menú contextual, ahora hay una barra de acción en la parte superior. Visualización de el detalle actual de la imagen en plena resolución. Corrección de errores</item>
+        <item>Mostrar imágenes automáticamente en la resolución completa. Nota: Si esta actualización lleva a fallos o baja velocidad de la aplicación en su dispositivo, debe cambiar el ajuste &amp;laquo;Mostrar imagen en alta resolución&amp;raquo;</item>
+        <item>Opciones modificadas para su visualización en resolución completa debido a problemas con los dispositivos de memoria baja</item>
+        <item>Corrección de errores</item>
+        <item>Habilitado ahorro en la tarjeta SD para Android 5. Corrección de errores</item>
+        <item>Corrección de errores</item>
+        <item>Añadido diálogos con consejos. Mejora de la gestión de errores.</item>
+        <item>Habilitado mostrar información de la imagen durante la vista detallada. Lanzamiento de la aplicación de Windows. Corrección de errores</item>
+        <item>Tomar fotos directamente desde la aplicación. Permitir el uso de diferentes tarjetas SD para la carpeta de entrada y la carpeta de fotos. Corrección de errores</item>
+        <item>Corrección de errores</item>
+        <item>Corrección de errores</item>
+        <item>Anuncios (sólo EE.UU.). Corrección de errores</item>
+        <item>Corrección de errores</item>
+        <item>Añadido donaciones a través de compra en aplicación. Habilitado apagamiento de anuncios. Reorganizado los ajustes. Corrección De Errores.</item>
+        <item>Corrección de errores</item>
+    </string-array>
+
+</resources>

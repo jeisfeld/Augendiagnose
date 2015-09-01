@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0pt"
+    android:orientation="vertical"
+    android:padding="0pt"
+    tools:context=".activities.MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="@dimen/layout_main_margin"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
+
+        <Button
+            android:id="@+id/mainButtonTakePictures"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="@dimen/buttons_main_margin"
+            android:layout_weight="1"
+            android:onClick="takePicturesActivity"
+            android:text="@string/button_take_pictures"
+            tools:ignore="NestedWeights" />
+
+        <Button
+            android:id="@+id/mainButtonOrganizeNewPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="@dimen/buttons_main_margin"
+            android:layout_weight="1"
+            android:onClick="organizeNewFoldersActivity"
+            android:text="@string/button_organize_new_photos" />
+
+        <Button
+            android:id="@+id/mainButtonListFolders"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="@dimen/buttons_main_margin"
+            android:layout_weight="3"
+            android:onClick="listFoldersForDisplayActivity"
+            android:text="@string/button_display_pictures" />
+    </LinearLayout>
+
+    <com.admarvel.android.ads.AdMarvelView
+        android:id="@+id/admarvel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>
