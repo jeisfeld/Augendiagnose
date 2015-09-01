@@ -89,7 +89,11 @@ public class TakePicturesActivity extends BaseActivity {
 		if (photoFolderString != null) {
 			photoFolder = new File(photoFolderString);
 		}
-		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, false);
+		else {
+			photoFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
+		}
+		rightEyeLast =
+				getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
 
 		if (savedInstanceState != null) {
 			countCapturedPictures = savedInstanceState.getInt("countCapturedPictures");

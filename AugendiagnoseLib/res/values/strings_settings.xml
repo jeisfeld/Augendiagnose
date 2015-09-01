@@ -129,7 +129,6 @@
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
-    <string name="key_statistics_countmain" translatable="false">statistics_countmain</string>
     <string name="key_statistics_countorganizestart" translatable="false">statistics_countorganizestart</string>
     <string name="key_statistics_countorganizeend" translatable="false">statistics_countorganizeend</string>
     <string name="key_statistics_countlistnames" translatable="false">statistics_countlistnames</string>

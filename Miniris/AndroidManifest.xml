@@ -33,22 +33,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute" >
         <activity
-            android:name="de.jeisfeld.miniris.activities.MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="image/*" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity"
             android:label="@string/title_activity_display_two"
             android:parentActivityName=".activities.MainActivity"
@@ -103,6 +87,12 @@
             android:label="@string/title_activity_take_pictures"
             android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
+            <intent-filter android:label="@string/app_name" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity"
