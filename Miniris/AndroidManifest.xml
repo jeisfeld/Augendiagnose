@@ -13,8 +13,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <supports-screens
         android:anyDensity="true"
@@ -35,97 +40,63 @@
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity"
             android:label="@string/title_activity_display_two"
-            android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity"
             android:label="@string/title_activity_display_one"
-            android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity"
             android:label="@string/title_activity_list_folders_for_display"
-            android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplaySecondActivity"
             android:label="@string/title_activity_list_folders_for_display_second"
-            android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.Dialog"
             tools:ignore="UnusedAttribute,UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"
-                tools:ignore="UnusedAttribute" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity"
             android:label="@string/title_activity_organize_new_photos"
             android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"
-                tools:ignore="UnusedAttribute" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.TakePicturesActivity"
             android:label="@string/title_activity_take_pictures"
             android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"
-                tools:ignore="UnusedAttribute" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity"
             android:label="@string/title_activity_list_pictures_for_name"
-            android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"
-                tools:ignore="UnusedAttribute" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity"
             android:label="@string/title_activity_list_pictures_for_second_name"
-            android:parentActivityName=".activities.MainActivity"
             android:theme="@android:style/Theme.Holo.Dialog"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity"
-            android:label="@string/title_activity_select_two_pictures"
-            android:parentActivityName=".activities.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"
-                tools:ignore="UnusedAttribute" />
+            android:label="@string/title_activity_select_two_pictures" >
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.SettingsActivity"
@@ -134,11 +105,7 @@
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity"
             android:label="@string/title_help"
-            android:parentActivityName=".activities.MainActivity"
             tools:ignore="UnusedAttribute" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
         </activity>
     </application>
 
