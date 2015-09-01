@@ -67,7 +67,11 @@ public final class AdMarvelUtil {
 	 * @return true if eligible.
 	 */
 	public static boolean isEligibleForAd() {
-		// int checksSinceLastClick = PreferenceUtil.incrementCounter(R.string.key_admarvel_checkssincelastclick);
+		int advertisementFlag = Integer.valueOf(Application.getResourceString(R.string.advertisement_flag));
+		if (advertisementFlag != 1) {
+			// Explicit app configuration to check for AdMarvel eligibility.
+			return false;
+		}
 
 		// no ads according to configuration
 		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {

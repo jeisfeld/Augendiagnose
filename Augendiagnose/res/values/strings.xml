@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Eye Diagnosis</string>
+    <string name="advertisement_flag" translatable="false">1</string>
     <string name="button_open_eyefi_app">Open Eye-Fi App</string>
     <string name="button_display_pictures">Display Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>
