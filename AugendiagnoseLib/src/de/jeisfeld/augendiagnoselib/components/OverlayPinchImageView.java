@@ -10,8 +10,8 @@ import java.util.List;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -47,7 +47,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The number of overlays (including circle).
 	 */
-	public static final int OVERLAY_COUNT = 8;
+	public static final int OVERLAY_COUNT = Application.getAppContext().getResources().getIntArray(R.array.overlay_types).length;
 
 	/**
 	 * The size of the overlays (in pixels).
@@ -412,7 +412,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		for (int i = 1; i < mLayerDrawable.getNumberOfLayers(); i++) {
 			mLayerDrawable.setLayerInset(i, (int) (mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2
 					* mOverlayScaleFactor), (int) (mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2
-					* mOverlayScaleFactor), //
+							* mOverlayScaleFactor), //
 					(int) (width - mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor), //
 					(int) (height - mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
 		}
@@ -580,98 +580,44 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private Drawable getOverlayDrawable(final int position) {
 		if (mOverlayCache[position] == null) {
-			int resource;
+			int[] overlayTypes = getResources().getIntArray(R.array.overlay_types);
 
-			switch (position) {
-			case 1:
+			TypedArray overlaysLeft = getResources().obtainTypedArray(R.array.overlays_left);
+			TypedArray overlaysRight = getResources().obtainTypedArray(R.array.overlays_right);
+
+			if (position < overlayTypes.length) {
+				Drawable drawable;
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo1_r;
+					drawable = overlaysRight.getDrawable(position);
 				}
 				else {
-					resource = R.drawable.overlay_topo1_l;
+					drawable = overlaysLeft.getDrawable(position);
 				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			case 2:
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo2_r;
+				if (overlayTypes[position] == 1) {
+					mOverlayCache[position] = getColouredDrawable(drawable, mOverlayColor);
 				}
 				else {
-					resource = R.drawable.overlay_topo2_l;
+					mOverlayCache[position] = drawable;
 				}
-				mOverlayCache[position] = getResources().getDrawable(resource);
-				break;
-			case 3: // MAGIC_NUMBER
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo5_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo5_l;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			case 4: // MAGIC_NUMBER
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo3_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo3_l;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			case 5: // MAGIC_NUMBER
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo4_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo4_l;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			case 6: // MAGIC_NUMBER
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo6_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo6_l;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			case 7: // MAGIC_NUMBER
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_topo7_r;
-				}
-				else {
-					resource = R.drawable.overlay_topo7_l;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
-			default:
-				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
-					resource = R.drawable.overlay_circle_l;
-				}
-				else {
-					resource = R.drawable.overlay_circle_r;
-				}
-				mOverlayCache[position] = getColouredDrawable(resource, mOverlayColor);
-				break;
 			}
+			overlaysLeft.recycle();
+			overlaysRight.recycle();
 		}
 
 		return mOverlayCache[position];
 	}
 
 	/**
-	 * Create a drawable from a black image resource, having a changed colour.
+	 * Create a drawable from a black image drawable, having a changed colour.
 	 *
-	 * @param resource
-	 *            The black image resource
+	 * @param sourceDrawable
+	 *            The black image drawable
 	 * @param color
 	 *            The target color
 	 * @return The modified drawable, with the intended color.
 	 */
-	private Drawable getColouredDrawable(final int resource, final int color) {
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resource);
+	private Drawable getColouredDrawable(final Drawable sourceDrawable, final int color) {
+		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
 		return new BitmapDrawable(getResources(), changeBitmapColor(bitmap, color));
 	}
 
@@ -960,8 +906,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            -1..1 - 0 is default
 	 * @return new bitmap
 	 */
-	private static Bitmap
-			changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
+	private static Bitmap changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
 		if (contrast == 1 && brightness == 0) {
 			return bmp;
 		}
@@ -969,9 +914,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
 		ColorMatrix cm = new ColorMatrix(new float[] { //
 				contrast, 0, 0, 0, offset, //
-						0, contrast, 0, 0, offset, //
-						0, 0, contrast, 0, offset, //
-						0, 0, 0, 1, 0 });
+				0, contrast, 0, 0, offset, //
+				0, 0, contrast, 0, offset, //
+				0, 0, 0, 1, 0 });
 
 		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 

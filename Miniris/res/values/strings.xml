@@ -6,4 +6,28 @@
     <string name="button_organize_new_photos">Organize New Photos</string>
     <string name="button_take_pictures">Take pictures</string>
 
+    <!-- Resources defining available overlays -->
+
+    <array name="overlays_left">
+        <item>@drawable/overlay_circle_l</item>
+        <item>@drawable/overlay_topo1_l</item>
+        <item>@drawable/overlay_topo2_l</item>
+    </array>
+    <array name="overlays_right">
+        <item>@drawable/overlay_circle_r</item>
+        <item>@drawable/overlay_topo1_r</item>
+        <item>@drawable/overlay_topo2_r</item>
+    </array>
+    <array name="overlay_buttons">
+        <item>@id/toggleButtonOverlayCircle</item>
+        <item>@id/toggleButtonOverlay1</item>
+        <item>@id/toggleButtonOverlay2</item>
+    </array>
+
+    <integer-array name="overlay_types">
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </integer-array>
+
 </resources>

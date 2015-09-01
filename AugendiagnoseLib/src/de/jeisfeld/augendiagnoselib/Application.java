@@ -32,32 +32,6 @@ public class Application extends android.app.Application {
 	public static final String TAG = "Application";
 
 	/**
-	 * The version names for the release notes.
-	 */
-	private String[] releaseNotesVersionNames = new String[0];
-
-	public static String[] getReleaseNotesVersionNames() {
-		return application.releaseNotesVersionNames;
-	}
-
-	protected final void setReleaseNotesVersionNames(final String[] releaseNotesVersionNames) {
-		this.releaseNotesVersionNames = releaseNotesVersionNames;
-	}
-
-	/**
-	 * The release notes entries.
-	 */
-	private String[] releaseNotesVersionNotes = new String[0];
-
-	public static String[] getReleaseNotesVersionNotes() {
-		return application.releaseNotesVersionNotes;
-	}
-
-	protected final void setReleaseNotesVersionNotes(final String[] releaseNotesVersionNotes) {
-		this.releaseNotesVersionNotes = releaseNotesVersionNotes;
-	}
-
-	/**
 	 * The private constants of this app.
 	 */
 	private PrivateConstants privateConstants = null;

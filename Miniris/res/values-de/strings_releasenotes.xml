@@ -1,84 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="releasenotes_first_usage">
-<![CDATA[
-<h3>Hinweis für neue Nutzer:</h3>
-
-<p>Diese App dient der Organisation und Anzeige von Augenfotos.
-Vor der ersten Benutzung sind folgende Schritte erforderlich:</p>
-<p>1. Legen Sie ein Eingangsverzeichnis für neue Augenfotos fest, und kopieren Sie ihre vorhandenen
-Augenfotos in dieses Verzeichnis.</p>
-<p>2. Konfigurieren Sie dieses Eingangsverzeichnis in den Einstellungen (erster Eintrag).</p>
-<p>3. Nutzen Sie die Funktion &bdquo;Neue Fotos einordnen&ldquo;, um Ihre Fotos Personen und Daten zuzuordnen und die Fotos
-in das Augenfoto-Verzeichnis der App zu verschieben.</p>
-<p>Nach dieser Vorbereitung können Sie die Funktion &bdquo;Fotos anzeigen&ldquo; nutzen, um Ihre Fotos zu analysieren.</p>
-
-<p>Auf den meisten Seiten der App befindet sich rechts oben ein Fragezeichen - hier erreichen Sie die Hilfe.</p>
-
-<p>Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App
-organisiert haben, auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
-<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>.</p>
-
-<p><b>Wichtiger Hinweis:</b> Die App verändert Ihre JPG-Bilddateien, um Informationen (wie Irisposition
-oder Kommentare) direkt in den Bilddateien zu speichern.
-Dies hat den Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos
-auf ein anderes Gerät kopieren. Zum Teil sind die Informationen (wie Kommentare) sogar unter
-Windows verfügbar. Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets
-oder für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert,
-und vielleicht sogar die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie
-vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen
-Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
-]]>
-    </string>
-    <string name="releasenotes_current_remark"></string>
-
     <string-array name="releasenotes_version_notes">
-        <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
-        <item>Overlays können über die Bilder gelegt werden.</item>
-        <item>Kleinere Fehlerkorrekturen.</item>
-        <item>Neues Overlay.</item>
-        <item>Auswahl alternativer Fotos aus dem Eingangsverzeichnis.</item>
-        <item>Verbesserung der Zuordnung von Helligkeit und Kontrast.</item>
-        <item>Kleinere Verbesserungen und Fehlerkorrekturen.</item>
-        <item>Englische Version des Overlays.</item>
-        <item>Start der App von außen durch Senden mehrerer Fotos.</item>
-        <item>Andere Bildformate als JPG sind möglich. Die Ausrichtung wird berücksichtigt.</item>
-        <item>Neues Overlay. Verbessertes Zooming des Overlays. Verbesserte Darstellung.</item>
-        <item>Hilfeseiten für die wichtigsten Aktivitäten hinzugefügt.</item>
-        <item>Die Overlay-Position wird in den Bilddateien gespeichert.</item>
-        <item>Ein weiteres (italienisches) Overlay. Startinformation für neue Nutzer. Fehlerkorrekturen.</item>
-        <item>Kontextmenü bei Fotoansicht: Speicherung von Helligkeit und Kontrast. Bearbeitung von Bildkommentaren. Kleinere Verbesserungen.</item>
-        <item>Löschen von Fotos und Änderung des Datums ist über Kontextmenü möglich. Kleinere Verbesserungen und Fehlerkorrekturen.</item>
-        <item>Einführung eines gesonderten Designs für Tablets - Liste der Namen und Liste der Bilder werden gleichzeitig angezeigt.</item>
-        <item>Speicherung von Position und Zoom. Overlays und Helligkeit/Kontrast können jetzt auch in der Ansicht zweier Bilder angezeigt und verändert werden.</item>
-        <item>Das Foto wird jetzt angezeigt, während der Kommentar bearbeitet wird. Fehlerkorrekturen.</item>
-        <item>Suche nach Namen ist möglich. Das Eingeben von Namen ist jetzt direkter möglich.</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Vereinfachte Verzeichnisauswahl in den Einstellungen.</item>
-        <item>Fotos können ins Eingangsverzeichnis zurückgeschoben werden. Die App bleibt so lange beim Einsortieren, wie noch Fotos einzusortieren sind.</item>
-        <item>Navigation auf den Hilfeseiten. Fehlerkorrekturen.</item>
-        <item>Neue Overlays. Farbwahl für Overlays. Fehlerkorrekturen.</item>
-        <item>Ein neues Overlay. Hilfeseite für Release Notes. Fehlerkorrekturen.</item>
-        <item>Verbesserte Skala für Kontrast. Speichern der Daten auf externer SD-Karte in Android 4.4. Spanische Sprachversion.</item>
-        <item>Neues Overlay.</item>
-        <item>Fehlerkorrekturen - insbesondere Behebung des Problems mit Großbuchstaben in der Dateiendung („JPG“)</item>
-        <item>Wechsel der Sprache ist möglich. Sortieren nach Nachnamen ist möglich. Löschen von Fotos im Eingangsverzeichnis is möglich. Anzeige der neuestsen Augenfotopaare am oberen Ende der Liste. Fehlerkorrekturen</item>
-        <item>Bei der Anzeige von Fotos gibt es jetzt statt des Kontextmenüs ein Menü am oberen Rand. Anzeige des aktuellen Ausschnitts in voller Auflösung. Fehlerkorrekturen</item>
-        <item>Automatsche Anzeige des Bildes in voller Auflösung. Hinweis: Falls dieses Update in Ihrem Gerät zu Abstürzen oder Ruckeln führt, sollten Sie die Einstellung &amp;bdquo;Anzeige in voller Auflösung&amp;ldquo; ändern.</item>
-        <item>Änderung des Verhaltens hinsichtlich automatischer Anzeige in voller Auflösung aufgrund von Problemen bei Geräten mit geringem Speicher.</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Speichern der Daten auf externer SD-Karte in Android 5. Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Es wurden kleine Dialoge mit Tipps hinzugefügt. Verbesserte Fehlerbehandlung.</item>
-        <item>Anzeige von Bildinformationen während der Detailansicht. Veröffentlichung der Windows-Applikation. Fehlerkorrekturen</item>
-        <item>Aufnahme von Fotos direkt aus der App heraus. Für Eingangsverzeichnis und Foto-Verzeichnis können unterschiedliche SD-Karten gewählt werden. Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Werbebanner (nur USA). Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
-        <item>Spenden via In-App-Kauf. Ausschalten der Werbung. Neuorganisation der Einstellungen. Fehlerkorrekturen.</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Erste Version.</item>
     </string-array>
 
 </resources>

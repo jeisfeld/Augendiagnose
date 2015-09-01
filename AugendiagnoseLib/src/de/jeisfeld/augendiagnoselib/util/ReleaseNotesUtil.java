@@ -52,8 +52,8 @@ public final class ReleaseNotesUtil {
 		message.append("<h3>");
 		message.append(context.getString(R.string.releasenotes_changes));
 		message.append("</h3>");
-		String[] names = Application.getReleaseNotesVersionNames();
-		String[] notes = Application.getReleaseNotesVersionNotes();
+		String[] names = context.getResources().getStringArray(R.array.releasenotes_version_names);
+		String[] notes = context.getResources().getStringArray(R.array.releasenotes_version_notes);
 		for (int i = toVersion; i >= fromVersion; i--) {
 			message.append("<h5>");
 			message.append(context.getString(R.string.releasenotes_release));

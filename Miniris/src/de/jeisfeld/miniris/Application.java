@@ -13,11 +13,6 @@ public class Application extends de.jeisfeld.augendiagnoselib.Application {
 	public final void onCreate() {
 		super.onCreate();
 
-		setReleaseNotesVersionNames(
-				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_names));
-		setReleaseNotesVersionNotes(
-				getApplicationContext().getResources().getStringArray(R.array.releasenotes_version_notes));
-
 		try {
 			PrivateConstants privateConstants =
 					(PrivateConstants) Class.forName("de.jeisfeld.miniris.PrivateConstants")

@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.app.Fragment;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -285,15 +286,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		imageView.setGuiElementUpdater(this);
 		imageView.allowFullResolution(allowFullResolution());
 
+		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
 		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
-		toggleOverlayButtons[0] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlayCircle);
-		toggleOverlayButtons[1] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay1);
-		toggleOverlayButtons[2] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay2);
-		toggleOverlayButtons[3] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay3); // MAGIC_NUMBER
-		toggleOverlayButtons[4] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay4); // MAGIC_NUMBER
-		toggleOverlayButtons[5] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay5); // MAGIC_NUMBER
-		toggleOverlayButtons[6] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay6); // MAGIC_NUMBER
-		toggleOverlayButtons[7] = (ToggleButton) getView().findViewById(R.id.toggleButtonOverlay7); // MAGIC_NUMBER
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			toggleOverlayButtons[i] = (ToggleButton) getView().findViewById(overlayButtonResources.getResourceId(i, -1));
+			toggleOverlayButtons[i].setVisibility(View.VISIBLE);
+		}
+		overlayButtonResources.recycle();
 
 		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
