@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- The camera button -->
+    <dimen name="camerabutton_size">84dp</dimen>
+    <dimen name="camerabutton_padding">15dp</dimen>
+    <dimen name="camerabutton_padding_bottom">18dp</dimen>
+    <dimen name="camerabutton_padding_top">12dp</dimen>
+    
+</resources>
