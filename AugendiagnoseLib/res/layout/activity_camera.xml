@@ -3,12 +3,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <SurfaceView
-        android:id="@+id/camera_preview"
+    <FrameLayout
+        android:id="@+id/camera_preview_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical" >
-    </SurfaceView>
+
+        <SurfaceView
+            android:id="@+id/camera_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </SurfaceView>
+
+        <View
+            android:id="@+id/camera_flash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@android:color/white" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/button_capture"

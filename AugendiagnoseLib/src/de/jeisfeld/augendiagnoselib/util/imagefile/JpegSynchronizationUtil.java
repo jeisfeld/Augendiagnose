@@ -198,12 +198,12 @@ public final class JpegSynchronizationUtil {
 			if (e != null) {
 				if (e instanceof ExifStorageException) {
 					Log.e(TAG, "Failed to save file " + pathname, e);
-					DialogUtil.displayErrorAsToast(Application.getAppContext(),
+					DialogUtil.displayToast(Application.getAppContext(),
 							R.string.message_dialog_failed_to_store_exif, pathname);
 				}
 				else {
 					Log.e(TAG, "Failed to store EXIF data for file " + pathname, e);
-					DialogUtil.displayErrorAsToast(Application.getAppContext(),
+					DialogUtil.displayToast(Application.getAppContext(),
 							R.string.message_dialog_failed_to_store_metadata, pathname);
 				}
 			}

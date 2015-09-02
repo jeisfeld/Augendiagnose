@@ -17,7 +17,13 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -105,6 +111,7 @@ public class CameraActivity extends Activity {
 					public void onClick(final View v) {
 						// get an image from the camera
 						camera.takePicture(null, null, photoCallback);
+						animateFlash();
 					}
 				});
 	}
@@ -129,6 +136,38 @@ public class CameraActivity extends Activity {
 		inPreview = false;
 
 		super.onPause();
+	}
+
+	/**
+	 * Show a flashlight in the preview.
+	 */
+	private void animateFlash() {
+		final View flashView = findViewById(R.id.camera_flash);
+
+		Animation fadeOut = new AlphaAnimation(1, 0);
+		fadeOut.setInterpolator(new DecelerateInterpolator());
+		fadeOut.setDuration(500); // MAGIC_NUMBER
+		fadeOut.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(final Animation animation) {
+				flashView.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAnimationRepeat(final Animation animation) {
+				// do nothing
+			}
+
+			@Override
+			public void onAnimationEnd(final Animation animation) {
+				flashView.setVisibility(View.GONE);
+			}
+		});
+
+		AnimationSet animation = new AnimationSet(false);
+		animation.addAnimation(fadeOut);
+
+		flashView.startAnimation(animation);
 	}
 
 	/**
@@ -168,17 +207,19 @@ public class CameraActivity extends Activity {
 				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 				camera.setParameters(parameters);
 
+				// Resize frame to match aspect ratio
 				float aspectRatio = ((float) pictureSize.width) / pictureSize.height;
-				LayoutParams layoutParams = preview.getLayoutParams();
-				if (preview.getWidth() > aspectRatio * preview.getHeight()) {
-					layoutParams.width = Math.round(preview.getHeight() * aspectRatio);
-					layoutParams.height = preview.getHeight();
+				FrameLayout previewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
+				LayoutParams layoutParams = previewFrame.getLayoutParams();
+				if (previewFrame.getWidth() > aspectRatio * previewFrame.getHeight()) {
+					layoutParams.width = Math.round(previewFrame.getHeight() * aspectRatio);
+					layoutParams.height = previewFrame.getHeight();
 				}
 				else {
-					layoutParams.width = preview.getWidth();
-					layoutParams.height = Math.round(preview.getWidth() / aspectRatio);
+					layoutParams.width = previewFrame.getWidth();
+					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
 				}
-				preview.setLayoutParams(layoutParams);
+				previewFrame.setLayoutParams(layoutParams);
 
 				cameraConfigured = true;
 			}

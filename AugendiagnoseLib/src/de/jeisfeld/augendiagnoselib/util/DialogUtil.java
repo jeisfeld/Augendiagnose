@@ -127,9 +127,9 @@ public final class DialogUtil {
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayErrorAsToast(final Context context, final int resource, final Object... args) {
+	public static void displayToast(final Context context, final int resource, final Object... args) {
 		String message = String.format(context.getString(resource), args);
-		Log.w(Application.TAG, "Toast message: " + message);
+		Log.d(Application.TAG, "Toast message: " + message);
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 

@@ -29,6 +29,7 @@
     <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_failed_to_store_exif">Konnte EXIF-Informationen nicht in Datei %1$s speichern - bitte Kontaktieren Sie den Entwickler!</string>
+    <string name="message_dialog_failed_to_open_camera">Kamera konnte nicht gestartet werden.</string>
     <string name="message_dialog_donation_thanks">Danke für Ihre Spende!</string>
     <string name="message_dialog_donation_thanks_premium">Danke für Ihre Spende! Sie können nun in den Einstellungen die Werbung abschalten.</string>
     <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>
