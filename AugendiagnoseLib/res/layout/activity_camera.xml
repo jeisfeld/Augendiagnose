@@ -1,33 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
     <FrameLayout
-        android:id="@+id/camera_preview_frame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical" >
+        android:id="@+id/camera_main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-        <SurfaceView
-            android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </SurfaceView>
+        <FrameLayout
+            android:id="@+id/camera_preview_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical" >
 
-        <View
-            android:id="@+id/camera_flash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:background="@android:color/white" />
+            <SurfaceView
+                android:id="@+id/camera_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </SurfaceView>
+
+            <View
+                android:id="@+id/camera_flash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/camera_thumb_layout_right"
+            android:layout_width="@dimen/camera_thumb_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:background="@drawable/camera_thumb_background"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/content_description_right_eye" />
+
+            <ImageView
+                android:id="@+id/camera_thumb_image_right"
+                android:layout_width="@dimen/camera_thumb_size"
+                android:layout_height="@dimen/camera_thumb_size"
+                android:contentDescription="@layout/text_view_initializing"
+                android:padding="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/camera_thumb_layout_left"
+            android:layout_width="@dimen/camera_thumb_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:background="@drawable/camera_thumb_background"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/content_description_left_eye" />
+
+            <ImageView
+                android:id="@+id/camera_thumb_image_left"
+                android:layout_width="@dimen/camera_thumb_size"
+                android:layout_height="@dimen/camera_thumb_size"
+                android:contentDescription="@layout/text_view_initializing"
+                android:padding="2dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_capture"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/circlebutton" />
     </FrameLayout>
 
-    <Button
-        android:id="@+id/button_capture"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
-        android:layout_gravity="center_vertical|right"
-        android:background="@drawable/circlebutton" />
+    <LinearLayout
+        android:id="@+id/camera_review_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
-</FrameLayout>
+        <de.jeisfeld.augendiagnoselib.components.PinchImageView
+            android:id="@+id/imageViewRightEye"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <de.jeisfeld.augendiagnoselib.components.PinchImageView
+            android:id="@+id/imageViewLeftEye"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</merge>

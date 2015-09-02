@@ -109,6 +109,12 @@
                 tools:ignore="UnusedAttribute" />
         </activity>
         <activity
+            android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+        </activity>
+        <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity"
             android:label="@string/title_activity_list_pictures_for_name"
             android:parentActivityName=".activities.MainActivity"

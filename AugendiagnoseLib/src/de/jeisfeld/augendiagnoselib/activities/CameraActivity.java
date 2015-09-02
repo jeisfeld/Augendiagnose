@@ -1,11 +1,16 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.CurrentAction.LEFT_EYE;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.CurrentAction.NAME;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.CurrentAction.RIGHT_EYE;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -24,11 +29,16 @@ import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.CameraUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -37,19 +47,14 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressWarnings("deprecation")
 public class CameraActivity extends Activity {
 	/**
-	 * The resource key for the input folder.
-	 */
-	private static final String STRING_EXTRA_PHOTOFOLDER = "de.jeisfeld.augendiagnoselib.PHOTOFOLDER";
-
-	/**
 	 * The camera used by the activity.
 	 */
 	private Camera camera;
 
 	/**
-	 * The folder where the photos are stored.
+	 * The folder where the photos are finally placed.
 	 */
-	private File photoFolder;
+	private File outputFolder;
 
 	/**
 	 * The preview.
@@ -72,16 +77,28 @@ public class CameraActivity extends Activity {
 	private boolean cameraConfigured = false;
 
 	/**
+	 * The current action in the activity.
+	 */
+	private CurrentAction currentAction;
+
+	/**
+	 * The temp file holding the right eye.
+	 */
+	private File rightEyeFile = null;
+
+	/**
+	 * The temp file holding the left eye.
+	 */
+	private File leftEyeFile = null;
+
+	/**
 	 * Static helper method to start the activity.
 	 *
 	 * @param context
 	 *            The context in which the activity is started.
-	 * @param photoFolderName
-	 *            The folder where the photo is stored.
 	 */
-	public static final void startActivity(final Context context, final String photoFolderName) {
+	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, CameraActivity.class);
-		intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolderName);
 		context.startActivity(intent);
 	}
 
@@ -90,13 +107,10 @@ public class CameraActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 
-		String photoFolderString = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
-		if (photoFolderString != null) {
-			photoFolder = new File(photoFolderString);
-		}
-		else {
-			photoFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
-		}
+		outputFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
+
+		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+		setAction(rightEyeLast ? LEFT_EYE : RIGHT_EYE);
 
 		preview = (SurfaceView) findViewById(R.id.camera_preview);
 		previewHolder = preview.getHolder();
@@ -116,25 +130,79 @@ public class CameraActivity extends Activity {
 				});
 	}
 
+	/**
+	 * Change to the given action.
+	 *
+	 * @param action
+	 *            The new action.
+	 */
+	private void setAction(final CurrentAction action) {
+		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
+		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
+		FrameLayout cameraMainFrame = (FrameLayout) findViewById(R.id.camera_main_frame);
+		LinearLayout cameraReviewFrame = (LinearLayout) findViewById(R.id.camera_review_frame);
+
+		switch (action) {
+		case RIGHT_EYE:
+			startPreview();
+			cameraMainFrame.setVisibility(View.VISIBLE);
+			cameraReviewFrame.setVisibility(View.GONE);
+
+			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
+			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
+			break;
+		case LEFT_EYE:
+			startPreview();
+			cameraMainFrame.setVisibility(View.VISIBLE);
+			cameraReviewFrame.setVisibility(View.GONE);
+
+			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
+			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
+			break;
+		case NAME:
+			stopPreview();
+			cameraMainFrame.setVisibility(View.GONE);
+			cameraReviewFrame.setVisibility(View.VISIBLE);
+
+			break;
+		default:
+			break;
+		}
+
+		currentAction = action;
+	}
+
+	/**
+	 * Set the thumb image.
+	 *
+	 * @param data
+	 *            The data representing the bitmap.
+	 */
+	private void setThumbImage(final byte[] data) {
+		ImageView imageView = (ImageView) findViewById(currentAction == RIGHT_EYE ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
+
+		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
+
+		imageView.setImageBitmap(bitmap);
+	}
+
 	@Override
 	public final void onResume() {
 		super.onResume();
 
-		camera = CameraUtil.getCameraInstance();
-
-		startPreview();
+		if (currentAction == RIGHT_EYE || currentAction == LEFT_EYE) {
+			if (!inPreview) {
+				camera = CameraUtil.getCameraInstance();
+				startPreview();
+			}
+		}
 	}
 
 	@Override
 	public final void onPause() {
-		if (inPreview) {
-			camera.stopPreview();
+		if (currentAction == RIGHT_EYE || currentAction == LEFT_EYE) {
+			stopPreview();
 		}
-
-		camera.release();
-		camera = null;
-		inPreview = false;
-
 		super.onPause();
 	}
 
@@ -230,9 +298,24 @@ public class CameraActivity extends Activity {
 	 * Start the camera preview.
 	 */
 	private void startPreview() {
-		if (cameraConfigured && camera != null) {
+		if (cameraConfigured && camera != null && !inPreview) {
 			camera.startPreview();
 			inPreview = true;
+		}
+	}
+
+	/**
+	 * Stop the camera preview.
+	 */
+	private void stopPreview() {
+		if (camera != null) {
+			if (inPreview) {
+				camera.stopPreview();
+			}
+
+			camera.release();
+			camera = null;
+			inPreview = false;
 		}
 	}
 
@@ -253,7 +336,9 @@ public class CameraActivity extends Activity {
 				inPreview = false;
 			}
 			initPreview(width, height);
-			startPreview();
+			if (currentAction == RIGHT_EYE || currentAction == LEFT_EYE) {
+				startPreview();
+			}
 		}
 
 		@Override
@@ -270,36 +355,120 @@ public class CameraActivity extends Activity {
 		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG",
 				justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
-			new SavePhotoTask().execute(data);
-			camera.startPreview();
-			inPreview = true;
+			inPreview = false;
+			setThumbImage(data);
+			File imageFile = FileUtil.getTempJpegFile();
+
+			// Analyze next required step
+			CurrentAction nextAction = currentAction;
+			if (currentAction == RIGHT_EYE) {
+				if (rightEyeFile != null && rightEyeFile.exists()) {
+					rightEyeFile.delete();
+				}
+				rightEyeFile = imageFile;
+
+				if (leftEyeFile == null) {
+					nextAction = LEFT_EYE;
+				}
+				else {
+					nextAction = NAME;
+				}
+			}
+			else if (currentAction == LEFT_EYE) {
+				if (leftEyeFile != null && leftEyeFile.exists()) {
+					leftEyeFile.delete();
+				}
+				leftEyeFile = imageFile;
+
+				if (rightEyeFile == null) {
+					nextAction = RIGHT_EYE;
+				}
+				else {
+					nextAction = NAME;
+				}
+			}
+
+			// save photo
+			new SavePhotoTask(data, currentAction).execute(imageFile);
+
+			// go to next step
+			setAction(nextAction);
 		}
 	};
 
 	/**
 	 * The task responsible for saving the picture.
 	 */
-	class SavePhotoTask extends AsyncTask<byte[], String, String> {
-		@Override
-		protected String doInBackground(final byte[]... jpeg) {
-			File photo =
-					new File(photoFolder, "photo.jpg");
+	private final class SavePhotoTask extends AsyncTask<File, String, File> {
+		/**
+		 * The data to be saved.
+		 */
+		private byte[] data;
 
-			if (photo.exists()) {
-				photo.delete();
-			}
+		/**
+		 * The action indicating if right or left eye is saved.
+		 */
+		private CurrentAction action;
+
+		/**
+		 * Constructor, passing the data to be saved.
+		 *
+		 * @param data
+		 *            The data to be saved.
+		 * @param action
+		 *            The action indicating if right or left eye is saved.
+		 */
+		private SavePhotoTask(final byte[] data, final CurrentAction action) {
+			this.data = data;
+			this.action = action;
+		}
+
+		@Override
+		protected File doInBackground(final File... imageFiles) {
+			File imageFile = imageFiles[0];
 
 			try {
-				FileOutputStream fos = new FileOutputStream(photo.getPath());
+				FileOutputStream fos = new FileOutputStream(imageFile.getPath());
 
-				fos.write(jpeg[0]);
+				fos.write(data);
 				fos.close();
 			}
 			catch (java.io.IOException e) {
 				Log.e(Application.TAG, "Exception when saving photo", e);
 			}
 
-			return null;
+			return imageFile;
+		}
+
+		@Override
+		protected void onPostExecute(final File imageFile) {
+			if (action == RIGHT_EYE) {
+				PinchImageView imageViewRight = (PinchImageView) findViewById(R.id.imageViewRightEye);
+				imageViewRight.setImage(imageFile.getAbsolutePath(), CameraActivity.this, 1);
+			}
+			else if (action == LEFT_EYE) {
+				PinchImageView imageViewLeft = (PinchImageView) findViewById(R.id.imageViewLeftEye);
+				imageViewLeft.setImage(imageFile.getAbsolutePath(), CameraActivity.this, 2);
+			}
 		}
 	}
+
+	/**
+	 * Enumeration for holding the current action that the activity is doing.
+	 */
+	enum CurrentAction {
+		/**
+		 * Capturing the photo of the right eye.
+		 */
+		RIGHT_EYE,
+		/**
+		 * Capturing the photo of the left eye.
+		 */
+		LEFT_EYE,
+		/**
+		 * Capturing the name (and date).
+		 */
+		NAME
+	}
+
 }

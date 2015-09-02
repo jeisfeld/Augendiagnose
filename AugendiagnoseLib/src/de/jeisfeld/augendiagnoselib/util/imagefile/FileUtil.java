@@ -288,8 +288,24 @@ public final class FileUtil {
 	 * @return The temp file.
 	 */
 	public static File getTempFile(final File file) {
-		File extDir = Application.getAppContext().getExternalFilesDir(null);
+		File extDir = Application.getAppContext().getExternalCacheDir();
 		File tempFile = new File(extDir, file.getName());
+		return tempFile;
+	}
+
+	/**
+	 * Get a filename for temporarily storing a Jpeg file.
+	 *
+	 * @return a non-existing Jpeg file in the cache dir.
+	 */
+	public static File getTempJpegFile() {
+		File tempDir = Application.getAppContext().getExternalCacheDir();
+		File tempFile = null;
+		do {
+			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_counter_tempfiles);
+			tempFile = new File(tempDir, "tempFile_" + tempFileCounter + ".jpg");
+		}
+		while (tempFile.exists());
 		return tempFile;
 	}
 

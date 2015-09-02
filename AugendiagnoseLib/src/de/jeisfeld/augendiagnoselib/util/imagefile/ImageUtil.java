@@ -187,6 +187,48 @@ public final class ImageUtil {
 	}
 
 	/**
+	 * Return a bitmap of a photo directly from byte array data.
+	 *
+	 * @param data
+	 *            The byte array data of the bitmap.
+	 * @param maxSize
+	 *            The maximum size of this bitmap. If bigger, it will be resized.
+	 * @return the bitmap.
+	 */
+	public static Bitmap getImageBitmap(final byte[] data, final int maxSize) {
+		Bitmap bitmap = null;
+
+		if (maxSize <= 0) {
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		}
+		else {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = getBitmapFactor(data, maxSize);
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+
+			if (bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
+				return bitmap;
+			}
+
+			if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
+				// Only if bitmap is bigger than maxSize, then resize it
+				if (bitmap.getWidth() > bitmap.getHeight()) {
+					int targetWidth = maxSize;
+					int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
+					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+				}
+				else {
+					int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
+					int targetHeight = maxSize;
+					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+				}
+			}
+		}
+
+		return bitmap;
+	}
+
+	/**
 	 * Retrieve a part of a bitmap in full resolution.
 	 *
 	 * @param fullBitmap
@@ -226,6 +268,23 @@ public final class ImageUtil {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filepath, options);
+		int size = Math.max(options.outWidth, options.outHeight);
+		return size / targetSize;
+	}
+
+	/**
+	 * Utility to retrieve the sample size for BitmapFactory.decodeFile.
+	 *
+	 * @param data
+	 *            the data of the bitmap.
+	 * @param targetSize
+	 *            the target size of the bitmap
+	 * @return the sample size to be used.
+	 */
+	private static int getBitmapFactor(final byte[] data, final int targetSize) {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 		int size = Math.max(options.outWidth, options.outHeight);
 		return size / targetSize;
 	}

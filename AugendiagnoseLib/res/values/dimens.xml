@@ -17,10 +17,11 @@
     <dimen name="actionbar_height">32dip</dimen>
     <dimen name="actionbar_buttonwidth">48dip</dimen>
 
-    <!-- The camera button -->
+    <!-- Camera settings -->
     <dimen name="camerabutton_size">56dp</dimen>
     <dimen name="camerabutton_padding">10dp</dimen>
     <dimen name="camerabutton_padding_bottom">10dp</dimen>
     <dimen name="camerabutton_padding_top">10dp</dimen>
+    <dimen name="camera_thumb_size">90dp</dimen>
     
 </resources>

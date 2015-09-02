@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+
+    <issue id="IconLauncherShape" >
+
+        <ignore regexp="res/drawable-nodpi/ic_launcher\.png" />
+    </issue>
+
 </lint>
