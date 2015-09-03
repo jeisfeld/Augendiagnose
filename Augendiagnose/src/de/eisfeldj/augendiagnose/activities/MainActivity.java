@@ -12,11 +12,11 @@ import android.widget.Button;
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.AdMarvelActivity;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
-import de.jeisfeld.augendiagnoselib.activities.TakePicturesActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
@@ -170,8 +170,7 @@ public class MainActivity extends AdMarvelActivity {
 	 *            the button to take pictures.
 	 */
 	public final void takePicturesActivity(final View view) {
-		TakePicturesActivity.startActivity(this, PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
-				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
+		CameraActivity.startActivity(this, PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
 	}
 
 	/**

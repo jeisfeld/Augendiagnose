@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
@@ -48,6 +47,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @SuppressWarnings("deprecation")
 public class CameraActivity extends Activity {
+	/**
+	 * The resource key for the folder where to store the photos.
+	 */
+	private static final String STRING_EXTRA_PHOTOFOLDER = "de.jeisfeld.augendiagnoselib.PHOTOFOLDER";
+
 	/**
 	 * The camera used by the activity.
 	 */
@@ -109,20 +113,33 @@ public class CameraActivity extends Activity {
 	private File newLeftEyeFile = null;
 
 	/**
+	 * The folder where to store the photos.
+	 */
+	private File photoFolder = null;
+
+	/**
 	 * Static helper method to start the activity.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
+	 * @param activity
+	 *            The activity from which the activity is started.
+	 * @param photoFolder
+	 *            The folder where to store the photos.
 	 */
-	public static final void startActivity(final Context context) {
-		Intent intent = new Intent(context, CameraActivity.class);
-		context.startActivity(intent);
+	public static final void startActivity(final Activity activity, final String photoFolder) {
+		Intent intent = new Intent(activity, CameraActivity.class);
+		intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolder);
+		activity.startActivity(intent);
 	}
 
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
+
+		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
+		if (photoFolderName != null) {
+			photoFolder = new File(photoFolderName);
+		}
 
 		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 		setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
@@ -251,12 +268,20 @@ public class CameraActivity extends Activity {
 			// cleanup temp folder
 			File[] tempFiles = FileUtil.getTempCameraFiles();
 			for (File file : tempFiles) {
-				if (!file.equals(rightEyeFile) && !file.equals(leftEyeFile)) {
+				if (file.equals(rightEyeFile) || file.equals(leftEyeFile)) {
+					if (photoFolder != null && photoFolder.isDirectory()) {
+						File targetFile = new File(photoFolder, file.getName());
+						FileUtil.moveFile(file, targetFile);
+					}
+				}
+				else {
 					file.delete();
 				}
 			}
 
-			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(), lastRightLeft == RIGHT);
+			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraDir() : photoFolder;
+
+			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(), lastRightLeft == RIGHT);
 			finish();
 			return;
 		default:
