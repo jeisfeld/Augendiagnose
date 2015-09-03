@@ -22,6 +22,8 @@
     <dimen name="camerabutton_padding">10dp</dimen>
     <dimen name="camerabutton_padding_bottom">10dp</dimen>
     <dimen name="camerabutton_padding_top">10dp</dimen>
+    <dimen name="camera_thumb_frame_size">94dp</dimen>
+    <dimen name="camera_thumb_frame_boundary">2dp</dimen>
     <dimen name="camera_thumb_size">90dp</dimen>
     
 </resources>

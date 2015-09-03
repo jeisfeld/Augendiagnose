@@ -20,23 +20,24 @@
             android:id="@+id/camera_flash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:background="@android:color/white"
             android:visibility="gone" />
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/camera_thumb_layout_right"
-        android:layout_width="@dimen/camera_thumb_size"
+        android:layout_width="@dimen/camera_thumb_frame_size"
         android:layout_height="wrap_content"
         android:layout_gravity="left|top"
         android:background="@drawable/camera_thumb_background"
         android:orientation="vertical"
-        android:visibility="gone"
         tools:ignore="UseCompoundDrawables" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:gravity="center_horizontal"
             android:text="@string/content_description_right_eye" />
 
@@ -44,23 +45,26 @@
             android:id="@+id/camera_thumb_image_right"
             android:layout_width="@dimen/camera_thumb_size"
             android:layout_height="@dimen/camera_thumb_size"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
+            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:contentDescription="@layout/text_view_initializing"
-            android:padding="2dp" />
+            android:scaleType="centerCrop" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/camera_thumb_layout_left"
-        android:layout_width="@dimen/camera_thumb_size"
+        android:layout_width="@dimen/camera_thumb_frame_size"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
         android:background="@drawable/camera_thumb_background"
         android:orientation="vertical"
-        android:visibility="gone"
         tools:ignore="UseCompoundDrawables" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:gravity="center_horizontal"
             android:text="@string/content_description_left_eye" />
 
@@ -68,8 +72,11 @@
             android:id="@+id/camera_thumb_image_left"
             android:layout_width="@dimen/camera_thumb_size"
             android:layout_height="@dimen/camera_thumb_size"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
+            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:contentDescription="@layout/text_view_initializing"
-            android:padding="2dp" />
+            android:scaleType="centerCrop" />
     </LinearLayout>
 
     <Button

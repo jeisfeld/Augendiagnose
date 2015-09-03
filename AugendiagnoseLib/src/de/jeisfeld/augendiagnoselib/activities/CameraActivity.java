@@ -231,6 +231,23 @@ public class CameraActivity extends Activity {
 						setAction(TAKE_PHOTO, currentRightLeft);
 					}
 				});
+
+		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
+		cameraThumbRight.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				setAction(TAKE_PHOTO, RIGHT);
+			}
+		});
+
+		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
+		cameraThumbLeft.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				setAction(TAKE_PHOTO, LEFT);
+			}
+		});
+
 	}
 
 	/**
@@ -256,12 +273,10 @@ public class CameraActivity extends Activity {
 			buttonDecline.setVisibility(View.GONE);
 
 			if (rightLeft == RIGHT) {
-				cameraThumbRight.setVisibility(View.VISIBLE);
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			}
 			else {
-				cameraThumbLeft.setVisibility(View.VISIBLE);
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 			}
@@ -290,7 +305,6 @@ public class CameraActivity extends Activity {
 			}
 
 			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraDir() : photoFolder;
-
 			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(), lastRightLeft == RIGHT);
 			finish();
 			return;
