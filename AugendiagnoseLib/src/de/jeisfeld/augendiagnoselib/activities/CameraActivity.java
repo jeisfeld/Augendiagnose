@@ -143,7 +143,30 @@ public class CameraActivity extends Activity {
 		}
 
 		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-		setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
+
+		File[] existingFiles = FileUtil.getTempCameraFiles();
+		if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
+			setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
+		}
+		else if (existingFiles.length == 1) {
+			// one file already there. Assume that this is already taken and we only have to take the other one
+			if (rightEyeLast) {
+				leftEyeFile = existingFiles[0];
+				setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+				setAction(Action.TAKE_PHOTO, RIGHT);
+			}
+			else {
+				rightEyeFile = existingFiles[0];
+				setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+				setAction(Action.TAKE_PHOTO, LEFT);
+			}
+		}
+		else {
+			// both files are already there - switch to Organize.
+			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(), lastRightLeft == RIGHT);
+			finish();
+			return;
+		}
 
 		preview = (SurfaceView) findViewById(R.id.camera_preview);
 		previewHolder = preview.getHolder();
@@ -317,7 +340,7 @@ public class CameraActivity extends Activity {
 	}
 
 	/**
-	 * Set the thumb image.
+	 * Set the thumb image with a byte array.
 	 *
 	 * @param data
 	 *            The data representing the bitmap.
@@ -326,6 +349,22 @@ public class CameraActivity extends Activity {
 		ImageView imageView = (ImageView) findViewById(currentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
+
+		imageView.setImageBitmap(bitmap);
+	}
+
+	/**
+	 * Set the thumb image from a file.
+	 *
+	 * @param file
+	 *            The file to be put in the thumb.
+	 * @param rightLeft
+	 *            The side of the eye
+	 */
+	private void setThumbImage(final String file, final RightLeft rightLeft) {
+		ImageView imageView = (ImageView) findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
+
+		Bitmap bitmap = ImageUtil.getImageBitmap(file, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
 
 		imageView.setImageBitmap(bitmap);
 	}
