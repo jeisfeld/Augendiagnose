@@ -80,7 +80,23 @@
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
             android:layout_gravity="center_vertical|right"
-            android:background="@drawable/circlebutton" />
+            android:background="@drawable/circlebutton_trigger" />
+
+        <Button
+            android:id="@+id/button_accept"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/circlebutton_accept"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_decline"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/circlebutton_decline"
+            android:visibility="gone" />
     </FrameLayout>
 
     <LinearLayout
