@@ -36,6 +36,7 @@ import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.CameraUtil;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
@@ -149,6 +150,14 @@ public class CameraActivity extends Activity {
 		previewHolder.addCallback(surfaceCallback);
 		previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+		camera = CameraUtil.getCameraInstance();
+
+		if (camera == null) {
+			// The activity depends on the camera.
+			DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_camera, true);
+			return;
+		}
+
 		// Add a listener to the capture button
 		Button captureButton = (Button) findViewById(R.id.button_capture);
 		captureButton.setOnClickListener(
@@ -222,7 +231,6 @@ public class CameraActivity extends Activity {
 						setAction(TAKE_PHOTO, currentRightLeft);
 					}
 				});
-
 	}
 
 	/**
@@ -308,26 +316,6 @@ public class CameraActivity extends Activity {
 		imageView.setImageBitmap(bitmap);
 	}
 
-	@Override
-	public final void onResume() {
-		super.onResume();
-
-		if (currentAction == TAKE_PHOTO) {
-			if (!inPreview) {
-				camera = CameraUtil.getCameraInstance();
-				startPreview();
-			}
-		}
-	}
-
-	@Override
-	public final void onPause() {
-		if (currentAction == TAKE_PHOTO) {
-			stopPreview();
-		}
-		super.onPause();
-	}
-
 	/**
 	 * Show a flashlight in the preview.
 	 */
@@ -362,13 +350,8 @@ public class CameraActivity extends Activity {
 
 	/**
 	 * Initialize the camera.
-	 *
-	 * @param width
-	 *            The width of the preview
-	 * @param height
-	 *            The height of the preview
 	 */
-	private void initPreview(final int width, final int height) {
+	private void initPreview() {
 		if (camera != null && previewHolder.getSurface() != null) {
 			try {
 				camera.setPreviewDisplay(previewHolder);
@@ -447,25 +430,20 @@ public class CameraActivity extends Activity {
 	private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 		@Override
 		public void surfaceCreated(final SurfaceHolder holder) {
-			// no-op -- wait until surfaceChanged()
-		}
-
-		@Override
-		public void surfaceChanged(final SurfaceHolder holder, final int format,
-				final int width, final int height) {
-			if (inPreview) {
-				camera.stopPreview();
-				inPreview = false;
-			}
-			initPreview(width, height);
+			initPreview();
 			if (currentAction == TAKE_PHOTO) {
 				startPreview();
 			}
 		}
 
 		@Override
+		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
+			// No display change based on surface.
+		}
+
+		@Override
 		public void surfaceDestroyed(final SurfaceHolder holder) {
-			// no-op
+			stopPreview();
 		}
 	};
 
