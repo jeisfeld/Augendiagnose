@@ -31,6 +31,7 @@
         android:layout_gravity="left|top"
         android:background="@drawable/camera_thumb_background"
         android:orientation="vertical"
+        android:visibility="gone"
         tools:ignore="UseCompoundDrawables" >
 
         <TextView
@@ -54,6 +55,7 @@
         android:layout_gravity="right|top"
         android:background="@drawable/camera_thumb_background"
         android:orientation="vertical"
+        android:visibility="gone"
         tools:ignore="UseCompoundDrawables" >
 
         <TextView

@@ -248,10 +248,12 @@ public class CameraActivity extends Activity {
 			buttonDecline.setVisibility(View.GONE);
 
 			if (rightLeft == RIGHT) {
+				cameraThumbRight.setVisibility(View.VISIBLE);
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			}
 			else {
+				cameraThumbLeft.setVisibility(View.VISIBLE);
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 			}
