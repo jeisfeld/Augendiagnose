@@ -33,8 +33,6 @@
     <string name="message_dialog_donation_thanks">Thanks for your donation!</string>
     <string name="message_dialog_donation_thanks_premium">Thanks for your donation! You may not switch off ads in the settings.</string>
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
-    <string name="message_dialog_take_photo_first">Please take first a photo of the %1$s.</string>
-    <string name="message_dialog_take_photo_second">Please take now a photo of the %1$s.</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
@@ -47,7 +45,5 @@
     <string name="imageinfo_line_filedate">File date:</string>
     <string name="imageinfo_line_name">Name:</string>
     <string name="imageinfo_line_comment">Comment:</string>
-    <string name="param_right_eye">right eye</string>
-    <string name="param_left_eye">left eye</string>
 
 </resources>

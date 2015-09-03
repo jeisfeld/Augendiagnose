@@ -6,7 +6,6 @@
     <string name="title_activity_list_folders_for_display">Seleccionar nombre</string>
     <string name="title_activity_list_folders_for_display_second">Seleccionar segundo nombre</string>
     <string name="title_activity_organize_new_photos">Organizar nuevas fotos</string>
-    <string name="title_activity_take_pictures">Tomar fotografías</string>
     <string name="title_activity_list_pictures_for_name">Seleccionar fotos</string>
     <string name="title_activity_list_pictures_for_second_name">Seleccionar segunda foto</string>
     <string name="title_activity_select_two_pictures">Seleccionar dos nuevas fotos</string>
@@ -25,6 +24,7 @@
     <string name="button_delete">Eliminar</string>
     <string name="button_move">Mover</string>
     <string name="button_other_pictures">Otras Fotos</string>
+    <string name="button_camera">Cámara</string>
     <string name="button_dont_show">No mostrar de nuevo</string>
     <string name="button_show_later">Mostrar de nuevo</string>
     <string name="button_purchased_item">%1$s (comprado)</string>

@@ -8,7 +8,6 @@
     <string name="title_activity_list_folders_for_display">Select Name</string>
     <string name="title_activity_list_folders_for_display_second">Select Name for Second Picture</string>
     <string name="title_activity_organize_new_photos">Organize New Photos</string>
-    <string name="title_activity_take_pictures">Take Pictures</string>
     <string name="title_activity_list_pictures_for_name">Select Pictures</string>
     <string name="title_activity_list_pictures_for_second_name">Select Second Picture</string>
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
@@ -27,6 +26,7 @@
     <string name="button_delete">Delete</string>
     <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
+    <string name="button_camera">Camera</string>
     <string name="button_select_color" translatable="false">\u25a0</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>

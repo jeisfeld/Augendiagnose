@@ -137,7 +137,6 @@
     <string name="key_statistics_countlock" translatable="false">statistics_countlock</string>
     <string name="key_statistics_countcomment" translatable="false">statistics_countcomment</string>
     <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
-    <string name="key_statistics_counttakephoto" translatable="false">statistics_counttakephoto</string>
     <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
     <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
     <string name="key_counter_tempfiles" translatable="false">counter_tempfiles</string>

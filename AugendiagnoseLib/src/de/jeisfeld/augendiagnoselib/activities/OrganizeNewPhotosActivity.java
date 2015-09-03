@@ -20,7 +20,9 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -82,6 +84,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * The list of input images.
 	 */
 	private String[] fileNames;
+
+	/**
+	 * The total number of images in the input folder.
+	 */
+	private int totalImageCount;
 
 	/**
 	 * The ImageViews displaying the eye photos.
@@ -158,6 +165,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		if (savedInstanceState != null && savedInstanceState.getString("rightEyePhoto") != null) {
 			photoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
 			photoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
+			totalImageCount = savedInstanceState.getInt("totalImageCount");
 		}
 
 		imageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
@@ -197,6 +205,33 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			if (!success) {
 				Log.w(Application.TAG, "Failed to create folder" + parentFolder);
 			}
+		}
+
+		// Set on-click action for selecting other pictures.
+		Button buttonOtherPictures = (Button) findViewById(R.id.buttonOrganizeOtherPictures);
+		if (totalImageCount == 2 && inputFolder != null) {
+			buttonOtherPictures.setText(getString(R.string.button_camera));
+			buttonOtherPictures.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					CameraActivity.startActivity(OrganizeNewPhotosActivity.this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath());
+					finish();
+				}
+			});
+		}
+		else {
+			buttonOtherPictures.setText(getString(R.string.button_other_pictures));
+			buttonOtherPictures.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					if (inputFolder != null) {
+						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, inputFolder.getAbsolutePath());
+					}
+					else {
+						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, fileNames);
+					}
+				}
+			});
 		}
 
 		if (savedInstanceState == null) {
@@ -295,6 +330,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 				DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
 			}
 		}
+
+		totalImageCount = files.length;
 	}
 
 	/**
@@ -341,21 +378,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		photoLeft = photoRight;
 		photoRight = temp;
 		updateImages(false);
-	}
-
-	/**
-	 * onClick action for Button "Other photos".
-	 *
-	 * @param view
-	 *            The view triggering the onClick action.
-	 */
-	public final void selectOtherPhotos(final View view) {
-		if (inputFolder != null) {
-			SelectTwoPicturesActivity.startActivity(this, inputFolder.getAbsolutePath());
-		}
-		else {
-			SelectTwoPicturesActivity.startActivity(this, fileNames);
-		}
 	}
 
 	/**
@@ -551,6 +573,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		if (photoRight != null && photoLeft != null) {
 			outState.putString("rightEyePhoto", photoRight.getAbsolutePath());
 			outState.putString("leftEyePhoto", photoLeft.getAbsolutePath());
+			outState.putInt("totalImageCount", totalImageCount);
 		}
 	}
 

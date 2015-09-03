@@ -337,7 +337,7 @@ public final class FileUtil {
 	}
 
 	/**
-	 * Get the folder where temporary files are stored.
+	 * Get the folder where temporary files from the camera are stored.
 	 *
 	 * @return The temp folder.
 	 */

@@ -1,7 +1,8 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.ADD_NAME;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.RE_TAKE_PHOTO;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.TAKE_PHOTO;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.LEFT;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIGHT;
@@ -41,6 +42,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -52,6 +54,14 @@ public class CameraActivity extends Activity {
 	 * The resource key for the folder where to store the photos.
 	 */
 	private static final String STRING_EXTRA_PHOTOFOLDER = "de.jeisfeld.augendiagnoselib.PHOTOFOLDER";
+	/**
+	 * The resource key for the file to be re-taken.
+	 */
+	private static final String STRING_EXTRA_PHOTO_RIGHT = "de.jeisfeld.augendiagnoselib.PHOTO_RIGHT";
+	/**
+	 * The resource key for the file to be re-taken.
+	 */
+	private static final String STRING_EXTRA_PHOTO_LEFT = "de.jeisfeld.augendiagnoselib.PHOTO_LEFT";
 
 	/**
 	 * The camera used by the activity.
@@ -119,7 +129,17 @@ public class CameraActivity extends Activity {
 	private File photoFolder = null;
 
 	/**
-	 * Static helper method to start the activity.
+	 * The right eye file coming as input to the activity.
+	 */
+	private File inputRightFile = null;
+
+	/**
+	 * The left eye file coming as input to the activity.
+	 */
+	private File inputLeftFile = null;
+
+	/**
+	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
 	 * @param activity
 	 *            The activity from which the activity is started.
@@ -132,6 +152,23 @@ public class CameraActivity extends Activity {
 		activity.startActivity(intent);
 	}
 
+	/**
+	 * Static helper method to start the activity for re-checking two images.
+	 *
+	 * @param activity
+	 *            The activity from which the activity is started.
+	 * @param photoRight
+	 *            The path of the right eye image
+	 * @param photoLeft
+	 *            The path of the left eye image
+	 */
+	public static final void startActivity(final Activity activity, final String photoRight, final String photoLeft) {
+		Intent intent = new Intent(activity, CameraActivity.class);
+		intent.putExtra(STRING_EXTRA_PHOTO_RIGHT, photoRight);
+		intent.putExtra(STRING_EXTRA_PHOTO_LEFT, photoLeft);
+		activity.startActivity(intent);
+	}
+
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -141,11 +178,30 @@ public class CameraActivity extends Activity {
 		if (photoFolderName != null) {
 			photoFolder = new File(photoFolderName);
 		}
+		String inputRightFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_RIGHT);
+		String inputLeftFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_LEFT);
 
 		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 
+		// Handle the different scenarios based on input and based on existing temp files.
 		File[] existingFiles = FileUtil.getTempCameraFiles();
-		if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
+		if (inputLeftFileName != null && inputRightFileName != null) {
+			inputLeftFile = new File(inputLeftFileName);
+			inputRightFile = new File(inputRightFileName);
+
+			// Triggered by OrganizeNewPhotosActivity to update photos.
+			photoFolder = inputRightFile.getParentFile();
+			if (FileUtil.getTempCameraDir().equals(photoFolder)) {
+				photoFolder = null;
+			}
+			leftEyeFile = inputLeftFile;
+			rightEyeFile = inputRightFile;
+			setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+			setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+			setAction(RE_TAKE_PHOTO, null);
+		}
+		else if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
+			// This is the standard scenario.
 			setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
 		}
 		else if (existingFiles.length == 1) {
@@ -181,6 +237,13 @@ public class CameraActivity extends Activity {
 			return;
 		}
 
+		configureButtons();
+	}
+
+	/**
+	 * Configure the buttons of this activity.
+	 */
+	private void configureButtons() {
 		// Add a listener to the capture button
 		Button captureButton = (Button) findViewById(R.id.button_capture);
 		captureButton.setOnClickListener(
@@ -212,7 +275,7 @@ public class CameraActivity extends Activity {
 								setAction(TAKE_PHOTO, LEFT);
 							}
 							else {
-								setAction(ADD_NAME, null);
+								setAction(FINISH_CAMERA, null);
 							}
 						}
 						else {
@@ -227,7 +290,7 @@ public class CameraActivity extends Activity {
 								setAction(TAKE_PHOTO, RIGHT);
 							}
 							else {
-								setAction(ADD_NAME, null);
+								setAction(FINISH_CAMERA, null);
 							}
 						}
 					}
@@ -238,20 +301,38 @@ public class CameraActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
-						if (currentRightLeft == RIGHT) {
-							if (newRightEyeFile != null && newRightEyeFile.exists()) {
-								newRightEyeFile.delete();
-							}
-							newRightEyeFile = null;
+						if (inputRightFile != null && inputLeftFile != null && currentAction != CHECK_PHOTO) {
+							// in case of re-take, this button serves to cancel the whole re-take.
+							setAction(FINISH_CAMERA, null);
 						}
 						else {
-							if (newLeftEyeFile != null && newLeftEyeFile.exists()) {
-								newLeftEyeFile.delete();
+							if (currentRightLeft == RIGHT) {
+								if (newRightEyeFile != null && newRightEyeFile.exists()) {
+									newRightEyeFile.delete();
+								}
+								newRightEyeFile = null;
+								if (rightEyeFile != null && rightEyeFile.exists()) {
+									setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+								}
+								else {
+									// TODO: fill with default
+								}
 							}
-							newLeftEyeFile = null;
-						}
+							else {
+								if (newLeftEyeFile != null && newLeftEyeFile.exists()) {
+									newLeftEyeFile.delete();
+								}
+								newLeftEyeFile = null;
+							}
+							if (leftEyeFile != null && leftEyeFile.exists()) {
+								setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+							}
+							else {
+								// TODO: fill with default
+							}
 
-						setAction(TAKE_PHOTO, currentRightLeft);
+							setAction(TAKE_PHOTO, currentRightLeft);
+						}
 					}
 				});
 
@@ -270,7 +351,6 @@ public class CameraActivity extends Activity {
 				setAction(TAKE_PHOTO, LEFT);
 			}
 		});
-
 	}
 
 	/**
@@ -293,7 +373,8 @@ public class CameraActivity extends Activity {
 			startPreview();
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonAccept.setVisibility(View.GONE);
-			buttonDecline.setVisibility(View.GONE);
+
+			buttonDecline.setVisibility(inputLeftFile != null && inputRightFile != null ? View.VISIBLE : View.GONE);
 
 			if (rightLeft == RIGHT) {
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
@@ -308,23 +389,41 @@ public class CameraActivity extends Activity {
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
-			// TODO
 			break;
-		case ADD_NAME:
+		case RE_TAKE_PHOTO:
+			buttonCapture.setVisibility(View.GONE);
+			buttonAccept.setVisibility(View.GONE);
+			buttonDecline.setVisibility(View.VISIBLE);
+			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
+			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
+			break;
+		case FINISH_CAMERA:
 			stopPreview();
 
 			// cleanup temp folder
 			File[] tempFiles = FileUtil.getTempCameraFiles();
 			for (File file : tempFiles) {
-				if (file.equals(rightEyeFile) || file.equals(leftEyeFile)) {
-					if (photoFolder != null && photoFolder.isDirectory()) {
-						File targetFile = new File(photoFolder, file.getName());
-						FileUtil.moveFile(file, targetFile);
-					}
-				}
-				else {
+				if (!file.equals(rightEyeFile) & !file.equals(leftEyeFile)) {
 					file.delete();
 				}
+			}
+
+			// move files to their target position
+			if (inputLeftFile != null && inputRightFile != null) {
+				if (!inputLeftFile.equals(leftEyeFile)) {
+					FileUtil.moveFile(leftEyeFile, inputLeftFile);
+					MediaStoreUtil.deleteThumbnail(inputLeftFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(inputLeftFile.getAbsolutePath());
+				}
+				if (!inputRightFile.equals(rightEyeFile)) {
+					FileUtil.moveFile(rightEyeFile, inputRightFile);
+					MediaStoreUtil.deleteThumbnail(inputRightFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(inputRightFile.getAbsolutePath());
+				}
+			}
+			else if (photoFolder != null && photoFolder.isDirectory()) {
+				FileUtil.moveFile(leftEyeFile, new File(photoFolder, leftEyeFile.getName()));
+				FileUtil.moveFile(rightEyeFile, new File(photoFolder, rightEyeFile.getName()));
 			}
 
 			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraDir() : photoFolder;
@@ -505,8 +604,7 @@ public class CameraActivity extends Activity {
 	 */
 	private PictureCallback photoCallback = new PictureCallback() {
 		@Override
-		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG",
-				justification = "Intentionally sending byte array")
+		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
 			inPreview = false;
 			setThumbImage(data);
@@ -582,17 +680,21 @@ public class CameraActivity extends Activity {
 	 */
 	enum Action {
 		/**
-		 * Capturing the photo of the right eye.
+		 * Capture a photo.
 		 */
 		TAKE_PHOTO,
 		/**
-		 * Capturing the photo of the left eye.
+		 * Check a photo.
 		 */
 		CHECK_PHOTO,
 		/**
-		 * Capturing the name (and date).
+		 * Finish the camera activity.
 		 */
-		ADD_NAME
+		FINISH_CAMERA,
+		/**
+		 * Make an optional re-take of a photo.
+		 */
+		RE_TAKE_PHOTO
 	}
 
 }
