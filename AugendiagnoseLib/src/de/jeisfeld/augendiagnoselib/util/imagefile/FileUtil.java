@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.TargetApi;
@@ -327,6 +328,7 @@ public final class FileUtil {
 				return file.isFile();
 			}
 		});
+		Arrays.sort(files);
 
 		if (files == null) {
 			return new File[0];

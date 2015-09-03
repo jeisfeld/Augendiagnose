@@ -218,6 +218,10 @@ public class CameraActivity extends Activity {
 			}
 		}
 		else {
+			// prevent cleanup in onDestroy
+			rightEyeFile = rightEyeLast ? existingFiles[1] : existingFiles[0];
+			leftEyeFile = rightEyeLast ? existingFiles[0] : existingFiles[1];
+
 			// both files are already there - switch to Organize.
 			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(), lastRightLeft == RIGHT);
 			finish();
@@ -238,6 +242,12 @@ public class CameraActivity extends Activity {
 		}
 
 		configureButtons();
+	}
+
+	@Override
+	public final void onDestroy() {
+		cleanupTempFolder();
+		super.onDestroy();
 	}
 
 	/**
@@ -399,14 +409,7 @@ public class CameraActivity extends Activity {
 			break;
 		case FINISH_CAMERA:
 			stopPreview();
-
-			// cleanup temp folder
-			File[] tempFiles = FileUtil.getTempCameraFiles();
-			for (File file : tempFiles) {
-				if (!file.equals(rightEyeFile) & !file.equals(leftEyeFile)) {
-					file.delete();
-				}
-			}
+			cleanupTempFolder();
 
 			// move files to their target position
 			if (inputLeftFile != null && inputRightFile != null) {
@@ -436,6 +439,18 @@ public class CameraActivity extends Activity {
 
 		currentAction = action;
 		currentRightLeft = rightLeft;
+	}
+
+	/**
+	 * Remove unused files from the temp folder.
+	 */
+	private void cleanupTempFolder() {
+		File[] tempFiles = FileUtil.getTempCameraFiles();
+		for (File file : tempFiles) {
+			if (!file.equals(rightEyeFile) & !file.equals(leftEyeFile)) {
+				file.delete();
+			}
+		}
 	}
 
 	/**
