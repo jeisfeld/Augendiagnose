@@ -49,7 +49,8 @@
             android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
             android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:contentDescription="@layout/text_view_initializing"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_eye_right" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +77,8 @@
             android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
             android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
             android:contentDescription="@layout/text_view_initializing"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_eye_left" />
     </LinearLayout>
 
     <Button

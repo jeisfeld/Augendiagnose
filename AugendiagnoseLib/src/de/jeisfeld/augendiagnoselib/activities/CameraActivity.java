@@ -315,7 +315,7 @@ public class CameraActivity extends Activity {
 									setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
 								}
 								else {
-									// TODO: fill with default
+									setThumbImage(null, RIGHT);
 								}
 							}
 							else {
@@ -328,7 +328,7 @@ public class CameraActivity extends Activity {
 								setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
 							}
 							else {
-								// TODO: fill with default
+								setThumbImage(null, LEFT);
 							}
 
 							setAction(TAKE_PHOTO, currentRightLeft);
@@ -463,9 +463,13 @@ public class CameraActivity extends Activity {
 	private void setThumbImage(final String file, final RightLeft rightLeft) {
 		ImageView imageView = (ImageView) findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
-		Bitmap bitmap = ImageUtil.getImageBitmap(file, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
-
-		imageView.setImageBitmap(bitmap);
+		if (file != null) {
+			Bitmap bitmap = ImageUtil.getImageBitmap(file, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
+			imageView.setImageBitmap(bitmap);
+		}
+		else {
+			imageView.setImageResource(rightLeft == RIGHT ? R.drawable.icon_eye_right : R.drawable.icon_eye_left);
+		}
 	}
 
 	/**
