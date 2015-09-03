@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.CameraUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
@@ -53,11 +52,6 @@ public class CameraActivity extends Activity {
 	 * The camera used by the activity.
 	 */
 	private Camera camera;
-
-	/**
-	 * The folder where the photos are finally placed.
-	 */
-	private File outputFolder;
 
 	/**
 	 * The preview.
@@ -88,6 +82,11 @@ public class CameraActivity extends Activity {
 	 * The current eye.
 	 */
 	private RightLeft currentRightLeft;
+
+	/**
+	 * The side of the last recorded eye.
+	 */
+	private RightLeft lastRightLeft;
 
 	/**
 	 * The temp file holding the right eye.
@@ -125,8 +124,6 @@ public class CameraActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 
-		outputFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
-
 		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 		setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
 
@@ -160,6 +157,7 @@ public class CameraActivity extends Activity {
 							}
 							rightEyeFile = newRightEyeFile;
 							newRightEyeFile = null;
+							lastRightLeft = RIGHT;
 
 							if (leftEyeFile == null) {
 								setAction(TAKE_PHOTO, LEFT);
@@ -174,6 +172,7 @@ public class CameraActivity extends Activity {
 							}
 							leftEyeFile = newLeftEyeFile;
 							newLeftEyeFile = null;
+							lastRightLeft = LEFT;
 
 							if (rightEyeFile == null) {
 								setAction(TAKE_PHOTO, RIGHT);
@@ -220,8 +219,6 @@ public class CameraActivity extends Activity {
 	private void setAction(final Action action, final RightLeft rightLeft) {
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
-		FrameLayout cameraMainFrame = (FrameLayout) findViewById(R.id.camera_main_frame);
-		LinearLayout cameraReviewFrame = (LinearLayout) findViewById(R.id.camera_review_frame);
 		Button buttonCapture = (Button) findViewById(R.id.button_capture);
 		Button buttonAccept = (Button) findViewById(R.id.button_accept);
 		Button buttonDecline = (Button) findViewById(R.id.button_decline);
@@ -229,8 +226,6 @@ public class CameraActivity extends Activity {
 		switch (action) {
 		case TAKE_PHOTO:
 			startPreview();
-			cameraMainFrame.setVisibility(View.VISIBLE);
-			cameraReviewFrame.setVisibility(View.GONE);
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonAccept.setVisibility(View.GONE);
 			buttonDecline.setVisibility(View.GONE);
@@ -245,8 +240,6 @@ public class CameraActivity extends Activity {
 			}
 			break;
 		case CHECK_PHOTO:
-			cameraMainFrame.setVisibility(View.VISIBLE);
-			cameraReviewFrame.setVisibility(View.GONE);
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
@@ -254,10 +247,18 @@ public class CameraActivity extends Activity {
 			break;
 		case ADD_NAME:
 			stopPreview();
-			cameraMainFrame.setVisibility(View.GONE);
-			cameraReviewFrame.setVisibility(View.VISIBLE);
 
-			break;
+			// cleanup temp folder
+			File[] tempFiles = FileUtil.getTempCameraFiles();
+			for (File file : tempFiles) {
+				if (!file.equals(rightEyeFile) && !file.equals(leftEyeFile)) {
+					file.delete();
+				}
+			}
+
+			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(), lastRightLeft == RIGHT);
+			finish();
+			return;
 		default:
 			break;
 		}
@@ -514,14 +515,7 @@ public class CameraActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final File imageFile) {
-			if (rightLeft == RIGHT) {
-				PinchImageView imageViewRight = (PinchImageView) findViewById(R.id.imageViewRightEye);
-				imageViewRight.setImage(imageFile.getAbsolutePath(), CameraActivity.this, 1);
-			}
-			else {
-				PinchImageView imageViewLeft = (PinchImageView) findViewById(R.id.imageViewLeftEye);
-				imageViewLeft.setImage(imageFile.getAbsolutePath(), CameraActivity.this, 2);
-			}
+			Log.d(Application.TAG, "Finished saving image " + imageFile.getName() + " - " + rightLeft);
 		}
 	}
 

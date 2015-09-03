@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnose;
 
 import android.util.Log;
+import de.jeisfeld.augendiagnoselib.util.PrivateConstants;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

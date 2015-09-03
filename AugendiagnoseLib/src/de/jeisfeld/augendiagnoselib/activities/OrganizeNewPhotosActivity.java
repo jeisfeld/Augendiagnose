@@ -54,10 +54,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 */
 	private static final String STRING_EXTRA_INPUTFOLDER = "de.jeisfeld.augendiagnoselib.INPUTFOLDER";
 	/**
-	 * The resource key for the target (parent) folder.
-	 */
-	private static final String STRING_EXTRA_FOLDER = "de.jeisfeld.augendiagnoselib.FOLDER";
-	/**
 	 * The resource key for the list of input files.
 	 */
 	private static final String STRING_EXTRA_FILENAMES = "de.jeisfeld.augendiagnoselib.FILENAMES";
@@ -112,16 +108,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The context in which the activity is started.
 	 * @param inputFolderName
 	 *            The folder containing the input files.
-	 * @param folderName
-	 *            The target Folder.
 	 * @param rightEyeLast
 	 *            A flag indicating if the last picture is the right eye.
 	 */
-	public static final void startActivity(final Context context, final String inputFolderName,
-			final String folderName, final boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String inputFolderName, final boolean rightEyeLast) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
-		intent.putExtra(STRING_EXTRA_FOLDER, folderName);
 		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
 		context.startActivity(intent);
 	}
@@ -134,16 +126,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The context in which the activity is started.
 	 * @param fileNames
 	 *            The list of files.
-	 * @param folderName
-	 *            The target folder.
 	 * @param rightEyeLast
 	 *            A flag indicating if the last picture is the right eye.
 	 */
-	public static final void startActivity(final Context context, final String[] fileNames, final String folderName,
-			final boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String[] fileNames, final boolean rightEyeLast) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
-		intent.putExtra(STRING_EXTRA_FOLDER, folderName);
 		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
 		context.startActivity(intent);
 	}
@@ -163,7 +151,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			inputFolder = new File(inputFolderString);
 		}
 
-		parentFolder = new File(getIntent().getStringExtra(STRING_EXTRA_FOLDER));
+		parentFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
 		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, false);
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 

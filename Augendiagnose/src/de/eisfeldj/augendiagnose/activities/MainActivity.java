@@ -34,8 +34,6 @@ public class MainActivity extends AdMarvelActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		SettingsActivity.setDefaultSharedPreferences(this);
-
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);
 
 		// Track if AdMarvel has been clicked in the current session.
@@ -67,8 +65,7 @@ public class MainActivity extends AdMarvelActivity {
 					}
 				}
 				boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]),
-						PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos), rightEyeLast);
+				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]), rightEyeLast);
 			}
 		}
 
@@ -197,7 +194,6 @@ public class MainActivity extends AdMarvelActivity {
 	public final void organizeNewFoldersActivity(final View view) {
 		OrganizeNewPhotosActivity.startActivity(this,
 				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
-				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos),
 				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
 	}
 

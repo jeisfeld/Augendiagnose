@@ -279,6 +279,7 @@ public class OverlayPinchImageView extends PinchImageView {
 					mMetadata = mEyePhoto.getImageMetadata();
 					retainFragment.setBitmap(mBitmap);
 					retainFragment.setBitmapSmall(mBitmapSmall);
+					mIsBitmapSet = true;
 
 					post(new Runnable() {
 						@Override
@@ -334,6 +335,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else {
 			// orientation change
+			mIsBitmapSet = true;
 			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 			mCanvas = new Canvas(mCanvasBitmap);
 			doInitialScaling();

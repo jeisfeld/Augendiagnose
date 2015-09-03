@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.fragments.SettingsFragment;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
@@ -23,10 +23,6 @@ public class SettingsActivity extends BaseActivity {
 	 * The fragment tag.
 	 */
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
-	/**
-	 * Tag to be replaced by the external storage root.
-	 */
-	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
 
 	/**
 	 * The path resources for which external storag prefix should be replaced.
@@ -93,13 +89,13 @@ public class SettingsActivity extends BaseActivity {
 			}
 		}
 
-		// TODO: remove duplications from DirectorySelectionPreference
 		for (int id : PATH_RESOURCES) {
 			String path = PreferenceUtil.getSharedPreferenceString(id);
-			if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
-				path = Environment.getExternalStorageDirectory().getAbsolutePath()
-						+ path.substring(EXTERNAL_STORAGE_PREFIX.length());
-				PreferenceUtil.setSharedPreferenceString(id, path);
+
+			String mappedPath = DirectorySelectionPreference.replaceSpecialFolderTags(path);
+
+			if (!path.equals(mappedPath)) {
+				PreferenceUtil.setSharedPreferenceString(id, mappedPath);
 			}
 		}
 

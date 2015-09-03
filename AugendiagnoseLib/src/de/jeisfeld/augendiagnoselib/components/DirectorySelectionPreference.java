@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Environment;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -25,9 +24,14 @@ public class DirectorySelectionPreference extends ListPreference {
 	private static final String CUSTOM_FOLDER = "__custom__";
 
 	/**
-	 * List tag to be replaced by the external storage root.
+	 * Tag to be replaced by the external storage root.
 	 */
 	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
+
+	/**
+	 * Tag to be replaced by the application's cache directory.
+	 */
+	private static final String CACHE_DIR_PREFIX = "__cache_dir__";
 
 	/**
 	 * List tag to be replaced by the default camera folder.
@@ -66,18 +70,36 @@ public class DirectorySelectionPreference extends ListPreference {
 		for (int i = 0; i < entryValues.length; i++) {
 			String value = entryValues[i].toString();
 
-			if (value.startsWith(EXTERNAL_STORAGE_PREFIX)) {
-				value = Environment.getExternalStorageDirectory().getAbsolutePath()
-						+ value.substring(EXTERNAL_STORAGE_PREFIX.length());
-				entryValues[i] = value;
-			}
-			else if (value.startsWith(CAMERA_FOLDER_PREFIX)) {
-				value = FileUtil.getDefaultCameraFolder();
-				entryValues[i] = value;
-			}
-			else if (value.equals(CUSTOM_FOLDER)) {
+			String mappedValue = replaceSpecialFolderTags(value);
+
+			if (value.equals(CUSTOM_FOLDER)) {
 				customIndex = i;
 			}
+			else if (!mappedValue.equals(value)) {
+				entryValues[i] = mappedValue;
+			}
+		}
+	}
+
+	/**
+	 * Replace special folder tags in a path.
+	 *
+	 * @param path
+	 *            The path.
+	 * @return The path with special folder tags replaced.
+	 */
+	public static final String replaceSpecialFolderTags(final String path) {
+		if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
+			return FileUtil.getSdCardPath() + path.substring(EXTERNAL_STORAGE_PREFIX.length());
+		}
+		else if (path.startsWith(CACHE_DIR_PREFIX)) {
+			return FileUtil.getTempCameraDir().getAbsolutePath() + path.substring(CACHE_DIR_PREFIX.length());
+		}
+		else if (path.startsWith(CAMERA_FOLDER_PREFIX)) {
+			return FileUtil.getDefaultCameraFolder() + path.substring(CAMERA_FOLDER_PREFIX.length());
+		}
+		else {
+			return path;
 		}
 	}
 

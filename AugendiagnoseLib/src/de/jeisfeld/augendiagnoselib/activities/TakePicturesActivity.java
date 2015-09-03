@@ -204,9 +204,7 @@ public class TakePicturesActivity extends BaseActivity {
 					askForTakingPicture(false, rightEyeLast);
 				}
 				else {
-					OrganizeNewPhotosActivity.startActivity(this, photoFolder.getAbsolutePath(),
-							PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos),
-							rightEyeLast);
+					OrganizeNewPhotosActivity.startActivity(this, photoFolder.getAbsolutePath(), rightEyeLast);
 					finish();
 				}
 			}

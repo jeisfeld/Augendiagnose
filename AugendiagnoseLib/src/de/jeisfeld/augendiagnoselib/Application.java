@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.PrivateConstants;
@@ -51,6 +52,9 @@ public class Application extends android.app.Application {
 	public void onCreate() {
 		super.onCreate();
 		Application.application = this;
+
+		SettingsActivity.setDefaultSharedPreferences(getApplicationContext());
+
 		setLanguage();
 		setExceptionHandler();
 

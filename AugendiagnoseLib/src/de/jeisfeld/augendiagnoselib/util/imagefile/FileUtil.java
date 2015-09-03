@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -288,18 +289,21 @@ public final class FileUtil {
 	 * @return The temp file.
 	 */
 	public static File getTempFile(final File file) {
-		File extDir = Application.getAppContext().getExternalCacheDir();
+		File extDir = new File(Application.getAppContext().getExternalCacheDir(), "temp");
+		if (!extDir.exists()) {
+			extDir.mkdirs();
+		}
 		File tempFile = new File(extDir, file.getName());
 		return tempFile;
 	}
 
 	/**
-	 * Get a filename for temporarily storing a Jpeg file.
+	 * Get a file for temporarily storing a Jpeg file.
 	 *
 	 * @return a non-existing Jpeg file in the cache dir.
 	 */
 	public static File getTempJpegFile() {
-		File tempDir = Application.getAppContext().getExternalCacheDir();
+		File tempDir = getTempCameraDir();
 		File tempFile = null;
 		do {
 			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_counter_tempfiles);
@@ -307,6 +311,42 @@ public final class FileUtil {
 		}
 		while (tempFile.exists());
 		return tempFile;
+	}
+
+	/**
+	 * Get all temp files.
+	 *
+	 * @return The list of existing temp files.
+	 */
+	public static File[] getTempCameraFiles() {
+		File tempDir = getTempCameraDir();
+
+		File[] files = tempDir.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(final File file) {
+				return file.isFile();
+			}
+		});
+
+		if (files == null) {
+			return new File[0];
+		}
+		else {
+			return files;
+		}
+	}
+
+	/**
+	 * Get the folder where temporary files are stored.
+	 *
+	 * @return The temp folder.
+	 */
+	public static File getTempCameraDir() {
+		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
+		if (!result.exists()) {
+			result.mkdirs();
+		}
+		return result;
 	}
 
 	/**
@@ -553,6 +593,23 @@ public final class FileUtil {
 		document.delete();
 
 		return result;
+	}
+
+	/**
+	 * Get the SD card directory.
+	 *
+	 * @return The SD card directory.
+	 */
+	public static String getSdCardPath() {
+		String sdCardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+		try {
+			sdCardDirectory = new File(sdCardDirectory).getCanonicalPath();
+		}
+		catch (IOException ioe) {
+			Log.e(Application.TAG, "Could not get SD directory", ioe);
+		}
+		return sdCardDirectory;
 	}
 
 	/**

@@ -1,0 +1,5 @@
+<resources>
+
+    <string name="pref_default_folder_input" translatable="false">__cache_dir__</string>
+
+</resources>
