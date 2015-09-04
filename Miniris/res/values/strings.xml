@@ -4,14 +4,15 @@
     <string name="app_name">Miniris</string>
     <string name="title_activity_camera">Miniris Camera</string>
     <string name="title_activity_list_folders_for_display">Miniris Gallery</string>
-    
+    <string name="title_activity_organize_new_photos">Set Name and Date</string>
+    <string name="section_select_photos"></string>
+
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_settings" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
     </string-array>
-    <string-array name="activities_with_home_enablement" translatable="false">
-    </string-array>
+    <string-array name="activities_with_home_enablement" translatable="false"></string-array>
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">

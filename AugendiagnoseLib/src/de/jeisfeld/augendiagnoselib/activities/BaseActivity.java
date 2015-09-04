@@ -22,9 +22,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		DialogUtil.checkOutOfMemoryError(this);
 
 		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
-		if (Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName())) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
+		getActionBar().setDisplayHomeAsUpEnabled(Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName()));
 	}
 
 	/*

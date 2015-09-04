@@ -41,6 +41,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/section_select_date"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+    </LinearLayout>
+
+    <Space style="@style/Space" />
+
+    <View style="@style/Divider" />
+
+    <Space style="@style/Space" />
+
+    <LinearLayout style="@style/Subactivity" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/section_select_photos"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
@@ -98,29 +121,6 @@
                 android:text="@string/button_other_pictures"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
-    </LinearLayout>
-
-    <Space style="@style/Space" />
-
-    <View style="@style/Divider" />
-
-    <Space style="@style/Space" />
-
-    <LinearLayout style="@style/Subactivity" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_select_date"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
     </LinearLayout>
 
     <Space style="@style/Space" />

@@ -87,7 +87,6 @@
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity"
             android:label="@string/title_activity_organize_new_photos"
-            android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity

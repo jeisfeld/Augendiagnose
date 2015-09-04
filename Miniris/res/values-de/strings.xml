@@ -4,5 +4,7 @@
     <string name="app_name">Miniris</string>
     <string name="title_activity_camera">Miniris Kamera</string>
     <string name="title_activity_list_folders_for_display">Miniris Galerie</string>
-    
+    <string name="title_activity_organize_new_photos">Name und Datum festlegen</string>
+    <string name="section_select_photos"></string>
+
 </resources>
