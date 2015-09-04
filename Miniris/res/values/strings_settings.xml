@@ -1,5 +1,6 @@
 <resources>
 
     <string name="pref_default_folder_input" translatable="false">__cache_dir__</string>
+    <string name="pref_title_eye_sequence_choice">Start with left eye</string>
 
 </resources>
