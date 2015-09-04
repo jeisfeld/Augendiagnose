@@ -4,6 +4,8 @@
     <issue id="IconLauncherShape" >
 
         <ignore regexp="res/drawable-nodpi/ic_launcher\.png" />
+
+        <ignore regexp="res/drawable-nodpi/ic_launcher_gallery\.png" />
     </issue>
 
 </lint>

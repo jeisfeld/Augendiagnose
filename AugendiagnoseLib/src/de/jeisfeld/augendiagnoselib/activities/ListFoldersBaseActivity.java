@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.os.Bundle;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
  * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
@@ -29,6 +30,9 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		parentFolder = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
+		if (parentFolder == null) {
+			parentFolder = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
+		}
 	}
 
 	/**
