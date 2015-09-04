@@ -20,6 +20,11 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		super.onCreate(savedInstanceState);
 		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
+
+		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
+		if (Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName())) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 	}
 
 	/*
@@ -31,6 +36,12 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		boolean allowsSettings = Arrays.asList(activitiesWithSettings).contains(getClass().getName());
 
 		getMenuInflater().inflate(allowsSettings ? R.menu.menu_settings_help : R.menu.menu_only_help, menu);
+
+		if (getHelpResource() == 0 || getString(getHelpResource()).length() == 0) {
+			// Hide help icon if there is no help text
+			menu.findItem(R.id.action_help).setVisible(false);
+		}
+
 		return super.onCreateOptionsMenu(menu);
 	}
 

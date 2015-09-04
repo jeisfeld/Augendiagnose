@@ -1,5 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +66,11 @@ public class DisplayHtmlActivity extends Activity {
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
+		if (Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName())) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		int resource = getIntent().getIntExtra(STRING_EXTRA_RESOURCE, NO_RESOURCE);
 

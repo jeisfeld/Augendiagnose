@@ -167,7 +167,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_organize_new_photos);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String inputFolderString = getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER);
 		if (inputFolderString != null) {

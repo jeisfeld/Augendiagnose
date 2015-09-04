@@ -45,8 +45,6 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 

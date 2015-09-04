@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 /**
  * Activity to select a pair of eye photos from a folder and return the paths to the parent activity.
  */
-public class SelectTwoPicturesActivity extends Activity {
+public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * The requestCode with which this activity is started.
 	 */
@@ -136,7 +135,6 @@ public class SelectTwoPicturesActivity extends Activity {
 		parentActivityStatic = null;
 
 		setContentView(R.layout.activity_select_two_pictures);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String folderName = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
 		if (folderName != null) {
@@ -156,6 +154,11 @@ public class SelectTwoPicturesActivity extends Activity {
 	protected final void onDestroy() {
 		super.onDestroy();
 		parentActivity = null;
+	}
+
+	@Override
+	protected final int getHelpResource() {
+		return R.string.html_organize_photos;
 	}
 
 	/**

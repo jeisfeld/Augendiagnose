@@ -50,7 +50,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if (SystemUtil.isTablet()) {
 			setContentView(R.layout.activity_fragments_list_detail);

@@ -60,6 +60,14 @@
     <string-array name="activities_with_settings" translatable="false">
         <item></item>
     </string-array>
+    <string-array name="activities_with_home_enablement" translatable="false">
+        <item>de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity</item>
+        <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
+        <item>de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity</item>
+        <item>de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity</item>
+        <item>de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity</item>
+        <item>de.jeisfeld.augendiagnoselib.activities.SettingsActivity</item>
+    </string-array>
 
     <!-- Resources defining available overlays -->
 
