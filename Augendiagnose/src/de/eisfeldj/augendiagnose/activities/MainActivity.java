@@ -13,6 +13,7 @@ import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
+import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
@@ -59,7 +60,7 @@ public class MainActivity extends BaseActivity {
 					}
 				}
 				boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]), rightEyeLast);
+				OrganizeNewPhotosActivity.startActivity(this, fileNames.toArray(new String[fileNames.size()]), rightEyeLast, NextAction.NEXT_IMAGES);
 			}
 		}
 
@@ -152,8 +153,7 @@ public class MainActivity extends BaseActivity {
 	 *            the button to display the eye photos.
 	 */
 	public final void listFoldersForDisplayActivity(final View view) {
-		ListFoldersForDisplayActivity.startActivity(this,
-				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
+		ListFoldersForDisplayActivity.startActivity(this);
 	}
 
 	/**
@@ -165,7 +165,8 @@ public class MainActivity extends BaseActivity {
 	public final void organizeNewFoldersActivity(final View view) {
 		OrganizeNewPhotosActivity.startActivity(this,
 				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
-				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice));
+				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
+				NextAction.NEXT_IMAGES);
 	}
 
 	/**

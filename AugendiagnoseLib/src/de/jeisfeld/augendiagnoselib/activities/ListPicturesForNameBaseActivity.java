@@ -67,7 +67,7 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 	 *            The view triggering the onClick action.
 	 */
 	public final void selectDifferentPictureActivity(final View view) {
-		ListFoldersForDisplaySecondActivity.startActivity(this, fragment.getParentFolder());
+		ListFoldersForDisplaySecondActivity.startActivity(this);
 	}
 
 	@Override

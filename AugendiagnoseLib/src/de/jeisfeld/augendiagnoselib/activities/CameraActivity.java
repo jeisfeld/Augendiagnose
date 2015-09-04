@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.util.CameraUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -224,7 +225,8 @@ public class CameraActivity extends Activity {
 			leftEyeFile = rightEyeLast ? existingFiles[0] : existingFiles[1];
 
 			// both files are already there - switch to Organize.
-			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(), lastRightLeft == RIGHT);
+			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(),
+					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
 			return;
 		}
@@ -431,7 +433,8 @@ public class CameraActivity extends Activity {
 			}
 
 			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraDir() : photoFolder;
-			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(), lastRightLeft == RIGHT);
+			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(),
+					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
 			return;
 		default:

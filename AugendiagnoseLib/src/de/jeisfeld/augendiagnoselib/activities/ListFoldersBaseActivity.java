@@ -11,11 +11,6 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
  */
 public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
-	 * The resource key for the parent folder.
-	 */
-	protected static final String STRING_EXTRA_FOLDER = "de.jeisfeld.augendiagnoselib.FOLDER";
-
-	/**
 	 * The parent folder.
 	 */
 	private String parentFolder;
@@ -29,10 +24,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		parentFolder = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
-		if (parentFolder == null) {
-			parentFolder = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
-		}
+		parentFolder = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
 	}
 
 	/**

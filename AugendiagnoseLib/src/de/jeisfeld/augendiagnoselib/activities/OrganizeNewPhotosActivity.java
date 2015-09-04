@@ -62,7 +62,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * The resource key for the flag indicating if the last picture is the right eye.
 	 */
-	private static final String BOOL_EXTRA_RIGHTEYELAST = "de.jeisfeld.augendiagnoselib.RIGHTEYELAST";
+	private static final String STRING_EXTRA_RIGHTEYELAST = "de.jeisfeld.augendiagnoselib.RIGHTEYELAST";
+	/**
+	 * The resource key for the next action to be done after organizing a pair of images.
+	 */
+	private static final String STRING_EXTRA_NEXTACTION = "de.jeisfeld.augendiagnoselib.NEXTACTION";
 
 	/**
 	 * The input folder for images.
@@ -80,6 +84,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * The flag indicating if the last picture is the right eye.
 	 */
 	private boolean rightEyeLast;
+	/**
+	 * The next action to be done after organizing a pair of images.
+	 */
+	private NextAction nextAction;
 	/**
 	 * The list of input images.
 	 */
@@ -117,11 +125,15 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The folder containing the input files.
 	 * @param rightEyeLast
 	 *            A flag indicating if the last picture is the right eye.
+	 * @param nextAction
+	 *            The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(final Context context, final String inputFolderName, final boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String inputFolderName,
+			final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
-		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
+		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
+		intent.putExtra(STRING_EXTRA_NEXTACTION, nextAction);
 		context.startActivity(intent);
 	}
 
@@ -135,11 +147,15 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The list of files.
 	 * @param rightEyeLast
 	 *            A flag indicating if the last picture is the right eye.
+	 * @param nextAction
+	 *            The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(final Context context, final String[] fileNames, final boolean rightEyeLast) {
+	public static final void startActivity(final Context context, final String[] fileNames,
+			final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
-		intent.putExtra(BOOL_EXTRA_RIGHTEYELAST, rightEyeLast);
+		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
+		intent.putExtra(STRING_EXTRA_NEXTACTION, nextAction);
 		context.startActivity(intent);
 	}
 
@@ -159,7 +175,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 
 		parentFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
-		rightEyeLast = getIntent().getBooleanExtra(BOOL_EXTRA_RIGHTEYELAST, false);
+		rightEyeLast = getIntent().getBooleanExtra(STRING_EXTRA_RIGHTEYELAST, false);
+		nextAction = (NextAction) getIntent().getSerializableExtra(STRING_EXTRA_NEXTACTION);
 		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		if (savedInstanceState != null && savedInstanceState.getString("rightEyePhoto") != null) {
@@ -444,6 +461,20 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 
 		movePhotos(targetPhotoRight, targetPhotoLeft, name);
+
+		switch (nextAction) {
+		case NEXT_IMAGES:
+			setPicturesAndValues(true);
+			break;
+		case FINISH:
+			finish();
+			break;
+		case VIEW_IMAGES:
+			ListFoldersForDisplayActivity.startActivity(this);
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -456,7 +487,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param name
 	 *            The selected name.
 	 */
-	public final void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
+	private void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
 
 		if (!photoRight.exists()) {
 			displayError(R.string.message_dialog_file_does_not_exist, photoRight.getAbsolutePath());
@@ -514,8 +545,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
 
 		PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizeend);
-
-		setPicturesAndValues(true);
 	}
 
 	/**
@@ -632,6 +661,24 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			};
 			return new DatePickerDialog(getActivity(), dateSetListener, year, month, date);
 		}
+	}
+
+	/**
+	 * The next action to be done after organizing photos.
+	 */
+	public enum NextAction {
+		/**
+		 * Continue the activity with the next image pair (and finish if not existing).
+		 */
+		NEXT_IMAGES,
+		/**
+		 * Finish the activity.
+		 */
+		FINISH,
+		/**
+		 * Continue with viewing images.
+		 */
+		VIEW_IMAGES
 	}
 
 }

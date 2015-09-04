@@ -41,12 +41,9 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 *
 	 * @param context
 	 *            The context in which the activity is started.
-	 * @param foldername
-	 *            The path of the folder.
 	 */
-	public static final void startActivity(final Context context, final String foldername) {
+	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
-		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		context.startActivity(intent);
 	}
 
