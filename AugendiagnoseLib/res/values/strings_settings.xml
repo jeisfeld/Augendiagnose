@@ -30,7 +30,8 @@
     <string name="pref_title_remove_ads">Remove ads</string>
     <string name="pref_default_remove_ads" translatable="false">false</string>
     <string name="pref_title_user_key">User key</string>
-
+    <string name="pref_default_show_tips" translatable="false">true</string>
+    
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
