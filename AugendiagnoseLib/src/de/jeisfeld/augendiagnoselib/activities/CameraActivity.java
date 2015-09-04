@@ -4,6 +4,7 @@ import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHEC
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.RE_TAKE_PHOTO;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.TAKE_PHOTO;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.VIEW_IMAGES;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.LEFT;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIGHT;
 
@@ -269,6 +270,16 @@ public class CameraActivity extends Activity {
 					}
 				});
 
+		// Add a listener to the view image button
+		Button viewImageButton = (Button) findViewById(R.id.button_view_images);
+		viewImageButton.setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(final View v) {
+						setAction(VIEW_IMAGES, null);
+					}
+				});
+
 		// Add listeners to the accept/decline button
 		Button acceptButton = (Button) findViewById(R.id.button_accept);
 		acceptButton.setOnClickListener(
@@ -437,6 +448,13 @@ public class CameraActivity extends Activity {
 					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
 			return;
+		case VIEW_IMAGES:
+			stopPreview();
+			cleanupTempFolder();
+
+			ListFoldersForDisplayActivity.startActivity(this);
+			finish();
+			break;
 		default:
 			break;
 		}
@@ -714,6 +732,10 @@ public class CameraActivity extends Activity {
 		 * Finish the camera activity.
 		 */
 		FINISH_CAMERA,
+		/**
+		 * Cancel and go to the view images activity.
+		 */
+		VIEW_IMAGES,
 		/**
 		 * Make an optional re-take of a photo.
 		 */

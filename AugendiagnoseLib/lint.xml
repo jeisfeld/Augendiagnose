@@ -3,9 +3,12 @@
 
     <issue id="IconLauncherShape" >
 
-        <ignore regexp="res/drawable-nodpi/ic_launcher\.png" />
+        <ignore regexp="res/drawable-nodpi/ic_launcher.*\.png" />
+    </issue>
 
-        <ignore regexp="res/drawable-nodpi/ic_launcher_gallery\.png" />
+    <issue id="IconDuplicates" >
+
+        <ignore regexp="res/drawable-nodpi/ic_launcher.*\.png" />
     </issue>
 
 </lint>

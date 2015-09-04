@@ -104,4 +104,17 @@
         android:background="@drawable/circlebutton_decline"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/button_view_images"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:background="@drawable/circlebutton_view_images" />
+    </LinearLayout>
+
 </merge>
