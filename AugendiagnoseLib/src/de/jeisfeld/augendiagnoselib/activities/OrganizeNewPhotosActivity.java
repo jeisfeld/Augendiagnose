@@ -471,6 +471,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			break;
 		case VIEW_IMAGES:
 			ListFoldersForDisplayActivity.startActivity(this);
+			finish();
 			break;
 		default:
 			break;

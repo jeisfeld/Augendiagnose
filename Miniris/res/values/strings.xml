@@ -2,7 +2,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Miniris</string>
-
+    <string name="title_activity_camera">Miniris Camera</string>
+    <string name="title_activity_list_folders_for_display">Miniris Gallery</string>
+    
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_settings" translatable="false">
