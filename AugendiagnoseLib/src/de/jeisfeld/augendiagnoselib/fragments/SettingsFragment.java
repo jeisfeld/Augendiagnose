@@ -95,6 +95,10 @@ public class SettingsFragment extends PreferenceFragment {
 		bindPreferenceSummaryToValue(R.string.key_full_resolution);
 		bindPreferenceSummaryToValue(R.string.key_language);
 
+		if (getString(R.string.pref_title_folder_input).length() == 0) {
+			getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
+		}
+
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);
 
@@ -497,7 +501,7 @@ public class SettingsFragment extends PreferenceFragment {
 		// Persist access permissions.
 		final int takeFlags = data.getFlags()
 				& (Intent.FLAG_GRANT_READ_URI_PERMISSION
-				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+						| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
 	}
 
