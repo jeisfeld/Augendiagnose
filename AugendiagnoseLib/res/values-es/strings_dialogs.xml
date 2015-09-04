@@ -17,7 +17,6 @@
     <string name="message_dialog_folder_does_not_exist">Carpeta %1$s no existe. Por favor, verifique los ajustes.</string>
     <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización.</string>
     <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>
-    <string name="message_dialog_file_already_exists">El archivo %1$s ya existe. Por favor seleccione un nombre o fecha diferente.</string>
     <string name="message_dialog_failed_to_move_file">Error al mover el archivo %1$s a %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error mientras se mueve la carpeta %1$s a %2$s - Por favor, consulte las carpetas y mover archivos a la carpeta apropiada.</string>
     <string name="message_dialog_failed_to_rename_file">Error al cambiar el nombre de archivo %1$s a %2$s</string>
@@ -40,6 +39,7 @@
     <string name="message_dialog_confirm_delete_all_photos">¿Realmente desea eliminar todas las fotos de la carpeta de entrada?</string>
     <string name="message_dialog_confirm_move_to_input_folder">¿Realmente desea mover las fotos de %1$s de %2$s a la carpeta de entrada?</string>
     <string name="message_dialog_confirm_no_jpeg">Las fotos seleccionadas no son JPG fotos. Por lo tanto, parte de la funcionalidad (tal como almacenamiento de información) no funcionará. ¿Quiere continuar?</string>
+    <string name="message_dialog_confirm_overwrite">Para el nombre «%1$s» ya hay fotos de ojo de %2$s. ¿Desea sobrescribir estos?\n\nDe lo contrario, por favor seleccione un nombre o una fecha diferente.</string>
     <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
     <string name="imageinfo_line_filename">Nombre del archivo:</string>
     <string name="imageinfo_line_filedate">Fecha del archivo:</string>

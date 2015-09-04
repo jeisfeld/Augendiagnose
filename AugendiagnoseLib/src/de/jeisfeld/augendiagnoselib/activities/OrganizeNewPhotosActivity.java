@@ -459,22 +459,38 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			return;
 		}
 
-		movePhotos(targetPhotoRight, targetPhotoLeft, name);
-
-		switch (nextAction) {
-		case NEXT_IMAGES:
-			setPicturesAndValues(true);
-			break;
-		case FINISH:
-			finish();
-			break;
-		case VIEW_IMAGES:
-			ListFoldersForDisplayActivity.startActivity(this);
-			finish();
-			break;
-		default:
-			break;
+		if (!photoRight.exists()) {
+			displayError(R.string.message_dialog_file_does_not_exist, photoRight.getAbsolutePath());
+			return;
 		}
+		if (!photoLeft.exists()) {
+			displayError(R.string.message_dialog_file_does_not_exist, photoLeft.getAbsolutePath());
+			return;
+		}
+
+		if (targetPhotoRight.exists() || targetPhotoLeft.exists()) {
+			DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogPositiveClick(final DialogFragment dialog) {
+					MediaStoreUtil.deleteThumbnail(targetPhotoLeft.getAbsolutePath());
+					MediaStoreUtil.deleteThumbnail(targetPhotoRight.getAbsolutePath());
+					movePhotos(targetPhotoRight, targetPhotoLeft, name);
+				}
+
+				@Override
+				public void onDialogNegativeClick(final DialogFragment dialog) {
+					// Do nothing
+				}
+			}, R.string.button_overwrite, R.string.message_dialog_confirm_overwrite, name, DateUtil.format(date));
+			return;
+		}
+
+		movePhotos(targetPhotoRight, targetPhotoLeft, name);
 	}
 
 	/**
@@ -488,33 +504,14 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The selected name.
 	 */
 	private void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
-
-		if (!photoRight.exists()) {
-			displayError(R.string.message_dialog_file_does_not_exist, photoRight.getAbsolutePath());
-			return;
-		}
-		if (!photoLeft.exists()) {
-			displayError(R.string.message_dialog_file_does_not_exist, photoLeft.getAbsolutePath());
-			return;
-		}
-
-		if (targetPhotoRight.exists()) {
-			displayError(R.string.message_dialog_file_already_exists, targetPhotoRight.getAbsolutePath());
-			return;
-		}
-		if (targetPhotoLeft.exists()) {
-			displayError(R.string.message_dialog_file_already_exists, targetPhotoLeft.getAbsolutePath());
-			return;
-		}
-
 		if (inputFolder != null) {
 			// in case of input folder, move files
-			if (!photoRight.moveTo(targetPhotoRight)) {
+			if (!photoRight.moveTo(targetPhotoRight, true)) {
 				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
 						targetPhotoRight.getAbsolutePath());
 				return;
 			}
-			if (!photoLeft.moveTo(targetPhotoLeft)) {
+			if (!photoLeft.moveTo(targetPhotoLeft, true)) {
 				displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
 						targetPhotoLeft.getAbsolutePath());
 				return;
@@ -545,6 +542,21 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
 
 		PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizeend);
+
+		switch (nextAction) {
+		case NEXT_IMAGES:
+			setPicturesAndValues(true);
+			break;
+		case FINISH:
+			finish();
+			break;
+		case VIEW_IMAGES:
+			ListFoldersForDisplayActivity.startActivity(this);
+			finish();
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**

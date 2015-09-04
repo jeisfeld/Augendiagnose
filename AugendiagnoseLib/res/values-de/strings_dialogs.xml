@@ -17,7 +17,6 @@
     <string name="message_dialog_folder_does_not_exist">Verzeichnis %1$s existiert nicht. Bitte überprüfen Sie die Einstellungen.</string>
     <string name="message_dialog_no_organized_photos">Es sind keine eingeordneten Fotos zum anzeigen vorhanden.</string>
     <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>
-    <string name="message_dialog_file_already_exists">Datei %1$s existiert schon. Bitte wählen Sie einen anderen Namen oder ein anderes Datum.</string>
     <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
     <string name="message_dialog_failed_to_move_folder_partially">Beim Verschieben des Verzeichnisses %1$s in %2$s sind Probleme aufgetreten - bitte überprüfen und korrigieren Sie diese Verzeichnisse.</string>
     <string name="message_dialog_failed_to_rename_file">Konnte Datei %1$s nicht in  %2$s umbenennen</string>
@@ -40,6 +39,7 @@
     <string name="message_dialog_confirm_delete_all_photos">Wollen Sie wirklich alle Fotos im Eingangsverzeichnis löschen?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Wollen Sie die Fotos von %1$s vom %2$s zurück ins Eingangsverzeichnis verschieben?</string>
     <string name="message_dialog_confirm_no_jpeg">Die gewählten Fotos sind keine JPG-Fotos. Daher werden Teile der App (wie Speichern von Daten) nicht funktionieren. Wollen Sie trotzdem fortsetzen?</string>
+    <string name="message_dialog_confirm_overwrite">Zum Namen „%1$s“ gibt es bereits Augenfotos vom %2$s. Wollen Sie diese überschreiben?\n\nAnsonsten wählen Sie bitte einen anderen Namen oder ein anderes Datum.</string>
     <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
     <string name="imageinfo_line_filename">Dateiname:</string>
     <string name="imageinfo_line_filedate">Dateidatum:</string>

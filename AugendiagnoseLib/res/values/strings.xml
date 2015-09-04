@@ -27,6 +27,7 @@
     <string name="button_move">Move</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_camera">Camera</string>
+    <string name="button_overwrite">Overwrite</string>
     <string name="button_select_color" translatable="false">\u25a0</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>

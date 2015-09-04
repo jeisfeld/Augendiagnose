@@ -328,11 +328,12 @@ public class EyePhoto {
 	 *
 	 * @param target
 	 *            the file information of the target file.
+	 * @param allowOverwrite
+	 *            if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
-	public final boolean moveTo(final EyePhoto target) {
-		if (target.getFile().exists()) {
-			// do not allow overwriting
+	public final boolean moveTo(final EyePhoto target, final boolean allowOverwrite) {
+		if (target.getFile().exists() && !allowOverwrite) {
 			return false;
 		}
 
@@ -388,7 +389,7 @@ public class EyePhoto {
 	public final boolean changePersonName(final String targetName) {
 		EyePhoto target = cloneFromPath();
 		target.setPersonName(targetName);
-		boolean success = moveTo(target);
+		boolean success = moveTo(target, false);
 
 		if (success) {
 			// update metadata
@@ -416,7 +417,7 @@ public class EyePhoto {
 	public final boolean changeDate(final Date newDate) {
 		EyePhoto target = cloneFromPath();
 		target.setDate(newDate);
-		boolean success = moveTo(target);
+		boolean success = moveTo(target, false);
 
 		if (success) {
 			// update metadata

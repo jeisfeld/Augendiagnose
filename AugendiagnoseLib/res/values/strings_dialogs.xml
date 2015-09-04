@@ -17,7 +17,6 @@
     <string name="message_dialog_folder_does_not_exist">Folder %1$s does not exist. Please check the settings.</string>
     <string name="message_dialog_no_organized_photos">There are no organized photos available for display.</string>
     <string name="message_dialog_file_does_not_exist">File %1$s does not exist</string>
-    <string name="message_dialog_file_already_exists">File %1$s already exists. Please select a different name or date.</string>
     <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error while moving folder %1$s to %2$s - please check folders and move files to appropriate folder.</string>
     <string name="message_dialog_failed_to_rename_file">Failed to rename file %1$s to %2$s</string>
@@ -40,6 +39,7 @@
     <string name="message_dialog_confirm_delete_all_photos">Do you really want to delete all photos from the input folder?</string>
     <string name="message_dialog_confirm_move_to_input_folder">Do you really want to move the photos of %1$s from %2$s back to the input folder?</string>
     <string name="message_dialog_confirm_no_jpeg">The selected photos are no JPG photos. Therefore, part of the functionality (such as storing information) will not work. Do you want to continue?</string>
+    <string name="message_dialog_confirm_overwrite">For the name “%1$s” there are already eye photos from %2$s. Do you want to overwrite these?\n\nOtherwise, please select a different name or date.</string>
     <string name="message_dialog_outofmemoryerror">The app has crashed due to lack of memory. If this happens repeatedly, then you should go to the settings, change the setting “Show image in full resolution” to the value “Load only on demand”, and reduce the value of “Max Bitmap size”.</string>
     <string name="imageinfo_line_filename">File name:</string>
     <string name="imageinfo_line_filedate">File date:</string>

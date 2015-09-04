@@ -25,6 +25,7 @@
     <string name="button_move">Verschieben</string>
     <string name="button_other_pictures">Andere Fotos</string>
     <string name="button_camera">Kamera</string>
+    <string name="button_overwrite">Überschreiben</string>
     <string name="button_dont_show">Nicht mehr zeigen</string>
     <string name="button_show_later">Erneut zeigen</string>
     <string name="button_purchased_item">%1$s (gekauft)</string>
