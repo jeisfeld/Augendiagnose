@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import de.eisfeldj.augendiagnose.R;
-import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
@@ -16,7 +15,6 @@ import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
@@ -40,9 +38,6 @@ public class MainActivity extends BaseActivity {
 		}
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked, isAdMarvelClicked);
 
-		// Initial tip is triggered first, so that it is hidden behind release notes.
-		DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
-
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) && intent.getType() != null) {
 			// Application was started from other application by passing a list of images - open
@@ -64,23 +59,6 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 
-		if (Intent.ACTION_MAIN.equals(intent.getAction()) && savedInstanceState == null) {
-			boolean firstStart = false;
-			// When starting from launcher, check if started the first time in this version. If yes, display release
-			// notes.
-			String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
-			if (storedVersionString == null || storedVersionString.length() == 0) {
-				storedVersionString = "30";
-				firstStart = true;
-			}
-			int storedVersion = Integer.parseInt(storedVersionString);
-			int currentVersion = Application.getVersion();
-
-			if (storedVersion < currentVersion) {
-				ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
-			}
-		}
-
 		if (!SystemUtil.isEyeFiInstalled()) {
 			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
@@ -94,8 +72,6 @@ public class MainActivity extends BaseActivity {
 		if (savedInstanceState == null) {
 			PreferenceUtil.incrementCounter(R.string.key_statistics_countmain);
 		}
-
-		DialogUtil.checkOutOfMemoryError(this);
 
 		requestBannerAdIfEligible();
 

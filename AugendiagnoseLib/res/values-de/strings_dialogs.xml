@@ -14,7 +14,7 @@
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">Verzeichnis %1$s ist nicht schreibbar. Bitte stellen Sie sicher, dass Sie Schreibrechte für die ganze SD-Karte erteilen.</string>
-    <string name="message_dialog_no_organized_photos">Es sind keine eingeordneten Fotos zum anzeigen vorhanden. Bitte ordnen Sie zunächst Augenfotos ein.\n\nFalls Sie mit der App vertraut sind, können Sie nun in den Einstellungen das Fotoverzeichnis ändern.</string>
+    <string name="message_dialog_no_organized_photos">Es sind keine eingeordneten Fotos zum anzeigen vorhanden. Bitte nehmen Sie zunächst ein Paar Augenfotos auf und weisen Sie Name und Datum zu.\n\nFalls Sie mit der App vertraut sind, können Sie nun in den Einstellungen das Fotoverzeichnis ändern.</string>
     <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>
     <string name="message_dialog_failed_to_move_file">Konnte Datei %1$s nicht nach %2$s verschieben</string>
     <string name="message_dialog_failed_to_move_folder_partially">Beim Verschieben des Verzeichnisses %1$s in %2$s sind Probleme aufgetreten - bitte überprüfen und korrigieren Sie diese Verzeichnisse.</string>

@@ -207,15 +207,37 @@ public final class DialogUtil {
 	 */
 	public static void displayTip(final Activity activity, final int messageResource,
 			final int preferenceResource) {
+		displayTip(activity, R.string.title_dialog_tip, R.drawable.ic_title_tipp, messageResource, preferenceResource);
+	}
+
+	/**
+	 * Display a tip.
+	 *
+	 * @param activity
+	 *            the triggering activity
+	 * @param titleResource
+	 *            The resource containing the title.
+	 * @param iconResource
+	 *            The resource containing the icon.
+	 * @param messageResource
+	 *            The resource containing the text of the tip.
+	 * @param preferenceResource
+	 *            The resource for the key of the preference storing the information if the tip should be skipped later.
+	 */
+	public static void displayTip(final Activity activity, final int titleResource, final int iconResource,
+			final int messageResource, final int preferenceResource) {
 		String message = activity.getString(messageResource);
 
 		boolean skip = PreferenceUtil.getSharedPreferenceBoolean(preferenceResource);
 
 		if (!skip) {
-			DisplayTipFragment fragment = new DisplayTipFragment();
 			Bundle bundle = new Bundle();
+			bundle.putString(PARAM_TITLE, activity.getString(titleResource));
+			bundle.putInt(PARAM_ICON, iconResource);
 			bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message));
 			bundle.putInt(PARAM_PREFERENCE_KEY, preferenceResource);
+
+			DisplayTipFragment fragment = new DisplayTipFragment();
 			fragment.setArguments(bundle);
 			fragment.show(activity.getFragmentManager(), DisplayTipFragment.class.toString());
 		}
@@ -332,9 +354,9 @@ public final class DialogUtil {
 			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(title) //
-					.setIcon(iconResource) //
-					.setMessage(message) //
+			builder.setTitle(title)
+					.setIcon(iconResource)
+					.setMessage(message)
 					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
@@ -401,9 +423,9 @@ public final class DialogUtil {
 					PARAM_LISTENER);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.title_dialog_confirmation) //
-					.setIcon(R.drawable.ic_title_warning) //
-					.setMessage(message) //
+			builder.setTitle(R.string.title_dialog_confirmation)
+					.setIcon(R.drawable.ic_title_warning)
+					.setMessage(message)
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
@@ -452,11 +474,13 @@ public final class DialogUtil {
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
+			String title = getArguments().getString(PARAM_TITLE);
+			int iconResource = getArguments().getInt(PARAM_ICON);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.title_dialog_tip) //
-					.setIcon(R.drawable.ic_title_tipp) //
-					.setMessage(message) //
+			builder.setTitle(title)
+					.setIcon(iconResource)
+					.setMessage(message)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {

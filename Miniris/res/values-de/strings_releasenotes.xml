@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="releasenotes_first_usage">
+<![CDATA[
+	<h3>Wichtiger Hinweis:</h3>
+	
+	<p>Diese App erlaubt nur einen Tag lang die freie Nutzung, bei eingeschränkter Zahl der Fotos.</p>
+
+	<p>Bitte testen Sie die App. Wenn Sie sie nützlich finden, dann können Sie in der App ein Premium-Pack erwerben, das unbegrenzte Nutzung ermöglicht.</p>
+	
+	<h3>Erste Schritte:</h3>
+	<ol>
+	  <li>Machen Sie Fotos des rechten und linken Auges</li>
+	  <li>Weisen Sie den Fotos einen Namen (und ein Datum) zu</li>
+	  <li>Betrachten und analysieren Sie die Fotos</li>
+	</ol>
+]]>
+    </string>
+
     <string-array name="releasenotes_version_notes">
         <item>Erste Version.</item>
     </string-array>

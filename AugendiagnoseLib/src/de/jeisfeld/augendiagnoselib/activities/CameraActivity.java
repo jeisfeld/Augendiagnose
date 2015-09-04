@@ -51,7 +51,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * An activity to take pictures with the camera.
  */
 @SuppressWarnings("deprecation")
-public class CameraActivity extends Activity {
+public class CameraActivity extends BaseActivity {
 	/**
 	 * The resource key for the folder where to store the photos.
 	 */
@@ -174,7 +174,6 @@ public class CameraActivity extends Activity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Application.setLanguage();
 		setContentView(R.layout.activity_camera);
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
@@ -252,6 +251,11 @@ public class CameraActivity extends Activity {
 	public final void onDestroy() {
 		cleanupTempFolder();
 		super.onDestroy();
+	}
+
+	@Override
+	protected final int getHelpResource() {
+		return 0;
 	}
 
 	/**

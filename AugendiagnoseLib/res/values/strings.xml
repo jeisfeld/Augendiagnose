@@ -59,7 +59,6 @@
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_settings" translatable="false">
-        <item></item>
     </string-array>
     <string-array name="activities_with_home_enablement" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity</item>

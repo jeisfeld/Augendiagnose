@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="releasenotes_first_usage">
+<![CDATA[
+	<h3>Nota importante:</h3>
+
+	<p>Esta aplicación permite el uso libre sólo para un día, con limitaciones en el número de fotos.</p>
+
+	<p>Por favor, probar la aplicación. Si le resulta útil, entonces usted puede comprar un paquete premium dentro de la aplicación, que permite el uso ilimitado.</p>
+	
+	<h3>Primeros pasos:</h3>
+	<ol>
+	  <li>Tome fotos de ojo derecho y ojo izquierdo</li>
+	  <li>Asigne un nombre (y fecha) a las fotos</li>
+	  <li>Vea y analice las fotos</li>
+	</ol>
+]]>
+    </string>
+
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial.</item>
     </string-array>

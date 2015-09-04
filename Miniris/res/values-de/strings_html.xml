@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview">Übersicht</string>
+    <string name="html_navigation_overview"></string>
     <string name="html_navigation_settings">Einstellungen</string>
     <string name="html_navigation_organize_photos">Organisation der Fotos</string>
     <string name="html_navigation_display_photos">Betrachten der Fotos</string>
@@ -12,114 +12,21 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Augendiagnose - Release Notes</title>
+<title>Miniris - Release Notes</title>
 </head>
 <body>
-	<h2>Augendiagnose - Release Notes</h2>
+	<h2>Miniris - Release Notes</h2>
 </body>
 </html>
 ]]>
     </string>
-    <string name="html_overview" formatted="false">
-<![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Augendiagnose - Übersicht</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
-<body>
-	<h2>Augendiagnose - Übersicht</h2>
-
-	Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu vergleichen, im Rahmen der medizinischen
-	Augendiagnose.
-
-	<h3>Funktionalitäten</h3>
-
-	<ul>
-		<li>Organisation von Augenfotos nach Name, Datum und Körperseite (rechts/links)</li>
-
-		<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalität), so dass man zwei Fotos vergleichen kann
-			(z.B. Vergleich rechts-links, Vergleich früher-später, Vergleich zweier Personen, oder Vergleich eines Fotos mit
-			einer Iristopographie).</li>
-
-		<li>Änderung von Helligkeit und Kontrast eines Augenfotos bei der Anzeige, und Anzeige des Fotos mit einer
-			eingeblendeten Iristopographie (als Overlay)</li>
-
-		<li>Sie können auch Informationen in den Fotos speichern, z.B. Helligkeitsanpassungen und Kommentare. Um
-			Informationen speichern zu können und die volle Funktionalität der App nutzen zu können, brrauchen Sie Fotos im
-			JPG-Format.</li>
-	</ul>
-
-	Diese Applikation ist noch im Beta-Stadium - weitere Funktionalitäten sind geplant. Wünsche für weitere Funktionen
-	können Sie mir gerne mitteilen.
-
-	<h3>Aktivitäten</h3>
-
-	<h4>Schritt 1: Organisation der Fotos</h4>
-
-	<p>In diesem Schritt können Sie Ihre Augenfotos organisieren.</p>
-
-	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das
-		Zielverzeichnis der Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen
-		geändert werden.</p>
-
-	<p>In der Aktivität &bdquo;Neue Fotos einordnen&ldquo; können Sie neue Augenfotos aus dem Eingangsverzeichnis einer
-		Person und einem Datum zuordnen und so für die App vorbereiten. Dabei werden die Fotos Umbenannt und in das
-		Augenfoto-Verzeichnis verschoben.</p>
-
-	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses können Sie auch zwei Fotos in einem Dateibrowser oder
-		einer Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In
-		diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
-
-	<p>Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies
-		wird normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer
-		professionellen Kamera.</p>
-
-	<h4>Schritt 2: Betrachten der Fotos</h4>
-
-	<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige Organisation über Schritt 1 voraus.</p>
-
-	<p>In dieser Aktivität können Sie</p>
-
-	<ul>
-		<li>Ein Foto im Detail Anschauen. Dabei können Sie auch Helligkeit und Kontrast ändern, Iristopographien als
-			Overlay anzeigen oder einen Kommentar zu einem Foto schreiben.</li>
-
-		<li>Zwei Fotos vergleichen (und dabei unabhängig voneinander zoomen).</li>
-	</ul>
-
-	<h3>Windows-Anwendung</h3>
-
-	<p>
-		Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App organisiert haben,
-		auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
-		<a href="http://augendiagnose.jeisfeld.de/?lang=de&page=windowsapp" target="_top">http://augendiagnose.jeisfeld.de/?page=windowsapp</a>
-		.
-	</p>
-
-	<h3>Datenspeicherung</h3>
-
-	<p>Die App speichert Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien. Dies hat den
-		Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren. Zum
-		Teil sind die Informationen (wie Kommentare) sogar unter Windows verfügbar.</p>
-
-	<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets
-		oder für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht
-		sogar die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App
-		zum ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
-</body>
-</html>
-]]>
-    </string>
+    <string name="html_overview" formatted="false"></string>
     <string name="html_settings" formatted="false">
 <![CDATA[
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Augendiagnose - Einstellungen</title>
+<title>Miniris - Einstellungen</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
@@ -128,17 +35,6 @@
 	<h2>Einstellungen</h2>
 
 	Die Applikation ermöglicht folgende Einstellungen:
-
-	<h3>Eingangsverzeichnis für neue Augenfotos</h3>
-
-	<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert. Als Standard ist hier entweder das
-		Zielverzeichnis der Eye-Fi-App gesetzt oder das Standardverzeichnis der Kamera-App. Es kann aber ein beliebiges
-		anderes Verzeichnis gewählt werden (z.B. das Kamera-Verzeichnis).</p>
-
-	<p>Hintergrund zur Eye-Fi-App: Eine Smartphone-Kamera ist typischerweise nicht ausreichend, um hochwertige
-		Augenfotografien zu machen. Daher wird eine externe Kamera benötigt. Der einfachste Weg, die Fotos von einer externen
-		Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte, die die Fotos per WiFi auf das
-		Smartphone schickt.</p>
 
 	<h3>Anzeigeeinstellungen</h3>
 
@@ -263,7 +159,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Augendiagnose - Fotos organisieren</title>
+<title>Miniris - Fotos organisieren</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
@@ -300,7 +196,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Augendiagnose - Fotos betrachten</title>
+<title>Miniris - Fotos betrachten</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">

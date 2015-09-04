@@ -7,11 +7,10 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.widget.TextView;
+import android.webkit.WebView;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
 
 /**
  * Helper class to show standard dialogs.
@@ -21,6 +20,23 @@ public final class ReleaseNotesUtil {
 	 * Parameter to pass the message to the DialogFragment (of all types).
 	 */
 	private static final String PARAM_MESSAGE = "message";
+
+	/**
+	 * The prefix to be put in front of the HTML.
+	 */
+	private static final String HTML_PREFIX =
+			"<html><head>"
+					+ "<style type=\"text/css\">"
+					+ "body{color: #ffffff;} "
+					+ "img {width: 24px; height: 24px; vertical-align: middle;} "
+					+ "a {color: #7fffff;} "
+					+ "li {margin-top: 6px; }"
+					+ "</style></head><body>";
+
+	/**
+	 * The postfix to be put at the end of the HTML.
+	 */
+	private static final String HTML_POSTFIX = "</body></html>";
 
 	/**
 	 * Hide default constructor.
@@ -94,12 +110,19 @@ public final class ReleaseNotesUtil {
 	public static class DisplayReleaseNotesFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			String message = getArguments().getString(PARAM_MESSAGE);
+			String html = getArguments().getString(PARAM_MESSAGE);
+
+			WebView webView = new WebView(getActivity());
+			webView.setBackgroundColor(0x00000000);
+			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
+
+			html = HTML_PREFIX + html + HTML_POSTFIX;
+			webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.releasenotes_title) //
-					.setIcon(R.drawable.ic_title_info) //
-					.setMessage(Html.fromHtml(message)) //
+			builder.setTitle(R.string.releasenotes_title)
+					.setIcon(R.drawable.ic_title_info)
+					.setView(webView)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
@@ -116,14 +139,6 @@ public final class ReleaseNotesUtil {
 					});
 
 			return builder.create();
-		}
-
-		@Override
-		public final void onStart() {
-			super.onStart();
-			// Make links clickable
-			((TextView) getDialog().findViewById(android.R.id.message))
-					.setMovementMethod(LinkMovementMethod.getInstance());
 		}
 	}
 

@@ -22,11 +22,11 @@ public class DisplayHtmlFragment extends Fragment {
 	 */
 	private static final String STYLE =
 			"<style type=\"text/css\">"
-			+ "body{color: #ffffff;} "
-			+ "img {width: 24px; height: 24px; vertical-align: middle;} "
-			+ "a {color: #7fffff;} "
-			+ "li {margin-top: 6px; }"
-			+ "</style>";
+					+ "body{color: #ffffff;} "
+					+ "img {width: 24px; height: 24px; vertical-align: middle;} "
+					+ "a {color: #7fffff;} "
+					+ "li {margin-top: 6px; }"
+					+ "</style>";
 
 	/**
 	 * The resource key for the resource to be displayed (for storage in the bundle).
@@ -71,20 +71,7 @@ public class DisplayHtmlFragment extends Fragment {
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
 
-		// Open links in external browser
-		webView.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
-				if (url != null && url.startsWith("http://")) {
-					view.getContext().startActivity(
-							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		});
+		setOpenLinksInExternalBrowser(webView);
 
 		String html = getString(resource);
 		if (resource == R.string.html_release_notes_base) {
@@ -92,9 +79,6 @@ public class DisplayHtmlFragment extends Fragment {
 			String releaseNotes =
 					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), false, 1, Application.getVersion());
 			html = html.substring(0, indexBody) + releaseNotes + html.substring(indexBody);
-		}
-		else {
-			html = getString(resource);
 		}
 
 		// remove link containing stylesheet
@@ -111,4 +95,27 @@ public class DisplayHtmlFragment extends Fragment {
 
 		webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");
 	}
+
+	/**
+	 * Enable a WebView to open links in the external browser.
+	 *
+	 * @param webView
+	 *            The webView.
+	 */
+	public static void setOpenLinksInExternalBrowser(final WebView webView) {
+		webView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+				if (url != null && url.startsWith("http://")) {
+					view.getContext().startActivity(
+							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		});
+	}
+
 }

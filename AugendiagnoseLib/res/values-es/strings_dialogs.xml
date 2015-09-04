@@ -14,7 +14,7 @@
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">No se puede escribir en la carpeta %1$s. Por favor, asegúrese de conceder derechos de acceso a la tarjeta SD completa.</string>
-    <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización. Por favor, comenzar con la organización de fotos.\n\nSi está familiarizado con la aplicación y necesita de actualizar la carpeta de imágenes en la configuración, usted puede hacer esto ahora.</string>
+    <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización. Por favor, tome primero un par de fotos oculares y asigne nombre y fecha.\n\nSi está familiarizado con la aplicación y necesita de actualizar la carpeta de imágenes en la configuración, usted puede hacer esto ahora.</string>
     <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>
     <string name="message_dialog_failed_to_move_file">Error al mover el archivo %1$s a %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error mientras se mueve la carpeta %1$s a %2$s - Por favor, consulte las carpetas y mover archivos a la carpeta apropiada.</string>

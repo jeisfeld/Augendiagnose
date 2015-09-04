@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="releasenotes_first_usage">
+<![CDATA[
+	<h3>Important information:</h3>
+
+	<p>This app allows free use only for one day, with limitations on the number of photos.</p>
+
+	<p>Please test the app. If you find it useful, then you may purchase a premium pack within the app that allows unlimited use.</p>
+	
+	<h3>First steps:</h3>
+	<ol>
+	  <li>Take photos of right eye and left eye</li>
+	  <li>Assign a name (and date) to the photos</li>
+	  <li>View and analyze the photos</li>
+	</ol>
+]]>
+    </string>
+
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
     </string-array>

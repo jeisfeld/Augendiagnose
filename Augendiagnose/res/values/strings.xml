@@ -13,5 +13,5 @@
     <string-array name="activities_with_settings" translatable="false">
         <item>de.eisfeldj.augendiagnose.activities.MainActivity</item>
     </string-array>
-
+    
 </resources>
