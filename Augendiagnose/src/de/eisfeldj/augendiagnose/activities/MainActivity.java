@@ -5,18 +5,14 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.activities.AdMarvelActivity;
+import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
-import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
-import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
@@ -27,7 +23,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 /**
  * Main activity of the application.
  */
-public class MainActivity extends AdMarvelActivity {
+public class MainActivity extends BaseActivity {
 
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
@@ -42,8 +38,6 @@ public class MainActivity extends AdMarvelActivity {
 			isAdMarvelClicked = savedInstanceState.getBoolean("isAdMarvelClicked");
 		}
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked, isAdMarvelClicked);
-
-		Application.setLanguage();
 
 		// Initial tip is triggered first, so that it is hidden behind release notes.
 		DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
@@ -108,37 +102,15 @@ public class MainActivity extends AdMarvelActivity {
 	}
 
 	@Override
+	protected final int getHelpResource() {
+		return R.string.html_overview;
+	}
+
+	@Override
 	protected final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		boolean isAdMarvelClicked = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked);
 		outState.putBoolean("isAdMarvelClicked", isAdMarvelClicked);
-	}
-
-	/*
-	 * Inflate options menu.
-	 */
-	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
-	}
-
-	/*
-	 * Handle menu actions.
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_settings:
-			SettingsActivity.startActivity(this);
-			break;
-		case R.id.action_help:
-			DisplayHtmlActivity.startActivity(this, R.string.html_overview);
-			break;
-		default:
-			break;
-		}
-		return true;
 	}
 
 	/**

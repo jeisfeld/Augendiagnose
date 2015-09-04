@@ -3,6 +3,12 @@
 
     <string name="app_name">Miniris</string>
 
+    <!-- Resources configuring behaviour of activities in the app -->
+
+    <string-array name="activities_with_settings" translatable="false">
+        <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
+    </string-array>
+
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">

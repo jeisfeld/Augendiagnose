@@ -8,4 +8,10 @@
     <string name="button_organize_new_photos">Organize New Photos</string>
     <string name="button_take_pictures">Take pictures</string>
 
+    <!-- Resources configuring behaviour of activities in the app -->
+
+    <string-array name="activities_with_settings" translatable="false">
+        <item>de.eisfeldj.augendiagnose.activities.MainActivity</item>
+    </string-array>
+
 </resources>

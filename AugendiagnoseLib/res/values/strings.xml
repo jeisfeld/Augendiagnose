@@ -55,6 +55,12 @@
     <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
     <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
 
+    <!-- Resources configuring behaviour of activities in the app -->
+
+    <string-array name="activities_with_settings" translatable="false">
+        <item></item>
+    </string-array>
+
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">

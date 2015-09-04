@@ -1,8 +1,11 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 
@@ -15,6 +18,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
 	}
 
@@ -23,7 +27,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_only_help, menu);
+		String[] activitiesWithSettings = getResources().getStringArray(R.array.activities_with_settings);
+		boolean allowsSettings = Arrays.asList(activitiesWithSettings).contains(getClass().getName());
+
+		getMenuInflater().inflate(allowsSettings ? R.menu.menu_settings_help : R.menu.menu_only_help, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -35,6 +42,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		int itemId = item.getItemId();
 		if (itemId == R.id.action_help) {
 			DisplayHtmlActivity.startActivity(this, getHelpResource());
+			return true;
+		}
+		else if (itemId == R.id.action_settings) {
+			SettingsActivity.startActivity(this);
 			return true;
 		}
 		else {
