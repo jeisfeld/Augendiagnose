@@ -25,7 +25,9 @@ import android.widget.ListView;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersBaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
+import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -139,13 +141,24 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 */
 	protected final void createList() {
 		List<String> folderNames = getFolderNames(parentFolder);
-		if (folderNames == null) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_folder_does_not_exist, true,
-					parentFolder.getAbsolutePath());
-			return;
-		}
-		if (folderNames.size() == 0) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_organized_photos, true);
+		if (folderNames == null || folderNames.size() == 0) {
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_organized_photos, new MessageDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					getActivity().finish();
+					SettingsActivity.startActivity(getActivity());
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					getActivity().finish();
+				}
+			});
 			return;
 		}
 

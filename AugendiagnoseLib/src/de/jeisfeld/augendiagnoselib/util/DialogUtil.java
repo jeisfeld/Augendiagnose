@@ -93,28 +93,63 @@ public final class DialogUtil {
 	 *            the current activity
 	 * @param resource
 	 *            the error message
-	 * @param finishActivity
-	 *            should activity be finished after display?
+	 * @param listener
+	 *            listener to react on dialog confirmation or dismissal.
 	 * @param args
 	 *            arguments for the error message
 	 */
-	public static void displayError(final Activity activity, final int resource, final boolean finishActivity,
+	public static void displayError(final Activity activity, final int resource, final MessageDialogListener listener,
 			final Object... args) {
-		DialogFragment fragment;
-		if (finishActivity) {
-			fragment = new DisplayErrorDialogAndReturnFragment();
-		}
-		else {
-			fragment = new DisplayMessageDialogFragment();
-		}
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_error));
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_error);
+		if (listener != null) {
+			bundle.putSerializable(PARAM_LISTENER, listener);
+		}
+
+		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+	}
+
+	/**
+	 * Display an error and either go back to the current activity or finish the current activity.
+	 *
+	 * @param activity
+	 *            the current activity
+	 * @param resource
+	 *            the error message
+	 * @param finishActivity
+	 *            a flag indicating if the activity should be finished.
+	 * @param args
+	 *            arguments for the error message
+	 */
+	public static void displayError(final Activity activity, final int resource, final boolean finishActivity,
+			final Object... args) {
+		MessageDialogListener listener = null;
+
+		if (finishActivity) {
+			listener = new MessageDialogListener() {
+				/**
+				 * The serial version id.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					activity.finish();
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					activity.finish();
+				}
+			};
+		}
+		displayError(activity, resource, listener, args);
 	}
 
 	/**
@@ -314,11 +349,11 @@ public final class DialogUtil {
 		}
 
 		@Override
-		public final void onCancel(final DialogInterface dialogInterface) {
+		public final void onDismiss(final DialogInterface dialog) {
+			super.onDismiss(dialog);
 			if (listener != null) {
 				listener.onDialogCancel(DisplayMessageDialogFragment.this);
 			}
-			super.onCancel(dialogInterface);
 		}
 
 		@Override
@@ -351,37 +386,6 @@ public final class DialogUtil {
 			 *            the confirmation dialog fragment.
 			 */
 			void onDialogCancel(final DialogFragment dialog);
-		}
-	}
-
-	/**
-	 * Fragment to display an error and stop the activity - return to parent activity.
-	 */
-	public static class DisplayErrorDialogAndReturnFragment extends DialogFragment {
-		@Override
-		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(R.string.title_dialog_error) //
-					.setIcon(R.drawable.ic_title_error) //
-					.setMessage(message) //
-					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
-							getActivity().finish();
-						}
-					});
-
-			return builder.create();
-		}
-
-		@Override
-		public final void onDismiss(final DialogInterface dialog) {
-			super.onDismiss(dialog);
-			if (getActivity() != null) {
-				getActivity().finish();
-			}
 		}
 	}
 

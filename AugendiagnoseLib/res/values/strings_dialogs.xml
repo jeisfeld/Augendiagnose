@@ -14,8 +14,7 @@
     <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">Cannot write to folder %1$s. Please select a different folder.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">Cannot write to folder %1$s. Please ensure that you grant access rights for the full SD card.</string>
-    <string name="message_dialog_folder_does_not_exist">Folder %1$s does not exist. Please check the settings.</string>
-    <string name="message_dialog_no_organized_photos">There are no organized photos available for display.</string>
+    <string name="message_dialog_no_organized_photos">There are no organized photos available for display. Please start with organizing photos.\n\nIf you are familiar with the app and need to update the picture folder in the settings, you can do this now.</string>
     <string name="message_dialog_file_does_not_exist">File %1$s does not exist</string>
     <string name="message_dialog_failed_to_move_file">Failed to move file %1$s to %2$s</string>
     <string name="message_dialog_failed_to_move_folder_partially">Error while moving folder %1$s to %2$s - please check folders and move files to appropriate folder.</string>

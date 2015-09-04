@@ -281,8 +281,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
-				DialogUtil.displayError(this, R.string.message_dialog_folder_does_not_exist, true,
-						inputFolder.getAbsolutePath());
+				DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
 				return;
 			}
 
