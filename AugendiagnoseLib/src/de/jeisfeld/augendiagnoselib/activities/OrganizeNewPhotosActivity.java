@@ -19,14 +19,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -193,6 +197,17 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		editName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
 		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
 				.getFolderNames(parentFolder)));
+		// Ensure that Keyboard "ok" click already triggers next step.
+		editName.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(final TextView v, final int actionId, final KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					onOkClick(v);
+					return true;
+				}
+				return false;
+			}
+		});
 
 		// when touching the "date" field, open a dialog.
 		editDate = (EditText) findViewById(R.id.editDate);
