@@ -94,7 +94,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	public final boolean onCreateOptionsMenu(final Menu menu) {
 		String[] activitiesWithActionSettings = getResources().getStringArray(R.array.activities_with_action_settings);
 		boolean hasActionSettings = Arrays.asList(activitiesWithActionSettings).contains(getClass().getName());
-		String[] activitiesWithActionCamera = getResources().getStringArray(R.array.activities_with_action_settings);
+		String[] activitiesWithActionCamera = getResources().getStringArray(R.array.activities_with_action_camera);
 		boolean hasActionCamera = Arrays.asList(activitiesWithActionCamera).contains(getClass().getName());
 
 		getMenuInflater().inflate(R.menu.menu_default, menu);
@@ -130,6 +130,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		}
 		else if (itemId == R.id.action_camera) {
 			CameraActivity.startActivity(this);
+			finish();
 			return true;
 		}
 		else {

@@ -240,8 +240,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 		}
 
-		// Set on-click action for selecting other pictures.
+		// Set on-click action for selecting other pictures and for cancelling activity.
 		Button buttonOtherPictures = (Button) findViewById(R.id.buttonOrganizeOtherPictures);
+		Button buttonCancel = (Button) findViewById(R.id.buttonOrganizeCancel);
+
 		if (totalImageCount == 2 && inputFolder != null) {
 			buttonOtherPictures.setText(getString(R.string.button_camera));
 			buttonOtherPictures.setOnClickListener(new OnClickListener() {
@@ -249,6 +251,34 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 				public void onClick(final View v) {
 					CameraActivity.startActivity(OrganizeNewPhotosActivity.this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath());
 					finish();
+				}
+			});
+
+			buttonCancel.setText(getString(R.string.button_delete));
+			buttonCancel.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
+						/**
+						 * The serial version id.
+						 */
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void onDialogPositiveClick(final DialogFragment dialog) {
+							// delete images
+							photoLeft.delete();
+							photoRight.delete();
+							finish();
+						}
+
+						@Override
+						public void onDialogNegativeClick(final DialogFragment dialog) {
+							finish();
+						}
+					};
+					DialogUtil.displayConfirmationMessage(OrganizeNewPhotosActivity.this, listenerDelete, R.string.button_delete,
+							R.string.message_dialog_confirm_delete_two_photos);
 				}
 			});
 		}
@@ -263,6 +293,14 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 					else {
 						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, fileNames);
 					}
+				}
+			});
+
+			buttonCancel.setText(getString(R.string.button_cancel));
+			buttonCancel.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					finish();
 				}
 			});
 		}
@@ -595,16 +633,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		default:
 			break;
 		}
-	}
-
-	/**
-	 * onClick action for Button "Cancel". Finishes the activity without action.
-	 *
-	 * @param view
-	 *            The view triggering the onClick action.
-	 */
-	public final void finishActivity(final View view) {
-		finish();
 	}
 
 	/*
