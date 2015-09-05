@@ -185,15 +185,21 @@ public class CameraActivity extends BaseActivity {
 		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
 			// Ensure that requested Orientation has once been set, triggering re-creation of activity.
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				// Prevent deletion of temp camera files in onDestroy
+				getTempCameraFiles();
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			}
 			else {
+				// Prevent deletion of temp camera files in onDestroy
+				getTempCameraFiles();
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
 			return;
 		}
 
 		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+			// Prevent deletion of temp camera files in onDestroy
+			getTempCameraFiles();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			return;
 		}
@@ -207,10 +213,7 @@ public class CameraActivity extends BaseActivity {
 		String inputRightFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_RIGHT);
 		String inputLeftFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_LEFT);
 
-		boolean rightEyeLast = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
-
 		// Handle the different scenarios based on input and based on existing temp files.
-		File[] existingFiles = FileUtil.getTempCameraFiles();
 		if (inputLeftFileName != null && inputRightFileName != null) {
 			inputLeftFile = new File(inputLeftFileName);
 			inputRightFile = new File(inputRightFileName);
@@ -226,33 +229,32 @@ public class CameraActivity extends BaseActivity {
 			setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
 			setAction(RE_TAKE_PHOTO, null);
 		}
-		else if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
-			// This is the standard scenario.
-			setAction(Action.TAKE_PHOTO, rightEyeLast ? LEFT : RIGHT);
-		}
-		else if (existingFiles.length == 1) {
-			// one file already there. Assume that this is already taken and we only have to take the other one
-			if (rightEyeLast) {
-				leftEyeFile = existingFiles[0];
-				setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
-				setAction(Action.TAKE_PHOTO, RIGHT);
+		else {
+			boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+			File[] existingFiles = getTempCameraFiles();
+
+			if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
+				// This is the standard scenario.
+				setAction(Action.TAKE_PHOTO, leftEyeFirst ? LEFT : RIGHT);
+			}
+			else if (existingFiles.length == 1) {
+				// one file already there. Assume that this is already taken and we only have to take the other one
+				if (leftEyeFirst) {
+					setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+					setAction(Action.TAKE_PHOTO, RIGHT);
+				}
+				else {
+					setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+					setAction(Action.TAKE_PHOTO, LEFT);
+				}
 			}
 			else {
-				rightEyeFile = existingFiles[0];
-				setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
-				setAction(Action.TAKE_PHOTO, LEFT);
+				// both files are already there - switch to Organize.
+				OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(),
+						lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
+				finish();
+				return;
 			}
-		}
-		else {
-			// prevent cleanup in onDestroy
-			rightEyeFile = rightEyeLast ? existingFiles[1] : existingFiles[0];
-			leftEyeFile = rightEyeLast ? existingFiles[0] : existingFiles[1];
-
-			// both files are already there - switch to Organize.
-			OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(),
-					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
-			finish();
-			return;
 		}
 
 		preview = (SurfaceView) findViewById(R.id.camera_preview);
@@ -501,6 +503,31 @@ public class CameraActivity extends BaseActivity {
 				file.delete();
 			}
 		}
+	}
+
+	/**
+	 * Get all temp camera files and link them to the app.
+	 *
+	 * @return The list of existing temp files.
+	 */
+	private File[] getTempCameraFiles() {
+		File[] existingFiles = FileUtil.getTempCameraFiles();
+		boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+
+		if (existingFiles.length == 1) {
+			if (leftEyeFirst) {
+				leftEyeFile = existingFiles[0];
+			}
+			else {
+				rightEyeFile = existingFiles[0];
+			}
+		}
+		else if (existingFiles.length >= 2) {
+			rightEyeFile = leftEyeFirst ? existingFiles[1] : existingFiles[0];
+			leftEyeFile = leftEyeFirst ? existingFiles[0] : existingFiles[1];
+		}
+
+		return existingFiles;
 	}
 
 	/**
