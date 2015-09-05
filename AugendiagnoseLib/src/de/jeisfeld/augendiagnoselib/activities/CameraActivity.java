@@ -462,11 +462,15 @@ public class CameraActivity extends BaseActivity {
 			if (inputLeftFile != null && inputRightFile != null) {
 				if (!inputLeftFile.equals(leftEyeFile)) {
 					FileUtil.moveFile(leftEyeFile, inputLeftFile);
+					// prevent cleanup
+					leftEyeFile = inputLeftFile;
 					MediaStoreUtil.deleteThumbnail(inputLeftFile.getAbsolutePath());
 					MediaStoreUtil.addPictureToMediaStore(inputLeftFile.getAbsolutePath());
 				}
 				if (!inputRightFile.equals(rightEyeFile)) {
 					FileUtil.moveFile(rightEyeFile, inputRightFile);
+					// prevent cleanup
+					rightEyeFile = inputRightFile;
 					MediaStoreUtil.deleteThumbnail(inputRightFile.getAbsolutePath());
 					MediaStoreUtil.addPictureToMediaStore(inputRightFile.getAbsolutePath());
 				}
