@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -401,7 +402,28 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param view
 	 *            The view triggering the onClick action.
 	 */
-	public final void validateAndMovePhotos(final View view) {
+	public final void onOkClick(final View view) {
+		final String name = editName.getText().toString();
+		if (name == null || name.length() < 1) {
+			displayError(R.string.message_dialog_select_name);
+			return;
+		}
+
+		List<String> existingNames = ListFoldersBaseFragment.getFolderNames(parentFolder);
+		if (!existingNames.contains(name) && existingNames.size() >= ListFoldersBaseFragment.TRIAL_MAX_NAMES) {
+			// Error due to trial version.
+			DialogUtil.displayAuthorizationError(this, R.string.message_dialog_trial_names);
+		}
+		else {
+			validateAndMovePhotos();
+		}
+	}
+
+	/**
+	 * Move and rename the selected files after making JPG validation.
+	 *
+	 */
+	public final void validateAndMovePhotos() {
 		final String name = editName.getText().toString();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);

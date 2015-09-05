@@ -39,14 +39,22 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 
 	@Override
 	protected AuthorizationLevel getAuthorizationLevel() {
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		boolean isAuthorizedUser = EncryptionUtil.validateUserKey(userKey);
+
+		// TODO: Premium pack validation
+
+		if (isAuthorizedUser) {
+			return AuthorizationLevel.FULL_ACCESS;
+		}
+
 		if (de.jeisfeld.augendiagnoselib.Application.getVersion() <= 44) { // MAGIC_NUMBER
-			String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
-			return EncryptionUtil.validateUserKey(userKey) ? AuthorizationLevel.FULL_ACCESS : AuthorizationLevel.FULL_ACCESS_WITH_ADS;
+			return AuthorizationLevel.FULL_ACCESS_WITH_ADS;
 		}
 		else {
 			long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
 			return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(1)
-					? AuthorizationLevel.FULL_ACCESS : AuthorizationLevel.TRIAL_ACCESS;
+					? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
 		}
 	}
 }

@@ -150,7 +150,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:onClick="validateAndMovePhotos"
+            android:onClick="onOkClick"
             android:text="@string/button_ok"
             tools:ignore="ButtonStyle" />
     </LinearLayout>

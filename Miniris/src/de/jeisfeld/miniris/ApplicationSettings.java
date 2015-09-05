@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -38,8 +39,17 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 
 	@Override
 	protected AuthorizationLevel getAuthorizationLevel() {
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		boolean isAuthorizedUser = EncryptionUtil.validateUserKey(userKey);
+
+		// TODO: Premium pack validation
+
+		if (isAuthorizedUser) {
+			return AuthorizationLevel.FULL_ACCESS;
+		}
+
 		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
-		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(1)
-				? AuthorizationLevel.FULL_ACCESS : AuthorizationLevel.TRIAL_ACCESS;
+		return System.currentTimeMillis() < firstStartTime + TimeUnit.HOURS.toMillis(1)
+				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
 	}
 }

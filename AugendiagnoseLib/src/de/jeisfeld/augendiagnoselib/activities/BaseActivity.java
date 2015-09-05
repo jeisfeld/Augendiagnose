@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -16,6 +17,14 @@ import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
  * Base activity being the subclass of most application activities. Handles the help menu.
  */
 public abstract class BaseActivity extends AdMarvelActivity {
+	/**
+	 * Flag indicating if the creation of the activity is failed.
+	 */
+	private boolean isCreationFailed = false;
+
+	protected final boolean isCreationFailed() {
+		return isCreationFailed;
+	}
 
 	// OVERRIDABLE
 	@Override
@@ -25,6 +34,12 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		DialogUtil.checkOutOfMemoryError(this);
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction()) && savedInstanceState == null) {
+			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
+				isCreationFailed = true;
+				DialogUtil.displayAuthorizationError(this, R.string.message_dialog_trial_time);
+				return;
+			}
+
 			boolean firstStart = false;
 
 			// Initial tip is triggered first, so that it is hidden behind release notes.

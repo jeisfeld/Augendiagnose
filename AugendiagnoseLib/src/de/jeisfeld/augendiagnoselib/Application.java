@@ -220,6 +220,10 @@ public class Application extends android.app.Application {
 		/**
 		 * Full usage.
 		 */
-		FULL_ACCESS
+		FULL_ACCESS,
+		/**
+		 * No access.
+		 */
+		NO_ACCESS
 	}
 }

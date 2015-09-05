@@ -27,6 +27,11 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (isCreationFailed()) {
+			return;
+		}
+
 		setContentView(R.layout.activity_main);
 
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, false);

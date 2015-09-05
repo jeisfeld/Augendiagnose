@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -150,6 +151,35 @@ public final class DialogUtil {
 			};
 		}
 		displayError(activity, resource, listener, args);
+	}
+
+	/**
+	 * Display an error indicating insignificant authorization and redirect to settings.
+	 *
+	 * @param activity
+	 *            the current activity
+	 * @param resource
+	 *            the error message
+	 */
+	public static void displayAuthorizationError(final Activity activity, final int resource) {
+		MessageDialogListener listener = new MessageDialogListener() {
+			/**
+			 * The serial version id.
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onDialogClick(final DialogFragment dialog) {
+				SettingsActivity.startActivity(activity);
+				activity.finish();
+			}
+
+			@Override
+			public void onDialogCancel(final DialogFragment dialog) {
+				// do nothing
+			}
+		};
+		displayError(activity, resource, listener);
 	}
 
 	/**

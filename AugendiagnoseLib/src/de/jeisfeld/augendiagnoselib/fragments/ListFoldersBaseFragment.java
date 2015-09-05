@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersBaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
@@ -47,6 +49,11 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * The list of folder names which should be shown on top of the list.
 	 */
 	protected static final String[] FOLDERS_TOP = { "TOPOGRAPH", "TOPOGRAF", "IRIDOLOG" };
+
+	/**
+	 * The maximum allowed number of names in the trial version.
+	 */
+	public static final int TRIAL_MAX_NAMES = 3;
 
 	// PUBLIC_FIELDS:START
 
@@ -196,6 +203,11 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
+
+		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && folderNames.size() > TRIAL_MAX_NAMES) {
+			folderNames = folderNames.subList(0, TRIAL_MAX_NAMES);
+		}
+
 		return folderNames;
 	}
 

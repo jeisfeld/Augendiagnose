@@ -174,6 +174,11 @@ public class CameraActivity extends BaseActivity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (isCreationFailed()) {
+			return;
+		}
+
 		setContentView(R.layout.activity_camera);
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
