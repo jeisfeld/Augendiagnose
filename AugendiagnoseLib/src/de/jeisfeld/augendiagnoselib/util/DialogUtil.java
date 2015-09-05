@@ -179,7 +179,7 @@ public final class DialogUtil {
 				// do nothing
 			}
 		};
-		displayError(activity, resource, listener);
+		displayInfo(activity, listener, resource);
 	}
 
 	/**

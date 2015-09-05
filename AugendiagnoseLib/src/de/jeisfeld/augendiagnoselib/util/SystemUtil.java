@@ -108,7 +108,7 @@ public final class SystemUtil {
 	 *
 	 * @return the default display.
 	 */
-	private static Display getDefaultDisplay() {
+	public static Display getDefaultDisplay() {
 		WindowManager wm = (WindowManager) Application.getAppContext().getSystemService(Context.WINDOW_SERVICE);
 		return wm.getDefaultDisplay();
 	}

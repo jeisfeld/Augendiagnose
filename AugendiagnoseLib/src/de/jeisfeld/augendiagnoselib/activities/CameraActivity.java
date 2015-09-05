@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
@@ -176,6 +178,23 @@ public class CameraActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		if (isCreationFailed()) {
+			return;
+		}
+
+		// Workaround because there is no clear detection of landscape vs reverse landscape
+		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+			// Ensure that requested Orientation has once been set, triggering re-creation of activity.
+			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			}
+			else {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			}
+			return;
+		}
+
+		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			return;
 		}
 
@@ -640,7 +659,6 @@ public class CameraActivity extends BaseActivity {
 
 		@Override
 		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
-			// No display change based on surface.
 		}
 
 		@Override

@@ -13,7 +13,7 @@
     <dimen name="camerabutton_padding">15dp</dimen>
     <dimen name="camerabutton_padding_bottom">15dp</dimen>
     <dimen name="camerabutton_padding_top">15dp</dimen>
-    <dimen name="camera_thumb_frame_size">156dp</dimen>
+    <dimen name="camera_thumb_frame_size">154dp</dimen>
     <dimen name="camera_thumb_frame_boundary">6dp</dimen>
     <dimen name="camera_thumb_size">142dp</dimen>
 
