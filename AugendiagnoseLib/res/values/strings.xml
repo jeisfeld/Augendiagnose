@@ -47,6 +47,7 @@
     <string name="toggle_overlay_5" translatable="false">\u2464</string>
     <string name="toggle_overlay_6" translatable="false">\u2465</string>
     <string name="toggle_overlay_7" translatable="false">\u2466</string>
+    <string name="overlay_trial_count" translatable="false">3</string>
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>
@@ -120,5 +121,5 @@
         <item>1</item>
         <item>1</item>
     </integer-array>
-
+    
 </resources>
