@@ -12,7 +12,7 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
-    <string-array name="activities_with_settings" translatable="false">
+    <string-array name="activities_with_action_settings" translatable="false">
         <item>de.eisfeldj.augendiagnose.activities.MainActivity</item>
     </string-array>
     <string-array name="googlebilling_ids" translatable="false">

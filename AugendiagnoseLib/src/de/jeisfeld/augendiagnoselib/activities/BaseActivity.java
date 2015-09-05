@@ -92,10 +92,19 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
-		String[] activitiesWithSettings = getResources().getStringArray(R.array.activities_with_settings);
-		boolean allowsSettings = Arrays.asList(activitiesWithSettings).contains(getClass().getName());
+		String[] activitiesWithActionSettings = getResources().getStringArray(R.array.activities_with_action_settings);
+		boolean hasActionSettings = Arrays.asList(activitiesWithActionSettings).contains(getClass().getName());
+		String[] activitiesWithActionCamera = getResources().getStringArray(R.array.activities_with_action_settings);
+		boolean hasActionCamera = Arrays.asList(activitiesWithActionCamera).contains(getClass().getName());
 
-		getMenuInflater().inflate(allowsSettings ? R.menu.menu_settings_help : R.menu.menu_only_help, menu);
+		getMenuInflater().inflate(R.menu.menu_default, menu);
+
+		if (hasActionSettings) {
+			menu.findItem(R.id.action_settings).setVisible(true);
+		}
+		if (hasActionCamera) {
+			menu.findItem(R.id.action_camera).setVisible(true);
+		}
 
 		if (getHelpResource() == 0 || getString(getHelpResource()).length() == 0) {
 			// Hide help icon if there is no help text
@@ -117,6 +126,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		}
 		else if (itemId == R.id.action_settings) {
 			SettingsActivity.startActivity(this);
+			return true;
+		}
+		else if (itemId == R.id.action_camera) {
+			CameraActivity.startActivity(this);
 			return true;
 		}
 		else {

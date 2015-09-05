@@ -150,6 +150,17 @@ public class CameraActivity extends BaseActivity {
 	 *
 	 * @param activity
 	 *            The activity from which the activity is started.
+	 */
+	public static final void startActivity(final Activity activity) {
+		Intent intent = new Intent(activity, CameraActivity.class);
+		activity.startActivity(intent);
+	}
+
+	/**
+	 * Static helper method to start the activity for taking two photos to the input folder.
+	 *
+	 * @param activity
+	 *            The activity from which the activity is started.
 	 * @param photoFolder
 	 *            The folder where to store the photos.
 	 */

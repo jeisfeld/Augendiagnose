@@ -132,7 +132,7 @@ public class DisplayHtmlActivity extends Activity {
 	public final boolean onCreateOptionsMenu(final Menu menu) {
 		if (!SystemUtil.isTablet()) {
 			// Allow navigation to help overview page on smartphones
-			getMenuInflater().inflate(R.menu.menu_only_help, menu);
+			getMenuInflater().inflate(R.menu.menu_default, menu);
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
