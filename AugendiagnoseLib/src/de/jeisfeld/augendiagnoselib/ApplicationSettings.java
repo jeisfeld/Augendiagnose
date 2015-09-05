@@ -1,6 +1,11 @@
 package de.jeisfeld.augendiagnoselib;
 
+import java.util.concurrent.TimeUnit;
+
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 
 /**
  * Utility interface for Settings which are application specific.
@@ -12,5 +17,18 @@ public abstract class ApplicationSettings {
 	 *
 	 * @return The authorization level of the user.
 	 */
-	protected abstract AuthorizationLevel getAuthorizationLevel();
+	// OVERRIDABLE
+	protected AuthorizationLevel getAuthorizationLevel() {
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		boolean hasPremiumPack = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack);
+		boolean isAuthorizedUser = hasPremiumPack || EncryptionUtil.validateUserKey(userKey) || SystemUtil.isJeDevice();
+
+		if (isAuthorizedUser) {
+			return AuthorizationLevel.FULL_ACCESS;
+		}
+
+		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
+		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(1)
+				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
+	}
 }

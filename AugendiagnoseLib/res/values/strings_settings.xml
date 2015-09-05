@@ -127,6 +127,7 @@
     <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
     <string name="key_internal_show_utilities" translatable="false">show_utilities</string>
     <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
+    <string name="key_internal_has_premium_pack" translatable="false">has_premium_pack</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>

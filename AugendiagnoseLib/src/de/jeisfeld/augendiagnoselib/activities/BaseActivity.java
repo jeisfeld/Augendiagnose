@@ -1,6 +1,10 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import java.util.Arrays;
+import java.util.List;
+
+import com.android.vending.billing.PurchasedSku;
+import com.android.vending.billing.SkuDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +14,8 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 
@@ -59,6 +65,17 @@ public abstract class BaseActivity extends AdMarvelActivity {
 				if (storedVersion < currentVersion) {
 					ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
 				}
+
+				// Check in-app purchases
+				GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
+
+					@Override
+					public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+							final boolean isPremium) {
+						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
+						GoogleBillingHelper.dispose();
+					}
+				});
 
 				test();
 			}
