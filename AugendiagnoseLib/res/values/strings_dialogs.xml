@@ -31,7 +31,7 @@
     <string name="message_dialog_trial_names">In the trial version you are allowed to use only up to three names. Please purchase a premium pack to get unlimited access.</string>
     <string name="message_dialog_trial_time">The trial version of the app can be used only for one day. Please purchase a premium pack to get unlimited access.</string>
     <string name="message_dialog_donation_thanks">Thanks for your donation!</string>
-    <string name="message_dialog_donation_thanks_premium">Thanks for your donation! You may not switch off ads in the settings.</string>
+    <string name="message_dialog_donation_thanks_premium">Thanks for your donation! You can now use the app without limitations.</string>
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>

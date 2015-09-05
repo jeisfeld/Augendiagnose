@@ -31,7 +31,7 @@
     <string name="message_dialog_trial_names">En la versión de prueba es permitido utilizar sólo hasta tres nombres. Por favor, compre un paquete premium para obtener acceso ilimitado.</string>
     <string name="message_dialog_trial_time">La versión de prueba de la aplicación se puede utilizar solamente por un día. Por favor, compre un paquete premium para obtener acceso ilimitado.</string>
     <string name="message_dialog_donation_thanks">¡Gracias por su donación!</string>
-    <string name="message_dialog_donation_thanks_premium">¡Gracias por su compra! Ahora puede desactivar anuncios en los ajustes.</string>
+    <string name="message_dialog_donation_thanks_premium">¡Gracias por su compra! Ahora puede utilizar la aplicación ilimitadamente.</string>
     <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
     <string name="message_dialog_unformatted_file">El archivo %1$s no está formateado correctamente</string>
     <string name="message_dialog_confirm_delete_date">¿Realmente desea borrar las fotos de %1$s de %2$s?</string>
