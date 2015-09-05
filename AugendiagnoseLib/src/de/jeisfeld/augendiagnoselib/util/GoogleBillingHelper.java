@@ -123,16 +123,7 @@ public final class GoogleBillingHelper {
 	 * Initialize the GoogleBillingHelper.
 	 */
 	private void initialize() {
-
-		String base64EncodedPublicKey = null;
-		try {
-			PrivateConstants privateConstants = Application.getPrivateConstants();
-			base64EncodedPublicKey = privateConstants.getLicenseKey();
-		}
-		catch (Exception e) {
-			Log.e(TAG, "Did not find PrivateConstants", e);
-			return;
-		}
+		String base64EncodedPublicKey = Application.getResourceString(R.string.private_license_key);
 
 		// compute your public key and store it in base64EncodedPublicKey
 		iabHelper = new IabHelper(activity, base64EncodedPublicKey);

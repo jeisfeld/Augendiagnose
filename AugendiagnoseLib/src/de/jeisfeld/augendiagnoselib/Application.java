@@ -11,9 +11,7 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
-import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.PrivateConstants;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -35,14 +33,10 @@ public class Application extends android.app.Application {
 	/**
 	 * The private constants of this app.
 	 */
-	private PrivateConstants privateConstants = null;
+	private ApplicationSettings applicationSettings = null;
 
-	public static PrivateConstants getPrivateConstants() {
-		return application.privateConstants;
-	}
-
-	protected final void setPrivateConstants(final PrivateConstants privateConstants) {
-		this.privateConstants = privateConstants;
+	public static ApplicationSettings getApplicationSettings() {
+		return application.applicationSettings;
 	}
 
 	// OVERRIDABLE
@@ -57,6 +51,17 @@ public class Application extends android.app.Application {
 
 		setLanguage();
 		setExceptionHandler();
+
+		// Initialize special classes
+		try {
+			applicationSettings =
+					(ApplicationSettings) Class.forName(getResourceString(R.string.class_application_settings))
+							.getDeclaredMethod("getInstance", new Class<?>[0])
+							.invoke(null, new Object[0]);
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Error in getting PrivateConstants and ApplicationSettings", e);
+		}
 
 		// Set statistics
 		int initialVersion = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_initialversion, -1);
@@ -109,9 +114,8 @@ public class Application extends android.app.Application {
 	 *
 	 * @return true if the application has an authorized user key.
 	 */
-	public static boolean isAuthorized() {
-		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
-		return EncryptionUtil.validateUserKey(userKey);
+	public static AuthorizationLevel getAuthorizationLevel() {
+		return getApplicationSettings().getAuthorizationLevel();
 	}
 
 	/**
@@ -199,5 +203,23 @@ public class Application extends android.app.Application {
 		Configuration conf = res.getConfiguration();
 		conf.locale = locale;
 		res.updateConfiguration(conf, dm);
+	}
+
+	/**
+	 * The level of authorization of the class.
+	 */
+	public static enum AuthorizationLevel {
+		/**
+		 * Only trial access.
+		 */
+		TRIAL_ACCESS,
+		/**
+		 * Full usage, but with ads.
+		 */
+		FULL_ACCESS_WITH_ADS,
+		/**
+		 * Full usage.
+		 */
+		FULL_ACCESS
 	}
 }

@@ -43,6 +43,8 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			if (storedVersion < currentVersion) {
 				ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
 			}
+
+			test();
 		}
 
 		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
@@ -95,4 +97,9 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	protected abstract int getHelpResource();
 
+	/**
+	 * Utility method - here it is possible to place code to be tested on startup.
+	 */
+	private void test() {
+	}
 }

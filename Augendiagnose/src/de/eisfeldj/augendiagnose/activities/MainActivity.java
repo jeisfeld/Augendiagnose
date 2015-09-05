@@ -74,8 +74,6 @@ public class MainActivity extends BaseActivity {
 		}
 
 		requestBannerAdIfEligible();
-
-		test();
 	}
 
 	@Override
@@ -143,11 +141,5 @@ public class MainActivity extends BaseActivity {
 				PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
 				PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
 				NextAction.NEXT_IMAGES);
-	}
-
-	/**
-	 * Utility method - here it is possible to place code to be tested on startup.
-	 */
-	private void test() {
 	}
 }

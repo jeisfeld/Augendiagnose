@@ -2,7 +2,7 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import java.security.Key;
 import java.security.MessageDigest;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.util.Base64;
 import android.util.Log;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility for handling user keys.
@@ -52,25 +53,12 @@ public final class EncryptionUtil {
 	private static boolean initialized = false;
 
 	static {
-		boolean foundPrivateConstants = false;
+		KEY = Application.getResourceString(R.string.private_key_string);
 
-		List<String> specialKeys = new ArrayList<String>();
-		String key = "";
-		try {
-			PrivateConstants privateConstants = Application.getPrivateConstants();
-			specialKeys = privateConstants.getSpecialKeys();
-			key = privateConstants.getKeyString();
-			foundPrivateConstants = true;
-		}
-		catch (Exception e) {
-			Log.e(Application.TAG, "Did not find PrivateConstants", e);
-		}
-		SPECIAL_KEYS = specialKeys;
-		KEY = key;
+		String[] specialKeys = Application.getAppContext().getResources().getStringArray(R.array.private_special_keys);
+		SPECIAL_KEYS = Arrays.asList(specialKeys);
 
-		if (foundPrivateConstants) {
-			initializeCipher();
-		}
+		initializeCipher();
 	}
 
 	/**

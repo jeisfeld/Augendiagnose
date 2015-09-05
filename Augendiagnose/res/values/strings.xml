@@ -3,6 +3,8 @@
 
     <string name="app_name">Eye Diagnosis</string>
     <string name="advertisement_flag" translatable="false">1</string>
+    <string name="class_private_constants" translatable="false">de.eisfeldj.augendiagnose.PrivateConstants</string>
+    <string name="class_application_settings" translatable="false">de.eisfeldj.augendiagnose.ApplicationSettings</string>
     <string name="button_open_eyefi_app">Open Eye-Fi App</string>
     <string name="button_display_pictures">Display Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>

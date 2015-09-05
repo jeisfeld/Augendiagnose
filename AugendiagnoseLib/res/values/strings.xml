@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Application specific settings -->
+
     <string name="app_name" translatable="false">AugendiagnoseLib</string>
     <string name="advertisement_flag" translatable="false">0</string>
+    <string name="class_private_constants" translatable="false"></string>
+    <string name="class_application_settings" translatable="false"></string>
+
+    <!-- Generic constants -->
+
     <string name="title_activity_display_two">Compare Photos</string>
     <string name="title_activity_display_one">Display Photo</string>
     <string name="title_activity_list_folders_for_display">Select Name</string>
@@ -58,8 +65,7 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
-    <string-array name="activities_with_settings" translatable="false">
-    </string-array>
+    <string-array name="activities_with_settings" translatable="false"></string-array>
     <string-array name="activities_with_home_enablement" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
@@ -68,11 +74,9 @@
         <item>de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.SettingsActivity</item>
     </string-array>
-    <string-array name="googlebilling_ids" translatable="false">
-    </string-array>
-    <string-array name="googlebilling_premium_ids" translatable="false">
-    </string-array>
-    
+    <string-array name="googlebilling_ids" translatable="false"></string-array>
+    <string-array name="googlebilling_premium_ids" translatable="false"></string-array>
+
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">

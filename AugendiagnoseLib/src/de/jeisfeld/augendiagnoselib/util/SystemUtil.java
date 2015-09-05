@@ -1,5 +1,6 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import android.app.ActivityManager;
@@ -13,6 +14,7 @@ import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.view.WindowManager;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class for getting system information.
@@ -97,8 +99,8 @@ public final class SystemUtil {
 	 * @return true if the app is running on a tablet.
 	 */
 	public static boolean isTablet() {
-		return (Application.getAppContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
-		>= Configuration.SCREENLAYOUT_SIZE_LARGE;
+		return (Application.getAppContext().getResources().getConfiguration().screenLayout
+				& Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
 	/**
@@ -173,4 +175,14 @@ public final class SystemUtil {
 		return manager.getLargeMemoryClass();
 	}
 
+	/**
+	 * Get information if this is one of JE's devices.
+	 *
+	 * @return true if one of JE's devices.
+	 */
+	public static boolean isJeDevice() {
+		String[] jeDevices = Application.getAppContext().getResources().getStringArray(R.array.private_je_devices);
+
+		return Arrays.asList(jeDevices).contains(getDeviceId());
+	}
 }
