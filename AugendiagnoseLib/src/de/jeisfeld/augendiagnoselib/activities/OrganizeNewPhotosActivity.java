@@ -28,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.InstantAutoCompleteTextView;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
@@ -410,7 +411,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 
 		List<String> existingNames = ListFoldersBaseFragment.getFolderNames(parentFolder);
-		if (!existingNames.contains(name) && existingNames.size() >= ListFoldersBaseFragment.TRIAL_MAX_NAMES) {
+		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && !existingNames.contains(name)
+				&& existingNames.size() >= ListFoldersBaseFragment.TRIAL_MAX_NAMES) {
 			// Error due to trial version.
 			DialogUtil.displayAuthorizationError(this, R.string.message_dialog_trial_names);
 		}

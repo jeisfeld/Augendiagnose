@@ -28,7 +28,7 @@ public class Application extends android.app.Application {
 	/**
 	 * The default tag for logging.
 	 */
-	public static final String TAG = "Application";
+	public static final String TAG = "Augendiagnose.Application.JE";
 
 	/**
 	 * The private constants of this app.

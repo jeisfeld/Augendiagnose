@@ -406,6 +406,9 @@ public class SettingsFragment extends PreferenceFragment {
 	private OnPurchaseSuccessListener onPurchaseSuccessListener = new OnPurchaseSuccessListener() {
 		@Override
 		public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
+			if (addedPremiumProduct) {
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
+			}
 			int messageResource =
 					addedPremiumProduct ? R.string.message_dialog_donation_thanks_premium
 							: R.string.message_dialog_donation_thanks;
