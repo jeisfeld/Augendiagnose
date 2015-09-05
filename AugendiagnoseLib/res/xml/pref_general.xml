@@ -79,8 +79,8 @@
             android:title="@string/pref_title_store_options" />
     </PreferenceScreen>
     <PreferenceScreen
-        android:key="@string/key_dummy_screen_donate"
-        android:title="@string/pref_screen_donate" >
+        android:key="@string/key_dummy_screen_premium"
+        android:title="@string/pref_screen_premium" >
         <CheckBoxPreference
             android:defaultValue="@string/pref_default_remove_ads"
             android:enabled="false"

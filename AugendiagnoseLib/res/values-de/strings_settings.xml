@@ -6,8 +6,8 @@
 
     <string name="pref_screen_storage_settings">Speichereinstellungen</string>
     <string name="pref_screen_display_settings">Anzeigeeinstellungen</string>
+    <string name="pref_screen_premium">Premium-Pakete / Hilfe</string>
     <string name="pref_screen_hints">Tipps</string>
-    <string name="pref_screen_donate">Werbung entfernen / Spenden</string>
 
     <!-- Strings related to Settings -->
 

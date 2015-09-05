@@ -21,7 +21,7 @@
 
     <string name="menu_hide_all_hints">No mostrar consejos</string>
     <string name="menu_show_all_hints">Mostrar todos los consejos</string>
-    <string name="menu_title_variable_donation">Donación variable</string>
+    <string name="menu_title_variable_donation">Donar</string>
     <string name="menu_detail_variable_donation">A través de PayPal en el explorador</string>
     <string name="menu_target_variable_donation">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=BUNWSRJGY3D98</string>
     <string name="menu_title_contact_developer">Póngase en contacto con el desarrollador</string>

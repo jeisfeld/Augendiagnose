@@ -99,11 +99,15 @@ public class SettingsFragment extends PreferenceFragment {
 		if (getString(R.string.pref_title_folder_input).length() == 0) {
 			getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
 		}
+		if (Integer.parseInt(getString(R.string.advertisement_flag)) == 0) {
+			((PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium)))
+					.removePreference(findPreference(getString(R.string.key_remove_ads)));
+		}
 
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);
 
-		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_donate));
+		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
 
 		GoogleBillingHelper.initialize(getActivity(), onInventoryFinishedListener);
 	}
@@ -382,7 +386,9 @@ public class SettingsFragment extends PreferenceFragment {
 			// Enable ad removal if applicable.
 			if (isPremium || Application.getAuthorizationLevel().equals(AuthorizationLevel.FULL_ACCESS)) {
 				Preference preferenceRemoveAds = findPreference(getString(R.string.key_remove_ads));
-				preferenceRemoveAds.setEnabled(true);
+				if (preferenceRemoveAds != null) {
+					preferenceRemoveAds.setEnabled(true);
+				}
 			}
 
 			addVariableDonation();
