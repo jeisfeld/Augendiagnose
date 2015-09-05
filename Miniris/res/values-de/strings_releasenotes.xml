@@ -20,6 +20,7 @@
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version.</item>
+        <item>Fehlerkorrekturen.</item>
     </string-array>
 
 </resources>

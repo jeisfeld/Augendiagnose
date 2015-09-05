@@ -20,9 +20,11 @@
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
+        <item>0.1.1</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version.</item>
+        <item>Bugfixes.</item>
     </string-array>
 
 </resources>
