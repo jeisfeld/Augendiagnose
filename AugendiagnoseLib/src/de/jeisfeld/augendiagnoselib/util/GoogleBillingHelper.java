@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class to support in-ad purchases via Google Billing.
@@ -33,15 +34,12 @@ public final class GoogleBillingHelper {
 	/**
 	 * The product ids to be offered.
 	 */
-	private static final String[] PRODUCT_IDS =
-			new String[] { "donation_monthly_small", "donation_big", "donation_medium",
-					"donation_small" };
+	private static final String[] PRODUCT_IDS = Application.getAppContext().getResources().getStringArray(R.array.googlebilling_ids);
 
 	/**
 	 * The product ids which set premium status.
 	 */
-	private static final String[] PREMIUM_IDS =
-			new String[] { "donation_monthly_small", "donation_big", "donation_medium" };
+	private static final String[] PREMIUM_IDS = Application.getAppContext().getResources().getStringArray(R.array.googlebilling_premium_ids);
 
 	/**
 	 * The product ids which are subscriptions.
@@ -303,32 +301,32 @@ public final class GoogleBillingHelper {
 	 * Listener to be called after inventory has been retrieved.
 	 */
 	public interface OnInventoryFinishedListener {
-				/**
-				 * Handler called after inventory has been retrieved.
-				 *
-				 * @param purchases
-				 *            The list of bought purchases.
-				 * @param availableProducts
-				 *            The list of available products.
-				 * @param isPremium
-				 *            Flag indicating if there is a purchase setting premium status.
-				 */
-				void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts,
-						boolean isPremium);
+		/**
+		 * Handler called after inventory has been retrieved.
+		 *
+		 * @param purchases
+		 *            The list of bought purchases.
+		 * @param availableProducts
+		 *            The list of available products.
+		 * @param isPremium
+		 *            Flag indicating if there is a purchase setting premium status.
+		 */
+		void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts,
+				boolean isPremium);
 	}
 
 	/**
 	 * Listener to be called after a purchase has been successfully completed.
 	 */
 	public interface OnPurchaseSuccessListener {
-				/**
-				 * Handler called after a purchase has been successfully completed.
-				 *
-				 * @param purchase
-				 *            The completed purchase.
-				 * @param addedPremiumProduct
-				 *            Flag indicating if there was a premium upgrade.
-				 */
-				void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
+		/**
+		 * Handler called after a purchase has been successfully completed.
+		 *
+		 * @param purchase
+		 *            The completed purchase.
+		 * @param addedPremiumProduct
+		 *            Flag indicating if there was a premium upgrade.
+		 */
+		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
 	}
 }

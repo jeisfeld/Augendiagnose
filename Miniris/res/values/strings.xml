@@ -13,6 +13,12 @@
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
     </string-array>
     <string-array name="activities_with_home_enablement" translatable="false"></string-array>
+    <string-array name="googlebilling_ids" translatable="false">
+        <item>standard_pack</item>
+    </string-array>
+    <string-array name="googlebilling_premium_ids" translatable="false">
+        <item>standard_pack</item>
+    </string-array>
 
     <!-- Resources defining available overlays -->
 

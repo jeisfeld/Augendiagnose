@@ -68,7 +68,11 @@
         <item>de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.SettingsActivity</item>
     </string-array>
-
+    <string-array name="googlebilling_ids" translatable="false">
+    </string-array>
+    <string-array name="googlebilling_premium_ids" translatable="false">
+    </string-array>
+    
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">
