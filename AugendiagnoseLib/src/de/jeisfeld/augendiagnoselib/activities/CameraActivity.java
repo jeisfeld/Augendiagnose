@@ -10,6 +10,7 @@ import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIG
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,6 +47,8 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
+import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -220,7 +223,7 @@ public class CameraActivity extends BaseActivity {
 
 			// Triggered by OrganizeNewPhotosActivity to update photos.
 			photoFolder = inputRightFile.getParentFile();
-			if (FileUtil.getTempCameraDir().equals(photoFolder)) {
+			if (FileUtil.getTempCameraFolder().equals(photoFolder)) {
 				photoFolder = null;
 			}
 			leftEyeFile = inputLeftFile;
@@ -250,7 +253,7 @@ public class CameraActivity extends BaseActivity {
 			}
 			else {
 				// both files are already there - switch to Organize.
-				OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraDir().getAbsolutePath(),
+				OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraFolder().getAbsolutePath(),
 						lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 				finish();
 				return;
@@ -473,7 +476,7 @@ public class CameraActivity extends BaseActivity {
 				FileUtil.moveFile(rightEyeFile, new File(photoFolder, rightEyeFile.getName()));
 			}
 
-			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraDir() : photoFolder;
+			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraFolder() : photoFolder;
 			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(),
 					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
@@ -705,15 +708,32 @@ public class CameraActivity extends BaseActivity {
 			setThumbImage(data);
 			File imageFile = FileUtil.getTempJpegFile();
 
+			JpegMetadata metadata = null;
+
 			if (currentRightLeft == RIGHT) {
 				newRightEyeFile = imageFile;
+				if (inputRightFile != null) {
+					// Keep metadata from input
+					metadata = JpegSynchronizationUtil.getJpegMetadata(inputRightFile.getAbsolutePath());
+				}
 			}
 			else {
 				newLeftEyeFile = imageFile;
+				if (inputLeftFile != null) {
+					// Keep metadata from input
+					metadata = JpegSynchronizationUtil.getJpegMetadata(inputLeftFile.getAbsolutePath());
+				}
+			}
+
+			if (metadata == null) {
+				metadata = new JpegMetadata();
+				metadata.rightLeft = currentRightLeft;
+				metadata.comment = "";
+				metadata.organizeDate = new Date();
 			}
 
 			// save photo
-			new SavePhotoTask(data, currentRightLeft).execute(imageFile);
+			new SavePhotoTask(data, currentRightLeft, metadata).execute(imageFile);
 
 			// go to next step
 			setAction(CHECK_PHOTO, currentRightLeft);
@@ -735,16 +755,24 @@ public class CameraActivity extends BaseActivity {
 		private RightLeft rightLeft;
 
 		/**
+		 * The metadata to be stored.
+		 */
+		private JpegMetadata metadata;
+
+		/**
 		 * Constructor, passing the data to be saved.
 		 *
 		 * @param data
 		 *            The data to be saved.
 		 * @param rightLeft
 		 *            The side of the eye to be saved.
+		 * @param metadata
+		 *            Metadata to be stored in the photo.
 		 */
-		private SavePhotoTask(final byte[] data, final RightLeft rightLeft) {
+		private SavePhotoTask(final byte[] data, final RightLeft rightLeft, final JpegMetadata metadata) {
 			this.data = data;
 			this.rightLeft = rightLeft;
+			this.metadata = metadata;
 		}
 
 		@Override
@@ -752,10 +780,14 @@ public class CameraActivity extends BaseActivity {
 			File imageFile = imageFiles[0];
 
 			try {
-				FileOutputStream fos = new FileOutputStream(imageFile.getPath());
+				FileOutputStream fos = new FileOutputStream(imageFile.getAbsolutePath());
 
 				fos.write(data);
 				fos.close();
+
+				if (metadata != null) {
+					JpegSynchronizationUtil.storeJpegMetadata(imageFile.getAbsolutePath(), metadata);
+				}
 			}
 			catch (java.io.IOException e) {
 				Log.e(Application.TAG, "Exception when saving photo", e);

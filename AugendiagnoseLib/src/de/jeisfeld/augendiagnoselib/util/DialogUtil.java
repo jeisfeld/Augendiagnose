@@ -318,10 +318,10 @@ public final class DialogUtil {
 		try {
 			JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(eyePhoto.getAbsolutePath());
 
-			if (metadata.person != null) {
+			if (metadata.person != null && metadata.person.length() > 0) {
 				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.person));
 			}
-			if (metadata.comment != null) {
+			if (metadata.comment != null && metadata.comment.length() > 0) {
 				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.comment));
 			}
 		}

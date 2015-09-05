@@ -304,7 +304,7 @@ public final class FileUtil {
 	 * @return a non-existing Jpeg file in the cache dir.
 	 */
 	public static File getTempJpegFile() {
-		File tempDir = getTempCameraDir();
+		File tempDir = getTempCameraFolder();
 		File tempFile = null;
 		do {
 			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_counter_tempfiles);
@@ -320,7 +320,7 @@ public final class FileUtil {
 	 * @return The list of existing temp files.
 	 */
 	public static File[] getTempCameraFiles() {
-		File tempDir = getTempCameraDir();
+		File tempDir = getTempCameraFolder();
 
 		File[] files = tempDir.listFiles(new FileFilter() {
 			@Override
@@ -343,7 +343,7 @@ public final class FileUtil {
 	 *
 	 * @return The temp folder.
 	 */
-	public static File getTempCameraDir() {
+	public static File getTempCameraFolder() {
 		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
 		if (!result.exists()) {
 			result.mkdirs();

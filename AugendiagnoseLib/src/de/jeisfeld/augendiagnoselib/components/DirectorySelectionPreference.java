@@ -93,7 +93,7 @@ public class DirectorySelectionPreference extends ListPreference {
 			return FileUtil.getSdCardPath() + path.substring(EXTERNAL_STORAGE_PREFIX.length());
 		}
 		else if (path.startsWith(CACHE_DIR_PREFIX)) {
-			return FileUtil.getTempCameraDir().getAbsolutePath() + path.substring(CACHE_DIR_PREFIX.length());
+			return FileUtil.getTempCameraFolder().getAbsolutePath() + path.substring(CACHE_DIR_PREFIX.length());
 		}
 		else if (path.startsWith(CAMERA_FOLDER_PREFIX)) {
 			return FileUtil.getDefaultCameraFolder() + path.substring(CAMERA_FOLDER_PREFIX.length());
