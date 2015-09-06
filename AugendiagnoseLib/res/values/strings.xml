@@ -122,5 +122,21 @@
         <item>1</item>
         <item>1</item>
     </integer-array>
-    
+
+    <!-- Resources defining availalble help screens -->
+
+    <array name="html_navigation_resources">
+        <item>@string/html_navigation_overview</item>
+        <item>@string/html_navigation_settings</item>
+        <item>@string/html_navigation_organize_photos</item>
+        <item>@string/html_navigation_display_photos</item>
+        <item>@string/html_navigation_release_notes</item>
+    </array>
+    <array name="html_resources">
+        <item>@string/html_overview</item>
+        <item>@string/html_settings</item>
+        <item>@string/html_organize_photos</item>
+        <item>@string/html_display_photos</item>
+        <item>@string/html_release_notes_base</item>
+    </array>
 </resources>

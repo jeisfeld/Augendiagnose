@@ -218,16 +218,16 @@
 		</tr>
 	</table>
 
-	<h3>Remove Ads / Donate</h3>
+	<h3>Premium Packs / Support</h3>
 
-	<p>This page offers various buttons by which you can make a donation to the developer - the development of this app
-		takes lot of time, therefore it would be good to get something back from the people who find this app useful.</p>
+	<p>This page offers the possibility to purchase a premium pack which gives you anlimited access to all functions of
+		the app.</p>
 
 	<p>In addition, there are the following features:</p>
 
 	<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Remove Ads</td>
+			<td width="30%" valign="top">Remove Ads (only for users of older versions)</td>
 			<td width="70%" valign="top">Here you can disable all ads (currently only in US). This feature can be enabled
 				via donation or via user key.</td>
 		</tr>

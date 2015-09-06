@@ -223,16 +223,16 @@
 		</tr>
 	</table>
 
-	<h3>Eliminar anuncios / Donar</h3>
+	<h3>Paquetes premium / Ayuda</h3>
 
-	<p>Esta página ofrece varios botones por los quales usted puede hacer una donación al desarrollador - el desarrollo
-		de esta aplicación toma mucho tiempo, y por eso, sería bueno recuperar algo de las personas que usan esta aplicación.</p>
+	<p>Esta página ofrece la posibilidad de comprar un paquete premium, que le da acceso anlimited a todas las
+		funciones de la aplicación.</p>
 
 	<p>Además, hay las siguientes funciones:</p>
 
 	<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Quitar anuncios</td>
+			<td width="30%" valign="top">Quitar anuncios (sólo para usuarios de versiones anteriores)</td>
 			<td width="70%" valign="top">Aquí usted puede desactivar todos los anuncios (actualmente sólo en los Estados
 				Unidos). Esta función se puede activar a través de una donación o mediante clave de usuario.</td>
 		</tr>

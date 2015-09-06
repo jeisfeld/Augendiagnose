@@ -1,11 +1,13 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.app.ListFragment;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 
@@ -13,20 +15,6 @@ import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
  * Fragment to display the navigation list of help screens.
  */
 public class DisplayHelpNavigatonFragment extends ListFragment {
-
-	/**
-	 * The array of HTML navigation Strings.
-	 */
-	private static final int[] HTML_NAVIGATION_RESOURCES = { R.string.html_navigation_overview,
-			R.string.html_navigation_settings,
-			R.string.html_navigation_organize_photos, R.string.html_navigation_display_photos,
-			R.string.html_navigation_release_notes };
-
-	/**
-	 * The array of HTML details to be shown (ordered in same sequence as navigation pane).
-	 */
-	private static final int[] HTML_RESOURCES = { R.string.html_overview, R.string.html_settings,
-			R.string.html_organize_photos, R.string.html_display_photos, R.string.html_release_notes_base };
 
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
@@ -45,11 +33,15 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 	 * Fill the contents of the navigation page.
 	 */
 	protected final void createList() {
-		String[] folderNames = new String[HTML_NAVIGATION_RESOURCES.length];
+		TypedArray htmlNavigationResoucces =
+				getActivity().getResources().obtainTypedArray(R.array.html_navigation_resources);
 
-		for (int i = 0; i < HTML_NAVIGATION_RESOURCES.length; i++) {
-			folderNames[i] = getString(HTML_NAVIGATION_RESOURCES[i]);
+		String[] folderNames = new String[htmlNavigationResoucces.length()];
+
+		for (int i = 0; i < htmlNavigationResoucces.length(); i++) {
+			folderNames[i] = htmlNavigationResoucces.getString(i);
 		}
+		htmlNavigationResoucces.recycle();
 
 		ArrayAdapter<String> directoryListAdapter =
 				new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
@@ -62,7 +54,10 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 	private class ShowHelpOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-			int resource = HTML_RESOURCES[position];
+			TypedArray htmlResources =
+					Application.getAppContext().getResources().obtainTypedArray(R.array.html_resources);
+			int resource = htmlResources.getResourceId(position, 0);
+			htmlResources.recycle();
 
 			((DisplayHtmlActivity) getActivity()).displayDetails(resource);
 		}
