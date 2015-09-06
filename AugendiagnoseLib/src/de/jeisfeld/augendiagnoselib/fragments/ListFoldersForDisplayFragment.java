@@ -59,11 +59,12 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 			}
 			else if (itemId == R.id.action_delete_images) {
 				ConfirmDialogListener listener = new ConfirmDialogListener() {
-					private static final long serialVersionUID = -90397353402300863L;
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void onDialogPositiveClick(final DialogFragment dialog) {
 						deleteFolder(name.toString());
+						((ListFoldersForDisplayActivity) getActivity()).handleRemoveName(name.toString());
 					}
 
 					@Override

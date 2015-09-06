@@ -161,6 +161,21 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		}
 	}
 
+	/**
+	 * Handle the removal of a name in tablet view - if pictures of this name are viewed, this is cleaned up.
+	 *
+	 * @param name
+	 *            The removed name.
+	 */
+	public final void handleRemoveName(final String name) {
+		if (SystemUtil.isTablet() && getListPicturesForNameFragment() != null) {
+			String currentName = getListPicturesForNameFragment().getName();
+			if (currentName != null && currentName.equals(name)) {
+				popBackStack();
+			}
+		}
+	}
+
 	// implementation of ListPicturesForNameFragmentHolder
 
 	@Override
