@@ -354,6 +354,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mPosX = mMetadata.xPosition;
 			mPosY = mMetadata.yPosition;
 			mScaleFactor = mMetadata.zoomFactor * getOrientationIndependentScaleFactor();
+			mLastScaleFactor = mScaleFactor;
 			mInitialized = true;
 		}
 		// Otherwise, if available, use overlay position
@@ -366,6 +367,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mScaleFactor = size / (OVERLAY_SIZE * mOverlayScaleFactor);
 				mInitialized = true;
 			}
+			mLastScaleFactor = mScaleFactor;
 		}
 		// Otherwise, use default (set if mInitialized = false)
 		super.doInitialScaling();

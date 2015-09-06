@@ -125,12 +125,12 @@ public class PinchImageView extends ImageView {
 	 */
 	protected static int maxBitmapSize = DEFAULT_MAX_BITMAP_SIZE;
 
-	// PUBLIC_FIELDS:END
-
 	/**
 	 * The last scale factor.
 	 */
-	private float mLastScaleFactor = 1.f;
+	protected float mLastScaleFactor = 1.f;
+
+	// PUBLIC_FIELDS:END
 
 	/**
 	 * Standard constructor to be implemented for all views.
@@ -563,6 +563,7 @@ public class PinchImageView extends ImageView {
 		if (state instanceof Bundle) {
 			Bundle bundle = (Bundle) state;
 			this.mScaleFactor = bundle.getFloat("mScaleFactor");
+			this.mLastScaleFactor = this.mScaleFactor;
 			this.mPosX = bundle.getFloat("mPosX");
 			this.mPosY = bundle.getFloat("mPosY");
 			this.mPathName = bundle.getString("mPathName");
