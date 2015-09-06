@@ -21,6 +21,7 @@
     <string-array name="releasenotes_version_notes">
         <item>Erste Version, basierend auf der Augendiagnose-App, mit deutlich verbesserter Aufnahmefunktion.</item>
         <item>Verschiedene Fehlerkorrekturen.</item>
+        <item>Fehlerkorrekturen.</item>
     </string-array>
 
 </resources>
