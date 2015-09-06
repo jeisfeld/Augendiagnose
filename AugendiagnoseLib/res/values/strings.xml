@@ -82,7 +82,7 @@
     <!-- Resources defining available overlays -->
 
     <array name="overlays_left">
-        <item>@drawable/overlay_circle_l</item>
+        <item>@drawable/overlay_circle</item>
         <item>@drawable/overlay_topo1_l</item>
         <item>@drawable/overlay_topo2_l</item>
         <item>@drawable/overlay_topo3_l</item>
@@ -92,7 +92,7 @@
         <item>@drawable/overlay_topo7_l</item>
     </array>
     <array name="overlays_right">
-        <item>@drawable/overlay_circle_r</item>
+        <item>@drawable/overlay_circle</item>
         <item>@drawable/overlay_topo1_r</item>
         <item>@drawable/overlay_topo2_r</item>
         <item>@drawable/overlay_topo3_r</item>
