@@ -136,7 +136,15 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	@Override
 	public final int getViewTypeCount() {
 		int count = getCount();
-		return count < cacheRange.length ? count : cacheRange.length;
+		if (count == 0) {
+			return 1;
+		}
+		else if (count < cacheRange.length) {
+			return count;
+		}
+		else {
+			return cacheRange.length;
+		}
 	}
 
 	/**

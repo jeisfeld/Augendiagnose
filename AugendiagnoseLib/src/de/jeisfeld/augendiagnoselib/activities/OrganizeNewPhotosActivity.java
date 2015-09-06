@@ -457,7 +457,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void onOkClick(final View view) {
-		final String name = editName.getText().toString();
+		final String name = editName.getText().toString().trim();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;

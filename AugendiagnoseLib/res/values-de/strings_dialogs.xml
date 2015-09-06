@@ -9,7 +9,7 @@
     <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
     <string name="title_dialog_tip">Tipp</string>
     <string name="message_dialog_no_picture">Es sind keine zwei Fotos zum Einordnen vorhanden</string>
-    <string name="message_dialog_no_photos_for_name">Keine Augenfotos zu %1$s vorhanden</string>
+    <string name="message_dialog_no_photos_for_name">Keine Augenfotos vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis.</string>

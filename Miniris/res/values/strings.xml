@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Miniris</string>
-    <string name="class_private_constants" translatable="false">de.jeisfeld.miniris.PrivateConstants</string>
     <string name="class_application_settings" translatable="false">de.jeisfeld.miniris.ApplicationSettings</string>
     <string name="title_activity_camera">Miniris Camera</string>
     <string name="title_activity_list_folders_for_display">Miniris Gallery</string>

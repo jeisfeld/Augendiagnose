@@ -9,7 +9,7 @@
     <string name="title_dialog_select_folder">Seleccionar carpeta</string>
     <string name="title_dialog_tip">Consejo</string>
     <string name="message_dialog_no_picture">No hay suficientes fotos (min. 2 requerido)</string>
-    <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles para %1$s</string>
+    <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles</string>
     <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>

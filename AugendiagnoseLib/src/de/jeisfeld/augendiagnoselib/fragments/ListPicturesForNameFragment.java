@@ -67,9 +67,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (isDismiss()) {
-			return;
-		}
 
 		buttonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
@@ -81,7 +78,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * Update the list of eye photo pairs.
 	 */
 	protected final void updateEyePhotoPairs() {
-		boolean isPhotosRemaining = createAndStoreEyePhotoList(false);
+		boolean isPhotosRemaining = createAndStoreEyePhotoList();
 
 		if (isPhotosRemaining) {
 			adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
@@ -153,7 +150,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						if (!success) {
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify
-											.getLeftEye().getPersonName(), pairToModify
+											.getLeftEye().getPersonName(),
+									pairToModify
 											.getDateDisplayString(DATE_FORMAT));
 
 						}
@@ -189,7 +187,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 						if (!success) {
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
 									R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
-											.getLeftEye().getPersonName(), pairToModify
+											.getLeftEye().getPersonName(),
+									pairToModify
 											.getDateDisplayString(DATE_FORMAT));
 
 						}

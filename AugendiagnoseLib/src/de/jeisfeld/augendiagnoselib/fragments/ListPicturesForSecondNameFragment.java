@@ -21,9 +21,6 @@ public class ListPicturesForSecondNameFragment extends ListPicturesForNameBaseFr
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (isDismiss()) {
-			return;
-		}
 
 		getListView().setAdapter(new ListPicturesForSecondNameArrayAdapter(getActivity(), getEyePhotoPairs()));
 	}

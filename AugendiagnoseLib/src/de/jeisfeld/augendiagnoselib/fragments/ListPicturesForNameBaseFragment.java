@@ -10,11 +10,11 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
-import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhotoPair;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -41,11 +41,6 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 * The name for which the eye photos should be displayed.
 	 */
 	private String name;
-
-	/**
-	 * Flag indicating that the fragment should be dismissed because there are no pictures.
-	 */
-	private boolean dismiss = false;
 
 	/**
 	 * The list view showing the pictures.
@@ -91,7 +86,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		TextView headerNameView = (TextView) getView().findViewById(R.id.textTitleName);
 		headerNameView.setText(name);
 
-		createAndStoreEyePhotoList(true);
+		createAndStoreEyePhotoList();
 
 		listview = (ListView) getView().findViewById(R.id.listViewForName);
 
@@ -158,23 +153,17 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * Create the list of eye photo pairs and store them.
 	 *
-	 * @param dismissIfEmpty
-	 *            Dismiss fragment in case of no photos?
-	 *
 	 * @return true if there are still eye photos remaining.
 	 */
-	protected final boolean createAndStoreEyePhotoList(final boolean dismissIfEmpty) {
+	protected final boolean createAndStoreEyePhotoList() {
 		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
-
-		if (eyePhotoPairs == null || eyePhotoPairs.length == 0) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_no_photos_for_name, !SystemUtil.isTablet(),
-					name);
-			if (dismissIfEmpty) {
-				dismiss = true;
-			}
-			return false;
+		if (eyePhotoPairs == null) {
+			eyePhotoPairs = new EyePhotoPair[0];
 		}
-		return true;
+
+		getActivity().findViewById(R.id.textViewNoImagesForName).setVisibility(eyePhotoPairs.length == 0 ? View.VISIBLE : View.GONE);
+
+		return eyePhotoPairs.length > 0;
 	}
 
 	public final String getParentFolder() {
@@ -183,10 +172,6 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 
 	public final String getName() {
 		return name;
-	}
-
-	protected final boolean isDismiss() {
-		return dismiss;
 	}
 
 	protected final ListView getListView() {
