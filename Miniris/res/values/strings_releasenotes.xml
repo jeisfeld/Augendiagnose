@@ -23,8 +23,8 @@
         <item>0.1.1</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
-        <item>Initial version.</item>
-        <item>Bugfixes.</item>
+        <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
+        <item>Various Bugfixes.</item>
     </string-array>
 
 </resources>

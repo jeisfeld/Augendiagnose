@@ -19,8 +19,8 @@
     </string>
 
     <string-array name="releasenotes_version_notes">
-        <item>Versión inicial.</item>
-        <item>Corrección de errores.</item>
+        <item>Versión inicial, basado en la aplicación Diagnóstico ocular, con grandes mejoras en el uso de la cámara.</item>
+        <item>arias correcciones de errores.</item>
     </string-array>
 
 </resources>
