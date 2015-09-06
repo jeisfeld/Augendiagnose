@@ -16,6 +16,12 @@
             android:layout_height="match_parent" >
         </SurfaceView>
 
+        <ImageView
+            android:id="@+id/camera_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@layout/text_view_initializing" />
+
         <View
             android:id="@+id/camera_flash"
             android:layout_width="match_parent"

@@ -14,10 +14,8 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -623,28 +621,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private Drawable getColouredDrawable(final Drawable sourceDrawable, final int color) {
 		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
-		return new BitmapDrawable(getResources(), changeBitmapColor(bitmap, color));
-	}
-
-	/**
-	 * Utility method to change a bitmap colour.
-	 *
-	 * @param sourceBitmap
-	 *            The original bitmap
-	 * @param color
-	 *            The target color
-	 * @return the bitmap with the target color.
-	 */
-	private static Bitmap changeBitmapColor(final Bitmap sourceBitmap, final int color) {
-		Bitmap ret = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
-
-		Paint p = new Paint();
-		ColorFilter filter = new LightingColorFilter(0, color);
-		p.setAlpha(color >>> 24); // MAGIC_NUMBER
-		p.setColorFilter(filter);
-		Canvas canvas = new Canvas(ret);
-		canvas.drawBitmap(sourceBitmap, 0, 0, p);
-		return ret;
+		return new BitmapDrawable(getResources(), ImageUtil.changeBitmapColor(bitmap, color));
 	}
 
 	/**

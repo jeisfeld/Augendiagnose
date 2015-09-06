@@ -11,7 +11,11 @@ import java.util.Locale;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
@@ -386,6 +390,27 @@ public final class ImageUtil {
 			fileNames.add(file.getAbsolutePath());
 		}
 		return fileNames;
+	}
+
+	/**
+	 * Utility method to change a bitmap colour.
+	 *
+	 * @param sourceBitmap
+	 *            The original bitmap
+	 * @param color
+	 *            The target color
+	 * @return the bitmap with the target color.
+	 */
+	public static Bitmap changeBitmapColor(final Bitmap sourceBitmap, final int color) {
+		Bitmap ret = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
+
+		Paint p = new Paint();
+		ColorFilter filter = new LightingColorFilter(0, color);
+		p.setAlpha(color >>> 24); // MAGIC_NUMBER
+		p.setColorFilter(filter);
+		Canvas canvas = new Canvas(ret);
+		canvas.drawBitmap(sourceBitmap, 0, 0, p);
+		return ret;
 	}
 
 	/**

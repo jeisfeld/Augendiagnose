@@ -1,10 +1,10 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CANCEL_AND_VIEW_IMAGES;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.RE_TAKE_PHOTO;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.TAKE_PHOTO;
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.VIEW_IMAGES;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.LEFT;
 import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIGHT;
 
@@ -17,6 +17,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -284,6 +286,11 @@ public class CameraActivity extends BaseActivity {
 			return;
 		}
 
+		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
+		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+		Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.overlay_circle_camera);
+		overlayView.setImageBitmap(ImageUtil.changeBitmapColor(sourceBitmap, overlayColor));
+
 		configureButtons();
 	}
 
@@ -320,7 +327,7 @@ public class CameraActivity extends BaseActivity {
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
-						setAction(VIEW_IMAGES, null);
+						setAction(CANCEL_AND_VIEW_IMAGES, null);
 					}
 				});
 
@@ -435,12 +442,14 @@ public class CameraActivity extends BaseActivity {
 		Button buttonCapture = (Button) findViewById(R.id.button_capture);
 		Button buttonAccept = (Button) findViewById(R.id.button_accept);
 		Button buttonDecline = (Button) findViewById(R.id.button_decline);
+		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
 
 		switch (action) {
 		case TAKE_PHOTO:
 			startPreview();
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonAccept.setVisibility(View.GONE);
+			overlayView.setVisibility(View.VISIBLE);
 
 			buttonDecline.setVisibility(inputLeftFile != null && inputRightFile != null ? View.VISIBLE : View.GONE);
 
@@ -457,11 +466,13 @@ public class CameraActivity extends BaseActivity {
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
+			overlayView.setVisibility(View.GONE);
 			break;
 		case RE_TAKE_PHOTO:
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.GONE);
 			buttonDecline.setVisibility(View.VISIBLE);
+			overlayView.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 			break;
@@ -496,7 +507,7 @@ public class CameraActivity extends BaseActivity {
 					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
 			return;
-		case VIEW_IMAGES:
+		case CANCEL_AND_VIEW_IMAGES:
 			stopPreview();
 			cleanupTempFolder();
 
@@ -836,7 +847,7 @@ public class CameraActivity extends BaseActivity {
 		/**
 		 * Cancel and go to the view images activity.
 		 */
-		VIEW_IMAGES,
+		CANCEL_AND_VIEW_IMAGES,
 		/**
 		 * Make an optional re-take of a photo.
 		 */
