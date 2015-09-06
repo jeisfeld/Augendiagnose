@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
+import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.components.ListPicturesForNameArrayAdapter;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -168,41 +170,32 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				return true;
 			}
 			else if (itemId == R.id.action_move_to_input_folder) {
-				ConfirmDialogListener listenerMove = new ConfirmDialogListener() {
-					private static final long serialVersionUID = -7137767075780390391L;
+				// delete old thumbnails, in so that other photos can get the same names
+				MediaStoreUtil.deleteThumbnail(pairToModify.getLeftEye().getAbsolutePath());
+				MediaStoreUtil.deleteThumbnail(pairToModify.getRightEye().getAbsolutePath());
 
-					@Override
-					public void onDialogPositiveClick(final DialogFragment dialog) {
-						// delete old thumbnails, in so that other photos can get the same names
-						MediaStoreUtil.deleteThumbnail(pairToModify.getLeftEye().getAbsolutePath());
-						MediaStoreUtil.deleteThumbnail(pairToModify.getRightEye().getAbsolutePath());
+				// delete images
+				boolean success =
+						pairToModify.moveToFolder(PreferenceUtil
+								.getSharedPreferenceString(R.string.key_folder_input));
+				// update list of images
+				updateEyePhotoPairs();
 
-						// delete images
-						boolean success =
-								pairToModify.moveToFolder(PreferenceUtil
-										.getSharedPreferenceString(R.string.key_folder_input));
-						// update list of images
-						updateEyePhotoPairs();
+				if (success) {
+					OrganizeNewPhotosActivity.startActivity(getActivity(),
+							PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
+							PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
+							NextAction.FINISH);
+					getActivity().finish();
+				}
+				else {
+					DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
+							R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
+									.getLeftEye().getPersonName(),
+							pairToModify
+									.getDateDisplayString(DATE_FORMAT));
 
-						if (!success) {
-							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-									R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
-											.getLeftEye().getPersonName(),
-									pairToModify
-											.getDateDisplayString(DATE_FORMAT));
-
-						}
-					}
-
-					@Override
-					public void onDialogNegativeClick(final DialogFragment dialog) {
-						// Do nothing
-					}
-				};
-				DialogUtil.displayConfirmationMessage(getActivity(), listenerMove, R.string.button_move,
-						R.string.message_dialog_confirm_move_to_input_folder,
-						pairToModify.getLeftEye().getPersonName(),
-						pairToModify.getDateDisplayString(DATE_FORMAT));
+				}
 				return true;
 			}
 			else {

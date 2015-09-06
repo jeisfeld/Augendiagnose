@@ -7,7 +7,8 @@
     <string name="title_activity_list_folders_for_display">Miniris Gallery</string>
     <string name="title_activity_organize_new_photos">Set Name and Date</string>
     <string name="section_select_photos"></string>
-
+    <string name="menu_move_to_input_folder">Assign different name</string>
+    
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_action_camera" translatable="false">
