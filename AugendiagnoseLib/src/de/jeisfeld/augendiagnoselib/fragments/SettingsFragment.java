@@ -99,10 +99,6 @@ public class SettingsFragment extends PreferenceFragment {
 		if (getString(R.string.pref_title_folder_input).length() == 0) {
 			getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
 		}
-		if (Integer.parseInt(getString(R.string.advertisement_flag)) == 0) {
-			((PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium)))
-					.removePreference(findPreference(getString(R.string.key_remove_ads)));
-		}
 
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);

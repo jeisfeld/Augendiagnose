@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.AdMarvelActivity;
 
@@ -67,21 +68,24 @@ public final class AdMarvelUtil {
 	 * @return true if eligible.
 	 */
 	public static boolean isEligibleForAd() {
-		int advertisementFlag = Integer.valueOf(Application.getResourceString(R.string.advertisement_flag));
-		if (advertisementFlag != 1) {
-			// Explicit app configuration to check for AdMarvel eligibility.
-			return false;
-		}
-
 		// no ads according to configuration
 		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {
 			return false;
 		}
 
+		// Only for certain access level.
+		if (Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
+			return false;
+		}
+
+		// Special user to test ads
+		if (PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
+			return true;
+		}
+
 		// no ads except for certain countries. (Exception for special user key, in order to allow testing.)
 		String country = SystemUtil.getUserCountry();
-		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)
-				&& !PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
+		if (country == null || !Arrays.asList(AD_COUNTRIES).contains(country)) {
 			return false;
 		}
 
@@ -89,8 +93,6 @@ public final class AdMarvelUtil {
 		if (PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countdisplay, 0) < 2) {
 			return false;
 		}
-
-		// return checksSinceLastClick > PreferenceUtil.getSharedPreferenceInt(R.string.key_admarvel_countclicks, 0);
 
 		return !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked);
 	}

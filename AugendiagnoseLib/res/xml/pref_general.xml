@@ -81,12 +81,6 @@
     <PreferenceScreen
         android:key="@string/key_dummy_screen_premium"
         android:title="@string/pref_screen_premium" >
-        <CheckBoxPreference
-            android:defaultValue="@string/pref_default_remove_ads"
-            android:enabled="false"
-            android:key="@string/key_remove_ads"
-            android:title="@string/pref_title_remove_ads" />
-
         <EditTextPreference
             android:defaultValue=""
             android:inputType="textPassword"

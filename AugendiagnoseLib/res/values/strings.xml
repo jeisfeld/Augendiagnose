@@ -4,7 +4,6 @@
     <!-- Application specific settings -->
 
     <string name="app_name" translatable="false">AugendiagnoseLib</string>
-    <string name="advertisement_flag" translatable="false">0</string>
     <string name="class_application_settings" translatable="false"></string>
 
     <!-- Generic constants -->

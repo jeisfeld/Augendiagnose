@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import de.eisfeldj.augendiagnose.activities.MainActivity;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
+import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.AdMarvelUtil;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -38,6 +41,10 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	@Override
 	protected AuthorizationLevel getAuthorizationLevel() {
 		AuthorizationLevel level = super.getAuthorizationLevel();
+
+		if (PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(AdMarvelUtil.FORCE_AD_USER)) {
+			return AuthorizationLevel.FULL_ACCESS_WITH_ADS;
+		}
 
 		if (de.jeisfeld.augendiagnoselib.Application.getVersion() <= 44) { // MAGIC_NUMBER
 			// Special handling for "old" users that may keep full functionality.
