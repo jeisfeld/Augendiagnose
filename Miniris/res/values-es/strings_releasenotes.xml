@@ -21,7 +21,7 @@
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial, basado en la aplicación Diagnóstico ocular, con grandes mejoras en el uso de la cámara.</item>
         <item>Varias correcciones de errores.</item>
-        <item>Correcciones de errores.</item>
+        <item>Corregidos problemas con la compra de paquete premium.</item>
     </string-array>
 
 </resources>

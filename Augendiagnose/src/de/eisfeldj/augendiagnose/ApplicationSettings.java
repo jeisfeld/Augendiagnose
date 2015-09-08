@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnose;
 
+import android.app.Activity;
+import android.content.Intent;
+import de.eisfeldj.augendiagnose.activities.MainActivity;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -43,5 +46,11 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 		else {
 			return level;
 		}
+	}
+
+	@Override
+	public void startApplication(final Activity triggeringActivity) {
+		Intent intent = new Intent(triggeringActivity, MainActivity.class);
+		triggeringActivity.startActivity(intent);
 	}
 }

@@ -15,6 +15,7 @@ import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
@@ -176,7 +177,10 @@ public final class DialogUtil {
 
 			@Override
 			public void onDialogCancel(final DialogFragment dialog) {
-				// do nothing
+				if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
+					SettingsActivity.startActivity(activity);
+					activity.finish();
+				}
 			}
 		};
 		displayInfo(activity, listener, resource);

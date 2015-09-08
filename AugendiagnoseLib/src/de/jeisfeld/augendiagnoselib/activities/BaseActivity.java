@@ -41,30 +41,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
-				isCreationFailed = true;
-				DialogUtil.displayAuthorizationError(this, R.string.message_dialog_trial_time);
-				return;
-			}
-
-			if (savedInstanceState == null) {
-				boolean firstStart = false;
-
-				// Initial tip is triggered first, so that it is hidden behind release notes.
-				DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
-
-				// When starting from launcher, check if started the first time in this version. If yes, display release
-				// notes.
-				String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
-				if (storedVersionString == null || storedVersionString.length() == 0) {
-					storedVersionString = "0";
-					firstStart = true;
-				}
-				int storedVersion = Integer.parseInt(storedVersionString);
-				int currentVersion = Application.getVersion();
-
-				if (storedVersion < currentVersion) {
-					ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
-				}
+				final Intent starterIntent = getIntent();
 
 				// Check in-app purchases
 				GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
@@ -74,10 +51,53 @@ public abstract class BaseActivity extends AdMarvelActivity {
 							final boolean isPremium) {
 						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
 						GoogleBillingHelper.dispose();
+
+						if (isPremium) {
+							startActivity(starterIntent);
+							finish();
+						}
+						else {
+							DialogUtil.displayAuthorizationError(BaseActivity.this, R.string.message_dialog_trial_time);
+						}
 					}
 				});
+				isCreationFailed = true;
+				return;
+			}
+			else {
+				if (savedInstanceState == null) {
+					boolean firstStart = false;
 
-				test();
+					// Initial tip is triggered first, so that it is hidden behind release notes.
+					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
+
+					// When starting from launcher, check if started the first time in this version. If yes, display release
+					// notes.
+					String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
+					if (storedVersionString == null || storedVersionString.length() == 0) {
+						storedVersionString = "0";
+						firstStart = true;
+					}
+					int storedVersion = Integer.parseInt(storedVersionString);
+					int currentVersion = Application.getVersion();
+
+					if (storedVersion < currentVersion) {
+						ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
+					}
+
+					// Check in-app purchases
+					GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
+
+						@Override
+						public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+								final boolean isPremium) {
+							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
+							GoogleBillingHelper.dispose();
+						}
+					});
+
+					test();
+				}
 			}
 		}
 

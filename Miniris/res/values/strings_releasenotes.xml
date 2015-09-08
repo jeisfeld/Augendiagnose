@@ -26,7 +26,7 @@
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
         <item>Various Bugfixes.</item>
-        <item>Bugfixes.</item>
+        <item>Fixed issues with premium purchase.</item>
     </string-array>
 
 </resources>

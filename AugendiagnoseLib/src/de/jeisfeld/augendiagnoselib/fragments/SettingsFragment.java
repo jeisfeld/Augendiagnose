@@ -410,8 +410,8 @@ public class SettingsFragment extends PreferenceFragment {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
 			}
 			int messageResource =
-					addedPremiumProduct ? R.string.message_dialog_donation_thanks_premium
-							: R.string.message_dialog_donation_thanks;
+					addedPremiumProduct ? R.string.message_dialog_purchase_thanks_premium
+							: R.string.message_dialog_purchase_thanks;
 
 			MessageDialogListener listener = new MessageDialogListener() {
 				private static final long serialVersionUID = 1L;
@@ -419,11 +419,13 @@ public class SettingsFragment extends PreferenceFragment {
 				@Override
 				public void onDialogClick(final DialogFragment dialog) {
 					getActivity().finish();
+					Application.startApplication(getActivity());
 				}
 
 				@Override
 				public void onDialogCancel(final DialogFragment dialog) {
 					getActivity().finish();
+					Application.startApplication(getActivity());
 				}
 			};
 

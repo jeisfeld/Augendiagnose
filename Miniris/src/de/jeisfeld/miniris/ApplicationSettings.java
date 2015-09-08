@@ -1,5 +1,7 @@
 package de.jeisfeld.miniris;
 
+import android.app.Activity;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -30,4 +32,10 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 		}
 		return instance;
 	}
+
+	@Override
+	public void startApplication(final Activity triggeringActivity) {
+		CameraActivity.startActivity(triggeringActivity);
+	}
+
 }

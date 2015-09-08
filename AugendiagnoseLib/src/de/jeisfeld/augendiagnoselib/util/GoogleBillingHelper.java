@@ -45,7 +45,7 @@ public final class GoogleBillingHelper {
 	 * The product ids which are subscriptions.
 	 */
 	private static final String[] SUBSCRIPTION_IDS =
-			new String[] { "donation_monthly_small" };
+			Application.getAppContext().getResources().getStringArray(R.array.googlebilling_subscription_ids);
 
 	/**
 	 * An instance of GoogleBillingHelper.

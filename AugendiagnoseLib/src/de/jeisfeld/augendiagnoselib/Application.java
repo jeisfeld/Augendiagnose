@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -116,6 +117,17 @@ public class Application extends android.app.Application {
 	 */
 	public static AuthorizationLevel getAuthorizationLevel() {
 		return getApplicationSettings().getAuthorizationLevel();
+	}
+
+	/**
+	 * start the application.
+	 *
+	 * @param triggeringActivity
+	 *            the triggering activity.
+	 *
+	 */
+	public static void startApplication(final Activity triggeringActivity) {
+		getApplicationSettings().startApplication(triggeringActivity);
 	}
 
 	/**

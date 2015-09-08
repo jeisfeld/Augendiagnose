@@ -26,6 +26,9 @@
         <item>standard_pack</item>
         <item>monthly_pack</item>
     </string-array>
+    <string-array name="googlebilling_subscription_ids" translatable="false">
+        <item>monthly_pack</item>
+    </string-array>
 
     <!-- Resources defining availalble help screens -->
 
