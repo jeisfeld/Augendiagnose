@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -46,9 +45,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The number of overlays (including circle).
 	 */
-	public static final int OVERLAY_COUNT = Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-			? Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))
-			: Application.getAppContext().getResources().getIntArray(R.array.overlay_types).length;
+	public static final int OVERLAY_COUNT = Application.getAppContext().getResources().getIntArray(R.array.overlay_types).length;
 
 	/**
 	 * The size of the overlays (in pixels).
