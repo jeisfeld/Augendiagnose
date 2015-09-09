@@ -310,12 +310,13 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private void configureButtons() {
 		// Add a listener to the capture button
-		Button captureButton = (Button) findViewById(R.id.button_capture);
+		final Button captureButton = (Button) findViewById(R.id.button_capture);
 		captureButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
 						// get an image from the camera
+						captureButton.setEnabled(false);
 						camera.takePicture(null, null, photoCallback);
 						animateFlash();
 					}
@@ -448,6 +449,7 @@ public class CameraActivity extends BaseActivity {
 		case TAKE_PHOTO:
 			startPreview();
 			buttonCapture.setVisibility(View.VISIBLE);
+			buttonCapture.setEnabled(true);
 			buttonAccept.setVisibility(View.GONE);
 			overlayView.setVisibility(View.VISIBLE);
 
@@ -707,9 +709,14 @@ public class CameraActivity extends BaseActivity {
 	private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 		@Override
 		public void surfaceCreated(final SurfaceHolder holder) {
-			initPreview();
-			if (currentAction == TAKE_PHOTO) {
-				startPreview();
+			try {
+				initPreview();
+				if (currentAction == TAKE_PHOTO) {
+					startPreview();
+				}
+			}
+			catch (Exception e) {
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_open_camera, true);
 			}
 		}
 

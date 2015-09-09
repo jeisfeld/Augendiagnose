@@ -4,7 +4,6 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.util.Log;
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class for handling the camera.
@@ -33,7 +32,6 @@ public final class CameraUtil {
 			return Camera.open(cameraId);
 		}
 		catch (Exception e) {
-			DialogUtil.displayToast(Application.getAppContext(), R.string.message_dialog_failed_to_open_camera);
 			Log.e(Application.TAG, "Could not open camera: " + e.getMessage(), e);
 			return null;
 		}
