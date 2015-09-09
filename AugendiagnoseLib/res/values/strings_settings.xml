@@ -31,7 +31,7 @@
     <string name="pref_default_remove_ads" translatable="false">false</string>
     <string name="pref_title_user_key">User key</string>
     <string name="pref_default_show_tips" translatable="false">true</string>
-    
+
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
@@ -120,6 +120,8 @@
     <string name="key_dummy_screen_premium" translatable="false">dummy_screen_donate</string>
     <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
     <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
+    <string name="key_dummy_contact_developer" translatable="false">dummy_contact_developer</string>
+    <string name="key_dummy_variable_donation" translatable="false">dummy_variable_donation</string>
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>

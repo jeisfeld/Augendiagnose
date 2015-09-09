@@ -81,10 +81,22 @@
     <PreferenceScreen
         android:key="@string/key_dummy_screen_premium"
         android:title="@string/pref_screen_premium" >
+        <Preference
+            android:key="@string/key_dummy_variable_donation"
+            android:order="100"
+            android:summary="@string/menu_detail_variable_donation"
+            android:title="@string/menu_title_variable_donation" />
+        <Preference
+            android:key="@string/key_dummy_contact_developer"
+            android:order="101"
+            android:summary="@string/menu_detail_contact_developer"
+            android:title="@string/menu_title_contact_developer" />
+
         <EditTextPreference
             android:defaultValue=""
             android:inputType="textPassword"
             android:key="@string/key_user_key"
+            android:order="102"
             android:title="@string/pref_title_user_key" />
     </PreferenceScreen>
 

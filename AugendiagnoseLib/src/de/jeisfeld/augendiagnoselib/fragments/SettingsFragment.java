@@ -102,6 +102,8 @@ public class SettingsFragment extends PreferenceFragment {
 
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);
+		addVariableDonationButtonListener();
+		addDeveloperContactButtonListener();
 
 		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
 
@@ -133,11 +135,8 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Add an entry for variable donation.
 	 */
-	private void addVariableDonation() {
-		Preference variableDonationPreference = new Preference(getActivity());
-		variableDonationPreference.setTitle(getString(R.string.menu_title_variable_donation));
-		variableDonationPreference.setSummary(getString(R.string.menu_detail_variable_donation));
-
+	private void addVariableDonationButtonListener() {
+		Preference variableDonationPreference = findPreference(getString(R.string.key_dummy_variable_donation));
 		variableDonationPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
@@ -147,18 +146,13 @@ public class SettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-
-		screenDonate.addItemFromInflater(variableDonationPreference);
 	}
 
 	/**
 	 * Add an entry for developer contact.
 	 */
-	private void addDeveloperContact() {
-		Preference contactPreference = new Preference(getActivity());
-		contactPreference.setTitle(getString(R.string.menu_title_contact_developer));
-		contactPreference.setSummary(getString(R.string.menu_detail_contact_developer));
-
+	private void addDeveloperContactButtonListener() {
+		Preference contactPreference = findPreference(getString(R.string.key_dummy_contact_developer));
 		contactPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
@@ -170,8 +164,6 @@ public class SettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-
-		screenDonate.addItemFromInflater(contactPreference);
 	}
 
 	/**
@@ -387,12 +379,6 @@ public class SettingsFragment extends PreferenceFragment {
 				}
 			}
 
-			addVariableDonation();
-			addDeveloperContact();
-
-			// Move User Key to end of list.
-			Preference preferenceUserKey = findPreference(getString(R.string.key_user_key));
-			preferenceUserKey.setOrder(screenDonate.getPreferenceCount());
 		}
 	};
 
