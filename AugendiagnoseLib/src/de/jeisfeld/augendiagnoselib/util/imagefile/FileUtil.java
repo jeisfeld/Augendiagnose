@@ -307,7 +307,7 @@ public final class FileUtil {
 		File tempDir = getTempCameraFolder();
 		File tempFile = null;
 		do {
-			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_counter_tempfiles);
+			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_internal_counter_tempfiles);
 			tempFile = new File(tempDir, "tempFile_" + tempFileCounter + ".jpg");
 		}
 		while (tempFile.exists());

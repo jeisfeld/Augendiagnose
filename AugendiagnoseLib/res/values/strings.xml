@@ -78,50 +78,6 @@
     <string-array name="googlebilling_ids" translatable="false"></string-array>
     <string-array name="googlebilling_premium_ids" translatable="false"></string-array>
     <string-array name="googlebilling_subscription_ids" translatable="false"></string-array>
-    
-    <!-- Resources defining available overlays -->
-
-    <array name="overlays_left">
-        <item>@drawable/overlay_circle</item>
-        <item>@drawable/overlay_topo1_l</item>
-        <item>@drawable/overlay_topo2_l</item>
-        <item>@drawable/overlay_topo3_l</item>
-        <item>@drawable/overlay_topo4_l</item>
-        <item>@drawable/overlay_topo5_l</item>
-        <item>@drawable/overlay_topo6_l</item>
-        <item>@drawable/overlay_topo7_l</item>
-    </array>
-    <array name="overlays_right">
-        <item>@drawable/overlay_circle</item>
-        <item>@drawable/overlay_topo1_r</item>
-        <item>@drawable/overlay_topo2_r</item>
-        <item>@drawable/overlay_topo3_r</item>
-        <item>@drawable/overlay_topo4_r</item>
-        <item>@drawable/overlay_topo5_r</item>
-        <item>@drawable/overlay_topo6_r</item>
-        <item>@drawable/overlay_topo7_r</item>
-    </array>
-    <array name="overlay_buttons">
-        <item>@id/toggleButtonOverlayCircle</item>
-        <item>@id/toggleButtonOverlay1</item>
-        <item>@id/toggleButtonOverlay2</item>
-        <item>@id/toggleButtonOverlay3</item>
-        <item>@id/toggleButtonOverlay4</item>
-        <item>@id/toggleButtonOverlay5</item>
-        <item>@id/toggleButtonOverlay6</item>
-        <item>@id/toggleButtonOverlay7</item>
-    </array>
-
-    <integer-array name="overlay_types">
-        <item>1</item>
-        <item>1</item>
-        <item>0</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-    </integer-array>
 
     <!-- Resources defining availalble help screens -->
 
@@ -139,4 +95,4 @@
         <item>@string/html_display_photos</item>
         <item>@string/html_release_notes_base</item>
     </array>
-</resources>
+</resources>

@@ -117,9 +117,16 @@
         android:orientation="vertical" >
 
         <Button
+            android:id="@+id/button_overlay_circle"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:background="@drawable/circlebutton_overlay_circle" />
+
+        <Button
             android:id="@+id/button_view_images"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginTop="6dp"
             android:background="@drawable/circlebutton_view_images" />
     </LinearLayout>
 

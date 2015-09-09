@@ -127,6 +127,8 @@
     <string name="key_internal_show_utilities" translatable="false">show_utilities</string>
     <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
     <string name="key_internal_has_premium_pack" translatable="false">has_premium_pack</string>
+    <string name="key_internal_counter_tempfiles" translatable="false">counter_tempfiles</string>
+    <string name="key_internal_camera_circle_type" translatable="false">camera_circle_type</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
@@ -140,7 +142,6 @@
     <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
     <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
     <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
-    <string name="key_counter_tempfiles" translatable="false">counter_tempfiles</string>
     <string name="key_admarvel_countclicks" translatable="false">admarvel_countclicks</string>
     <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
     <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>

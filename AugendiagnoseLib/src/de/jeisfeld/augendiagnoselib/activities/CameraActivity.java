@@ -17,9 +17,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
@@ -71,6 +73,23 @@ public class CameraActivity extends BaseActivity {
 	 * The resource key for the file to be re-taken.
 	 */
 	private static final String STRING_EXTRA_PHOTO_LEFT = "de.jeisfeld.augendiagnoselib.PHOTO_LEFT";
+
+	/**
+	 * The size of the circle overlay bitmap.
+	 */
+	private static final int CIRCLE_BITMAP_SIZE = 1024;
+	/**
+	 * The array of possible radii of overlay circles.
+	 */
+	private static final int[] CIRCLE_RADII = Application.getAppContext().getResources().getIntArray(R.array.camera_overlay_radii);
+	/**
+	 * The default circle size.
+	 */
+	private static final int DEFAULT_CIRCLE_TYPE = 2;
+	/**
+	 * The default overlay scale factor (required due to strange calculation in OverlayPinchImageView).
+	 */
+	private float defaultOverlayScaleFactor;
 
 	/**
 	 * The camera used by the activity.
@@ -286,10 +305,8 @@ public class CameraActivity extends BaseActivity {
 			return;
 		}
 
-		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
-		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
-		Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.overlay_circle_camera);
-		overlayView.setImageBitmap(ImageUtil.changeBitmapColor(sourceBitmap, overlayColor));
+		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
+		drawOverlayCircle(overlayCircleSize);
 
 		configureButtons();
 	}
@@ -411,6 +428,17 @@ public class CameraActivity extends BaseActivity {
 						}
 					}
 				});
+
+		Button overlayCircleButton = (Button) findViewById(R.id.button_overlay_circle);
+		overlayCircleButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				int currentCircleType = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
+				int nextCircleType = (currentCircleType + 1) % CIRCLE_RADII.length;
+				PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_circle_type, nextCircleType);
+				drawOverlayCircle(nextCircleType);
+			}
+		});
 
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setOnClickListener(new OnClickListener() {
@@ -628,6 +656,33 @@ public class CameraActivity extends BaseActivity {
 	}
 
 	/**
+	 * Draw the overlay circle.
+	 *
+	 * @param circleType
+	 *            the flag holding the circle type.
+	 */
+	private void drawOverlayCircle(final int circleType) {
+		Bitmap overlayBitmap = Bitmap.createBitmap(CIRCLE_BITMAP_SIZE, CIRCLE_BITMAP_SIZE, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(overlayBitmap);
+
+		int circleRadius = CIRCLE_RADII[circleType];
+		if (circleRadius > 0) {
+			Paint paint = new Paint();
+			paint.setAntiAlias(true);
+			int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+			paint.setColor(overlayColor);
+			paint.setStyle(Style.STROKE);
+			paint.setStrokeWidth(5); // MAGIC_NUMBER
+
+			canvas.drawCircle(CIRCLE_BITMAP_SIZE / 2, CIRCLE_BITMAP_SIZE / 2, circleRadius, paint);
+		}
+
+		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
+		overlayView.setImageBitmap(overlayBitmap);
+
+	}
+
+	/**
 	 * Initialize the camera.
 	 */
 	private void initPreview() {
@@ -672,6 +727,12 @@ public class CameraActivity extends BaseActivity {
 					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
 				}
 				previewFrame.setLayoutParams(layoutParams);
+
+				// Factor 8/3 due to 75% size of base overlay circle.
+				// Math/min factor due to strange implementation in OverlayPinchImageView.
+				defaultOverlayScaleFactor =
+						((float) Math.min(layoutParams.width, layoutParams.height))
+								/ Math.max(layoutParams.width, layoutParams.height) * 8 / 3; // MAGIC_NUMBER
 
 				cameraConfigured = true;
 			}
@@ -763,6 +824,14 @@ public class CameraActivity extends BaseActivity {
 				metadata.rightLeft = currentRightLeft;
 				metadata.comment = "";
 				metadata.organizeDate = new Date();
+			}
+
+			int overlayCircleRadius =
+					CIRCLE_RADII[PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE)];
+			if (overlayCircleRadius > 0) {
+				metadata.xCenter = 0.5f; // MAGIC_NUMBER
+				metadata.yCenter = 0.5f; // MAGIC_NUMBER
+				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * defaultOverlayScaleFactor;
 			}
 
 			// save photo
