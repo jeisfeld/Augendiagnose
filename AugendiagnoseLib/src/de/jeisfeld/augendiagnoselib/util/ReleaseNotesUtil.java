@@ -64,20 +64,22 @@ public final class ReleaseNotesUtil {
 		if (firstStart) {
 			message.append(context.getString(R.string.releasenotes_first_usage));
 		}
-		message.append(context.getString(R.string.releasenotes_current_remark));
-		message.append("<h3>");
-		message.append(context.getString(R.string.releasenotes_changes));
-		message.append("</h3>");
-		String[] names = context.getResources().getStringArray(R.array.releasenotes_version_names);
-		String[] notes = context.getResources().getStringArray(R.array.releasenotes_version_notes);
-		for (int i = toVersion; i >= fromVersion; i--) {
-			message.append("<h5>");
-			message.append(context.getString(R.string.releasenotes_release));
-			message.append(" ");
-			message.append(names[i - 1]);
-			message.append("</h5><p>");
-			message.append(notes[i - 1]);
-			message.append("</p>");
+		else {
+			message.append(context.getString(R.string.releasenotes_current_remark));
+			message.append("<h3>");
+			message.append(context.getString(R.string.releasenotes_changes));
+			message.append("</h3>");
+			String[] names = context.getResources().getStringArray(R.array.releasenotes_version_names);
+			String[] notes = context.getResources().getStringArray(R.array.releasenotes_version_notes);
+			for (int i = toVersion; i >= fromVersion; i--) {
+				message.append("<h5>");
+				message.append(context.getString(R.string.releasenotes_release));
+				message.append(" ");
+				message.append(names[i - 1]);
+				message.append("</h5><p>");
+				message.append(notes[i - 1]);
+				message.append("</p>");
+			}
 		}
 		return message.toString();
 	}

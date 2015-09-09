@@ -28,7 +28,7 @@
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
         <item>Various Bugfixes.</item>
         <item>Fixed issues with premium purchase.</item>
-        <item>Bugfixes.</item>
+        <item>Increased trial period to 2 weeks. Enabled various guidance circles on camera. Bugfixes.</item>
     </string-array>
 
 </resources>
