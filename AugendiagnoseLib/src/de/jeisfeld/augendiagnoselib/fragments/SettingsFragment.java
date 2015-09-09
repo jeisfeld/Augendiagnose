@@ -22,7 +22,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -370,15 +369,6 @@ public class SettingsFragment extends PreferenceFragment {
 				});
 				screenDonate.addPreference(skuPreference);
 			}
-
-			// Enable ad removal if applicable.
-			if (isPremium || Application.getAuthorizationLevel().equals(AuthorizationLevel.FULL_ACCESS)) {
-				Preference preferenceRemoveAds = findPreference(getString(R.string.key_remove_ads));
-				if (preferenceRemoveAds != null) {
-					preferenceRemoveAds.setEnabled(true);
-				}
-			}
-
 		}
 	};
 

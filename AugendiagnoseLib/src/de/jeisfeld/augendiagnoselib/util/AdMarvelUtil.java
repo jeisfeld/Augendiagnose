@@ -68,11 +68,6 @@ public final class AdMarvelUtil {
 	 * @return true if eligible.
 	 */
 	public static boolean isEligibleForAd() {
-		// no ads according to configuration
-		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {
-			return false;
-		}
-
 		// Only for certain access level.
 		if (Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
 			return false;

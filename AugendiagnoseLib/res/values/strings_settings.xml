@@ -27,8 +27,6 @@
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_default_language" translatable="false">0</string>
-    <string name="pref_title_remove_ads">Remove ads</string>
-    <string name="pref_default_remove_ads" translatable="false">false</string>
     <string name="pref_title_user_key">User key</string>
     <string name="pref_default_show_tips" translatable="false">true</string>
 
@@ -114,7 +112,6 @@
     <string name="key_full_resolution" translatable="false">full_resolution</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>
-    <string name="key_remove_ads" translatable="false">remove_ads</string>
     <string name="key_user_key" translatable="false">user_key</string>
     <string name="key_dummy_screen_hints" translatable="false">dummy_screen_hints</string>
     <string name="key_dummy_screen_premium" translatable="false">dummy_screen_donate</string>

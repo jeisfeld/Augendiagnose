@@ -5,6 +5,8 @@ import com.admarvel.android.ads.AdMarvelView;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewManager;
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.AdMarvelUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -49,7 +51,7 @@ public abstract class AdMarvelActivity extends Activity {
 		super.onStart();
 		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
 			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)
-					|| PreferenceUtil.getSharedPreferenceBoolean(R.string.key_remove_ads)) {
+					|| Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
 				// do not trigger again after it was once clicked.
 				adMarvelView.setVisibility(View.GONE);
 				adMarvelView.destroy();
