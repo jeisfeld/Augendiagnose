@@ -15,6 +15,7 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayImageActivity;
@@ -419,7 +420,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private void onToggleOverlayClicked(final View view, final int position) {
 		boolean buttonGetsUnchecked = false;
 
-		if (position >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
+				&& position >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
 			DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
 			toggleOverlayButtons[position].setChecked(false);
 			return;
