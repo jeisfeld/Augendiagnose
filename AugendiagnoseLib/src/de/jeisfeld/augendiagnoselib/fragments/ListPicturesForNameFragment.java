@@ -80,12 +80,9 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * Update the list of eye photo pairs.
 	 */
 	protected final void updateEyePhotoPairs() {
-		boolean isPhotosRemaining = createAndStoreEyePhotoList();
-
-		if (isPhotosRemaining) {
-			adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
-			getListView().setAdapter(adapter);
-		}
+		createAndStoreEyePhotoList();
+		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+		getListView().setAdapter(adapter);
 	}
 
 	/**
@@ -140,7 +137,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			}
 			else if (itemId == R.id.action_delete_images) {
 				ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
-					private static final long serialVersionUID = -7137767075780390391L;
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void onDialogPositiveClick(final DialogFragment dialog) {
