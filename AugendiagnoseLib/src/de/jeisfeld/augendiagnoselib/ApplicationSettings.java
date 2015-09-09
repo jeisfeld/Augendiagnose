@@ -29,7 +29,7 @@ public abstract class ApplicationSettings {
 		}
 
 		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
-		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(1)
+		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(14) // MAGIC_NUMBER
 				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
 	}
 
