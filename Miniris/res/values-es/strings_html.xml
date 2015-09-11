@@ -8,8 +8,6 @@
     <string name="html_navigation_release_notes">Notas de la versión</string>
     <string name="html_release_notes_base">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Miniris - Notas de la versión</title>
@@ -23,13 +21,9 @@
     <string name="html_overview" formatted="false"></string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Miniris - Ajustes</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Ajustes</h2>
@@ -152,13 +146,9 @@
     <string name="html_organize_photos" formatted="false"></string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Miniris - Visualizar las fotos</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
 </head>
 <body>
 	<h2>Visualizar las fotos</h2>

@@ -8,8 +8,6 @@
     <string name="html_navigation_release_notes">Release Notes</string>
     <string name="html_release_notes_base">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Augendiagnose - Release Notes</title>
@@ -22,14 +20,8 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Augendiagnose - Übersicht</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Augendiagnose - Übersicht</title></head>
 <body>
 	<h2>Augendiagnose - Übersicht</h2>
 
@@ -41,16 +33,15 @@
 	<ul>
 		<li>Organisation von Augenfotos nach Name, Datum und Körperseite (rechts/links)</li>
 
-		<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalität), so dass man zwei Fotos vergleichen kann
-			(z.B. Vergleich rechts-links, Vergleich früher-später, Vergleich zweier Personen, oder Vergleich eines Fotos mit
-			einer Iristopographie).</li>
+		<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalität), so dass man zwei Fotos vergleichen kann (z.B.
+			Vergleich rechts-links, Vergleich früher-später, Vergleich zweier Personen, oder Vergleich eines Fotos mit einer
+			Iristopographie).</li>
 
 		<li>Änderung von Helligkeit und Kontrast eines Augenfotos bei der Anzeige, und Anzeige des Fotos mit einer
 			eingeblendeten Iristopographie (als Overlay)</li>
 
-		<li>Sie können auch Informationen in den Fotos speichern, z.B. Helligkeitsanpassungen und Kommentare. Um
-			Informationen speichern zu können und die volle Funktionalität der App nutzen zu können, brrauchen Sie Fotos im
-			JPG-Format.</li>
+		<li>Sie können auch Informationen in den Fotos speichern, z.B. Helligkeitsanpassungen und Kommentare. Um Informationen
+			speichern zu können und die volle Funktionalität der App nutzen zu können, brauchen Sie Fotos im JPG-Format.</li>
 	</ul>
 
 	Diese Applikation ist noch im Beta-Stadium - weitere Funktionalitäten sind geplant. Wünsche für weitere Funktionen
@@ -62,21 +53,20 @@
 
 	<p>In diesem Schritt können Sie Ihre Augenfotos organisieren.</p>
 
-	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das
-		Zielverzeichnis der Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen
-		geändert werden.</p>
+	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das Zielverzeichnis
+		der Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen geändert werden.</p>
 
 	<p>In der Aktivität &bdquo;Neue Fotos einordnen&ldquo; können Sie neue Augenfotos aus dem Eingangsverzeichnis einer
 		Person und einem Datum zuordnen und so für die App vorbereiten. Dabei werden die Fotos Umbenannt und in das
 		Augenfoto-Verzeichnis verschoben.</p>
 
-	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses können Sie auch zwei Fotos in einem Dateibrowser oder
-		einer Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In
-		diesem Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
+	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses können Sie auch zwei Fotos in einem Dateibrowser oder einer
+		Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In diesem
+		Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
 
-	<p>Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies
-		wird normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer
-		professionellen Kamera.</p>
+	<p>Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies wird
+		normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer professionellen
+		Kamera.</p>
 
 	<h4>Schritt 2: Betrachten der Fotos</h4>
 
@@ -85,8 +75,8 @@
 	<p>In dieser Aktivität können Sie</p>
 
 	<ul>
-		<li>Ein Foto im Detail Anschauen. Dabei können Sie auch Helligkeit und Kontrast ändern, Iristopographien als
-			Overlay anzeigen oder einen Kommentar zu einem Foto schreiben.</li>
+		<li>Ein Foto im Detail Anschauen. Dabei können Sie auch Helligkeit und Kontrast ändern, Iristopographien als Overlay
+			anzeigen oder einen Kommentar zu einem Foto schreiben.</li>
 
 		<li>Zwei Fotos vergleichen (und dabei unabhängig voneinander zoomen).</li>
 	</ul>
@@ -106,24 +96,18 @@
 		Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren. Zum
 		Teil sind die Informationen (wie Kommentare) sogar unter Windows verfügbar.</p>
 
-	<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets
-		oder für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht
-		sogar die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App
-		zum ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
+	<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets oder
+		für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht sogar
+		die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App zum
+		ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
 </body>
 </html>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Augendiagnose - Einstellungen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Augendiagnose - Einstellungen</title></head>
 <body>
 	<h2>Einstellungen</h2>
 
@@ -145,14 +129,14 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Letztes Foto ist rechtes Auge</td>
-			<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge
-				ist. Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das
-				linke Auge fotografiert haben).</td>
+			<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge ist.
+				Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das linke
+				Auge fotografiert haben).</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Sortieren nach Nachname</td>
-			<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert
-				werden soll.</td>
+			<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden
+				soll.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Standardfarbe für Overlays</td>
@@ -176,8 +160,8 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Verzeichnis der Augenfotos</td>
-			<td width="70%" valign="top"><p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses
-					muss normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
+			<td width="70%" valign="top"><p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss
+					normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
 
 				<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
 
@@ -188,8 +172,8 @@
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Maximale Bitmap-Größe</td>
-			<td width="70%" valign="top">Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist
-				nötig, um Speicherplatz zu sparen. Als Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein
+			<td width="70%" valign="top">Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist nötig,
+				um Speicherplatz zu sparen. Als Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein
 				kleinerer Wert (z.B. 1024) konfiguriert werden. Zu große Werte können zu Abstürzen führen.</td>
 		</tr>
 		<tr>
@@ -198,17 +182,16 @@
 				angezeigt wird. Dies erlaubt es, mehr Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
 
 				<ul>
-					<li><b>Immer automatisch laden:</b> Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt
-						dazu, dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht
-						genug Speicher zur Verfügung steht.</li>
+					<li><b>Immer automatisch laden:</b> Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt dazu,
+						dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht genug
+						Speicher zur Verfügung steht.</li>
 
-					<li><b>Automatisch laden, wenn nur ein Foto angezeigt wird:</b> Das Foto wird nur bei Anzeige eines einzigen
-						Fotos in voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
+					<li><b>Automatisch laden, wenn nur ein Foto angezeigt wird:</b> Das Foto wird nur bei Anzeige eines einzigen Fotos
+						in voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
 
-					<li><b>Nur auf Anfrage:</b> Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten
-						Speicher und Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des
-						&bdquo;Lupen&ldquo;-Buttons <img src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller
-						Bildauflösung angezeigt werden.</li>
+					<li><b>Nur auf Anfrage:</b> Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher
+						und Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons <img
+						src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.</li>
 				</ul>
 			</td>
 		</tr>
@@ -217,14 +200,14 @@
 			<td width="70%" valign="top">Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien speichert.
 
 				<ul>
-					<li><b>Speichern in EXIF (empfohlen):</b> Die Applikation speichert verfügbare Informationen in der JPG-Datei,
-						auch in Standardfeldern, die z.B. in Windows sichtbar sind.</li>
+					<li><b>Speichern in EXIF (empfohlen):</b> Die Applikation speichert verfügbare Informationen in der JPG-Datei, auch
+						in Standardfeldern, die z.B. in Windows sichtbar sind.</li>
 
-					<li><b>Speichern in Extra-Feldern:</b> Die Applikation speichert Informationen in der JPG-Datei, aber nur in
-						neuen Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
+					<li><b>Speichern in Extra-Feldern:</b> Die Applikation speichert Informationen in der JPG-Datei, aber nur in neuen
+						Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
 
-					<li><b>Nicht in Fotos speichern:</b> Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur
-						Teile der Funktionalität der App zur Verfügng.)</li>
+					<li><b>Nicht in Fotos speichern:</b> Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur Teile
+						der Funktionalität der App zur Verfügng.)</li>
 				</ul>
 			</td>
 		</tr>
@@ -240,13 +223,13 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Werbung entfernen (nur für Nutzer älterer Versionen)</td>
-			<td width="70%" valign="top">Hier können Sie die Werbung entfernen (vorerst nur in den USA). Diese Möglichkeit
-				kann per Spende oder Nutzerschlüssel freigeschaltet werden.</td>
+			<td width="70%" valign="top">Hier können Sie die Werbung entfernen (vorerst nur in den USA). Diese Möglichkeit kann
+				per Spende oder Nutzerschlüssel freigeschaltet werden.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Kontakt mit dem Entwickler</td>
-			<td width="70%" valign="top">Hier können Sie eine E-Mail an den Entwickler schreiben, falls Sie Wünsche oder
-				Probleme haben.</td>
+			<td width="70%" valign="top">Hier können Sie eine E-Mail an den Entwickler schreiben, falls Sie Wünsche oder Probleme
+				haben.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Nutzerschlüssel</td>
@@ -260,14 +243,8 @@
     </string>
     <string name="html_organize_photos" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Augendiagnose - Fotos organisieren</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Augendiagnose - Fotos organisieren</title></head>
 <body>
 	<h2>Organisation der Fotos</h2>
 
@@ -277,12 +254,12 @@
 
 	<p>Mit dem Button &bdquo;Tauschen&ldquo; können Sie die beiden Fotos tauschen.</p>
 
-	<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie zwei andere Fotos aus dem Eingangsverzeichnis auswählen,
-		indem sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen, indem Sie
-		durch einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
+	<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie zwei andere Fotos aus dem Eingangsverzeichnis auswählen, indem
+		sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen, indem Sie durch
+		einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
 
-	<p>Unter &bdquo;Name wählen&ldquo; können Sie den Namen der Person festlegen, zu der die Augen gehören. Hier können
-		Sie entweder einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.</p>
+	<p>Unter &bdquo;Name wählen&ldquo; können Sie den Namen der Person festlegen, zu der die Augen gehören. Hier können Sie
+		entweder einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.</p>
 
 	<p>Unter &bdquo;Datum wählen&ldquo; können Sie das Datum wählen, dem die Fotos zugeordnet sind. Hier ist das
 		Aufnahmedatum vorausgewählt. Sie können aber auch ein anderes Datum wählen. Dies ist insbesondere dann nötig, wenn es
@@ -297,19 +274,13 @@
     </string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Augendiagnose - Fotos betrachten</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Augendiagnose - Fotos betrachten</title></head>
 <body>
 	<h2>Betrachten der Fotos</h2>
 
-	<p>In dieser Aktivität können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten
-		wollen. Daraufhin sehen Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
+	<p>In dieser Aktivität können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen.
+		Daraufhin sehen Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
 
 	<p>Anschließend haben Sie folgende Möglichkeiten:</p>
 
@@ -318,25 +289,25 @@
 
 		<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das Datum)</li>
 
-		<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen Klick auf ein Foto und anschließenden
-			Klick auf ein anderes Foto)</li>
+		<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen Klick auf ein Foto und anschließenden Klick
+			auf ein anderes Foto)</li>
 
-		<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie erst einen langen Klick auf ein Foto,
-			und wählen Sie dann ein Foto einer zweiten Person aus.</li>
+		<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie erst einen langen Klick auf ein Foto, und
+			wählen Sie dann ein Foto einer zweiten Person aus.</li>
 	</ul>
 
-	<p>Mit Hilfe dieser Funktionalität können Sie auch ein Augenfoto mit einer Iristopographie vergleichen. Hierzu
-		müssen Sie nur die Grafiken von Iristopographien genauso organisieren wie Augenfotos. Die App liefert keine
-		Iristopographien mit (außer als Overlays).</p>
+	<p>Mit Hilfe dieser Funktionalität können Sie auch ein Augenfoto mit einer Iristopographie vergleichen. Hierzu müssen
+		Sie nur die Grafiken von Iristopographien genauso organisieren wie Augenfotos. Die App liefert keine Iristopographien
+		mit (außer als Overlays).</p>
 
 	<h3>Weitere Optionen in der Übersicht</h3>
 
 	<ul>
 		<li>In der Liste der Namen können Sie lange auf einen Namen klicken, und dann den Namen ändern oder löschen.</li>
 
-		<li>In der Liste der Fotos zu einem Namen können Sie lange auf ein Datum klicken, und dann das Datum ändern oder
-			die Fotos dieses Datums löschen, oder die Fotos dieses Datums ins Eingangsverzeichnis zurückschieben (z.B. um sie
-			einem anderen Namen zuzuordnen).</li>
+		<li>In der Liste der Fotos zu einem Namen können Sie lange auf ein Datum klicken, und dann das Datum ändern oder die
+			Fotos dieses Datums löschen, oder die Fotos dieses Datums ins Eingangsverzeichnis zurückschieben (z.B. um sie einem
+			anderen Namen zuzuordnen).</li>
 	</ul>
 
 	<h3>Weitere Optionen in der Detailansicht</h3>
@@ -344,23 +315,23 @@
 	<p>In der Detailansicht (von einem oder zwei Fotos) bestehen noch folgende Möglichkeiten:</p>
 
 	<ul>
-		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img
-			src="../drawable/ic_seek_brightness.png" /><img src="../drawable/ic_seek_contrast.png" /></li>
+		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
+			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Anzeige von Iristopographien als Overlay (nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern
-			der Position der Overlays (Lock-Button <img src="../drawable/ic_lock_open.png" />)
+		<li>Anzeige von Iristopographien als Overlay (nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern der
+			Position der Overlays (Lock-Button <img src="../drawable/ic_lock_open.png" />)
 		</li>
 
 		<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button <img
 			src="../drawable/ic_action_save.png" /> im Action-Menü)
 		</li>
 
-		<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button <img
-			src="../drawable/ic_action_save.png" /> im Action-Menü)
+		<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button <img src="../drawable/ic_action_save.png" />
+			im Action-Menü)
 		</li>
 
-		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img
-			src="../drawable/ic_comment.png" /> im Action-Menü)
+		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img src="../drawable/ic_comment.png" />
+			im Action-Menü)
 		</li>
 	</ul>
 

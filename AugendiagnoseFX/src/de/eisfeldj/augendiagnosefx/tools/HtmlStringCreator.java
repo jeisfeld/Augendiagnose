@@ -40,15 +40,54 @@ public final class HtmlStringCreator {
 	 */
 	private static final Map<String, String> PAGE_MAP = new TreeMap<String, String>();
 
-	static {
-		LANGUAGE_MAP.put("en", "values");
-		LANGUAGE_MAP.put("de", "values-de");
-		LANGUAGE_MAP.put("es", "values-es");
+	/**
+	 * A map from app name and language to the display app name.
+	 */
+	private static final Map<String, Map<String, String>> APP_NAME_MAP = new TreeMap<String, Map<String, String>>();
 
-		PAGE_MAP.put("overview.html", "html_overview");
-		PAGE_MAP.put("settings.html", "html_settings");
-		PAGE_MAP.put("organize_photos.html", "html_organize_photos");
-		PAGE_MAP.put("display_photos.html", "html_display_photos");
+	/**
+	 * The name of the Mininris app.
+	 */
+	private static final String MINIRIS = "Miniris";
+
+	/**
+	 * The base name of the Augendiagnose app.
+	 */
+	private static final String AUGENDIAGNOSE = "Augendiagnose";
+
+	/**
+	 * Abbreviation of language English.
+	 */
+	private static final String EN = "en";
+	/**
+	 * Abbreviation of language German.
+	 */
+	private static final String DE = "de";
+	/**
+	 * Abbreviation of language Spanish.
+	 */
+	private static final String ES = "es";
+
+	static {
+		LANGUAGE_MAP.put(EN, "values");
+		LANGUAGE_MAP.put(DE, "values-de");
+		LANGUAGE_MAP.put(ES, "values-es");
+
+		PAGE_MAP.put("overview.php", "html_overview");
+		PAGE_MAP.put("settings.php", "html_settings");
+		PAGE_MAP.put("organize_photos.php", "html_organize_photos");
+		PAGE_MAP.put("display_photos.php", "html_display_photos");
+
+		Map<String, String> appNamesAugendiagnose = new TreeMap<String, String>();
+		appNamesAugendiagnose.put(EN, "Eye Diagnosis");
+		appNamesAugendiagnose.put(DE, AUGENDIAGNOSE);
+		appNamesAugendiagnose.put(ES, "Diagnóstico ocular");
+		APP_NAME_MAP.put(AUGENDIAGNOSE, appNamesAugendiagnose);
+		Map<String, String> appNamesMiniris = new TreeMap<String, String>();
+		appNamesMiniris.put(EN, MINIRIS);
+		appNamesMiniris.put(DE, MINIRIS);
+		appNamesMiniris.put(ES, MINIRIS);
+		APP_NAME_MAP.put(MINIRIS, appNamesMiniris);
 	}
 
 	/**
@@ -93,7 +132,7 @@ public final class HtmlStringCreator {
 		String resourceFileContent = readFile(resourceFile, resourceFileEncoding);
 
 		for (String htmlFile : PAGE_MAP.keySet()) {
-			String htmlFileContent = readHtmlFile(language, htmlFile);
+			String htmlFileContent = readHtmlFile(language, AUGENDIAGNOSE, htmlFile);
 			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlFile), htmlFileContent);
 		}
 
@@ -133,15 +172,41 @@ public final class HtmlStringCreator {
 	 *
 	 * @param language
 	 *            The language.
+	 * @param app
+	 *            the app,
 	 * @param fileName
 	 *            The name of the page.
 	 * @return The content of the page.
 	 * @throws IOException
 	 *             thrown if there are issues reading the file.
 	 */
-	private String readHtmlFile(final String language, final String fileName) throws IOException {
+	private String readHtmlFile(final String language, final String app, final String fileName) throws IOException {
 		File file = new File(new File(WEB_BASE_FOLDER, language), fileName);
-		return readFile(file, "ISO8859-1");
+
+		String htmlContent = readFile(file, "ISO8859-1");
+
+		// remove everything before html tag
+		int htmlIndex = htmlContent.indexOf("<html>");
+		htmlContent = htmlContent.substring(htmlIndex);
+
+		// from head, keep only the title
+		int headStartIndex = htmlContent.indexOf("<head>") + "<head>".length();
+		int headEndIndex = htmlContent.indexOf("</head>", headStartIndex);
+		int titleStartIndex = htmlContent.indexOf("<title>", headStartIndex);
+		int titleEndIndex = htmlContent.indexOf("</title>", titleStartIndex) + "</title>".length();
+		if (titleStartIndex > 0 && titleEndIndex > 0 && titleEndIndex <= headEndIndex) {
+			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(titleStartIndex, titleEndIndex)
+					+ htmlContent.substring(headEndIndex);
+		}
+		else {
+			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(headEndIndex);
+		}
+
+		// Replace PHP app name in the html file
+		String appName = APP_NAME_MAP.get(app).get(language);
+		htmlContent = htmlContent.replace("<?=$appname?>", appName);
+
+		return htmlContent;
 	}
 
 	/**

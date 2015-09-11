@@ -8,8 +8,6 @@
     <string name="html_navigation_release_notes">Release Notes</string>
     <string name="html_release_notes_base">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Eye Diagnosis - Release Notes</title>
@@ -22,14 +20,8 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Eye Diagnosis - Overview</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Eye Diagnosis - Overview</title></head>
 <body>
 	<h2>Eye Diagnosis - Overview</h2>
 
@@ -41,9 +33,9 @@
 	<ul>
 		<li>Organization of eye photos by name, date and side (right/left)</li>
 
-		<li>Display of two eye photos in parallel (with full support of individual resizing), so that comparisons are
-			possible (such as right-left comparison, earlier-later comparison, different person comparison, or comparison to an
-			iris topography).</li>
+		<li>Display of two eye photos in parallel (with full support of individual resizing), so that comparisons are possible
+			(such as right-left comparison, earlier-later comparison, different person comparison, or comparison to an iris
+			topography).</li>
 
 		<li>Change of brightness and contrast of the photo during display, and overlay with an iris topography.</li>
 
@@ -60,15 +52,15 @@
 
 	<p>In this step, you can organize eye photos.</p>
 
-	<p>The App expects new eye photos in an input folder. This folder is preconfigured as the target folder of the
-		Eye-Fi app or as the default folder of the camera, but can be changed via the settings.</p>
+	<p>The App expects new eye photos in an input folder. This folder is preconfigured as the target folder of the Eye-Fi
+		app or as the default folder of the camera, but can be changed via the settings.</p>
 
-	<p>In the &ldquo;Organize new photos&rdquo; activity, you can assign new eye photos from the input folder to a
-		person and a date and prepare them in this way for the app. Then the photos will be renamed and moved to the eye photo
+	<p>In the &ldquo;Organize new photos&rdquo; activity, you can assign new eye photos from the input folder to a person
+		and a date and prepare them in this way for the app. Then the photos will be renamed and moved to the eye photo
 		folder.</p>
 
-	<p>As further alternative, you may take pictures directly from the app with the device camera. This will normally
-		not give photos in adequate quality, but it serves as an alternative to a professional camera.</p>
+	<p>As further alternative, you may take pictures directly from the app with the device camera. This will normally not
+		give photos in adequate quality, but it serves as an alternative to a professional camera.</p>
 
 	<p>As third alternative,</p>
 
@@ -96,28 +88,22 @@
 
 	<h3>Data storage</h3>
 
-	<p>The app stores information (like iris position or comments) directly in the JPG image files. This has the
-		advantage that all such information is still available if you copy the pictures from one device to another one. To
-		some extent, information like comments will be even available when viewing the files in MS Windows.</p>
+	<p>The app stores information (like iris position or comments) directly in the JPG image files. This has the advantage
+		that all such information is still available if you copy the pictures from one device to another one. To some extent,
+		information like comments will be even available when viewing the files in MS Windows.</p>
 
-	<p>However, this kind of storage imposes a small risk. It may happen that on some devices, or for pictures from
-		some cameras, storage of information in the JPG fails, or possibly even destroys the JPG file. Therefore, it is
-		recommended that you keep backups of your JPG files at least when using the app for the first time with a new device
-		or with a new camera.</p>
+	<p>However, this kind of storage imposes a small risk. It may happen that on some devices, or for pictures from some
+		cameras, storage of information in the JPG fails, or possibly even destroys the JPG file. Therefore, it is recommended
+		that you keep backups of your JPG files at least when using the app for the first time with a new device or with a new
+		camera.</p>
 </body>
 </html>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Eye Diagnosis - Settings</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Eye Diagnosis - Settings</title></head>
 <body>
 	<h2>Settings</h2>
 
@@ -125,8 +111,8 @@
 
 	<h3>Input folder for new eye photos</h3>
 
-	<p>This is the folder, from which the app imports new eye photos. By default, this is either the target folder of
-		the Eye-Fi app or the standard folder of the Camera app. However, you can configure here any other folder.</p>
+	<p>This is the folder, from which the app imports new eye photos. By default, this is either the target folder of the
+		Eye-Fi app or the standard folder of the Camera app. However, you can configure here any other folder.</p>
 
 	<p>Background regarding the Eye-Fi app: typically, the camera of the mobile device is not sufficient to capture eye
 		photos in high quality. A more practical approach is to use an external camera with Eye-Fi SD card, which transfers
@@ -137,13 +123,13 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Last photo is right eye</td>
-			<td width="70%" valign="top">Here you can define if the last photo is the right or the left eye. By default this
-				is the left eye (which means that you made first a photo of the right eye and then of the left eye).</td>
+			<td width="70%" valign="top">Here you can define if the last photo is the right or the left eye. By default this is
+				the left eye (which means that you made first a photo of the right eye and then of the left eye).</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Sort by last name</td>
-			<td width="70%" valign="top">Here you may decide that names are not ordered strictly alphabetically as given,
-				but by the last name.</td>
+			<td width="70%" valign="top">Here you may decide that names are not ordered strictly alphabetically as given, but by
+				the last name.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Default overlay color</td>
@@ -151,8 +137,8 @@
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Language</td>
-			<td width="70%" valign="top">Here you can change the language in which the app is displayed. A value change
-				forces a restart of the app.</td>
+			<td width="70%" valign="top">Here you can change the language in which the app is displayed. A value change forces a
+				restart of the app.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Hints</td>
@@ -166,36 +152,35 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Eye Photo Folder</td>
-			<td width="70%" valign="top"><p>This is the folder in which the app manages the eye photos. Normally, you
-					need not change this. From here, you can copy the photos to other devices.</p>
+			<td width="70%" valign="top"><p>This is the folder in which the app manages the eye photos. Normally, you need not
+					change this. From here, you can copy the photos to other devices.</p>
 
 				<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
 
-				<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage
-					on SD card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder
-					on SD card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p></td>
+				<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on
+					SD card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on
+					SD card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p></td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Max Bitmap size</td>
-			<td width="70%" valign="top">This is the size to which photos are scaled down before displaying. This
-				downscaling is required to save device memory. The default value is 2048. In devices with little memory, it may be
-				required to configure a smaller value (such as 1024). Too big values may crash the application.</td>
+			<td width="70%" valign="top">This is the size to which photos are scaled down before displaying. This downscaling is
+				required to save device memory. The default value is 2048. In devices with little memory, it may be required to
+				configure a smaller value (such as 1024). Too big values may crash the application.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Show image in full resolution</td>
-			<td width="70%" valign="top">Here you can decide under which circumstances the photo is displayed in full
-				resolution, which allows to see more details on the photo, but consumes memory and computing time.
+			<td width="70%" valign="top">Here you can decide under which circumstances the photo is displayed in full resolution,
+				which allows to see more details on the photo, but consumes memory and computing time.
 
 				<ul>
-					<li><b>Always load automatically:</b> The app always stores the photos in full resolution in memory. This
-						gives the best user experience on high end devices, but may lead to crashes if there is not enough memory
-						available.</li>
+					<li><b>Always load automatically:</b> The app always stores the photos in full resolution in memory. This gives the
+						best user experience on high end devices, but may lead to crashes if there is not enough memory available.</li>
 
-					<li><b>Load automatically when displaying single photo:</b> The app shows full resolution only when displaying
-						a single image. This requires half of the memory.</li>
+					<li><b>Load automatically when displaying single photo:</b> The app shows full resolution only when displaying a
+						single image. This requires half of the memory.</li>
 
-					<li><b>Load only on demand:</b> The app does not show the image in full resolution. This requires least memory
-						and CPU, but details in the photo may be lost. The &ldquo;magnifier&rdquo; button <img
+					<li><b>Load only on demand:</b> The app does not show the image in full resolution. This requires least memory and
+						CPU, but details in the photo may be lost. The &ldquo;magnifier&rdquo; button <img
 						src="../drawable/ic_clarity.png" /> allows to display the current picture detail in full resolution.</li>
 				</ul>
 			</td>
@@ -228,8 +213,8 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Remove Ads (only for users of older versions)</td>
-			<td width="70%" valign="top">Here you can disable all ads (currently only in US). This feature can be enabled
-				via donation or via user key.</td>
+			<td width="70%" valign="top">Here you can disable all ads (currently only in US). This feature can be enabled via
+				donation or via user key.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Contact the developer</td>
@@ -246,14 +231,8 @@
     </string>
     <string name="html_organize_photos" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Eye Diagnosis - Organize Photos</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Eye Diagnosis - Organize Photos</title></head>
 <body>
 	<h2>Organize the photos</h2>
 
@@ -263,39 +242,33 @@
 
 	<p>With the button &ldquo;Switch&rdquo; you can exchange the two photos.</p>
 
-	<p>With the button &ldquo;Other Photos&rdquo;, you can select two different photos from the input folder, by
-		clicking on two of the displayed photos. Here, you may also delete photos from the input folder, by using the context
-		menu (long click on a photo).</p>
+	<p>With the button &ldquo;Other Photos&rdquo;, you can select two different photos from the input folder, by clicking
+		on two of the displayed photos. Here, you may also delete photos from the input folder, by using the context menu
+		(long click on a photo).</p>
 
-	<p>At &ldquo;Select Name&rdquo; you can set the name of the person from which the eye photos are taken. Here you
-		can either select an existing name or enter a new name.</p>
+	<p>At &ldquo;Select Name&rdquo; you can set the name of the person from which the eye photos are taken. Here you can
+		either select an existing name or enter a new name.</p>
 
-	<p>At &ldquo;Select Date&rdquo; you can select the date on which the photos are listed. Typically this is the
-		capture date of the photos, which is preselected. However, you may select a different date. This is necessary in
-		particular, if you want to keep more than one eye pair of a person from one date - the app allows only one photo pair
-		per day and person.</p>
+	<p>At &ldquo;Select Date&rdquo; you can select the date on which the photos are listed. Typically this is the capture
+		date of the photos, which is preselected. However, you may select a different date. This is necessary in particular,
+		if you want to keep more than one eye pair of a person from one date - the app allows only one photo pair per day and
+		person.</p>
 
-	<p>With the button &ldquo;OK&rdquo; you can move the selected eye photo pair to the eye photo folder. The photos
-		are attached to the given name and date and can then be used by the app.</p>
+	<p>With the button &ldquo;OK&rdquo; you can move the selected eye photo pair to the eye photo folder. The photos are
+		attached to the given name and date and can then be used by the app.</p>
 </body>
 </html>
 ]]>
     </string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Eye Diagnosis - Visualize Photos</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../stylesheets/styles.css" rel="Stylesheet" type="text/css">
-</head>
+<head><title>Eye Diagnosis - Visualize Photos</title></head>
 <body>
 	<h2>Visualize the photos</h2>
 
-	<p>In this activity, you can select the name of a person whose eye photos you want to see. Then you get shown all
-		eye photos of this person in a list sorted by date.</p>
+	<p>In this activity, you can select the name of a person whose eye photos you want to see. Then you get shown all eye
+		photos of this person in a list sorted by date.</p>
 
 	<p>Then you have the following possibilities:</p>
 
@@ -306,12 +279,12 @@
 
 		<li>Show two photos of different dates (via long click on one photo and click on a second photo)</li>
 
-		<li>Show two photos of different persons: Select one photo of this person (via long click) and then select a
-			photo of a different person.</li>
+		<li>Show two photos of different persons: Select one photo of this person (via long click) and then select a photo of
+			a different person.</li>
 	</ul>
 
-	<p>Note that iris topography graphics may be organized just like eye photos - this allows to compare eye photos
-		with iris topography graphics. Such graphics are not included in the app (except as overlays).</p>
+	<p>Note that iris topography graphics may be organized just like eye photos - this allows to compare eye photos with
+		iris topography graphics. Such graphics are not included in the app (except as overlays).</p>
 
 	<h3>Further options in the overview</h3>
 
@@ -331,20 +304,20 @@
 		<li>Change of brightness and contrast via sliders <img src="../drawable/ic_seek_brightness.png" /><img
 			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Display of iris topographies as overlay (numbered buttons), adaption of the overlay to the iris and storage
-			of overlay position (lock button <img src="../drawable/ic_lock_open.png" />)
+		<li>Display of iris topographies as overlay (numbered buttons), adaption of the overlay to the iris and storage of
+			overlay position (lock button <img src="../drawable/ic_lock_open.png" />)
 		</li>
 
 		<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; <img
 			src="../drawable/ic_action_save.png" /> button on action bar)
 		</li>
 
-		<li>Store the position and zoom (via &ldquo;save&rdquo; <img src="../drawable/ic_action_save.png" /> button on
-			action bar)
+		<li>Store the position and zoom (via &ldquo;save&rdquo; <img src="../drawable/ic_action_save.png" /> button on action
+			bar)
 		</li>
 
-		<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button
-			on action bar)
+		<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button on
+			action bar)
 		</li>
 	</ul>
 
