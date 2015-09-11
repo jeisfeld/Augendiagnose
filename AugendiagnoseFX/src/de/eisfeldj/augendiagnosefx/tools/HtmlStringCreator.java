@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,11 +17,6 @@ import java.util.TreeMap;
  * Utility class to copy HTML from web page into Android project resources.
  */
 public final class HtmlStringCreator {
-	/**
-	 * The base path of web pages of the Autendiagnose page.
-	 */
-	private static final File WEB_BASE_FOLDER = new File("../../Webdevelopment/augendiagnose/web");
-
 	/**
 	 * The base path of Android resources.
 	 */
@@ -43,7 +40,7 @@ public final class HtmlStringCreator {
 	/**
 	 * A map from app name and language to the display app name.
 	 */
-	private static final Map<String, Map<String, String>> APP_NAME_MAP = new TreeMap<String, Map<String, String>>();
+	private static final Map<String, String> APP_URL_MAP = new TreeMap<String, String>();
 
 	/**
 	 * The name of the Mininris app.
@@ -78,16 +75,8 @@ public final class HtmlStringCreator {
 		PAGE_MAP.put("organize_photos.php", "html_organize_photos");
 		PAGE_MAP.put("display_photos.php", "html_display_photos");
 
-		Map<String, String> appNamesAugendiagnose = new TreeMap<String, String>();
-		appNamesAugendiagnose.put(EN, "Eye Diagnosis");
-		appNamesAugendiagnose.put(DE, AUGENDIAGNOSE);
-		appNamesAugendiagnose.put(ES, "Diagnóstico ocular");
-		APP_NAME_MAP.put(AUGENDIAGNOSE, appNamesAugendiagnose);
-		Map<String, String> appNamesMiniris = new TreeMap<String, String>();
-		appNamesMiniris.put(EN, MINIRIS);
-		appNamesMiniris.put(DE, MINIRIS);
-		appNamesMiniris.put(ES, MINIRIS);
-		APP_NAME_MAP.put(MINIRIS, appNamesMiniris);
+		APP_URL_MAP.put(AUGENDIAGNOSE, "http://localhost:8002");
+		APP_URL_MAP.put(MINIRIS, "http://localhost:8007");
 	}
 
 	/**
@@ -132,7 +121,7 @@ public final class HtmlStringCreator {
 		String resourceFileContent = readFile(resourceFile, resourceFileEncoding);
 
 		for (String htmlFile : PAGE_MAP.keySet()) {
-			String htmlFileContent = readHtmlFile(language, AUGENDIAGNOSE, htmlFile);
+			String htmlFileContent = readHtml(language, AUGENDIAGNOSE, htmlFile);
 			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlFile), htmlFileContent);
 		}
 
@@ -180,10 +169,18 @@ public final class HtmlStringCreator {
 	 * @throws IOException
 	 *             thrown if there are issues reading the file.
 	 */
-	private String readHtmlFile(final String language, final String app, final String fileName) throws IOException {
-		File file = new File(new File(WEB_BASE_FOLDER, language), fileName);
+	private String readHtml(final String language, final String app, final String fileName) throws IOException {
+		URL oracle = getUrl(app, language, fileName);
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(oracle.openStream()));
 
-		String htmlContent = readFile(file, "ISO8859-1");
+		String inputLine;
+		StringBuffer htmlBuffer = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			htmlBuffer.append(inputLine).append("\n");
+		}
+		in.close();
+		String htmlContent = htmlBuffer.toString();
 
 		// remove everything before html tag
 		int htmlIndex = htmlContent.indexOf("<html>");
@@ -202,11 +199,27 @@ public final class HtmlStringCreator {
 			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(headEndIndex);
 		}
 
-		// Replace PHP app name in the html file
-		String appName = APP_NAME_MAP.get(app).get(language);
-		htmlContent = htmlContent.replace("<?=$appname?>", appName);
-
 		return htmlContent;
+	}
+
+	/**
+	 * Get the URL from where the HTML can be retrieved.
+	 *
+	 * @param app
+	 *            The application name.
+	 * @param language
+	 *            The language.
+	 * @param fileName
+	 *            The file name.
+	 * @return The URL.
+	 */
+	private URL getUrl(final String app, final String language, final String fileName) {
+		try {
+			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName);
+		}
+		catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 	/**
