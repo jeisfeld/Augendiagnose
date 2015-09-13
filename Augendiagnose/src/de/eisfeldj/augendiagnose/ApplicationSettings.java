@@ -46,7 +46,8 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 			return AuthorizationLevel.FULL_ACCESS_WITH_ADS;
 		}
 
-		if (de.jeisfeld.augendiagnoselib.Application.getVersion() <= 44) { // MAGIC_NUMBER
+		int initialVersion = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_initialversion, 45); // MAGIC_NUMBER
+		if (initialVersion <= 44) { // MAGIC_NUMBER
 			// Special handling for "old" users that may keep full functionality.
 			return level == AuthorizationLevel.FULL_ACCESS ? AuthorizationLevel.FULL_ACCESS : AuthorizationLevel.FULL_ACCESS_WITH_ADS;
 		}
