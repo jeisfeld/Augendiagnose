@@ -18,11 +18,6 @@ import java.util.TreeMap;
  */
 public final class HtmlStringCreator {
 	/**
-	 * The base path of Android resources.
-	 */
-	private static final File ANDROID_BASE_FOLDER = new File("../Augendiagnose/res");
-
-	/**
 	 * The Android resource file name.
 	 */
 	private static final String RESOURCE_FILE_NAME = "strings_html.xml";
@@ -38,9 +33,14 @@ public final class HtmlStringCreator {
 	private static final Map<String, String> PAGE_MAP = new TreeMap<String, String>();
 
 	/**
-	 * A map from app name and language to the display app name.
+	 * A map from app name to the URL of the web page.
 	 */
 	private static final Map<String, String> APP_URL_MAP = new TreeMap<String, String>();
+
+	/**
+	 * A map from app name to the resource folder of the Android app.
+	 */
+	private static final Map<String, File> APP_RESOURCE_FOLDER_MAP = new TreeMap<String, File>();
 
 	/**
 	 * The name of the Mininris app.
@@ -77,6 +77,9 @@ public final class HtmlStringCreator {
 
 		APP_URL_MAP.put(AUGENDIAGNOSE, "http://localhost:8002");
 		APP_URL_MAP.put(MINIRIS, "http://localhost:8007");
+
+		APP_RESOURCE_FOLDER_MAP.put(AUGENDIAGNOSE, new File("../Augendiagnose/res"));
+		APP_RESOURCE_FOLDER_MAP.put(MINIRIS, new File("../Miniris/res"));
 	}
 
 	/**
@@ -102,26 +105,30 @@ public final class HtmlStringCreator {
 	public static void main(final String[] args) throws IOException {
 		instance = new HtmlStringCreator();
 
-		for (String language : LANGUAGE_MAP.keySet()) {
-			instance.updateResourceFile(language);
+		for (String app : APP_URL_MAP.keySet()) {
+			for (String language : LANGUAGE_MAP.keySet()) {
+				instance.updateResourceFile(app, language);
+			}
 		}
 	}
 
 	/**
-	 * Update the HTML resource file for a given language.
+	 * Update the HTML resource file for a given app and a given language.
 	 *
+	 * @param app
+	 *            the app.
 	 * @param language
 	 *            The language.
 	 * @throws IOException
 	 *             thrown if there are issues writing the file.
 	 */
-	private void updateResourceFile(final String language) throws IOException {
+	private void updateResourceFile(final String app, final String language) throws IOException {
 		String resourceFileEncoding = "UTF-8";
-		File resourceFile = new File(new File(ANDROID_BASE_FOLDER, LANGUAGE_MAP.get(language)), RESOURCE_FILE_NAME);
+		File resourceFile = new File(new File(APP_RESOURCE_FOLDER_MAP.get(app), LANGUAGE_MAP.get(language)), RESOURCE_FILE_NAME);
 		String resourceFileContent = readFile(resourceFile, resourceFileEncoding);
 
 		for (String htmlFile : PAGE_MAP.keySet()) {
-			String htmlFileContent = readHtml(language, AUGENDIAGNOSE, htmlFile);
+			String htmlFileContent = readHtml(language, app, htmlFile);
 			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlFile), htmlFileContent);
 		}
 
@@ -184,7 +191,9 @@ public final class HtmlStringCreator {
 
 		// remove everything before html tag
 		int htmlIndex = htmlContent.indexOf("<html>");
-		htmlContent = htmlContent.substring(htmlIndex);
+		if (htmlIndex >= 0) {
+			htmlContent = htmlContent.substring(htmlIndex);
+		}
 
 		// from head, keep only the title
 		int headStartIndex = htmlContent.indexOf("<head>") + "<head>".length();
@@ -195,7 +204,7 @@ public final class HtmlStringCreator {
 			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(titleStartIndex, titleEndIndex)
 					+ htmlContent.substring(headEndIndex);
 		}
-		else {
+		else if (headEndIndex > 0) {
 			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(headEndIndex);
 		}
 
