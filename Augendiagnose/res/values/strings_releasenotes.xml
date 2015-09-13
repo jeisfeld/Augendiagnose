@@ -3,6 +3,12 @@
 
     <string name="releasenotes_first_usage">
 <![CDATA[
+<h3>Important information:</h3>
+
+<p>This app allows free use only for two weeks, with limitations on the number of photos.</p>
+
+<p>Please test the app. If you find it useful, then you may purchase a premium pack within the app that allows unlimited use.</p>
+	
 <h3>Information for new users:</h3>
 
 <p>The purpose of this app is the organization and display of eye photos. On first usage, you need
@@ -27,7 +33,10 @@ even destroys the JPG file. Therefore, it is recommended that you keep backups o
 when using the app for the first time with a new device or with a new camera. Please inform me if such problems appear.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">Important note: From this version on, the app allows free use only for two weeks,
+        with limitations on the number of photos. Further use requires the purchase of a premium pack.
+        Users who used the app before will keep the full functionality as long as the app stays installed.
+        New installations will only give trial access.</string>
 
     <string-array name="releasenotes_version_names" translatable="false">
         <item>0.1</item>
@@ -74,7 +83,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.11</item>
         <item>0.5.12</item>
         <item>0.5.13</item>
-        <item>0.5.14</item>
+        <item>0.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -121,7 +130,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added advertisements (US only). Bugfixes</item>
         <item>Bugfixes</item>
         <item>Added donations via in-app purchase. Allowed disabling of ads. Reorganized settings. Bugfixes.</item>
-        <item>Bugfixes</item>
+        <item>New workflow for taking pictures out of the app. Made free app version only a test version. Bugfixes</item>
     </string-array>
 
 </resources>

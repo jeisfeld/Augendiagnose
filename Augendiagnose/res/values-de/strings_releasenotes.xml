@@ -3,6 +3,12 @@
 
     <string name="releasenotes_first_usage">
 <![CDATA[
+<h3>Wichtiger Hinweis:</h3>
+	
+<p>Diese App erlaubt nur zwei Wochen lang die freie Nutzung, bei eingeschränkter Zahl der Fotos.</p>
+
+<p>Bitte testen Sie die App. Wenn Sie sie nützlich finden, dann können Sie in der App ein Premium-Pack erwerben, das unbegrenzte Nutzung ermöglicht.</p>
+
 <h3>Hinweis für neue Nutzer:</h3>
 
 <p>Diese App dient der Organisation und Anzeige von Augenfotos.
@@ -31,7 +37,10 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark"></string>
+    <string name="releasenotes_current_remark">Wichtiger Hinweis: Ab dieser Version ermöglicht die App die kostenlose Nutzung
+        nur für einen Testzeitraum von zwei Wochen, mit Beschränkungen für die Anzahl der Fotos. Weitere Nutzung ist nur nach Erwerb
+        eines Premium-Packs möglich. Benutzern, die frühere Versionen der App bereits nutzten, bleibt die volle Funktionalität erhalten, solange
+        die App installiert bleibt. Für neue Installationen gilt eine freie Nutzung für zwei Wochen.</string>
 
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
@@ -78,7 +87,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Werbebanner (nur USA). Fehlerkorrekturen</item>
         <item>Fehlerkorrekturen</item>
         <item>Spenden via In-App-Kauf. Ausschalten der Werbung. Neuorganisation der Einstellungen. Fehlerkorrekturen.</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Neuer Ablauf für die Aufnahme von Fotos aus der App heraus. Die freie App ist ab jetzt für neue Downloads nur noch eine Testversion. Fehlerkorrekturen</item>
     </string-array>
 
 </resources>
