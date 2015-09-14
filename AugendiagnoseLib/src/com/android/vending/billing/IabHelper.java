@@ -610,6 +610,11 @@ public class IabHelper {
 				catch (IabException ex) {
 					result = ex.getResult();
 				}
+				catch (Exception e) {
+					// NullPointerException may happen if activity is closed too quickly
+					Log.e(mDebugTag, "Error when querying inventory", e);
+					return;
+				}
 
 				flagEndAsync();
 

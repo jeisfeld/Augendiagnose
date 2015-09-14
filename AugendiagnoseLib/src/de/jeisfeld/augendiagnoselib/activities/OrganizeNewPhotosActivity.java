@@ -336,7 +336,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
-				DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
+				if (update) {
+					finish();
+				}
+				else {
+					DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
+				}
 				return;
 			}
 

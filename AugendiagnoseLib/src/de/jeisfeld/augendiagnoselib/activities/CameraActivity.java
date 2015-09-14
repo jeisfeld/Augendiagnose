@@ -15,7 +15,6 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -28,6 +27,8 @@ import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -217,29 +218,6 @@ public class CameraActivity extends BaseActivity {
 			return;
 		}
 
-		// Workaround because there is no clear detection of landscape vs reverse landscape
-		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
-			// Ensure that requested Orientation has once been set, triggering re-creation of activity.
-			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				// Prevent deletion of temp camera files in onDestroy
-				getTempCameraFiles();
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			}
-			else {
-				// Prevent deletion of temp camera files in onDestroy
-				getTempCameraFiles();
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			}
-			return;
-		}
-
-		if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-			// Prevent deletion of temp camera files in onDestroy
-			getTempCameraFiles();
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			return;
-		}
-
 		setContentView(R.layout.activity_camera);
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
@@ -293,10 +271,12 @@ public class CameraActivity extends BaseActivity {
 			}
 		}
 
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 		preview = (SurfaceView) findViewById(R.id.camera_preview);
 		previewHolder = preview.getHolder();
 		previewHolder.addCallback(surfaceCallback);
-		previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		previewHolder.setKeepScreenOn(true);
 
 		camera = CameraUtil.getCameraInstance();
 
@@ -315,6 +295,7 @@ public class CameraActivity extends BaseActivity {
 	@Override
 	public final void onDestroy() {
 		cleanupTempFolder();
+		stopPreview();
 		super.onDestroy();
 	}
 
@@ -797,6 +778,28 @@ public class CameraActivity extends BaseActivity {
 
 		@Override
 		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
+			Display display = getWindowManager().getDefaultDisplay();
+			int angle;
+			switch (display.getRotation()) {
+			case Surface.ROTATION_0: // This is display orientation
+				angle = 90; // MAGIC_NUMBER
+				break;
+			case Surface.ROTATION_90:
+				angle = 0;
+				break;
+			case Surface.ROTATION_180:
+				angle = 270; // MAGIC_NUMBER
+				break;
+			case Surface.ROTATION_270:
+				angle = 180; // MAGIC_NUMBER
+				break;
+			default:
+				angle = 0;
+				break;
+			}
+			if (camera != null) {
+				camera.setDisplayOrientation(angle);
+			}
 		}
 
 		@Override
