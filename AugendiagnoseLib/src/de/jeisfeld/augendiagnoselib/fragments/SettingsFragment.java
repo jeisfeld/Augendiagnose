@@ -101,7 +101,6 @@ public class SettingsFragment extends PreferenceFragment {
 
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);
-		addVariableDonationButtonListener();
 		addDeveloperContactButtonListener();
 
 		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
@@ -126,22 +125,6 @@ public class SettingsFragment extends PreferenceFragment {
 				((PreferenceScreen) findPreference(getActivity().getString(R.string.key_dummy_screen_hints)))
 						.getDialog()
 						.dismiss();
-				return true;
-			}
-		});
-	}
-
-	/**
-	 * Add an entry for variable donation.
-	 */
-	private void addVariableDonationButtonListener() {
-		Preference variableDonationPreference = findPreference(getString(R.string.key_dummy_variable_donation));
-		variableDonationPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				Intent browserIntent =
-						new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.menu_target_variable_donation)));
-				startActivity(browserIntent);
 				return true;
 			}
 		});

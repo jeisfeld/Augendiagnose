@@ -82,11 +82,6 @@
         android:key="@string/key_dummy_screen_premium"
         android:title="@string/pref_screen_premium" >
         <Preference
-            android:key="@string/key_dummy_variable_donation"
-            android:order="100"
-            android:summary="@string/menu_detail_variable_donation"
-            android:title="@string/menu_title_variable_donation" />
-        <Preference
             android:key="@string/key_dummy_contact_developer"
             android:order="101"
             android:summary="@string/menu_detail_contact_developer"

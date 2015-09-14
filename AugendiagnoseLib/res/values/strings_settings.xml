@@ -118,7 +118,6 @@
     <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
     <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
     <string name="key_dummy_contact_developer" translatable="false">dummy_contact_developer</string>
-    <string name="key_dummy_variable_donation" translatable="false">dummy_variable_donation</string>
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
