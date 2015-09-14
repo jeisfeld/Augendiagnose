@@ -80,6 +80,39 @@ public final class JpegMetadataUtil {
 	}
 
 	/**
+	 * Get the Exif date of an image file.
+	 *
+	 * @param imageFile
+	 *            the image file.
+	 * @return The EXIF date.
+	 * @throws ImageReadException
+	 *             thrown if the metadata cannot be read.
+	 * @throws IOException
+	 *             thrown in case of other errors while reading metadata.
+	 */
+	public static String getExifDate(final File imageFile) throws ImageReadException, IOException {
+		final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+		TiffImageMetadata tiffImageMetadata = null;
+		if (metadata instanceof JpegImageMetadata) {
+			tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
+		}
+		else if (metadata instanceof TiffImageMetadata) {
+			tiffImageMetadata = (TiffImageMetadata) metadata;
+		}
+		else {
+			return null;
+		}
+
+		TiffField dateTime = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_DATE_TIME);
+		if (dateTime == null) {
+			return null;
+		}
+		else {
+			return dateTime.getStringValue();
+		}
+	}
+
+	/**
 	 * Retrieve the orientation of a file from the EXIF data. Required, as built-in ExifInterface is not always
 	 * reliable.
 	 *

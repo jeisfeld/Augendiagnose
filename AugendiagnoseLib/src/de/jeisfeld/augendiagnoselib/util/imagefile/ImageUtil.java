@@ -67,6 +67,10 @@ public final class ImageUtil {
 			ExifInterface exif = new ExifInterface(path);
 			String dateString = exif.getAttribute(ExifInterface.TAG_DATETIME);
 
+			if (dateString == null) {
+				dateString = JpegMetadataUtil.getExifDate(new File(path));
+			}
+
 			retrievedDate = DateUtil.parse(dateString, "yyyy:MM:dd HH:mm:ss");
 		}
 		catch (Exception e) {
