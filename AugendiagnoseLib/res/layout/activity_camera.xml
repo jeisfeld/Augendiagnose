@@ -88,14 +88,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_capture"
+        android:id="@+id/buttonCameraTrigger"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"
         android:layout_gravity="center_vertical|right"
         android:background="@drawable/circlebutton_trigger" />
 
     <Button
-        android:id="@+id/button_accept"
+        android:id="@+id/buttonCameraAccept"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"
         android:layout_gravity="center_vertical|right"
@@ -103,7 +103,7 @@
         android:visibility="gone" />
 
     <Button
-        android:id="@+id/button_decline"
+        android:id="@+id/buttonCameraDecline"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"
         android:layout_gravity="bottom|right"
@@ -117,13 +117,13 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/button_overlay_circle"
+            android:id="@+id/buttonCameraOverlayCircle"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
             android:background="@drawable/circlebutton_overlay_circle" />
 
         <Button
-            android:id="@+id/button_view_images"
+            android:id="@+id/buttonCameraViewImages"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
             android:layout_marginTop="6dp"

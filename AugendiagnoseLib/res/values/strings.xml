@@ -79,6 +79,8 @@
     <string-array name="googlebilling_premium_ids" translatable="false"></string-array>
     <string-array name="googlebilling_subscription_ids" translatable="false"></string-array>
 
+    <array name="hidden_camera_buttons" translatable="false"></array>
+
     <!-- Resources defining availalble help screens -->
 
     <array name="html_navigation_resources">
@@ -95,4 +97,5 @@
         <item>@string/html_display_photos</item>
         <item>@string/html_release_notes_base</item>
     </array>
-</resources>
+
+</resources>

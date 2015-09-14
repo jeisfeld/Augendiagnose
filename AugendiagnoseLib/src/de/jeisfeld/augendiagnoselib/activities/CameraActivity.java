@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -327,7 +328,7 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private void configureButtons() {
 		// Add a listener to the capture button
-		final Button captureButton = (Button) findViewById(R.id.button_capture);
+		final Button captureButton = (Button) findViewById(R.id.buttonCameraTrigger);
 		captureButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -340,7 +341,7 @@ public class CameraActivity extends BaseActivity {
 				});
 
 		// Add a listener to the view image button
-		Button viewImageButton = (Button) findViewById(R.id.button_view_images);
+		Button viewImageButton = (Button) findViewById(R.id.buttonCameraViewImages);
 		viewImageButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -350,7 +351,7 @@ public class CameraActivity extends BaseActivity {
 				});
 
 		// Add listeners to the accept/decline button
-		Button acceptButton = (Button) findViewById(R.id.button_accept);
+		Button acceptButton = (Button) findViewById(R.id.buttonCameraAccept);
 		acceptButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -389,7 +390,7 @@ public class CameraActivity extends BaseActivity {
 					}
 				});
 
-		Button declineButton = (Button) findViewById(R.id.button_decline);
+		Button declineButton = (Button) findViewById(R.id.buttonCameraDecline);
 		declineButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -429,7 +430,7 @@ public class CameraActivity extends BaseActivity {
 					}
 				});
 
-		Button overlayCircleButton = (Button) findViewById(R.id.button_overlay_circle);
+		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraOverlayCircle);
 		overlayCircleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -455,6 +456,19 @@ public class CameraActivity extends BaseActivity {
 				setAction(TAKE_PHOTO, LEFT);
 			}
 		});
+
+		// Hide application specific buttons
+		TypedArray hiddenButtons = getResources().obtainTypedArray(R.array.hidden_camera_buttons);
+		for (int i = 0; i < hiddenButtons.length(); i++) {
+			int id = hiddenButtons.getResourceId(i, 0);
+			if (id != 0) {
+				View view = findViewById(id);
+				if (view != null) {
+					view.setVisibility(View.GONE);
+				}
+			}
+		}
+		hiddenButtons.recycle();
 	}
 
 	/**
@@ -468,9 +482,9 @@ public class CameraActivity extends BaseActivity {
 	private void setAction(final Action action, final RightLeft rightLeft) {
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
-		Button buttonCapture = (Button) findViewById(R.id.button_capture);
-		Button buttonAccept = (Button) findViewById(R.id.button_accept);
-		Button buttonDecline = (Button) findViewById(R.id.button_decline);
+		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
+		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
+		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
 		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
 
 		switch (action) {

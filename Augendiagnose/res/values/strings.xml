@@ -27,4 +27,8 @@
         <item>donation_monthly_small</item>
     </string-array>
 
+    <array name="hidden_camera_buttons" translatable="false">
+        <item>@id/buttonCameraViewImages</item>
+    </array>
+
 </resources>
