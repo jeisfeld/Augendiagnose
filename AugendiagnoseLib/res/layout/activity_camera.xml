@@ -120,7 +120,15 @@
             android:id="@+id/buttonCameraOverlayCircle"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginTop="6dp"
             android:background="@drawable/circlebutton_overlay_circle" />
+
+        <Button
+            android:id="@+id/buttonCameraFlashlight"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/circlebutton_noflash" />
 
         <Button
             android:id="@+id/buttonCameraViewImages"

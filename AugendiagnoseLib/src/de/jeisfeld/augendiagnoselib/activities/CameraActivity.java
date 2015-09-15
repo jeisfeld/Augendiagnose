@@ -15,6 +15,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -23,6 +24,7 @@ import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -89,6 +91,11 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private static final int DEFAULT_CIRCLE_TYPE = 2;
 	/**
+	 * The default flashlight type.
+	 */
+	private static final String[] FLASHLIGHT_MODES = { Parameters.FLASH_MODE_OFF, Parameters.FLASH_MODE_ON, Parameters.FLASH_MODE_TORCH };
+
+	/**
 	 * The default overlay scale factor (required due to strange calculation in OverlayPinchImageView).
 	 */
 	private float defaultOverlayScaleFactor;
@@ -122,6 +129,11 @@ public class CameraActivity extends BaseActivity {
 	 * The current rightLeft in the activity.
 	 */
 	private Action currentAction;
+
+	/**
+	 * The current flashlight mode.
+	 */
+	private String currentFlashlightMode;
 
 	/**
 	 * The current eye.
@@ -220,6 +232,9 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
+		configureMainButtons();
+		configureConfigButtons();
+
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
 		if (photoFolderName != null) {
 			photoFolder = new File(photoFolderName);
@@ -241,6 +256,7 @@ public class CameraActivity extends BaseActivity {
 			rightEyeFile = inputRightFile;
 			setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
 			setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+
 			setAction(RE_TAKE_PHOTO, null);
 		}
 		else {
@@ -288,8 +304,6 @@ public class CameraActivity extends BaseActivity {
 
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
 		drawOverlayCircle(overlayCircleSize);
-
-		configureButtons();
 	}
 
 	@Override
@@ -305,9 +319,9 @@ public class CameraActivity extends BaseActivity {
 	}
 
 	/**
-	 * Configure the buttons of this activity.
+	 * Configure the main buttons of this activity.
 	 */
-	private void configureButtons() {
+	private void configureMainButtons() {
 		// Add a listener to the capture button
 		final Button captureButton = (Button) findViewById(R.id.buttonCameraTrigger);
 		captureButton.setOnClickListener(
@@ -318,16 +332,6 @@ public class CameraActivity extends BaseActivity {
 						captureButton.setEnabled(false);
 						camera.takePicture(null, null, photoCallback);
 						animateFlash();
-					}
-				});
-
-		// Add a listener to the view image button
-		Button viewImageButton = (Button) findViewById(R.id.buttonCameraViewImages);
-		viewImageButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						setAction(CANCEL_AND_VIEW_IMAGES, null);
 					}
 				});
 
@@ -411,6 +415,23 @@ public class CameraActivity extends BaseActivity {
 					}
 				});
 
+		// Add a listener to the view image button
+		Button viewImageButton = (Button) findViewById(R.id.buttonCameraViewImages);
+		viewImageButton.setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(final View v) {
+						setAction(CANCEL_AND_VIEW_IMAGES, null);
+					}
+				});
+
+	}
+
+	/**
+	 * Configure configuration buttons in this activity.
+	 */
+	private void configureConfigButtons() {
+
 		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraOverlayCircle);
 		overlayCircleButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -421,6 +442,38 @@ public class CameraActivity extends BaseActivity {
 				drawOverlayCircle(nextCircleType);
 			}
 		});
+
+		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
+		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+			currentFlashlightMode = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
+			if (currentFlashlightMode == null || currentFlashlightMode.length() == 0) {
+				currentFlashlightMode = FLASHLIGHT_MODES[0];
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
+			}
+			updateFlashlight();
+
+			flashlightButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					// Determine next flashlight mode
+					int flashlightModeIndex = 0;
+					for (int i = 0; i < FLASHLIGHT_MODES.length; i++) {
+						if (FLASHLIGHT_MODES[i].equals(currentFlashlightMode)) {
+							flashlightModeIndex = i;
+						}
+					}
+					flashlightModeIndex = (flashlightModeIndex + 1) % FLASHLIGHT_MODES.length;
+					currentFlashlightMode = FLASHLIGHT_MODES[flashlightModeIndex];
+					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
+
+					updateFlashlight();
+				}
+			});
+		}
+		else {
+			currentFlashlightMode = null;
+			flashlightButton.setVisibility(View.GONE);
+		}
 
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setOnClickListener(new OnClickListener() {
@@ -461,6 +514,9 @@ public class CameraActivity extends BaseActivity {
 	 *            the next eye side.
 	 */
 	private void setAction(final Action action, final RightLeft rightLeft) {
+		currentAction = action;
+		currentRightLeft = rightLeft;
+
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
 		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
@@ -486,12 +542,15 @@ public class CameraActivity extends BaseActivity {
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 			}
+
+			updateFlashlight();
 			break;
 		case CHECK_PHOTO:
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
 			overlayView.setVisibility(View.GONE);
+			updateFlashlight();
 			break;
 		case RE_TAKE_PHOTO:
 			buttonCapture.setVisibility(View.GONE);
@@ -500,6 +559,7 @@ public class CameraActivity extends BaseActivity {
 			overlayView.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
+			updateFlashlight();
 			break;
 		case FINISH_CAMERA:
 			stopPreview();
@@ -542,9 +602,6 @@ public class CameraActivity extends BaseActivity {
 		default:
 			break;
 		}
-
-		currentAction = action;
-		currentRightLeft = rightLeft;
 	}
 
 	/**
@@ -678,6 +735,46 @@ public class CameraActivity extends BaseActivity {
 	}
 
 	/**
+	 * Update the flashlight button and set the flashlight mode.
+	 */
+	private void updateFlashlight() {
+		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
+		if (Parameters.FLASH_MODE_OFF.equals(currentFlashlightMode)) {
+			flashlightButton.setBackgroundResource(R.drawable.circlebutton_noflash);
+		}
+		else if (Parameters.FLASH_MODE_ON.equals(currentFlashlightMode)) {
+			flashlightButton.setBackgroundResource(R.drawable.circlebutton_flash);
+		}
+		else if (Parameters.FLASH_MODE_TORCH.equals(currentFlashlightMode)) {
+			flashlightButton.setBackgroundResource(R.drawable.circlebutton_torch);
+		}
+		if (currentFlashlightMode != null) {
+			if (currentAction == Action.TAKE_PHOTO) {
+				setFlashlightMode(currentFlashlightMode);
+			}
+			else {
+				setFlashlightMode(FLASHLIGHT_MODES[0]);
+			}
+		}
+	}
+
+	/**
+	 * Set the flashlight mode.
+	 *
+	 * @param flashlightMode
+	 *            The new flashlight mode.
+	 */
+	private void setFlashlightMode(final String flashlightMode) {
+		if (camera != null) {
+			Parameters parameters = camera.getParameters();
+			if (parameters.getSupportedFlashModes().contains(flashlightMode)) {
+				parameters.setFlashMode(flashlightMode);
+			}
+			camera.setParameters(parameters);
+		}
+	}
+
+	/**
 	 * Initialize the camera.
 	 */
 	private void initPreview() {
@@ -693,7 +790,7 @@ public class CameraActivity extends BaseActivity {
 			}
 
 			if (!cameraConfigured) {
-				Camera.Parameters parameters = camera.getParameters();
+				Parameters parameters = camera.getParameters();
 				Camera.Size pictureSize = CameraUtil.getBiggestPictureSize(parameters);
 				if (pictureSize == null) {
 					return;
@@ -708,6 +805,7 @@ public class CameraActivity extends BaseActivity {
 				parameters.setPictureFormat(ImageFormat.JPEG);
 				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 				camera.setParameters(parameters);
+				updateFlashlight();
 
 				// Resize frame to match aspect ratio
 				float aspectRatio = ((float) pictureSize.width) / pictureSize.height;
