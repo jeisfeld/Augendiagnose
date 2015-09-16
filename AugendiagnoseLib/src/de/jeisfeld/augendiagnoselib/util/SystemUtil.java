@@ -67,14 +67,15 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Determine if Eye-Fi is installed.
+	 * Determine if an app is installed.
 	 *
-	 * @return true if Eye-Fi is installed.
+	 * @param appPackage
+	 *            the app package name.
+	 * @return true if the app is installed.
 	 */
-	public static boolean isEyeFiInstalled() {
-		Intent eyeFiIntent =
-				Application.getAppContext().getPackageManager().getLaunchIntentForPackage("fi.eye.android");
-		return eyeFiIntent != null;
+	public static boolean isAppInstalled(final String appPackage) {
+		Intent appIntent = Application.getAppContext().getPackageManager().getLaunchIntentForPackage(appPackage);
+		return appIntent != null;
 	}
 
 	/**

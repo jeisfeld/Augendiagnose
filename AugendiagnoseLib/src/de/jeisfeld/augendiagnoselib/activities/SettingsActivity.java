@@ -77,7 +77,7 @@ public class SettingsActivity extends BaseActivity {
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_folder_input))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
-			if (SystemUtil.isEyeFiInstalled()) {
+			if (SystemUtil.isAppInstalled("fi.eye.android")) {
 				// If Eye-Fi is available, use Eye-Fi default folder
 				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
 						context.getString(R.string.pref_default_folder_input_eyefi));

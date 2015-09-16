@@ -102,6 +102,7 @@ public class SettingsFragment extends PreferenceFragment {
 		addHintButtonListener(R.string.key_dummy_show_hints, false);
 		addHintButtonListener(R.string.key_dummy_hide_hints, true);
 		addDeveloperContactButtonListener();
+		addUnlockerAppButtonListener();
 
 		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
 
@@ -128,6 +129,28 @@ public class SettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
+	}
+
+	/**
+	 * Add an entry for unlocker app.
+	 */
+	private void addUnlockerAppButtonListener() {
+		Preference contactPreference = findPreference(getString(R.string.key_dummy_unlocker_app));
+		contactPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
+				googlePlayIntent.setData(Uri.parse("market://details?id=de.jeisfeld.augendiagnoseunlocker"));
+				try {
+					startActivity(googlePlayIntent);
+				}
+				catch (Exception e) {
+					DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_open_google_play, false);
+				}
+				return true;
+			}
+		});
+		contactPreference.setEnabled(!SystemUtil.isAppInstalled("de.jeisfeld.augendiagnoseunlocker"));
 	}
 
 	/**

@@ -21,6 +21,8 @@
 
     <string name="menu_hide_all_hints">Tipps nicht mehr zeigen</string>
     <string name="menu_show_all_hints">Alle Tipps zeigen</string>
+    <string name="menu_title_unlocker_app">Iridology Unlocker-App</string>
+    <string name="menu_detail_unlocker_app">Eine Alternative zu den Paketen - die Unlocker-App erlaubt unbegrenzte Nutzung der Apps „Augendiagnose“ und „Miniris“</string>
     <string name="menu_title_contact_developer">Kontakt mit dem Entwickler</string>
     <string name="menu_detail_contact_developer">über E-Mail im Fall von Problemen oder Fragen</string>
     <string name="menu_subject_contact_developer">Frage zur Augendiagnose-App</string>

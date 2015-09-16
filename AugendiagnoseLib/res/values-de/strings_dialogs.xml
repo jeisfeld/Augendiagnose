@@ -28,6 +28,7 @@
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_failed_to_store_exif">Konnte EXIF-Informationen nicht in Datei %1$s speichern - bitte Kontaktieren Sie den Entwickler!</string>
     <string name="message_dialog_failed_to_open_camera">Kamera konnte nicht gestartet werden.</string>
+    <string name="message_dialog_failed_to_open_google_play">Google Play konnte nicht gestartet werden.</string>
     <string name="message_dialog_trial_names">In der Testversion der App können Sie nur bis zu drei Namen vergeben. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
     <string name="message_dialog_trial_time">Die Testversion der App ist nur zwei Wochen nutzbar. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
     <string name="message_dialog_trial_overlays">Die Testversion der App ist auf zwei Overlays beschränkt. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>

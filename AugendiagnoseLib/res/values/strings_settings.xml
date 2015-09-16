@@ -118,6 +118,7 @@
     <string name="key_dummy_screen_premium" translatable="false">dummy_screen_donate</string>
     <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
     <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
+    <string name="key_dummy_unlocker_app" translatable="false">dummy_unlocker_app</string>
     <string name="key_dummy_contact_developer" translatable="false">dummy_contact_developer</string>
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>

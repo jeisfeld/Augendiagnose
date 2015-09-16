@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 
-		if (!SystemUtil.isEyeFiInstalled()) {
+		if (!SystemUtil.isAppInstalled("fi.eye.android")) {
 			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
 		}
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
 	 *            the button to open the Eye-Fi app.
 	 */
 	public final void openEyeFiApp(final View view) {
-		if (SystemUtil.isEyeFiInstalled()) {
+		if (SystemUtil.isAppInstalled("fi.eye.android")) {
 			startActivity(getPackageManager().getLaunchIntentForPackage("fi.eye.android"));
 		}
 		else {
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
 				startActivity(googlePlayIntent);
 			}
 			catch (Exception e) {
-				DialogUtil.displayError(this, R.string.message_dialog_eyefi_not_installed, false);
+				DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_google_play, false);
 			}
 		}
 	}

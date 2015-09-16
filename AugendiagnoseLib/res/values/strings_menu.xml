@@ -21,6 +21,8 @@
 
     <string name="menu_hide_all_hints">Do not display hints</string>
     <string name="menu_show_all_hints">Display all hints</string>
+    <string name="menu_title_unlocker_app">Iridology unlocker app</string>
+    <string name="menu_detail_unlocker_app">An alternative to premium packs - gives unlimited access to both apps “Eye Diagnosis” and “Miniris”</string>
     <string name="menu_title_contact_developer">Contact the developer</string>
     <string name="menu_detail_contact_developer">via email in case of problems or questions</string>
     <string name="menu_email_contact_developer" translatable="false">Jörg Eisfeld &lt;augendiagnose@jeisfeld.de&gt;</string>

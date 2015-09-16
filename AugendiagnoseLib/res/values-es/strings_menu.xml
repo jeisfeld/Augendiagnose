@@ -21,6 +21,8 @@
 
     <string name="menu_hide_all_hints">No mostrar consejos</string>
     <string name="menu_show_all_hints">Mostrar todos los consejos</string>
+    <string name="menu_title_unlocker_app">Aplicación «Iridology unlocker»</string>
+    <string name="menu_detail_unlocker_app">Una alternativa a los paquetes premium - esta aplicación da acceso ilimitado a ambas aplicaciones «Diagnóstico ocular» y «Miniris»</string>
     <string name="menu_title_contact_developer">Póngase en contacto con el desarrollador</string>
     <string name="menu_detail_contact_developer">Por correo electrónico en caso de problemas o preguntas</string>
     <string name="menu_subject_contact_developer">Pregunta sobre aplicación Diagnóstico ocular</string>
