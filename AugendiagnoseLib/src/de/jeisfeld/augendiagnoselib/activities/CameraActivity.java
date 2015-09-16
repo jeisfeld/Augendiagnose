@@ -416,8 +416,8 @@ public class CameraActivity extends BaseActivity {
 				});
 
 		// Add a listener to the view image button
-		Button viewImageButton = (Button) findViewById(R.id.buttonCameraViewImages);
-		viewImageButton.setOnClickListener(
+		Button viewImagesButton = (Button) findViewById(R.id.buttonCameraViewImages);
+		viewImagesButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
@@ -499,6 +499,7 @@ public class CameraActivity extends BaseActivity {
 				View view = findViewById(id);
 				if (view != null) {
 					view.setVisibility(View.GONE);
+					view.setEnabled(false);
 				}
 			}
 		}
@@ -522,7 +523,8 @@ public class CameraActivity extends BaseActivity {
 		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
 		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
 		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
-		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
+		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
+		Button buttonOverlayCircle = (Button) findViewById(R.id.buttonCameraOverlayCircle);
 
 		switch (action) {
 		case TAKE_PHOTO:
@@ -530,9 +532,11 @@ public class CameraActivity extends BaseActivity {
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonCapture.setEnabled(true);
 			buttonAccept.setVisibility(View.GONE);
-			overlayView.setVisibility(View.VISIBLE);
-
 			buttonDecline.setVisibility(inputLeftFile != null && inputRightFile != null ? View.VISIBLE : View.GONE);
+			if (buttonViewImages.isEnabled() && buttonDecline.getVisibility() == View.GONE) {
+				buttonViewImages.setVisibility(View.VISIBLE);
+			}
+			buttonOverlayCircle.setEnabled(true);
 
 			if (rightLeft == RIGHT) {
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
@@ -549,14 +553,18 @@ public class CameraActivity extends BaseActivity {
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
-			overlayView.setVisibility(View.GONE);
+			buttonViewImages.setVisibility(View.INVISIBLE);
+			buttonOverlayCircle.setEnabled(false);
 			updateFlashlight();
 			break;
 		case RE_TAKE_PHOTO:
 			buttonCapture.setVisibility(View.GONE);
 			buttonAccept.setVisibility(View.GONE);
 			buttonDecline.setVisibility(View.VISIBLE);
-			overlayView.setVisibility(View.VISIBLE);
+			if (buttonViewImages.isEnabled()) {
+				buttonViewImages.setVisibility(View.VISIBLE);
+			}
+			buttonOverlayCircle.setEnabled(true);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 			updateFlashlight();
