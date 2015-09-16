@@ -385,7 +385,15 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 
 			// Organize left vs. right
-			if (rightEyeLast) {
+			if (photoLast.getRightLeft() == RightLeft.RIGHT && photoLastButOne.getRightLeft() == RightLeft.LEFT) {
+				photoRight = photoLast;
+				photoLeft = photoLastButOne;
+			}
+			else if (photoLast.getRightLeft() == RightLeft.LEFT && photoLastButOne.getRightLeft() == RightLeft.RIGHT) {
+				photoLeft = photoLast;
+				photoRight = photoLastButOne;
+			}
+			else if (rightEyeLast) {
 				photoRight = photoLast;
 				photoLeft = photoLastButOne;
 			}
