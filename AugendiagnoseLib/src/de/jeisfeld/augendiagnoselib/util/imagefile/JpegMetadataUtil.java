@@ -1,7 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType.TIFF_DIRECTORY_IFD0;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +18,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
@@ -135,13 +134,19 @@ public final class JpegMetadataUtil {
 				return ExifInterface.ORIENTATION_UNDEFINED;
 			}
 
-			TagInfo tagInfo = new TagInfoShort("Orientation", 274, 1, TIFF_DIRECTORY_IFD0); // MAGIC_NUMBER
-			TiffField field = tiffImageMetadata.findField(tagInfo);
+			TiffField field = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_ORIENTATION);
 			if (field != null) {
 				return field.getIntValue();
 			}
 			else {
-				return ExifInterface.ORIENTATION_UNDEFINED;
+				TagInfo tagInfo = new TagInfoShort("Orientation", 274, 1, TiffDirectoryType.TIFF_DIRECTORY_IFD0); // MAGIC_NUMBER
+				field = tiffImageMetadata.findField(tagInfo);
+				if (field != null) {
+					return field.getIntValue();
+				}
+				else {
+					return ExifInterface.ORIENTATION_UNDEFINED;
+				}
 			}
 		}
 		catch (Exception e) {
@@ -404,6 +409,11 @@ public final class JpegMetadataUtil {
 			if (metadata.subject != null) {
 				rootDirectory.removeField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
 				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.subject);
+			}
+
+			if (metadata.orientation != null) {
+				rootDirectory.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+				rootDirectory.add(TiffTagConstants.TIFF_TAG_ORIENTATION, metadata.orientation);
 			}
 
 			try {

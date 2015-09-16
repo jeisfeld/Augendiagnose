@@ -30,6 +30,7 @@ public final class JpegMetadata implements Parcelable {
 	public Float brightness = null;
 	public Float contrast = null;
 	public Integer overlayColor = null;
+	public Short orientation = null;
 
 	// PUBLIC_FIELDS:END
 	// JAVADOC:ON
@@ -153,6 +154,14 @@ public final class JpegMetadata implements Parcelable {
 		return overlayColor == null ? null : Integer.toHexString(overlayColor);
 	}
 
+	public void setOrientation(final String value) {
+		orientation = value == null ? null : (short) Short.parseShort(value);
+	}
+
+	public String getOrientationString() {
+		return orientation == null ? null : Short.toString(orientation);
+	}
+
 	// JAVADOC:ON
 
 	@Override
@@ -172,8 +181,9 @@ public final class JpegMetadata implements Parcelable {
 		str.append("OrganizeDate: " + organizeDate + LINE_BREAK);
 		str.append("RightLeft: " + rightLeft + LINE_BREAK);
 		str.append("Brightness: " + brightness + LINE_BREAK);
-		str.append("Contrast: " + contrast + "\n");
+		str.append("Contrast: " + contrast + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
+		str.append("Orientation: " + getOrientationString() + LINE_BREAK);
 		return str.toString();
 	}
 
@@ -198,6 +208,7 @@ public final class JpegMetadata implements Parcelable {
 		dest.writeString(getBrightnessString());
 		dest.writeString(getContrastString());
 		dest.writeString(getOverlayColorString());
+		dest.writeString(getOrientationString());
 	}
 
 	/**
@@ -220,6 +231,7 @@ public final class JpegMetadata implements Parcelable {
 			metadata.setBrightness(in.readString());
 			metadata.setContrast(in.readString());
 			metadata.setOverlayColor(in.readString());
+			metadata.setOrientation(in.readString());
 			return metadata;
 		}
 

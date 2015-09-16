@@ -26,11 +26,11 @@ import android.graphics.Paint.Style;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.SensorManager;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -51,6 +51,9 @@ import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.util.CameraUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.OrientationManager;
+import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
+import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
@@ -181,6 +184,16 @@ public class CameraActivity extends BaseActivity {
 	private File inputLeftFile = null;
 
 	/**
+	 * An orientation manager used to track the orientation of the image.
+	 */
+	private OrientationManager orientationManager = null;
+
+	/**
+	 * The current screen orientation.
+	 */
+	private ScreenOrientation currentScreenOrientation;
+
+	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
 	 * @param activity
@@ -304,12 +317,23 @@ public class CameraActivity extends BaseActivity {
 
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
 		drawOverlayCircle(overlayCircleSize);
+
+		orientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
+			@Override
+			public void onOrientationChange(final ScreenOrientation screenOrientation) {
+				currentScreenOrientation = screenOrientation;
+			}
+		});
+		orientationManager.enable();
 	}
 
 	@Override
 	public final void onDestroy() {
 		cleanupTempFolder();
 		stopPreview();
+		if (orientationManager != null) {
+			orientationManager.disable();
+		}
 		super.onDestroy();
 	}
 
@@ -884,28 +908,7 @@ public class CameraActivity extends BaseActivity {
 
 		@Override
 		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
-			Display display = getWindowManager().getDefaultDisplay();
-			int angle;
-			switch (display.getRotation()) {
-			case Surface.ROTATION_0: // This is display orientation
-				angle = 90; // MAGIC_NUMBER
-				break;
-			case Surface.ROTATION_90:
-				angle = 0;
-				break;
-			case Surface.ROTATION_180:
-				angle = 270; // MAGIC_NUMBER
-				break;
-			case Surface.ROTATION_270:
-				angle = 180; // MAGIC_NUMBER
-				break;
-			default:
-				angle = 0;
-				break;
-			}
-			if (camera != null) {
-				camera.setDisplayOrientation(angle);
-			}
+			// do nothing.
 		}
 
 		@Override
@@ -915,6 +918,29 @@ public class CameraActivity extends BaseActivity {
 	};
 
 	/**
+	 * Get the exif orientation to be applied.
+	 *
+	 * @return The orientation angle.
+	 */
+	private short getExifAngle() {
+		if (currentScreenOrientation == null) {
+			return ExifInterface.ORIENTATION_NORMAL;
+		}
+		switch (currentScreenOrientation) {
+		case LANDSCAPE:
+			return ExifInterface.ORIENTATION_NORMAL;
+		case PORTRAIT:
+			return ExifInterface.ORIENTATION_ROTATE_90;
+		case REVERSED_LANDSCAPE:
+			return ExifInterface.ORIENTATION_ROTATE_180;
+		case REVERSED_PORTRAIT:
+			return ExifInterface.ORIENTATION_ROTATE_270;
+		default:
+			return ExifInterface.ORIENTATION_NORMAL;
+		}
+	}
+
+	/**
 	 * The callback called when pictures are taken.
 	 */
 	private PictureCallback photoCallback = new PictureCallback() {
@@ -922,6 +948,7 @@ public class CameraActivity extends BaseActivity {
 		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
 			inPreview = false;
+			short exifAngle = getExifAngle();
 			setThumbImage(data);
 			File imageFile = FileUtil.getTempJpegFile();
 
@@ -947,6 +974,7 @@ public class CameraActivity extends BaseActivity {
 				metadata.rightLeft = currentRightLeft;
 				metadata.comment = "";
 				metadata.organizeDate = new Date();
+				metadata.orientation = exifAngle;
 			}
 
 			int overlayCircleRadius =
