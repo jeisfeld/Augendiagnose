@@ -14,8 +14,9 @@
     <string name="pref_title_folder_photos">Eye Photo Folder</string>
     <string name="pref_default_folder_photos">__ext_storage__/EyePhotos</string>
     <string name="pref_title_folder_input">Input folder for new eye photos</string>
-    <string name="pref_default_folder_input" translatable="false">__ext_storage__/Eye-Fi</string>
-    <string name="pref_dummy_value" translatable="false">!!DUMMY!!</string>
+    <string name="pref_default_folder_input" translatable="false">__folder_camera__</string>
+    <string name="pref_default_folder_input_eyefi" translatable="false">__ext_storage__/Eye-Fi</string>
+    <string name="pref_dummy_folder_input" translatable="false">!!DUMMY!!</string>
     <string name="pref_title_max_bitmap_size">Max Bitmap size</string>
     <string name="pref_title_eye_sequence_choice">Last photo is right eye</string>
     <string name="pref_default_eye_sequence_value" translatable="false">false</string>

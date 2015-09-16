@@ -13,7 +13,6 @@ import de.jeisfeld.augendiagnoselib.fragments.SettingsFragment;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 
 /**
  * Activity to display the settings page.
@@ -76,16 +75,17 @@ public class SettingsActivity extends BaseActivity {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.pref_general, false);
 
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
-				context.getString(R.string.pref_dummy_value))) {
+				context.getString(R.string.pref_dummy_folder_input))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
 			if (SystemUtil.isEyeFiInstalled()) {
-				// If Eye-Fi is available, use Eye-Fi folder, which is the first selection
+				// If Eye-Fi is available, use Eye-Fi default folder
 				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
-						context.getString(R.string.pref_default_folder_input));
+						context.getString(R.string.pref_default_folder_input_eyefi));
 			}
 			else {
-				// Otherwise, use Camera foldder.
-				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input, FileUtil.getDefaultCameraFolder());
+				// Otherwise, use normal default folder.
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
+						context.getString(R.string.pref_default_folder_input));
 			}
 		}
 

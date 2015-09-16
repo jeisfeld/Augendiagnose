@@ -1,10 +1,11 @@
 <resources>
 
     <string name="pref_default_folder_input" translatable="false">__cache_dir__</string>
+    <string name="pref_default_folder_input_eyefi" translatable="false">__cache_dir__</string>
     <string name="pref_title_eye_sequence_choice">Start with left eye</string>
     <string name="pref_title_folder_input"></string>
     <string name="pref_default_show_tips" translatable="false">false</string>
     <string name="menu_email_contact_developer" translatable="false">Jörg Eisfeld &lt;miniris@jeisfeld.de&gt;</string>
     <string name="menu_subject_contact_developer">Question on Miniris App</string>
-    
+
 </resources>
