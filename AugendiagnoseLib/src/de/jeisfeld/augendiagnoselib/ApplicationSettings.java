@@ -22,13 +22,14 @@ public abstract class ApplicationSettings {
 	protected AuthorizationLevel getAuthorizationLevel() {
 		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
 		boolean hasPremiumPack = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack);
-		boolean isAuthorizedUser = hasPremiumPack || EncryptionUtil.validateUserKey(userKey) || SystemUtil.isJeDevice();
+		boolean hasUnlockerApp = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app);
+		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || EncryptionUtil.validateUserKey(userKey) || SystemUtil.isJeDevice();
 
 		if (isAuthorizedUser) {
 			return AuthorizationLevel.FULL_ACCESS;
 		}
-
 		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
+
 		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(14) // MAGIC_NUMBER
 				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
 	}

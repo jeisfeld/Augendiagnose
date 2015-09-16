@@ -55,7 +55,7 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 			finish();
 			break;
 		default:
-			break;
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 

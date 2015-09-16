@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc" >
+
+    <target name="javadoc" >
+
+        <javadoc
+            access="private"
+            author="false"
+            classpath="bin/classes;../AugendiagnoseLib/bin/augendiagnoselib.jar;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;libs/android-support-v13.jar;../AugendiagnoseLib/libsExtra/xmpcore.jar;../AugendiagnoseLib/libsExtra/annotations.jar;libs/admarvel-android-sdk-core.jar"
+            destdir="doc"
+            linksource="true"
+            nodeprecated="false"
+            nodeprecatedlist="false"
+            noindex="false"
+            nonavbar="false"
+            notree="false"
+            packagenames="de.jeisfeld.augendiagnoseunlocker,de.jeisfeld.augendiagnose.activities"
+            source="1.7"
+            sourcepath="src"
+            splitindex="true"
+            use="true"
+            version="true" >
+
+            <link href="file:/D:/Jörg/Eclipse/Android/XMPCore/doc/" />
+
+            <link
+                href="http://android-javadoc.localhost/reference/"
+                offline="true"
+                packagelistLoc="C:\Program Files (x86)\Android\android-sdk\docs\reference" />
+
+            <link href="file:/D:/Git/Augendiagnose/Augendiagnose/doc/" />
+
+            <link href="file:/D:/Git/Augendiagnose/AugendiagnoseLib/doc/" />
+        </javadoc>
+    </target>
+
+</project>

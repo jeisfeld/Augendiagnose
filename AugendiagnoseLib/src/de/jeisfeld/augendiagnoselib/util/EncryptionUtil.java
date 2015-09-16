@@ -183,4 +183,29 @@ public final class EncryptionUtil {
 		return cipherEncrypt.doFinal(input.getBytes());
 	}
 
+	/**
+	 * Create a hash value of a String.
+	 *
+	 * @param input
+	 *            The input string.
+	 * @return The hash value.
+	 */
+	public static String createHash(final String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA1");
+			md.reset();
+			byte[] buffer = input.getBytes("UTF-8");
+			md.update(buffer);
+			byte[] digest = md.digest();
+
+			String hexStr = "";
+			for (int i = 0; i < digest.length; i++) {
+				hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1); // MAGIC_NUMBER
+			}
+			return hexStr;
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
 }

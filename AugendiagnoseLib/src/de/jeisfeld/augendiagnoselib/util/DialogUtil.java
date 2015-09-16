@@ -405,8 +405,8 @@ public final class DialogUtil {
 		}
 
 		@Override
-		public final void onDismiss(final DialogInterface dialog) {
-			super.onDismiss(dialog);
+		public final void onCancel(final DialogInterface dialog) {
+			super.onCancel(dialog);
 			if (listener != null) {
 				listener.onDialogCancel(DisplayMessageDialogFragment.this);
 			}

@@ -666,7 +666,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 			break;
 		default:
-			break;
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 

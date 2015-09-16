@@ -1,5 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -23,6 +26,24 @@ import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
  * Base activity being the subclass of most application activities. Handles the help menu.
  */
 public abstract class BaseActivity extends AdMarvelActivity {
+	/**
+	 * The request code for the unlocker app.
+	 */
+	private static final int REQUEST_CODE_UNLOCKER = 100;
+	/**
+	 * The resource key for the authorizaton with the unlocker app.
+	 */
+	private static final String STRING_EXTRA_REQUEST_KEY = "de.jeisfeld.augendiagnoseunlocker.REQUEST_KEY";
+	/**
+	 * The resource key for the response from the unlocker app.
+	 */
+	private static final String STRING_RESULT_RESPONSE_KEY = "de.jeisfeld.augendiagnoseunlocker.RESPONSE_KEY";
+
+	/**
+	 * The random string used for authorization versus unlocker app.
+	 */
+	private String randomAuthorizationString = null;
+
 	/**
 	 * Flag indicating if the creation of the activity is failed.
 	 */
@@ -41,27 +62,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
-				final Intent starterIntent = getIntent();
-
-				// Check in-app purchases
-				GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
-
-					@Override
-					public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-							final boolean isPremium) {
-						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
-						GoogleBillingHelper.dispose();
-
-						if (isPremium) {
-							startActivity(starterIntent);
-							finish();
-						}
-						else {
-							DialogUtil.displayAuthorizationError(BaseActivity.this, R.string.message_dialog_trial_time);
-						}
-					}
-				});
 				isCreationFailed = true;
+
+				// Try authorization via unlocker app.
+				checkUnlockerApp();
 				return;
 			}
 			else {
@@ -84,6 +88,9 @@ public abstract class BaseActivity extends AdMarvelActivity {
 					if (storedVersion < currentVersion) {
 						ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
 					}
+
+					// Check unlocker app.
+					checkUnlockerApp();
 
 					// Check in-app purchases
 					GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
@@ -155,6 +162,77 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		}
 		else {
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * After all other authorization options have failed, try to authorize via premium pack.
+	 */
+	private void checkPremiumPackAfterAuthorizationFailure() {
+		if (isCreationFailed) {
+			GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
+
+				@Override
+				public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+						final boolean isPremium) {
+					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
+					GoogleBillingHelper.dispose();
+
+					if (isPremium) {
+						finish();
+						startActivity(getIntent());
+					}
+					else {
+						DialogUtil.displayAuthorizationError(BaseActivity.this, R.string.message_dialog_trial_time);
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * Check authorization via unlocker app.
+	 */
+	public final void checkUnlockerApp() {
+		Intent intent = getPackageManager().getLaunchIntentForPackage("de.jeisfeld.augendiagnoseunlocker");
+		if (intent == null) {
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+			checkPremiumPackAfterAuthorizationFailure();
+		}
+		else {
+			SecureRandom random = new SecureRandom();
+			randomAuthorizationString = new BigInteger(130, random).toString(32); // MAGIC_NUMBER
+			intent.putExtra(STRING_EXTRA_REQUEST_KEY, randomAuthorizationString);
+			intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+			startActivityForResult(intent, REQUEST_CODE_UNLOCKER);
+		}
+	}
+
+	// OVERRIDABLE
+	@Override
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		if (requestCode == REQUEST_CODE_UNLOCKER && resultCode == RESULT_OK && data != null) {
+			String responseKey = data.getStringExtra(STRING_RESULT_RESPONSE_KEY);
+			String expectedResponseKey = EncryptionUtil.createHash(randomAuthorizationString + getString(R.string.private_unlock_key));
+
+			if (expectedResponseKey.equals(responseKey)) {
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, true);
+
+				if (isCreationFailed) {
+					finish();
+					startActivity(getIntent());
+				}
+			}
+			else {
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+				checkPremiumPackAfterAuthorizationFailure();
+			}
+		}
+		else {
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+			checkPremiumPackAfterAuthorizationFailure();
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 

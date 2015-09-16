@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="private_license_key" translatable="false"></string>
+    <string name="private_unlock_key" translatable="false"></string>
     <string name="private_key_string" translatable="false"></string>
 
     <string-array name="private_special_keys" translatable="false"></string-array>
