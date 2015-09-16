@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview"></string>
+    <string name="html_navigation_overview">Overview</string>
     <string name="html_navigation_settings">Settings</string>
     <string name="html_navigation_organize_photos"></string>
     <string name="html_navigation_display_photos">Display Photos</string>
@@ -20,6 +20,64 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
+<html>
+<head><title>Miniris - Overview</title></head>
+<body>
+	<h2>Miniris - Overview</h2>
+
+
+	<p>This App has the purpose to support the capturing and visualization of iris photographs on an Android device, in
+		order to do medical iris diagnosis. It is optimized for the use with the Miniris tool.</p>
+
+	<h3>Key Features</h3>
+
+	<p>The key features of the App are</p>
+
+	<ul>
+		<li>Capturing of iris photos using the phone camera (e.g. with the help of the Miniris tool).</li>
+		<li>Organization of iris photos by name, date and side (right/left).</li>
+		<li>Display of two iris photos in parallel (with full support of individual resizing).</li>
+		<li>Change of brightness and contrast of the photo during display, overlay with an iris topography, and saving of
+			comments.</li>
+	</ul>
+
+	<p>The app stores data (such as position of center of eye) as metadata in the JPG files. This allows to transfer stored
+		data between different devices by just copying the photos.</p>
+
+	<h3>Camera usage</h3>
+
+	<p>When opening the camera, you see the following areas:</p>
+
+	<ul>
+		<li>On the right hand side in the middle there is the button for capturing the photo. After capturing a photo, you can
+			decide if you want to keep the photo or if you want to dismiss it and try again.</li>
+		<li>In the corners on top of the screen there is the display of the right and left eye photo. The red marking
+			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
+		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
+			photo.</li>
+		<li>On the left side, there is a flashlight button. Here you can select if you want to use the device flash.</li>
+		<li>Above, there is a button with a circle. Here you can select how big the iris should be on the photo.</li>
+	</ul>
+
+	<p>After taking photos of both eyes, you are directed to a page where you can review the two photos, and where you have
+		to enter the name of the person to whom these photos should be assigned. Here you may also change the date of the
+		photos - for each person and each date, only one pair of photos may be stored.</p>
+
+	<p>If you stop the app after taking one or two eye photos, but before assigning a name, then the next start of the app
+		will continue where you stopped - the photos which you have taken will be kept until you decide to delete or overwrite
+		them.</p>
+
+	<p>
+		There is an accompanying Windows application that can be used to view the photos that have been organized with this
+		app. For more information, see
+		<a href="http://miniris.jeisfeld.de/?lang=en&page=windowsapp" target="_top">http://miniris.jeisfeld.de/?page=windowsapp</a>
+		.
+	</p>
+	
+
+</body>
+</html>
+
 ]]>
     </string>
     <string name="html_settings" formatted="false">
@@ -148,8 +206,8 @@
 <body>
 	<h2>Visualize the photos</h2>
 
-	<p>In this activity, you can select the name of a person whose eye photos you want to see. Then you get shown all eye
-		photos of this person in a list sorted by date.</p>
+	<p>Here you can select the name of a person whose eye photos you want to see. Then you get shown all eye photos of this
+		person in a list sorted by date.</p>
 
 	<p>Then you have the following possibilities:</p>
 
@@ -173,8 +231,9 @@
 		<li>When making a long click on a name in the list of names, you may change or delete the name</li>
 
 		<li>When making a long click on a date in the list of pictures for a name, you may change the date or delete the
-			pictures of that date, or you may move these pictures back to the input folder (e.g. in order to move them to a
-			different name).</li>
+			pictures of that date, or you may
+						move them to a different name.
+					</li>
 	</ul>
 
 	<h3>Further options in the detail view</h3>

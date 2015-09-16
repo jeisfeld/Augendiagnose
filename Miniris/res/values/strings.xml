@@ -33,14 +33,18 @@
     <!-- Resources defining availalble help screens -->
 
     <array name="html_navigation_resources">
+        <item>@string/html_navigation_overview</item>
         <item>@string/html_navigation_settings</item>
         <item>@string/html_navigation_display_photos</item>
         <item>@string/html_navigation_release_notes</item>
     </array>
     <array name="html_resources">
+        <item>@string/html_overview</item>
         <item>@string/html_settings</item>
         <item>@string/html_display_photos</item>
         <item>@string/html_release_notes_base</item>
     </array>
+
+    <string name="help_overview_in_list_folders">true</string>
 
 </resources>

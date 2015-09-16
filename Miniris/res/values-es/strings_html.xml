@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview"></string>
+    <string name="html_navigation_overview">Información general</string>
     <string name="html_navigation_settings">Ajustes</string>
     <string name="html_navigation_organize_photos"></string>
     <string name="html_navigation_display_photos">Visualizar las fotos</string>
@@ -20,6 +20,62 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
+<html>
+<head><title>Miniris - Información general</title></head>
+<body>
+	<h2>Miniris - Información general</h2>
+
+
+	<p>Esta aplicación tiene la finalidad de apoyar la captura y visualización de fotografías del iris en un dispositivo
+		Android, con el fin de hacer un diagnóstico del iris. Está optimizado para el uso con la herramienta Miniris.</p>
+
+	<p>Las características principales de la App son</p>
+
+	<ul>
+		<li>Captura de fotos del iris usando la cámara del teléfono (por ejemplo, con la ayuda de la herramienta Miniris).</li>
+		<li>La organización de fotos del iris por nombre, fecha y lateral (derecha / izquierda).</li>
+		<li>La visualización de dos fotos de iris en paralelo (con el soporte del cambio de tamaño individual).</li>
+		<li>Cambio de brillo y contraste de la foto durante la visualización, superposición con una topografía del iris, y
+			ahorro de comentarios.</li>
+	</ul>
+
+	<p>La aplicación graba información (como posición del iris o comentarios) directamente en los archivos de imagen JPG.
+		Esto tiene la ventaja de que toda la información es todavía disponible si copia las imágenes de un dispositivo a otro.</p>
+
+	<h3>Uso de la cámara</h3>
+
+	<p>Al abrir la cámara, verá las siguientes áreas:</p>
+
+	<ul>
+		<li>En el lado derecho en el medio está el botón para capturar la foto. Después de capturar una foto, puede decidir si
+			desea conservar la foto o si desea descartarlo y capturar la foto de nuevo.</li>
+		<li>En las esquinas en la parte superior se encuentra la pantalla del derecho y del izquierdo ojo. La marca roja
+			indica que ojo está previsto para la próxima foto. Pulsando sobre una de estas áreas se puede cambiar el lado.</li>
+		<li>En la pantalla de la cámara hay un gran círculo. Este círculo indica el lugar donde el iris debe aparecer en la
+			foto.</li>
+		<li>En el lado izquierdo, hay un botón de flash. Aquí puede seleccionar si desea utilizar el flash del dispositivo.</li>
+		<li>Arriba, hay un botón con un círculo. Aquí puede seleccionar qué tan grande el iris debe estar en la foto.</li>
+	</ul>
+
+	<p>Después de tomar fotos de ambos ojos, se abre una pagina donde usted puede revisar las dos fotos, y donde se puede
+		introducir el nombre de la persona a la que estas fotos se deben asignar. Aquí también se puede cambiar la fecha de la
+		fotos - para cada persona y cada fecha, sólo un par de fotos se pueden almacenar.</p>
+
+	<p>Si detiene la aplicación después de tomar una o dos fotos de los ojos, pero antes de asignar un nombre, luego el
+		siguiente inicio de la aplicación continuará donde se detuvo - las fotos que se han tomado se mantendrá hasta que
+		decida eliminar o sobrescribir ellos.</p>
+
+	<h3>Aplicación para Windows</h3>
+
+	<p>
+		Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido organizada con
+		esta aplicación. Para obtener más información, consulte
+		<a href="http://miniris.jeisfeld.de/?lang=es&page=windowsapp" target="_top">http://miniris.jeisfeld.de/?page=windowsapp</a>
+		.
+	</p>
+
+</body>
+</html>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
@@ -155,8 +211,8 @@
 <body>
 	<h2>Visualizar las fotos</h2>
 
-	<p>En esta actividad, se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la
-		aplicación mostrará todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
+	<p>Aqui se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
+		todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
 
 	<p>A continuación, usted tiene las siguientes posibilidades:</p>
 
@@ -181,8 +237,9 @@
 		<li>Al hacer una pulsación larga en un nombre en la lista de nombres, es posible que cambiar o eliminar el nombre</li>
 
 		<li>Al hacer una pulsación larga en una fecha en la lista de fotos para una nombre, usted puede cambiar la fecha o
-			eliminar las imágenes de esa fecha, o puede mover estas fotos a la carpeta de entrada (por ejemplo, con el fin de
-			trasladarlos a un diferente nombre).</li>
+			eliminar las imágenes de esa fecha, o puede 
+						trasladar estas fotos a un diferente nombre.
+					</li>
 	</ul>
 
 	<h3>Otras opciones en la vista de detalle</h3>

@@ -16,6 +16,16 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/textViewNoImagesForName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textTitleName"
+        android:layout_marginTop="6dp"
+        android:text="@string/message_dialog_no_photos_for_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+
     <ListView
         android:id="@+id/listViewForName"
         android:layout_width="match_parent"

@@ -25,6 +25,7 @@
 <body>
 	<h2>Eye Diagnosis - Overview</h2>
 
+	
 	This App has the purpose to support the visualization of eye photographs on an Android device, in order to do medical
 	diagnosis.
 
@@ -101,8 +102,11 @@
 		cameras, storage of information in the JPG fails, or possibly even destroys the JPG file. Therefore, it is recommended
 		that you keep backups of your JPG files at least when using the app for the first time with a new device or with a new
 		camera.</p>
+		
+
 </body>
 </html>
+
 ]]>
     </string>
     <string name="html_settings" formatted="false">
@@ -271,8 +275,8 @@
 <body>
 	<h2>Visualize the photos</h2>
 
-	<p>In this activity, you can select the name of a person whose eye photos you want to see. Then you get shown all eye
-		photos of this person in a list sorted by date.</p>
+	<p>Here you can select the name of a person whose eye photos you want to see. Then you get shown all eye photos of this
+		person in a list sorted by date.</p>
 
 	<p>Then you have the following possibilities:</p>
 
@@ -296,8 +300,9 @@
 		<li>When making a long click on a name in the list of names, you may change or delete the name</li>
 
 		<li>When making a long click on a date in the list of pictures for a name, you may change the date or delete the
-			pictures of that date, or you may move these pictures back to the input folder (e.g. in order to move them to a
-			different name).</li>
+			pictures of that date, or you may
+						move these pictures back to the input folder (e.g. in order to move them to a different name).
+					</li>
 	</ul>
 
 	<h3>Further options in the detail view</h3>

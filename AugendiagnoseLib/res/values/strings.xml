@@ -81,6 +81,8 @@
 
     <array name="hidden_camera_buttons" translatable="false"></array>
 
+    <string name="help_overview_in_list_folders">false</string>
+
     <!-- Resources defining availalble help screens -->
 
     <array name="html_navigation_resources">

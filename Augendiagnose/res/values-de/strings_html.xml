@@ -25,6 +25,7 @@
 <body>
 	<h2>Augendiagnose - Übersicht</h2>
 
+	
 	Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu vergleichen, im Rahmen der medizinischen
 	Augendiagnose.
 
@@ -105,6 +106,8 @@
 		für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht sogar
 		die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App zum
 		ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
+		
+
 </body>
 </html>
 ]]>
@@ -283,8 +286,8 @@
 <body>
 	<h2>Betrachten der Fotos</h2>
 
-	<p>In dieser Aktivität können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen.
-		Daraufhin sehen Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
+	<p>Hier können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen. Daraufhin sehen
+		Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
 
 	<p>Anschließend haben Sie folgende Möglichkeiten:</p>
 
@@ -310,8 +313,9 @@
 		<li>In der Liste der Namen können Sie lange auf einen Namen klicken, und dann den Namen ändern oder löschen.</li>
 
 		<li>In der Liste der Fotos zu einem Namen können Sie lange auf ein Datum klicken, und dann das Datum ändern oder die
-			Fotos dieses Datums löschen, oder die Fotos dieses Datums ins Eingangsverzeichnis zurückschieben (z.B. um sie einem
-			anderen Namen zuzuordnen).</li>
+			Fotos dieses Datums löschen, oder die Fotos dieses Datums 
+						ins Eingangsverzeichnis zurückschieben (z.B. um sie einem anderen Namen zuzuordnen).
+						</li>
 	</ul>
 
 	<h3>Weitere Optionen in der Detailansicht</h3>

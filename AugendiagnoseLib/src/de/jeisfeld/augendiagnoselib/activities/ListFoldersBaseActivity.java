@@ -52,7 +52,13 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 
 	@Override
 	protected final int getHelpResource() {
-		return R.string.html_display_photos;
+		boolean helpOverviewInListFolders = Boolean.parseBoolean(getString(R.string.help_overview_in_list_folders));
+		if (helpOverviewInListFolders) {
+			return R.string.html_overview;
+		}
+		else {
+			return R.string.html_display_photos;
+		}
 	}
 
 	// Setters and getters
