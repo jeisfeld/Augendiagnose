@@ -127,14 +127,14 @@
             android:id="@+id/buttonCameraOverlayCircle"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/camerabutton_distance"
             android:background="@drawable/circlebutton_overlay_circle" />
 
         <Button
             android:id="@+id/buttonCameraFlashlight"
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/camerabutton_distance"
             android:background="@drawable/circlebutton_noflash" />
     </LinearLayout>
 
