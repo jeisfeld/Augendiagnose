@@ -129,6 +129,11 @@ public class CameraActivity extends BaseActivity {
 	private boolean cameraConfigured = false;
 
 	/**
+	 * A flag indicating if the surface is created.
+	 */
+	private boolean surfaceCreated = false;
+
+	/**
 	 * The current rightLeft in the activity.
 	 */
 	private Action currentAction;
@@ -252,6 +257,12 @@ public class CameraActivity extends BaseActivity {
 		if (photoFolderName != null) {
 			photoFolder = new File(photoFolderName);
 		}
+
+		preview = (SurfaceView) findViewById(R.id.camera_preview);
+		previewHolder = preview.getHolder();
+		previewHolder.addCallback(surfaceCallback);
+		previewHolder.setKeepScreenOn(true);
+
 		String inputRightFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_RIGHT);
 		String inputLeftFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_LEFT);
 
@@ -301,19 +312,6 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-		preview = (SurfaceView) findViewById(R.id.camera_preview);
-		previewHolder = preview.getHolder();
-		previewHolder.addCallback(surfaceCallback);
-		previewHolder.setKeepScreenOn(true);
-
-		camera = CameraUtil.getCameraInstance();
-
-		if (camera == null) {
-			// The activity depends on the camera.
-			DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_camera, true);
-			return;
-		}
 
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
 		drawOverlayCircle(overlayCircleSize);
@@ -868,7 +866,29 @@ public class CameraActivity extends BaseActivity {
 	 * Start the camera preview.
 	 */
 	private void startPreview() {
-		if (cameraConfigured && camera != null && !inPreview) {
+		if (FLASHLIGHT_MODES[1].equals(currentFlashlightMode)) {
+			stopPreview();
+		}
+
+		if (inPreview) {
+			return;
+		}
+
+		if (camera == null) {
+			camera = CameraUtil.getCameraInstance();
+
+			if (camera == null) {
+				// The activity depends on the camera.
+				DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_camera, true);
+				return;
+			}
+		}
+
+		if (surfaceCreated && !cameraConfigured) {
+			initPreview();
+		}
+
+		if (cameraConfigured) {
 			camera.startPreview();
 			inPreview = true;
 		}
@@ -885,6 +905,7 @@ public class CameraActivity extends BaseActivity {
 
 			camera.release();
 			camera = null;
+			cameraConfigured = false;
 			inPreview = false;
 		}
 	}
@@ -895,8 +916,8 @@ public class CameraActivity extends BaseActivity {
 	private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 		@Override
 		public void surfaceCreated(final SurfaceHolder holder) {
+			surfaceCreated = true;
 			try {
-				initPreview();
 				if (currentAction == TAKE_PHOTO) {
 					startPreview();
 				}
@@ -914,6 +935,7 @@ public class CameraActivity extends BaseActivity {
 		@Override
 		public void surfaceDestroyed(final SurfaceHolder holder) {
 			stopPreview();
+			surfaceCreated = false;
 		}
 	};
 

@@ -81,7 +81,7 @@
 
     <array name="hidden_camera_buttons" translatable="false"></array>
 
-    <string name="help_overview_in_list_folders">false</string>
+    <string name="help_overview_in_list_folders" translatable="false">false</string>
 
     <!-- Resources defining availalble help screens -->
 

@@ -45,6 +45,6 @@
         <item>@string/html_release_notes_base</item>
     </array>
 
-    <string name="help_overview_in_list_folders">true</string>
+    <string name="help_overview_in_list_folders" translatable="false">true</string>
 
 </resources>
