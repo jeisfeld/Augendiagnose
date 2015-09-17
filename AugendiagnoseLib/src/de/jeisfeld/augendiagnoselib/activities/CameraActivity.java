@@ -45,7 +45,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -813,10 +812,8 @@ public class CameraActivity extends BaseActivity {
 				camera.setPreviewDisplay(previewHolder);
 			}
 			catch (Throwable t) {
-				Log.e(Application.TAG,
-						"Exception in setPreviewDisplay()", t);
-				Toast.makeText(CameraActivity.this, t.getMessage(),
-						Toast.LENGTH_LONG).show();
+				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
+				DialogUtil.displayToast(this, R.string.message_dialog_failed_to_open_camera_display);
 			}
 
 			if (!cameraConfigured) {
