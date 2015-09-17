@@ -73,6 +73,11 @@ public final class AdMarvelUtil {
 			return false;
 		}
 
+		// After clicking
+		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)) {
+			return false;
+		}
+
 		// Special user to test ads
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
 			return true;
@@ -89,7 +94,7 @@ public final class AdMarvelUtil {
 			return false;
 		}
 
-		return !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked);
+		return true;
 	}
 
 	/**
