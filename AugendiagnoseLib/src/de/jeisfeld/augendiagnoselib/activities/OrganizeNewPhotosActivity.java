@@ -305,6 +305,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			});
 		}
 
+		if (getString(R.string.section_select_photos).length() == 0) {
+			findViewById(R.id.textViewSelectPhotos).setVisibility(View.GONE);
+		}
+
 		if (savedInstanceState == null) {
 			PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizestart);
 		}
