@@ -23,16 +23,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressWarnings("deprecation")
 public class Camera1Handler implements CameraHandler {
 	/**
-	 * The default overlay scale factor (required due to strange calculation in OverlayPinchImageView).
-	 */
-	private float defaultOverlayScaleFactor;
-
-	@Override
-	public final float getDefaultOverlayScaleFactor() {
-		return defaultOverlayScaleFactor;
-	}
-
-	/**
 	 * The camera used by the activity.
 	 */
 	private Camera camera;
@@ -194,12 +184,6 @@ public class Camera1Handler implements CameraHandler {
 					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
 				}
 				previewFrame.setLayoutParams(layoutParams);
-
-				// Factor 8/3 due to 75% size of base overlay circle.
-				// Math/min factor due to strange implementation in OverlayPinchImageView.
-				defaultOverlayScaleFactor =
-						((float) Math.min(layoutParams.width, layoutParams.height))
-								/ Math.max(layoutParams.width, layoutParams.height) * 8 / 3; // MAGIC_NUMBER
 
 				cameraConfigured = true;
 			}

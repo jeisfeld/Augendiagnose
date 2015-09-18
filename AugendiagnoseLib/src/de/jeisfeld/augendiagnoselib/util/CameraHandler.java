@@ -33,11 +33,4 @@ public interface CameraHandler {
 	 * Take a picture.
 	 */
 	void takePicture();
-
-	/**
-	 * Get the default scale factor of the overlay (dependent on the surface).
-	 *
-	 * @return
-	 */
-	float getDefaultOverlayScaleFactor();
 }

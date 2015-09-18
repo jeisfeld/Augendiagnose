@@ -830,7 +830,7 @@ public class CameraActivity extends BaseActivity {
 			if (overlayCircleRadius > 0) {
 				metadata.xCenter = 0.5f; // MAGIC_NUMBER
 				metadata.yCenter = 0.5f; // MAGIC_NUMBER
-				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * cameraHandler.getDefaultOverlayScaleFactor();
+				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor();
 			}
 
 			// save photo
@@ -840,6 +840,23 @@ public class CameraActivity extends BaseActivity {
 			setAction(CHECK_PHOTO, currentRightLeft);
 		}
 	};
+
+	/**
+	 * Get the default scale factor of the overlay (dependent on the surface).
+	 *
+	 * @return The default scale factor of the overlay.
+	 */
+
+	private float getDefaultOverlayScaleFactor() {
+		View surfaceView = findViewById(R.id.camera_preview);
+
+		int height = surfaceView.getHeight();
+		int width = surfaceView.getWidth();
+
+		// Factor 8/3 due to 75% size of base overlay circle.
+		// Math/min factor due to strange implementation in OverlayPinchImageView.
+		return ((float) Math.min(width, height)) / Math.max(width, height) * 8 / 3; // MAGIC_NUMBER
+	}
 
 	/**
 	 * The task responsible for saving the picture.
