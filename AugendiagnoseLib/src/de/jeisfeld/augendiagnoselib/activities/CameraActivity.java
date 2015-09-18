@@ -20,22 +20,17 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.hardware.Camera.PictureCallback;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -48,8 +43,7 @@ import android.widget.LinearLayout;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
-import de.jeisfeld.augendiagnoselib.util.CameraUtil;
-import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.CameraHandler;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
@@ -60,12 +54,10 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * An activity to take pictures with the camera.
  */
-@SuppressWarnings("deprecation")
 public class CameraActivity extends BaseActivity {
 	/**
 	 * The resource key for the folder where to store the photos.
@@ -93,44 +85,9 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private static final int DEFAULT_CIRCLE_TYPE = 2;
 	/**
-	 * The default flashlight type.
+	 * The used flashlight modes.
 	 */
 	private static final String[] FLASHLIGHT_MODES = { Parameters.FLASH_MODE_OFF, Parameters.FLASH_MODE_ON, Parameters.FLASH_MODE_TORCH };
-
-	/**
-	 * The default overlay scale factor (required due to strange calculation in OverlayPinchImageView).
-	 */
-	private float defaultOverlayScaleFactor;
-
-	/**
-	 * The camera used by the activity.
-	 */
-	private Camera camera;
-
-	/**
-	 * The preview.
-	 */
-	private SurfaceView preview = null;
-
-	/**
-	 * The surface of the preview.
-	 */
-	private SurfaceHolder previewHolder = null;
-
-	/**
-	 * A flag indicating if the preview is active.
-	 */
-	private boolean inPreview = false;
-
-	/**
-	 * A flag indicating if the camera is configured.
-	 */
-	private boolean cameraConfigured = false;
-
-	/**
-	 * A flag indicating if the surface is created.
-	 */
-	private boolean surfaceCreated = false;
 
 	/**
 	 * The current rightLeft in the activity.
@@ -198,6 +155,11 @@ public class CameraActivity extends BaseActivity {
 	private ScreenOrientation currentScreenOrientation;
 
 	/**
+	 * The handler operating the camera.
+	 */
+	private CameraHandler cameraHandler;
+
+	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
 	 * @param activity
@@ -249,6 +211,9 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
+		cameraHandler = new CameraHandler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
+				(SurfaceView) findViewById(R.id.camera_preview), onPictureTakenHandler);
+
 		configureMainButtons();
 		configureConfigButtons();
 
@@ -256,11 +221,6 @@ public class CameraActivity extends BaseActivity {
 		if (photoFolderName != null) {
 			photoFolder = new File(photoFolderName);
 		}
-
-		preview = (SurfaceView) findViewById(R.id.camera_preview);
-		previewHolder = preview.getHolder();
-		previewHolder.addCallback(surfaceCallback);
-		previewHolder.setKeepScreenOn(true);
 
 		String inputRightFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_RIGHT);
 		String inputLeftFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_LEFT);
@@ -327,7 +287,7 @@ public class CameraActivity extends BaseActivity {
 	@Override
 	public final void onDestroy() {
 		cleanupTempFolder();
-		stopPreview();
+		cameraHandler.stopPreview();
 		if (orientationManager != null) {
 			orientationManager.disable();
 		}
@@ -351,7 +311,7 @@ public class CameraActivity extends BaseActivity {
 					public void onClick(final View v) {
 						// get an image from the camera
 						captureButton.setEnabled(false);
-						camera.takePicture(null, null, photoCallback);
+						cameraHandler.takePicture();
 						animateFlash();
 					}
 				});
@@ -466,9 +426,9 @@ public class CameraActivity extends BaseActivity {
 
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
 		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-			currentFlashlightMode = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
+			setCurrentFlashlightMode(PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode));
 			if (currentFlashlightMode == null || currentFlashlightMode.length() == 0) {
-				currentFlashlightMode = FLASHLIGHT_MODES[0];
+				setCurrentFlashlightMode(FLASHLIGHT_MODES[0]);
 				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
 			}
 			updateFlashlight();
@@ -484,7 +444,7 @@ public class CameraActivity extends BaseActivity {
 						}
 					}
 					flashlightModeIndex = (flashlightModeIndex + 1) % FLASHLIGHT_MODES.length;
-					currentFlashlightMode = FLASHLIGHT_MODES[flashlightModeIndex];
+					setCurrentFlashlightMode(FLASHLIGHT_MODES[flashlightModeIndex]);
 					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
 
 					updateFlashlight();
@@ -492,7 +452,7 @@ public class CameraActivity extends BaseActivity {
 			});
 		}
 		else {
-			currentFlashlightMode = null;
+			setCurrentFlashlightMode(null);
 			flashlightButton.setVisibility(View.GONE);
 		}
 
@@ -549,7 +509,8 @@ public class CameraActivity extends BaseActivity {
 
 		switch (action) {
 		case TAKE_PHOTO:
-			startPreview();
+			updateFlashlight();
+			cameraHandler.startPreview();
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonCapture.setEnabled(true);
 			buttonAccept.setVisibility(View.GONE);
@@ -568,7 +529,6 @@ public class CameraActivity extends BaseActivity {
 				cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
 			}
 
-			updateFlashlight();
 			break;
 		case CHECK_PHOTO:
 			buttonCapture.setVisibility(View.GONE);
@@ -591,7 +551,7 @@ public class CameraActivity extends BaseActivity {
 			updateFlashlight();
 			break;
 		case FINISH_CAMERA:
-			stopPreview();
+			cameraHandler.stopPreview();
 			cleanupTempFolder();
 
 			// move files to their target position
@@ -622,7 +582,7 @@ public class CameraActivity extends BaseActivity {
 			finish();
 			return;
 		case CANCEL_AND_VIEW_IMAGES:
-			stopPreview();
+			cameraHandler.stopPreview();
 			cleanupTempFolder();
 
 			ListFoldersForDisplayActivity.startActivity(this);
@@ -631,6 +591,17 @@ public class CameraActivity extends BaseActivity {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Update the flashlight mode.
+	 *
+	 * @param flashlightMode
+	 *            The new flashlight mode.
+	 */
+	private void setCurrentFlashlightMode(final String flashlightMode) {
+		currentFlashlightMode = flashlightMode;
+		cameraHandler.setCurrentFlashlightMode(flashlightMode);
 	}
 
 	/**
@@ -779,170 +750,13 @@ public class CameraActivity extends BaseActivity {
 		}
 		if (currentFlashlightMode != null) {
 			if (currentAction == Action.TAKE_PHOTO) {
-				setFlashlightMode(currentFlashlightMode);
+				cameraHandler.setFlashlightMode(currentFlashlightMode);
 			}
 			else {
-				setFlashlightMode(FLASHLIGHT_MODES[0]);
+				cameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
 			}
 		}
 	}
-
-	/**
-	 * Set the flashlight mode.
-	 *
-	 * @param flashlightMode
-	 *            The new flashlight mode.
-	 */
-	private void setFlashlightMode(final String flashlightMode) {
-		if (camera != null) {
-			Parameters parameters = camera.getParameters();
-			if (parameters.getSupportedFlashModes().contains(flashlightMode)) {
-				parameters.setFlashMode(flashlightMode);
-			}
-			camera.setParameters(parameters);
-		}
-	}
-
-	/**
-	 * Initialize the camera.
-	 */
-	private void initPreview() {
-		if (camera != null && previewHolder.getSurface() != null) {
-			try {
-				camera.setPreviewDisplay(previewHolder);
-			}
-			catch (Throwable t) {
-				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
-				DialogUtil.displayToast(this, R.string.message_dialog_failed_to_open_camera_display);
-			}
-
-			if (!cameraConfigured) {
-				Parameters parameters = camera.getParameters();
-				Camera.Size pictureSize = CameraUtil.getBiggestPictureSize(parameters);
-				if (pictureSize == null) {
-					return;
-				}
-				Camera.Size previewSsize = CameraUtil.getBestPreviewSize(((float) pictureSize.width) / pictureSize.height, parameters);
-				if (previewSsize == null) {
-					return;
-				}
-
-				parameters.setPreviewSize(previewSsize.width, previewSsize.height);
-				parameters.setPictureSize(pictureSize.width, pictureSize.height);
-				parameters.setPictureFormat(ImageFormat.JPEG);
-
-				try {
-					// getSupportedFocusModes is not reliable.
-					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-				}
-				catch (Exception e) {
-					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-				}
-
-				camera.setParameters(parameters);
-				updateFlashlight();
-
-				// Resize frame to match aspect ratio
-				float aspectRatio = ((float) pictureSize.width) / pictureSize.height;
-				FrameLayout previewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
-				LayoutParams layoutParams = previewFrame.getLayoutParams();
-				if (previewFrame.getWidth() > aspectRatio * previewFrame.getHeight()) {
-					layoutParams.width = Math.round(previewFrame.getHeight() * aspectRatio);
-					layoutParams.height = previewFrame.getHeight();
-				}
-				else {
-					layoutParams.width = previewFrame.getWidth();
-					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
-				}
-				previewFrame.setLayoutParams(layoutParams);
-
-				// Factor 8/3 due to 75% size of base overlay circle.
-				// Math/min factor due to strange implementation in OverlayPinchImageView.
-				defaultOverlayScaleFactor =
-						((float) Math.min(layoutParams.width, layoutParams.height))
-								/ Math.max(layoutParams.width, layoutParams.height) * 8 / 3; // MAGIC_NUMBER
-
-				cameraConfigured = true;
-			}
-		}
-	}
-
-	/**
-	 * Start the camera preview.
-	 */
-	private void startPreview() {
-		if (FLASHLIGHT_MODES[1].equals(currentFlashlightMode)) {
-			stopPreview();
-		}
-
-		if (inPreview) {
-			return;
-		}
-
-		if (camera == null) {
-			camera = CameraUtil.getCameraInstance();
-
-			if (camera == null) {
-				// The activity depends on the camera.
-				DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_camera, true);
-				return;
-			}
-		}
-
-		if (surfaceCreated && !cameraConfigured) {
-			initPreview();
-		}
-
-		if (cameraConfigured) {
-			camera.startPreview();
-			inPreview = true;
-		}
-	}
-
-	/**
-	 * Stop the camera preview.
-	 */
-	private void stopPreview() {
-		if (camera != null) {
-			if (inPreview) {
-				camera.stopPreview();
-			}
-
-			camera.release();
-			camera = null;
-			cameraConfigured = false;
-			inPreview = false;
-		}
-	}
-
-	/**
-	 * The callback client for the preview.
-	 */
-	private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
-		@Override
-		public void surfaceCreated(final SurfaceHolder holder) {
-			surfaceCreated = true;
-			try {
-				if (currentAction == TAKE_PHOTO) {
-					startPreview();
-				}
-			}
-			catch (Exception e) {
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_open_camera, true);
-			}
-		}
-
-		@Override
-		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
-			// do nothing.
-		}
-
-		@Override
-		public void surfaceDestroyed(final SurfaceHolder holder) {
-			stopPreview();
-			surfaceCreated = false;
-		}
-	};
 
 	/**
 	 * Get the exif orientation to be applied.
@@ -970,11 +784,9 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private PictureCallback photoCallback = new PictureCallback() {
+	private OnPictureTakenHandler onPictureTakenHandler = new OnPictureTakenHandler() {
 		@Override
-		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
-		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
-			inPreview = false;
+		public void onPictureTaken(final byte[] data) {
 			short exifAngle = getExifAngle();
 			setThumbImage(data);
 			File imageFile = FileUtil.getTempJpegFile();
@@ -1009,7 +821,7 @@ public class CameraActivity extends BaseActivity {
 			if (overlayCircleRadius > 0) {
 				metadata.xCenter = 0.5f; // MAGIC_NUMBER
 				metadata.yCenter = 0.5f; // MAGIC_NUMBER
-				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * defaultOverlayScaleFactor;
+				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * cameraHandler.getDefaultOverlayScaleFactor();
 			}
 
 			// save photo
@@ -1080,6 +892,13 @@ public class CameraActivity extends BaseActivity {
 		protected void onPostExecute(final File imageFile) {
 			Log.d(Application.TAG, "Finished saving image " + imageFile.getName() + " - " + rightLeft);
 		}
+	}
+
+	/**
+	 * Handler called after the picture is taken.
+	 */
+	public interface OnPictureTakenHandler {
+		void onPictureTaken(byte[] data);
 	}
 
 	/**
