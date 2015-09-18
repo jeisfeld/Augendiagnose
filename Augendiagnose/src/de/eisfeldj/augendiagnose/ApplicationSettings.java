@@ -59,6 +59,7 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	@Override
 	public void startApplication(final Activity triggeringActivity) {
 		Intent intent = new Intent(triggeringActivity, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		triggeringActivity.startActivity(intent);
 	}
 }

@@ -1,7 +1,8 @@
 package de.jeisfeld.miniris;
 
 import android.app.Activity;
-import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
+import android.content.Intent;
+import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -35,7 +36,9 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 
 	@Override
 	public void startApplication(final Activity triggeringActivity) {
-		CameraActivity.startActivity(triggeringActivity);
+		Intent intent = new Intent(triggeringActivity, ListFoldersForDisplayActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		triggeringActivity.startActivity(intent);
 	}
 
 }

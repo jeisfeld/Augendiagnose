@@ -241,6 +241,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 							// Workaround to get rid of all kinds of cashing
 							if (!JpegSynchronizationUtil.isSaving()) {
+								Application.startApplication(getActivity());
 								System.exit(0);
 							}
 
