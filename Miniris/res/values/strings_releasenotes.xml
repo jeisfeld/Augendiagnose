@@ -25,6 +25,7 @@
         <item>0.1.3</item>
         <item>1.0</item>
         <item>1.0.1</item>
+        <item>1.0.2</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -32,7 +33,8 @@
         <item>Fixed issues with premium purchase.</item>
         <item>Increased trial period to 2 weeks. Enabled various guidance circles on camera. Bugfixes.</item>
         <item>Flashlight can be used in camera. Vertical photos are possible. Bugfixes.</item>
-        <item>Bugfixes.</item>
+        <item>Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

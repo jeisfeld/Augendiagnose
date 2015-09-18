@@ -87,6 +87,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>0.5.13</item>
         <item>1.0</item>
         <item>1.0.1</item>
+        <item>1.0.2</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -135,6 +136,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added donations via in-app purchase. Allowed disabling of ads. Reorganized settings. Bugfixes.</item>
         <item>New workflow for taking pictures out of the app. Made free app version only a test version. Bugfixes</item>
         <item>Made camera optional again.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
