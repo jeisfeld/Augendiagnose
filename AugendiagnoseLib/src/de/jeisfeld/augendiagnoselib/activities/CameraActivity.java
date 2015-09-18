@@ -830,7 +830,15 @@ public class CameraActivity extends BaseActivity {
 				parameters.setPreviewSize(previewSsize.width, previewSsize.height);
 				parameters.setPictureSize(pictureSize.width, pictureSize.height);
 				parameters.setPictureFormat(ImageFormat.JPEG);
-				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+				try {
+					// getSupportedFocusModes is not reliable.
+					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+				}
+				catch (Exception e) {
+					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+				}
+
 				camera.setParameters(parameters);
 				updateFlashlight();
 

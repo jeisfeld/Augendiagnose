@@ -35,10 +35,12 @@ seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
 primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
 ]]>
     </string>
-    <string name="releasenotes_current_remark"><![CDATA[<h3>Nota importante:</h3> A partir de esta versión, la aplicación permite el uso gratuito
+    <string name="releasenotes_current_remark">
+<![CDATA[<h3>Nota importante:</h3> A partir de esta versión, la aplicación permite el uso gratuito
         sólo para dos semanas, con limitaciones en el número de fotos. Uso adicional requiere la compra de un paquete premium.<br>
         Los usuarios que utilizan la aplicación antes mantendrán todas las funciones, cuando la aplicación se queda instalado.<br>
-        Nuevas instalaciones sólo se darán acceso de prueba.]]></string>
+        Nuevas instalaciones sólo se darán acceso de prueba.]]>
+    </string>
 
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
@@ -86,6 +88,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores</item>
         <item>Añadido donaciones a través de compra en aplicación. Habilitado apagamiento de anuncios. Reorganizado los ajustes. Corrección De Errores.</item>
         <item>Nuevo proceso para la toma de fotografías desde la aplicación. Hecho libre versión de la aplicación solamente una versión de prueba. Corrección de errores</item>
+        <item>Hecho cámara opcional de nuevo.</item>
     </string-array>
 
 </resources>

@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
@@ -64,6 +65,17 @@ public final class SystemUtil {
 	public static boolean hasCameraActivity() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		return takePictureIntent.resolveActivity(Application.getAppContext().getPackageManager()) != null;
+	}
+
+	/**
+	 * Determine if the device has a camera.
+	 *
+	 * @return true if the device has a camera.
+	 */
+	public static boolean hasCamera() {
+		PackageManager pm = Application.getAppContext().getPackageManager();
+
+		return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
 	}
 
 	/**

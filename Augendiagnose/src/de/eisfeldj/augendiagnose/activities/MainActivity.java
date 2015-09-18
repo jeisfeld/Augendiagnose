@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
 			buttonEyeFi.setVisibility(View.GONE);
 		}
 
-		if (!SystemUtil.hasCameraActivity()) {
+		if (!SystemUtil.hasCamera()) {
 			Button buttonTakePhotos = (Button) findViewById(R.id.mainButtonTakePictures);
 			buttonTakePhotos.setVisibility(View.GONE);
 		}

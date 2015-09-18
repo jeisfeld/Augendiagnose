@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.jeisfeld.miniris"
     android:installLocation="auto"
-    android:versionCode="5"
-    android:versionName="1.0" >
+    android:versionCode="6"
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -21,7 +21,10 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
