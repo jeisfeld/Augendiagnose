@@ -22,7 +22,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.hardware.Camera.Parameters;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.os.AsyncTask;
@@ -87,7 +86,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The used flashlight modes.
 	 */
-	private static final String[] FLASHLIGHT_MODES = { Parameters.FLASH_MODE_OFF, Parameters.FLASH_MODE_ON, Parameters.FLASH_MODE_TORCH };
+	private static final FlashMode[] FLASHLIGHT_MODES = { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH };
 
 	/**
 	 * The current rightLeft in the activity.
@@ -97,7 +96,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The current flashlight mode.
 	 */
-	private String currentFlashlightMode;
+	private FlashMode currentFlashlightMode;
 
 	/**
 	 * The current eye.
@@ -426,12 +425,17 @@ public class CameraActivity extends BaseActivity {
 
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
 		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-			setCurrentFlashlightMode(PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode));
-			if (currentFlashlightMode == null || currentFlashlightMode.length() == 0) {
-				setCurrentFlashlightMode(FLASHLIGHT_MODES[0]);
-				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
+			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
+			FlashMode storedFlashlightMode;
+			try {
+				storedFlashlightMode = FlashMode.valueOf(storedFlashlightString);
 			}
-			updateFlashlight();
+			catch (Exception e) {
+				storedFlashlightMode = FlashMode.OFF;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
+			}
+
+			setFlashlightMode(storedFlashlightMode);
 
 			flashlightButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -444,15 +448,15 @@ public class CameraActivity extends BaseActivity {
 						}
 					}
 					flashlightModeIndex = (flashlightModeIndex + 1) % FLASHLIGHT_MODES.length;
-					setCurrentFlashlightMode(FLASHLIGHT_MODES[flashlightModeIndex]);
-					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, currentFlashlightMode);
+					FlashMode newFlashlightMode = FLASHLIGHT_MODES[flashlightModeIndex];
+					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
 
-					updateFlashlight();
+					setFlashlightMode(newFlashlightMode);
 				}
 			});
 		}
 		else {
-			setCurrentFlashlightMode(null);
+			setFlashlightMode(null);
 			flashlightButton.setVisibility(View.GONE);
 		}
 
@@ -599,9 +603,12 @@ public class CameraActivity extends BaseActivity {
 	 * @param flashlightMode
 	 *            The new flashlight mode.
 	 */
-	private void setCurrentFlashlightMode(final String flashlightMode) {
+	private void setFlashlightMode(final FlashMode flashlightMode) {
 		currentFlashlightMode = flashlightMode;
-		cameraHandler.setCurrentFlashlightMode(flashlightMode);
+		cameraHandler.setFlashlightMode(flashlightMode);
+		if (flashlightMode != null) {
+			updateFlashlight();
+		}
 	}
 
 	/**
@@ -739,13 +746,13 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private void updateFlashlight() {
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		if (Parameters.FLASH_MODE_OFF.equals(currentFlashlightMode)) {
+		if (FlashMode.OFF.equals(currentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_noflash);
 		}
-		else if (Parameters.FLASH_MODE_ON.equals(currentFlashlightMode)) {
+		else if (FlashMode.ON.equals(currentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_flash);
 		}
-		else if (Parameters.FLASH_MODE_TORCH.equals(currentFlashlightMode)) {
+		else if (FlashMode.TORCH.equals(currentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_torch);
 		}
 		if (currentFlashlightMode != null) {
@@ -755,6 +762,7 @@ public class CameraActivity extends BaseActivity {
 			else {
 				cameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
 			}
+			cameraHandler.updateFlashlight();
 		}
 	}
 
@@ -925,6 +933,24 @@ public class CameraActivity extends BaseActivity {
 		 * Make an optional re-take of a photo.
 		 */
 		RE_TAKE_PHOTO
+	}
+
+	/**
+	 * Enumeration for modes of the camera flash.
+	 */
+	public static enum FlashMode {
+		/**
+		 * The flash is off.
+		 */
+		OFF,
+		/**
+		 * The flash is used when taking picture.
+		 */
+		ON,
+		/**
+		 * The flash is permanently on.
+		 */
+		TORCH
 	}
 
 }

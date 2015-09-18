@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.OnPictureTakenHandler;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -64,10 +65,6 @@ public class CameraHandler {
 	 */
 	private String currentFlashlightMode = null;
 
-	public final void setCurrentFlashlightMode(final String currentFlashlightMode) {
-		this.currentFlashlightMode = currentFlashlightMode;
-	}
-
 	/**
 	 * The activity using the handler.
 	 */
@@ -112,12 +109,36 @@ public class CameraHandler {
 	 * @param flashlightMode
 	 *            The new flashlight mode.
 	 */
-	public final void setFlashlightMode(final String flashlightMode) {
-		currentFlashlightMode = flashlightMode;
+	public final void setFlashlightMode(final FlashMode flashlightMode) {
+		if (flashlightMode == null) {
+			currentFlashlightMode = null;
+			return;
+		}
+
+		switch (flashlightMode) {
+		case OFF:
+			currentFlashlightMode = Parameters.FLASH_MODE_OFF;
+			break;
+		case ON:
+			currentFlashlightMode = Parameters.FLASH_MODE_ON;
+			break;
+		case TORCH:
+			currentFlashlightMode = Parameters.FLASH_MODE_TORCH;
+			break;
+		default:
+			currentFlashlightMode = null;
+			break;
+		}
+	}
+
+	/**
+	 * Update the flashlight.
+	 */
+	public final void updateFlashlight() {
 		if (camera != null) {
 			Parameters parameters = camera.getParameters();
-			if (parameters.getSupportedFlashModes().contains(flashlightMode)) {
-				parameters.setFlashMode(flashlightMode);
+			if (parameters.getSupportedFlashModes().contains(currentFlashlightMode)) {
+				parameters.setFlashMode(currentFlashlightMode);
 			}
 			camera.setParameters(parameters);
 		}
@@ -162,7 +183,7 @@ public class CameraHandler {
 				camera.setParameters(parameters);
 
 				if (currentFlashlightMode != null) {
-					setFlashlightMode(currentFlashlightMode);
+					updateFlashlight();
 				}
 
 				// Resize frame to match aspect ratio
