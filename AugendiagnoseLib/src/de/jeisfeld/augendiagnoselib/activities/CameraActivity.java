@@ -42,6 +42,7 @@ import android.widget.LinearLayout;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
+import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
@@ -210,7 +211,7 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
-		cameraHandler = new CameraHandler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
+		cameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
 				(SurfaceView) findViewById(R.id.camera_preview), onPictureTakenHandler);
 
 		configureMainButtons();
