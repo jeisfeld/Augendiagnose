@@ -49,6 +49,11 @@ public class SettingsFragment extends PreferenceFragment {
 	public static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
+	 * The resource key of the flag indicating if only packs should be shown.
+	 */
+	protected static final String STRING_ONLY_PACKS = "de.jeisfeld.augendiagnoselib.ONLY_PACKS";
+
+	/**
 	 * A prefix put before the productId to define the according preference key.
 	 */
 	private static final String SKU_KEY_PREFIX = "sku_";
@@ -67,44 +72,73 @@ public class SettingsFragment extends PreferenceFragment {
 	private String folderPhotos;
 
 	/**
-	 * The preference screen handling donations.
+	 * The flag indicating if only packs should be shown.
 	 */
-	private PreferenceScreen screenDonate;
+	private boolean onlyPacks = false;
+
+	/**
+	 * The preference screen handling purchases.
+	 */
+	private PreferenceScreen screenPurchase;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
 	 */
 	private File currentFolder;
 
+	/**
+	 * Initialize the fragment with onlyPacks flag.
+	 *
+	 * @param showOnlyPacks
+	 *            The flag indicating if only packs should be shown.
+	 */
+	public final void setParameters(final boolean showOnlyPacks) {
+		Bundle args = new Bundle();
+		args.putBoolean(STRING_ONLY_PACKS, showOnlyPacks);
+		setArguments(args);
+	}
+
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Load the preferences from an XML resource
-		addPreferencesFromResource(R.xml.pref_general);
-
-		// Fill variables in order to detect changed values.
-		languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
-		folderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
-		folderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
-
-		bindPreferenceSummaryToValue(R.string.key_folder_input);
-		bindPreferenceSummaryToValue(R.string.key_folder_photos);
-		bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
-		bindPreferenceSummaryToValue(R.string.key_store_option);
-		bindPreferenceSummaryToValue(R.string.key_full_resolution);
-		bindPreferenceSummaryToValue(R.string.key_language);
-
-		if (getString(R.string.pref_title_folder_input).length() == 0) {
-			getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
+		if (getArguments() != null) {
+			onlyPacks = getArguments().getBoolean(STRING_ONLY_PACKS);
 		}
 
-		addHintButtonListener(R.string.key_dummy_show_hints, false);
-		addHintButtonListener(R.string.key_dummy_hide_hints, true);
+		if (onlyPacks) {
+			// Load the preferences from an XML resource
+			addPreferencesFromResource(R.xml.pref_only_purchase);
+
+		}
+		else {
+			// Load the preferences from an XML resource
+			addPreferencesFromResource(R.xml.pref_general);
+
+			// Fill variables in order to detect changed values.
+			languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
+			folderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
+			folderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
+
+			bindPreferenceSummaryToValue(R.string.key_folder_input);
+			bindPreferenceSummaryToValue(R.string.key_folder_photos);
+			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
+			bindPreferenceSummaryToValue(R.string.key_store_option);
+			bindPreferenceSummaryToValue(R.string.key_full_resolution);
+			bindPreferenceSummaryToValue(R.string.key_language);
+
+			if (getString(R.string.pref_title_folder_input).length() == 0) {
+				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
+			}
+
+			addHintButtonListener(R.string.key_dummy_show_hints, false);
+			addHintButtonListener(R.string.key_dummy_hide_hints, true);
+		}
+
 		addDeveloperContactButtonListener();
 		addUnlockerAppButtonListener();
 
-		screenDonate = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
+		screenPurchase = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
 
 		GoogleBillingHelper.initialize(getActivity(), onInventoryFinishedListener);
 	}
@@ -135,8 +169,8 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Add an entry for unlocker app.
 	 */
 	private void addUnlockerAppButtonListener() {
-		Preference contactPreference = findPreference(getString(R.string.key_dummy_unlocker_app));
-		contactPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		Preference unlockPreference = findPreference(getString(R.string.key_dummy_unlocker_app));
+		unlockPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
@@ -150,7 +184,7 @@ public class SettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-		contactPreference.setEnabled(!SystemUtil.isAppInstalled("de.jeisfeld.augendiagnoseunlocker"));
+		unlockPreference.setEnabled(!SystemUtil.isAppInstalled("de.jeisfeld.augendiagnoseunlocker"));
 	}
 
 	/**
@@ -359,7 +393,7 @@ public class SettingsFragment extends PreferenceFragment {
 				purchasePreference.setTitle(title);
 				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
-				screenDonate.addPreference(purchasePreference);
+				screenPurchase.addPreference(purchasePreference);
 			}
 			for (SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
@@ -374,7 +408,7 @@ public class SettingsFragment extends PreferenceFragment {
 						return false;
 					}
 				});
-				screenDonate.addPreference(skuPreference);
+				screenPurchase.addPreference(skuPreference);
 			}
 		}
 	};

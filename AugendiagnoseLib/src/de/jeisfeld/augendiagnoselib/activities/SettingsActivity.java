@@ -24,7 +24,12 @@ public class SettingsActivity extends BaseActivity {
 	private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 	/**
-	 * The path resources for which external storag prefix should be replaced.
+	 * The resource key for the flag indicating if only packs should be displayed.
+	 */
+	private static final String STRING_EXTRA_ONLY_PACKS = "de.jeisfeld.augendiagnoselib.ONLY_PACKS";
+
+	/**
+	 * The path resources for which external storage prefix should be replaced.
 	 */
 	private static final int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos };
 
@@ -33,9 +38,12 @@ public class SettingsActivity extends BaseActivity {
 	 *
 	 * @param context
 	 *            The context in which the activity is started.
+	 * @param onlyPacks
+	 *            the flag indicating if only packs should be displayed.
 	 */
-	public static final void startActivity(final Context context) {
+	public static final void startActivity(final Context context, final boolean onlyPacks) {
 		Intent intent = new Intent(context, SettingsActivity.class);
+		intent.putExtra(STRING_EXTRA_ONLY_PACKS, onlyPacks);
 		context.startActivity(intent);
 	}
 
@@ -43,19 +51,22 @@ public class SettingsActivity extends BaseActivity {
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		boolean onlyPacks = getIntent().getBooleanExtra(STRING_EXTRA_ONLY_PACKS, false);
+
 		// Display the SettingsFragment as the main content.
 
 		SettingsFragment fragment = (SettingsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 		if (fragment == null) {
-			getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment(), FRAGMENT_TAG)
-					.commit();
+			fragment = new SettingsFragment();
+			fragment.setParameters(onlyPacks);
+
+			getFragmentManager().beginTransaction().replace(android.R.id.content, fragment, FRAGMENT_TAG).commit();
 			getFragmentManager().executePendingTransactions();
 
 			if (savedInstanceState == null) {
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
 			}
 		}
-
 	}
 
 	@Override

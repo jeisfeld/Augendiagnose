@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="@string/key_dummy_screen_premium"
+    android:title="@string/pref_screen_premium" >
+
+    <Preference
+        android:key="@string/key_dummy_unlocker_app"
+        android:order="101"
+        android:summary="@string/menu_detail_unlocker_app"
+        android:title="@string/menu_title_unlocker_app" />
+    <Preference
+        android:key="@string/key_dummy_contact_developer"
+        android:order="102"
+        android:summary="@string/menu_detail_contact_developer"
+        android:title="@string/menu_title_contact_developer" />
+
+</PreferenceScreen>

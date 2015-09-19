@@ -171,14 +171,14 @@ public final class DialogUtil {
 
 			@Override
 			public void onDialogClick(final DialogFragment dialog) {
-				SettingsActivity.startActivity(activity);
+				SettingsActivity.startActivity(activity, true);
 				activity.finish();
 			}
 
 			@Override
 			public void onDialogCancel(final DialogFragment dialog) {
 				if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
-					SettingsActivity.startActivity(activity);
+					SettingsActivity.startActivity(activity, true);
 					activity.finish();
 				}
 			}
