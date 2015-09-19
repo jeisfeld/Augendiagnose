@@ -116,10 +116,14 @@ public class Camera1Handler implements CameraHandler {
 			currentFlashlightMode = null;
 			break;
 		}
+
+		updateFlashlight();
 	}
 
-	@Override
-	public final void updateFlashlight() {
+	/**
+	 * Update the flashlight.
+	 */
+	private void updateFlashlight() {
 		if (camera != null) {
 			Parameters parameters = camera.getParameters();
 			if (parameters.getSupportedFlashModes().contains(currentFlashlightMode)) {

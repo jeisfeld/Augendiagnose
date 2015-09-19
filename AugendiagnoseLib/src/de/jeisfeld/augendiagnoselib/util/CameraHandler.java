@@ -15,11 +15,6 @@ public interface CameraHandler {
 	void setFlashlightMode(final FlashMode flashlightMode);
 
 	/**
-	 * Update the flashlight.
-	 */
-	void updateFlashlight();
-
-	/**
 	 * Start the camera preview.
 	 */
 	void startPreview();

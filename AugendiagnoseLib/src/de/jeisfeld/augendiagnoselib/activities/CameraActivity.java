@@ -763,7 +763,6 @@ public class CameraActivity extends BaseActivity {
 			else {
 				cameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
 			}
-			cameraHandler.updateFlashlight();
 		}
 	}
 
