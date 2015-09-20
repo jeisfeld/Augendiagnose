@@ -27,7 +27,7 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -211,8 +211,9 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
+		// TODO: add proper logic to distinguish between camera interfaces
 		cameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
-				(SurfaceView) findViewById(R.id.camera_preview), onPictureTakenHandler);
+				(TextureView) findViewById(R.id.camera_preview), onPictureTakenHandler);
 
 		configureMainButtons();
 		configureConfigButtons();

@@ -2,13 +2,13 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
 import android.graphics.ImageFormat;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.Application;
@@ -26,11 +26,6 @@ public class Camera1Handler implements CameraHandler {
 	 * The camera used by the activity.
 	 */
 	private Camera camera;
-
-	/**
-	 * The surface of the preview.
-	 */
-	private SurfaceHolder previewHolder = null;
 
 	/**
 	 * A flag indicating if the preview is active.
@@ -68,6 +63,11 @@ public class Camera1Handler implements CameraHandler {
 	private FrameLayout previewFrame;
 
 	/**
+	 * The view holding the preview.
+	 */
+	private TextureView preview;
+
+	/**
 	 * The handler called when the picture is taken.
 	 */
 	private OnPictureTakenHandler onPictureTakenHandler;
@@ -84,15 +84,14 @@ public class Camera1Handler implements CameraHandler {
 	 * @param onPictureTakenHandler
 	 *            The handler called when the picture is taken.
 	 */
-	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final SurfaceView preview,
+	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
 			final OnPictureTakenHandler onPictureTakenHandler) {
 		this.activity = activity;
 		this.previewFrame = previewFrame;
+		this.preview = preview;
 		this.onPictureTakenHandler = onPictureTakenHandler;
 
-		previewHolder = preview.getHolder();
-		previewHolder.addCallback(surfaceCallback);
-		previewHolder.setKeepScreenOn(true);
+		preview.setSurfaceTextureListener(surfaceTextureListener);
 	}
 
 	@Override
@@ -137,9 +136,9 @@ public class Camera1Handler implements CameraHandler {
 	 * Initialize the camera.
 	 */
 	private void initPreview() {
-		if (camera != null && previewHolder.getSurface() != null) {
+		if (camera != null && surfaceCreated && preview.isAvailable()) {
 			try {
-				camera.setPreviewDisplay(previewHolder);
+				camera.setPreviewTexture(preview.getSurfaceTexture());
 			}
 			catch (Throwable t) {
 				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
@@ -249,9 +248,10 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The callback client for the preview.
 	 */
-	private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+	private final TextureView.SurfaceTextureListener surfaceTextureListener = new TextureView.SurfaceTextureListener() {
+
 		@Override
-		public void surfaceCreated(final SurfaceHolder holder) {
+		public void onSurfaceTextureAvailable(final SurfaceTexture texture, final int width, final int height) {
 			surfaceCreated = true;
 			try {
 				if (isPreviewRequested) {
@@ -264,14 +264,18 @@ public class Camera1Handler implements CameraHandler {
 		}
 
 		@Override
-		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
-			// do nothing.
+		public void onSurfaceTextureSizeChanged(final SurfaceTexture texture, final int width, final int height) {
 		}
 
 		@Override
-		public void surfaceDestroyed(final SurfaceHolder holder) {
+		public boolean onSurfaceTextureDestroyed(final SurfaceTexture texture) {
 			stopPreview();
 			surfaceCreated = false;
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(final SurfaceTexture texture) {
 		}
 	};
 
