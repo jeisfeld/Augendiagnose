@@ -189,7 +189,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
 	 */
-	private HandlerThread mBackgroundThread;
+	private HandlerThread mBackgroundThread = null;
 
 	/**
 	 * A {@link Handler} for running tasks in the background.
@@ -730,9 +730,11 @@ public class Camera2Handler implements CameraHandler {
 	 * Starts a background thread and its {@link Handler}.
 	 */
 	private void startBackgroundThread() {
-		mBackgroundThread = new HandlerThread("CameraBackground");
-		mBackgroundThread.start();
-		mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+		if (mBackgroundThread == null) {
+			mBackgroundThread = new HandlerThread("CameraBackground");
+			mBackgroundThread.start();
+			mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+		}
 	}
 
 	/**
