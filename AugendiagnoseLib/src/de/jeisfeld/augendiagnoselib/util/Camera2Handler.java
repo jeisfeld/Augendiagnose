@@ -110,31 +110,6 @@ public class Camera2Handler implements CameraHandler {
 	private static final String TAG = "Camera2Handler";
 
 	/**
-	 * Camera state: Showing camera preview.
-	 */
-	private static final int STATE_PREVIEW = 0;
-
-	/**
-	 * Camera state: Waiting for the focus to be locked.
-	 */
-	private static final int STATE_WAITING_LOCK = 1;
-
-	/**
-	 * Camera state: Waiting for the exposure to be precapture state.
-	 */
-	private static final int STATE_WAITING_PRECAPTURE = 2;
-
-	/**
-	 * Camera state: Waiting for the exposure state to be something other than precapture.
-	 */
-	private static final int STATE_WAITING_NON_PRECAPTURE = 3;
-
-	/**
-	 * Camera state: Picture was taken.
-	 */
-	private static final int STATE_PICTURE_TAKEN = 4;
-
-	/**
 	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
 	 * {@link TextureView}.
 	 */
@@ -265,7 +240,7 @@ public class Camera2Handler implements CameraHandler {
 	 *
 	 * @see #mCaptureCallback
 	 */
-	private int mState = STATE_PREVIEW;
+	private CameraState mState = CameraState.STATE_PREVIEW;
 
 	/**
 	 * A {@link Semaphore} to prevent the app from exiting before closing the camera.
@@ -292,7 +267,7 @@ public class Camera2Handler implements CameraHandler {
 					// CONTROL_AE_STATE can be null on some devices
 					Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
 					if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
-						mState = STATE_PICTURE_TAKEN;
+						mState = CameraState.STATE_PICTURE_TAKEN;
 						captureStillPicture();
 					}
 					else {
@@ -306,14 +281,14 @@ public class Camera2Handler implements CameraHandler {
 				if (aeState == null
 						|| aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
 						|| aeState == CaptureRequest.CONTROL_AE_STATE_FLASH_REQUIRED) {
-					mState = STATE_WAITING_NON_PRECAPTURE;
+					mState = CameraState.STATE_WAITING_NON_PRECAPTURE;
 				}
 				break;
 			case STATE_WAITING_NON_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
 				Integer aeState2 = result.get(CaptureResult.CONTROL_AE_STATE);
 				if (aeState2 == null || aeState2 != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
-					mState = STATE_PICTURE_TAKEN;
+					mState = CameraState.STATE_PICTURE_TAKEN;
 					captureStillPicture();
 				}
 				break;
@@ -646,7 +621,7 @@ public class Camera2Handler implements CameraHandler {
 			// This is how to tell the camera to lock focus.
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
 			// Tell #mCaptureCallback to wait for the lock.
-			mState = STATE_WAITING_LOCK;
+			mState = CameraState.STATE_WAITING_LOCK;
 
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
@@ -665,7 +640,7 @@ public class Camera2Handler implements CameraHandler {
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
 					CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_START);
 			// Tell #mCaptureCallback to wait for the precapture sequence to be set.
-			mState = STATE_WAITING_PRECAPTURE;
+			mState = CameraState.STATE_WAITING_PRECAPTURE;
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
@@ -718,7 +693,7 @@ public class Camera2Handler implements CameraHandler {
 					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 			// After this, the camera will go back to the normal state of preview.
-			mState = STATE_PREVIEW;
+			mState = CameraState.STATE_PREVIEW;
 			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
@@ -763,13 +738,40 @@ public class Camera2Handler implements CameraHandler {
 	 * Compares two {@code Size}s based on their areas.
 	 */
 	static class CompareSizesByArea implements Comparator<Size> {
-
 		@Override
 		public int compare(final Size lhs, final Size rhs) {
 			// We cast here to ensure the multiplications won't overflow
 			return Long.signum((long) lhs.getWidth() * lhs.getHeight() - (long) rhs.getWidth() * rhs.getHeight());
 		}
+	}
 
+	/**
+	 * Camera states.
+	 */
+	enum CameraState {
+		/**
+		 * Camera state: Showing camera preview.
+		 */
+		STATE_PREVIEW,
+		/**
+		 * Camera state: Waiting for the focus to be locked.
+		 */
+		STATE_WAITING_LOCK,
+
+		/**
+		 * Camera state: Waiting for the exposure to be precapture state.
+		 */
+		STATE_WAITING_PRECAPTURE,
+
+		/**
+		 * Camera state: Waiting for the exposure state to be something other than precapture.
+		 */
+		STATE_WAITING_NON_PRECAPTURE,
+
+		/**
+		 * Camera state: Picture was taken.
+		 */
+		STATE_PICTURE_TAKEN
 	}
 
 }
