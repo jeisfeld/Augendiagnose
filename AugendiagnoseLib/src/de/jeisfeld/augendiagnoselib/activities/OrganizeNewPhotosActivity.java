@@ -77,49 +77,49 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * The input folder for images.
 	 */
-	private File inputFolder;
+	private File mInputFolder;
 	/**
 	 * The parent output folder for images.
 	 */
-	private File parentFolder;
+	private File mParentFolder;
 	/**
 	 * The currently selected date to be given to the pictures.
 	 */
-	private Calendar pictureDate = Calendar.getInstance();
+	private Calendar mPictureDate = Calendar.getInstance();
 	/**
 	 * The flag indicating if the last picture is the right eye.
 	 */
-	private boolean rightEyeLast;
+	private boolean mRightEyeLast;
 	/**
 	 * The next action to be done after organizing a pair of images.
 	 */
-	private NextAction nextAction;
+	private NextAction mNextAction;
 	/**
 	 * The list of input images.
 	 */
-	private String[] fileNames;
+	private String[] mFileNames;
 
 	/**
 	 * The total number of images in the input folder.
 	 */
-	private int totalImageCount;
+	private int mTotalImageCount;
 
 	/**
 	 * The ImageViews displaying the eye photos.
 	 */
-	private ImageView imageRight, imageLeft;
+	private ImageView mImageRight, mImageLeft;
 	/**
 	 * The EditText with the name to which the photos should be assigned.
 	 */
-	private InstantAutoCompleteTextView editName;
+	private InstantAutoCompleteTextView mEditName;
 	/**
 	 * The EditText with the data to which the photos should be assigned.
 	 */
-	private EditText editDate;
+	private EditText mEditDate;
 	/**
 	 * The currently chosen eye photos.
 	 */
-	private EyePhoto photoRight, photoLeft;
+	private EyePhoto mPhotoRight, mPhotoLeft;
 
 	/**
 	 * Static helper method to start the activity, passing the source folder, the target folder, and a flag indicating
@@ -176,29 +176,29 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		String inputFolderString = getIntent().getStringExtra(STRING_EXTRA_INPUTFOLDER);
 		if (inputFolderString != null) {
-			inputFolder = new File(inputFolderString);
+			mInputFolder = new File(inputFolderString);
 		}
 
-		parentFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
-		rightEyeLast = getIntent().getBooleanExtra(STRING_EXTRA_RIGHTEYELAST, false);
-		nextAction = (NextAction) getIntent().getSerializableExtra(STRING_EXTRA_NEXTACTION);
-		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
+		mParentFolder = new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos));
+		mRightEyeLast = getIntent().getBooleanExtra(STRING_EXTRA_RIGHTEYELAST, false);
+		mNextAction = (NextAction) getIntent().getSerializableExtra(STRING_EXTRA_NEXTACTION);
+		mFileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		if (savedInstanceState != null && savedInstanceState.getString("rightEyePhoto") != null) {
-			photoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
-			photoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
-			totalImageCount = savedInstanceState.getInt("totalImageCount");
+			mPhotoRight = new EyePhoto(savedInstanceState.getString("rightEyePhoto"));
+			mPhotoLeft = new EyePhoto(savedInstanceState.getString("leftEyePhoto"));
+			mTotalImageCount = savedInstanceState.getInt("totalImageCount");
 		}
 
-		imageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
-		imageLeft = (ImageView) findViewById(R.id.imageOrganizeLeft);
+		mImageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
+		mImageLeft = (ImageView) findViewById(R.id.imageOrganizeLeft);
 
 		// when editing the "name" field, show suggestions
-		editName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
-		editName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
-				.getFolderNames(parentFolder)));
+		mEditName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
+		mEditName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
+				.getFolderNames(mParentFolder)));
 		// Ensure that Keyboard "ok" click already triggers next step.
-		editName.setOnEditorActionListener(new OnEditorActionListener() {
+		mEditName.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(final TextView v, final int actionId, final KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -210,9 +210,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		});
 
 		// when touching the "date" field, open a dialog.
-		editDate = (EditText) findViewById(R.id.editDate);
-		editDate.setInputType(InputType.TYPE_NULL);
-		editDate.setOnTouchListener(new View.OnTouchListener() {
+		mEditDate = (EditText) findViewById(R.id.editDate);
+		mEditDate.setInputType(InputType.TYPE_NULL);
+		mEditDate.setOnTouchListener(new View.OnTouchListener() {
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(final View v, final MotionEvent event) {
@@ -223,7 +223,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 		});
 
-		if (photoLeft == null || photoRight == null) {
+		if (mPhotoLeft == null || mPhotoRight == null) {
 			// initial fill
 			setPicturesAndValues(false);
 		}
@@ -233,10 +233,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 
 		// Ensure that target folder exists
-		if (!parentFolder.exists()) {
-			boolean success = parentFolder.mkdirs();
+		if (!mParentFolder.exists()) {
+			boolean success = mParentFolder.mkdirs();
 			if (!success) {
-				Log.w(Application.TAG, "Failed to create folder" + parentFolder);
+				Log.w(Application.TAG, "Failed to create folder" + mParentFolder);
 			}
 		}
 
@@ -244,12 +244,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		Button buttonOtherPictures = (Button) findViewById(R.id.buttonOrganizeOtherPictures);
 		Button buttonCancel = (Button) findViewById(R.id.buttonOrganizeCancel);
 
-		if (totalImageCount == 2 && inputFolder != null) {
+		if (mTotalImageCount == 2 && mInputFolder != null) {
 			buttonOtherPictures.setText(getString(R.string.button_camera));
 			buttonOtherPictures.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					CameraActivity.startActivity(OrganizeNewPhotosActivity.this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath());
+					CameraActivity.startActivity(OrganizeNewPhotosActivity.this, mPhotoRight.getAbsolutePath(), mPhotoLeft.getAbsolutePath());
 					finish();
 				}
 			});
@@ -267,8 +267,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 						@Override
 						public void onDialogPositiveClick(final DialogFragment dialog) {
 							// delete images
-							photoLeft.delete();
-							photoRight.delete();
+							mPhotoLeft.delete();
+							mPhotoRight.delete();
 							finish();
 						}
 
@@ -287,11 +287,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			buttonOtherPictures.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					if (inputFolder != null) {
-						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, inputFolder.getAbsolutePath());
+					if (mInputFolder != null) {
+						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, mInputFolder.getAbsolutePath());
 					}
 					else {
-						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, fileNames);
+						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, mFileNames);
 					}
 				}
 			});
@@ -335,9 +335,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 */
 	private void setPicturesAndValues(final boolean update) {
 		File[] files;
-		if (inputFolder != null) {
+		if (mInputFolder != null) {
 			// retrieve files from Input Folder
-			files = inputFolder.listFiles(new ImageUtil.ImageFileFilter());
+			files = mInputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
 				if (update) {
@@ -361,11 +361,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			ArrayList<File> fileList = new ArrayList<File>();
 			ArrayList<String> fileNameList = new ArrayList<String>();
 
-			for (String fileName : fileNames) {
+			for (String fileName : mFileNames) {
 				File file = new File(fileName);
 				if (file.exists() && file.isFile()) {
-					if (!update || (!photoLeft.getAbsolutePath().equals(file.getAbsolutePath())
-							&& !photoRight.getAbsolutePath().equals(file.getAbsolutePath()))) {
+					if (!update || (!mPhotoLeft.getAbsolutePath().equals(file.getAbsolutePath())
+							&& !mPhotoRight.getAbsolutePath().equals(file.getAbsolutePath()))) {
 						fileList.add(file);
 						fileNameList.add(fileName);
 					}
@@ -373,7 +373,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 
 			files = fileList.toArray(new File[fileList.size()]);
-			fileNames = fileNameList.toArray(new String[fileNameList.size()]);
+			mFileNames = fileNameList.toArray(new String[fileNameList.size()]);
 		}
 
 		if (files.length > 1) {
@@ -390,20 +390,20 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 			// Organize left vs. right
 			if (photoLast.getRightLeft() == RightLeft.RIGHT && photoLastButOne.getRightLeft() == RightLeft.LEFT) {
-				photoRight = photoLast;
-				photoLeft = photoLastButOne;
+				mPhotoRight = photoLast;
+				mPhotoLeft = photoLastButOne;
 			}
 			else if (photoLast.getRightLeft() == RightLeft.LEFT && photoLastButOne.getRightLeft() == RightLeft.RIGHT) {
-				photoLeft = photoLast;
-				photoRight = photoLastButOne;
+				mPhotoLeft = photoLast;
+				mPhotoRight = photoLastButOne;
 			}
-			else if (rightEyeLast) {
-				photoRight = photoLast;
-				photoLeft = photoLastButOne;
+			else if (mRightEyeLast) {
+				mPhotoRight = photoLast;
+				mPhotoLeft = photoLastButOne;
 			}
 			else {
-				photoLeft = photoLast;
-				photoRight = photoLastButOne;
+				mPhotoLeft = photoLast;
+				mPhotoRight = photoLastButOne;
 			}
 
 			updateImages(true);
@@ -418,7 +418,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			}
 		}
 
-		totalImageCount = files.length;
+		mTotalImageCount = files.length;
 	}
 
 	/**
@@ -429,15 +429,15 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            if true, then the date will be updated from the images.
 	 */
 	private void updateImages(final boolean updateDate) {
-		imageRight.setImageBitmap(photoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
-		imageRight.invalidate();
-		imageLeft.setImageBitmap(photoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
-		imageLeft.invalidate();
+		mImageRight.setImageBitmap(mPhotoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+		mImageRight.invalidate();
+		mImageLeft.setImageBitmap(mPhotoLeft.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
+		mImageLeft.invalidate();
 
 		if (updateDate) {
-			pictureDate.setTime(photoRight.getDate());
-			editDate.setText(DateUtil.getDisplayDate(pictureDate));
-			editDate.invalidate();
+			mPictureDate.setTime(mPhotoRight.getDate());
+			mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
+			mEditDate.invalidate();
 		}
 	}
 
@@ -460,10 +460,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void switchImages(final View view) {
-		rightEyeLast = !rightEyeLast;
-		EyePhoto temp = photoLeft;
-		photoLeft = photoRight;
-		photoRight = temp;
+		mRightEyeLast = !mRightEyeLast;
+		EyePhoto temp = mPhotoLeft;
+		mPhotoLeft = mPhotoRight;
+		mPhotoRight = temp;
 		updateImages(false);
 	}
 
@@ -474,13 +474,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void onOkClick(final View view) {
-		final String name = editName.getText().toString().trim();
+		final String name = mEditName.getText().toString().trim();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;
 		}
 
-		List<String> existingNames = ListFoldersBaseFragment.getFolderNames(parentFolder);
+		List<String> existingNames = ListFoldersBaseFragment.getFolderNames(mParentFolder);
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && !existingNames.contains(name)
 				&& existingNames.size() >= ListFoldersBaseFragment.TRIAL_MAX_NAMES) {
 			// Error due to trial version.
@@ -496,17 +496,17 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *
 	 */
 	public final void validateAndMovePhotos() {
-		final String name = editName.getText().toString();
+		final String name = mEditName.getText().toString();
 		if (name == null || name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;
 		}
 
-		Date date = new Date(pictureDate.getTimeInMillis());
-		String suffixRight = photoRight.getSuffix();
-		String suffixLeft = photoLeft.getSuffix();
+		Date date = new Date(mPictureDate.getTimeInMillis());
+		String suffixRight = mPhotoRight.getSuffix();
+		String suffixLeft = mPhotoLeft.getSuffix();
 
-		File targetFolder = new File(parentFolder, name);
+		File targetFolder = new File(mParentFolder, name);
 
 		if (targetFolder.exists() && !targetFolder.isDirectory()) {
 			displayError(R.string.message_dialog_cannot_create_folder, targetFolder.getAbsolutePath());
@@ -526,8 +526,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 				new EyePhoto(targetFolder.getAbsolutePath(), name, date, RightLeft.LEFT, suffixLeft);
 
 		try {
-			JpegMetadataUtil.checkJpeg(photoRight.getAbsolutePath());
-			JpegMetadataUtil.checkJpeg(photoLeft.getAbsolutePath());
+			JpegMetadataUtil.checkJpeg(mPhotoRight.getAbsolutePath());
+			JpegMetadataUtil.checkJpeg(mPhotoLeft.getAbsolutePath());
 		}
 		catch (IOException e) {
 			ConfirmDialogListener confirmationListener = new ConfirmDialogListener() {
@@ -552,12 +552,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			return;
 		}
 
-		if (!photoRight.exists()) {
-			displayError(R.string.message_dialog_file_does_not_exist, photoRight.getAbsolutePath());
+		if (!mPhotoRight.exists()) {
+			displayError(R.string.message_dialog_file_does_not_exist, mPhotoRight.getAbsolutePath());
 			return;
 		}
-		if (!photoLeft.exists()) {
-			displayError(R.string.message_dialog_file_does_not_exist, photoLeft.getAbsolutePath());
+		if (!mPhotoLeft.exists()) {
+			displayError(R.string.message_dialog_file_does_not_exist, mPhotoLeft.getAbsolutePath());
 			return;
 		}
 
@@ -597,28 +597,28 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The selected name.
 	 */
 	private void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
-		if (inputFolder != null) {
+		if (mInputFolder != null) {
 			// in case of input folder, move files
-			if (!photoRight.moveTo(targetPhotoRight, true)) {
-				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
+			if (!mPhotoRight.moveTo(targetPhotoRight, true)) {
+				displayError(R.string.message_dialog_failed_to_move_file, mPhotoRight.getAbsolutePath(),
 						targetPhotoRight.getAbsolutePath());
 				return;
 			}
-			if (!photoLeft.moveTo(targetPhotoLeft, true)) {
-				displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
+			if (!mPhotoLeft.moveTo(targetPhotoLeft, true)) {
+				displayError(R.string.message_dialog_failed_to_move_file, mPhotoLeft.getAbsolutePath(),
 						targetPhotoLeft.getAbsolutePath());
 				return;
 			}
 		}
 		else {
 			// in case of input files, copy files
-			if (!photoRight.copyTo(targetPhotoRight)) {
-				displayError(R.string.message_dialog_failed_to_move_file, photoRight.getAbsolutePath(),
+			if (!mPhotoRight.copyTo(targetPhotoRight)) {
+				displayError(R.string.message_dialog_failed_to_move_file, mPhotoRight.getAbsolutePath(),
 						targetPhotoRight.getAbsolutePath());
 				return;
 			}
-			if (!photoLeft.copyTo(targetPhotoLeft)) {
-				displayError(R.string.message_dialog_failed_to_move_file, photoLeft.getAbsolutePath(),
+			if (!mPhotoLeft.copyTo(targetPhotoLeft)) {
+				displayError(R.string.message_dialog_failed_to_move_file, mPhotoLeft.getAbsolutePath(),
 						targetPhotoLeft.getAbsolutePath());
 				return;
 			}
@@ -636,7 +636,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizeend);
 
-		switch (nextAction) {
+		switch (mNextAction) {
 		case NEXT_IMAGES:
 			setPicturesAndValues(true);
 			break;
@@ -661,8 +661,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		case SelectTwoPicturesActivity.REQUEST_CODE:
 			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
 			if (filePair != null) {
-				photoRight = new EyePhoto(filePair.getFile1());
-				photoLeft = new EyePhoto(filePair.getFile2());
+				mPhotoRight = new EyePhoto(filePair.getFile1());
+				mPhotoLeft = new EyePhoto(filePair.getFile2());
 				updateImages(true);
 			}
 			else {
@@ -682,9 +682,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 */
 	public final void openDateDialog(final View view) {
 		Bundle bundle = new Bundle();
-		bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
-		bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
-		bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
+		bundle.putInt("Year", mPictureDate.get(Calendar.YEAR));
+		bundle.putInt("Month", mPictureDate.get(Calendar.MONTH));
+		bundle.putInt("Date", mPictureDate.get(Calendar.DAY_OF_MONTH));
 		DateDialogFragment fragment = new DateDialogFragment();
 		fragment.setArguments(bundle);
 		fragment.show(getFragmentManager(), DateDialogFragment.class.toString());
@@ -694,10 +694,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	@Override
 	protected final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if (photoRight != null && photoLeft != null) {
-			outState.putString("rightEyePhoto", photoRight.getAbsolutePath());
-			outState.putString("leftEyePhoto", photoLeft.getAbsolutePath());
-			outState.putInt("totalImageCount", totalImageCount);
+		if (mPhotoRight != null && mPhotoLeft != null) {
+			outState.putString("rightEyePhoto", mPhotoRight.getAbsolutePath());
+			outState.putString("leftEyePhoto", mPhotoLeft.getAbsolutePath());
+			outState.putInt("totalImageCount", mTotalImageCount);
 		}
 	}
 
@@ -712,9 +712,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The day of the month.
 	 */
 	public final void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
-		pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-		editDate.setText(DateUtil.getDisplayDate(pictureDate));
-		editDate.invalidate();
+		mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
+		mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
+		mEditDate.invalidate();
 	}
 
 	/**
@@ -724,7 +724,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *            The view triggering the onClick action.
 	 */
 	public final void displayNewImages(final View view) {
-		DisplayTwoActivity.startActivity(this, photoRight.getAbsolutePath(), photoLeft.getAbsolutePath(), true);
+		DisplayTwoActivity.startActivity(this, mPhotoRight.getAbsolutePath(), mPhotoLeft.getAbsolutePath(), true);
 	}
 
 	/**

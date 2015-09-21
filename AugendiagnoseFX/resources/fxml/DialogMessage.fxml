@@ -12,15 +12,15 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="dialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" vgap="10">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mDialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" vgap="10">
 
-	<Label fx:id="dialogHeading" text="%title_dialog_error" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
-	<Text fx:id="dialogMessage" text="%message_error_unknown_error" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
+	<Label fx:id="mDialogHeading" text="%title_dialog_error" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
+	<Text fx:id="mDialogMessage" text="%message_error_unknown_error" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 		<GridPane.margin>
 			<Insets left="5" right="5" bottom="5" top="5"/> 
 		</GridPane.margin>
 	</Text>
-	<Button fx:id="btnBack" text="%button_back" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER"> 
+	<Button fx:id="mBtnBack" text="%button_back" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER"> 
 		<GridPane.margin>
 			<Insets left="5" right="5" bottom="5" top="5"/> 
 		</GridPane.margin>

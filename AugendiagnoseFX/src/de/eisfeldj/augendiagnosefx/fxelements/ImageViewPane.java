@@ -16,7 +16,7 @@ public class ImageViewPane extends Region {
 	/**
 	 * The contained ImageView, stored in a property.
 	 */
-	private ObjectProperty<ImageView> imageViewProperty = new SimpleObjectProperty<ImageView>();
+	private ObjectProperty<ImageView> mImageViewProperty = new SimpleObjectProperty<ImageView>();
 
 	/**
 	 * Getter for the contained ImageView property.
@@ -24,7 +24,7 @@ public class ImageViewPane extends Region {
 	 * @return The imageView property.
 	 */
 	public final ObjectProperty<ImageView> imageViewProperty() {
-		return imageViewProperty;
+		return mImageViewProperty;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ImageViewPane extends Region {
 	 * @return The ImageView.
 	 */
 	public final ImageView getImageView() {
-		return imageViewProperty.get();
+		return mImageViewProperty.get();
 	}
 
 	/**
@@ -43,14 +43,14 @@ public class ImageViewPane extends Region {
 	 *            The imageView to be set.
 	 */
 	public final void setImageView(final ImageView imageView) {
-		this.imageViewProperty.set(imageView);
+		this.mImageViewProperty.set(imageView);
 	}
 
 	/**
 	 * Creating an ImageViewPane without imageView.
 	 */
 	public ImageViewPane() {
-		imageViewProperty.addListener(new ChangeListener<ImageView>() {
+		mImageViewProperty.addListener(new ChangeListener<ImageView>() {
 			@Override
 			public void changed(final ObservableValue<? extends ImageView> arg0, final ImageView oldImageView,
 					final ImageView newImageView) {
@@ -67,7 +67,7 @@ public class ImageViewPane extends Region {
 
 	@Override
 	protected final void layoutChildren() {
-		ImageView imageView = imageViewProperty.get();
+		ImageView imageView = mImageViewProperty.get();
 		if (imageView != null) {
 			imageView.setFitWidth(getWidth());
 			double newHeight = getWidth() * imageView.getImage().getHeight() / imageView.getImage().getWidth();

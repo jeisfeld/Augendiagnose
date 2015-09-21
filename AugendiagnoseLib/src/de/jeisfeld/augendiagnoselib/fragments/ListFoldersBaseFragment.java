@@ -58,24 +58,24 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * The parent folder.
 	 */
-	protected File parentFolder;
+	protected File mParentFolder;
 
 	/**
 	 * The list view containing the folders.
 	 */
-	protected ListView listView;
+	protected ListView mListView;
 
 	// PUBLIC_FIELDS:END
 
 	/**
 	 * The editText in which the name can be searched.
 	 */
-	private EditText editTextSearch;
+	private EditText mEditTextSearch;
 
 	/**
 	 * The array adapter displaying the list of names.
 	 */
-	private ArrayAdapter<String> directoryListAdapter = null;
+	private ArrayAdapter<String> mDirectoryListAdapter = null;
 
 	/**
 	 * Initialize the listFoldersFragment with parentFolder.
@@ -95,7 +95,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		Bundle args = getArguments();
-		parentFolder = new File(args.getString(STRING_FOLDER));
+		mParentFolder = new File(args.getString(STRING_FOLDER));
 	}
 
 	/*
@@ -112,14 +112,14 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		listView = (ListView) getView().findViewById(R.id.listViewNames);
+		mListView = (ListView) getView().findViewById(R.id.listViewNames);
 		createList();
 
-		editTextSearch = (EditText) getView().findViewById(R.id.searchName);
-		editTextSearch.addTextChangedListener(new TextWatcher() {
+		mEditTextSearch = (EditText) getView().findViewById(R.id.searchName);
+		mEditTextSearch.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-				directoryListAdapter.getFilter().filter(s.toString());
+				mDirectoryListAdapter.getFilter().filter(s.toString());
 			}
 
 			@Override
@@ -145,22 +145,22 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * Fill the list of subfolders and create the list adapter.
 	 */
 	protected final void createList() {
-		List<String> folderNames = getFolderNames(parentFolder);
+		List<String> folderNames = getFolderNames(mParentFolder);
 		if (folderNames == null) {
 			folderNames = new ArrayList<String>();
 		}
 
-		if (directoryListAdapter == null) {
+		if (mDirectoryListAdapter == null) {
 			// fill initial adapter
-			directoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
-			listView.setAdapter(directoryListAdapter);
-			listView.setTextFilterEnabled(true);
+			mDirectoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
+			mListView.setAdapter(mDirectoryListAdapter);
+			mListView.setTextFilterEnabled(true);
 		}
 		else {
 			// update existing adapter
-			directoryListAdapter.clear();
-			directoryListAdapter.addAll(folderNames);
-			directoryListAdapter.notifyDataSetChanged();
+			mDirectoryListAdapter.clear();
+			mDirectoryListAdapter.addAll(folderNames);
+			mDirectoryListAdapter.notifyDataSetChanged();
 		}
 
 		getActivity().findViewById(R.id.textViewNoImages).setVisibility(folderNames.size() == 0 ? View.VISIBLE : View.GONE);
@@ -243,8 +243,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 *            the new name.
 	 */
 	protected final void renameFolderAndFiles(final String oldName, final String newName) {
-		final File oldFolder = new File(parentFolder, oldName.trim());
-		final File newFolder = new File(parentFolder, newName.trim());
+		final File oldFolder = new File(mParentFolder, oldName.trim());
+		final File newFolder = new File(mParentFolder, newName.trim());
 
 		// rename folder and ensure that list is refreshed
 		boolean success = FileUtil.renameFolder(oldFolder, newFolder); // STORE_PROPERTY
@@ -302,7 +302,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 *            the name for which the folder should be deleted.
 	 */
 	protected final void deleteFolder(final String name) {
-		File folder = new File(parentFolder, name.trim());
+		File folder = new File(mParentFolder, name.trim());
 
 		// delete files in folder.
 		FileUtil.deleteFilesInFolder(folder);

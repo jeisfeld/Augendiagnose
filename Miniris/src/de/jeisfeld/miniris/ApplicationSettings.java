@@ -14,7 +14,7 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	/**
 	 * An instance of this class.
 	 */
-	private static volatile ApplicationSettings instance;
+	private static volatile ApplicationSettings mInstance;
 
 	/**
 	 * Keep constructor private.
@@ -28,10 +28,10 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	 * @return An instance of this class.
 	 */
 	public static ApplicationSettings getInstance() {
-		if (instance == null) {
-			instance = new ApplicationSettings();
+		if (mInstance == null) {
+			mInstance = new ApplicationSettings();
 		}
-		return instance;
+		return mInstance;
 	}
 
 	@Override

@@ -26,11 +26,11 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Storage for currently running save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> runningSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mRunningSaveRequests = new HashMap<String, JpegMetadata>();
 	/**
 	 * Storage for queued save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> queuedSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mQueuedSaveRequests = new HashMap<String, JpegMetadata>();
 	/**
 	 * The tag for logging.
 	 */
@@ -57,11 +57,11 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			if (queuedSaveRequests.containsKey(pathname)) {
-				cachedMetadata = queuedSaveRequests.get(pathname);
+			if (mQueuedSaveRequests.containsKey(pathname)) {
+				cachedMetadata = mQueuedSaveRequests.get(pathname);
 			}
-			else if (runningSaveRequests.containsKey(pathname)) {
-				cachedMetadata = runningSaveRequests.get(pathname);
+			else if (mRunningSaveRequests.containsKey(pathname)) {
+				cachedMetadata = mRunningSaveRequests.get(pathname);
 			}
 		}
 
@@ -99,8 +99,8 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			if (runningSaveRequests.containsKey(pathname)) {
-				queuedSaveRequests.put(pathname, metadata);
+			if (mRunningSaveRequests.containsKey(pathname)) {
+				mQueuedSaveRequests.put(pathname, metadata);
 			}
 			else {
 				triggerJpegSaverTask(pathname, metadata);
@@ -116,11 +116,11 @@ public final class JpegSynchronizationUtil {
 	 */
 	private static void triggerNextFromQueue(final String pathname) {
 		synchronized (JpegSynchronizationUtil.class) {
-			runningSaveRequests.remove(pathname);
-			if (queuedSaveRequests.containsKey(pathname)) {
+			mRunningSaveRequests.remove(pathname);
+			if (mQueuedSaveRequests.containsKey(pathname)) {
 				Log.i(TAG, "Executing queued store request for file " + pathname);
-				JpegMetadata newMetadata = queuedSaveRequests.get(pathname);
-				queuedSaveRequests.remove(pathname);
+				JpegMetadata newMetadata = mQueuedSaveRequests.get(pathname);
+				mQueuedSaveRequests.remove(pathname);
 				triggerJpegSaverTask(pathname, newMetadata);
 			}
 		}
@@ -135,7 +135,7 @@ public final class JpegSynchronizationUtil {
 	 *            the metadata.
 	 */
 	private static void triggerJpegSaverTask(final String pathname, final JpegMetadata metadata) {
-		runningSaveRequests.put(pathname, metadata);
+		mRunningSaveRequests.put(pathname, metadata);
 		JpegSaverTask task = new JpegSaverTask(pathname, metadata);
 		task.execute();
 
@@ -148,7 +148,7 @@ public final class JpegSynchronizationUtil {
 	 * @return true if an image is currently saved.
 	 */
 	public static boolean isSaving() {
-		return runningSaveRequests.size() > 0;
+		return mRunningSaveRequests.size() > 0;
 	}
 
 	/**
@@ -158,11 +158,11 @@ public final class JpegSynchronizationUtil {
 		/**
 		 * The path of the jpg file.
 		 */
-		private String pathname;
+		private String mPathname;
 		/**
 		 * The changed metadata.
 		 */
-		private JpegMetadata metadata;
+		private JpegMetadata mMetadata;
 
 		/**
 		 * Constructor for the task.
@@ -173,19 +173,19 @@ public final class JpegSynchronizationUtil {
 		 *            the metadata.
 		 */
 		public JpegSaverTask(final String pathname, final JpegMetadata metadata) {
-			this.pathname = pathname;
-			this.metadata = metadata;
+			this.mPathname = pathname;
+			this.mMetadata = metadata;
 		}
 
 		@Override
 		protected void onPreExecute() {
-			Log.d(TAG, "Starting thread to save file " + pathname);
+			Log.d(TAG, "Starting thread to save file " + mPathname);
 		}
 
 		@Override
 		protected Exception doInBackground(final Void... nothing) {
 			try {
-				JpegMetadataUtil.changeMetadata(pathname, metadata);
+				JpegMetadataUtil.changeMetadata(mPathname, mMetadata);
 				return null;
 			}
 			catch (Exception e) {
@@ -197,20 +197,20 @@ public final class JpegSynchronizationUtil {
 		protected void onPostExecute(final Exception e) {
 			if (e != null) {
 				if (e instanceof ExifStorageException) {
-					Log.e(TAG, "Failed to save file " + pathname, e);
+					Log.e(TAG, "Failed to save file " + mPathname, e);
 					DialogUtil.displayToast(Application.getAppContext(),
-							R.string.message_dialog_failed_to_store_exif, pathname);
+							R.string.message_dialog_failed_to_store_exif, mPathname);
 				}
 				else {
-					Log.e(TAG, "Failed to store EXIF data for file " + pathname, e);
+					Log.e(TAG, "Failed to store EXIF data for file " + mPathname, e);
 					DialogUtil.displayToast(Application.getAppContext(),
-							R.string.message_dialog_failed_to_store_metadata, pathname);
+							R.string.message_dialog_failed_to_store_metadata, mPathname);
 				}
 			}
 			else {
-				Log.d(TAG, "Successfully saved file " + pathname);
+				Log.d(TAG, "Successfully saved file " + mPathname);
 			}
-			triggerNextFromQueue(pathname);
+			triggerNextFromQueue(mPathname);
 		}
 	}
 }

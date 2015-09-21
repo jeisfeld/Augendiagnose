@@ -14,12 +14,12 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * The activity for selection.
 	 */
-	private SelectTwoPicturesActivity activity = null;
+	private SelectTwoPicturesActivity mActivity = null;
 
 	/**
 	 * A holder of the TwoImageSelectionHandler as singleton.
 	 */
-	private static volatile TwoImageSelectionHandler singleton;
+	private static volatile TwoImageSelectionHandler mSingleton;
 
 	/**
 	 * Get an instance of the handler - it is handled as singleton.
@@ -27,10 +27,10 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 * @return an instance of the handler.
 	 */
 	public static TwoImageSelectionHandler getInstance() {
-		if (singleton == null) {
-			singleton = new TwoImageSelectionHandler();
+		if (mSingleton == null) {
+			mSingleton = new TwoImageSelectionHandler();
 		}
-		return singleton;
+		return mSingleton;
 	}
 
 	/**
@@ -47,14 +47,14 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *            The activity.
 	 */
 	public void setActivity(final SelectTwoPicturesActivity activity) {
-		this.activity = activity;
+		this.mActivity = activity;
 	}
 
 	/**
 	 * Clean all references.
 	 */
 	public static void clean() {
-		singleton = null;
+		mSingleton = null;
 	}
 
 	/**
@@ -110,11 +110,11 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *            the second selected image.
 	 */
 	private void createResponse(final EyePhoto image1, final EyePhoto image2) {
-		activity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());
+		mActivity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());
 	}
 
 	@Override
 	protected Activity getActivity() {
-		return activity;
+		return mActivity;
 	}
 }

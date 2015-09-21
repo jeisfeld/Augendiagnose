@@ -4,5 +4,5 @@ import de.eisfeldj.augendiagnosefx.controller.DisplayImageFullController
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView
 
 component DisplayImage controlledby DisplayImageFullController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	SizableImageView id displayImageView
+	SizableImageView id mDisplayImageView
 }

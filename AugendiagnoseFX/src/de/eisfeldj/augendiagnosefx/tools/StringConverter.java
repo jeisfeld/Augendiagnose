@@ -75,12 +75,12 @@ public final class StringConverter {
 	/**
 	 * An instance of this class.
 	 */
-	private static StringConverter instance;
+	private static StringConverter mInstance;
 
 	/**
 	 * The SAX parser factory used.
 	 */
-	private SAXParserFactory factory = SAXParserFactory.newInstance();
+	private SAXParserFactory mFactory = SAXParserFactory.newInstance();
 
 	/**
 	 * Private constructor.
@@ -96,9 +96,9 @@ public final class StringConverter {
 	 *            The command line arguments.
 	 */
 	public static void main(final String[] args) {
-		instance = new StringConverter();
+		mInstance = new StringConverter();
 
-		instance.process();
+		mInstance.process();
 	}
 
 	/**
@@ -224,7 +224,7 @@ public final class StringConverter {
 
 		SAXParser parser;
 		try {
-			parser = factory.newSAXParser();
+			parser = mFactory.newSAXParser();
 			SaxHandler handler = new SaxHandler(key);
 			parser.parse(file, handler);
 			result = handler.getValue();
@@ -243,16 +243,16 @@ public final class StringConverter {
 		/**
 		 * Storage for the resource key.
 		 */
-		private String key = null;
+		private String mKey = null;
 		/**
 		 * Storage for the resource value.
 		 */
-		private String value = null;
+		private String mValue = null;
 
 		/**
 		 * The String to be looked for.
 		 */
-		private String searchKey = null;
+		private String mSearchKey = null;
 
 		/**
 		 * Constructor passing a search key.
@@ -261,21 +261,21 @@ public final class StringConverter {
 		 *            The String to be looked for.
 		 */
 		public SaxHandler(final String searchKey) {
-			this.searchKey = searchKey;
+			this.mSearchKey = searchKey;
 		}
 
 		@Override
 		public void startElement(final String uri, final String localName, final String qName,
 				final Attributes attributes) throws SAXException {
 			if ("string".equals(qName)) {
-				key = attributes.getValue("name");
+				mKey = attributes.getValue("name");
 			}
 		}
 
 		@Override
 		public void characters(final char[] ch, final int start, final int length) throws SAXException {
-			if (key != null && key.equals(searchKey)) {
-				value = new String(ch, start, length);
+			if (mKey != null && mKey.equals(mSearchKey)) {
+				mValue = new String(ch, start, length);
 			}
 		}
 
@@ -283,7 +283,7 @@ public final class StringConverter {
 		public void endElement(final String uri, final String localName,
 				final String qName) throws SAXException {
 			if ("string".equals(qName)) {
-				key = null;
+				mKey = null;
 			}
 		}
 
@@ -293,7 +293,7 @@ public final class StringConverter {
 		 * @return The found value.
 		 */
 		public String getValue() {
-			return value;
+			return mValue;
 		}
 	}
 

@@ -50,68 +50,68 @@ public class PreferencesController extends DialogController implements Initializ
 	 * The main pane.
 	 */
 	@FXML
-	private GridPane settingsPane;
+	private GridPane mSettingsPane;
 
 	/**
 	 * The photos folder when starting the activity.
 	 */
-	private String oldPhotosFolder;
+	private String mOldPhotosFolder;
 
 	/**
 	 * The "sort by last name" value when starting the activity.
 	 */
-	private boolean oldSortByLastName;
+	private boolean mOldSortByLastName;
 
 	/**
 	 * The "language" value when starting the activity.
 	 */
-	private int oldLanguage;
+	private int mOldLanguage;
 
 	/**
 	 * Text field for the eye photos folder.
 	 */
 	@FXML
-	private TextField textFolderPhotos;
+	private TextField mTextFolderPhotos;
 
 	/**
 	 * Choice box for max bitmap size.
 	 */
 	@FXML
-	private ChoiceBox<Integer> choiceMaxBitmapSize;
+	private ChoiceBox<Integer> mChoiceMaxBitmapSize;
 
 	/**
 	 * Choice box for max bitmap size.
 	 */
 	@FXML
-	private ChoiceBox<Integer> choiceThumbnailSize;
+	private ChoiceBox<Integer> mChoiceThumbnailSize;
 
 	/**
 	 * Checkbox for "sort by last name" flag.
 	 */
 	@FXML
-	private CheckBox checkBoxSortByLastName;
+	private CheckBox mCheckBoxSortByLastName;
 
 	/**
 	 * Checkbox for "update automatically" flag.
 	 */
 	@FXML
-	private CheckBox checkBoxUpdateAutomatically;
+	private CheckBox mCheckBoxUpdateAutomatically;
 
 	/**
 	 * Color picker for the default overlay color.
 	 */
 	@FXML
-	private ColorPicker colorPicker;
+	private ColorPicker mColorPicker;
 
 	/**
 	 * Choice box for language.
 	 */
 	@FXML
-	private ChoiceBox<String> choiceLanguage;
+	private ChoiceBox<String> mChoiceLanguage;
 
 	@Override
 	public final Parent getRoot() {
-		return settingsPane;
+		return mSettingsPane;
 	}
 
 	@Override
@@ -123,21 +123,21 @@ public class PreferencesController extends DialogController implements Initializ
 
 		LANGUAGE_MAP.forEach((key, value) -> LANGUAGE_MAP_BACK.put(value, key));
 
-		oldPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
-		textFolderPhotos.setText(oldPhotosFolder);
+		mOldPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
+		mTextFolderPhotos.setText(mOldPhotosFolder);
 
-		choiceMaxBitmapSize.setValue(PreferenceUtil.getPreferenceInt(KEY_MAX_BITMAP_SIZE));
-		choiceThumbnailSize.setValue(PreferenceUtil.getPreferenceInt(KEY_THUMBNAIL_SIZE));
-		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
+		mChoiceMaxBitmapSize.setValue(PreferenceUtil.getPreferenceInt(KEY_MAX_BITMAP_SIZE));
+		mChoiceThumbnailSize.setValue(PreferenceUtil.getPreferenceInt(KEY_THUMBNAIL_SIZE));
+		mColorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
 
-		oldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
-		checkBoxSortByLastName.setSelected(oldSortByLastName);
-		checkBoxUpdateAutomatically.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_UPDATE_AUTOMATICALLY));
+		mOldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
+		mCheckBoxSortByLastName.setSelected(mOldSortByLastName);
+		mCheckBoxUpdateAutomatically.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_UPDATE_AUTOMATICALLY));
 
 		// Fill language choice box from LANGUAGE_MAP
-		LANGUAGE_MAP.forEach((key, value) -> choiceLanguage.getItems().add(key, value));
-		oldLanguage = PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
-		choiceLanguage.setValue(languageIdToString(oldLanguage));
+		LANGUAGE_MAP.forEach((key, value) -> mChoiceLanguage.getItems().add(key, value));
+		mOldLanguage = PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
+		mChoiceLanguage.setValue(languageIdToString(mOldLanguage));
 	}
 
 	/**
@@ -159,13 +159,13 @@ public class PreferencesController extends DialogController implements Initializ
 	 */
 	@FXML
 	public final void submit(final ActionEvent event) {
-		PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, textFolderPhotos.getText());
-		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, choiceMaxBitmapSize.getValue());
-		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, choiceThumbnailSize.getValue());
-		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, colorPicker.getValue());
-		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, checkBoxSortByLastName.isSelected());
-		PreferenceUtil.setPreference(KEY_UPDATE_AUTOMATICALLY, checkBoxUpdateAutomatically.isSelected());
-		PreferenceUtil.setPreference(KEY_LANGUAGE, languageStringToId(choiceLanguage.getValue()));
+		PreferenceUtil.setPreference(KEY_FOLDER_PHOTOS, mTextFolderPhotos.getText());
+		PreferenceUtil.setPreference(KEY_MAX_BITMAP_SIZE, mChoiceMaxBitmapSize.getValue());
+		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, mChoiceThumbnailSize.getValue());
+		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, mColorPicker.getValue());
+		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, mCheckBoxSortByLastName.isSelected());
+		PreferenceUtil.setPreference(KEY_UPDATE_AUTOMATICALLY, mCheckBoxUpdateAutomatically.isSelected());
+		PreferenceUtil.setPreference(KEY_LANGUAGE, languageStringToId(mChoiceLanguage.getValue()));
 
 		if (requiresRestartApplication()) {
 			SystemUtil.restartApplication();
@@ -186,7 +186,7 @@ public class PreferencesController extends DialogController implements Initializ
 	 * @return true if the application needs to be restarted.
 	 */
 	private boolean requiresRestartApplication() {
-		return oldLanguage != PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
+		return mOldLanguage != PreferenceUtil.getPreferenceInt(KEY_LANGUAGE);
 	}
 
 	/**
@@ -196,10 +196,10 @@ public class PreferencesController extends DialogController implements Initializ
 	 */
 	private boolean requireRefreshMainPage() {
 		String newPhotosFolder = PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS);
-		boolean changedPhotosFolder = newPhotosFolder != null && !newPhotosFolder.equals(oldPhotosFolder);
+		boolean changedPhotosFolder = newPhotosFolder != null && !newPhotosFolder.equals(mOldPhotosFolder);
 
 		boolean newSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
-		boolean changedSortByLastName = newSortByLastName != oldSortByLastName;
+		boolean changedSortByLastName = newSortByLastName != mOldSortByLastName;
 
 		return changedPhotosFolder || changedSortByLastName;
 	}
@@ -224,7 +224,7 @@ public class PreferencesController extends DialogController implements Initializ
 				Logger.warning("Could not get canonical path for " + selectedFolder.getAbsolutePath());
 				selectedFolderString = selectedFolder.getAbsolutePath();
 			}
-			textFolderPhotos.setText(selectedFolderString);
+			mTextFolderPhotos.setText(selectedFolderString);
 		}
 	}
 

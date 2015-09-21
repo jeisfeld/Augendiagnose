@@ -39,17 +39,17 @@ public class Application extends javafx.application.Application {
 	/**
 	 * The primary scene.
 	 */
-	private static Scene scene;
+	private static Scene mScene;
 
 	/**
 	 * The primary stage.
 	 */
-	private static Stage stage;
+	private static Stage mStage;
 
 	/**
 	 * The application host services.
 	 */
-	private static HostServices hostServices;
+	private static HostServices mHostServices;
 
 	/**
 	 * Application method to start the application.
@@ -67,12 +67,12 @@ public class Application extends javafx.application.Application {
 	@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
 			justification = "Intentionally write the stage statically")
 	public final void start(final Stage primaryStage) throws IOException, IllegalAccessException {
-		Application.stage = primaryStage;
+		Application.mStage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));
 
 		MainController mainController = (MainController) FxmlUtil.getRootFromFxml(FxmlConstants.FXML_MAIN);
 
-		scene =
+		mScene =
 				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
 						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
 
@@ -87,13 +87,13 @@ public class Application extends javafx.application.Application {
 					}
 				});
 
-		primaryStage.setScene(scene);
+		primaryStage.setScene(mScene);
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
 		primaryStage.show();
 
 		FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
 
-		hostServices = getHostServices();
+		mHostServices = getHostServices();
 
 		VersioningUtil.checkForNewerVersion(false);
 	}
@@ -133,10 +133,10 @@ public class Application extends javafx.application.Application {
 	 * Store the dimensions of the application window.
 	 */
 	private static void storeWindowDimensions() {
-		PreferenceUtil.setPreference(KEY_WINDOW_MAXIMIZED, stage.isMaximized());
-		if (!stage.isMaximized()) {
-			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_X, scene.getWidth());
-			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_Y, scene.getHeight());
+		PreferenceUtil.setPreference(KEY_WINDOW_MAXIMIZED, mStage.isMaximized());
+		if (!mStage.isMaximized()) {
+			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_X, mScene.getWidth());
+			PreferenceUtil.setPreference(KEY_WINDOW_SIZE_Y, mScene.getHeight());
 		}
 	}
 
@@ -154,7 +154,7 @@ public class Application extends javafx.application.Application {
 	 * @return The primary scene.
 	 */
 	public static Scene getScene() {
-		return scene;
+		return mScene;
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class Application extends javafx.application.Application {
 	 * @return The primary stage.
 	 */
 	public static Stage getStage() {
-		return stage;
+		return mStage;
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Application extends javafx.application.Application {
 	 * @return The host services.
 	 */
 	public static HostServices getApplicationHostServices() {
-		return hostServices;
+		return mHostServices;
 	}
 
 }

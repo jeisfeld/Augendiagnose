@@ -99,7 +99,7 @@ public final class PreferenceUtil {
 	/**
 	 * The user's preferences.
 	 */
-	private static Preferences prefs = Preferences.userNodeForPackage(Application.class);
+	private static Preferences mPrefs = Preferences.userNodeForPackage(Application.class);
 
 	static {
 		DEFAULT_MAP.put(KEY_STORE_OPTION, 2);
@@ -136,7 +136,7 @@ public final class PreferenceUtil {
 	 *            The value of the preference.
 	 */
 	public static void setPreference(final String key, final String value) {
-		prefs.put(key, value);
+		mPrefs.put(key, value);
 	}
 
 	/**
@@ -148,7 +148,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static String getPreferenceString(final String key) {
-		return prefs.get(key, (String) DEFAULT_MAP.get(key));
+		return mPrefs.get(key, (String) DEFAULT_MAP.get(key));
 	}
 
 	/**
@@ -160,7 +160,7 @@ public final class PreferenceUtil {
 	 *            The value of the preference.
 	 */
 	public static void setPreference(final String key, final int value) {
-		prefs.putInt(key, value);
+		mPrefs.putInt(key, value);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static int getPreferenceInt(final String key) {
-		return prefs.getInt(key, (Integer) DEFAULT_MAP.get(key));
+		return mPrefs.getInt(key, (Integer) DEFAULT_MAP.get(key));
 	}
 
 	/**
@@ -184,7 +184,7 @@ public final class PreferenceUtil {
 	 *            The value of the preference.
 	 */
 	public static void setPreference(final String key, final double value) {
-		prefs.putDouble(key, value);
+		mPrefs.putDouble(key, value);
 	}
 
 	/**
@@ -196,7 +196,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static double getPreferenceDouble(final String key) {
-		return prefs.getDouble(key, (Double) DEFAULT_MAP.get(key));
+		return mPrefs.getDouble(key, (Double) DEFAULT_MAP.get(key));
 	}
 
 	/**
@@ -208,7 +208,7 @@ public final class PreferenceUtil {
 	 *            The value of the preference.
 	 */
 	public static void setPreference(final String key, final boolean value) {
-		prefs.putBoolean(key, value);
+		mPrefs.putBoolean(key, value);
 	}
 
 	/**
@@ -220,7 +220,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static boolean getPreferenceBoolean(final String key) {
-		return prefs.getBoolean(key, (Boolean) DEFAULT_MAP.get(key));
+		return mPrefs.getBoolean(key, (Boolean) DEFAULT_MAP.get(key));
 	}
 
 	/**
@@ -238,7 +238,7 @@ public final class PreferenceUtil {
 				(int) (color.getGreen() * maxByte),
 				(int) (color.getBlue() * maxByte),
 				(int) (color.getOpacity() * maxByte));
-		prefs.put(key, colorString);
+		mPrefs.put(key, colorString);
 	}
 
 	/**
@@ -250,7 +250,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static Color getPreferenceColor(final String key) {
-		String colorString = prefs.get(key, (String) DEFAULT_MAP.get(key));
+		String colorString = mPrefs.get(key, (String) DEFAULT_MAP.get(key));
 		return Color.web(colorString);
 	}
 

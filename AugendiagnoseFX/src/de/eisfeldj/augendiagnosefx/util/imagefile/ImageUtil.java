@@ -29,10 +29,10 @@ public final class ImageUtil {
 	 * A cache of one overlay - to prevent frequent recalculation while sliding brightness and contrast.
 	 */
 	// JAVADOC:OFF
-	private static Image cachedOverlay;
-	private static Integer cachedOverlayType = null;
-	private static RightLeft cachedOverlaySide;
-	private static Color cachedOverlayColor;
+	private static Image mCachedOverlay;
+	private static Integer mCachedOverlayType = null;
+	private static RightLeft mCachedOverlaySide;
+	private static Color mCachedOverlayColor;
 
 	// JAVADOC:ON
 
@@ -79,10 +79,10 @@ public final class ImageUtil {
 	 * @return The overlay image.
 	 */
 	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
-		if (cachedOverlayType != null && overlayType == cachedOverlayType
-				&& side == cachedOverlaySide
-				&& color.equals(cachedOverlayColor)) {
-			return cachedOverlay;
+		if (mCachedOverlayType != null && overlayType == mCachedOverlayType
+				&& side == mCachedOverlaySide
+				&& color.equals(mCachedOverlayColor)) {
+			return mCachedOverlay;
 		}
 
 		String baseName = "";
@@ -136,11 +136,11 @@ public final class ImageUtil {
 		SnapshotParameters parameters = new SnapshotParameters();
 		parameters.setFill(Color.TRANSPARENT);
 
-		cachedOverlay = canvas.snapshot(parameters, null);
-		cachedOverlayType = overlayType;
-		cachedOverlaySide = side;
-		cachedOverlayColor = color;
-		return cachedOverlay;
+		mCachedOverlay = canvas.snapshot(parameters, null);
+		mCachedOverlayType = overlayType;
+		mCachedOverlaySide = side;
+		mCachedOverlayColor = color;
+		return mCachedOverlay;
 	}
 
 	/**
@@ -281,8 +281,8 @@ public final class ImageUtil {
 		}
 		else if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
 			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
-					metadata.xCenter, metadata.yCenter,
-					metadata.overlayScaleFactor, brightness, contrast, resolution);
+					metadata.mXCenter, metadata.mYCenter,
+					metadata.mOverlayScaleFactor, brightness, contrast, resolution);
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,

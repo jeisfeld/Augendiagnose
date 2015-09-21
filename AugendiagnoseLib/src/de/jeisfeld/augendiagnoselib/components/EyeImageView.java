@@ -14,11 +14,11 @@ public class EyeImageView extends ImageView {
 	/**
 	 * The EyePhoto shown in the view.
 	 */
-	private EyePhoto eyePhoto;
+	private EyePhoto mEyePhoto;
 	/**
 	 * Indicates if the view is initialized.
 	 */
-	private boolean initialized = false;
+	private boolean mInitialized = false;
 
 	/**
 	 * Standard constructor to be implemented for all views.
@@ -71,7 +71,7 @@ public class EyeImageView extends ImageView {
 	 *            Activities that may be run on the UI thread after loading the image.
 	 */
 	public final void setEyePhoto(final Activity activity, final EyePhoto newEyePhoto, final Runnable postActivities) {
-		this.eyePhoto = newEyePhoto;
+		this.mEyePhoto = newEyePhoto;
 		// Fill pictures in separate thread, for performance reasons
 		Thread thread = new Thread() {
 			@Override
@@ -82,7 +82,7 @@ public class EyeImageView extends ImageView {
 					public void run() {
 						setImageBitmap(newEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
 						invalidate();
-						initialized = true;
+						mInitialized = true;
 						if (postActivities != null) {
 							postActivities.run();
 						}
@@ -97,7 +97,7 @@ public class EyeImageView extends ImageView {
 	 * Clean the eye photo from the view.
 	 */
 	public final void cleanEyePhoto() {
-		this.eyePhoto = null;
+		this.mEyePhoto = null;
 		setImageBitmap(null);
 	}
 
@@ -107,14 +107,14 @@ public class EyeImageView extends ImageView {
 	 * @return the eye photo.
 	 */
 	public final EyePhoto getEyePhoto() {
-		return eyePhoto;
+		return mEyePhoto;
 	}
 
 	/**
 	 * Mark as mInitialized to prevent double initialization.
 	 */
 	public final void setInitialized() {
-		initialized = true;
+		mInitialized = true;
 	}
 
 	/**
@@ -123,6 +123,6 @@ public class EyeImageView extends ImageView {
 	 * @return true if it is initialized.
 	 */
 	public final boolean isInitialized() {
-		return initialized;
+		return mInitialized;
 	}
 }

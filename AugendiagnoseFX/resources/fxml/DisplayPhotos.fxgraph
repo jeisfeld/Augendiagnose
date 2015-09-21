@@ -10,7 +10,7 @@ import javafx.scene.control.TextField
 import de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController
 
 component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css"  {
-	GridPane id displayMain {
+	GridPane id mDisplayMain {
 		styleClass : "display",
 		padding : Insets {
 			top : 0,
@@ -27,18 +27,18 @@ component DisplayPhotos controlledby DisplayPhotosController resourcefile "../bu
 			}
 		],
 		children : [
-			TextField id searchField {
+			TextField id mSearchField {
 				static columnIndex : 0,
 				static rowIndex : 0,
 				onKeyTyped : controllermethod handleSearchText
 			},
-			ListView < String > id listNames {
+			ListView < String > id mListNames {
 				static columnIndex : 0,
 				static rowIndex : 1,
 				styleClass : "listNames",
 				onMouseClicked : controllermethod handleNameClick
 			},
-			ListView < GridPane > id listPhotos {
+			ListView < GridPane > id mListPhotos {
 				static columnIndex : 1,
 				static rowIndex : 0,
 				static rowSpan : 2,

@@ -33,34 +33,34 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	/**
 	 * The parent controller.
 	 */
-	private BaseController parentController;
+	private BaseController mParentController;
 
 	/**
 	 * Height of the left image.
 	 */
-	private double heightLeft = 0;
+	private double mHeightLeft = 0;
 	/**
 	 * Height of the right image.
 	 */
-	private double heightRight = 0;
+	private double mHeightRight = 0;
 
 	/**
 	 * The label for the date.
 	 */
 	@FXML
-	private Label labelDate;
+	private Label mLabelDate;
 
 	/**
 	 * The image view of the right eye.
 	 */
 	@FXML
-	private ImageViewPane imageViewRight;
+	private ImageViewPane mImageViewRight;
 
 	/**
 	 * The image view of the left eye.
 	 */
 	@FXML
-	private ImageViewPane imageViewLeft;
+	private ImageViewPane mImageViewLeft;
 
 	@Override
 	public final Parent getRoot() {
@@ -70,10 +70,10 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	/**
 	 * A boolean property indicating if images are loaded.
 	 */
-	private BooleanProperty imagesLoadedProperty = new SimpleBooleanProperty(false);
+	private BooleanProperty mImagesLoadedProperty = new SimpleBooleanProperty(false);
 
 	public final BooleanProperty getImagesLoadedProperty() {
-		return imagesLoadedProperty;
+		return mImagesLoadedProperty;
 	}
 
 	/**
@@ -86,14 +86,14 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 */
 	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
 	public EyePhotoPairNode(final EyePhotoPair pair, final BaseController initialParentController) {
-		parentController = initialParentController;
+		mParentController = initialParentController;
 
 		FxmlUtil.loadFromFxml(this, FxmlConstants.FXML_EYE_PHOTO_PAIR_NODE);
 
-		labelDate.setText(pair.getDateDisplayString());
+		mLabelDate.setText(pair.getDateDisplayString());
 
-		imageViewRight.setImageView(getImageView(pair.getRightEye()));
-		imageViewLeft.setImageView(getImageView(pair.getLeftEye()));
+		mImageViewRight.setImageView(getImageView(pair.getRightEye()));
+		mImageViewLeft.setImageView(getImageView(pair.getLeftEye()));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 								? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
 								: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;
 				DisplayImageController controller =
-						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, parentController.getPaneIndex(),
+						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, mParentController.getPaneIndex(),
 								true);
 				controller.setEyePhoto(eyePhoto);
 			}
@@ -144,14 +144,14 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 					final Number newValue) {
 				switch (eyePhoto.getRightLeft()) {
 				case RIGHT:
-					heightRight = newValue.doubleValue();
+					mHeightRight = newValue.doubleValue();
 					break;
 				case LEFT:
-					heightLeft = newValue.doubleValue();
+					mHeightLeft = newValue.doubleValue();
 					break;
 				default:
 				}
-				setPrefHeight(Math.max(heightLeft, heightRight));
+				setPrefHeight(Math.max(mHeightLeft, mHeightRight));
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
@@ -169,16 +169,16 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @return true if the images are loaded.
 	 */
 	private boolean checkIfImagesLoaded() {
-		if (imagesLoadedProperty.get()) {
+		if (mImagesLoadedProperty.get()) {
 			return true;
 		}
 
-		Image imageRight = imageViewRight.getImageView().getImage();
-		Image imageLeft = imageViewRight.getImageView().getImage();
+		Image imageRight = mImageViewRight.getImageView().getImage();
+		Image imageLeft = mImageViewRight.getImageView().getImage();
 
 		boolean loaded = imageRight.getProgress() == 1 && imageLeft.getProgress() == 1;
 		if (loaded) {
-			imagesLoadedProperty.set(true);
+			mImagesLoadedProperty.set(true);
 		}
 		return loaded;
 	}

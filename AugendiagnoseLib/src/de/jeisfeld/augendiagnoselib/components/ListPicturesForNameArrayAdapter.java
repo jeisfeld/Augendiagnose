@@ -21,12 +21,12 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	/**
 	 * A map linking the TextViews containing the date to their position.
 	 */
-	private Map<TextView, Integer> positionMap = new HashMap<TextView, Integer>();
+	private Map<TextView, Integer> mPositionMap = new HashMap<TextView, Integer>();
 
 	/**
 	 * The fragment using the adapter.
 	 */
-	private ListPicturesForNameFragment fragment;
+	private ListPicturesForNameFragment mFragment;
 
 	/**
 	 * Constructor for the adapter.
@@ -41,7 +41,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	public ListPicturesForNameArrayAdapter(final Activity activity, final ListPicturesForNameFragment fragment,
 			final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
-		this.fragment = fragment;
+		this.mFragment = fragment;
 	}
 
 	/**
@@ -77,16 +77,16 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 			public void onClick(final View v) {
 				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedViews();
 				DisplayTwoActivity
-						.startActivity(ListPicturesForNameArrayAdapter.this.activity, eyePhotoPairs[position]
-								.getRightEye().getAbsolutePath(), eyePhotoPairs[position].getLeftEye()
+						.startActivity(ListPicturesForNameArrayAdapter.this.mActivity, mEyePhotoPairs[position]
+								.getRightEye().getAbsolutePath(), mEyePhotoPairs[position].getLeftEye()
 								.getAbsolutePath(), true);
 
 			}
 		});
 
-		positionMap.put(textView, position);
+		mPositionMap.put(textView, position);
 
-		textView.setOnCreateContextMenuListener(fragment);
+		textView.setOnCreateContextMenuListener(mFragment);
 
 		return rowView;
 	}
@@ -99,7 +99,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	 * @return The row
 	 */
 	public final int getRow(final TextView view) {
-		return positionMap.get(view);
+		return mPositionMap.get(view);
 	}
 
 }

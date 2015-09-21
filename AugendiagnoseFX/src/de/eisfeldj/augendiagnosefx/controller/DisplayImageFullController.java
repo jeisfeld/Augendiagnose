@@ -14,11 +14,11 @@ public class DisplayImageFullController extends BaseController {
 	 * The scroll pane holding the image.
 	 */
 	@FXML
-	private SizableImageView displayImageView;
+	private SizableImageView mDisplayImageView;
 
 	@Override
 	public final Parent getRoot() {
-		return displayImageView;
+		return mDisplayImageView;
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class DisplayImageFullController extends BaseController {
 	 *            the image to be displayed.
 	 */
 	public final void setImage(final JpegMetadata metadata, final Image image) {
-		displayImageView.setImage(metadata, image);
+		mDisplayImageView.setImage(metadata, image);
 	}
 
 }

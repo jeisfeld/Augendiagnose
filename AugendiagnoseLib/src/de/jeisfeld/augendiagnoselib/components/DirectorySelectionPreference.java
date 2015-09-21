@@ -41,17 +41,17 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * The selected index in the list.
 	 */
-	private int selectedIndex = -1;
+	private int mSelectedIndex = -1;
 
 	/**
 	 * The custom directory selected via directory browser. Value is null if no custom directory is selected.
 	 */
-	private String selectedCustomDir = null;
+	private String mSelectedCustomDir = null;
 
 	/**
 	 * The list index of the custom directory.
 	 */
-	private int customIndex = -1;
+	private int mCustomIndex = -1;
 
 	/**
 	 * The constructor replaces placeholders for external storage and camera folder.
@@ -73,7 +73,7 @@ public class DirectorySelectionPreference extends ListPreference {
 			String mappedValue = replaceSpecialFolderTags(value);
 
 			if (value.equals(CUSTOM_FOLDER)) {
-				customIndex = i;
+				mCustomIndex = i;
 			}
 			else if (!mappedValue.equals(value)) {
 				entryValues[i] = mappedValue;
@@ -128,13 +128,13 @@ public class DirectorySelectionPreference extends ListPreference {
 		int clickedDialogEntryIndex = findIndexOfValue(getValue());
 
 		if (clickedDialogEntryIndex < 0) {
-			clickedDialogEntryIndex = customIndex;
+			clickedDialogEntryIndex = mCustomIndex;
 		}
 
 		builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				selectedCustomDir = null;
+				mSelectedCustomDir = null;
 
 				if (getEntryValues()[which].toString().equals(CUSTOM_FOLDER)) {
 					// determine custom folder via dialog
@@ -143,8 +143,8 @@ public class DirectorySelectionPreference extends ListPreference {
 
 						@Override
 						public void onChosenDir(final String chosenDir) {
-							selectedIndex = which;
-							selectedCustomDir = chosenDir;
+							mSelectedIndex = which;
+							mSelectedCustomDir = chosenDir;
 
 							DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
 							dialog.dismiss();
@@ -166,7 +166,7 @@ public class DirectorySelectionPreference extends ListPreference {
 					}
 				}
 				else {
-					selectedIndex = which;
+					mSelectedIndex = which;
 					setValueIndex(which);
 					DirectorySelectionPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
 					dialog.dismiss();
@@ -188,13 +188,13 @@ public class DirectorySelectionPreference extends ListPreference {
 	protected final void onDialogClosed(final boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
 
-		if (positiveResult && selectedIndex >= 0 && getEntryValues() != null) {
+		if (positiveResult && mSelectedIndex >= 0 && getEntryValues() != null) {
 			String value;
-			if (selectedCustomDir != null) {
-				value = selectedCustomDir;
+			if (mSelectedCustomDir != null) {
+				value = mSelectedCustomDir;
 			}
 			else {
-				value = getEntryValues()[selectedIndex].toString();
+				value = getEntryValues()[mSelectedIndex].toString();
 			}
 			if (callChangeListener(value)) {
 				setValue(value);

@@ -81,50 +81,50 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
 	 */
-	private int type;
+	private int mType;
 
 	/**
 	 * The file resource id.
 	 */
-	private int fileResource;
+	private int mFileResource;
 
 	/**
 	 * The file path.
 	 */
-	private String file;
+	private String mFile;
 
 	/**
 	 * The image index.
 	 */
-	private int imageIndex;
+	private int mImageIndex;
 
 	/**
 	 * Information if right or left image.
 	 */
-	private RightLeft rightLeft;
+	private RightLeft mRightLeft;
 
 	/**
 	 * Flag indicating if overlays are allowed.
 	 */
-	private boolean allowOverlays = true;
+	private boolean mAllowOverlays = true;
 
 	/**
 	 * Flag holding information if fragment is shown in landscape mode.
 	 */
-	private boolean isLandscape;
+	private boolean mIsLandscape;
 
 	protected final boolean isLandscape() {
-		return isLandscape;
+		return mIsLandscape;
 	}
 
 	protected final void setLandscape(final boolean newIsLandscape) {
-		this.isLandscape = newIsLandscape;
+		this.mIsLandscape = newIsLandscape;
 	}
 
 	/**
 	 * The view displaying the image.
 	 */
-	private OverlayPinchImageView imageView;
+	private OverlayPinchImageView mImageView;
 
 	/**
 	 * The number of overlay images.
@@ -134,67 +134,67 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The button for showing the image in full resolution.
 	 */
-	private Button clarityButton;
+	private Button mClarityButton;
 
 	/**
 	 * The button for showing the image comment.
 	 */
-	private Button commentButton;
+	private Button mCommentButton;
 
 	/**
 	 * The button for showing the image info.
 	 */
-	private Button infoButton;
+	private Button mInfoButton;
 
 	/**
 	 * The button for saving image metadata.
 	 */
-	private Button saveButton;
+	private Button mSaveButton;
 
 	/**
 	 * The button for showing or hiding the tools.
 	 */
-	private Button toolsButton;
+	private Button mToolsButton;
 
 	/**
 	 * The button for showing or hiding the tools.
 	 */
-	private Button helpButton;
+	private Button mHelpButton;
 
 	/**
 	 * The array of overlay buttons.
 	 */
-	private ToggleButton[] toggleOverlayButtons;
+	private ToggleButton[] mToggleOverlayButtons;
 
 	/**
 	 * The lock button.
 	 */
-	private ToggleButton lockButton;
+	private ToggleButton mLockButton;
 
 	/**
 	 * The color selector button.
 	 */
-	private Button selectColorButton;
+	private Button mSelectColorButton;
 
 	/**
 	 * The brightness SeekBar.
 	 */
-	private SeekBar seekbarBrightness;
+	private SeekBar mSeekbarBrightness;
 
 	/**
 	 * The contrast SeekBar.
 	 */
-	private SeekBar seekbarContrast;
+	private SeekBar mSeekbarContrast;
 
 	/**
 	 * A flag indicating if utilities (seekbars, buttons) should be displayed.
 	 */
-	private boolean showUtilities = true;
+	private boolean mShowUtilities = true;
 
 	/**
 	 * The overlay color.
 	 */
-	private int overlayColor = Color.RED;
+	private int mOverlayColor = Color.RED;
 
 	/**
 	 * Initialize the fragment with the file name.
@@ -244,11 +244,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		type = getArguments().getInt(STRING_TYPE, -1);
-		file = getArguments().getString(STRING_FILE);
-		fileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
-		imageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
-		rightLeft = (RightLeft) getArguments().getSerializable(STRING_RIGHTLEFT);
+		mType = getArguments().getInt(STRING_TYPE, -1);
+		mFile = getArguments().getString(STRING_FILE);
+		mFileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
+		mImageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
+		mRightLeft = (RightLeft) getArguments().getSerializable(STRING_RIGHTLEFT);
 	}
 
 	/*
@@ -276,43 +276,43 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		super.onActivityCreated(savedInstanceState);
 
 		if (savedInstanceState != null) {
-			showUtilities = savedInstanceState.getBoolean("showUtilities");
-			overlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
+			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
+			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
 		}
 		else {
-			showUtilities = getDefaultShowUtilities();
-			overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+			mShowUtilities = getDefaultShowUtilities();
+			mOverlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		}
 
-		imageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
-		imageView.setGuiElementUpdater(this);
-		imageView.allowFullResolution(allowFullResolution());
+		mImageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
+		mImageView.setGuiElementUpdater(this);
+		mImageView.allowFullResolution(allowFullResolution());
 
 		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
-		toggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
+		mToggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
-			toggleOverlayButtons[i] = (ToggleButton) getView().findViewById(overlayButtonResources.getResourceId(i, -1));
-			toggleOverlayButtons[i].setVisibility(View.VISIBLE);
+			mToggleOverlayButtons[i] = (ToggleButton) getView().findViewById(overlayButtonResources.getResourceId(i, -1));
+			mToggleOverlayButtons[i].setVisibility(View.VISIBLE);
 		}
 		overlayButtonResources.recycle();
 
-		lockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
+		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
-		selectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
+		mSelectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
 
-		clarityButton = (Button) getView().findViewById(R.id.buttonClarity);
-		infoButton = (Button) getView().findViewById(R.id.buttonInfo);
-		commentButton = (Button) getView().findViewById(R.id.buttonComment);
-		saveButton = (Button) getView().findViewById(R.id.buttonSave);
-		toolsButton = (Button) getView().findViewById(R.id.buttonTools);
-		helpButton = (Button) getView().findViewById(R.id.buttonHelp);
+		mClarityButton = (Button) getView().findViewById(R.id.buttonClarity);
+		mInfoButton = (Button) getView().findViewById(R.id.buttonInfo);
+		mCommentButton = (Button) getView().findViewById(R.id.buttonComment);
+		mSaveButton = (Button) getView().findViewById(R.id.buttonSave);
+		mToolsButton = (Button) getView().findViewById(R.id.buttonTools);
+		mHelpButton = (Button) getView().findViewById(R.id.buttonHelp);
 
-		showUtilities(showUtilities);
+		showUtilities(mShowUtilities);
 
 		// Initialize the onClick listeners for the buttons
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			final int index = i;
-			toggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
+			mToggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
 					onToggleOverlayClicked(v, index);
@@ -320,14 +320,14 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			});
 		}
 
-		lockButton.setOnClickListener(new OnClickListener() {
+		mLockButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				onToggleLockClicked(v);
 			}
 		});
 
-		selectColorButton.setOnClickListener(new OnClickListener() {
+		mSelectColorButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				onButtonSelectColorClicked(v);
@@ -335,35 +335,35 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 
 		if (!allowFullResolution()) {
-			clarityButton.setOnClickListener(new OnClickListener() {
+			mClarityButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					imageView.showFullResolutionSnapshot(false);
+					mImageView.showFullResolutionSnapshot(false);
 					DialogUtil.displayTip(getActivity(), R.string.message_tip_clarity, R.string.key_tip_clarity);
 				}
 			});
 		}
 		else {
-			clarityButton.setVisibility(View.GONE);
+			mClarityButton.setVisibility(View.GONE);
 		}
 
-		infoButton.setOnClickListener(new OnClickListener() {
+		mInfoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				DialogUtil.displayImageInfo(getActivity(), imageView.getEyePhoto());
+				DialogUtil.displayImageInfo(getActivity(), mImageView.getEyePhoto());
 			}
 		});
 
-		commentButton.setOnClickListener(new OnClickListener() {
+		mCommentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
-						imageView.getMetadata().comment);
+						mImageView.getMetadata().mComment);
 				DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
 			}
 		});
 
-		saveButton.setOnClickListener(new OnClickListener() {
+		mSaveButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				showSaveMenu(v);
@@ -371,16 +371,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		toolsButton.setOnClickListener(new OnClickListener() {
+		mToolsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				boolean newShowUtilities = !showUtilities;
+				boolean newShowUtilities = !mShowUtilities;
 				showUtilities(newShowUtilities);
 				updateDefaultShowUtilities(newShowUtilities);
 			}
 		});
 
-		helpButton.setOnClickListener(new OnClickListener() {
+		mHelpButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				DisplayHtmlActivity.startActivity(getActivity(), R.string.html_display_photos);
@@ -388,24 +388,24 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 
 		// Initialize the listeners for the seekbars (brightness and contrast)
-		seekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
-		seekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
+		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				imageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
 
-		seekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
-		seekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		mSeekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
+		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				imageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
 
 		// The following also updates the selectColorButton
-		imageView.setOverlayColor(overlayColor);
+		mImageView.setOverlayColor(mOverlayColor);
 
 	}
 
@@ -423,22 +423,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
 				&& position >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
 			DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
-			toggleOverlayButtons[position].setChecked(false);
+			mToggleOverlayButtons[position].setChecked(false);
 			return;
 		}
 
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			if (position != i) {
-				if (toggleOverlayButtons[i].isChecked()) {
-					toggleOverlayButtons[i].setChecked(false);
+				if (mToggleOverlayButtons[i].isChecked()) {
+					mToggleOverlayButtons[i].setChecked(false);
 					buttonGetsUnchecked = true;
 				}
 			}
 		}
 
-		imageView.triggerOverlay(position);
+		mImageView.triggerOverlay(position);
 
-		if (toggleOverlayButtons[position].isChecked() && !buttonGetsUnchecked) {
+		if (mToggleOverlayButtons[position].isChecked() && !buttonGetsUnchecked) {
 			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay, R.string.key_tip_overlay);
 		}
 	}
@@ -451,7 +451,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	private void onToggleLockClicked(final View view) {
 		ToggleButton button = (ToggleButton) view;
-		imageView.lockOverlay(button.isChecked(), true);
+		mImageView.lockOverlay(button.isChecked(), true);
 	}
 
 	/**
@@ -464,7 +464,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		ColorPickerDialog dialog =
 				ColorPickerDialog
 						.newInstance(R.string.color_picker_title, ColorPickerConstants.COLOR_PICKER_COLORS,
-								imageView.getOverlayColor(),
+								mImageView.getOverlayColor(),
 								ColorPickerConstants.COLOR_PICKER_COLUMNS,
 								ColorPickerConstants.COLOR_PICKER_SIZE);
 
@@ -485,31 +485,31 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			public boolean onMenuItemClick(final MenuItem item) {
 				int itemId = item.getItemId();
 				if (itemId == R.id.action_store_brightness) {
-					imageView.storeBrightnessContrast(false);
+					mImageView.storeBrightnessContrast(false);
 					return true;
 				}
 				else if (itemId == R.id.action_reset_brightness) {
-					imageView.storeBrightnessContrast(true);
+					mImageView.storeBrightnessContrast(true);
 					return true;
 				}
 				else if (itemId == R.id.action_store_position) {
-					imageView.storePositionZoom(false);
+					mImageView.storePositionZoom(false);
 					return true;
 				}
 				else if (itemId == R.id.action_reset_position) {
-					imageView.storePositionZoom(true);
+					mImageView.storePositionZoom(true);
 					return true;
 				}
 				else if (itemId == R.id.action_store_overlay_color) {
-					imageView.storeOverlayColor(false);
+					mImageView.storeOverlayColor(false);
 					return true;
 				}
 				else if (itemId == R.id.action_reset_overlay_color) {
-					imageView.storeOverlayColor(true);
+					mImageView.storeOverlayColor(true);
 					return true;
 				}
 				else if (itemId == R.id.action_delete_overlay_position) {
-					imageView.resetOverlayPosition(true);
+					mImageView.resetOverlayPosition(true);
 					return true;
 				}
 				else {
@@ -519,7 +519,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 		popup.inflate(R.menu.context_display_one);
 
-		if (!showUtilities) {
+		if (!mShowUtilities) {
 			// Hide store/reset actions when utilities are not shown
 			popup.getMenu().removeGroup(R.id.group_store_reset);
 		}
@@ -533,7 +533,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            The comment text to be stored.
 	 */
 	public final void storeComment(final String comment) {
-		imageView.storeComment(comment);
+		mImageView.storeComment(comment);
 	}
 
 	/**
@@ -544,25 +544,25 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	protected final void showUtilities(final boolean show) {
 		if (show) {
-			if (isLandscape) {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
+			if (mIsLandscape) {
+				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
 			}
 			else {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_down);
+				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_down);
 			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
-			if (allowOverlays) {
+			if (mAllowOverlays) {
 				getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
 			}
 		}
 		else {
-			if (isLandscape) {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_left, 0);
+			if (mIsLandscape) {
+				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_left, 0);
 			}
 			else {
-				toolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_up);
+				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_up);
 			}
 			getView().findViewById(R.id.separatorTools).setVisibility(View.GONE);
 			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
@@ -570,7 +570,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 		}
 		requestLayout();
-		showUtilities = show;
+		mShowUtilities = show;
 	}
 
 	/**
@@ -636,28 +636,28 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Override
 	public final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putBoolean("showUtilities", showUtilities);
-		outState.putInt("overlayColor", overlayColor);
+		outState.putBoolean("showUtilities", mShowUtilities);
+		outState.putInt("overlayColor", mOverlayColor);
 	}
 
 	/**
 	 * Initialize images - to be called after the views have restored instance state.
 	 */
 	public final void initializeImages() {
-		if (type == TYPE_FILERESOURCE) {
-			imageView.setImage(fileResource, getActivity(), imageIndex);
+		if (mType == TYPE_FILERESOURCE) {
+			mImageView.setImage(mFileResource, getActivity(), mImageIndex);
 		}
 		else {
-			imageView.setImage(file, getActivity(), imageIndex);
+			mImageView.setImage(mFile, getActivity(), mImageIndex);
 		}
 
-		if (imageView.getEyePhoto().getRightLeft() == null && rightLeft != null) {
-			imageView.getEyePhoto().setRightLeft(rightLeft);
+		if (mImageView.getEyePhoto().getRightLeft() == null && mRightLeft != null) {
+			mImageView.getEyePhoto().setRightLeft(mRightLeft);
 		}
 
-		if (!imageView.canHandleOverlays()) {
+		if (!mImageView.canHandleOverlays()) {
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-			allowOverlays = false;
+			mAllowOverlays = false;
 		}
 	}
 
@@ -665,11 +665,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Trigger redrawing of the imageView from outside.
 	 */
 	public final void requestLayout() {
-		imageView.post(new Runnable() {
+		mImageView.post(new Runnable() {
 			@Override
 			public void run() {
-				imageView.requestLayout();
-				imageView.invalidate();
+				mImageView.requestLayout();
+				mImageView.invalidate();
 			}
 		});
 	}
@@ -699,43 +699,43 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	@Override
 	public final void onColorSelected(final int color) {
-		imageView.setOverlayColor(color);
-		overlayColor = color;
+		mImageView.setOverlayColor(color);
+		mOverlayColor = color;
 	}
 
 	// Implementation of GuiElementUpdater
 
 	@Override
 	public final void setLockChecked(final boolean checked) {
-		lockButton.setChecked(checked);
+		mLockButton.setChecked(checked);
 	}
 
 	@Override
 	public final void updateSeekbarBrightness(final float brightness) {
-		float progress = (brightness + 1) * seekbarBrightness.getMax() / 2;
-		seekbarBrightness.setProgress(Float.valueOf(progress).intValue());
+		float progress = (brightness + 1) * mSeekbarBrightness.getMax() / 2;
+		mSeekbarBrightness.setProgress(Float.valueOf(progress).intValue());
 	}
 
 	@Override
 	public final void updateSeekbarContrast(final float contrast) {
-		float progress = (contrast + 1) * seekbarContrast.getMax() / 2;
-		seekbarContrast.setProgress(Float.valueOf(progress).intValue());
+		float progress = (contrast + 1) * mSeekbarContrast.getMax() / 2;
+		mSeekbarContrast.setProgress(Float.valueOf(progress).intValue());
 	}
 
 	@Override
 	public final void updateOverlayColorButton(final int color) {
-		selectColorButton.setTextColor(color);
+		mSelectColorButton.setTextColor(color);
 	}
 
 	@Override
 	public final int getOverlayDefaultColor() {
-		return overlayColor;
+		return mOverlayColor;
 	}
 
 	@Override
 	public final void resetOverlays() {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
-			toggleOverlayButtons[i].setChecked(false);
+			mToggleOverlayButtons[i].setChecked(false);
 		}
 	}
 
@@ -744,7 +744,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	@Override
 	public final void onTrimMemory(final int level) {
-		imageView.cleanFullBitmap();
+		mImageView.cleanFullBitmap();
 		super.onTrimMemory(level);
 	}
 
@@ -754,7 +754,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 		@Override
 		public void onStopTrackingTouch(final SeekBar seekBar) {
-			imageView.refresh();
+			mImageView.refresh();
 		}
 
 		@Override

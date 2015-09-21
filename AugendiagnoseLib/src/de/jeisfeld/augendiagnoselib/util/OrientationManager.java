@@ -37,11 +37,11 @@ public class OrientationManager extends OrientationEventListener {
 	/**
 	 * The current screen orientation.
 	 */
-	private ScreenOrientation screenOrientation;
+	private ScreenOrientation mScreenOrientation;
 	/**
 	 * The listener reacting on changes of screen orientation.
 	 */
-	private OrientationListener listener;
+	private OrientationListener mListener;
 
 	/**
 	 * Constructor for the orientation manager.
@@ -89,20 +89,20 @@ public class OrientationManager extends OrientationEventListener {
 		else {
 			newScreenOrientation = ScreenOrientation.PORTRAIT;
 		}
-		if (newScreenOrientation != screenOrientation) {
-			screenOrientation = newScreenOrientation;
-			if (listener != null) {
-				listener.onOrientationChange(screenOrientation);
+		if (newScreenOrientation != mScreenOrientation) {
+			mScreenOrientation = newScreenOrientation;
+			if (mListener != null) {
+				mListener.onOrientationChange(mScreenOrientation);
 			}
 		}
 	}
 
 	public final void setListener(final OrientationListener listener) {
-		this.listener = listener;
+		this.mListener = listener;
 	}
 
 	public final ScreenOrientation getScreenOrientation() {
-		return screenOrientation;
+		return mScreenOrientation;
 	}
 
 	/**

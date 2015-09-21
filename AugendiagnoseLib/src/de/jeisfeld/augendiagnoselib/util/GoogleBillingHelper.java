@@ -50,42 +50,42 @@ public final class GoogleBillingHelper {
 	/**
 	 * An instance of GoogleBillingHelper.
 	 */
-	private static GoogleBillingHelper instance;
+	private static GoogleBillingHelper mInstance;
 
 	/**
 	 * Helper class for Google Billing.
 	 */
-	private IabHelper iabHelper;
+	private IabHelper mIabHelper;
 
 	/**
 	 * The activity starting Google Billing.
 	 */
-	private Activity activity;
+	private Activity mActivity;
 
 	/**
 	 * An onInventoryFinishedListener called after inventory has been retrieved.
 	 */
-	private OnInventoryFinishedListener onInventoryFinishedListener;
+	private OnInventoryFinishedListener mOnInventoryFinishedListener;
 
 	/**
 	 * An onPurchaseSuccessListener called after a purchase has been completed.
 	 */
-	private OnPurchaseSuccessListener onPurchaseSuccessListener;
+	private OnPurchaseSuccessListener mOnPurchaseSuccessListener;
 
 	/**
 	 * The list of purchases.
 	 */
-	private List<PurchasedSku> purchases = null;
+	private List<PurchasedSku> mPurchases = null;
 
 	/**
 	 * The list of non-purchased products.
 	 */
-	private List<SkuDetails> nonPurchases = null;
+	private List<SkuDetails> mNonPurchases = null;
 
 	/**
 	 * Flag indicating if there is a purchase setting premium status.
 	 */
-	private boolean isPremium = false;
+	private boolean mIsPremium = false;
 
 	/**
 	 * Hide default constructor.
@@ -104,19 +104,19 @@ public final class GoogleBillingHelper {
 	 */
 	public static void initialize(final Activity activity, final OnInventoryFinishedListener listener) {
 		synchronized (GoogleBillingHelper.class) {
-			if (instance != null) {
-				if (instance.activity == activity) {
+			if (mInstance != null) {
+				if (mInstance.mActivity == activity) {
 					return;
 				}
 				else {
 					dispose();
 				}
 			}
-			instance = new GoogleBillingHelper();
-			instance.activity = activity;
-			instance.onInventoryFinishedListener = listener;
+			mInstance = new GoogleBillingHelper();
+			mInstance.mActivity = activity;
+			mInstance.mOnInventoryFinishedListener = listener;
 		}
-		instance.initialize();
+		mInstance.initialize();
 	}
 
 	/**
@@ -126,14 +126,14 @@ public final class GoogleBillingHelper {
 		String base64EncodedPublicKey = Application.getResourceString(R.string.private_license_key);
 
 		// compute your public key and store it in base64EncodedPublicKey
-		iabHelper = new IabHelper(activity, base64EncodedPublicKey);
-		iabHelper.enableDebugLogging(false, TAG);
-		iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+		mIabHelper = new IabHelper(mActivity, base64EncodedPublicKey);
+		mIabHelper.enableDebugLogging(false, TAG);
+		mIabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			@Override
 			public void onIabSetupFinished(final IabResult result) {
 				if (result.isSuccess()) {
 					Log.d(TAG, "Finished IAB setup");
-					iabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), gotInventoryListener);
+					mIabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), mGotInventoryListener);
 				}
 				else {
 					Log.e(TAG, "Problem setting up In-app Billing: " + result);
@@ -151,21 +151,21 @@ public final class GoogleBillingHelper {
 	 *            a listener called after the purchase has been completed.
 	 */
 	public static void launchPurchaseFlow(final String productId, final OnPurchaseSuccessListener listener) {
-		if (instance == null || instance.iabHelper == null) {
+		if (mInstance == null || mInstance.mIabHelper == null) {
 			throw new NullPointerException(
 					"Tried to launch purchase flow without having GoogleBillingHelper initialized");
 		}
-		instance.onPurchaseSuccessListener = listener;
+		mInstance.mOnPurchaseSuccessListener = listener;
 
 		if (Arrays.asList(SUBSCRIPTION_IDS).contains(productId)) {
 			Log.d(TAG, "Starting subscription purchase flow for " + productId);
-			instance.iabHelper.launchSubscriptionPurchaseFlow(instance.activity, productId, REQUEST_CODE,
-					instance.purchaseFinishedListener);
+			mInstance.mIabHelper.launchSubscriptionPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
+					mInstance.mPurchaseFinishedListener);
 		}
 		else {
 			Log.d(TAG, "Starting product purchase flow for " + productId);
-			instance.iabHelper.launchPurchaseFlow(instance.activity, productId, REQUEST_CODE,
-					instance.purchaseFinishedListener);
+			mInstance.mIabHelper.launchPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
+					mInstance.mPurchaseFinishedListener);
 		}
 	}
 
@@ -183,8 +183,8 @@ public final class GoogleBillingHelper {
 	 */
 	public static void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (requestCode == REQUEST_CODE) {
-			if (instance != null && instance.iabHelper != null) {
-				instance.iabHelper.handleActivityResult(requestCode, resultCode, data);
+			if (mInstance != null && mInstance.mIabHelper != null) {
+				mInstance.mIabHelper.handleActivityResult(requestCode, resultCode, data);
 			}
 		}
 	}
@@ -194,11 +194,11 @@ public final class GoogleBillingHelper {
 	 */
 	public static void dispose() {
 		synchronized (GoogleBillingHelper.class) {
-			if (instance != null) {
-				if (instance.iabHelper != null) {
-					instance.iabHelper.dispose();
+			if (mInstance != null) {
+				if (mInstance.mIabHelper != null) {
+					mInstance.mIabHelper.dispose();
 				}
-				instance = null;
+				mInstance = null;
 			}
 		}
 	}
@@ -206,14 +206,14 @@ public final class GoogleBillingHelper {
 	/**
 	 * The onInventoryFinishedListener started after the inventory is loaded.
 	 */
-	private IabHelper.QueryInventoryFinishedListener gotInventoryListener =
+	private IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
 			new IabHelper.QueryInventoryFinishedListener() {
 				@Override
 				public void onQueryInventoryFinished(final IabResult result, final Inventory inventory) {
 					Log.d(TAG, "Query inventory finished - " + inventory);
 
 					// Have we been disposed of in the meantime? If so, quit.
-					if (iabHelper == null) {
+					if (mIabHelper == null) {
 						return;
 					}
 
@@ -226,8 +226,8 @@ public final class GoogleBillingHelper {
 					Log.d(TAG, "Query inventory was successful.");
 
 					synchronized (GoogleBillingHelper.class) {
-						purchases = new ArrayList<PurchasedSku>();
-						nonPurchases = new ArrayList<SkuDetails>();
+						mPurchases = new ArrayList<PurchasedSku>();
+						mNonPurchases = new ArrayList<SkuDetails>();
 					}
 					for (String purchaseId : Arrays.asList(PRODUCT_IDS)) {
 						Purchase purchase = inventory.getPurchase(purchaseId);
@@ -239,13 +239,13 @@ public final class GoogleBillingHelper {
 						else {
 							synchronized (GoogleBillingHelper.class) {
 								if (purchase == null) {
-									nonPurchases.add(skuDetails);
+									mNonPurchases.add(skuDetails);
 								}
 								else {
 									Log.d(TAG, "Found purchase: " + purchase);
-									purchases.add(new PurchasedSku(skuDetails, purchase));
+									mPurchases.add(new PurchasedSku(skuDetails, purchase));
 									if (Arrays.asList(PREMIUM_IDS).contains(purchase.getSku())) {
-										isPremium = true;
+										mIsPremium = true;
 									}
 								}
 							}
@@ -253,8 +253,8 @@ public final class GoogleBillingHelper {
 
 					}
 
-					if (onInventoryFinishedListener != null) {
-						onInventoryFinishedListener.handleProducts(purchases, nonPurchases, isPremium);
+					if (mOnInventoryFinishedListener != null) {
+						mOnInventoryFinishedListener.handleProducts(mPurchases, mNonPurchases, mIsPremium);
 					}
 				}
 			};
@@ -262,14 +262,14 @@ public final class GoogleBillingHelper {
 	/**
 	 * Callback for when a purchase is finished.
 	 */
-	private IabHelper.OnIabPurchaseFinishedListener purchaseFinishedListener =
+	private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
 			new IabHelper.OnIabPurchaseFinishedListener() {
 				@Override
 				public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
 					Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
 					// if we were disposed of in the meantime, quit.
-					if (iabHelper == null) {
+					if (mIabHelper == null) {
 						return;
 					}
 
@@ -280,10 +280,10 @@ public final class GoogleBillingHelper {
 
 					Log.d(TAG, "Purchase successful.");
 
-					if (onPurchaseSuccessListener != null) {
+					if (mOnPurchaseSuccessListener != null) {
 						boolean isPremiumProduct = Arrays.asList(PREMIUM_IDS).contains(purchase.getSku());
-						onPurchaseSuccessListener.handlePurchase(purchase, isPremiumProduct && !isPremium);
-						isPremium = isPremium || isPremiumProduct;
+						mOnPurchaseSuccessListener.handlePurchase(purchase, isPremiumProduct && !mIsPremium);
+						mIsPremium = mIsPremium || isPremiumProduct;
 					}
 				}
 			};

@@ -25,12 +25,12 @@ public class EditCommentFragment extends Fragment {
 	/**
 	 * The EditText displaying the comment.
 	 */
-	private EditText editText;
+	private EditText mEditText;
 
 	/**
 	 * The comment text.
 	 */
-	private String text;
+	private String mText;
 
 	/**
 	 * Initialize the EditCommentFragment with the text.
@@ -49,7 +49,7 @@ public class EditCommentFragment extends Fragment {
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		text = getArguments().getString(STRING_TEXT);
+		mText = getArguments().getString(STRING_TEXT);
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class EditCommentFragment extends Fragment {
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		editText = (EditText) getView().findViewById(R.id.input_edit_comment);
-		editText.setText(text);
+		mEditText = (EditText) getView().findViewById(R.id.input_edit_comment);
+		mEditText.setText(mText);
 
-		editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(final View v, final boolean hasFocus) {
 				if (hasFocus) {
@@ -80,7 +80,7 @@ public class EditCommentFragment extends Fragment {
 			@Override
 			public void onClick(final View v) {
 				DisplayImageActivity activity = (DisplayImageActivity) getActivity();
-				activity.processUpdatedComment(editText.getText().toString(), false);
+				activity.processUpdatedComment(mEditText.getText().toString(), false);
 			}
 		});
 
@@ -88,7 +88,7 @@ public class EditCommentFragment extends Fragment {
 		buttonClear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				editText.setText("");
+				mEditText.setText("");
 			}
 		});
 
@@ -97,7 +97,7 @@ public class EditCommentFragment extends Fragment {
 			@Override
 			public void onClick(final View v) {
 				DisplayImageActivity activity = (DisplayImageActivity) getActivity();
-				activity.processUpdatedComment(editText.getText().toString(), true);
+				activity.processUpdatedComment(mEditText.getText().toString(), true);
 			}
 		});
 
@@ -107,7 +107,7 @@ public class EditCommentFragment extends Fragment {
 	 * Hide the soft keyboard triggered from this listFoldersFragment.
 	 */
 	public final void hideKeyboard() {
-		KeyboardUtil.hideKeyboard(getActivity(), editText);
+		KeyboardUtil.hideKeyboard(getActivity(), mEditText);
 	}
 
 }

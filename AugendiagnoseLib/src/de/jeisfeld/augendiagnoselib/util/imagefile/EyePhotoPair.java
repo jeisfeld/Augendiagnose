@@ -11,22 +11,22 @@ public class EyePhotoPair {
 	/**
 	 * The eye photos contained in the pair.
 	 */
-	private EyePhoto rightEye, leftEye;
+	private EyePhoto mRightEye, mLeftEye;
 
 	public final EyePhoto getRightEye() {
-		return rightEye;
+		return mRightEye;
 	}
 
 	public final void setRightEye(final EyePhoto rightEye) {
-		this.rightEye = rightEye;
+		this.mRightEye = rightEye;
 	}
 
 	public final EyePhoto getLeftEye() {
-		return leftEye;
+		return mLeftEye;
 	}
 
 	public final void setLeftEye(final EyePhoto leftEye) {
-		this.leftEye = leftEye;
+		this.mLeftEye = leftEye;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class EyePhotoPair {
 	 * @return the date of the right photo.
 	 */
 	public final Date getDate() {
-		return rightEye.getDate();
+		return mRightEye.getDate();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class EyePhotoPair {
 	 * @return true if both eyes are available.
 	 */
 	public final boolean isComplete() {
-		return leftEye != null && rightEye != null;
+		return mLeftEye != null && mRightEye != null;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class EyePhotoPair {
 	 * @return true if the deletion was successful on both eyes.
 	 */
 	public final boolean delete() {
-		return rightEye.delete() && leftEye.delete();
+		return mRightEye.delete() && mLeftEye.delete();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class EyePhotoPair {
 	 * @return true if the move was successful on both eyes.
 	 */
 	public final boolean moveToFolder(final String targetFolder) {
-		return rightEye.moveToFolder(targetFolder) && leftEye.moveToFolder(targetFolder);
+		return mRightEye.moveToFolder(targetFolder) && mLeftEye.moveToFolder(targetFolder);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class EyePhotoPair {
 	 * @return true if the change operation was successful on both eyes.
 	 */
 	public final boolean changeDate(final Date newDate) {
-		return rightEye.changeDate(newDate) && leftEye.changeDate(newDate);
+		return mRightEye.changeDate(newDate) && mLeftEye.changeDate(newDate);
 	}
 
 }

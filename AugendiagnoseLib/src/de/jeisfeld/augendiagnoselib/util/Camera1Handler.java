@@ -25,52 +25,52 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The camera used by the activity.
 	 */
-	private Camera camera;
+	private Camera mCamera;
 
 	/**
 	 * A flag indicating if the preview is active.
 	 */
-	private boolean inPreview = false;
+	private boolean mIsInPreview = false;
 
 	/**
 	 * A flag indicating if preview is requested.
 	 */
-	private boolean isPreviewRequested = false;
+	private boolean mIsPreviewRequested = false;
 
 	/**
 	 * A flag indicating if the camera is configured.
 	 */
-	private boolean cameraConfigured = false;
+	private boolean mIsCameraConfigured = false;
 
 	/**
 	 * A flag indicating if the surface is created.
 	 */
-	private boolean surfaceCreated = false;
+	private boolean mIsSurfaceCreated = false;
 
 	/**
 	 * The current flashlight mode.
 	 */
-	private String currentFlashlightMode = null;
+	private String mCurrentFlashlightMode = null;
 
 	/**
 	 * The activity using the handler.
 	 */
-	private Activity activity;
+	private Activity mActivity;
 
 	/**
 	 * The FrameLayout holding the preview.
 	 */
-	private FrameLayout previewFrame;
+	private FrameLayout mPreviewFrame;
 
 	/**
 	 * The view holding the preview.
 	 */
-	private TextureView preview;
+	private TextureView mTextureView;
 
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private OnPictureTakenHandler onPictureTakenHandler;
+	private OnPictureTakenHandler mOnPictureTakenHandler;
 
 	/**
 	 * Constructor of the Camera1Handler.
@@ -86,33 +86,33 @@ public class Camera1Handler implements CameraHandler {
 	 */
 	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
 			final OnPictureTakenHandler onPictureTakenHandler) {
-		this.activity = activity;
-		this.previewFrame = previewFrame;
-		this.preview = preview;
-		this.onPictureTakenHandler = onPictureTakenHandler;
+		this.mActivity = activity;
+		this.mPreviewFrame = previewFrame;
+		this.mTextureView = preview;
+		this.mOnPictureTakenHandler = onPictureTakenHandler;
 
-		preview.setSurfaceTextureListener(surfaceTextureListener);
+		preview.setSurfaceTextureListener(mSurfaceTextureListener);
 	}
 
 	@Override
 	public final void setFlashlightMode(final FlashMode flashlightMode) {
 		if (flashlightMode == null) {
-			currentFlashlightMode = null;
+			mCurrentFlashlightMode = null;
 			return;
 		}
 
 		switch (flashlightMode) {
 		case OFF:
-			currentFlashlightMode = Parameters.FLASH_MODE_OFF;
+			mCurrentFlashlightMode = Parameters.FLASH_MODE_OFF;
 			break;
 		case ON:
-			currentFlashlightMode = Parameters.FLASH_MODE_ON;
+			mCurrentFlashlightMode = Parameters.FLASH_MODE_ON;
 			break;
 		case TORCH:
-			currentFlashlightMode = Parameters.FLASH_MODE_TORCH;
+			mCurrentFlashlightMode = Parameters.FLASH_MODE_TORCH;
 			break;
 		default:
-			currentFlashlightMode = null;
+			mCurrentFlashlightMode = null;
 			break;
 		}
 
@@ -123,12 +123,12 @@ public class Camera1Handler implements CameraHandler {
 	 * Update the flashlight.
 	 */
 	private void updateFlashlight() {
-		if (camera != null) {
-			Parameters parameters = camera.getParameters();
-			if (parameters.getSupportedFlashModes().contains(currentFlashlightMode)) {
-				parameters.setFlashMode(currentFlashlightMode);
+		if (mCamera != null) {
+			Parameters parameters = mCamera.getParameters();
+			if (parameters.getSupportedFlashModes().contains(mCurrentFlashlightMode)) {
+				parameters.setFlashMode(mCurrentFlashlightMode);
 			}
-			camera.setParameters(parameters);
+			mCamera.setParameters(parameters);
 		}
 	}
 
@@ -136,17 +136,17 @@ public class Camera1Handler implements CameraHandler {
 	 * Initialize the camera.
 	 */
 	private void initPreview() {
-		if (camera != null && surfaceCreated && preview.isAvailable()) {
+		if (mCamera != null && mIsSurfaceCreated && mTextureView.isAvailable()) {
 			try {
-				camera.setPreviewTexture(preview.getSurfaceTexture());
+				mCamera.setPreviewTexture(mTextureView.getSurfaceTexture());
 			}
 			catch (Throwable t) {
 				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
-				DialogUtil.displayToast(activity, R.string.message_dialog_failed_to_open_camera_display);
+				DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera_display);
 			}
 
-			if (!cameraConfigured) {
-				Parameters parameters = camera.getParameters();
+			if (!mIsCameraConfigured) {
+				Parameters parameters = mCamera.getParameters();
 				Camera.Size pictureSize = getBiggestPictureSize(parameters);
 				if (pictureSize == null) {
 					return;
@@ -168,98 +168,98 @@ public class Camera1Handler implements CameraHandler {
 					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
 				}
 
-				camera.setParameters(parameters);
+				mCamera.setParameters(parameters);
 
-				if (currentFlashlightMode != null) {
+				if (mCurrentFlashlightMode != null) {
 					updateFlashlight();
 				}
 
 				// Resize frame to match aspect ratio
 				float aspectRatio = ((float) pictureSize.width) / pictureSize.height;
 
-				LayoutParams layoutParams = previewFrame.getLayoutParams();
-				if (previewFrame.getWidth() > aspectRatio * previewFrame.getHeight()) {
-					layoutParams.width = Math.round(previewFrame.getHeight() * aspectRatio);
-					layoutParams.height = previewFrame.getHeight();
+				LayoutParams layoutParams = mPreviewFrame.getLayoutParams();
+				if (mPreviewFrame.getWidth() > aspectRatio * mPreviewFrame.getHeight()) {
+					layoutParams.width = Math.round(mPreviewFrame.getHeight() * aspectRatio);
+					layoutParams.height = mPreviewFrame.getHeight();
 				}
 				else {
-					layoutParams.width = previewFrame.getWidth();
-					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
+					layoutParams.width = mPreviewFrame.getWidth();
+					layoutParams.height = Math.round(mPreviewFrame.getWidth() / aspectRatio);
 				}
-				previewFrame.setLayoutParams(layoutParams);
+				mPreviewFrame.setLayoutParams(layoutParams);
 
-				cameraConfigured = true;
+				mIsCameraConfigured = true;
 			}
 		}
 	}
 
 	@Override
 	public final void startPreview() {
-		if (Parameters.FLASH_MODE_ON.equals(currentFlashlightMode)) {
+		if (Parameters.FLASH_MODE_ON.equals(mCurrentFlashlightMode)) {
 			stopPreview();
 		}
-		isPreviewRequested = true;
+		mIsPreviewRequested = true;
 
-		if (inPreview) {
+		if (mIsInPreview) {
 			return;
 		}
 
-		if (camera == null) {
-			camera = getCameraInstance();
+		if (mCamera == null) {
+			mCamera = getCameraInstance();
 
-			if (camera == null) {
+			if (mCamera == null) {
 				// The activity depends on the camera.
-				DialogUtil.displayError(activity, R.string.message_dialog_failed_to_open_camera, true);
+				DialogUtil.displayError(mActivity, R.string.message_dialog_failed_to_open_camera, true);
 				return;
 			}
 		}
 
-		if (surfaceCreated && !cameraConfigured) {
+		if (mIsSurfaceCreated && !mIsCameraConfigured) {
 			initPreview();
 		}
 
-		if (cameraConfigured) {
-			camera.startPreview();
-			inPreview = true;
+		if (mIsCameraConfigured) {
+			mCamera.startPreview();
+			mIsInPreview = true;
 		}
 	}
 
 	@Override
 	public final void stopPreview() {
-		isPreviewRequested = false;
+		mIsPreviewRequested = false;
 
-		if (camera != null) {
-			if (inPreview) {
-				camera.stopPreview();
+		if (mCamera != null) {
+			if (mIsInPreview) {
+				mCamera.stopPreview();
 			}
 
-			camera.release();
-			camera = null;
-			cameraConfigured = false;
-			inPreview = false;
+			mCamera.release();
+			mCamera = null;
+			mIsCameraConfigured = false;
+			mIsInPreview = false;
 		}
 	}
 
 	@Override
 	public final void takePicture() {
-		camera.takePicture(null, null, photoCallback);
+		mCamera.takePicture(null, null, mPhotoCallback);
 	}
 
 	/**
 	 * The callback client for the preview.
 	 */
-	private final TextureView.SurfaceTextureListener surfaceTextureListener = new TextureView.SurfaceTextureListener() {
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
 
 		@Override
 		public void onSurfaceTextureAvailable(final SurfaceTexture texture, final int width, final int height) {
-			surfaceCreated = true;
+			mIsSurfaceCreated = true;
 			try {
-				if (isPreviewRequested) {
+				if (mIsPreviewRequested) {
 					startPreview();
 				}
 			}
 			catch (Exception e) {
-				DialogUtil.displayError(activity, R.string.message_dialog_failed_to_open_camera, true);
+				DialogUtil.displayError(mActivity, R.string.message_dialog_failed_to_open_camera, true);
 			}
 		}
 
@@ -270,7 +270,7 @@ public class Camera1Handler implements CameraHandler {
 		@Override
 		public boolean onSurfaceTextureDestroyed(final SurfaceTexture texture) {
 			stopPreview();
-			surfaceCreated = false;
+			mIsSurfaceCreated = false;
 			return true;
 		}
 
@@ -282,12 +282,12 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private PictureCallback photoCallback = new PictureCallback() {
+	private PictureCallback mPhotoCallback = new PictureCallback() {
 		@Override
 		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
-			inPreview = false;
-			onPictureTakenHandler.onPictureTaken(data);
+			mIsInPreview = false;
+			mOnPictureTakenHandler.onPictureTaken(data);
 		}
 	};
 

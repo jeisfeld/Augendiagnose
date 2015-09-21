@@ -7,21 +7,21 @@ import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
 
 component DialogProgress controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	GridPane id dialogPane {
+	GridPane id mDialogPane {
 		styleClass : "dialogProgress",
 		vgap : 10,
-		Label id dialogHeading {
+		Label id mDialogHeading {
 			static columnIndex : 0,
 			static rowIndex : 0,
 			static halignment : "CENTER",
 			text : rstring "title_dialog_progress"
 		},
-		Text id dialogMessage {
+		Text id mDialogMessage {
 			static columnIndex : 0,
 			static rowIndex : 1,
 			static halignment : "CENTER"
 		},
-		ProgressBar id progressBar {
+		ProgressBar id mProgressBar {
 			static columnIndex : 0,
 			static rowIndex : 2,
 			static halignment : "CENTER"

@@ -12,7 +12,7 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayMain" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController" styleClass="display">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mDisplayMain" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController" styleClass="display">
 
 	<padding>
 		<Insets top="0" right="0" bottom="0" left="0"/> 
@@ -22,8 +22,8 @@
 		<ColumnConstraints hgrow="SOMETIMES"/> 
 	</columnConstraints>
 	<children>
-		<TextField fx:id="searchField" onKeyTyped="#handleSearchText" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
-		<ListView fx:id="listNames" styleClass="listNames" onMouseClicked="#handleNameClick" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
-		<ListView fx:id="listPhotos" styleClass="listPhotos" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
+		<TextField fx:id="mSearchField" onKeyTyped="#handleSearchText" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+		<ListView fx:id="mListNames" styleClass="listNames" onMouseClicked="#handleNameClick" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
+		<ListView fx:id="mListPhotos" styleClass="listPhotos" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
 	</children>
 </GridPane>

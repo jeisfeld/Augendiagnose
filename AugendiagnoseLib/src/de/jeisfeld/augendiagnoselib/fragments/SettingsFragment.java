@@ -61,30 +61,30 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Field holding the value of the language preference, in order to detect a real change.
 	 */
-	private String languageString;
+	private String mLanguageString;
 	/**
 	 * Field holding the value of the input folder preference, in order to detect a real change.
 	 */
-	private String folderInput;
+	private String mFolderInput;
 	/**
 	 * Field holding the value of the photo folder preference, in order to detect a real change.
 	 */
-	private String folderPhotos;
+	private String mFolderPhotos;
 
 	/**
 	 * The flag indicating if only packs should be shown.
 	 */
-	private boolean onlyPacks = false;
+	private boolean mOnlyPacks = false;
 
 	/**
 	 * The preference screen handling purchases.
 	 */
-	private PreferenceScreen screenPurchase;
+	private PreferenceScreen mScreenPurchase;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
 	 */
-	private File currentFolder;
+	private File mCurrentFolder;
 
 	/**
 	 * Initialize the fragment with onlyPacks flag.
@@ -103,10 +103,10 @@ public class SettingsFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments() != null) {
-			onlyPacks = getArguments().getBoolean(STRING_ONLY_PACKS);
+			mOnlyPacks = getArguments().getBoolean(STRING_ONLY_PACKS);
 		}
 
-		if (onlyPacks) {
+		if (mOnlyPacks) {
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.pref_only_purchase);
 
@@ -116,9 +116,9 @@ public class SettingsFragment extends PreferenceFragment {
 			addPreferencesFromResource(R.xml.pref_general);
 
 			// Fill variables in order to detect changed values.
-			languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
-			folderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
-			folderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
+			mLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
+			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
+			mFolderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
 
 			bindPreferenceSummaryToValue(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_photos);
@@ -138,9 +138,9 @@ public class SettingsFragment extends PreferenceFragment {
 		addDeveloperContactButtonListener();
 		addUnlockerAppButtonListener();
 
-		screenPurchase = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
+		mScreenPurchase = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
 
-		GoogleBillingHelper.initialize(getActivity(), onInventoryFinishedListener);
+		GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
 	}
 
 	/**
@@ -215,10 +215,10 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void bindPreferenceSummaryToValue(final Preference preference) {
 		// Set the listener to watch for value changes.
-		preference.setOnPreferenceChangeListener(bindPreferenceSummaryToValueListener);
+		preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
 
 		// Trigger the listener immediately with the preference's current value.
-		bindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
+		mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
 				.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
 	}
 
@@ -235,7 +235,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A preference value change listener that updates the preference's summary to reflect its new value.
 	 */
-	private OnPreferenceChangeListener bindPreferenceSummaryToValueListener =
+	private OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
 			new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
@@ -249,27 +249,27 @@ public class SettingsFragment extends PreferenceFragment {
 
 					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
-						if (!folderPhotos.equals(value)) {
-							currentFolder = new File(stringValue);
-							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+						if (!mFolderPhotos.equals(value)) {
+							mCurrentFolder = new File(stringValue);
+							acceptChange = checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
 							if (acceptChange) {
-								folderPhotos = currentFolder.getAbsolutePath();
+								mFolderPhotos = mCurrentFolder.getAbsolutePath();
 							}
 						}
 					}
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
-						if (!folderInput.equals(value)) {
-							currentFolder = new File(stringValue);
-							acceptChange = checkFolder(currentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+						if (!mFolderInput.equals(value)) {
+							mCurrentFolder = new File(stringValue);
+							acceptChange = checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT);
 							if (acceptChange) {
-								folderInput = currentFolder.getAbsolutePath();
+								mFolderInput = mCurrentFolder.getAbsolutePath();
 							}
 						}
 					}
 
 					// Apply change of language
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
-						if (!languageString.equals(value)) {
+						if (!mLanguageString.equals(value)) {
 							Application.setLanguage();
 							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
 
@@ -355,9 +355,9 @@ public class SettingsFragment extends PreferenceFragment {
 					}
 					else {
 						DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
-								currentFolder);
+								mCurrentFolder);
 
-						currentFolder = null;
+						mCurrentFolder = null;
 						return false;
 					}
 				}
@@ -380,7 +380,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the response after reading the in-add purchase inventory.
 	 */
-	private OnInventoryFinishedListener onInventoryFinishedListener = new OnInventoryFinishedListener() {
+	private OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
 		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
 				final boolean isPremium) {
@@ -393,7 +393,7 @@ public class SettingsFragment extends PreferenceFragment {
 				purchasePreference.setTitle(title);
 				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
-				screenPurchase.addPreference(purchasePreference);
+				mScreenPurchase.addPreference(purchasePreference);
 			}
 			for (SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
@@ -404,11 +404,11 @@ public class SettingsFragment extends PreferenceFragment {
 					@Override
 					public boolean onPreferenceClick(final Preference preference) {
 						String productId = preference.getKey().substring(SKU_KEY_PREFIX.length());
-						GoogleBillingHelper.launchPurchaseFlow(productId, onPurchaseSuccessListener);
+						GoogleBillingHelper.launchPurchaseFlow(productId, mOnPurchaseSuccessListener);
 						return false;
 					}
 				});
-				screenPurchase.addPreference(skuPreference);
+				mScreenPurchase.addPreference(skuPreference);
 			}
 		}
 	};
@@ -416,7 +416,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the response after purchasing a product.
 	 */
-	private OnPurchaseSuccessListener onPurchaseSuccessListener = new OnPurchaseSuccessListener() {
+	private OnPurchaseSuccessListener mOnPurchaseSuccessListener = new OnPurchaseSuccessListener() {
 		@Override
 		public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
 			if (addedPremiumProduct) {
@@ -475,12 +475,12 @@ public class SettingsFragment extends PreferenceFragment {
 		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_PHOTOS) {
 			preferenceKeyUri = R.string.key_internal_uri_extsdcard_photos;
 			preferenceKeyFolder = R.string.key_folder_photos;
-			oldFolder = folderPhotos;
+			oldFolder = mFolderPhotos;
 		}
 		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
 			preferenceKeyUri = R.string.key_internal_uri_extsdcard_input;
 			preferenceKeyFolder = R.string.key_folder_input;
-			oldFolder = folderInput;
+			oldFolder = mFolderInput;
 		}
 		else {
 			return;
@@ -501,27 +501,27 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 
 		// If not confirmed SAF, or if still not writable, then revert settings.
-		if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(currentFolder)) {
+		if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(mCurrentFolder)) {
 			DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false,
-					currentFolder);
+					mCurrentFolder);
 
 			PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, oldFolder);
 			findPreference(getString(preferenceKeyFolder)).setSummary(oldFolder);
 
-			currentFolder = null;
+			mCurrentFolder = null;
 			PreferenceUtil.setSharedPreferenceUri(preferenceKeyUri, oldUri);
 			return;
 		}
 
 		// After confirmation, update stored value of folder.
 		if (preferenceKeyFolder == R.string.key_folder_photos) {
-			folderPhotos = currentFolder.getAbsolutePath();
+			mFolderPhotos = mCurrentFolder.getAbsolutePath();
 		}
 		if (preferenceKeyFolder == R.string.key_folder_input) {
-			folderInput = currentFolder.getAbsolutePath();
+			mFolderInput = mCurrentFolder.getAbsolutePath();
 		}
-		PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, currentFolder.getAbsolutePath());
-		findPreference(getString(preferenceKeyFolder)).setSummary(currentFolder.getAbsolutePath());
+		PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, mCurrentFolder.getAbsolutePath());
+		findPreference(getString(preferenceKeyFolder)).setSummary(mCurrentFolder.getAbsolutePath());
 
 		// Persist access permissions.
 		final int takeFlags = data.getFlags()

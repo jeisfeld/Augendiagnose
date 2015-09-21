@@ -43,22 +43,22 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	/**
 	 * The Button for selecting an additional picture.
 	 */
-	private Button buttonAdditionalPictures;
+	private Button mButtonAdditionalPictures;
 
 	/**
 	 * The position in the context menu which has been selected.
 	 */
-	private int contextMenuPosition;
+	private int mContextMenuPosition;
 
 	/**
 	 * The adapter displaying the list of pictures.
 	 */
-	private ListPicturesForNameArrayAdapter adapter;
+	private ListPicturesForNameArrayAdapter mAdapter;
 
 	/**
 	 * The date of the pictures - used in case of date change.
 	 */
-	private Calendar pictureDate = new GregorianCalendar();
+	private Calendar mPictureDate = new GregorianCalendar();
 
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -70,10 +70,10 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		buttonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
+		mButtonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
-		getListView().setAdapter(adapter);
+		mAdapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+		getListView().setAdapter(mAdapter);
 	}
 
 	/**
@@ -81,15 +81,15 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 */
 	protected final void updateEyePhotoPairs() {
 		createAndStoreEyePhotoList();
-		adapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
-		getListView().setAdapter(adapter);
+		mAdapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
+		getListView().setAdapter(mAdapter);
 	}
 
 	/**
 	 * Display the button "additional pictures" after one photo is selected.
 	 */
 	public final void activateButtonAdditionalPictures() {
-		buttonAdditionalPictures.setVisibility(View.VISIBLE);
+		mButtonAdditionalPictures.setVisibility(View.VISIBLE);
 		getListView().invalidate();
 	}
 
@@ -97,7 +97,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * Undisplay the button "additional pictures" if photo selection has been removed.
 	 */
 	public final void deactivateButtonAdditionalPictures() {
-		buttonAdditionalPictures.setVisibility(View.GONE);
+		mButtonAdditionalPictures.setVisibility(View.GONE);
 		getListView().invalidate();
 	}
 
@@ -109,7 +109,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.context_picture_date, menu);
-		contextMenuPosition = adapter.getRow((TextView) v);
+		mContextMenuPosition = mAdapter.getRow((TextView) v);
 	}
 
 	/*
@@ -118,18 +118,18 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	@Override
 	public final boolean onContextItemSelected(final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_picture_date) {
-			final EyePhotoPair pairToModify = getEyePhotoPairs()[contextMenuPosition];
+			final EyePhotoPair pairToModify = getEyePhotoPairs()[mContextMenuPosition];
 
 			int itemId = item.getItemId();
 			if (itemId == R.id.action_change_date) {
 				// ensure that activity is linked to the correct instance of this listFoldersFragment
 				((ListPicturesForNameFragmentHolder) getActivity()).setListPicturesForNameFragment(this);
-				pictureDate.setTime(pairToModify.getDate());
+				mPictureDate.setTime(pairToModify.getDate());
 				Bundle bundle = new Bundle();
-				bundle.putInt("Year", pictureDate.get(Calendar.YEAR));
-				bundle.putInt("Month", pictureDate.get(Calendar.MONTH));
-				bundle.putInt("Date", pictureDate.get(Calendar.DAY_OF_MONTH));
-				bundle.putInt("position", contextMenuPosition);
+				bundle.putInt("Year", mPictureDate.get(Calendar.YEAR));
+				bundle.putInt("Month", mPictureDate.get(Calendar.MONTH));
+				bundle.putInt("Date", mPictureDate.get(Calendar.DAY_OF_MONTH));
+				bundle.putInt("position", mContextMenuPosition);
 				DateChangeDialogFragment fragment = new DateChangeDialogFragment();
 				fragment.setArguments(bundle);
 				fragment.show(getFragmentManager(), DateChangeDialogFragment.class.toString());
@@ -236,8 +236,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 							int monthOfYear = dialog.getDatePicker().getMonth();
 							int dayOfMonth = dialog.getDatePicker().getDayOfMonth();
 
-							fragment.pictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-							Date newDate = new Date(fragment.pictureDate.getTimeInMillis());
+							fragment.mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
+							Date newDate = new Date(fragment.mPictureDate.getTimeInMillis());
 							boolean success = pairToUpdate.changeDate(newDate);
 							fragment.updateEyePhotoPairs();
 

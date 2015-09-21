@@ -12,31 +12,31 @@ public abstract class BaseController implements Controller {
 	/**
 	 * The list of all controllers.
 	 */
-	private static List<BaseController> controllerRegistry = new ArrayList<BaseController>();
+	private static List<BaseController> mControllerRegistry = new ArrayList<BaseController>();
 
 	/**
 	 * Indicator if there is data pending to be saved.
 	 */
-	private boolean isDirty = false;
+	private boolean mIsDirty = false;
 
 	/**
 	 * The pane in which this element is shown.
 	 */
-	private int paneIndex = 0;
+	private int mPaneIndex = 0;
 
 	public final int getPaneIndex() {
-		return paneIndex;
+		return mPaneIndex;
 	}
 
 	public final void setPaneIndex(final int newPaneIndex) {
-		paneIndex = newPaneIndex;
+		mPaneIndex = newPaneIndex;
 	}
 
 	/**
 	 * Constructor of controllers. Adds the controller to the registry.
 	 */
 	public BaseController() {
-		controllerRegistry.add(this);
+		mControllerRegistry.add(this);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public abstract class BaseController implements Controller {
 	// OVERRIDABLE
 	public void close() {
 		FxmlUtil.remove(this.getRoot());
-		controllerRegistry.remove(this);
+		mControllerRegistry.remove(this);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public abstract class BaseController implements Controller {
 	public static <C extends BaseController> List<C> getControllers(final Class<C> controllerClass) {
 		List<C> result = new ArrayList<C>();
 
-		for (BaseController controller : controllerRegistry) {
+		for (BaseController controller : mControllerRegistry) {
 			if (controllerClass.isAssignableFrom(controller.getClass())) {
 				result.add((C) controller);
 			}
@@ -103,7 +103,7 @@ public abstract class BaseController implements Controller {
 	 * @return true if the controller has data pending for save.
 	 */
 	public final boolean isDirty() {
-		return isDirty;
+		return mIsDirty;
 	}
 
 	/**
@@ -113,7 +113,7 @@ public abstract class BaseController implements Controller {
 	 *            value true indicates that there is data pending for save.
 	 */
 	protected final void setDirty(final boolean dirty) {
-		isDirty = dirty;
+		mIsDirty = dirty;
 	}
 
 	/**

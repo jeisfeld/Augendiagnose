@@ -185,7 +185,7 @@ public abstract class DialogUtil {
 		/**
 		 * The controller.
 		 */
-		private MessageDialogController controller;
+		private MessageDialogController mController;
 
 		/**
 		 * Constructor setting the stage and the controller.
@@ -194,7 +194,7 @@ public abstract class DialogUtil {
 		 *            The controller.
 		 */
 		private ProgressDialog(final MessageDialogController controller) {
-			this.controller = controller;
+			this.mController = controller;
 			setProgress(0);
 		}
 
@@ -204,14 +204,14 @@ public abstract class DialogUtil {
 		 * @return The controller.
 		 */
 		public MessageDialogController getController() {
-			return controller;
+			return mController;
 		}
 
 		/**
 		 * Close the dialog.
 		 */
 		public void close() {
-			controller.close();
+			mController.close();
 		}
 
 		/**
@@ -221,7 +221,7 @@ public abstract class DialogUtil {
 		 *            The progressBar value.
 		 */
 		public void setProgress(final double progress) {
-			controller.setProgress(progress);
+			mController.setProgress(progress);
 		}
 	}
 

@@ -13,18 +13,18 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
 	 * The parent folder.
 	 */
-	private String parentFolder;
+	private String mParentFolder;
 	/**
 	 * The fragment displaying the list of folders.
 	 */
-	private ListFoldersBaseFragment listFoldersFragment;
+	private ListFoldersBaseFragment mListFoldersFragment;
 
 	// OVERRIDABLE
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		parentFolder = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
+		mParentFolder = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
 	}
 
 	/**
@@ -34,7 +34,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	 *            The fragment to be populated.
 	 */
 	protected final void setFragmentParameters(final ListFoldersBaseFragment fragment) {
-		fragment.setParameters(parentFolder);
+		fragment.setParameters(mParentFolder);
 	}
 
 	/**
@@ -64,15 +64,15 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	// Setters and getters
 
 	protected final String getParentFolder() {
-		return parentFolder;
+		return mParentFolder;
 	}
 
 	public final ListFoldersBaseFragment getListFoldersFragment() {
-		return listFoldersFragment;
+		return mListFoldersFragment;
 	}
 
 	protected final void setListFoldersFragment(final ListFoldersBaseFragment listFoldersFragment) {
-		this.listFoldersFragment = listFoldersFragment;
+		this.mListFoldersFragment = listFoldersFragment;
 	}
 
 }

@@ -92,72 +92,72 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The current rightLeft in the activity.
 	 */
-	private Action currentAction;
+	private Action mCurrentAction;
 
 	/**
 	 * The current flashlight mode.
 	 */
-	private FlashMode currentFlashlightMode;
+	private FlashMode mCurrentFlashlightMode;
 
 	/**
 	 * The current eye.
 	 */
-	private RightLeft currentRightLeft;
+	private RightLeft mCurrentRightLeft;
 
 	/**
 	 * The side of the last recorded eye.
 	 */
-	private RightLeft lastRightLeft;
+	private RightLeft mLastRightLeft;
 
 	/**
 	 * The temp file holding the right eye.
 	 */
-	private File rightEyeFile = null;
+	private File mRightEyeFile = null;
 
 	/**
 	 * The temp file holding the next photo for the right eye.
 	 */
-	private File newRightEyeFile = null;
+	private File mNewRightEyeFile = null;
 
 	/**
 	 * The temp file holding the left eye.
 	 */
-	private File leftEyeFile = null;
+	private File mLeftEyeFile = null;
 
 	/**
 	 * The temp file holding the next photo for the left eye.
 	 */
-	private File newLeftEyeFile = null;
+	private File mNewLeftEyeFile = null;
 
 	/**
 	 * The folder where to store the photos.
 	 */
-	private File photoFolder = null;
+	private File mPhotoFolder = null;
 
 	/**
 	 * The right eye file coming as input to the activity.
 	 */
-	private File inputRightFile = null;
+	private File mInputRightFile = null;
 
 	/**
 	 * The left eye file coming as input to the activity.
 	 */
-	private File inputLeftFile = null;
+	private File mInputLeftFile = null;
 
 	/**
 	 * An orientation manager used to track the orientation of the image.
 	 */
-	private OrientationManager orientationManager = null;
+	private OrientationManager mOrientationManager = null;
 
 	/**
 	 * The current screen orientation.
 	 */
-	private ScreenOrientation currentScreenOrientation;
+	private ScreenOrientation mCurrentScreenOrientation;
 
 	/**
 	 * The handler operating the camera.
 	 */
-	private CameraHandler cameraHandler;
+	private CameraHandler mCameraHandler;
 
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
@@ -212,15 +212,15 @@ public class CameraActivity extends BaseActivity {
 		setContentView(R.layout.activity_camera);
 
 		// TODO: add proper logic to distinguish between camera interfaces
-		cameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
-				(TextureView) findViewById(R.id.camera_preview), onPictureTakenHandler);
+		mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
+				(TextureView) findViewById(R.id.camera_preview), mOnPictureTakenHandler);
 
 		configureMainButtons();
 		configureConfigButtons();
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
 		if (photoFolderName != null) {
-			photoFolder = new File(photoFolderName);
+			mPhotoFolder = new File(photoFolderName);
 		}
 
 		String inputRightFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_RIGHT);
@@ -228,18 +228,18 @@ public class CameraActivity extends BaseActivity {
 
 		// Handle the different scenarios based on input and based on existing temp files.
 		if (inputLeftFileName != null && inputRightFileName != null) {
-			inputLeftFile = new File(inputLeftFileName);
-			inputRightFile = new File(inputRightFileName);
+			mInputLeftFile = new File(inputLeftFileName);
+			mInputRightFile = new File(inputRightFileName);
 
 			// Triggered by OrganizeNewPhotosActivity to update photos.
-			photoFolder = inputRightFile.getParentFile();
-			if (FileUtil.getTempCameraFolder().equals(photoFolder)) {
-				photoFolder = null;
+			mPhotoFolder = mInputRightFile.getParentFile();
+			if (FileUtil.getTempCameraFolder().equals(mPhotoFolder)) {
+				mPhotoFolder = null;
 			}
-			leftEyeFile = inputLeftFile;
-			rightEyeFile = inputRightFile;
-			setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
-			setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+			mLeftEyeFile = mInputLeftFile;
+			mRightEyeFile = mInputRightFile;
+			setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
+			setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
 
 			setAction(RE_TAKE_PHOTO, null);
 		}
@@ -247,25 +247,25 @@ public class CameraActivity extends BaseActivity {
 			boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 			File[] existingFiles = getTempCameraFiles();
 
-			if (existingFiles == null || existingFiles.length == 0 || photoFolder != null) {
+			if (existingFiles == null || existingFiles.length == 0 || mPhotoFolder != null) {
 				// This is the standard scenario.
 				setAction(Action.TAKE_PHOTO, leftEyeFirst ? LEFT : RIGHT);
 			}
 			else if (existingFiles.length == 1) {
 				// one file already there. Assume that this is already taken and we only have to take the other one
 				if (leftEyeFirst) {
-					setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+					setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
 					setAction(Action.TAKE_PHOTO, RIGHT);
 				}
 				else {
-					setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+					setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
 					setAction(Action.TAKE_PHOTO, LEFT);
 				}
 			}
 			else {
 				// both files are already there - switch to Organize.
 				OrganizeNewPhotosActivity.startActivity(this, FileUtil.getTempCameraFolder().getAbsolutePath(),
-						lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
+						mLastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 				finish();
 				return;
 			}
@@ -276,21 +276,21 @@ public class CameraActivity extends BaseActivity {
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
 		drawOverlayCircle(overlayCircleSize);
 
-		orientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
+		mOrientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
 			@Override
 			public void onOrientationChange(final ScreenOrientation screenOrientation) {
-				currentScreenOrientation = screenOrientation;
+				mCurrentScreenOrientation = screenOrientation;
 			}
 		});
-		orientationManager.enable();
+		mOrientationManager.enable();
 	}
 
 	@Override
 	public final void onDestroy() {
 		cleanupTempFolder();
-		cameraHandler.stopPreview();
-		if (orientationManager != null) {
-			orientationManager.disable();
+		mCameraHandler.stopPreview();
+		if (mOrientationManager != null) {
+			mOrientationManager.disable();
 		}
 		super.onDestroy();
 	}
@@ -312,7 +312,7 @@ public class CameraActivity extends BaseActivity {
 					public void onClick(final View v) {
 						// get an image from the camera
 						captureButton.setEnabled(false);
-						cameraHandler.takePicture();
+						mCameraHandler.takePicture();
 						animateFlash();
 					}
 				});
@@ -324,15 +324,15 @@ public class CameraActivity extends BaseActivity {
 					@Override
 					public void onClick(final View v) {
 						// Analyze next required step
-						if (currentRightLeft == RIGHT) {
-							if (rightEyeFile != null && rightEyeFile.exists()) {
-								rightEyeFile.delete();
+						if (mCurrentRightLeft == RIGHT) {
+							if (mRightEyeFile != null && mRightEyeFile.exists()) {
+								mRightEyeFile.delete();
 							}
-							rightEyeFile = newRightEyeFile;
-							newRightEyeFile = null;
-							lastRightLeft = RIGHT;
+							mRightEyeFile = mNewRightEyeFile;
+							mNewRightEyeFile = null;
+							mLastRightLeft = RIGHT;
 
-							if (leftEyeFile == null) {
+							if (mLeftEyeFile == null) {
 								setAction(TAKE_PHOTO, LEFT);
 							}
 							else {
@@ -340,14 +340,14 @@ public class CameraActivity extends BaseActivity {
 							}
 						}
 						else {
-							if (leftEyeFile != null && leftEyeFile.exists()) {
-								leftEyeFile.delete();
+							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
+								mLeftEyeFile.delete();
 							}
-							leftEyeFile = newLeftEyeFile;
-							newLeftEyeFile = null;
-							lastRightLeft = LEFT;
+							mLeftEyeFile = mNewLeftEyeFile;
+							mNewLeftEyeFile = null;
+							mLastRightLeft = LEFT;
 
-							if (rightEyeFile == null) {
+							if (mRightEyeFile == null) {
 								setAction(TAKE_PHOTO, RIGHT);
 							}
 							else {
@@ -362,37 +362,37 @@ public class CameraActivity extends BaseActivity {
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
-						if (inputRightFile != null && inputLeftFile != null && currentAction != CHECK_PHOTO) {
+						if (mInputRightFile != null && mInputLeftFile != null && mCurrentAction != CHECK_PHOTO) {
 							// in case of re-take, this button serves to cancel the whole re-take.
 							setAction(FINISH_CAMERA, null);
 						}
 						else {
-							if (currentRightLeft == RIGHT) {
-								if (newRightEyeFile != null && newRightEyeFile.exists()) {
-									newRightEyeFile.delete();
+							if (mCurrentRightLeft == RIGHT) {
+								if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
+									mNewRightEyeFile.delete();
 								}
-								newRightEyeFile = null;
-								if (rightEyeFile != null && rightEyeFile.exists()) {
-									setThumbImage(rightEyeFile.getAbsolutePath(), RIGHT);
+								mNewRightEyeFile = null;
+								if (mRightEyeFile != null && mRightEyeFile.exists()) {
+									setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
 								}
 								else {
 									setThumbImage(null, RIGHT);
 								}
 							}
 							else {
-								if (newLeftEyeFile != null && newLeftEyeFile.exists()) {
-									newLeftEyeFile.delete();
+								if (mNewLeftEyeFile != null && mNewLeftEyeFile.exists()) {
+									mNewLeftEyeFile.delete();
 								}
-								newLeftEyeFile = null;
+								mNewLeftEyeFile = null;
 							}
-							if (leftEyeFile != null && leftEyeFile.exists()) {
-								setThumbImage(leftEyeFile.getAbsolutePath(), LEFT);
+							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
+								setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
 							}
 							else {
 								setThumbImage(null, LEFT);
 							}
 
-							setAction(TAKE_PHOTO, currentRightLeft);
+							setAction(TAKE_PHOTO, mCurrentRightLeft);
 						}
 					}
 				});
@@ -445,7 +445,7 @@ public class CameraActivity extends BaseActivity {
 					// Determine next flashlight mode
 					int flashlightModeIndex = 0;
 					for (int i = 0; i < FLASHLIGHT_MODES.length; i++) {
-						if (FLASHLIGHT_MODES[i].equals(currentFlashlightMode)) {
+						if (FLASHLIGHT_MODES[i].equals(mCurrentFlashlightMode)) {
 							flashlightModeIndex = i;
 						}
 					}
@@ -502,8 +502,8 @@ public class CameraActivity extends BaseActivity {
 	 *            the next eye side.
 	 */
 	private void setAction(final Action action, final RightLeft rightLeft) {
-		currentAction = action;
-		currentRightLeft = rightLeft;
+		mCurrentAction = action;
+		mCurrentRightLeft = rightLeft;
 
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
@@ -516,11 +516,11 @@ public class CameraActivity extends BaseActivity {
 		switch (action) {
 		case TAKE_PHOTO:
 			updateFlashlight();
-			cameraHandler.startPreview();
+			mCameraHandler.startPreview();
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonCapture.setEnabled(true);
 			buttonAccept.setVisibility(View.GONE);
-			buttonDecline.setVisibility(inputLeftFile != null && inputRightFile != null ? View.VISIBLE : View.GONE);
+			buttonDecline.setVisibility(mInputLeftFile != null && mInputRightFile != null ? View.VISIBLE : View.GONE);
 			if (buttonViewImages.isEnabled() && buttonDecline.getVisibility() == View.GONE) {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
@@ -557,38 +557,38 @@ public class CameraActivity extends BaseActivity {
 			updateFlashlight();
 			break;
 		case FINISH_CAMERA:
-			cameraHandler.stopPreview();
+			mCameraHandler.stopPreview();
 			cleanupTempFolder();
 
 			// move files to their target position
-			if (inputLeftFile != null && inputRightFile != null) {
-				if (!inputLeftFile.equals(leftEyeFile)) {
-					FileUtil.moveFile(leftEyeFile, inputLeftFile);
+			if (mInputLeftFile != null && mInputRightFile != null) {
+				if (!mInputLeftFile.equals(mLeftEyeFile)) {
+					FileUtil.moveFile(mLeftEyeFile, mInputLeftFile);
 					// prevent cleanup
-					leftEyeFile = inputLeftFile;
-					MediaStoreUtil.deleteThumbnail(inputLeftFile.getAbsolutePath());
-					MediaStoreUtil.addPictureToMediaStore(inputLeftFile.getAbsolutePath());
+					mLeftEyeFile = mInputLeftFile;
+					MediaStoreUtil.deleteThumbnail(mInputLeftFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(mInputLeftFile.getAbsolutePath());
 				}
-				if (!inputRightFile.equals(rightEyeFile)) {
-					FileUtil.moveFile(rightEyeFile, inputRightFile);
+				if (!mInputRightFile.equals(mRightEyeFile)) {
+					FileUtil.moveFile(mRightEyeFile, mInputRightFile);
 					// prevent cleanup
-					rightEyeFile = inputRightFile;
-					MediaStoreUtil.deleteThumbnail(inputRightFile.getAbsolutePath());
-					MediaStoreUtil.addPictureToMediaStore(inputRightFile.getAbsolutePath());
+					mRightEyeFile = mInputRightFile;
+					MediaStoreUtil.deleteThumbnail(mInputRightFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(mInputRightFile.getAbsolutePath());
 				}
 			}
-			else if (photoFolder != null && photoFolder.isDirectory()) {
-				FileUtil.moveFile(leftEyeFile, new File(photoFolder, leftEyeFile.getName()));
-				FileUtil.moveFile(rightEyeFile, new File(photoFolder, rightEyeFile.getName()));
+			else if (mPhotoFolder != null && mPhotoFolder.isDirectory()) {
+				FileUtil.moveFile(mLeftEyeFile, new File(mPhotoFolder, mLeftEyeFile.getName()));
+				FileUtil.moveFile(mRightEyeFile, new File(mPhotoFolder, mRightEyeFile.getName()));
 			}
 
-			File organizeFolder = photoFolder == null ? FileUtil.getTempCameraFolder() : photoFolder;
+			File organizeFolder = mPhotoFolder == null ? FileUtil.getTempCameraFolder() : mPhotoFolder;
 			OrganizeNewPhotosActivity.startActivity(this, organizeFolder.getAbsolutePath(),
-					lastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
+					mLastRightLeft == RIGHT, NextAction.VIEW_IMAGES);
 			finish();
 			return;
 		case CANCEL_AND_VIEW_IMAGES:
-			cameraHandler.stopPreview();
+			mCameraHandler.stopPreview();
 			cleanupTempFolder();
 
 			ListFoldersForDisplayActivity.startActivity(this);
@@ -606,8 +606,8 @@ public class CameraActivity extends BaseActivity {
 	 *            The new flashlight mode.
 	 */
 	private void setFlashlightMode(final FlashMode flashlightMode) {
-		currentFlashlightMode = flashlightMode;
-		cameraHandler.setFlashlightMode(flashlightMode);
+		mCurrentFlashlightMode = flashlightMode;
+		mCameraHandler.setFlashlightMode(flashlightMode);
 		if (flashlightMode != null) {
 			updateFlashlight();
 		}
@@ -619,7 +619,7 @@ public class CameraActivity extends BaseActivity {
 	private void cleanupTempFolder() {
 		File[] tempFiles = FileUtil.getTempCameraFiles();
 		for (File file : tempFiles) {
-			if (!file.equals(rightEyeFile) & !file.equals(leftEyeFile)) {
+			if (!file.equals(mRightEyeFile) & !file.equals(mLeftEyeFile)) {
 				file.delete();
 			}
 		}
@@ -636,15 +636,15 @@ public class CameraActivity extends BaseActivity {
 
 		if (existingFiles.length == 1) {
 			if (leftEyeFirst) {
-				leftEyeFile = existingFiles[0];
+				mLeftEyeFile = existingFiles[0];
 			}
 			else {
-				rightEyeFile = existingFiles[0];
+				mRightEyeFile = existingFiles[0];
 			}
 		}
 		else if (existingFiles.length >= 2) {
-			rightEyeFile = leftEyeFirst ? existingFiles[1] : existingFiles[0];
-			leftEyeFile = leftEyeFirst ? existingFiles[0] : existingFiles[1];
+			mRightEyeFile = leftEyeFirst ? existingFiles[1] : existingFiles[0];
+			mLeftEyeFile = leftEyeFirst ? existingFiles[0] : existingFiles[1];
 		}
 
 		return existingFiles;
@@ -657,7 +657,7 @@ public class CameraActivity extends BaseActivity {
 	 *            The data representing the bitmap.
 	 */
 	private void setThumbImage(final byte[] data) {
-		ImageView imageView = (ImageView) findViewById(currentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
+		ImageView imageView = (ImageView) findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
 
@@ -748,21 +748,21 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private void updateFlashlight() {
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		if (FlashMode.OFF.equals(currentFlashlightMode)) {
+		if (FlashMode.OFF.equals(mCurrentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_noflash);
 		}
-		else if (FlashMode.ON.equals(currentFlashlightMode)) {
+		else if (FlashMode.ON.equals(mCurrentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_flash);
 		}
-		else if (FlashMode.TORCH.equals(currentFlashlightMode)) {
+		else if (FlashMode.TORCH.equals(mCurrentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_torch);
 		}
-		if (currentFlashlightMode != null) {
-			if (currentAction == Action.TAKE_PHOTO) {
-				cameraHandler.setFlashlightMode(currentFlashlightMode);
+		if (mCurrentFlashlightMode != null) {
+			if (mCurrentAction == Action.TAKE_PHOTO) {
+				mCameraHandler.setFlashlightMode(mCurrentFlashlightMode);
 			}
 			else {
-				cameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
+				mCameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
 			}
 		}
 	}
@@ -773,10 +773,10 @@ public class CameraActivity extends BaseActivity {
 	 * @return The orientation angle.
 	 */
 	private short getExifAngle() {
-		if (currentScreenOrientation == null) {
+		if (mCurrentScreenOrientation == null) {
 			return ExifInterface.ORIENTATION_NORMAL;
 		}
-		switch (currentScreenOrientation) {
+		switch (mCurrentScreenOrientation) {
 		case LANDSCAPE:
 			return ExifInterface.ORIENTATION_NORMAL;
 		case PORTRAIT:
@@ -793,7 +793,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private OnPictureTakenHandler onPictureTakenHandler = new OnPictureTakenHandler() {
+	private OnPictureTakenHandler mOnPictureTakenHandler = new OnPictureTakenHandler() {
 		@Override
 		public void onPictureTaken(final byte[] data) {
 			short exifAngle = getExifAngle();
@@ -802,42 +802,42 @@ public class CameraActivity extends BaseActivity {
 
 			JpegMetadata metadata = null;
 
-			if (currentRightLeft == RIGHT) {
-				newRightEyeFile = imageFile;
-				if (inputRightFile != null) {
+			if (mCurrentRightLeft == RIGHT) {
+				mNewRightEyeFile = imageFile;
+				if (mInputRightFile != null) {
 					// Keep metadata from input
-					metadata = JpegSynchronizationUtil.getJpegMetadata(inputRightFile.getAbsolutePath());
+					metadata = JpegSynchronizationUtil.getJpegMetadata(mInputRightFile.getAbsolutePath());
 				}
 			}
 			else {
-				newLeftEyeFile = imageFile;
-				if (inputLeftFile != null) {
+				mNewLeftEyeFile = imageFile;
+				if (mInputLeftFile != null) {
 					// Keep metadata from input
-					metadata = JpegSynchronizationUtil.getJpegMetadata(inputLeftFile.getAbsolutePath());
+					metadata = JpegSynchronizationUtil.getJpegMetadata(mInputLeftFile.getAbsolutePath());
 				}
 			}
 
 			if (metadata == null) {
 				metadata = new JpegMetadata();
-				metadata.rightLeft = currentRightLeft;
-				metadata.comment = "";
-				metadata.organizeDate = new Date();
-				metadata.orientation = exifAngle;
+				metadata.mRightLeft = mCurrentRightLeft;
+				metadata.mComment = "";
+				metadata.mOrganizeDate = new Date();
+				metadata.mOrientation = exifAngle;
 			}
 
 			int overlayCircleRadius =
 					CIRCLE_RADII[PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE)];
 			if (overlayCircleRadius > 0) {
-				metadata.xCenter = 0.5f; // MAGIC_NUMBER
-				metadata.yCenter = 0.5f; // MAGIC_NUMBER
-				metadata.overlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor();
+				metadata.mXCenter = 0.5f; // MAGIC_NUMBER
+				metadata.mYCenter = 0.5f; // MAGIC_NUMBER
+				metadata.mOverlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor();
 			}
 
 			// save photo
-			new SavePhotoTask(data, currentRightLeft, metadata).execute(imageFile);
+			new SavePhotoTask(data, mCurrentRightLeft, metadata).execute(imageFile);
 
 			// go to next step
-			setAction(CHECK_PHOTO, currentRightLeft);
+			setAction(CHECK_PHOTO, mCurrentRightLeft);
 		}
 	};
 
@@ -865,17 +865,17 @@ public class CameraActivity extends BaseActivity {
 		/**
 		 * The data to be saved.
 		 */
-		private byte[] data;
+		private byte[] mImageData;
 
 		/**
 		 * The side of the eye to be saved.
 		 */
-		private RightLeft rightLeft;
+		private RightLeft mRightLeft;
 
 		/**
 		 * The metadata to be stored.
 		 */
-		private JpegMetadata metadata;
+		private JpegMetadata mMetadata;
 
 		/**
 		 * Constructor, passing the data to be saved.
@@ -888,9 +888,9 @@ public class CameraActivity extends BaseActivity {
 		 *            Metadata to be stored in the photo.
 		 */
 		private SavePhotoTask(final byte[] data, final RightLeft rightLeft, final JpegMetadata metadata) {
-			this.data = data;
-			this.rightLeft = rightLeft;
-			this.metadata = metadata;
+			this.mImageData = data;
+			this.mRightLeft = rightLeft;
+			this.mMetadata = metadata;
 		}
 
 		@Override
@@ -900,11 +900,11 @@ public class CameraActivity extends BaseActivity {
 			try {
 				FileOutputStream fos = new FileOutputStream(imageFile.getAbsolutePath());
 
-				fos.write(data);
+				fos.write(mImageData);
 				fos.close();
 
-				if (metadata != null) {
-					JpegSynchronizationUtil.storeJpegMetadata(imageFile.getAbsolutePath(), metadata);
+				if (mMetadata != null) {
+					JpegSynchronizationUtil.storeJpegMetadata(imageFile.getAbsolutePath(), mMetadata);
 				}
 			}
 			catch (java.io.IOException e) {
@@ -916,7 +916,7 @@ public class CameraActivity extends BaseActivity {
 
 		@Override
 		protected void onPostExecute(final File imageFile) {
-			Log.d(Application.TAG, "Finished saving image " + imageFile.getName() + " - " + rightLeft);
+			Log.d(Application.TAG, "Finished saving image " + imageFile.getName() + " - " + mRightLeft);
 		}
 	}
 

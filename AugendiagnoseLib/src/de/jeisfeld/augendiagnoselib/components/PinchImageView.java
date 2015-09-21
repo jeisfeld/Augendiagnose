@@ -123,7 +123,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * The maximum allowed resolution of the bitmap. The image is scaled to this size.
 	 */
-	protected static int maxBitmapSize = DEFAULT_MAX_BITMAP_SIZE;
+	protected static int mMaxBitmapSize = DEFAULT_MAX_BITMAP_SIZE;
 
 	/**
 	 * The last scale factor.
@@ -203,9 +203,9 @@ public class PinchImageView extends ImageView {
 			new Thread() {
 				@Override
 				public void run() {
-					mBitmap = ImageUtil.getImageBitmap(pathName, maxBitmapSize);
+					mBitmap = ImageUtil.getImageBitmap(pathName, mMaxBitmapSize);
 
-					retainFragment.bitmap = mBitmap;
+					retainFragment.mRetainBitmap = mBitmap;
 					mPathName = pathName;
 					handler.post(new Runnable() {
 						@Override
@@ -322,7 +322,7 @@ public class PinchImageView extends ImageView {
 	 *            the maximum size (pixels)
 	 */
 	public static void setMaxBitmapSize(final int size) {
-		maxBitmapSize = size;
+		mMaxBitmapSize = size;
 	}
 
 	/**
@@ -599,14 +599,14 @@ public class PinchImageView extends ImageView {
 		/**
 		 * The bitmap to be stored.
 		 */
-		private Bitmap bitmap;
+		private Bitmap mRetainBitmap;
 
 		public final Bitmap getBitmap() {
-			return bitmap;
+			return mRetainBitmap;
 		}
 
 		public final void setBitmap(final Bitmap bitmap) {
-			this.bitmap = bitmap;
+			this.mRetainBitmap = bitmap;
 		}
 
 		/**

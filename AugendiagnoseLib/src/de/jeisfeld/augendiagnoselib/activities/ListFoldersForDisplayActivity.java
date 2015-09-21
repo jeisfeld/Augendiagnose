@@ -34,7 +34,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	/**
 	 * The ListPicturesForNameFragment used to display pictures on a tablet.
 	 */
-	private ListPicturesForNameFragment listPicturesFragment;
+	private ListPicturesForNameFragment mListPicturesFragment;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
@@ -117,18 +117,18 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 */
 	public final void listPicturesForName(final String name) {
 		if (SystemUtil.isTablet()) {
-			listPicturesFragment =
+			mListPicturesFragment =
 					(ListPicturesForNameFragment) getFragmentManager().findFragmentByTag(FRAGMENT_LISTPICTURES_TAG);
-			if (listPicturesFragment != null && name.equals(listPicturesFragment.getName())) {
+			if (mListPicturesFragment != null && name.equals(mListPicturesFragment.getName())) {
 				// Do nothing if the given name is already opened.
 				return;
 			}
 
-			listPicturesFragment = new ListPicturesForNameFragment();
-			listPicturesFragment.setParameters(getParentFolder(), name);
+			mListPicturesFragment = new ListPicturesForNameFragment();
+			mListPicturesFragment.setParameters(getParentFolder(), name);
 
 			FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragment_detail,
-					listPicturesFragment, FRAGMENT_LISTPICTURES_TAG);
+					mListPicturesFragment, FRAGMENT_LISTPICTURES_TAG);
 			if (findViewById(R.id.listViewForName) != null) {
 				// if right pane is filled, then add it to the back stack
 				transaction.addToBackStack(null);
@@ -180,12 +180,12 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 
 	@Override
 	public final ListPicturesForNameFragment getListPicturesForNameFragment() {
-		return listPicturesFragment;
+		return mListPicturesFragment;
 	}
 
 	@Override
 	public final void setListPicturesForNameFragment(final ListPicturesForNameFragment fragment) {
-		this.listPicturesFragment = fragment;
+		this.mListPicturesFragment = fragment;
 	}
 
 }

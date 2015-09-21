@@ -53,22 +53,22 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The activity using the handler.
 	 */
-	private Activity activity;
+	private Activity mActivity;
 
 	/**
 	 * The FrameLayout holding the preview.
 	 */
-	private FrameLayout previewFrame;
+	private FrameLayout mPreviewFrame;
 
 	/**
 	 * Flag indicating if the camera is in preview state.
 	 */
-	private boolean inPreview = false;
+	private boolean mIsInPreview = false;
 
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private OnPictureTakenHandler onPictureTakenHandler;
+	private OnPictureTakenHandler mOnPictureTakenHandler;
 
 	/**
 	 * Constructor of the Camera1Handler.
@@ -84,10 +84,10 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	public Camera2Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
 			final OnPictureTakenHandler onPictureTakenHandler) {
-		this.activity = activity;
-		this.previewFrame = previewFrame;
+		this.mActivity = activity;
+		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
-		this.onPictureTakenHandler = onPictureTakenHandler;
+		this.mOnPictureTakenHandler = onPictureTakenHandler;
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class Camera2Handler implements CameraHandler {
 			mCameraDevice = null;
 
 			Log.e(Application.TAG, "Error on camera - " + error);
-			DialogUtil.displayToast(activity, R.string.message_dialog_failed_to_open_camera);
+			DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera);
 		}
 
 	};
@@ -234,7 +234,7 @@ public class Camera2Handler implements CameraHandler {
 			buffer.get(data);
 			image.close();
 
-			onPictureTakenHandler.onPictureTaken(data);
+			mOnPictureTakenHandler.onPictureTaken(data);
 		}
 	};
 
@@ -333,11 +333,11 @@ public class Camera2Handler implements CameraHandler {
 	 *            The message to show
 	 */
 	private void showToast(final String text) {
-		if (activity != null) {
-			activity.runOnUiThread(new Runnable() {
+		if (mActivity != null) {
+			mActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+					Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
 				}
 			});
 		}
@@ -381,7 +381,7 @@ public class Camera2Handler implements CameraHandler {
 
 	@Override
 	public final void startPreview() {
-		if (inPreview) {
+		if (mIsInPreview) {
 			unlockFocus();
 		}
 		else {
@@ -396,7 +396,7 @@ public class Camera2Handler implements CameraHandler {
 
 	@Override
 	public final void stopPreview() {
-		inPreview = false;
+		mIsInPreview = false;
 		closeCamera();
 	}
 
@@ -409,7 +409,7 @@ public class Camera2Handler implements CameraHandler {
 	 *            The height of available size for camera preview
 	 */
 	private void setUpCameraOutputs(final int width, final int height) {
-		CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
+		CameraManager manager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
 		try {
 			for (String cameraId : manager.getCameraIdList()) {
 				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
@@ -442,16 +442,16 @@ public class Camera2Handler implements CameraHandler {
 				// Resize frame to match aspect ratio
 				float aspectRatio = ((float) mPreviewSize.getWidth()) / mPreviewSize.getHeight();
 
-				LayoutParams layoutParams = previewFrame.getLayoutParams();
-				if (previewFrame.getWidth() > aspectRatio * previewFrame.getHeight()) {
-					layoutParams.width = Math.round(previewFrame.getHeight() * aspectRatio);
-					layoutParams.height = previewFrame.getHeight();
+				LayoutParams layoutParams = mPreviewFrame.getLayoutParams();
+				if (mPreviewFrame.getWidth() > aspectRatio * mPreviewFrame.getHeight()) {
+					layoutParams.width = Math.round(mPreviewFrame.getHeight() * aspectRatio);
+					layoutParams.height = mPreviewFrame.getHeight();
 				}
 				else {
-					layoutParams.width = previewFrame.getWidth();
-					layoutParams.height = Math.round(previewFrame.getWidth() / aspectRatio);
+					layoutParams.width = mPreviewFrame.getWidth();
+					layoutParams.height = Math.round(mPreviewFrame.getWidth() / aspectRatio);
 				}
-				previewFrame.setLayoutParams(layoutParams);
+				mPreviewFrame.setLayoutParams(layoutParams);
 
 				mCameraId = cameraId;
 				return;
@@ -462,7 +462,7 @@ public class Camera2Handler implements CameraHandler {
 		}
 		catch (NullPointerException e) {
 			Log.e(Application.TAG, "Camera2 API seems to be not supported", e);
-			DialogUtil.displayToast(activity, R.string.message_dialog_failed_to_open_camera);
+			DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera);
 			// TODO: fallback to normal Camera API
 		}
 	}
@@ -476,10 +476,10 @@ public class Camera2Handler implements CameraHandler {
 	 *            the height of the preview
 	 */
 	private void openCamera(final int width, final int height) {
-		inPreview = true;
+		mIsInPreview = true;
 		setUpCameraOutputs(width, height);
 		configureTransform(width, height);
-		CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
+		CameraManager manager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
 		try {
 			if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) { // MAGIC_NUMBER
 				throw new RuntimeException("Time out waiting to lock camera opening.");
@@ -592,10 +592,10 @@ public class Camera2Handler implements CameraHandler {
 	 *            The height of `mTextureView`
 	 */
 	private void configureTransform(final int viewWidth, final int viewHeight) {
-		if (null == mTextureView || null == mPreviewSize || null == activity) {
+		if (null == mTextureView || null == mPreviewSize || null == mActivity) {
 			return;
 		}
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+		int rotation = mActivity.getWindowManager().getDefaultDisplay().getRotation();
 		Matrix matrix = new Matrix();
 		RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
 		RectF bufferRect = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
@@ -665,7 +665,7 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	private void captureStillPicture() {
 		try {
-			if (null == activity || null == mCameraDevice) {
+			if (null == mActivity || null == mCameraDevice) {
 				return;
 			}
 			// This is the CaptureRequest.Builder that we use to take a picture.
@@ -680,7 +680,7 @@ public class Camera2Handler implements CameraHandler {
 					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 
 			// Orientation
-			int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			int rotation = mActivity.getWindowManager().getDefaultDisplay().getRotation();
 			captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
 			mCaptureSession.stopRepeating();

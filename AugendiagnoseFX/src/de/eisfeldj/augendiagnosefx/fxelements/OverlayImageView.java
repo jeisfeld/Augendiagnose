@@ -17,32 +17,32 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * The current overlay displayed.
 	 */
-	private Integer overlayType;
+	private Integer mOverlayType;
 
 	/**
 	 * The current overlay color displayed.
 	 */
-	private Color overlayColor;
+	private Color mOverlayColor;
 
 	/**
 	 * The current brightness of the image.
 	 */
-	private float brightness = 0;
+	private float mBrightness = 0;
 
 	/**
 	 * The current contrast of the image.
 	 */
-	private float contrast = 1;
+	private float mContrast = 1;
 
 	/**
 	 * The current resolution of the image - used to adapt zoomFactor if resolution changes.
 	 */
-	private Resolution currentResolution = Resolution.NORMAL;
+	private Resolution mCurrentResolution = Resolution.NORMAL;
 
 	/**
 	 * The current image width - used to adapt zoomFactor if resolution changes.
 	 */
-	private double currentImageWidth;
+	private double mCurrentImageWidth;
 
 	/**
 	 * Display the overlay.
@@ -56,9 +56,9 @@ public class OverlayImageView extends SizableImageView {
 	 */
 	public final void displayOverlay(final Integer newOverlayType, final Color newOverlayColor,
 			final Resolution resolution) {
-		overlayType = newOverlayType;
-		overlayColor = newOverlayColor;
-		currentResolution = resolution;
+		mOverlayType = newOverlayType;
+		mOverlayColor = newOverlayColor;
+		mCurrentResolution = resolution;
 		redisplay(resolution);
 	}
 
@@ -71,7 +71,7 @@ public class OverlayImageView extends SizableImageView {
 	 *            Indicator of the resolution of the image.
 	 */
 	public final void setBrightness(final float newBrightness, final Resolution resolution) {
-		brightness = newBrightness;
+		mBrightness = newBrightness;
 		redisplay(resolution);
 	}
 
@@ -84,7 +84,7 @@ public class OverlayImageView extends SizableImageView {
 	 *            Indicator of the resolution of the image.
 	 */
 	public final void setContrast(final float newContrast, final Resolution resolution) {
-		contrast = seekbarContrastToStoredContrast(newContrast);
+		mContrast = seekbarContrastToStoredContrast(newContrast);
 		redisplay(resolution);
 	}
 
@@ -97,8 +97,8 @@ public class OverlayImageView extends SizableImageView {
 	 *            The contrast
 	 */
 	public final void initializeBrightnessContrast(final float newBrightness, final float newContrast) {
-		brightness = newBrightness;
-		contrast = newContrast;
+		mBrightness = newBrightness;
+		mContrast = newContrast;
 	}
 
 	/**
@@ -108,14 +108,14 @@ public class OverlayImageView extends SizableImageView {
 	 *            Indicator of the resolution of the image.
 	 */
 	public final void redisplay(final Resolution resolution) {
-		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
+		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor, mBrightness, mContrast,
 				resolution);
 
-		if (resolution != currentResolution) {
-			double imageRatio = newImage.getWidth() / currentImageWidth;
+		if (resolution != mCurrentResolution) {
+			double imageRatio = newImage.getWidth() / mCurrentImageWidth;
 			multiplyZoomProperty(1 / imageRatio);
-			currentImageWidth = newImage.getWidth();
-			currentResolution = resolution;
+			mCurrentImageWidth = newImage.getWidth();
+			mCurrentResolution = resolution;
 		}
 
 		getImageView().setImage(newImage);
@@ -132,10 +132,10 @@ public class OverlayImageView extends SizableImageView {
 	@Override
 	protected final void displayImage(final Image image) {
 		Image enhancedImage =
-				ImageUtil.getImageForDisplay(getEyePhoto(), overlayType, overlayColor, brightness, contrast,
+				ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor, mBrightness, mContrast,
 						Resolution.NORMAL);
-		currentResolution = Resolution.NORMAL;
-		currentImageWidth = enhancedImage.getWidth();
+		mCurrentResolution = Resolution.NORMAL;
+		mCurrentImageWidth = enhancedImage.getWidth();
 
 		super.displayImage(enhancedImage);
 	}

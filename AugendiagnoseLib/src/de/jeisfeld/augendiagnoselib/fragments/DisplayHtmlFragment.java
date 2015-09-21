@@ -36,7 +36,7 @@ public class DisplayHtmlFragment extends Fragment {
 	/**
 	 * The resource id of the HTML String to be displayed.
 	 */
-	private int resource;
+	private int mResource;
 
 	/**
 	 * Initialize the listFoldersFragment with the resource.
@@ -55,7 +55,7 @@ public class DisplayHtmlFragment extends Fragment {
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		resource = getArguments().getInt(STRING_RESOURCE, -1);
+		mResource = getArguments().getInt(STRING_RESOURCE, -1);
 	}
 
 	@Override
@@ -73,8 +73,8 @@ public class DisplayHtmlFragment extends Fragment {
 
 		setOpenLinksInExternalBrowser(webView);
 
-		String html = getString(resource);
-		if (resource == R.string.html_release_notes_base) {
+		String html = getString(mResource);
+		if (mResource == R.string.html_release_notes_base) {
 			int indexBody = html.indexOf("</body>");
 			String releaseNotes =
 					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), false, 1, Application.getVersion());

@@ -47,12 +47,12 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	/**
 	 * The view displaying the files.
 	 */
-	private View viewFragmentImage;
+	private View mViewFragmentImage;
 
 	/**
 	 * The fragment displaying the image.
 	 */
-	private DisplayImageFragment fragmentImage;
+	private DisplayImageFragment mFragmentImage;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
@@ -97,35 +97,35 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		setContentView(R.layout.activity_display_one);
 
-		fragmentImage = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		mFragmentImage = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-		if (fragmentImage == null) {
-			fragmentImage = new DisplayImageFragment();
+		if (mFragmentImage == null) {
+			mFragmentImage = new DisplayImageFragment();
 			if (type == TYPE_FILENAME) {
-				fragmentImage.setParameters(file, 1, null);
+				mFragmentImage.setParameters(file, 1, null);
 			}
 			else {
-				fragmentImage.setParameters(fileResource, 1);
+				mFragmentImage.setParameters(fileResource, 1);
 			}
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image, fragmentImage, FRAGMENT_TAG).commit();
+			getFragmentManager().beginTransaction().add(R.id.fragment_image, mFragmentImage, FRAGMENT_TAG).commit();
 			getFragmentManager().executePendingTransactions();
 		}
 
-		viewFragmentImage = findViewById(R.id.fragment_image);
-		viewFragmentEdit = findViewById(R.id.fragment_edit);
-		viewLayoutMain = findViewById(android.R.id.content);
-		viewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
+		mViewFragmentImage = findViewById(R.id.fragment_image);
+		mViewFragmentEdit = findViewById(R.id.fragment_edit);
+		mViewLayoutMain = findViewById(android.R.id.content);
+		mViewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
-		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
+		mFragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
 
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
-			viewFragmentEdit.setVisibility(fragmentEditVisibility);
+			mViewFragmentEdit.setVisibility(fragmentEditVisibility);
 
 			if (fragmentEditVisibility == View.VISIBLE) {
-				fragmentEditedImage = fragmentImage;
+				mFragmentEditedImage = mFragmentImage;
 			}
 		}
 
@@ -142,15 +142,15 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	@Override
 	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
-		viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
-		viewFragmentImage.findViewById(R.id.buttonComment).setEnabled(false);
+		mViewSeparatorAfterEdit.setVisibility(View.VISIBLE);
+		mViewFragmentImage.findViewById(R.id.buttonComment).setEnabled(false);
 	}
 
 	@Override
 	protected final void hideEditFragment() {
 		super.hideEditFragment();
-		viewSeparatorAfterEdit.setVisibility(View.GONE);
-		viewFragmentImage.findViewById(R.id.buttonComment).setEnabled(true);
+		mViewSeparatorAfterEdit.setVisibility(View.GONE);
+		mViewFragmentImage.findViewById(R.id.buttonComment).setEnabled(true);
 	}
 
 	/**
@@ -158,14 +158,14 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	 */
 	@Override
 	protected final void initializeImages() {
-		fragmentImage.initializeImages();
+		mFragmentImage.initializeImages();
 	}
 
 	// implemenation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
 	public final void requestLayout() {
-		viewLayoutMain.invalidate();
-		fragmentImage.requestLayout();
+		mViewLayoutMain.invalidate();
+		mFragmentImage.requestLayout();
 	}
 }

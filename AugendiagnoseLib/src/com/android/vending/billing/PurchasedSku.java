@@ -8,19 +8,19 @@ public class PurchasedSku {
 	/**
 	 * The purchase.
 	 */
-	private Purchase purchase;
+	private Purchase mPurchase;
 
 	public final Purchase getPurchase() {
-		return purchase;
+		return mPurchase;
 	}
 
 	/**
 	 * The SKU details of the purchase.
 	 */
-	private SkuDetails skuDetails;
+	private SkuDetails mSkuDetails;
 
 	public final SkuDetails getSkuDetails() {
-		return skuDetails;
+		return mSkuDetails;
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class PurchasedSku {
 	 *            The purchase.
 	 */
 	public PurchasedSku(final SkuDetails skuDetails, final Purchase purchase) {
-		this.skuDetails = skuDetails;
-		this.purchase = purchase;
+		this.mSkuDetails = skuDetails;
+		this.mPurchase = purchase;
 	}
 }

@@ -322,11 +322,11 @@ public final class DialogUtil {
 		try {
 			JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(eyePhoto.getAbsolutePath());
 
-			if (metadata.person != null && metadata.person.length() > 0) {
-				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.person));
+			if (metadata.mPerson != null && metadata.mPerson.length() > 0) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.mPerson));
 			}
-			if (metadata.comment != null && metadata.comment.length() > 0) {
-				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.comment));
+			if (metadata.mComment != null && metadata.mComment.length() > 0) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.mComment));
 			}
 		}
 		catch (Exception e) {
@@ -365,7 +365,7 @@ public final class DialogUtil {
 		/**
 		 * The listener called when the dialog is ended.
 		 */
-		private MessageDialogListener listener = null;
+		private MessageDialogListener mListener = null;
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -373,7 +373,7 @@ public final class DialogUtil {
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
-			listener = (MessageDialogListener) getArguments().getSerializable(
+			mListener = (MessageDialogListener) getArguments().getSerializable(
 					PARAM_LISTENER);
 			getArguments().putSerializable(PARAM_LISTENER, null);
 
@@ -394,8 +394,8 @@ public final class DialogUtil {
 					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
-							if (listener != null) {
-								listener.onDialogClick(DisplayMessageDialogFragment.this);
+							if (mListener != null) {
+								mListener.onDialogClick(DisplayMessageDialogFragment.this);
 							}
 							dialog.dismiss();
 						}
@@ -407,16 +407,16 @@ public final class DialogUtil {
 		@Override
 		public final void onCancel(final DialogInterface dialog) {
 			super.onCancel(dialog);
-			if (listener != null) {
-				listener.onDialogCancel(DisplayMessageDialogFragment.this);
+			if (mListener != null) {
+				mListener.onDialogCancel(DisplayMessageDialogFragment.this);
 			}
 		}
 
 		@Override
 		public final void onSaveInstanceState(final Bundle outState) {
-			if (listener != null) {
+			if (mListener != null) {
 				// Typically cannot serialize the listener due to its reference to the activity.
-				listener = null;
+				mListener = null;
 				outState.putBoolean("preventRecreation", true);
 			}
 			super.onSaveInstanceState(outState);

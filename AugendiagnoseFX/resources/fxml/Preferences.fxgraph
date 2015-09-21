@@ -14,7 +14,7 @@ import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
 
 component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	GridPane id settingsPane {
+	GridPane id mSettingsPane {
 		styleClass : "display",
 		columnConstraints : ColumnConstraints {
 		},
@@ -36,7 +36,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 1
 			},
 
-			TextField id textFolderPhotos {
+			TextField id mTextFolderPhotos {
 				minWidth : 300,
 				static columnIndex : 1,
 				static rowIndex : 1
@@ -60,7 +60,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 2
 			},
 
-			ChoiceBox<Integer> id choiceMaxBitmapSize {
+			ChoiceBox<Integer> id mChoiceMaxBitmapSize {
 				static columnIndex : 1,
 				static rowIndex : 2,
 				static columnSpan : 2,
@@ -75,7 +75,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 3
 			},
 
-			ChoiceBox<Integer> id choiceThumbnailSize {
+			ChoiceBox<Integer> id mChoiceThumbnailSize {
 				static columnIndex : 1,
 				static rowIndex : 3,
 				static columnSpan : 2,
@@ -90,7 +90,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 4
 			},
 
-			ColorPicker id colorPicker {
+			ColorPicker id mColorPicker {
 				static columnIndex : 1,
 				static rowIndex : 4,
 				static columnSpan : 2
@@ -102,7 +102,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 5
 			},
 
-			CheckBox id checkBoxSortByLastName {
+			CheckBox id mCheckBoxSortByLastName {
 				static columnIndex : 1,
 				static rowIndex : 5,
 				static columnSpan : 2
@@ -114,7 +114,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 6
 			},
 
-			CheckBox id checkBoxUpdateAutomatically {
+			CheckBox id mCheckBoxUpdateAutomatically {
 				static columnIndex : 1,
 				static rowIndex : 6,
 				static columnSpan : 2
@@ -126,7 +126,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 7
 			},
 
-			ChoiceBox<String> id choiceLanguage {
+			ChoiceBox<String> id mChoiceLanguage {
 				static columnIndex : 1,
 				static rowIndex : 7,
 				static columnSpan : 2

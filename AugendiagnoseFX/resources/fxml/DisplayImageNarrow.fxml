@@ -25,12 +25,12 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="displayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mDisplayImage" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageController" styleClass="displayImage" alignment="CENTER">
 	<fx:define>
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<OverlayImageView fx:id="displayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"> 
+	<OverlayImageView fx:id="mDisplayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"> 
 		<contextMenu>
 			<ContextMenu> 
 				<items>
@@ -43,52 +43,52 @@
 			</ContextMenu>
 		</contextMenu>
 	</OverlayImageView>
-	<GridPane fx:id="overlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
 		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/brightness.png"/> 
 			</image>
 		</ImageView>
-		<Slider fx:id="sliderBrightness" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
+		<Slider fx:id="mSliderBrightness" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/contrast.png"/> 
 			</image>
 		</ImageView>
-		<Slider fx:id="sliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
+		<Slider fx:id="mSliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<HBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
-			<ToggleButton fx:id="btnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
 			<Separator/> 
-			<ToggleButton fx:id="btnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay1" text="%button_overlay_1" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay2" text="%button_overlay_2" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay2" text="%button_overlay_2" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay3" text="%button_overlay_3" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay3" text="%button_overlay_3" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay4" text="%button_overlay_4" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay4" text="%button_overlay_4" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay5" text="%button_overlay_5" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay5" text="%button_overlay_5" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay6" text="%button_overlay_6" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay6" text="%button_overlay_6" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
-			<ToggleButton fx:id="btnOverlay7" text="%button_overlay_7" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlay7" text="%button_overlay_7" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
 			<Separator/> 
-			<ColorPicker fx:id="colorPicker" onAction="#onColorChanged"> 
+			<ColorPicker fx:id="mColorPicker" onAction="#onColorChanged"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ColorPicker>
 			<Separator/> 
-			<ToggleButton fx:id="clarityButton" alignment="CENTER" onAction="#btnClarityPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mClarityButton" alignment="CENTER" onAction="#btnClarityPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 				<graphic>
 					<ImageView> 
@@ -99,7 +99,7 @@
 				</graphic>
 			</ToggleButton>
 			<Separator/> 
-			<Button fx:id="fullScreenButton" alignment="CENTER" onAction="#displayInFullWindow"> 
+			<Button fx:id="mFullScreenButton" alignment="CENTER" onAction="#displayInFullWindow"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 				<graphic>
 					<ImageView> 
@@ -114,10 +114,10 @@
 			<Insets bottom="5" top="5"/> 
 		</padding>
 	</GridPane>
-	<GridPane fx:id="commentPane" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
+	<GridPane fx:id="mCommentPane" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
 		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
-		<TextArea fx:id="txtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
-		<ToggleButton fx:id="btnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM"/> 
+		<TextArea fx:id="mTxtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
+		<ToggleButton fx:id="mBtnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM"/> 
 		<columnConstraints>
 			<ColumnConstraints hgrow="NEVER"/> 
 			<ColumnConstraints hgrow="SOMETIMES"/> 
@@ -125,8 +125,8 @@
 	</GridPane>
 	<rowConstraints>
 		<RowConstraints vgrow="SOMETIMES"/> 
-		<RowConstraints fx:id="commentConstraints" vgrow="NEVER"/> 
-		<RowConstraints fx:id="commentConstraints" vgrow="SOMETIMES" percentHeight="20"/> 
+		<RowConstraints fx:id="mCommentConstraints" vgrow="NEVER"/> 
+		<RowConstraints fx:id="mCommentConstraints" vgrow="SOMETIMES" percentHeight="20"/> 
 	</rowConstraints>
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES"/> 

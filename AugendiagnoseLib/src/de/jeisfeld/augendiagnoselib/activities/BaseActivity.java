@@ -42,15 +42,15 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	/**
 	 * The random string used for authorization versus unlocker app.
 	 */
-	private String randomAuthorizationString = null;
+	private String mRandomAuthorizationString = null;
 
 	/**
 	 * Flag indicating if the creation of the activity is failed.
 	 */
-	private boolean isCreationFailed = false;
+	private boolean mIsCreationFailed = false;
 
 	protected final boolean isCreationFailed() {
-		return isCreationFailed;
+		return mIsCreationFailed;
 	}
 
 	// OVERRIDABLE
@@ -62,7 +62,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
-				isCreationFailed = true;
+				mIsCreationFailed = true;
 
 				// Try authorization via unlocker app.
 				checkUnlockerApp();
@@ -169,7 +169,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 * After all other authorization options have failed, try to authorize via premium pack.
 	 */
 	private void checkPremiumPackAfterAuthorizationFailure() {
-		if (isCreationFailed) {
+		if (mIsCreationFailed) {
 			GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
 
 				@Override
@@ -201,8 +201,8 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		}
 		else {
 			SecureRandom random = new SecureRandom();
-			randomAuthorizationString = new BigInteger(130, random).toString(32); // MAGIC_NUMBER
-			intent.putExtra(STRING_EXTRA_REQUEST_KEY, randomAuthorizationString);
+			mRandomAuthorizationString = new BigInteger(130, random).toString(32); // MAGIC_NUMBER
+			intent.putExtra(STRING_EXTRA_REQUEST_KEY, mRandomAuthorizationString);
 			intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
 			startActivityForResult(intent, REQUEST_CODE_UNLOCKER);
@@ -214,12 +214,12 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (requestCode == REQUEST_CODE_UNLOCKER && resultCode == RESULT_OK && data != null) {
 			String responseKey = data.getStringExtra(STRING_RESULT_RESPONSE_KEY);
-			String expectedResponseKey = EncryptionUtil.createHash(randomAuthorizationString + getString(R.string.private_unlock_key));
+			String expectedResponseKey = EncryptionUtil.createHash(mRandomAuthorizationString + getString(R.string.private_unlock_key));
 
 			if (expectedResponseKey.equals(responseKey)) {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, true);
 
-				if (isCreationFailed) {
+				if (mIsCreationFailed) {
 					finish();
 					startActivity(getIntent());
 				}

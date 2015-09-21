@@ -12,22 +12,22 @@ public final class JpegMetadata {
 	private static final String LINE_BREAK = "\n";
 
 	// PUBLIC_FIELDS:START
-	public String title = null;
-	public String description = null;
-	public String subject = null;
-	public String comment = null;
-	public String person = null;
-	public Float xCenter = null;
-	public Float yCenter = null;
-	public Float overlayScaleFactor = null;
-	public Float xPosition = null;
-	public Float yPosition = null;
-	public Float zoomFactor = null;
-	public Date organizeDate = null;
-	public RightLeft rightLeft = null;
-	public Float brightness = null;
-	public Float contrast = null;
-	public Integer overlayColor = null;
+	public String mTitle = null;
+	public String mDescription = null;
+	public String mSubject = null;
+	public String mComment = null;
+	public String mPerson = null;
+	public Float mXCenter = null;
+	public Float mYCenter = null;
+	public Float mOverlayScaleFactor = null;
+	public Float mXPosition = null;
+	public Float mYPosition = null;
+	public Float mZoomFactor = null;
+	public Date mOrganizeDate = null;
+	public RightLeft mRightLeft = null;
+	public Float mBrightness = null;
+	public Float mContrast = null;
+	public Integer mOverlayColor = null;
 
 	// PUBLIC_FIELDS:END
 	// JAVADOC:ON
@@ -38,7 +38,7 @@ public final class JpegMetadata {
 	 * @return true if overlay position is stored.
 	 */
 	public boolean hasOverlayPosition() {
-		return xCenter != null && yCenter != null && overlayScaleFactor != null;
+		return mXCenter != null && mYCenter != null && mOverlayScaleFactor != null;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public final class JpegMetadata {
 	 * @return true if the image position is stored.
 	 */
 	public boolean hasViewPosition() {
-		return xPosition != null && yPosition != null && zoomFactor != null;
+		return mXPosition != null && mYPosition != null && mZoomFactor != null;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public final class JpegMetadata {
 	 * @return true if brightness and contrast are stored.
 	 */
 	public boolean hasBrightnessContrast() {
-		return brightness != null && contrast != null;
+		return mBrightness != null && mContrast != null;
 	}
 
 	// JAVADOC:OFF
@@ -64,83 +64,83 @@ public final class JpegMetadata {
 	// Getters and setters with type conversion.
 
 	public void setXCenter(final String value) {
-		xCenter = value == null ? null : Float.parseFloat(value);
+		mXCenter = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getXCenterString() {
-		return xCenter == null ? null : xCenter.toString();
+		return mXCenter == null ? null : mXCenter.toString();
 	}
 
 	public void setYCenter(final String value) {
-		yCenter = value == null ? null : Float.parseFloat(value);
+		mYCenter = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getYCenterString() {
-		return yCenter == null ? null : yCenter.toString();
+		return mYCenter == null ? null : mYCenter.toString();
 	}
 
 	public void setOverlayScaleFactor(final String value) {
-		overlayScaleFactor = value == null ? null : Float.parseFloat(value);
+		mOverlayScaleFactor = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getOverlayScaleFactorString() {
-		return overlayScaleFactor == null ? null : overlayScaleFactor.toString();
+		return mOverlayScaleFactor == null ? null : mOverlayScaleFactor.toString();
 	}
 
 	public void setXPosition(final String value) {
-		xPosition = value == null ? null : Float.parseFloat(value);
+		mXPosition = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getXPositionString() {
-		return xPosition == null ? null : xPosition.toString();
+		return mXPosition == null ? null : mXPosition.toString();
 	}
 
 	public void setYPosition(final String value) {
-		yPosition = value == null ? null : Float.parseFloat(value);
+		mYPosition = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getYPositionString() {
-		return yPosition == null ? null : yPosition.toString();
+		return mYPosition == null ? null : mYPosition.toString();
 	}
 
 	public void setZoomFactor(final String value) {
-		zoomFactor = value == null ? null : Float.parseFloat(value);
+		mZoomFactor = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getZoomFactorString() {
-		return zoomFactor == null ? null : zoomFactor.toString();
+		return mZoomFactor == null ? null : mZoomFactor.toString();
 	}
 
 	public void setRightLeft(final String value) {
-		rightLeft = value == null ? null : RightLeft.fromString(value);
+		mRightLeft = value == null ? null : RightLeft.fromString(value);
 	}
 
 	public String getRightLeftString() {
-		return rightLeft == null ? null : rightLeft.toString();
+		return mRightLeft == null ? null : mRightLeft.toString();
 	}
 
 	public void setBrightness(final String value) {
-		brightness = value == null ? null : Float.parseFloat(value);
+		mBrightness = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getBrightnessString() {
-		return brightness == null ? null : brightness.toString();
+		return mBrightness == null ? null : mBrightness.toString();
 	}
 
 	public void setContrast(final String value) {
-		contrast = value == null ? null : Float.parseFloat(value);
+		mContrast = value == null ? null : Float.parseFloat(value);
 	}
 
 	public String getContrastString() {
-		return contrast == null ? null : contrast.toString();
+		return mContrast == null ? null : mContrast.toString();
 	}
 
 	public void setOverlayColor(final String value) {
-		overlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
+		mOverlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
 	}
 
 	public String getOverlayColorString() {
-		return overlayColor == null ? null : Integer.toHexString(overlayColor);
+		return mOverlayColor == null ? null : Integer.toHexString(mOverlayColor);
 	}
 
 	// JAVADOC:ON
@@ -148,21 +148,21 @@ public final class JpegMetadata {
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
-		str.append("Title: " + title + LINE_BREAK);
-		str.append("Description: " + description + LINE_BREAK);
-		str.append("Subject: " + subject + LINE_BREAK);
-		str.append("Comment: " + comment + LINE_BREAK);
-		str.append("Person: " + person + LINE_BREAK);
-		str.append("X-Center: " + xCenter + LINE_BREAK);
-		str.append("Y-Center: " + yCenter + LINE_BREAK);
-		str.append("OverlayScaleFactor: " + overlayScaleFactor + LINE_BREAK);
-		str.append("X-Position: " + xPosition + LINE_BREAK);
-		str.append("Y-Position: " + yPosition + LINE_BREAK);
-		str.append("ZoomFactor: " + zoomFactor + LINE_BREAK);
-		str.append("OrganizeDate: " + organizeDate + LINE_BREAK);
-		str.append("RightLeft: " + rightLeft + LINE_BREAK);
-		str.append("Brightness: " + brightness + LINE_BREAK);
-		str.append("Contrast: " + contrast + LINE_BREAK);
+		str.append("Title: " + mTitle + LINE_BREAK);
+		str.append("Description: " + mDescription + LINE_BREAK);
+		str.append("Subject: " + mSubject + LINE_BREAK);
+		str.append("Comment: " + mComment + LINE_BREAK);
+		str.append("Person: " + mPerson + LINE_BREAK);
+		str.append("X-Center: " + mXCenter + LINE_BREAK);
+		str.append("Y-Center: " + mYCenter + LINE_BREAK);
+		str.append("OverlayScaleFactor: " + mOverlayScaleFactor + LINE_BREAK);
+		str.append("X-Position: " + mXPosition + LINE_BREAK);
+		str.append("Y-Position: " + mYPosition + LINE_BREAK);
+		str.append("ZoomFactor: " + mZoomFactor + LINE_BREAK);
+		str.append("OrganizeDate: " + mOrganizeDate + LINE_BREAK);
+		str.append("RightLeft: " + mRightLeft + LINE_BREAK);
+		str.append("Brightness: " + mBrightness + LINE_BREAK);
+		str.append("Contrast: " + mContrast + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
 		return str.toString();
 	}

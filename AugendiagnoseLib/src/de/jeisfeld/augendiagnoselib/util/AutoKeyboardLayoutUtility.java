@@ -47,27 +47,27 @@ public final class AutoKeyboardLayoutUtility {
 	public static void assistActivity(final Activity activity, final OnKeyboardChangeListener callback,
 			final boolean changeLayout) {
 		AutoKeyboardLayoutUtility instance = new AutoKeyboardLayoutUtility(activity);
-		instance.callback = callback;
-		instance.changeLayout = changeLayout;
+		instance.mCallback = callback;
+		instance.mChangeLayout = changeLayout;
 	}
 
 	// JAVADOC:OFF
 	private View mChildOfContent;
-	private int usableHeightPrevious;
-	private FrameLayout.LayoutParams frameLayoutParams;
-	private ActivityWithExplicitLayoutTrigger activityWithLayoutTrigger = null;
+	private int mUsableHeightPrevious;
+	private FrameLayout.LayoutParams mFrameLayoutParams;
+	private ActivityWithExplicitLayoutTrigger mActivityWithLayoutTrigger = null;
 
 	// JAVADOC:ON
 
 	/**
 	 * A callback to be called if the kayboard is shown or hidden.
 	 */
-	private OnKeyboardChangeListener callback = null;
+	private OnKeyboardChangeListener mCallback = null;
 
 	/**
 	 * Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
 	 */
-	private boolean changeLayout = true;
+	private boolean mChangeLayout = true;
 
 	/**
 	 * Constructor, adding a listener to change the global layout if required.
@@ -84,10 +84,10 @@ public final class AutoKeyboardLayoutUtility {
 				possiblyResizeChildOfContent();
 			}
 		});
-		frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
+		mFrameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
 
 		if (activity instanceof ActivityWithExplicitLayoutTrigger) {
-			activityWithLayoutTrigger = (ActivityWithExplicitLayoutTrigger) activity;
+			mActivityWithLayoutTrigger = (ActivityWithExplicitLayoutTrigger) activity;
 		}
 	}
 
@@ -96,32 +96,32 @@ public final class AutoKeyboardLayoutUtility {
 	 */
 	private void possiblyResizeChildOfContent() {
 		int usableHeightNow = computeUsableHeight();
-		if (usableHeightNow != usableHeightPrevious) {
+		if (usableHeightNow != mUsableHeightPrevious) {
 			int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
 			int heightDifference = usableHeightSansKeyboard - usableHeightNow;
 			if (heightDifference > (usableHeightSansKeyboard * MIN_KEYBOARD_SIZE)) {
 				// keyboard probably just became visible
-				if (changeLayout) {
-					frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
+				if (mChangeLayout) {
+					mFrameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
 				}
-				if (callback != null) {
-					callback.onKeyboardChanged(true);
+				if (mCallback != null) {
+					mCallback.onKeyboardChanged(true);
 				}
 			}
 			else {
 				// keyboard probably just became hidden
-				if (changeLayout) {
-					frameLayoutParams.height = usableHeightSansKeyboard;
+				if (mChangeLayout) {
+					mFrameLayoutParams.height = usableHeightSansKeyboard;
 				}
-				if (callback != null) {
-					callback.onKeyboardChanged(false);
+				if (mCallback != null) {
+					mCallback.onKeyboardChanged(false);
 				}
 			}
 			mChildOfContent.requestLayout();
-			usableHeightPrevious = usableHeightNow;
+			mUsableHeightPrevious = usableHeightNow;
 
-			if (activityWithLayoutTrigger != null) {
-				activityWithLayoutTrigger.requestLayout();
+			if (mActivityWithLayoutTrigger != null) {
+				mActivityWithLayoutTrigger.requestLayout();
 			}
 		}
 	}

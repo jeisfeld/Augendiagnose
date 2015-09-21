@@ -12,6 +12,15 @@ import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.TH
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
+import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,15 +39,6 @@ import javafx.scene.layout.ConstraintsBase;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
-import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
-import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
-import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
-import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 /**
  * BaseController for the "Display Image" page.
@@ -48,55 +48,55 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * The main pane holding the image.
 	 */
 	@FXML
-	private GridPane displayImage;
+	private GridPane mDisplayImage;
 
 	/**
 	 * The scroll pane holding the image.
 	 */
 	@FXML
-	private OverlayImageView displayImageView;
+	private OverlayImageView mDisplayImageView;
 
 	/**
 	 * The pane used for displaying and editing the comment.
 	 */
 	@FXML
-	private Pane commentPane;
+	private Pane mCommentPane;
 
 	/**
 	 * The constraints of the comment pane.
 	 */
 	@FXML
-	private ConstraintsBase commentConstraints;
+	private ConstraintsBase mCommentConstraints;
 
 	/**
 	 * The pane used for toggling the overlay.
 	 */
 	@FXML
-	private Pane overlayPane;
+	private Pane mOverlayPane;
 
 	/**
 	 * The constraints of the overlay pane.
 	 */
 	@FXML
-	private ConstraintsBase overlayConstraints;
+	private ConstraintsBase mOverlayConstraints;
 
 	/**
 	 * The text field for the image comment.
 	 */
 	@FXML
-	private TextArea txtImageComment;
+	private TextArea mTxtImageComment;
 
 	/**
 	 * The Button for editing/saving the image comment.
 	 */
 	@FXML
-	private ToggleButton btnEditComment;
+	private ToggleButton mBtnEditComment;
 
 	/**
 	 * The Button for adding the circle overlay.
 	 */
 	@FXML
-	private ToggleButton btnOverlayCircle;
+	private ToggleButton mBtnOverlayCircle;
 
 	/**
 	 * The button for displaying the view in full resolution.
@@ -105,76 +105,76 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * This is a ToggleButton, as it is incompatible with overlays.
 	 */
 	@FXML
-	private ToggleButton clarityButton;
+	private ToggleButton mClarityButton;
 
 	/**
 	 * The button for displaying the image on full screen.
 	 */
 	@FXML
-	private Button fullScreenButton;
+	private Button mFullScreenButton;
 
 	/**
 	 * The slider for brightness.
 	 */
 	@FXML
-	private Slider sliderBrightness;
+	private Slider mSliderBrightness;
 
 	/**
 	 * The slider for contrast.
 	 */
 	@FXML
-	private Slider sliderContrast;
+	private Slider mSliderContrast;
 
 	/**
 	 * The Buttons for overlays.
 	 */
 	// JAVADOC:OFF
 	@FXML
-	private ToggleButton btnOverlay1;
+	private ToggleButton mBtnOverlay1;
 	@FXML
-	private ToggleButton btnOverlay2;
+	private ToggleButton mBtnOverlay2;
 	@FXML
-	private ToggleButton btnOverlay3;
+	private ToggleButton mBtnOverlay3;
 	@FXML
-	private ToggleButton btnOverlay4;
+	private ToggleButton mBtnOverlay4;
 	@FXML
-	private ToggleButton btnOverlay5;
+	private ToggleButton mBtnOverlay5;
 	@FXML
-	private ToggleButton btnOverlay6;
+	private ToggleButton mBtnOverlay6;
 	@FXML
-	private ToggleButton btnOverlay7;
+	private ToggleButton mBtnOverlay7;
 	// JAVADOC:ON
 
 	/**
 	 * The Button for selecting the overlay color.
 	 */
 	@FXML
-	private ColorPicker colorPicker;
+	private ColorPicker mColorPicker;
 
 	/**
 	 * The displayed eye photo.
 	 */
-	private EyePhoto eyePhoto;
+	private EyePhoto mEyePhoto;
 
 	/**
 	 * Flag storing if the view is already initialized. (However, the image may be loaded later asynchronously.)
 	 */
-	private boolean initialized = false;
+	private boolean mIsInitialized = false;
 
 	/**
 	 * Temporary storage for the comment while editing.
 	 */
-	private String oldComment;
+	private String mOldComment;
 
 	/**
 	 * Slider indicating if the current state displays only a thumbnail.
 	 */
-	private Resolution currentResolution = NORMAL;
+	private Resolution mCurrentResolution = NORMAL;
 
 	/**
 	 * Storage for the current overlay type.
 	 */
-	private Integer currentOverlayType = null;
+	private Integer mCurrentOverlayType = null;
 
 	/**
 	 * Update the stored current resolution, redisplay if the resolution changed, and update the clarityButton if
@@ -184,12 +184,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The current resolution.
 	 */
 	private void updateResolution(final Resolution newResolution) {
-		if (newResolution != currentResolution) {
-			currentResolution = newResolution;
+		if (newResolution != mCurrentResolution) {
+			mCurrentResolution = newResolution;
 			if (newResolution != FULL) {
-				clarityButton.setSelected(false);
+				mClarityButton.setSelected(false);
 			}
-			displayImageView.redisplay(newResolution);
+			mDisplayImageView.redisplay(newResolution);
 		}
 	}
 
@@ -204,37 +204,37 @@ public class DisplayImageController extends BaseController implements Initializa
 		}
 		showCommentPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 		showOverlayPane(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_OVERLAY_PANE));
-		colorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
-		colorPicker.getStyleClass().add("button");
+		mColorPicker.setValue(PreferenceUtil.getPreferenceColor(KEY_OVERLAY_COLOR));
+		mColorPicker.getStyleClass().add("button");
 
-		sliderBrightness.setMin(-1);
-		sliderBrightness.setValue(0);
-		sliderBrightness.setMax(1);
-		sliderContrast.setMin(-1);
-		sliderContrast.setValue(0);
-		sliderContrast.setMax(1);
+		mSliderBrightness.setMin(-1);
+		mSliderBrightness.setValue(0);
+		mSliderBrightness.setMax(1);
+		mSliderContrast.setMin(-1);
+		mSliderContrast.setValue(0);
+		mSliderContrast.setMax(1);
 
-		initialized = true;
+		mIsInitialized = true;
 	}
 
 	/**
 	 * Initialize the sliders for contrast and brightness.
 	 */
 	private void initializeSliders() {
-		sliderBrightness.valueProperty().addListener(new ChangeListener<Number>() {
+		mSliderBrightness.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setBrightness(newValue.floatValue(), currentResolution);
+				mDisplayImageView.setBrightness(newValue.floatValue(), mCurrentResolution);
 			}
 		});
-		sliderBrightness.setOnMousePressed(new EventHandler<MouseEvent>() {
+		mSliderBrightness.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
 				updateResolution(THUMB);
 			}
 		});
-		sliderBrightness.setOnMouseReleased(new EventHandler<MouseEvent>() {
+		mSliderBrightness.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
 				updateResolution(NORMAL);
@@ -242,20 +242,20 @@ public class DisplayImageController extends BaseController implements Initializa
 		});
 
 		// Inititlize slider for contrast.
-		sliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
+		mSliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				displayImageView.setContrast(newValue.floatValue(), currentResolution);
+				mDisplayImageView.setContrast(newValue.floatValue(), mCurrentResolution);
 			}
 		});
-		sliderContrast.setOnMousePressed(new EventHandler<MouseEvent>() {
+		mSliderContrast.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
 				updateResolution(THUMB);
 			}
 		});
-		sliderContrast.setOnMouseReleased(new EventHandler<MouseEvent>() {
+		mSliderContrast.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
 				updateResolution(NORMAL);
@@ -274,7 +274,7 @@ public class DisplayImageController extends BaseController implements Initializa
 
 	@Override
 	public final Parent getRoot() {
-		return displayImage;
+		return mDisplayImage;
 	}
 
 	/**
@@ -285,27 +285,27 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	public final void btnEditCommentPressed(final ActionEvent event) {
-		if (btnEditComment.isSelected()) {
+		if (mBtnEditComment.isSelected()) {
 			// make comment editable
-			oldComment = txtImageComment.getText();
-			txtImageComment.setEditable(true);
-			txtImageComment.requestFocus();
+			mOldComment = mTxtImageComment.getText();
+			mTxtImageComment.setEditable(true);
+			mTxtImageComment.requestFocus();
 
-			btnEditComment.setText(ResourceUtil.getString(BUTTON_SAVE_COMMENT));
+			mBtnEditComment.setText(ResourceUtil.getString(BUTTON_SAVE_COMMENT));
 			setDirty(true);
 		}
 		else {
-			txtImageComment.setEditable(false);
-			String newComment = txtImageComment.getText();
+			mTxtImageComment.setEditable(false);
+			String newComment = mTxtImageComment.getText();
 
 			// Save only if comment changed.
-			if (!(newComment == null && oldComment == null) && !(newComment != null && newComment.equals(oldComment))) {
-				JpegMetadata metadata = eyePhoto.getImageMetadata();
-				metadata.comment = newComment;
-				eyePhoto.storeImageMetadata(metadata);
+			if (!(newComment == null && mOldComment == null) && !(newComment != null && newComment.equals(mOldComment))) {
+				JpegMetadata metadata = mEyePhoto.getImageMetadata();
+				metadata.mComment = newComment;
+				mEyePhoto.storeImageMetadata(metadata);
 			}
 
-			btnEditComment.setText(ResourceUtil.getString(BUTTON_EDIT_COMMENT));
+			mBtnEditComment.setText(ResourceUtil.getString(BUTTON_EDIT_COMMENT));
 			setDirty(false);
 		}
 	}
@@ -324,11 +324,11 @@ public class DisplayImageController extends BaseController implements Initializa
 			Integer overlayType = null;
 
 			switch (btnId) {
-			case "btnOverlayCircle":
+			case "mBtnOverlayCircle":
 				overlayType = 0;
 				break;
 			default:
-				String indexStr = btnId.substring("btnOverlay".length());
+				String indexStr = btnId.substring("mBtnOverlay".length());
 				overlayType = Integer.parseInt(indexStr);
 			}
 
@@ -348,7 +348,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	public final void btnClarityPressed(final ActionEvent event) {
-		if (clarityButton.isSelected()) {
+		if (mClarityButton.isSelected()) {
 			showOverlay(null);
 			updateResolution(FULL);
 		}
@@ -365,7 +365,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	public final void onColorChanged(final ActionEvent event) {
-		showOverlay(currentOverlayType);
+		showOverlay(mCurrentOverlayType);
 	}
 
 	/**
@@ -377,12 +377,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	@FXML
 	public final void storeBrightnessContrast(final ActionEvent event) {
 		if (isInitialized()) {
-			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				metadata.brightness = (float) sliderBrightness.getValue();
-				metadata.contrast = OverlayImageView.seekbarContrastToStoredContrast((float) sliderContrast.getValue());
+				metadata.mBrightness = (float) mSliderBrightness.getValue();
+				metadata.mContrast = OverlayImageView.seekbarContrastToStoredContrast((float) mSliderContrast.getValue());
 
-				eyePhoto.storeImageMetadata(metadata);
+				mEyePhoto.storeImageMetadata(metadata);
 			}
 		}
 	}
@@ -395,8 +395,8 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	public final void resetBrightnessContrast(final ActionEvent event) {
-		sliderBrightness.setValue(0);
-		sliderContrast.setValue(0);
+		mSliderBrightness.setValue(0);
+		mSliderContrast.setValue(0);
 		storeBrightnessContrast(event);
 	}
 
@@ -409,14 +409,14 @@ public class DisplayImageController extends BaseController implements Initializa
 	@FXML
 	public final void storeViewPosition(final ActionEvent event) {
 		if (isInitialized()) {
-			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				MetadataPosition position = displayImageView.getPosition();
-				metadata.xPosition = position.xCenter;
-				metadata.yPosition = position.yCenter;
-				metadata.zoomFactor = position.zoom;
+				MetadataPosition position = mDisplayImageView.getPosition();
+				metadata.mXPosition = position.mXCenter;
+				metadata.mYPosition = position.mYCenter;
+				metadata.mZoomFactor = position.mZoom;
 
-				eyePhoto.storeImageMetadata(metadata);
+				mEyePhoto.storeImageMetadata(metadata);
 			}
 		}
 	}
@@ -430,15 +430,15 @@ public class DisplayImageController extends BaseController implements Initializa
 	@FXML
 	public final void resetViewPosition(final ActionEvent event) {
 		if (isInitialized()) {
-			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				metadata.xPosition = null;
-				metadata.yPosition = null;
-				metadata.zoomFactor = null;
+				metadata.mXPosition = null;
+				metadata.mYPosition = null;
+				metadata.mZoomFactor = null;
 
-				eyePhoto.storeImageMetadata(metadata);
+				mEyePhoto.storeImageMetadata(metadata);
 				// re-set eyePhoto in order to do initial scaling again.
-				displayImageView.setEyePhoto(eyePhoto);
+				mDisplayImageView.setEyePhoto(mEyePhoto);
 			}
 		}
 	}
@@ -456,14 +456,14 @@ public class DisplayImageController extends BaseController implements Initializa
 						MainController.getInstance().isSplitPane() ? 2 : 0, true);
 
 		if (isInitialized()) {
-			JpegMetadata metadata = eyePhoto.getImageMetadata();
+			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				MetadataPosition position = displayImageView.getPosition();
-				metadata.xPosition = position.xCenter;
-				metadata.yPosition = position.yCenter;
-				metadata.zoomFactor = position.zoom;
+				MetadataPosition position = mDisplayImageView.getPosition();
+				metadata.mXPosition = position.mXCenter;
+				metadata.mYPosition = position.mYCenter;
+				metadata.mZoomFactor = position.mZoom;
 
-				controller.setImage(metadata, displayImageView.getImageView().getImage());
+				controller.setImage(metadata, mDisplayImageView.getImageView().getImage());
 			}
 		}
 
@@ -476,23 +476,23 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The eye photo.
 	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
-		this.eyePhoto = eyePhoto;
+		this.mEyePhoto = eyePhoto;
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 
 		if (metadata.hasBrightnessContrast()) {
-			sliderBrightness.setValue(metadata.brightness);
-			sliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.contrast));
-			displayImageView.initializeBrightnessContrast(metadata.brightness, metadata.contrast);
+			mSliderBrightness.setValue(metadata.mBrightness);
+			mSliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.mContrast));
+			mDisplayImageView.initializeBrightnessContrast(metadata.mBrightness, metadata.mContrast);
 		}
 		// Only now the listeners should be initialized, as image is not yet loaded and listeners should not
 		// react on initial slider setup.
 		initializeSliders();
 
-		displayImageView.setEyePhoto(eyePhoto);
+		mDisplayImageView.setEyePhoto(eyePhoto);
 
 		enableOverlayButtons(metadata.hasOverlayPosition());
 
-		txtImageComment.setText(metadata.comment);
+		mTxtImageComment.setText(metadata.mComment);
 	}
 
 	/**
@@ -502,11 +502,11 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The overlay type to be displayed.
 	 */
 	public final void showOverlay(final Integer overlayType) {
-		currentOverlayType = overlayType;
+		mCurrentOverlayType = overlayType;
 		if (overlayType != null) {
-			currentResolution = NORMAL;
+			mCurrentResolution = NORMAL;
 		}
-		displayImageView.displayOverlay(overlayType, colorPicker.getValue(), currentResolution);
+		mDisplayImageView.displayOverlay(overlayType, mColorPicker.getValue(), mCurrentResolution);
 	}
 
 	/**
@@ -516,17 +516,17 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the pane should be visible.
 	 */
 	public final void showCommentPane(final boolean visible) {
-		displayImageView.storePosition();
-		commentPane.setVisible(visible);
-		commentPane.setManaged(visible);
-		if (commentConstraints instanceof ColumnConstraints) {
-			((ColumnConstraints) commentConstraints).setPercentWidth(visible ? 20 : 0); // MAGIC_NUMBER
+		mDisplayImageView.storePosition();
+		mCommentPane.setVisible(visible);
+		mCommentPane.setManaged(visible);
+		if (mCommentConstraints instanceof ColumnConstraints) {
+			((ColumnConstraints) mCommentConstraints).setPercentWidth(visible ? 20 : 0); // MAGIC_NUMBER
 		}
-		if (commentConstraints instanceof RowConstraints) {
-			((RowConstraints) commentConstraints).setPercentHeight(visible ? 20 : 0); // MAGIC_NUMBER
+		if (mCommentConstraints instanceof RowConstraints) {
+			((RowConstraints) mCommentConstraints).setPercentHeight(visible ? 20 : 0); // MAGIC_NUMBER
 		}
-		displayImage.layout();
-		displayImageView.retrievePosition();
+		mDisplayImage.layout();
+		mDisplayImageView.retrievePosition();
 	}
 
 	/**
@@ -536,14 +536,14 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the pane should be visible.
 	 */
 	public final void showOverlayPane(final boolean visible) {
-		displayImageView.storePosition();
-		overlayPane.setVisible(visible);
-		overlayPane.setManaged(visible);
-		if (overlayConstraints instanceof ColumnConstraints) {
-			((ColumnConstraints) overlayConstraints).setMinWidth(visible ? 75 : 0); // MAGIC_NUMBER
+		mDisplayImageView.storePosition();
+		mOverlayPane.setVisible(visible);
+		mOverlayPane.setManaged(visible);
+		if (mOverlayConstraints instanceof ColumnConstraints) {
+			((ColumnConstraints) mOverlayConstraints).setMinWidth(visible ? 75 : 0); // MAGIC_NUMBER
 		}
-		displayImage.layout();
-		displayImageView.retrievePosition();
+		mDisplayImage.layout();
+		mDisplayImageView.retrievePosition();
 	}
 
 	/**
@@ -553,15 +553,15 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the overlay buttons should be enabled.
 	 */
 	private void enableOverlayButtons(final boolean enabled) {
-		btnOverlayCircle.setDisable(!enabled);
-		btnOverlay1.setDisable(!enabled);
-		btnOverlay2.setDisable(!enabled);
-		btnOverlay3.setDisable(!enabled);
-		btnOverlay4.setDisable(!enabled);
-		btnOverlay5.setDisable(!enabled);
-		btnOverlay6.setDisable(!enabled);
-		btnOverlay7.setDisable(!enabled);
-		colorPicker.setDisable(!enabled);
+		mBtnOverlayCircle.setDisable(!enabled);
+		mBtnOverlay1.setDisable(!enabled);
+		mBtnOverlay2.setDisable(!enabled);
+		mBtnOverlay3.setDisable(!enabled);
+		mBtnOverlay4.setDisable(!enabled);
+		mBtnOverlay5.setDisable(!enabled);
+		mBtnOverlay6.setDisable(!enabled);
+		mBtnOverlay7.setDisable(!enabled);
+		mColorPicker.setDisable(!enabled);
 	}
 
 	/**
@@ -570,7 +570,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * @return true if the image is loaded and the view is initialized.
 	 */
 	private boolean isInitialized() {
-		return initialized && displayImageView.isInitialized();
+		return mIsInitialized && mDisplayImageView.isInitialized();
 	}
 
 }

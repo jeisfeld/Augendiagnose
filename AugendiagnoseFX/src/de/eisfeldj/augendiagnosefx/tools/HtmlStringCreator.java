@@ -85,7 +85,7 @@ public final class HtmlStringCreator {
 	/**
 	 * An instance of this class.
 	 */
-	private static HtmlStringCreator instance;
+	private static HtmlStringCreator mInstance;
 
 	/**
 	 * Private constructor.
@@ -103,11 +103,11 @@ public final class HtmlStringCreator {
 	 *             thrown if there any read/write issues.
 	 */
 	public static void main(final String[] args) throws IOException {
-		instance = new HtmlStringCreator();
+		mInstance = new HtmlStringCreator();
 
 		for (String app : APP_URL_MAP.keySet()) {
 			for (String language : LANGUAGE_MAP.keySet()) {
-				instance.updateResourceFile(app, language);
+				mInstance.updateResourceFile(app, language);
 			}
 		}
 	}

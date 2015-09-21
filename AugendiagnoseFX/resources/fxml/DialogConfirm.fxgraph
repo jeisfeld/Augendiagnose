@@ -8,16 +8,16 @@ import javafx.scene.text.Text
 import javafx.geometry.Insets
 
 component DialogConfirm controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	GridPane id dialogPane {
+	GridPane id mDialogPane {
 		vgap : 10,
-		Label id dialogHeading {
+		Label id mDialogHeading {
 			static columnIndex : 0,
 			static columnSpan : 2,
 			static rowIndex : 0,
 			static halignment : "CENTER",
 			text: rstring "title_dialog_confirmation"
 		},
-		Text id dialogMessage {
+		Text id mDialogMessage {
 			static columnIndex : 0,
 			static columnSpan : 2,
 			static rowIndex : 1,
@@ -29,7 +29,7 @@ component DialogConfirm controlledby MessageDialogController resourcefile "../bu
 				top : 5
 			}
 		},
-		Button id btnCancel {
+		Button id mBtnCancel {
 			text : rstring "button_cancel",
 			static columnIndex : 0,
 			static rowIndex : 2,
@@ -41,7 +41,7 @@ component DialogConfirm controlledby MessageDialogController resourcefile "../bu
 				top : 5
 			}
 		},
-		Button id btnOk {
+		Button id mBtnOk {
 			text : rstring "button_ok",
 			static columnIndex : 1,
 			static rowIndex : 2,

@@ -25,7 +25,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(listView);
+		registerForContextMenu(mListView);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 
 	@Override
 	protected final void setOnItemClickListener() {
-		listView.setOnItemClickListener(new ShowContentsOnClickListener());
+		mListView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
 	@Override

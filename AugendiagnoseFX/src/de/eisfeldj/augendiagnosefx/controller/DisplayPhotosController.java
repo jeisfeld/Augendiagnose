@@ -52,31 +52,31 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	/**
 	 * The previous selected name.
 	 */
-	private String previousName;
+	private String mPreviousName;
 
 	/**
 	 * The full "Display Photos" pane.
 	 */
 	@FXML
-	private Pane displayMain;
+	private Pane mDisplayMain;
 
 	/**
 	 * The list of names.
 	 */
 	@FXML
-	private ListView<String> listNames;
+	private ListView<String> mListNames;
 
 	/**
 	 * The list of names.
 	 */
 	@FXML
-	private ListView<GridPane> listPhotos;
+	private ListView<GridPane> mListPhotos;
 
 	/**
 	 * The field for searching names.
 	 */
 	@FXML
-	private TextField searchField;
+	private TextField mSearchField;
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
@@ -94,7 +94,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	private void initializeNames(final String searchString, final boolean loadPhotos) {
 		List<String> valuesNames =
 				getFolderNames(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)), searchString);
-		listNames.setItems(FXCollections.observableList(valuesNames));
+		mListNames.setItems(FXCollections.observableList(valuesNames));
 
 		String lastName = PreferenceUtil.getPreferenceString(KEY_LAST_NAME);
 		if (lastName != null && valuesNames.contains(lastName)) {
@@ -102,14 +102,14 @@ public class DisplayPhotosController extends BaseController implements Initializ
 				showPicturesForName(lastName);
 			}
 			int selectedIndex = valuesNames.indexOf(lastName);
-			listNames.getSelectionModel().select(selectedIndex);
-			listNames.scrollTo(selectedIndex);
+			mListNames.getSelectionModel().select(selectedIndex);
+			mListNames.scrollTo(selectedIndex);
 		}
 	}
 
 	@Override
 	public final Parent getRoot() {
-		return displayMain;
+		return mDisplayMain;
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 */
 	@FXML
 	private void handleNameClick(final MouseEvent event) {
-		String name = listNames.getSelectionModel().getSelectedItem();
-		if (name != null && !name.equals(previousName)) {
+		String name = mListNames.getSelectionModel().getSelectedItem();
+		if (name != null && !name.equals(mPreviousName)) {
 			showPicturesForName(name);
 		}
 		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
@@ -139,7 +139,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				initializeNames(searchField.getText(), false);
+				initializeNames(mSearchField.getText(), false);
 			}
 		});
 	}
@@ -175,7 +175,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 						public void run() {
 							GridPane dummy = new GridPane();
 							valuesPhotos.add(dummy);
-							listPhotos.layout();
+							mListPhotos.layout();
 							valuesPhotos.remove(dummy);
 						}
 					});
@@ -183,12 +183,12 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			});
 		}
 
-		previousName = name;
+		mPreviousName = name;
 
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				listPhotos.setItems(valuesPhotos);
+				mListPhotos.setItems(valuesPhotos);
 				dialog.close();
 			}
 		});

@@ -52,31 +52,31 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * The image folder.
 	 */
-	private File folder;
+	private File mFolder;
 	/**
 	 * The list of image files.
 	 */
-	private String[] fileNames;
+	private String[] mFileNames;
 
 	/**
 	 * The view showing the eye photos.
 	 */
-	private GridView gridView;
+	private GridView mGridView;
 
 	/**
 	 * The selected view when displaying the context menu.
 	 */
-	private EyeImageView selectedView;
+	private EyeImageView mSelectedView;
 
 	/**
 	 * The organize activity which has triggered the selection. Temporary static storage.
 	 */
-	private static OrganizeNewPhotosActivity parentActivityStatic;
+	private static OrganizeNewPhotosActivity mStaticParentActivity;
 
 	/**
 	 * The organize activity which has triggered the selection.
 	 */
-	private OrganizeNewPhotosActivity parentActivity;
+	private OrganizeNewPhotosActivity mParentActivity;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
@@ -87,7 +87,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 *            The image folder.
 	 */
 	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String foldername) {
-		parentActivityStatic = activity;
+		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -102,7 +102,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 *            The list of image files.
 	 */
 	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String[] fileNames) {
-		parentActivityStatic = activity;
+		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -131,20 +131,20 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		parentActivity = parentActivityStatic;
-		parentActivityStatic = null;
+		mParentActivity = mStaticParentActivity;
+		mStaticParentActivity = null;
 
 		setContentView(R.layout.activity_select_two_pictures);
 
 		String folderName = getIntent().getStringExtra(STRING_EXTRA_FOLDER);
 		if (folderName != null) {
-			folder = new File(folderName);
+			mFolder = new File(folderName);
 		}
-		fileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
+		mFileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		// Prepare the view
-		gridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
-		gridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		mGridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
+		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 
 		// Prepare the handler class
 		TwoImageSelectionHandler.getInstance().setActivity(this);
@@ -153,7 +153,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	@Override
 	protected final void onDestroy() {
 		super.onDestroy();
-		parentActivity = null;
+		mParentActivity = null;
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 
 		if (isStartedWithInputFolder()) {
 			// Get files from folder
-			files = folder.listFiles(new ImageUtil.ImageFileFilter());
+			files = mFolder.listFiles(new ImageUtil.ImageFileFilter());
 			if (files == null) {
 				files = new File[0];
 			}
@@ -183,9 +183,9 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 			});
 		}
 		else {
-			files = new File[fileNames.length];
-			for (int i = 0; i < fileNames.length; i++) {
-				files[i] = new File(fileNames[i]);
+			files = new File[mFileNames.length];
+			for (int i = 0; i < mFileNames.length; i++) {
+				files[i] = new File(mFileNames[i]);
 			}
 		}
 
@@ -222,7 +222,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.context_select_two, menu);
-		selectedView = (EyeImageView) v;
+		mSelectedView = (EyeImageView) v;
 	}
 
 	/*
@@ -241,12 +241,12 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				@Override
 				public void onDialogPositiveClick(final DialogFragment dialog) {
 					// delete image
-					boolean success = selectedView.getEyePhoto().delete();
+					boolean success = mSelectedView.getEyePhoto().delete();
 					updateEyePhotoList();
 
 					if (!success) {
 						DialogUtil.displayError(SelectTwoPicturesActivity.this,
-								R.string.message_dialog_failed_to_delete_file, false, selectedView
+								R.string.message_dialog_failed_to_delete_file, false, mSelectedView
 										.getEyePhoto().getFilename());
 
 					}
@@ -258,7 +258,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				}
 			};
 			DialogUtil.displayConfirmationMessage(this, listenerDelete, R.string.button_delete,
-					R.string.message_dialog_confirm_delete_photo, selectedView
+					R.string.message_dialog_confirm_delete_photo, mSelectedView
 							.getEyePhoto().getFilename());
 			return true;
 		}
@@ -273,16 +273,16 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				public void onDialogPositiveClick(final DialogFragment dialog) {
 					if (isStartedWithInputFolder()) {
 						// delete images
-						boolean success = FileUtil.deleteFilesInFolder(folder);
+						boolean success = FileUtil.deleteFilesInFolder(mFolder);
 						updateEyePhotoList();
 
 						if (success) {
 							finish();
-							parentActivity.finish();
+							mParentActivity.finish();
 						}
 						else {
 							DialogUtil.displayError(SelectTwoPicturesActivity.this,
-									R.string.message_dialog_failed_to_delete_all_files, false, selectedView
+									R.string.message_dialog_failed_to_delete_all_files, false, mSelectedView
 											.getEyePhoto().getFilename());
 						}
 					}
@@ -294,7 +294,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				}
 			};
 			DialogUtil.displayConfirmationMessage(this, listenerDeleteAll, R.string.button_delete,
-					R.string.message_dialog_confirm_delete_all_photos, selectedView
+					R.string.message_dialog_confirm_delete_all_photos, mSelectedView
 							.getEyePhoto().getFilename());
 			return true;
 		}
@@ -308,7 +308,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * Update the list of eye photo pairs.
 	 */
 	private void updateEyePhotoList() {
-		gridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @return true if started via input folder.
 	 */
 	public final boolean isStartedWithInputFolder() {
-		return folder != null;
+		return mFolder != null;
 	}
 
 	/**
@@ -333,21 +333,21 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		 *            The second file.
 		 */
 		public FilePair(final String name1, final String name2) {
-			file1 = new File(name1);
-			file2 = new File(name2);
+			mFile1 = new File(name1);
+			mFile2 = new File(name2);
 		}
 
 		/**
 		 * The two files stored in the container.
 		 */
-		private File file1, file2;
+		private File mFile1, mFile2;
 
 		public final File getFile1() {
-			return file1;
+			return mFile1;
 		}
 
 		public final File getFile2() {
-			return file2;
+			return mFile2;
 		}
 	}
 }

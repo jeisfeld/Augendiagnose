@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment {
 	@Override
 	protected final void setOnItemClickListener() {
-		listView.setOnItemClickListener(new ShowContentsOnClickListener());
+		mListView.setOnItemClickListener(new ShowContentsOnClickListener());
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment
 		public final void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 			ListFoldersForDisplaySecondFragment fragment = ListFoldersForDisplaySecondFragment.this;
 			ListPicturesForSecondNameActivity.startActivity(fragment.getActivity(),
-					fragment.parentFolder.getAbsolutePath(), ((TextView) view).getText().toString());
+					fragment.mParentFolder.getAbsolutePath(), ((TextView) view).getText().toString());
 		}
 	}
 

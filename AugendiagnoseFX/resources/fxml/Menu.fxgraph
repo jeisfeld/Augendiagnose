@@ -8,7 +8,7 @@ import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 
 component Menu controlledby MenuController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	MenuBar id menuBar {
+	MenuBar id mMenuBar {
 		styleClass : "menu",
 		menus : [
 			Menu {
@@ -24,19 +24,19 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 			Menu {
 				text : rstring "menu_view",
 				items : [
-					CheckMenuItem id menuOverlayPane {
+					CheckMenuItem id mMenuOverlayPane {
 						text : rstring "menu_overlay_pane",
 						selected : true,
 						disable : true,
 						onAction : controllermethod toggleOverlayPane
 					},
-					CheckMenuItem id menuCommentPane {
+					CheckMenuItem id mMenuCommentPane {
 						text : rstring "menu_comment_pane",
 						selected : true,
 						disable : true,
 						onAction : controllermethod toggleCommentPane
 					},
-					CheckMenuItem id menuSplitWindow {
+					CheckMenuItem id mMenuSplitWindow {
 						text : rstring "menu_split_window",
 						selected : false,
 						onAction : controllermethod toggleSplitWindow
@@ -46,7 +46,7 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 			Menu {
 				text : rstring "menu_window",
 				items : [
-					MenuItem id menuClose {
+					MenuItem id mMenuClose {
 						text : rstring "menu_close",
 						disable : true
 					},

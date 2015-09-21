@@ -17,12 +17,12 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	/**
 	 * The activity holding this adapter.
 	 */
-	private final SelectTwoPicturesActivity activity;
+	private final SelectTwoPicturesActivity mActivity;
 
 	/**
 	 * The array of eye photos displayed.
 	 */
-	private EyePhoto[] eyePhotos;
+	private EyePhoto[] mEyePhotos;
 
 	/**
 	 * Constructor for the adapter.
@@ -34,8 +34,8 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	public SelectTwoPicturesArrayAdapter(final SelectTwoPicturesActivity activity, final EyePhoto[] eyePhotos) {
 		super(activity, R.layout.text_view_initializing, eyePhotos);
-		this.activity = activity;
-		this.eyePhotos = eyePhotos;
+		this.mActivity = activity;
+		this.mEyePhotos = eyePhotos;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 */
 	public SelectTwoPicturesArrayAdapter(final Context context) {
 		super(context, R.layout.text_view_initializing);
-		this.activity = (SelectTwoPicturesActivity) context;
+		this.mActivity = (SelectTwoPicturesActivity) context;
 	}
 
 	/*
@@ -61,11 +61,11 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 			eyeImageView.cleanEyePhoto();
 		}
 		else {
-			eyeImageView = (EyeImageView) LayoutInflater.from(activity).inflate(R.layout.adapter_select_two_pictures,
+			eyeImageView = (EyeImageView) LayoutInflater.from(mActivity).inflate(R.layout.adapter_select_two_pictures,
 					parent, false);
 		}
 
-		eyeImageView.setEyePhoto(activity, eyePhotos[position], new Runnable() {
+		eyeImageView.setEyePhoto(mActivity, mEyePhotos[position], new Runnable() {
 			@Override
 			public void run() {
 				TwoImageSelectionHandler.getInstance().highlightIfSelected(eyeImageView);
@@ -73,7 +73,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 		});
 
 		TwoImageSelectionHandler.getInstance().prepareViewForSelection(eyeImageView,
-				activity.isStartedWithInputFolder());
+				mActivity.isStartedWithInputFolder());
 
 		return eyeImageView;
 	}

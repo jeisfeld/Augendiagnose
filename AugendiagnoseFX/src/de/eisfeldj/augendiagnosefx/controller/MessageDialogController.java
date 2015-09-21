@@ -16,47 +16,47 @@ public class MessageDialogController extends DialogController {
 	 * The root of the main page.
 	 */
 	@FXML
-	private GridPane dialogPane;
+	private GridPane mDialogPane;
 
 	/**
 	 * The heading of the Dialog box.
 	 */
 	@FXML
-	private Label dialogHeading;
+	private Label mDialogHeading;
 
 	/**
 	 * The message of the dialog box.
 	 */
 	@FXML
-	private Text dialogMessage;
+	private Text mDialogMessage;
 
 	/**
 	 * The "back" button on the dialog.
 	 */
 	@FXML
-	private Button btnBack;
+	private Button mBtnBack;
 
 	/**
 	 * The "ok" button on the dialog.
 	 */
 	@FXML
-	private Button btnOk;
+	private Button mBtnOk;
 
 	/**
 	 * The progressBar bar.
 	 */
 	@FXML
-	private ProgressBar progressBar;
+	private ProgressBar mProgressBar;
 
 	/**
 	 * The "cancel" button on the dialog.
 	 */
 	@FXML
-	private Button btnCancel;
+	private Button mBtnCancel;
 
 	@Override
 	public final Parent getRoot() {
-		return dialogPane;
+		return mDialogPane;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MessageDialogController extends DialogController {
 	 *            The heading text.
 	 */
 	public final void setHeading(final String text) {
-		dialogHeading.setText(text);
+		mDialogHeading.setText(text);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class MessageDialogController extends DialogController {
 	 *            The message text.
 	 */
 	public final void setMessage(final String text) {
-		dialogMessage.setText(text);
+		mDialogMessage.setText(text);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class MessageDialogController extends DialogController {
 	 * @return The "back" button.
 	 */
 	public final Button getBtnBack() {
-		return btnBack;
+		return mBtnBack;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class MessageDialogController extends DialogController {
 	 * @return The "ok" button.
 	 */
 	public final Button getBtnOk() {
-		return btnOk;
+		return mBtnOk;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class MessageDialogController extends DialogController {
 	 * @return The "cancel" button.
 	 */
 	public final Button getBtnCancel() {
-		return btnCancel;
+		return mBtnCancel;
 	}
 
 	/**
@@ -113,6 +113,6 @@ public class MessageDialogController extends DialogController {
 	 *            The progressBar value.
 	 */
 	public final void setProgress(final double progress) {
-		this.progressBar.setProgress(progress);
+		this.mProgressBar.setProgress(progress);
 	}
 }

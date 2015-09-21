@@ -22,8 +22,8 @@ import javax.crypto.spec.SecretKeySpec;
 public final class EncryptionUtil {
 	// JAVADOC:OFF
 	// parameters for encryption
-	private static Cipher cipherEncrypt;
-	private static MessageDigest messageDigest;
+	private static Cipher mCipherEncrypt;
+	private static MessageDigest mMessageDigest;
 	private static final String DUMMY_HASH = "dummy";
 	private static final int HASH_LENGTH = 8;
 	private static final String ALGORITHM = "DES";
@@ -50,7 +50,7 @@ public final class EncryptionUtil {
 	/**
 	 * Flag to store initialization status.
 	 */
-	private static boolean initialized = false;
+	private static boolean mIsInitialized = false;
 
 	static {
 		boolean foundPrivateConstants = false;
@@ -75,12 +75,12 @@ public final class EncryptionUtil {
 
 		if (foundPrivateConstants) {
 			try {
-				cipherEncrypt = Cipher.getInstance(ALGORITHM);
+				mCipherEncrypt = Cipher.getInstance(ALGORITHM);
 				Key symKey = new SecretKeySpec(Base64.getDecoder().decode(KEY), ALGORITHM);
-				cipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
+				mCipherEncrypt.init(Cipher.ENCRYPT_MODE, symKey);
 
-				messageDigest = MessageDigest.getInstance("MD5");
-				initialized = true;
+				mMessageDigest = MessageDigest.getInstance("MD5");
+				mIsInitialized = true;
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -97,7 +97,7 @@ public final class EncryptionUtil {
 	 * @return true if the user key is valid.
 	 */
 	public static boolean validateUserKey(final String key) {
-		if (key == null || key.length() == 0 || !initialized) {
+		if (key == null || key.length() == 0 || !mIsInitialized) {
 			return false;
 		}
 		if (SPECIAL_KEYS.contains(key)) {
@@ -150,7 +150,7 @@ public final class EncryptionUtil {
 	 * @return the hash.
 	 */
 	private static byte[] createHash(final byte[] input) {
-		return messageDigest.digest(input);
+		return mMessageDigest.digest(input);
 	}
 
 	/**
@@ -179,7 +179,7 @@ public final class EncryptionUtil {
 	 *             encryption algorithm is unable to process the input data provided.
 	 */
 	private static byte[] encrypt(final String input) throws BadPaddingException, IllegalBlockSizeException {
-		return cipherEncrypt.doFinal(input.getBytes());
+		return mCipherEncrypt.doFinal(input.getBytes());
 	}
 
 	/**

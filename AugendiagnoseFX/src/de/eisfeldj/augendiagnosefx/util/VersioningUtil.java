@@ -87,7 +87,7 @@ public final class VersioningUtil {
 		final File tempJarFile;
 		final ProgressDialog dialog =
 				DialogUtil
-						.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_UPDATE, version.versionString);
+						.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_UPDATE, version.mVersionString);
 		final URLConnection connection;
 		try {
 			connection = new URL(url).openConnection();
@@ -189,7 +189,7 @@ public final class VersioningUtil {
 
 				@Override
 				public void onDialogNegativeClick() {
-					PreferenceUtil.setPreference(KEY_LAST_KNOWN_VERSION, latestVersion.versionNumber);
+					PreferenceUtil.setPreference(KEY_LAST_KNOWN_VERSION, latestVersion.mVersionNumber);
 				}
 			};
 
@@ -210,19 +210,19 @@ public final class VersioningUtil {
 		/**
 		 * The version number (counting upwards from 1).
 		 */
-		private int versionNumber;
+		private int mVersionNumber;
 
 		public int getVersionNumber() {
-			return versionNumber;
+			return mVersionNumber;
 		}
 
 		/**
 		 * The version String (such as 1.2.3).
 		 */
-		private String versionString;
+		private String mVersionString;
 
 		public String getVersionString() {
-			return versionString;
+			return mVersionString;
 		}
 
 		/**
@@ -234,13 +234,13 @@ public final class VersioningUtil {
 		 *            The version String.
 		 */
 		private VersionInfo(final int versionNumber, final String versionString) {
-			this.versionNumber = versionNumber;
-			this.versionString = versionString;
+			this.mVersionNumber = versionNumber;
+			this.mVersionString = versionString;
 		}
 
 		@Override
 		public String toString() {
-			return versionString + " (" + versionNumber + ")";
+			return mVersionString + " (" + mVersionNumber + ")";
 		}
 
 		/**

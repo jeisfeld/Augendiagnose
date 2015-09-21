@@ -18,7 +18,7 @@ public abstract class AdMarvelActivity extends Activity {
 	/**
 	 * The view holding the ad.
 	 */
-	private AdMarvelView adMarvelView;
+	private AdMarvelView mAdMarvelView;
 
 	/**
 	 * Display a banner ad.
@@ -36,7 +36,7 @@ public abstract class AdMarvelActivity extends Activity {
 			@Override
 			public void run() {
 				try {
-					((ViewManager) adMarvelView.getParent()).removeView(adMarvelView);
+					((ViewManager) mAdMarvelView.getParent()).removeView(mAdMarvelView);
 				}
 				catch (Exception e) {
 					// do nothing.
@@ -49,16 +49,16 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
+		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
 			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)
 					|| Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
 				// do not trigger again after it was once clicked.
-				adMarvelView.setVisibility(View.GONE);
-				adMarvelView.destroy();
-				adMarvelView = null;
+				mAdMarvelView.setVisibility(View.GONE);
+				mAdMarvelView.destroy();
+				mAdMarvelView = null;
 			}
 			else {
-				adMarvelView.start(this);
+				mAdMarvelView.start(this);
 			}
 		}
 	}
@@ -67,8 +67,8 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
-			adMarvelView.resume(this);
+		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
+			mAdMarvelView.resume(this);
 		}
 	}
 
@@ -76,8 +76,8 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
-			adMarvelView.pause(this);
+		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
+			mAdMarvelView.pause(this);
 		}
 	}
 
@@ -85,8 +85,8 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
-			adMarvelView.stop(this);
+		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
+			mAdMarvelView.stop(this);
 		}
 	}
 
@@ -94,8 +94,8 @@ public abstract class AdMarvelActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (adMarvelView != null && adMarvelView.getVisibility() != View.GONE) {
-			adMarvelView.destroy();
+		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
+			mAdMarvelView.destroy();
 		}
 	}
 
@@ -105,10 +105,10 @@ public abstract class AdMarvelActivity extends Activity {
 	 * @return The AdMarvelView.
 	 */
 	public final AdMarvelView getAdMarvelView() {
-		if (adMarvelView == null) {
-			adMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
+		if (mAdMarvelView == null) {
+			mAdMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
 		}
-		return adMarvelView;
+		return mAdMarvelView;
 	}
 
 }

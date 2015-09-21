@@ -9,26 +9,26 @@ public abstract class DialogController extends BaseController {
 	/**
 	 * The stage containing the dialog.
 	 */
-	private Stage stage;
+	private Stage mStage;
 
 	public final void setStage(final Stage stage) {
-		this.stage = stage;
+		this.mStage = stage;
 	}
 
 	public final Stage getStage() {
-		return stage;
+		return mStage;
 	}
 
 	@Override
 	public final void close() {
 		super.close();
-		stage.close();
+		mStage.close();
 	}
 
 	/**
 	 * Show the dialog window.
 	 */
 	public final void show() {
-		stage.show();
+		mStage.show();
 	}
 }

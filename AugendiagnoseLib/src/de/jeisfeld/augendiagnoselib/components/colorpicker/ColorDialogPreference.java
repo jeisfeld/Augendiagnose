@@ -16,7 +16,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	/**
 	 * The selected color.
 	 */
-	private int selectedColor = 0;
+	private int mSelectedColor = 0;
 
 	/**
 	 * ColorDialogPreference constructor.
@@ -33,8 +33,8 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	@Override
 	protected final void onDialogClosed(final boolean positiveResult) {
 		// Persist the selectedColor
-		if (positiveResult && selectedColor != 0) {
-			persistInt(selectedColor);
+		if (positiveResult && mSelectedColor != 0) {
+			persistInt(mSelectedColor);
 		}
 
 		super.onDialogClosed(positiveResult);
@@ -56,7 +56,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 
 	@Override
 	public final void onColorSelected(final int color) {
-		selectedColor = color;
+		mSelectedColor = color;
 		onDialogClosed(true);
 		getDialog().dismiss();
 	}

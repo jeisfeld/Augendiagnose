@@ -25,47 +25,47 @@ public class EyePhoto {
 	/**
 	 * Indicator if the file has already a formatted name.
 	 */
-	private boolean formattedName = false;
+	private boolean mFormattedName = false;
 
 	/**
 	 * The path of the file.
 	 */
-	private String path;
+	private String mPath;
 
 	/**
 	 * The filename.
 	 */
-	private String filename;
+	private String mFilename;
 
 	/**
 	 * The name of the person.
 	 */
-	private String personName;
+	private String mPersonName;
 
 	/**
 	 * The date of the image.
 	 */
-	private Date date;
+	private Date mDate;
 
 	/**
 	 * The information of right/left eye.
 	 */
-	private RightLeft rightLeft;
+	private RightLeft mRightLeft;
 
 	/**
 	 * The file suffix.
 	 */
-	private String suffix;
+	private String mSuffix;
 
 	/**
 	 * A cache of the bitmap (to avoid too frequent generation).
 	 */
-	private Image cachedImage;
+	private Image mCachedImage;
 
 	/**
 	 * A cache of the thumbnail.
 	 */
-	private Image cachedThumbnail;
+	private Image mCachedThumbnail;
 
 	/**
 	 * Create the EyePhoto, giving a filename.
@@ -87,10 +87,10 @@ public class EyePhoto {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
-		if (filename != null && !filename.equals(getFilename())) {
-			boolean success = new File(getPath(), filename).renameTo(new File(getPath(), getFilename()));
+		if (mFilename != null && !mFilename.equals(getFilename())) {
+			boolean success = new File(getPath(), mFilename).renameTo(new File(getPath(), getFilename()));
 			if (!success) {
-				Logger.warning("Failed to rename file" + filename + " to " + getFilename());
+				Logger.warning("Failed to rename file" + mFilename + " to " + getFilename());
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class EyePhoto {
 		setDate(date);
 		setRightLeft(rightLeft);
 		setSuffix(suffix);
-		formattedName = true;
+		mFormattedName = true;
 	}
 
 	/**
@@ -125,12 +125,12 @@ public class EyePhoto {
 	 * @return the filename.
 	 */
 	public final String getFilename() {
-		if (formattedName) {
+		if (mFormattedName) {
 			return getPersonName() + " " + getDateString(DATE_FORMAT) + " " + getRightLeft().toShortString() + "."
 					+ getSuffix();
 		}
 		else {
-			return filename;
+			return mFilename;
 		}
 	}
 
@@ -150,14 +150,14 @@ public class EyePhoto {
 	 *            the filename
 	 */
 	private void setFilename(final String filename) {
-		this.filename = filename;
+		this.mFilename = filename;
 		int suffixPosition = filename.lastIndexOf('.');
 		int rightLeftPosition = filename.lastIndexOf(' ', suffixPosition);
 		int datePosition = filename.lastIndexOf(' ', rightLeftPosition - 1);
 
 		if (datePosition > 0) {
 			setPersonName(filename.substring(0, datePosition));
-			formattedName = setDateString(filename.substring(datePosition + 1, rightLeftPosition), DATE_FORMAT);
+			mFormattedName = setDateString(filename.substring(datePosition + 1, rightLeftPosition), DATE_FORMAT);
 			setRightLeft(RightLeft.fromString(filename.substring(rightLeftPosition + 1, suffixPosition)));
 			setSuffix(filename.substring(suffixPosition + 1));
 
@@ -172,7 +172,7 @@ public class EyePhoto {
 			}
 			// TODO: retrieval of EXIF date.
 			// setDate(ImageUtil.getExifDate(getAbsolutePath()));
-			formattedName = false;
+			mFormattedName = false;
 		}
 	}
 
@@ -182,11 +182,11 @@ public class EyePhoto {
 	 * @return the file path.
 	 */
 	public final String getPath() {
-		return path;
+		return mPath;
 	}
 
 	private void setPath(final String path) {
-		this.path = path;
+		this.mPath = path;
 	}
 
 	/**
@@ -195,11 +195,11 @@ public class EyePhoto {
 	 * @return the right/left information.
 	 */
 	public final RightLeft getRightLeft() {
-		return rightLeft;
+		return mRightLeft;
 	}
 
 	private void setRightLeft(final RightLeft rightLeft) {
-		this.rightLeft = rightLeft;
+		this.mRightLeft = rightLeft;
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class EyePhoto {
 	 * @return the person name.
 	 */
 	public final String getPersonName() {
-		return personName;
+		return mPersonName;
 	}
 
 	/**
@@ -219,11 +219,11 @@ public class EyePhoto {
 	 */
 	private void setPersonName(final String name) {
 		if (name == null) {
-			this.personName = null;
+			this.mPersonName = null;
 
 		}
 		else {
-			this.personName = name.trim();
+			this.mPersonName = name.trim();
 		}
 	}
 
@@ -263,11 +263,11 @@ public class EyePhoto {
 	 * @return the date.
 	 */
 	public final Date getDate() {
-		return date;
+		return mDate;
 	}
 
 	private void setDate(final Date date) {
-		this.date = date;
+		this.mDate = date;
 	}
 
 	/**
@@ -276,11 +276,11 @@ public class EyePhoto {
 	 * @return the suffix.
 	 */
 	public final String getSuffix() {
-		return suffix;
+		return mSuffix;
 	}
 
 	private void setSuffix(final String suffix) {
-		this.suffix = suffix.toLowerCase(Locale.getDefault());
+		this.mSuffix = suffix.toLowerCase(Locale.getDefault());
 	}
 
 	/**
@@ -289,7 +289,7 @@ public class EyePhoto {
 	 * @return true if the file name is formatted as eye photo.
 	 */
 	public final boolean isFormatted() {
-		return formattedName;
+		return mFormattedName;
 	}
 
 	/**
@@ -396,11 +396,11 @@ public class EyePhoto {
 	 *            Indicator of the resolution in which the image should be returned.
 	 */
 	public final synchronized void precalculateImage(final Resolution resolution) {
-		if (cachedThumbnail == null) {
-			cachedThumbnail = ImageUtil.getImage(getUrl(), Resolution.THUMB);
+		if (mCachedThumbnail == null) {
+			mCachedThumbnail = ImageUtil.getImage(getUrl(), Resolution.THUMB);
 		}
-		if (cachedImage == null && resolution == Resolution.NORMAL) {
-			cachedImage = ImageUtil.getImage(getUrl(), Resolution.NORMAL);
+		if (mCachedImage == null && resolution == Resolution.NORMAL) {
+			mCachedImage = ImageUtil.getImage(getUrl(), Resolution.NORMAL);
 		}
 	}
 
@@ -416,9 +416,9 @@ public class EyePhoto {
 
 		switch (resolution) {
 		case THUMB:
-			return cachedThumbnail;
+			return mCachedThumbnail;
 		case NORMAL:
-			return cachedImage;
+			return mCachedImage;
 		case FULL:
 			// Full size image is not cached.
 			return ImageUtil.getImage(getUrl(), Resolution.FULL);
@@ -446,8 +446,8 @@ public class EyePhoto {
 				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
-			if (metadata.person == null || metadata.person.length() == 0 || metadata.person.equals(getPersonName())) {
-				metadata.person = targetName;
+			if (metadata.mPerson == null || metadata.mPerson.length() == 0 || metadata.mPerson.equals(getPersonName())) {
+				metadata.mPerson = targetName;
 			}
 			target.storeImageMetadata(metadata);
 		}
@@ -474,7 +474,7 @@ public class EyePhoto {
 				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
-			metadata.organizeDate = newDate;
+			metadata.mOrganizeDate = newDate;
 			target.storeImageMetadata(metadata);
 		}
 
@@ -516,10 +516,10 @@ public class EyePhoto {
 	 *            the metadata object to be enhanced by the default information.
 	 */
 	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
-		metadata.person = getPersonName();
-		metadata.organizeDate = getDate();
-		metadata.rightLeft = getRightLeft();
-		metadata.title = getPersonName() + " - " + getRightLeft().getTitleSuffix();
+		metadata.mPerson = getPersonName();
+		metadata.mOrganizeDate = getDate();
+		metadata.mRightLeft = getRightLeft();
+		metadata.mTitle = getPersonName() + " - " + getRightLeft().getTitleSuffix();
 	}
 
 	/**

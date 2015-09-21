@@ -16,7 +16,7 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * The views containing the selected image.
 	 */
-	private List<EyeImageView> selectedViews = new ArrayList<EyeImageView>();
+	private List<EyeImageView> mSelectedViews = new ArrayList<EyeImageView>();
 
 	/**
 	 * Get the activity holding the images.
@@ -32,7 +32,7 @@ public abstract class BaseImageSelectionHandler {
 	 *            indicator if the views should be highlighted
 	 */
 	protected final void highlightSelectedViews(final boolean highlight) {
-		for (EyeImageView view : selectedViews) {
+		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
 				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
 			}
@@ -49,7 +49,7 @@ public abstract class BaseImageSelectionHandler {
 	public void cleanSelectedViews() {
 		if (hasSelectedView()) {
 			highlightSelectedViews(false);
-			selectedViews.clear();
+			mSelectedViews.clear();
 		}
 	}
 
@@ -61,7 +61,7 @@ public abstract class BaseImageSelectionHandler {
 	 */
 	// OVERRIDABLE
 	protected void selectView(final EyeImageView view) {
-		selectedViews.add(view);
+		mSelectedViews.add(view);
 		highlightSelectedViews(true);
 	}
 
@@ -71,7 +71,7 @@ public abstract class BaseImageSelectionHandler {
 	 * @return true if a view is selected.
 	 */
 	protected final boolean hasSelectedView() {
-		return selectedViews.size() > 0;
+		return mSelectedViews.size() > 0;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public abstract class BaseImageSelectionHandler {
 	 * @return true if the given view is selected.
 	 */
 	protected final boolean isSelectedView(final View view) {
-		return selectedViews.contains(view);
+		return mSelectedViews.contains(view);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public abstract class BaseImageSelectionHandler {
 	 */
 	protected final EyePhoto getSelectedImage() {
 		if (hasSelectedView()) {
-			return selectedViews.get(0).getEyePhoto();
+			return mSelectedViews.get(0).getEyePhoto();
 		}
 		else {
 			return null;

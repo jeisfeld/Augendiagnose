@@ -157,7 +157,7 @@ public final class AdMarvelUtil {
 		/**
 		 * The triggering activity.
 		 */
-		private AdMarvelActivity activity;
+		private AdMarvelActivity mActivity;
 
 		/**
 		 * Constructor handing over the activity.
@@ -166,7 +166,7 @@ public final class AdMarvelUtil {
 		 *            The triggering activity.
 		 */
 		public AdMarvelListener(final AdMarvelActivity activity) {
-			this.activity = activity;
+			this.mActivity = activity;
 		}
 
 		@Override
@@ -189,7 +189,7 @@ public final class AdMarvelUtil {
 		@Override
 		public void onFailedToReceiveAd(final AdMarvelView arg0, final int arg1, final ErrorReason errorReason) {
 			Log.w(Application.TAG, "Failed to receive ad: " + errorReason.toString());
-			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			AdMarvelView adMarvelView = mActivity.getAdMarvelView();
 			if (adMarvelView != null) {
 				adMarvelView.setVisibility(View.GONE);
 			}
@@ -197,13 +197,13 @@ public final class AdMarvelUtil {
 
 		@Override
 		public void onReceiveAd(final AdMarvelView arg0) {
-			AdMarvelView adMarvelView = activity.getAdMarvelView();
+			AdMarvelView adMarvelView = mActivity.getAdMarvelView();
 			if (adMarvelView != null) {
 				adMarvelView.setVisibility(View.VISIBLE);
 
 				int counter = PreferenceUtil.incrementCounter(R.string.key_admarvel_countdisplays);
 				if (counter % TIP_FREQUENCY == 0) {
-					DialogUtil.displayTip(activity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
+					DialogUtil.displayTip(mActivity, R.string.message_tip_admarvel, R.string.key_tip_admarvel);
 				}
 			}
 		}

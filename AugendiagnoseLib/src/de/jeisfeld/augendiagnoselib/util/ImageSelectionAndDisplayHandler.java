@@ -17,19 +17,19 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * The activity for first selection.
 	 */
-	private Activity activity = null;
+	private Activity mActivity = null;
 	/**
 	 * The activity for second selection.
 	 */
-	private ListPicturesForSecondNameActivity secondActivity = null;
+	private ListPicturesForSecondNameActivity mSecondActivity = null;
 	/**
 	 * The fragment for first selection.
 	 */
-	private ListPicturesForNameFragment fragment = null;
+	private ListPicturesForNameFragment mFragment = null;
 	/**
 	 * An instance of the ImageSelectionAndDisplayHandler - as singleton.
 	 */
-	private static volatile ImageSelectionAndDisplayHandler singleton;
+	private static volatile ImageSelectionAndDisplayHandler mSingleton;
 
 	/**
 	 * Get an instance of the handler - it is handled as singleton.
@@ -37,10 +37,10 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 * @return an instance of this class (as singleton).
 	 */
 	public static ImageSelectionAndDisplayHandler getInstance() {
-		if (singleton == null) {
-			singleton = new ImageSelectionAndDisplayHandler();
+		if (mSingleton == null) {
+			mSingleton = new ImageSelectionAndDisplayHandler();
 		}
-		return singleton;
+		return mSingleton;
 	}
 
 	/**
@@ -57,8 +57,8 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 *            The activity to be set.
 	 */
 	public void setActivity(final ListPicturesForNameActivity activity) {
-		this.activity = activity;
-		this.fragment = activity.getListPicturesForNameFragment();
+		this.mActivity = activity;
+		this.mFragment = activity.getListPicturesForNameFragment();
 	}
 
 	/**
@@ -68,8 +68,8 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 *            The activity to be set.
 	 */
 	public void setActivity(final ListFoldersForDisplayActivity activity) {
-		this.activity = activity;
-		this.fragment = null;
+		this.mActivity = activity;
+		this.mFragment = null;
 	}
 
 	/**
@@ -79,14 +79,14 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 *            The activity to be set.
 	 */
 	public void setSecondActivity(final ListPicturesForSecondNameActivity secondActivity) {
-		this.secondActivity = secondActivity;
+		this.mSecondActivity = secondActivity;
 	}
 
 	/**
 	 * Clean all references.
 	 */
 	public static void clean() {
-		singleton = null;
+		mSingleton = null;
 	}
 
 	/**
@@ -104,20 +104,20 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				if (activity == null) {
+				if (mActivity == null) {
 					// Prevent NullPointerException
 					return;
 				}
 
 				if (!hasSelectedView()) {
-					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
+					DisplayOneActivity.startActivity(mActivity, view.getEyePhoto().getAbsolutePath());
 				}
 				else if (isSelectedView(view)) {
 					cleanSelectedViews();
-					DisplayOneActivity.startActivity(activity, view.getEyePhoto().getAbsolutePath());
+					DisplayOneActivity.startActivity(mActivity, view.getEyePhoto().getAbsolutePath());
 				}
 				else {
-					DisplayTwoActivity.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
+					DisplayTwoActivity.startActivity(mActivity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
 							.getAbsolutePath(), false);
 					cleanSelectedViews();
 				}
@@ -150,10 +150,10 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 			@Override
 			public void onClick(final View v) {
 				DisplayTwoActivity
-						.startActivity(activity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
+						.startActivity(mActivity, getSelectedImage().getAbsolutePath(), view.getEyePhoto()
 								.getAbsolutePath(), false);
 				cleanSelectedViews();
-				secondActivity.finish();
+				mSecondActivity.finish();
 			}
 		});
 	}
@@ -166,8 +166,8 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 		if (hasSelectedView()) {
 			super.cleanSelectedViews();
 
-			if (fragment != null) {
-				fragment.deactivateButtonAdditionalPictures();
+			if (mFragment != null) {
+				mFragment.deactivateButtonAdditionalPictures();
 			}
 		}
 	}
@@ -182,13 +182,13 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	protected void selectView(final EyeImageView view) {
 		super.selectView(view);
 
-		if (fragment != null) {
-			fragment.activateButtonAdditionalPictures();
+		if (mFragment != null) {
+			mFragment.activateButtonAdditionalPictures();
 		}
 	}
 
 	@Override
 	protected Activity getActivity() {
-		return activity;
+		return mActivity;
 	}
 }

@@ -34,62 +34,62 @@ public class MainController extends BaseController implements Initializable {
 	 * The root of the main page.
 	 */
 	@FXML
-	private VBox mainPane;
+	private VBox mMainPane;
 
 	/**
 	 * The pane containing the body.
 	 */
 	@FXML
-	private StackPane body;
+	private StackPane mBody;
 
 	/**
 	 * The pane containing the menu bar.
 	 */
 	@FXML
-	private MenuBar menuBar;
+	private MenuBar mMenuBar;
 
 	/**
 	 * The pane containing menu buttons.
 	 */
 	@FXML
-	private HBox menuButtons;
+	private HBox mMenuButtons;
 
 	/**
 	 * The close button in the menu bar.
 	 */
 	@FXML
-	private Button closeButton;
+	private Button mCloseButton;
 
 	/**
 	 * The save icon.
 	 */
 	@FXML
-	private ImageView imageSave;
+	private ImageView mImageSave;
 
 	/**
 	 * The panes (one or two) containing the body.
 	 */
-	private StackPane[] bodies = new StackPane[0];
+	private StackPane[] mBodies = new StackPane[0];
 
 	/**
 	 * Number of subpages that cannot be closed.
 	 */
-	private int unclosablePages = 0;
+	private int mUnclosablePages = 0;
 
 	/**
 	 * The list of subpages.
 	 */
-	private List<BaseController> subPageRegistry = new ArrayList<BaseController>();
+	private List<BaseController> mSubPageRegistry = new ArrayList<BaseController>();
 
 	/**
 	 * A list storing the handlers for closing windows.
 	 */
-	private List<EventHandler<ActionEvent>> closeHandlerList = new ArrayList<EventHandler<ActionEvent>>();
+	private List<EventHandler<ActionEvent>> mCloseHandlerList = new ArrayList<EventHandler<ActionEvent>>();
 
 	/**
 	 * Indicator if two panes are shown.
 	 */
-	private boolean isSplitPane = false;
+	private boolean mIsSplitPane = false;
 
 	/**
 	 * Get information if two panes are shown.
@@ -97,7 +97,7 @@ public class MainController extends BaseController implements Initializable {
 	 * @return True if two panes are shown.
 	 */
 	public final boolean isSplitPane() {
-		return getInstance().isSplitPane;
+		return getInstance().mIsSplitPane;
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class MainController extends BaseController implements Initializable {
 	 *            If true, then split pane is set, otherwise single pane is set.
 	 */
 	public final void setSplitPane(final boolean newIsSplitPane) {
-		isSplitPane = newIsSplitPane;
+		mIsSplitPane = newIsSplitPane;
 
 		if (isSplitPane()) {
 			StackPane body1 = new StackPane();
@@ -118,35 +118,35 @@ public class MainController extends BaseController implements Initializable {
 			splitPane.getItems().add(body1);
 			splitPane.getItems().add(body2);
 
-			bodies = new StackPane[] { body1, body2, body };
+			mBodies = new StackPane[] { body1, body2, mBody };
 
 			// retain old body as left pane.
-			body1.getChildren().addAll(body.getChildren());
+			body1.getChildren().addAll(mBody.getChildren());
 			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
 
-			body.getChildren().clear();
-			body.getChildren().add(splitPane);
+			mBody.getChildren().clear();
+			mBody.getChildren().add(splitPane);
 
 		}
 		else {
-			body.getChildren().clear();
+			mBody.getChildren().clear();
 
 			// retain old left pane.
-			removeSubPage(subPageRegistry.get(1));
-			body.getChildren().addAll(bodies[0].getChildren());
+			removeSubPage(mSubPageRegistry.get(1));
+			mBody.getChildren().addAll(mBodies[0].getChildren());
 
-			bodies = new StackPane[] { body };
+			mBodies = new StackPane[] { mBody };
 		}
 	}
 
 	@Override
 	public final Parent getRoot() {
-		return mainPane;
+		return mMainPane;
 	}
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
-		bodies = new StackPane[] { body };
+		mBodies = new StackPane[] { mBody };
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class MainController extends BaseController implements Initializable {
 	 *            The contents of the menu bar.
 	 */
 	public final void setMenuBarContents(final MenuBar menuBarContents) {
-		menuBar.getMenus().clear();
-		menuBar.getMenus().addAll(menuBarContents.getMenus());
+		mMenuBar.getMenus().clear();
+		mMenuBar.getMenus().addAll(menuBarContents.getMenus());
 	}
 
 	/**
@@ -186,16 +186,16 @@ public class MainController extends BaseController implements Initializable {
 	 *            Indicator if this is a closable page.
 	 */
 	public final void addSubPage(final BaseController controller, final int paneIndex, final boolean isClosable) {
-		bodies[paneIndex].getChildren().add(controller.getRoot());
+		mBodies[paneIndex].getChildren().add(controller.getRoot());
 		int position;
 		if (isClosable) {
-			position = subPageRegistry.size();
-			subPageRegistry.add(controller);
+			position = mSubPageRegistry.size();
+			mSubPageRegistry.add(controller);
 		}
 		else {
-			position = unclosablePages;
-			subPageRegistry.add(position, controller);
-			unclosablePages++;
+			position = mUnclosablePages;
+			mSubPageRegistry.add(position, controller);
+			mUnclosablePages++;
 		}
 
 		// Enable the close menu.
@@ -233,11 +233,11 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	public final void removeSubPage(final BaseController controller) {
 		controller.close();
-		int index = subPageRegistry.indexOf(controller);
-		if (index >= 0 && index < unclosablePages) {
-			unclosablePages--;
+		int index = mSubPageRegistry.indexOf(controller);
+		if (index >= 0 && index < mUnclosablePages) {
+			mUnclosablePages--;
 		}
-		subPageRegistry.remove(controller);
+		mSubPageRegistry.remove(controller);
 		disableClose(index);
 
 		if (PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SHOW_SPLIT_WINDOW)
@@ -251,11 +251,11 @@ public class MainController extends BaseController implements Initializable {
 	 * Remove all subpages.
 	 */
 	public final void removeAllSubPages() {
-		for (BaseController controller : subPageRegistry) {
+		for (BaseController controller : mSubPageRegistry) {
 			controller.close();
 		}
-		subPageRegistry.clear();
-		unclosablePages = 0;
+		mSubPageRegistry.clear();
+		mUnclosablePages = 0;
 		disableAllClose();
 	}
 
@@ -269,16 +269,16 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	private void enableClose(final EventHandler<ActionEvent> eventHandler, final int position) {
 		if (position >= 0) {
-			closeHandlerList.add(position, eventHandler);
+			mCloseHandlerList.add(position, eventHandler);
 		}
 		else {
-			closeHandlerList.add(eventHandler);
+			mCloseHandlerList.add(eventHandler);
 		}
 		if (hasClosablePage()) {
 			MenuController.getInstance().setMenuClose(true, eventHandler);
 
-			closeButton.setVisible(true);
-			closeButton.setOnAction(closeHandlerList.get(closeHandlerList.size() - 1));
+			mCloseButton.setVisible(true);
+			mCloseButton.setOnAction(mCloseHandlerList.get(mCloseHandlerList.size() - 1));
 		}
 	}
 
@@ -290,19 +290,19 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	private void disableClose(final int position) {
 		if (position >= 0) {
-			closeHandlerList.remove(position);
+			mCloseHandlerList.remove(position);
 		}
 		else {
-			closeHandlerList.remove(closeHandlerList.size() - 1);
+			mCloseHandlerList.remove(mCloseHandlerList.size() - 1);
 		}
 		if (hasClosablePage()) {
-			EventHandler<ActionEvent> newEventHandler = closeHandlerList.get(closeHandlerList.size() - 1);
+			EventHandler<ActionEvent> newEventHandler = mCloseHandlerList.get(mCloseHandlerList.size() - 1);
 			MenuController.getInstance().setMenuClose(true, newEventHandler);
-			closeButton.setOnAction(newEventHandler);
+			mCloseButton.setOnAction(newEventHandler);
 		}
 		else {
 			MenuController.getInstance().setMenuClose(false, null);
-			closeButton.setVisible(false);
+			mCloseButton.setVisible(false);
 		}
 	}
 
@@ -312,30 +312,30 @@ public class MainController extends BaseController implements Initializable {
 	 * @return true if there is a page that can be closed.
 	 */
 	public final boolean hasClosablePage() {
-		return closeHandlerList.size() > unclosablePages;
+		return mCloseHandlerList.size() > mUnclosablePages;
 	}
 
 	/**
 	 * Disable all levels of the close menu icon.
 	 */
 	private void disableAllClose() {
-		closeHandlerList.clear();
+		mCloseHandlerList.clear();
 		MenuController.getInstance().setMenuClose(false, null);
-		closeButton.setVisible(false);
+		mCloseButton.setVisible(false);
 	}
 
 	/**
 	 * Show the save icon.
 	 */
 	public static void showSaveIcon() {
-		getInstance().imageSave.setVisible(true);
+		getInstance().mImageSave.setVisible(true);
 	}
 
 	/**
 	 * Hide the save icon.
 	 */
 	public static void hideSaveIcon() {
-		getInstance().imageSave.setVisible(false);
+		getInstance().mImageSave.setVisible(false);
 	}
 
 	/**
@@ -344,7 +344,7 @@ public class MainController extends BaseController implements Initializable {
 	 * @return true if there is a dirty page.
 	 */
 	public static boolean hasDirtyBaseController() {
-		for (BaseController controller : getInstance().subPageRegistry) {
+		for (BaseController controller : getInstance().mSubPageRegistry) {
 			if (controller.isDirty()) {
 				return true;
 			}

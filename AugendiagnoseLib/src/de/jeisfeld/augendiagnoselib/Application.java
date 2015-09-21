@@ -24,7 +24,7 @@ public class Application extends android.app.Application {
 	/**
 	 * An instance of this application.
 	 */
-	private static Application application;
+	private static Application mApplication;
 
 	/**
 	 * The default tag for logging.
@@ -34,10 +34,10 @@ public class Application extends android.app.Application {
 	/**
 	 * The private constants of this app.
 	 */
-	private ApplicationSettings applicationSettings = null;
+	private ApplicationSettings mApplicationSettings = null;
 
 	public static ApplicationSettings getApplicationSettings() {
-		return application.applicationSettings;
+		return mApplication.mApplicationSettings;
 	}
 
 	// OVERRIDABLE
@@ -46,7 +46,7 @@ public class Application extends android.app.Application {
 			justification = "Make some context visible statically (no matter which one)")
 	public void onCreate() {
 		super.onCreate();
-		Application.application = this;
+		Application.mApplication = this;
 
 		SettingsActivity.setDefaultSharedPreferences(getApplicationContext());
 
@@ -55,7 +55,7 @@ public class Application extends android.app.Application {
 
 		// Initialize special classes
 		try {
-			applicationSettings =
+			mApplicationSettings =
 					(ApplicationSettings) Class.forName(getResourceString(R.string.class_application_settings))
 							.getDeclaredMethod("getInstance", new Class<?>[0])
 							.invoke(null, new Object[0]);
@@ -107,7 +107,7 @@ public class Application extends android.app.Application {
 	 * @return The (statically stored) application context
 	 */
 	public static Context getAppContext() {
-		return Application.application.getApplicationContext();
+		return Application.mApplication.getApplicationContext();
 	}
 
 	/**

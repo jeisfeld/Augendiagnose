@@ -24,11 +24,11 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Storage for currently running save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> runningSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mRunningSaveRequests = new HashMap<String, JpegMetadata>();
 	/**
 	 * Storage for queued save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> queuedSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mQueuedSaveRequests = new HashMap<String, JpegMetadata>();
 
 	/**
 	 * This method handles a request to retrieve metadata for a file. If there is no running async task to update
@@ -51,11 +51,11 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			if (queuedSaveRequests.containsKey(pathname)) {
-				cachedMetadata = queuedSaveRequests.get(pathname);
+			if (mQueuedSaveRequests.containsKey(pathname)) {
+				cachedMetadata = mQueuedSaveRequests.get(pathname);
 			}
-			else if (runningSaveRequests.containsKey(pathname)) {
-				cachedMetadata = runningSaveRequests.get(pathname);
+			else if (mRunningSaveRequests.containsKey(pathname)) {
+				cachedMetadata = mRunningSaveRequests.get(pathname);
 			}
 		}
 
@@ -95,8 +95,8 @@ public final class JpegSynchronizationUtil {
 		synchronized (JpegSynchronizationUtil.class) {
 			MainController.showSaveIcon();
 
-			if (runningSaveRequests.containsKey(pathname)) {
-				queuedSaveRequests.put(pathname, metadata);
+			if (mRunningSaveRequests.containsKey(pathname)) {
+				mQueuedSaveRequests.put(pathname, metadata);
 			}
 			else {
 				triggerJpegSaverTask(pathname, metadata);
@@ -110,7 +110,7 @@ public final class JpegSynchronizationUtil {
 	 * @return true if there is a running or pending save request.
 	 */
 	public static boolean hasRunningSaveRequests() {
-		return runningSaveRequests.size() > 0 || queuedSaveRequests.size() > 0;
+		return mRunningSaveRequests.size() > 0 || mQueuedSaveRequests.size() > 0;
 	}
 
 	/**
@@ -121,11 +121,11 @@ public final class JpegSynchronizationUtil {
 	 */
 	private static void triggerNextFromQueue(final String pathname) {
 		synchronized (JpegSynchronizationUtil.class) {
-			runningSaveRequests.remove(pathname);
-			if (queuedSaveRequests.containsKey(pathname)) {
+			mRunningSaveRequests.remove(pathname);
+			if (mQueuedSaveRequests.containsKey(pathname)) {
 				Logger.info("Executing queued store request for file " + pathname);
-				JpegMetadata newMetadata = queuedSaveRequests.get(pathname);
-				queuedSaveRequests.remove(pathname);
+				JpegMetadata newMetadata = mQueuedSaveRequests.get(pathname);
+				mQueuedSaveRequests.remove(pathname);
 				triggerJpegSaverTask(pathname, newMetadata);
 			}
 			if (!hasRunningSaveRequests()) {
@@ -148,7 +148,7 @@ public final class JpegSynchronizationUtil {
 	 *            the metadata.
 	 */
 	private static void triggerJpegSaverTask(final String pathname, final JpegMetadata metadata) {
-		runningSaveRequests.put(pathname, metadata);
+		mRunningSaveRequests.put(pathname, metadata);
 		JpegSaverThread thread = new JpegSaverThread(pathname, metadata);
 		thread.start();
 	}
@@ -160,11 +160,11 @@ public final class JpegSynchronizationUtil {
 		/**
 		 * The path of the jpg file.
 		 */
-		private String pathname;
+		private String mPathname;
 		/**
 		 * The changed metadata.
 		 */
-		private JpegMetadata metadata;
+		private JpegMetadata mMetadata;
 
 		/**
 		 * Constructor for the task.
@@ -175,23 +175,23 @@ public final class JpegSynchronizationUtil {
 		 *            the metadata.
 		 */
 		public JpegSaverThread(final String pathname, final JpegMetadata metadata) {
-			this.pathname = pathname;
-			this.metadata = metadata;
+			this.mPathname = pathname;
+			this.mMetadata = metadata;
 		}
 
 		@Override
 		public void run() {
-			Logger.info("Starting thread to save file " + pathname);
+			Logger.info("Starting thread to save file " + mPathname);
 
 			try {
-				JpegMetadataUtil.changeMetadata(pathname, metadata);
-				Logger.info("Successfully saved file " + pathname);
+				JpegMetadataUtil.changeMetadata(mPathname, mMetadata);
+				Logger.info("Successfully saved file " + mPathname);
 			}
 			catch (Exception e) {
-				Logger.error("Failed to save file " + pathname, e);
-				DialogUtil.displayError(ResourceConstants.MESSAGE_ERROR_FAILED_TO_STORE_METADATA, pathname);
+				Logger.error("Failed to save file " + mPathname, e);
+				DialogUtil.displayError(ResourceConstants.MESSAGE_ERROR_FAILED_TO_STORE_METADATA, mPathname);
 			}
-			triggerNextFromQueue(pathname);
+			triggerNextFromQueue(mPathname);
 		}
 	}
 

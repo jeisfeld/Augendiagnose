@@ -36,21 +36,21 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * The parent folder.
 	 */
-	private String parentFolder;
+	private String mParentFolder;
 	/**
 	 * The name for which the eye photos should be displayed.
 	 */
-	private String name;
+	private String mName;
 
 	/**
 	 * The list view showing the pictures.
 	 */
-	private ListView listview;
+	private ListView mListview;
 
 	/**
 	 * The array of eye photo pairs.
 	 */
-	private EyePhotoPair[] eyePhotoPairs;
+	private EyePhotoPair[] mEyePhotoPairs;
 
 	/**
 	 * Initialize the listFoldersFragment with parentFolder and name.
@@ -74,8 +74,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 
 		Bundle args = getArguments();
 
-		name = args.getString(STRING_NAME);
-		parentFolder = args.getString(STRING_PARENTFOLDER);
+		mName = args.getString(STRING_NAME);
+		mParentFolder = args.getString(STRING_PARENTFOLDER);
 	}
 
 	// OVERRIDABLE
@@ -84,15 +84,15 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		TextView headerNameView = (TextView) getView().findViewById(R.id.textTitleName);
-		headerNameView.setText(name);
+		headerNameView.setText(mName);
 
 		createAndStoreEyePhotoList();
 
-		listview = (ListView) getView().findViewById(R.id.listViewForName);
+		mListview = (ListView) getView().findViewById(R.id.listViewForName);
 
 		// prevent highlighting
-		listview.setCacheColorHint(Color.TRANSPARENT);
-		listview.setSelector(new StateListDrawable());
+		mListview.setCacheColorHint(Color.TRANSPARENT);
+		mListview.setSelector(new StateListDrawable());
 	}
 
 	/**
@@ -156,30 +156,30 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 * @return true if there are still eye photos remaining.
 	 */
 	protected final boolean createAndStoreEyePhotoList() {
-		eyePhotoPairs = createEyePhotoList(new File(parentFolder, name));
-		if (eyePhotoPairs == null) {
-			eyePhotoPairs = new EyePhotoPair[0];
+		mEyePhotoPairs = createEyePhotoList(new File(mParentFolder, mName));
+		if (mEyePhotoPairs == null) {
+			mEyePhotoPairs = new EyePhotoPair[0];
 		}
 
-		getActivity().findViewById(R.id.textViewNoImagesForName).setVisibility(eyePhotoPairs.length == 0 ? View.VISIBLE : View.GONE);
+		getActivity().findViewById(R.id.textViewNoImagesForName).setVisibility(mEyePhotoPairs.length == 0 ? View.VISIBLE : View.GONE);
 
-		return eyePhotoPairs.length > 0;
+		return mEyePhotoPairs.length > 0;
 	}
 
 	public final String getParentFolder() {
-		return parentFolder;
+		return mParentFolder;
 	}
 
 	public final String getName() {
-		return name;
+		return mName;
 	}
 
 	protected final ListView getListView() {
-		return listview;
+		return mListview;
 	}
 
 	protected final EyePhotoPair[] getEyePhotoPairs() {
-		return eyePhotoPairs;
+		return mEyePhotoPairs;
 	}
 
 }

@@ -12,7 +12,7 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<MenuBar xmlns:fx="http://javafx.com/fxml" fx:id="menuBar" fx:controller="de.eisfeldj.augendiagnosefx.controller.MenuController" styleClass="menu">
+<MenuBar xmlns:fx="http://javafx.com/fxml" fx:id="mMenuBar" fx:controller="de.eisfeldj.augendiagnosefx.controller.MenuController" styleClass="menu">
 
 	<menus>
 		<Menu text="%menu_file"> 
@@ -23,14 +23,14 @@
 		</Menu>
 		<Menu text="%menu_view"> 
 			<items>
-				<CheckMenuItem fx:id="menuOverlayPane" text="%menu_overlay_pane" selected="true" disable="true" onAction="#toggleOverlayPane"/> 
-				<CheckMenuItem fx:id="menuCommentPane" text="%menu_comment_pane" selected="true" disable="true" onAction="#toggleCommentPane"/> 
-				<CheckMenuItem fx:id="menuSplitWindow" text="%menu_split_window" selected="false" onAction="#toggleSplitWindow"/> 
+				<CheckMenuItem fx:id="mMenuOverlayPane" text="%menu_overlay_pane" selected="true" disable="true" onAction="#toggleOverlayPane"/> 
+				<CheckMenuItem fx:id="mMenuCommentPane" text="%menu_comment_pane" selected="true" disable="true" onAction="#toggleCommentPane"/> 
+				<CheckMenuItem fx:id="mMenuSplitWindow" text="%menu_split_window" selected="false" onAction="#toggleSplitWindow"/> 
 			</items>
 		</Menu>
 		<Menu text="%menu_window"> 
 			<items>
-				<MenuItem fx:id="menuClose" text="%menu_close" disable="true"/> 
+				<MenuItem fx:id="mMenuClose" text="%menu_close" disable="true"/> 
 				<SeparatorMenuItem/> 
 				<MenuItem text="%menu_preferences" onAction="#showPreferences"/> 
 			</items>

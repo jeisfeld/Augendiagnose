@@ -30,7 +30,7 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 	/**
 	 * The fragment displaying the pictures.
 	 */
-	private ListPicturesForNameBaseFragment fragment;
+	private ListPicturesForNameBaseFragment mFragment;
 
 	// OVERRIDABLE
 	@Override
@@ -42,13 +42,13 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 
 		setContentView(R.layout.activity_fragments_single);
 
-		fragment = (ListPicturesForNameBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		mFragment = (ListPicturesForNameBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-		if (fragment == null) {
-			fragment = createFragment();
-			fragment.setParameters(parentFolder, name);
+		if (mFragment == null) {
+			mFragment = createFragment();
+			mFragment.setParameters(parentFolder, name);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, FRAGMENT_TAG).commit();
+			getFragmentManager().beginTransaction().add(R.id.fragment_container, mFragment, FRAGMENT_TAG).commit();
 			getFragmentManager().executePendingTransactions();
 		}
 	}
@@ -79,11 +79,11 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 
 	@Override
 	public final ListPicturesForNameFragment getListPicturesForNameFragment() {
-		return (ListPicturesForNameFragment) fragment;
+		return (ListPicturesForNameFragment) mFragment;
 	}
 
 	@Override
 	public final void setListPicturesForNameFragment(final ListPicturesForNameFragment listPicturesForNameFragment) {
-		this.fragment = listPicturesForNameFragment;
+		this.mFragment = listPicturesForNameFragment;
 	}
 }

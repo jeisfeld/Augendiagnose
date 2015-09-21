@@ -18,7 +18,7 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="settingsPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.PreferencesController" styleClass="display">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mSettingsPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.PreferencesController" styleClass="display">
 
 	<columnConstraints>
 		<ColumnConstraints/> 
@@ -29,7 +29,7 @@
 	<children>
 		<Label text="%title_settings" styleClass="settingsHeading" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/> 
 		<Label text="%pref_title_folder_photos" GridPane.columnIndex="0" GridPane.rowIndex="1"/> 
-		<TextField fx:id="textFolderPhotos" minWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
+		<TextField fx:id="mTextFolderPhotos" minWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1"/> 
 		<Button styleClass="imageButton" onAction="#selectDirectory" GridPane.columnIndex="2" GridPane.rowIndex="1"> 
 			<graphic>
 				<ImageView> 
@@ -40,7 +40,7 @@
 			</graphic>
 		</Button>
 		<Label text="%pref_title_max_bitmap_size" GridPane.columnIndex="0" GridPane.rowIndex="2"/> 
-		<ChoiceBox fx:id="choiceMaxBitmapSize" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"> 
+		<ChoiceBox fx:id="mChoiceMaxBitmapSize" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"> 
 			<items>
 				<FXCollections fx:factory="observableArrayList"> 
 					<Integer fx:value="4096"/> 
@@ -52,7 +52,7 @@
 			</items>
 		</ChoiceBox>
 		<Label text="%pref_title_thumbnail_size" GridPane.columnIndex="0" GridPane.rowIndex="3"/> 
-		<ChoiceBox fx:id="choiceThumbnailSize" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"> 
+		<ChoiceBox fx:id="mChoiceThumbnailSize" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"> 
 			<items>
 				<FXCollections fx:factory="observableArrayList"> 
 					<Integer fx:value="2048"/> 
@@ -64,13 +64,13 @@
 			</items>
 		</ChoiceBox>
 		<Label text="%pref_title_overlay_color" GridPane.columnIndex="0" GridPane.rowIndex="4"/> 
-		<ColorPicker fx:id="colorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/> 
+		<ColorPicker fx:id="mColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_sort_by_last_name" GridPane.columnIndex="0" GridPane.rowIndex="5"/> 
-		<CheckBox fx:id="checkBoxSortByLastName" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="2"/> 
+		<CheckBox fx:id="mCheckBoxSortByLastName" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_update_automatically" GridPane.columnIndex="0" GridPane.rowIndex="6"/> 
-		<CheckBox fx:id="checkBoxUpdateAutomatically" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="2"/> 
+		<CheckBox fx:id="mCheckBoxUpdateAutomatically" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_language" GridPane.columnIndex="0" GridPane.rowIndex="7"/> 
-		<ChoiceBox fx:id="choiceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="2"/> 
+		<ChoiceBox fx:id="mChoiceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="2"/> 
 		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.halignment="LEFT"/> 
 		<Button text="%button_ok" onAction="#submit" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.columnSpan="2" GridPane.halignment="RIGHT"/> 
 	</children>

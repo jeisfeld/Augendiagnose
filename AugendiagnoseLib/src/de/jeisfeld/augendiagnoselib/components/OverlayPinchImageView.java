@@ -272,7 +272,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			Thread thread = new Thread() {
 				@Override
 				public void run() {
-					mBitmap = mEyePhoto.getImageBitmap(maxBitmapSize);
+					mBitmap = mEyePhoto.getImageBitmap(mMaxBitmapSize);
 					mBitmapSmall = mEyePhoto.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE);
 					mMetadata = mEyePhoto.getImageMetadata();
 					retainFragment.setBitmap(mBitmap);
@@ -285,9 +285,9 @@ public class OverlayPinchImageView extends PinchImageView {
 							if (mMetadata != null && mMetadata.hasOverlayPosition()) {
 								// stored position of overlay
 								mHasOverlayPosition = true;
-								mOverlayX = mMetadata.xCenter;
-								mOverlayY = mMetadata.yCenter;
-								mOverlayScaleFactor = mMetadata.overlayScaleFactor
+								mOverlayX = mMetadata.mXCenter;
+								mOverlayY = mMetadata.mYCenter;
+								mOverlayScaleFactor = mMetadata.mOverlayScaleFactor
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 								lockOverlay(true, false);
 								if (mGuiElementUpdater != null) {
@@ -302,16 +302,16 @@ public class OverlayPinchImageView extends PinchImageView {
 								mHasViewPosition = true;
 							}
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
-								mBrightness = mMetadata.brightness.floatValue();
-								mContrast = mMetadata.contrast.floatValue();
+								mBrightness = mMetadata.mBrightness.floatValue();
+								mContrast = mMetadata.mContrast.floatValue();
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
 									mGuiElementUpdater
 											.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 								}
 							}
-							if (mMetadata != null && mMetadata.overlayColor != null) {
-								mOverlayColor = mMetadata.overlayColor.intValue();
+							if (mMetadata != null && mMetadata.mOverlayColor != null) {
+								mOverlayColor = mMetadata.mOverlayColor.intValue();
 								mGuiElementUpdater.updateOverlayColorButton(mOverlayColor);
 							}
 
@@ -348,9 +348,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	protected final void doInitialScaling() {
 		// If available, use stored position
 		if (!mInitialized && mHasViewPosition) {
-			mPosX = mMetadata.xPosition;
-			mPosY = mMetadata.yPosition;
-			mScaleFactor = mMetadata.zoomFactor * getOrientationIndependentScaleFactor();
+			mPosX = mMetadata.mXPosition;
+			mPosY = mMetadata.mYPosition;
+			mScaleFactor = mMetadata.mZoomFactor * getOrientationIndependentScaleFactor();
 			mLastScaleFactor = mScaleFactor;
 			mInitialized = true;
 		}
@@ -515,14 +515,14 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		if (lock && store && mInitialized) {
 			if (mMetadata != null) {
-				if (mMetadata.rightLeft == null) {
+				if (mMetadata.mRightLeft == null) {
 					// If image did not yet pass metadata setting, do it now.
 					mEyePhoto.updateMetadataWithDefaults(mMetadata);
 				}
 
-				mMetadata.xCenter = mOverlayX;
-				mMetadata.yCenter = mOverlayY;
-				mMetadata.overlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
+				mMetadata.mXCenter = mOverlayX;
+				mMetadata.mYCenter = mOverlayY;
+				mMetadata.mOverlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
 						* OVERLAY_SIZE;
 				mEyePhoto.storeImageMetadata(mMetadata);
 
@@ -544,9 +544,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		mOverlayY = ONE_HALF;
 		if (store && mInitialized) {
 			if (mMetadata != null) {
-				mMetadata.xCenter = null;
-				mMetadata.yCenter = null;
-				mMetadata.overlayScaleFactor = null;
+				mMetadata.mXCenter = null;
+				mMetadata.mYCenter = null;
+				mMetadata.mOverlayScaleFactor = null;
 				mEyePhoto.storeImageMetadata(mMetadata);
 			}
 		}
@@ -698,8 +698,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void storeBrightnessContrast(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
-				mMetadata.brightness = null;
-				mMetadata.contrast = null;
+				mMetadata.mBrightness = null;
+				mMetadata.mContrast = null;
 				mBrightness = 0;
 				mContrast = 1;
 				if (mGuiElementUpdater != null) {
@@ -708,8 +708,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 			}
 			else {
-				mMetadata.brightness = mBrightness;
-				mMetadata.contrast = mContrast;
+				mMetadata.mBrightness = mBrightness;
+				mMetadata.mContrast = mContrast;
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -750,9 +750,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
 				mHasViewPosition = false;
-				mMetadata.xPosition = null;
-				mMetadata.yPosition = null;
-				mMetadata.zoomFactor = null;
+				mMetadata.mXPosition = null;
+				mMetadata.mYPosition = null;
+				mMetadata.mZoomFactor = null;
 
 				// Reset to original view size
 				mInitialized = false;
@@ -760,9 +760,9 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 			else {
 				mHasViewPosition = true;
-				mMetadata.xPosition = mPosX;
-				mMetadata.yPosition = mPosY;
-				mMetadata.zoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
+				mMetadata.mXPosition = mPosX;
+				mMetadata.mYPosition = mPosY;
+				mMetadata.mZoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -778,11 +778,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void storeOverlayColor(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
-				mMetadata.overlayColor = null;
+				mMetadata.mOverlayColor = null;
 				setOverlayColor(mGuiElementUpdater.getOverlayDefaultColor());
 			}
 			else {
-				mMetadata.overlayColor = mOverlayColor;
+				mMetadata.mOverlayColor = mOverlayColor;
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -1147,7 +1147,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void storeComment(final String comment) {
 		if (mInitialized && mMetadata != null) {
-			mMetadata.comment = comment;
+			mMetadata.mComment = comment;
 			mEyePhoto.storeImageMetadata(mMetadata);
 
 			PreferenceUtil.incrementCounter(R.string.key_statistics_countcomment);
@@ -1289,27 +1289,27 @@ public class OverlayPinchImageView extends PinchImageView {
 		/**
 		 * The small version of the bitmap.
 		 */
-		private Bitmap bitmapSmall;
+		private Bitmap mRetainbitmapSmall;
 
 		private Bitmap getBitmapSmall() {
-			return bitmapSmall;
+			return mRetainbitmapSmall;
 		}
 
 		private void setBitmapSmall(final Bitmap bitmapSmall) {
-			this.bitmapSmall = bitmapSmall;
+			this.mRetainbitmapSmall = bitmapSmall;
 		}
 
 		/**
 		 * The full resolution bitmap.
 		 */
-		private Bitmap bitmapFullResolution;
+		private Bitmap mRetainBitmapFullResolution;
 
 		private Bitmap getBitmapFullResolution() {
-			return bitmapFullResolution;
+			return mRetainBitmapFullResolution;
 		}
 
 		private void setBitmapFullResolution(final Bitmap bitmapFullResolution) {
-			this.bitmapFullResolution = bitmapFullResolution;
+			this.mRetainBitmapFullResolution = bitmapFullResolution;
 		}
 
 		/**

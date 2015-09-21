@@ -42,23 +42,23 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	/**
 	 * Flag indicating if the images are flagged right/left independent of the metadata.
 	 */
-	private boolean presetRightLeft;
+	private boolean mPresetRightLeft;
 
 	/**
 	 * The views displaying the files.
 	 */
-	private View viewFragmentImage1, viewFragmentImage2;
+	private View mViewFragmentImage1, mViewFragmentImage2;
 
 	/**
 	 * The fragments displaying the files.
 	 */
-	private DisplayImageFragment fragmentImage1, fragmentImage2;
+	private DisplayImageFragment mFragmentImage1, mFragmentImage2;
 
 	/**
 	 * The view displaying the "other" file. Required to differentiate between "current listFoldersFragment" and
 	 * "other listFoldersFragment" when editing picture comment.
 	 */
-	private View viewFragmentOther, viewFragmentThis;
+	private View mViewFragmentOther, mViewFragmentThis;
 
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
@@ -90,56 +90,56 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 		String file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
 		String file2 = getIntent().getStringExtra(STRING_EXTRA_FILE2);
-		presetRightLeft = getIntent().getBooleanExtra(BOOLEAN_EXTRA_PRESETRIGHTLEFT, false);
+		mPresetRightLeft = getIntent().getBooleanExtra(BOOLEAN_EXTRA_PRESETRIGHTLEFT, false);
 
 		setContentView(R.layout.activity_display_two);
 
-		fragmentImage1 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
-		if (fragmentImage1 == null) {
-			fragmentImage1 = createFragment();
-			fragmentImage1.setParameters(file1, 1, presetRightLeft ? RightLeft.RIGHT : null);
+		mFragmentImage1 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
+		if (mFragmentImage1 == null) {
+			mFragmentImage1 = createFragment();
+			mFragmentImage1.setParameters(file1, 1, mPresetRightLeft ? RightLeft.RIGHT : null);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image1, fragmentImage1, FRAGMENT_IMAGE1_TAG)
+			getFragmentManager().beginTransaction().add(R.id.fragment_image1, mFragmentImage1, FRAGMENT_IMAGE1_TAG)
 					.commit();
 		}
 
-		fragmentImage2 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
-		if (fragmentImage2 == null) {
-			fragmentImage2 = createFragment();
-			fragmentImage2.setParameters(file2, 2, presetRightLeft ? RightLeft.LEFT : null);
+		mFragmentImage2 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
+		if (mFragmentImage2 == null) {
+			mFragmentImage2 = createFragment();
+			mFragmentImage2.setParameters(file2, 2, mPresetRightLeft ? RightLeft.LEFT : null);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image2, fragmentImage2, FRAGMENT_IMAGE2_TAG)
+			getFragmentManager().beginTransaction().add(R.id.fragment_image2, mFragmentImage2, FRAGMENT_IMAGE2_TAG)
 					.commit();
 		}
 
 		getFragmentManager().executePendingTransactions();
 
-		viewFragmentImage1 = findViewById(R.id.fragment_image1);
-		viewFragmentImage2 = findViewById(R.id.fragment_image2);
-		viewFragmentEdit = findViewById(R.id.fragment_edit);
-		viewLayoutMain = findViewById(android.R.id.content);
-		viewSeparatorBeforeEdit = findViewById(R.id.separator_before_edit);
-		viewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
+		mViewFragmentImage1 = findViewById(R.id.fragment_image1);
+		mViewFragmentImage2 = findViewById(R.id.fragment_image2);
+		mViewFragmentEdit = findViewById(R.id.fragment_edit);
+		mViewLayoutMain = findViewById(android.R.id.content);
+		mViewSeparatorBeforeEdit = findViewById(R.id.separator_before_edit);
+		mViewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
-		fragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
+		mFragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
 
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
 			int fragmentImage1Visibility = savedInstanceState.getInt("fragmentImage1Visibility");
 			int fragmentImage2Visibility = savedInstanceState.getInt("fragmentImage2Visibility");
 
-			viewFragmentEdit.setVisibility(fragmentEditVisibility);
-			viewFragmentImage1.setVisibility(fragmentImage1Visibility);
-			viewFragmentImage2.setVisibility(fragmentImage2Visibility);
+			mViewFragmentEdit.setVisibility(fragmentEditVisibility);
+			mViewFragmentImage1.setVisibility(fragmentImage1Visibility);
+			mViewFragmentImage2.setVisibility(fragmentImage2Visibility);
 
 			if (fragmentImage1Visibility == View.GONE) {
-				viewFragmentOther = viewFragmentImage1;
-				fragmentEditedImage = fragmentImage2;
+				mViewFragmentOther = mViewFragmentImage1;
+				mFragmentEditedImage = mFragmentImage2;
 			}
 			else {
-				viewFragmentOther = viewFragmentImage2;
-				fragmentEditedImage = fragmentImage1;
+				mViewFragmentOther = mViewFragmentImage2;
+				mFragmentEditedImage = mFragmentImage1;
 			}
 		}
 
@@ -165,20 +165,20 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	@Override
 	protected final void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("fragmentImage1Visibility", viewFragmentImage1.getVisibility());
-		outState.putInt("fragmentImage2Visibility", viewFragmentImage2.getVisibility());
+		outState.putInt("fragmentImage1Visibility", mViewFragmentImage1.getVisibility());
+		outState.putInt("fragmentImage2Visibility", mViewFragmentImage2.getVisibility());
 	}
 
 	@Override
 	public final void startEditComment(final DisplayImageFragment fragment, final String text) {
 		// Determine which image listFoldersFragment needs to be hidden
-		if (fragment == fragmentImage1) {
-			viewFragmentThis = viewFragmentImage1;
-			viewFragmentOther = viewFragmentImage2;
+		if (fragment == mFragmentImage1) {
+			mViewFragmentThis = mViewFragmentImage1;
+			mViewFragmentOther = mViewFragmentImage2;
 		}
 		else {
-			viewFragmentThis = viewFragmentImage2;
-			viewFragmentOther = viewFragmentImage1;
+			mViewFragmentThis = mViewFragmentImage2;
+			mViewFragmentOther = mViewFragmentImage1;
 		}
 
 		super.startEditComment(fragment, text);
@@ -187,23 +187,23 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	@Override
 	protected final void showEditFragment(final String text) {
 		super.showEditFragment(text);
-		viewFragmentOther.setVisibility(View.GONE);
-		if (viewFragmentThis == viewFragmentImage2) {
-			viewSeparatorBeforeEdit.setVisibility(View.GONE);
-			viewSeparatorAfterEdit.setVisibility(View.VISIBLE);
+		mViewFragmentOther.setVisibility(View.GONE);
+		if (mViewFragmentThis == mViewFragmentImage2) {
+			mViewSeparatorBeforeEdit.setVisibility(View.GONE);
+			mViewSeparatorAfterEdit.setVisibility(View.VISIBLE);
 		}
-		viewFragmentThis.findViewById(R.id.buttonComment).setEnabled(false);
+		mViewFragmentThis.findViewById(R.id.buttonComment).setEnabled(false);
 	}
 
 	@Override
 	protected final void hideEditFragment() {
 		super.hideEditFragment();
-		viewFragmentOther.setVisibility(View.VISIBLE);
-		if (viewFragmentThis == viewFragmentImage2) {
-			viewSeparatorBeforeEdit.setVisibility(View.VISIBLE);
-			viewSeparatorAfterEdit.setVisibility(View.GONE);
+		mViewFragmentOther.setVisibility(View.VISIBLE);
+		if (mViewFragmentThis == mViewFragmentImage2) {
+			mViewSeparatorBeforeEdit.setVisibility(View.VISIBLE);
+			mViewSeparatorAfterEdit.setVisibility(View.GONE);
 		}
-		viewFragmentThis.findViewById(R.id.buttonComment).setEnabled(true);
+		mViewFragmentThis.findViewById(R.id.buttonComment).setEnabled(true);
 	}
 
 	/**
@@ -211,17 +211,17 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	 */
 	@Override
 	protected final void initializeImages() {
-		fragmentImage1.initializeImages();
-		fragmentImage2.initializeImages();
+		mFragmentImage1.initializeImages();
+		mFragmentImage2.initializeImages();
 	}
 
 	// implemenation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
 	public final void requestLayout() {
-		viewLayoutMain.invalidate();
-		fragmentImage1.requestLayout();
-		fragmentImage2.requestLayout();
+		mViewLayoutMain.invalidate();
+		mFragmentImage1.requestLayout();
+		mFragmentImage2.requestLayout();
 	}
 
 }

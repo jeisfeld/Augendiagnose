@@ -57,12 +57,12 @@ public class XmpHandler {
 	/**
 	 * Store if the registry is prepared via prepareRegistry.
 	 */
-	private static boolean prepared = false;
+	private static boolean mIsPrepared = false;
 
 	/**
 	 * The XMP JpegMetadata stored in the handler.
 	 */
-	private XMPMeta xmpMeta;
+	private XMPMeta mXmpMeta;
 
 	/**
 	 * Create an XmpHandler from an XMP String.
@@ -75,7 +75,7 @@ public class XmpHandler {
 
 		if (xmpString == null) {
 			Log.w(Application.TAG, "xmpString is null ");
-			xmpMeta = XMPMetaFactory.create();
+			mXmpMeta = XMPMetaFactory.create();
 			return;
 		}
 
@@ -85,11 +85,11 @@ public class XmpHandler {
 			if (i > 0 && updatedXmpString.substring(i).startsWith("<?xpacket end")) {
 				updatedXmpString = updatedXmpString.substring(0, i);
 			}
-			xmpMeta = XMPMetaFactory.parseFromString(updatedXmpString);
+			mXmpMeta = XMPMetaFactory.parseFromString(updatedXmpString);
 		}
 		catch (Exception e) {
 			Log.w(Application.TAG, "Error when parsing XMP Data ", e);
-			xmpMeta = XMPMetaFactory.create();
+			mXmpMeta = XMPMetaFactory.create();
 		}
 	}
 
@@ -97,7 +97,7 @@ public class XmpHandler {
 	 * Add namespaces to the registry.
 	 */
 	private static void prepareRegistry() {
-		if (!prepared) {
+		if (!mIsPrepared) {
 			XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
 			try {
 				registry.registerNamespace(NS_JE, "je:");
@@ -107,7 +107,7 @@ public class XmpHandler {
 				registry.registerNamespace(NS_MPREG, "MPReg:");
 				registry.registerNamespace(NS_DC, "dc:");
 				registry.registerNamespace(NS_EXIF, "exif:");
-				prepared = true;
+				mIsPrepared = true;
 			}
 			catch (XMPException e) {
 				Log.e(Application.TAG, "Exception while preparing XMP registry", e);
@@ -124,7 +124,7 @@ public class XmpHandler {
 	 */
 	public final String getJeItem(final String item) {
 		try {
-			return xmpMeta.getPropertyString(NS_JE, item);
+			return mXmpMeta.getPropertyString(NS_JE, item);
 		}
 		catch (Exception e) {
 			return null;
@@ -140,7 +140,7 @@ public class XmpHandler {
 	 */
 	public final Date getJeDate(final String item) {
 		try {
-			XMPDateTime dateTime = xmpMeta.getPropertyDate(NS_JE, item);
+			XMPDateTime dateTime = mXmpMeta.getPropertyDate(NS_JE, item);
 			return dateTime.getCalendar().getTime();
 		}
 		catch (Exception e) {
@@ -157,7 +157,7 @@ public class XmpHandler {
 	 */
 	private String getDcItem(final String item) {
 		try {
-			return xmpMeta.getArrayItem(NS_DC, item, 1).getValue();
+			return mXmpMeta.getArrayItem(NS_DC, item, 1).getValue();
 		}
 		catch (Exception e) {
 			return null;
@@ -198,7 +198,7 @@ public class XmpHandler {
 	 */
 	public final String getUserComment() {
 		try {
-			return xmpMeta.getArrayItem(NS_EXIF, USER_COMMENT, 1).getValue();
+			return mXmpMeta.getArrayItem(NS_EXIF, USER_COMMENT, 1).getValue();
 		}
 		catch (Exception e) {
 			return null;
@@ -218,7 +218,7 @@ public class XmpHandler {
 			// String path = "RegionInfo"
 			// + XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1);
 
-			return xmpMeta.getPropertyString(NS_MP2, path);
+			return mXmpMeta.getPropertyString(NS_MP2, path);
 		}
 		catch (Exception e) {
 			return null;
@@ -231,7 +231,7 @@ public class XmpHandler {
 	 * @return a dump of the XMP object.
 	 */
 	public final String dumpObject() {
-		return xmpMeta.dumpObject();
+		return mXmpMeta.dumpObject();
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class XmpHandler {
 	 */
 	public final void setJeItem(final String item, final String value) throws XMPException {
 		if (value != null) {
-			xmpMeta.setProperty(NS_JE, item, value);
+			mXmpMeta.setProperty(NS_JE, item, value);
 		}
 		else {
 			removeJeItem(item);
@@ -268,7 +268,7 @@ public class XmpHandler {
 			Calendar calendar = new GregorianCalendar();
 			calendar.setTime(date);
 			XMPDateTime xmpDate = XMPDateTimeFactory.createFromCalendar(calendar);
-			xmpMeta.setPropertyDate(NS_JE, item, xmpDate);
+			mXmpMeta.setPropertyDate(NS_JE, item, xmpDate);
 		}
 	}
 
@@ -281,7 +281,7 @@ public class XmpHandler {
 	 *             thrown in case of issues with XMP handling.
 	 */
 	public final void removeJeItem(final String item) throws XMPException {
-		xmpMeta.deleteProperty(NS_JE, item);
+		mXmpMeta.deleteProperty(NS_JE, item);
 	}
 
 	/**
@@ -296,11 +296,11 @@ public class XmpHandler {
 	 */
 	private void setDcItem(final String item, final String value) throws XMPException {
 		if (value != null) {
-			if (xmpMeta.doesArrayItemExist(NS_DC, item, 1)) {
-				xmpMeta.setArrayItem(NS_DC, item, 1, value);
+			if (mXmpMeta.doesArrayItemExist(NS_DC, item, 1)) {
+				mXmpMeta.setArrayItem(NS_DC, item, 1, value);
 			}
 			else {
-				xmpMeta.appendArrayItem(NS_DC, item, new PropertyOptions().setArray(true), value, null);
+				mXmpMeta.appendArrayItem(NS_DC, item, new PropertyOptions().setArray(true), value, null);
 			}
 		}
 	}
@@ -351,11 +351,11 @@ public class XmpHandler {
 	 */
 	public final void setUserComment(final String userComment) throws XMPException {
 		if (userComment != null) {
-			if (xmpMeta.doesArrayItemExist(NS_EXIF, USER_COMMENT, 1)) {
-				xmpMeta.setArrayItem(NS_EXIF, USER_COMMENT, 1, userComment);
+			if (mXmpMeta.doesArrayItemExist(NS_EXIF, USER_COMMENT, 1)) {
+				mXmpMeta.setArrayItem(NS_EXIF, USER_COMMENT, 1, userComment);
 			}
 			else {
-				xmpMeta.appendArrayItem(NS_EXIF, USER_COMMENT, new PropertyOptions().setArray(true), userComment, null);
+				mXmpMeta.appendArrayItem(NS_EXIF, USER_COMMENT, new PropertyOptions().setArray(true), userComment, null);
 			}
 		}
 	}
@@ -375,11 +375,11 @@ public class XmpHandler {
 					+ XMPPathFactory.composeStructFieldPath(NS_MPREG, "PersonDisplayName");
 			String path1 = "RegionInfo" + XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions");
 
-			if (!xmpMeta.doesArrayItemExist(NS_MP2, path1, 1)) {
-				xmpMeta.appendArrayItem(NS_MP2, path1, new PropertyOptions().setArray(true), null,
+			if (!mXmpMeta.doesArrayItemExist(NS_MP2, path1, 1)) {
+				mXmpMeta.appendArrayItem(NS_MP2, path1, new PropertyOptions().setArray(true), null,
 						new PropertyOptions().setStruct(true));
 			}
-			xmpMeta.setProperty(NS_MP2, path, name);
+			mXmpMeta.setProperty(NS_MP2, path, name);
 		}
 	}
 
@@ -391,7 +391,7 @@ public class XmpHandler {
 	 *             thrown in case of issues with XMP handling.
 	 */
 	public final String getXmpString() throws XMPException {
-		return XMPMetaFactory.serializeToString(xmpMeta, null);
+		return XMPMetaFactory.serializeToString(mXmpMeta, null);
 	}
 
 }

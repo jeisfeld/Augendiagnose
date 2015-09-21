@@ -10,20 +10,20 @@ import javafx.scene.image.ImageView
 import javafx.scene.image.Image
 
 component Main controlledby MainController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	VBox id mainPane {
+	VBox id mMainPane {
 		StackPane {
 			alignment : "CENTER_RIGHT",
 			children : [
 				include fxml.Menu as menuBar,
-				HBox id menuButtons {
+				HBox id mMenuButtons {
 					maxWidth : 0,
-					ImageView id imageSave {
+					ImageView id mImageSave {
 						image : Image {
 							url : location "img/save.png"
 						},
 						visible : false
 					},
-					Button id closeButton {
+					Button id mCloseButton {
 						styleClass : "imageButton",
 						visible : false,
 						graphic : ImageView {
@@ -35,6 +35,6 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 				}
 			]
 		},
-		StackPane id body
+		StackPane id mBody
 	}
 }

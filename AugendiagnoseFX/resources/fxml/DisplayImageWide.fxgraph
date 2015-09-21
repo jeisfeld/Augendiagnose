@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox
 
 component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	define ToggleGroup id overlayGroup
-	GridPane id displayImage {
+	GridPane id mDisplayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",
 
@@ -29,11 +29,11 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			ColumnConstraints {
 				hgrow : "SOMETIMES"
 			},
-			ColumnConstraints id overlayConstraints {
+			ColumnConstraints id mOverlayConstraints {
 				hgrow : "NEVER",
 				minWidth : 75
 			},
-			ColumnConstraints id commentConstraints {
+			ColumnConstraints id mCommentConstraints {
 				hgrow : "SOMETIMES",
 				percentWidth : 20
 			}
@@ -43,7 +43,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				vgrow : "SOMETIMES"
 			}
 		],
-		OverlayImageView id displayImageView {
+		OverlayImageView id mDisplayImageView {
 			static columnIndex : 0,
 			static rowIndex : 0,
 			static halignment : "CENTER",
@@ -74,7 +74,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				]
 			}
 		},
-		GridPane id overlayPane {
+		GridPane id mOverlayPane {
 			static columnIndex : 1,
 			static rowIndex : 0,
 			vgap : 5,
@@ -88,7 +88,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					styleClass : "labelPanes",
 					text : rstring "label_overlays"
 				},
-				ToggleButton id btnOverlayCircle {
+				ToggleButton id mBtnOverlayCircle {
 					text : rstring "button_overlay_circle",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -98,7 +98,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					toggleGroup : idref overlayGroup
 				},
 				Separator,
-				ToggleButton id btnOverlay1 {
+				ToggleButton id mBtnOverlay1 {
 					text : rstring "button_overlay_1",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -107,7 +107,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay2 {
+				ToggleButton id mBtnOverlay2 {
 					text : rstring "button_overlay_2",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -116,7 +116,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay3 {
+				ToggleButton id mBtnOverlay3 {
 					text : rstring "button_overlay_3",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -125,7 +125,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay4 {
+				ToggleButton id mBtnOverlay4 {
 					text : rstring "button_overlay_4",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -134,7 +134,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay5 {
+				ToggleButton id mBtnOverlay5 {
 					text : rstring "button_overlay_5",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -143,7 +143,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay6 {
+				ToggleButton id mBtnOverlay6 {
 					text : rstring "button_overlay_6",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -152,7 +152,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
-				ToggleButton id btnOverlay7 {
+				ToggleButton id mBtnOverlay7 {
 					text : rstring "button_overlay_7",
 					styleClass : "toggleOverlay",
 					selected : false,
@@ -162,12 +162,12 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					toggleGroup : idref overlayGroup
 				},
 				Separator,
-				ColorPicker id colorPicker {
+				ColorPicker id mColorPicker {
 					maxWidth : const Double#MAX_VALUE,
 					onAction : controllermethod onColorChanged
 				},
 				Separator,
-				ToggleButton id clarityButton {
+				ToggleButton id mClarityButton {
 					alignment : "CENTER",
 					maxWidth : const Double#MAX_VALUE,
 					onAction : controllermethod btnClarityPressed,
@@ -179,7 +179,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					toggleGroup : idref overlayGroup
 				},
 				Separator,
-				Button id fullScreenButton {
+				Button id mFullScreenButton {
 					alignment : "CENTER",
 					maxWidth : const Double#MAX_VALUE,
 					onAction : controllermethod displayInFullWindow,
@@ -190,7 +190,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					}
 				}
 			},
-			Slider id sliderBrightness {
+			Slider id mSliderBrightness {
 				static columnIndex : 0,
 				static rowIndex : 1,
 				static halignment : "CENTER",
@@ -198,7 +198,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static hgrow : "SOMETIMES",
 				orientation : "VERTICAL"
 			},
-			Slider id sliderContrast {
+			Slider id mSliderContrast {
 				static columnIndex : 1,
 				static rowIndex : 1,
 				static halignment : "CENTER",
@@ -223,7 +223,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				}
 			}
 		},
-		GridPane id commentPane {
+		GridPane id mCommentPane {
 			static columnIndex : 2,
 			static rowIndex : 0,
 			visible : true,
@@ -234,7 +234,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				styleClass : "labelPanes",
 				text : rstring "label_comment"
 			},
-			TextArea id txtImageComment {
+			TextArea id mTxtImageComment {
 				static columnIndex : 0,
 				static rowIndex : 1,
 				static vgrow : "SOMETIMES",
@@ -242,7 +242,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				editable : false,
 				wrapText : true
 			},
-			ToggleButton id btnEditComment {
+			ToggleButton id mBtnEditComment {
 				static columnIndex : 0,
 				static rowIndex : 2,
 				text : rstring "button_edit_comment",

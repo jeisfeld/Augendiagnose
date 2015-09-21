@@ -27,30 +27,30 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	/**
 	 * The fragment for editing the image comment.
 	 */
-	protected EditCommentFragment fragmentEdit;
+	protected EditCommentFragment mFragmentEdit;
 	/**
 	 * The fragment for displaying the image.
 	 */
-	protected DisplayImageFragment fragmentEditedImage;
+	protected DisplayImageFragment mFragmentEditedImage;
 
 	/**
 	 * The view for the edit fragment.
 	 */
-	protected View viewFragmentEdit;
+	protected View mViewFragmentEdit;
 	/**
 	 * The view for the main layout.
 	 */
-	protected View viewLayoutMain;
+	protected View mViewLayoutMain;
 
 	/**
 	 * The separator line after the edit field.
 	 */
-	protected View viewSeparatorAfterEdit;
+	protected View mViewSeparatorAfterEdit;
 
 	/**
 	 * The separator line before the edit field.
 	 */
-	protected View viewSeparatorBeforeEdit = null;
+	protected View mViewSeparatorBeforeEdit = null;
 
 	// PUBLIC_FIELDS:END
 
@@ -58,7 +58,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 * A field for storing the fragment which was triggering the context menu. (For implementation of
 	 * ContextMenuReferenceHoler).
 	 */
-	private Object contextMenuReference;
+	private Object mContextMenuReference;
 
 	/**
 	 * Initialize the fragment(s) with the images.
@@ -79,7 +79,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("fragmentEditVisibility", viewFragmentEdit.getVisibility());
+		outState.putInt("fragmentEditVisibility", mViewFragmentEdit.getVisibility());
 	}
 
 	/**
@@ -92,7 +92,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	// OVERRIDABLE
 	public void startEditComment(final DisplayImageFragment fragment, final String text) {
-		fragmentEditedImage = fragment;
+		mFragmentEditedImage = fragment;
 		showEditFragment(text);
 		requestLayout();
 	}
@@ -107,7 +107,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	public final void processUpdatedComment(final String text, final boolean success) {
 		if (success) {
-			fragmentEditedImage.storeComment(text);
+			mFragmentEditedImage.storeComment(text);
 		}
 
 		hideEditFragment();
@@ -123,15 +123,15 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	// OVERRIDABLE
 	protected void showEditFragment(final String text) {
 		// Do not create duplicate edit fragments
-		if (fragmentEdit == null) {
-			fragmentEdit = new EditCommentFragment();
-			fragmentEdit.setParameters(text);
+		if (mFragmentEdit == null) {
+			mFragmentEdit = new EditCommentFragment();
+			mFragmentEdit.setParameters(text);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_edit, fragmentEdit, FRAGMENT_EDIT_TAG).commit();
+			getFragmentManager().beginTransaction().add(R.id.fragment_edit, mFragmentEdit, FRAGMENT_EDIT_TAG).commit();
 			getFragmentManager().executePendingTransactions();
 		}
 
-		viewFragmentEdit.setVisibility(View.VISIBLE);
+		mViewFragmentEdit.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -139,12 +139,12 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	// OVERRIDABLE
 	protected void hideEditFragment() {
-		fragmentEdit.hideKeyboard();
-		getFragmentManager().beginTransaction().remove(fragmentEdit).commit();
+		mFragmentEdit.hideKeyboard();
+		getFragmentManager().beginTransaction().remove(mFragmentEdit).commit();
 		getFragmentManager().executePendingTransactions();
-		fragmentEdit = null;
+		mFragmentEdit = null;
 
-		viewFragmentEdit.setVisibility(View.GONE);
+		mViewFragmentEdit.setVisibility(View.GONE);
 	}
 
 	/**
@@ -168,7 +168,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	@Override
 	public final void setContextMenuReference(final Object o) {
-		contextMenuReference = o;
+		mContextMenuReference = o;
 	}
 
 	/*
@@ -176,7 +176,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	@Override
 	public final Object getContextMenuReference() {
-		return contextMenuReference;
+		return mContextMenuReference;
 	}
 
 	/**
@@ -185,7 +185,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 * @return true if the EditCommentFragment is active.
 	 */
 	public final boolean isEditingComment() {
-		return fragmentEdit != null;
+		return mFragmentEdit != null;
 	}
 
 }

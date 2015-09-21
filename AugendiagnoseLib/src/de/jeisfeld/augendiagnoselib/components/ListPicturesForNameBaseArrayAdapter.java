@@ -22,18 +22,18 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Keep up to 25 rows in memory before reusing views.
 	 */
-	private CacheRange cacheRange = new CacheRange(CACHE_SIZE);
+	private CacheRange mCacheRange = new CacheRange(CACHE_SIZE);
 
 	// PUBLIC_FIELDS:START
 	/**
 	 * A reference to the activity.
 	 */
-	protected final Activity activity;
+	protected final Activity mActivity;
 
 	/**
 	 * The list of eye photo pairs.
 	 */
-	protected EyePhotoPair[] eyePhotoPairs;
+	protected EyePhotoPair[] mEyePhotoPairs;
 
 	// PUBLIC_FIELDS:END
 
@@ -47,8 +47,8 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
-		this.activity = activity;
-		this.eyePhotoPairs = eyePhotoPairs;
+		this.mActivity = activity;
+		this.mEyePhotoPairs = eyePhotoPairs;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
-		this.activity = (Activity) context;
+		this.mActivity = (Activity) context;
 	}
 
 	/**
@@ -87,23 +87,23 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		View rowView;
 
 		// Reuse views if they are already created and in the cached range
-		if (convertView != null && cacheRange.isInRange(position)) {
+		if (convertView != null && mCacheRange.isInRange(position)) {
 			rowView = convertView;
 		}
 		else {
-			rowView = LayoutInflater.from(activity).inflate(getLayout(), parent, false);
-			cacheRange.putIntoRange(position);
+			rowView = LayoutInflater.from(mActivity).inflate(getLayout(), parent, false);
+			mCacheRange.putIntoRange(position);
 		}
 
 		final TextView textView = (TextView) rowView.findViewById(R.id.textPictureDate);
-		textView.setText(eyePhotoPairs[position].getDateDisplayString("dd.MM.yyyy"));
+		textView.setText(mEyePhotoPairs[position].getDateDisplayString("dd.MM.yyyy"));
 
 		// Fill pictures in separate thread, for performance reasons
 		final EyeImageView imageListRight = (EyeImageView) rowView.findViewById(R.id.imageListRight);
 		if (!imageListRight.isInitialized()) {
 			// Prevent duplicate initialization in case of multiple parallel calls - will happen in dialog
 			imageListRight.setInitialized();
-			imageListRight.setEyePhoto(activity, eyePhotoPairs[position].getRightEye(), new Runnable() {
+			imageListRight.setEyePhoto(mActivity, mEyePhotoPairs[position].getRightEye(), new Runnable() {
 				@Override
 				public void run() {
 					prepareViewForSelection(imageListRight);
@@ -113,7 +113,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		final EyeImageView imageListLeft = (EyeImageView) rowView.findViewById(R.id.imageListLeft);
 		if (!imageListLeft.isInitialized()) {
 			imageListLeft.setInitialized();
-			imageListLeft.setEyePhoto(activity, eyePhotoPairs[position].getLeftEye(), new Runnable() {
+			imageListLeft.setEyePhoto(mActivity, mEyePhotoPairs[position].getLeftEye(), new Runnable() {
 				@Override
 				public void run() {
 					prepareViewForSelection(imageListLeft);
@@ -130,7 +130,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 */
 	@Override
 	public final int getItemViewType(final int position) {
-		return position % cacheRange.length;
+		return position % mCacheRange.mLength;
 	}
 
 	@Override
@@ -139,11 +139,11 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		if (count == 0) {
 			return 1;
 		}
-		else if (count < cacheRange.length) {
+		else if (count < mCacheRange.mLength) {
 			return count;
 		}
 		else {
-			return cacheRange.length;
+			return mCacheRange.mLength;
 		}
 	}
 
@@ -154,11 +154,11 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		/**
 		 * Length of the cache.
 		 */
-		private int length;
+		private int mLength;
 		/**
 		 * Start position of the cache. Moves to ensure that the current pointer is always within the cache.
 		 */
-		private int start;
+		private int mStart;
 
 		/**
 		 * Initialize the cache with a given length.
@@ -167,8 +167,8 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 *            The length of the cache.
 		 */
 		public CacheRange(final int length) {
-			this.start = 0;
-			this.length = length;
+			this.mStart = 0;
+			this.mLength = length;
 		}
 
 		/**
@@ -179,12 +179,12 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 * @return True if the number is in the cache.
 		 */
 		public final boolean isInRange(final int n) {
-			return (start <= n) && (n < start + length);
+			return (mStart <= n) && (n < mStart + mLength);
 		}
 
 		@Override
 		public final String toString() {
-			return "[" + start + "," + (start + length - 1) + "]";
+			return "[" + mStart + "," + (mStart + mLength - 1) + "]";
 		}
 
 		/**
@@ -194,11 +194,11 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 *            The number to be pushed.
 		 */
 		public final void putIntoRange(final int n) {
-			if (n < start) {
-				start = n;
+			if (n < mStart) {
+				mStart = n;
 			}
-			else if (n >= start + length) {
-				start = n + 1 - length;
+			else if (n >= mStart + mLength) {
+				mStart = n + 1 - mLength;
 			}
 		}
 

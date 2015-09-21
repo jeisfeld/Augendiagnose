@@ -13,18 +13,18 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:id="mMainPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MainController">
 
 	<StackPane alignment="CENTER_RIGHT"> 
 		<children>
 			<fx:include fx:id="menuBar" source="/fxml/Menu.fxml" />
-			<HBox fx:id="menuButtons" maxWidth="0"> 
-				<ImageView fx:id="imageSave" visible="false"> 
+			<HBox fx:id="mMenuButtons" maxWidth="0"> 
+				<ImageView fx:id="mImageSave" visible="false"> 
 					<image>
 						<Image url="@img/save.png"/> 
 					</image>
 				</ImageView>
-				<Button fx:id="closeButton" styleClass="imageButton" visible="false"> 
+				<Button fx:id="mCloseButton" styleClass="imageButton" visible="false"> 
 					<graphic>
 						<ImageView> 
 							<image>
@@ -36,5 +36,5 @@
 			</HBox>
 		</children>
 	</StackPane>
-	<StackPane fx:id="body"/> 
+	<StackPane fx:id="mBody"/> 
 </VBox>
