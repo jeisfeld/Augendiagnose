@@ -18,6 +18,7 @@ import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCaptureSession.CaptureCallback;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -34,12 +35,10 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Size;
-import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
@@ -90,18 +89,6 @@ public class Camera2Handler implements CameraHandler {
 		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
 		this.mOnPictureTakenHandler = onPictureTakenHandler;
-	}
-
-	/**
-	 * Conversion from screen rotation to JPEG orientation.
-	 */
-	private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
-
-	static {
-		ORIENTATIONS.append(Surface.ROTATION_0, 90); // MAGIC_NUMBER
-		ORIENTATIONS.append(Surface.ROTATION_90, 0);
-		ORIENTATIONS.append(Surface.ROTATION_180, 270); // MAGIC_NUMBER
-		ORIENTATIONS.append(Surface.ROTATION_270, 180); // MAGIC_NUMBER
 	}
 
 	/**
@@ -160,6 +147,16 @@ public class Camera2Handler implements CameraHandler {
 	 * The {@link android.util.Size} of camera preview.
 	 */
 	private Size mPreviewSize;
+
+	/**
+	 * The surface displaying the preview.
+	 */
+	private Surface mSurface;
+
+	/**
+	 * The flashlight mode.
+	 */
+	private int mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
 
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
@@ -250,7 +247,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
 	 */
-	private CameraCaptureSession.CaptureCallback mCaptureCallback = new CameraCaptureSession.CaptureCallback() {
+	private CaptureCallback mCaptureCallback = new CaptureCallback() {
 
 		private void process(final CaptureResult result) {
 			switch (mState) {
@@ -274,6 +271,9 @@ public class Camera2Handler implements CameraHandler {
 						runPrecaptureSequence();
 					}
 				}
+				break;
+			case STATE_WAITING_UNLOCK:
+				unlockFocus();
 				break;
 			case STATE_WAITING_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
@@ -314,23 +314,6 @@ public class Camera2Handler implements CameraHandler {
 	};
 
 	/**
-	 * Shows a {@link Toast} on the UI thread.
-	 *
-	 * @param text
-	 *            The message to show
-	 */
-	private void showToast(final String text) {
-		if (mActivity != null) {
-			mActivity.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-	}
-
-	/**
 	 * Given {@code choices} of {@code Size}s supported by a camera, chooses the smallest one whose
 	 * width and height are at least as large as the respective requested values, and whose aspect
 	 * ratio matches with the specified value.
@@ -345,20 +328,30 @@ public class Camera2Handler implements CameraHandler {
 	 *            The aspect ratio
 	 * @return The optimal {@code Size}, or an arbitrary one if none were big enough
 	 */
-	private static Size chooseOptimalSize(final Size[] choices, final int width, final int height, final Size aspectRatio) {
+	private static Size chooseOptimalPreviewSize(final Size[] choices, final int width, final int height, final Size aspectRatio) {
 		// Collect the supported resolutions that are at least as big as the preview Surface
 		List<Size> bigEnough = new ArrayList<Size>();
+		Size biggest = null;
+
 		int w = aspectRatio.getWidth();
 		int h = aspectRatio.getHeight();
 		for (Size option : choices) {
-			if (option.getHeight() == option.getWidth() * h / w && option.getWidth() >= width && option.getHeight() >= height) {
-				bigEnough.add(option);
+			if (option.getHeight() * w == option.getWidth() * h) {
+				if (option.getHeight() >= height && option.getWidth() >= width) {
+					bigEnough.add(option);
+				}
+				if (biggest == null || option.getHeight() > biggest.getHeight()) {
+					biggest = option;
+				}
 			}
 		}
 
 		// Pick the smallest of those, assuming we found any
 		if (bigEnough.size() > 0) {
-			return Collections.min(bigEnough, new CompareSizesByArea());
+			return Collections.min(bigEnough, new CompareSizesBySmallestSide());
+		}
+		else if (biggest != null) {
+			return biggest;
 		}
 		else {
 			Log.e(TAG, "Couldn't find any suitable preview size");
@@ -368,11 +361,12 @@ public class Camera2Handler implements CameraHandler {
 
 	@Override
 	public final void startPreview() {
-		startBackgroundThread();
 		if (mIsInPreview) {
-			unlockFocus();
+			reconfigureCamera();
 		}
 		else {
+			startBackgroundThread();
+
 			if (mTextureView.isAvailable()) {
 				openCamera(mTextureView.getWidth(), mTextureView.getHeight());
 			}
@@ -418,14 +412,14 @@ public class Camera2Handler implements CameraHandler {
 				// For still image captures, we use the largest available size.
 				Size largest = Collections.max(
 						Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
-						new CompareSizesByArea());
+						new CompareSizesBySmallestSide());
 				mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(), ImageFormat.JPEG, /* maxImages */2);
 				mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
 				// Danger, W.R.! Attempting to use too large a preview size could exceed the camera
 				// bus' bandwidth limitation, resulting in gorgeous previews but the storage of
 				// garbage capture data.
-				mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
+				mPreviewSize = chooseOptimalPreviewSize(map.getOutputSizes(SurfaceTexture.class),
 						width, height, largest);
 
 				// Resize frame to match aspect ratio
@@ -522,46 +516,34 @@ public class Camera2Handler implements CameraHandler {
 			texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
 
 			// This is the output Surface we need to start preview.
-			Surface surface = new Surface(texture);
-
-			// We set up a CaptureRequest.Builder with the output Surface.
-			mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-			mPreviewRequestBuilder.addTarget(surface);
+			mSurface = new Surface(texture);
 
 			// Here, we create a CameraCaptureSession for camera preview.
-			mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
+			mCameraDevice.createCaptureSession(Arrays.asList(mSurface, mImageReader.getSurface()),
 					new CameraCaptureSession.StateCallback() {
 
 						@Override
 						public void onConfigured(@NonNull final CameraCaptureSession cameraCaptureSession) {
 							// The camera is already closed
-							if (null == mCameraDevice) {
+							if (mCameraDevice == null) {
 								return;
 							}
 
 							// When the session is ready, we start displaying the preview.
 							mCaptureSession = cameraCaptureSession;
-							try {
-								// Auto focus should be continuous for camera preview.
-								mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-										CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-								// Flash is automatically enabled when necessary.
-								mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-										CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 
-								// Finally, we start displaying the camera preview.
-								mPreviewRequest = mPreviewRequestBuilder.build();
-								mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
-							}
-							catch (CameraAccessException e) {
-								e.printStackTrace();
-							}
+							doPreviewConfiguration();
 						}
 
 						@Override
 						public void onConfigureFailed(
 								@NonNull final CameraCaptureSession cameraCaptureSession) {
-							showToast("Failed");
+							mActivity.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera_display);
+								}
+							});
 						}
 					}, mBackgroundHandler);
 		}
@@ -663,16 +645,11 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.addTarget(mImageReader.getSurface());
 
 			// Use the same AE and AF modes as the preview.
-			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-					CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-
-			// Orientation
-			int rotation = mActivity.getWindowManager().getDefaultDisplay().getRotation();
-			captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
 
 			mCaptureSession.stopRepeating();
+			mState = CameraState.STATE_WAITING_UNLOCK;
 			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
 
 			mOnPictureTakenHandler.onTakingPicture();
@@ -689,10 +666,8 @@ public class Camera2Handler implements CameraHandler {
 	private void unlockFocus() {
 		try {
 			// Reset the auto-focus trigger
-			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
-					CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
+			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 			// After this, the camera will go back to the normal state of preview.
 			mState = CameraState.STATE_PREVIEW;
@@ -733,17 +708,92 @@ public class Camera2Handler implements CameraHandler {
 
 	@Override
 	public final void setFlashlightMode(final FlashMode flashlightMode) {
-		// TODO implement flash
+		if (flashlightMode == null) {
+			mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+		}
+		else {
+			switch (flashlightMode) {
+			case OFF:
+				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				break;
+			case ON:
+				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
+				break;
+			case TORCH:
+				// TODO
+				break;
+			default:
+				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				break;
+			}
+		}
+
+		if (mCameraDevice == null) {
+			return;
+		}
+
+		reconfigureCamera();
+	}
+
+	/**
+	 * Reconfigure the camera with new flash and focus settings.
+	 */
+	private void reconfigureCamera() {
+		if (mCameraDevice != null) {
+			try {
+				mCaptureSession.stopRepeating();
+
+				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
+				mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
+
+				doPreviewConfiguration();
+			}
+			catch (CameraAccessException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Do the setting of flash and focus settings.
+	 */
+	private void doPreviewConfiguration() {
+		if (mCameraDevice != null) {
+			mState = CameraState.STATE_PREVIEW;
+			try {
+				// Need to recreate the complete request from scratch - reuse will fail.
+				mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+				mPreviewRequestBuilder.addTarget(mSurface);
+
+				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
+				mPreviewRequest = mPreviewRequestBuilder.build();
+				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
+			}
+			catch (CameraAccessException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
 	 * Compares two {@code Size}s based on their areas.
 	 */
-	static class CompareSizesByArea implements Comparator<Size> {
+	static class CompareSizesBySmallestSide implements Comparator<Size> {
 		@Override
 		public int compare(final Size lhs, final Size rhs) {
-			// We cast here to ensure the multiplications won't overflow
-			return Long.signum((long) lhs.getWidth() * lhs.getHeight() - (long) rhs.getWidth() * rhs.getHeight());
+			int leftSize = Math.min(lhs.getWidth(), lhs.getHeight());
+			int rightSize = Math.min(rhs.getWidth(), rhs.getHeight());
+
+			if (leftSize > rightSize) {
+				return 1;
+			}
+			else if (rightSize > leftSize) {
+				return -1;
+			}
+
+			// prefer landscape
+			return Integer.signum(lhs.getWidth() - lhs.getHeight());
 		}
 	}
 
@@ -755,10 +805,16 @@ public class Camera2Handler implements CameraHandler {
 		 * Camera state: Showing camera preview.
 		 */
 		STATE_PREVIEW,
+
 		/**
 		 * Camera state: Waiting for the focus to be locked.
 		 */
 		STATE_WAITING_LOCK,
+
+		/**
+		 * Camera state: Waiting for the focus to be locked.
+		 */
+		STATE_WAITING_UNLOCK,
 
 		/**
 		 * Camera state: Waiting for the exposure to be precapture state.

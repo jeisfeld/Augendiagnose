@@ -757,11 +757,11 @@ public class CameraActivity extends BaseActivity {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_torch);
 		}
 		if (mCurrentFlashlightMode != null) {
-			if (mCurrentAction == Action.TAKE_PHOTO) {
-				mCameraHandler.setFlashlightMode(mCurrentFlashlightMode);
+			if (mCurrentAction != Action.TAKE_PHOTO && mCurrentFlashlightMode == FlashMode.TORCH) {
+				mCameraHandler.setFlashlightMode(FlashMode.OFF);
 			}
 			else {
-				mCameraHandler.setFlashlightMode(FLASHLIGHT_MODES[0]);
+				mCameraHandler.setFlashlightMode(mCurrentFlashlightMode);
 			}
 		}
 	}
