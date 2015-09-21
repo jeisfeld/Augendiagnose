@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.SystemUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,12 +31,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
-import de.eisfeldj.augendiagnosefx.Application;
-import de.eisfeldj.augendiagnosefx.util.Logger;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
-import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
-import de.eisfeldj.augendiagnosefx.util.SystemUtil;
 
 /**
  * BaseController for the Preferences page.

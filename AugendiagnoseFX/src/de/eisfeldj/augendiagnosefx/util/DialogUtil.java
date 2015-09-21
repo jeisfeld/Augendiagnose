@@ -1,5 +1,8 @@
 package de.eisfeldj.augendiagnosefx.util;
 
+import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.DialogController;
+import de.eisfeldj.augendiagnosefx.controller.MessageDialogController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,9 +10,6 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import de.eisfeldj.augendiagnosefx.Application;
-import de.eisfeldj.augendiagnosefx.controller.DialogController;
-import de.eisfeldj.augendiagnosefx.controller.MessageDialogController;
 
 /**
  * Helper class to show standard dialogs.

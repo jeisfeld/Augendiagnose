@@ -1,5 +1,17 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.BaseController;
+import de.eisfeldj.augendiagnosefx.controller.Controller;
+import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
+import de.eisfeldj.augendiagnosefx.controller.MainController;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,18 +25,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import de.eisfeldj.augendiagnosefx.Application;
-import de.eisfeldj.augendiagnosefx.controller.BaseController;
-import de.eisfeldj.augendiagnosefx.controller.Controller;
-import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
-import de.eisfeldj.augendiagnosefx.controller.MainController;
-import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
-import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Special GridPane for displaying a pair of eye photos.
@@ -128,8 +128,8 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				String fxmlName =
 						!MainController.getInstance().isSplitPane()
 								&& Application.getScene().getWidth() > Application.getScene().getHeight()
-								? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
-								: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;
+										? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
+										: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;
 				DisplayImageController controller =
 						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, mParentController.getPaneIndex(),
 								true);

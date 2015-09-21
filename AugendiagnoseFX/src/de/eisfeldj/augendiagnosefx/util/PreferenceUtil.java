@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
-import javafx.scene.paint.Color;
 import de.eisfeldj.augendiagnosefx.Application;
+import javafx.scene.paint.Color;
 
 /**
  * Utility class to get and store preferences.

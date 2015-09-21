@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
+import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
+import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,13 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
-import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
-import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
-import de.eisfeldj.augendiagnosefx.util.Logger;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 /**
  * The controller of the main window.

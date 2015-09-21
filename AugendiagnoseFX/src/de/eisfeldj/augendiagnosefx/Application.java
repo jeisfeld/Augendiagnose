@@ -6,12 +6,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
 
 import java.io.IOException;
 
-import javafx.application.HostServices;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
@@ -24,6 +18,12 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegSynchronizationUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javafx.application.HostServices;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Application class for starting the application.

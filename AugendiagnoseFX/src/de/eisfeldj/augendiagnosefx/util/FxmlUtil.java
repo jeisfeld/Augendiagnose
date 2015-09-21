@@ -2,6 +2,9 @@ package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.IOException;
 
+import de.eisfeldj.augendiagnosefx.controller.BaseController;
+import de.eisfeldj.augendiagnosefx.controller.Controller;
+import de.eisfeldj.augendiagnosefx.controller.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,9 +16,6 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import de.eisfeldj.augendiagnosefx.controller.BaseController;
-import de.eisfeldj.augendiagnosefx.controller.Controller;
-import de.eisfeldj.augendiagnosefx.controller.MainController;
 
 /**
  * Utility class for reading FXML files.

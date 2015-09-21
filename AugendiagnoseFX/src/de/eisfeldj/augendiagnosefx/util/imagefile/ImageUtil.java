@@ -4,6 +4,9 @@ import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFI
 
 import java.net.URL;
 
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,9 +15,6 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
 
 /**
  * Utility for handling images.

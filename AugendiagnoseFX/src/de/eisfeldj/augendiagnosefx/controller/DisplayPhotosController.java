@@ -17,6 +17,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
+import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,14 +39,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-import de.eisfeldj.augendiagnosefx.util.Logger;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
-import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 
 /**
  * BaseController for the "Display Photos" page.

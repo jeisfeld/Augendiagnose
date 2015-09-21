@@ -2,11 +2,11 @@ package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.util.HashMap;
 
-import javafx.application.Platform;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import javafx.application.Platform;
 
 /**
  * Utility class to help storing metadata in jpg files in a synchronized way, preventing to store the same file twice in

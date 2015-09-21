@@ -6,12 +6,12 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
-import javafx.scene.image.Image;
 import de.eisfeldj.augendiagnosefx.util.DateUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import javafx.scene.image.Image;
 
 /**
  * Utility class to handle an eye photo, in particular regarding personName policies.
