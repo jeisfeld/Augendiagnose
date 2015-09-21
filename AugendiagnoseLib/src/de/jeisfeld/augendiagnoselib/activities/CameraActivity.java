@@ -213,9 +213,9 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
+		// TODO: add proper logic to distinguish between camera interfaces
 		boolean useCamera2 = false;
 
-		// TODO: add proper logic to distinguish between camera interfaces
 		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
 		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
 		if (useCamera2) {
@@ -302,11 +302,23 @@ public class CameraActivity extends BaseActivity {
 	@Override
 	public final void onDestroy() {
 		cleanupTempFolder();
-		mCameraHandler.stopPreview();
+		// mCameraHandler.stopPreview();
 		if (mOrientationManager != null) {
 			mOrientationManager.disable();
 		}
 		super.onDestroy();
+	}
+
+	@Override
+	public final void onResume() {
+		super.onResume();
+		mCameraHandler.startPreview();
+	}
+
+	@Override
+	public final void onPause() {
+		mCameraHandler.stopPreview();
+		super.onPause();
 	}
 
 	@Override

@@ -154,9 +154,14 @@ public class Camera2Handler implements CameraHandler {
 	private Surface mSurface;
 
 	/**
-	 * The flashlight mode.
+	 * The autoexposure mode.
 	 */
-	private int mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+	private int mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+
+	/**
+	 * The flash mode.
+	 */
+	private int mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
 
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
@@ -646,7 +651,8 @@ public class Camera2Handler implements CameraHandler {
 
 			// Use the same AE and AF modes as the preview.
 			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
+			captureBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
+			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 
 			mCaptureSession.stopRepeating();
 			mState = CameraState.STATE_WAITING_UNLOCK;
@@ -667,7 +673,6 @@ public class Camera2Handler implements CameraHandler {
 		try {
 			// Reset the auto-focus trigger
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 			// After this, the camera will go back to the normal state of preview.
 			mState = CameraState.STATE_PREVIEW;
@@ -709,21 +714,25 @@ public class Camera2Handler implements CameraHandler {
 	@Override
 	public final void setFlashlightMode(final FlashMode flashlightMode) {
 		if (flashlightMode == null) {
-			mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+			mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
 		}
 		else {
 			switch (flashlightMode) {
 			case OFF:
-				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
 				break;
 			case ON:
-				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
+				mCurrentFlashMode = CaptureRequest.FLASH_MODE_SINGLE;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
 				break;
 			case TORCH:
-				// TODO
+				mCurrentFlashMode = CaptureRequest.FLASH_MODE_TORCH;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				break;
 			default:
-				mCurrentFlashlightMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
 				break;
 			}
 		}
@@ -766,7 +775,8 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequestBuilder.addTarget(mSurface);
 
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentFlashlightMode);
+				mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
+				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}

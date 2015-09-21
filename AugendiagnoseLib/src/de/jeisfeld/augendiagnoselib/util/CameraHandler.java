@@ -15,12 +15,12 @@ public interface CameraHandler {
 	void setFlashlightMode(final FlashMode flashlightMode);
 
 	/**
-	 * Start the camera preview.
+	 * Start the camera preview. Should be idempotent.
 	 */
 	void startPreview();
 
 	/**
-	 * Stop the camera preview.
+	 * Stop the camera preview. Should be idempotent.
 	 */
 	void stopPreview();
 
