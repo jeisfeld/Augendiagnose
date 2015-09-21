@@ -313,7 +313,6 @@ public class CameraActivity extends BaseActivity {
 						// get an image from the camera
 						captureButton.setEnabled(false);
 						mCameraHandler.takePicture();
-						animateFlash();
 					}
 				});
 
@@ -795,6 +794,16 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private OnPictureTakenHandler mOnPictureTakenHandler = new OnPictureTakenHandler() {
 		@Override
+		public void onTakingPicture() {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					animateFlash();
+				}
+			});
+		}
+
+		@Override
 		public void onPictureTaken(final byte[] data) {
 			short exifAngle = getExifAngle();
 
@@ -844,6 +853,7 @@ public class CameraActivity extends BaseActivity {
 				}
 			});
 		}
+
 	};
 
 	/**
@@ -929,6 +939,17 @@ public class CameraActivity extends BaseActivity {
 	 * Handler called after the picture is taken.
 	 */
 	public interface OnPictureTakenHandler {
+		/**
+		 * Callback called just when the picture is taken.
+		 */
+		void onTakingPicture();
+
+		/**
+		 * Callback called after the picture is taken.
+		 *
+		 * @param data
+		 *            The image data.
+		 */
 		void onPictureTaken(byte[] data);
 	}
 

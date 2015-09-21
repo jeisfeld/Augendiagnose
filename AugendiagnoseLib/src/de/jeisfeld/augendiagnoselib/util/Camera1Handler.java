@@ -243,6 +243,7 @@ public class Camera1Handler implements CameraHandler {
 	@Override
 	public final void takePicture() {
 		mCamera.takePicture(null, null, mPhotoCallback);
+		mOnPictureTakenHandler.onTakingPicture();
 	}
 
 	/**

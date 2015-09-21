@@ -674,6 +674,8 @@ public class Camera2Handler implements CameraHandler {
 
 			mCaptureSession.stopRepeating();
 			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
+
+			mOnPictureTakenHandler.onTakingPicture();
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
