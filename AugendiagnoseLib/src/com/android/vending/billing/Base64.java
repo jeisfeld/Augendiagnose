@@ -4,7 +4,8 @@ import android.annotation.SuppressLint;
 
 // This code was converted from code at http://iharder.sourceforge.net/base64/
 // Lots of extraneous features were removed.
-/* The original code said:
+/*
+ * The original code said:
  * <p>
  * I am placing this code in the Public Domain. Do with it as you will.
  * This software comes with no guarantees or warranties but with
@@ -15,7 +16,9 @@ import android.annotation.SuppressLint;
  * </p>
  *
  * @author Robert Harder
+ *
  * @author rharder@usa.net
+ *
  * @version 1.3
  */
 
@@ -23,8 +26,7 @@ import android.annotation.SuppressLint;
  * Base64 converter class. This code is not a complete MIME encoder; it simply converts binary data to base64 data and
  * back.
  *
- * <p>
- * Note {@link CharBase64} is a GWT-compatible implementation of this class.
+ * <p>Note {@link CharBase64} is a GWT-compatible implementation of this class.
  */
 public final class Base64 {
 
@@ -46,37 +48,37 @@ public final class Base64 {
 	 * The 64 valid Base64 values.
 	 */
 	private static final byte[] ALPHABET =
-	{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F',
-			(byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
-			(byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
-			(byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
-			(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
-			(byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
-			(byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j',
-			(byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
-			(byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
-			(byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
-			(byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
-			(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8',
-			(byte) '9', (byte) '+', (byte) '/' };
+			{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F',
+					(byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
+					(byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
+					(byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
+					(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
+					(byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
+					(byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j',
+					(byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
+					(byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
+					(byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
+					(byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+					(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8',
+					(byte) '9', (byte) '+', (byte) '/' };
 
 	/**
 	 * The 64 valid web safe Base64 values.
 	 */
 	private static final byte[] WEBSAFE_ALPHABET =
-	{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F',
-			(byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
-			(byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
-			(byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
-			(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
-			(byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
-			(byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j',
-			(byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
-			(byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
-			(byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
-			(byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
-			(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8',
-			(byte) '9', (byte) '-', (byte) '_' };
+			{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F',
+					(byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
+					(byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
+					(byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
+					(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
+					(byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
+					(byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j',
+					(byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
+					(byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
+					(byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
+					(byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+					(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8',
+					(byte) '9', (byte) '-', (byte) '_' };
 
 	/**
 	 * Translates a Base64 value to either its 6-bit reconstruction value or a negative number indicating some other
@@ -116,28 +118,28 @@ public final class Base64 {
 
 	/** The web safe decodabet */
 	private static final byte[] WEBSAFE_DECODABET =
-	{ -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 0 - 8
-			-5, -5, // Whitespace: Tab and Linefeed
-			-9, -9, // Decimal 11 - 12
-			-5, // Whitespace: Carriage Return
-			-9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
-			-9, -9, -9, -9, -9, // Decimal 27 - 31
-			-5, // Whitespace: Space
-			-9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 44
-			62, // Dash '-' sign at decimal 45
-			-9, -9, // Decimal 46-47
-			52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
-			-9, -9, -9, // Decimal 58 - 60
-			-1, // Equals sign at decimal 61
-			-9, -9, -9, // Decimal 62 - 64
-			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
-			14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
-			-9, -9, -9, -9, // Decimal 91-94
-			63, // Underscore '_' at decimal 95
-			-9, // Decimal 96
-			26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
-			39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
-			-9, -9, -9, -9, -9 // Decimal 123 - 127
+			{ -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 0 - 8
+					-5, -5, // Whitespace: Tab and Linefeed
+					-9, -9, // Decimal 11 - 12
+					-5, // Whitespace: Carriage Return
+					-9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
+					-9, -9, -9, -9, -9, // Decimal 27 - 31
+					-5, // Whitespace: Space
+					-9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 44
+					62, // Dash '-' sign at decimal 45
+					-9, -9, // Decimal 46-47
+					52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
+					-9, -9, -9, // Decimal 58 - 60
+					-1, // Equals sign at decimal 61
+					-9, -9, -9, // Decimal 62 - 64
+					0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
+					14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
+					-9, -9, -9, -9, // Decimal 91-94
+					63, // Underscore '_' at decimal 95
+					-9, // Decimal 96
+					26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
+					39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
+					-9, -9, -9, -9, -9 // Decimal 123 - 127
 			/*
 			 * ,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 128 - 139 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, //
 			 * Decimal 140 - 152 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 153 - 165
@@ -147,7 +149,7 @@ public final class Base64 {
 			 * Decimal 218 - 230 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 231 - 243
 			 * -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9 // Decimal 244 - 255
 			 */
-	};
+			};
 
 	// Indicates white space in encoding
 	private static final byte WHITE_SPACE_ENC = -5;

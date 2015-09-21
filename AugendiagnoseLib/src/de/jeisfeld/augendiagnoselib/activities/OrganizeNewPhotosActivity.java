@@ -52,8 +52,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming)
  *
- * <p>
- * The activity can be started either with a folder name, or with an array of file names.
+ * <p>The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends BaseActivity {
 

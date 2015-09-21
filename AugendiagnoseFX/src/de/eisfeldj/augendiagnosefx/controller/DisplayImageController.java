@@ -101,8 +101,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	/**
 	 * The button for displaying the view in full resolution.
 	 *
-	 * <p>
-	 * This is a ToggleButton, as it is incompatible with overlays.
+	 * <p>This is a ToggleButton, as it is incompatible with overlays.
 	 */
 	@FXML
 	private ToggleButton mClarityButton;

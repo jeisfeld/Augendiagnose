@@ -1,5 +1,11 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
+import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,12 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
-import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 /**
  * Pane containing an image that can be resized.
@@ -27,8 +27,7 @@ public class SizableImageView extends ScrollPane {
 	/**
 	 * The zoom factor to be applied for each zoom event.
 	 *
-	 * <p>
-	 * (480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
+	 * <p>(480th root of 2 means that 12 wheel turns of 40 will result in size factor 2.)
 	 */
 	private static final double ZOOM_FACTOR = 1.0014450997779993488675056142818;
 
@@ -146,11 +145,11 @@ public class SizableImageView extends ScrollPane {
 
 				// New scrollbar positions keeping the mouse position.
 				double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
-				? ((mouseXPosition * targetWidth) - mMouseXProperty.get()) / postScrollXFactor
+						? ((mouseXPosition * targetWidth) - mMouseXProperty.get()) / postScrollXFactor
 						: oldHvalue;
 				double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
-				? ((mouseYPosition * targetHeight) - mMouseYProperty.get() + verticalCorrection)
-						/ postScrollYFactor
+						? ((mouseYPosition * targetHeight) - mMouseYProperty.get() + verticalCorrection)
+								/ postScrollYFactor
 						: oldVvalue;
 
 				mImageView.setFitWidth(targetWidth);

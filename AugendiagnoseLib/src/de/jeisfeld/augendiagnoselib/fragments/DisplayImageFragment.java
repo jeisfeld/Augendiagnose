@@ -598,8 +598,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Get the value indicating if utilities should be shown.
 	 *
-	 * <p>
-	 * 1 means: don't show. 2 means: show only on full screen. 3 means: show always.
+	 * <p>1 means: don't show. 2 means: show only on full screen. 3 means: show always.
 	 *
 	 * @return The value indicating if utilities should be shown.
 	 */

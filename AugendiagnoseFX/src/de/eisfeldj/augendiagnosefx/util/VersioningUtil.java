@@ -12,11 +12,11 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javafx.application.Platform;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javafx.application.Platform;
 
 /**
  * Utility class for handling the download of new application version.
@@ -103,7 +103,7 @@ public final class VersioningUtil {
 			public void run() {
 				Logger.info("Downloading update to file " + tempJarFile.getAbsolutePath());
 				try (InputStream input = connection.getInputStream();
-						OutputStream output = new FileOutputStream(tempJarFile);) {
+						OutputStream output = new FileOutputStream(tempJarFile)) {
 					long totalSize = connection.getContentLengthLong();
 					long currentSize = 0;
 

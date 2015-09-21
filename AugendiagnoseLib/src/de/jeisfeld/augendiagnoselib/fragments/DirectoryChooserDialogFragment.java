@@ -37,8 +37,7 @@ import de.jeisfeld.augendiagnoselib.R;
 /**
  * Class to present a dialog for selection of a directory.
  *
- * <p>
- * Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
+ * <p>Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
