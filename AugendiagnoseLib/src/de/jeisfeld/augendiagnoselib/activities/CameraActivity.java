@@ -511,6 +511,7 @@ public class CameraActivity extends BaseActivity {
 		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
 		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
 		Button buttonOverlayCircle = (Button) findViewById(R.id.buttonCameraOverlayCircle);
+		ImageView imageViewReview = (ImageView) findViewById(R.id.camera_review);
 
 		switch (action) {
 		case TAKE_PHOTO:
@@ -524,6 +525,9 @@ public class CameraActivity extends BaseActivity {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
 			buttonOverlayCircle.setEnabled(true);
+			imageViewReview.setVisibility(View.GONE);
+			cameraThumbLeft.setEnabled(true);
+			cameraThumbRight.setEnabled(true);
 
 			if (rightLeft == RIGHT) {
 				cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background_highlighted);
@@ -541,6 +545,9 @@ public class CameraActivity extends BaseActivity {
 			buttonDecline.setVisibility(View.VISIBLE);
 			buttonViewImages.setVisibility(View.INVISIBLE);
 			buttonOverlayCircle.setEnabled(false);
+			imageViewReview.setVisibility(View.VISIBLE);
+			cameraThumbLeft.setEnabled(false);
+			cameraThumbRight.setEnabled(false);
 			updateFlashlight();
 			break;
 		case RE_TAKE_PHOTO:
@@ -551,6 +558,9 @@ public class CameraActivity extends BaseActivity {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
 			buttonOverlayCircle.setEnabled(true);
+			imageViewReview.setVisibility(View.GONE);
+			cameraThumbLeft.setEnabled(true);
+			cameraThumbRight.setEnabled(true);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
 			cameraThumbRight.setBackgroundResource(R.drawable.camera_thumb_background);
 			updateFlashlight();
@@ -681,6 +691,20 @@ public class CameraActivity extends BaseActivity {
 		else {
 			imageView.setImageResource(rightLeft == RIGHT ? R.drawable.icon_eye_right : R.drawable.icon_eye_left);
 		}
+	}
+
+	/**
+	 * Show the captured image for preview as fixed image.
+	 *
+	 * @param data
+	 *            The data representing the image.
+	 */
+	private void setReviewImage(final byte[] data) {
+		ImageView imageView = (ImageView) findViewById(R.id.camera_review);
+
+		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
+
+		imageView.setImageBitmap(bitmap);
 	}
 
 	/**
@@ -849,6 +873,7 @@ public class CameraActivity extends BaseActivity {
 				@Override
 				public void run() {
 					setThumbImage(data);
+					setReviewImage(data);
 					setAction(CHECK_PHOTO, mCurrentRightLeft);
 				}
 			});
