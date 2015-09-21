@@ -797,7 +797,7 @@ public class CameraActivity extends BaseActivity {
 		@Override
 		public void onPictureTaken(final byte[] data) {
 			short exifAngle = getExifAngle();
-			setThumbImage(data);
+
 			File imageFile = FileUtil.getTempJpegFile();
 
 			JpegMetadata metadata = null;
@@ -836,8 +836,13 @@ public class CameraActivity extends BaseActivity {
 			// save photo
 			new SavePhotoTask(data, mCurrentRightLeft, metadata).execute(imageFile);
 
-			// go to next step
-			setAction(CHECK_PHOTO, mCurrentRightLeft);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					setThumbImage(data);
+					setAction(CHECK_PHOTO, mCurrentRightLeft);
+				}
+			});
 		}
 	};
 

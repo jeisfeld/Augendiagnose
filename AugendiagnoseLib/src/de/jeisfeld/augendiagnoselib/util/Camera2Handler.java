@@ -29,6 +29,8 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Size;
@@ -183,6 +185,16 @@ public class Camera2Handler implements CameraHandler {
 	 * The {@link android.util.Size} of camera preview.
 	 */
 	private Size mPreviewSize;
+
+	/**
+	 * An additional thread for running tasks that shouldn't block the UI.
+	 */
+	private HandlerThread mBackgroundThread;
+
+	/**
+	 * A {@link Handler} for running tasks in the background.
+	 */
+	private Handler mBackgroundHandler;
 
 	/**
 	 * {@link CameraDevice.StateCallback} is called when {@link CameraDevice} changes its state.
@@ -381,6 +393,7 @@ public class Camera2Handler implements CameraHandler {
 
 	@Override
 	public final void startPreview() {
+		startBackgroundThread();
 		if (mIsInPreview) {
 			unlockFocus();
 		}
@@ -398,6 +411,7 @@ public class Camera2Handler implements CameraHandler {
 	public final void stopPreview() {
 		mIsInPreview = false;
 		closeCamera();
+		stopBackgroundThread();
 	}
 
 	/**
@@ -431,7 +445,7 @@ public class Camera2Handler implements CameraHandler {
 						Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
 						new CompareSizesByArea());
 				mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(), ImageFormat.JPEG, /* maxImages */2);
-				mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, null);
+				mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
 				// Danger, W.R.! Attempting to use too large a preview size could exceed the camera
 				// bus' bandwidth limitation, resulting in gorgeous previews but the storage of
@@ -484,7 +498,7 @@ public class Camera2Handler implements CameraHandler {
 			if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) { // MAGIC_NUMBER
 				throw new RuntimeException("Time out waiting to lock camera opening.");
 			}
-			manager.openCamera(mCameraId, mStateCallback, null);
+			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
@@ -562,7 +576,7 @@ public class Camera2Handler implements CameraHandler {
 
 								// Finally, we start displaying the camera preview.
 								mPreviewRequest = mPreviewRequestBuilder.build();
-								mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, null);
+								mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 							}
 							catch (CameraAccessException e) {
 								e.printStackTrace();
@@ -574,7 +588,7 @@ public class Camera2Handler implements CameraHandler {
 								@NonNull final CameraCaptureSession cameraCaptureSession) {
 							showToast("Failed");
 						}
-					}, null);
+					}, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
@@ -634,7 +648,7 @@ public class Camera2Handler implements CameraHandler {
 			// Tell #mCaptureCallback to wait for the lock.
 			mState = STATE_WAITING_LOCK;
 
-			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
+			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
@@ -652,7 +666,7 @@ public class Camera2Handler implements CameraHandler {
 					CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_START);
 			// Tell #mCaptureCallback to wait for the precapture sequence to be set.
 			mState = STATE_WAITING_PRECAPTURE;
-			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
+			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
@@ -684,7 +698,7 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
 			mCaptureSession.stopRepeating();
-			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, null);
+			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
@@ -702,13 +716,39 @@ public class Camera2Handler implements CameraHandler {
 					CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
 					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
+			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 			// After this, the camera will go back to the normal state of preview.
 			mState = STATE_PREVIEW;
-			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, null);
+			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Starts a background thread and its {@link Handler}.
+	 */
+	private void startBackgroundThread() {
+		mBackgroundThread = new HandlerThread("CameraBackground");
+		mBackgroundThread.start();
+		mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+	}
+
+	/**
+	 * Stops the background thread and its {@link Handler}.
+	 */
+	private void stopBackgroundThread() {
+		if (mBackgroundThread != null) {
+			mBackgroundThread.quitSafely();
+			try {
+				mBackgroundThread.join();
+				mBackgroundThread = null;
+				mBackgroundHandler = null;
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
