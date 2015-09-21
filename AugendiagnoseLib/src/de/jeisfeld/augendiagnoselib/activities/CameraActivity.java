@@ -27,6 +27,7 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
+import de.jeisfeld.augendiagnoselib.util.Camera2Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
@@ -211,9 +213,21 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
+		boolean useCamera2 = false;
+
 		// TODO: add proper logic to distinguish between camera interfaces
-		mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame),
-				(TextureView) findViewById(R.id.camera_preview), mOnPictureTakenHandler);
+		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
+		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
+		if (useCamera2) {
+			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
+			camera1View.setVisibility(View.GONE);
+			camera2View.setVisibility(View.VISIBLE);
+		}
+		else {
+			mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
+			camera1View.setVisibility(View.VISIBLE);
+			camera2View.setVisibility(View.GONE);
+		}
 
 		configureMainButtons();
 		configureConfigButtons();
@@ -888,7 +902,7 @@ public class CameraActivity extends BaseActivity {
 	 */
 
 	private float getDefaultOverlayScaleFactor() {
-		View surfaceView = findViewById(R.id.camera_preview);
+		View surfaceView = findViewById(R.id.camera_preview_frame);
 
 		int height = surfaceView.getHeight();
 		int width = surfaceView.getWidth();

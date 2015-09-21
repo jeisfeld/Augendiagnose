@@ -10,8 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical" >
 
+        <SurfaceView
+            android:id="@+id/camera1_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </SurfaceView>
+
         <TextureView
-            android:id="@+id/camera_preview"
+            android:id="@+id/camera2_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </TextureView>

@@ -2,13 +2,13 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
 import android.graphics.ImageFormat;
-import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.util.Log;
-import android.view.TextureView;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.Application;
@@ -63,9 +63,9 @@ public class Camera1Handler implements CameraHandler {
 	private FrameLayout mPreviewFrame;
 
 	/**
-	 * The view holding the preview.
+	 * The surface of the preview.
 	 */
-	private TextureView mTextureView;
+	private SurfaceHolder mPreviewHolder = null;
 
 	/**
 	 * The handler called when the picture is taken.
@@ -84,14 +84,15 @@ public class Camera1Handler implements CameraHandler {
 	 * @param onPictureTakenHandler
 	 *            The handler called when the picture is taken.
 	 */
-	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
+	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final SurfaceView preview,
 			final OnPictureTakenHandler onPictureTakenHandler) {
 		this.mActivity = activity;
 		this.mPreviewFrame = previewFrame;
-		this.mTextureView = preview;
 		this.mOnPictureTakenHandler = onPictureTakenHandler;
 
-		preview.setSurfaceTextureListener(mSurfaceTextureListener);
+		mPreviewHolder = preview.getHolder();
+		mPreviewHolder.addCallback(mSurfaceCallback);
+		mPreviewHolder.setKeepScreenOn(true);
 	}
 
 	@Override
@@ -136,9 +137,9 @@ public class Camera1Handler implements CameraHandler {
 	 * Initialize the camera.
 	 */
 	private void initPreview() {
-		if (mCamera != null && mIsSurfaceCreated && mTextureView.isAvailable()) {
+		if (mCamera != null && mPreviewHolder.getSurface() != null) {
 			try {
-				mCamera.setPreviewTexture(mTextureView.getSurfaceTexture());
+				mCamera.setPreviewDisplay(mPreviewHolder);
 			}
 			catch (Throwable t) {
 				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
@@ -249,10 +250,9 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The callback client for the preview.
 	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
-
+	private SurfaceHolder.Callback mSurfaceCallback = new SurfaceHolder.Callback() {
 		@Override
-		public void onSurfaceTextureAvailable(final SurfaceTexture texture, final int width, final int height) {
+		public void surfaceCreated(final SurfaceHolder holder) {
 			mIsSurfaceCreated = true;
 			try {
 				if (mIsPreviewRequested) {
@@ -265,18 +265,14 @@ public class Camera1Handler implements CameraHandler {
 		}
 
 		@Override
-		public void onSurfaceTextureSizeChanged(final SurfaceTexture texture, final int width, final int height) {
+		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
+			// do nothing.
 		}
 
 		@Override
-		public boolean onSurfaceTextureDestroyed(final SurfaceTexture texture) {
+		public void surfaceDestroyed(final SurfaceHolder holder) {
 			stopPreview();
 			mIsSurfaceCreated = false;
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(final SurfaceTexture texture) {
 		}
 	};
 
