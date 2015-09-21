@@ -111,8 +111,9 @@ public final class FileUtil {
 				if (SystemUtil.isAndroid5()) {
 					// Storage Access Framework
 					DocumentFile targetDocument = getDocumentFile(target, false, true);
-					outStream =
-							Application.getAppContext().getContentResolver().openOutputStream(targetDocument.getUri());
+					if (targetDocument != null) {
+						outStream = Application.getAppContext().getContentResolver().openOutputStream(targetDocument.getUri());
+					}
 				}
 				else if (SystemUtil.isKitkat()) {
 					// Workaround for Kitkat ext SD card
@@ -184,7 +185,7 @@ public final class FileUtil {
 		// Try with Storage Access Framework.
 		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, false, true);
-			return document.delete();
+			return document != null && document.delete();
 		}
 
 		// Try the Kitkat workaround.
@@ -248,7 +249,7 @@ public final class FileUtil {
 		// Try the Storage Access Framework if it is just a rename within the same parent folder.
 		if (SystemUtil.isAndroid5() && source.getParent().equals(target.getParent())) {
 			DocumentFile document = getDocumentFile(source, true, true);
-			if (document.renameTo(target.getName())) {
+			if (document != null && document.renameTo(target.getName())) {
 				return true;
 			}
 		}
@@ -373,7 +374,7 @@ public final class FileUtil {
 		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, true, true);
 			// getDocumentFile implicitly creates the directory.
-			return document.exists();
+			return document != null && document.exists();
 		}
 
 		// Try the Kitkat workaround.
@@ -439,7 +440,7 @@ public final class FileUtil {
 		// Try with Storage Access Framework.
 		if (SystemUtil.isAndroid5()) {
 			DocumentFile document = getDocumentFile(file, true, true);
-			return document.delete();
+			return document != null && document.delete();
 		}
 
 		// Try the Kitkat workaround.
