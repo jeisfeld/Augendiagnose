@@ -23,7 +23,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
+import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
@@ -255,9 +255,9 @@ public class SettingsFragment extends PreferenceFragment {
 					String stringValue = value.toString();
 					boolean acceptChange = true;
 
-					// For maxBitmapSize, check format and inform PinchImageView
+					// For maxBitmapSize, inform PinchImageView
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
-						SettingsActivity.pushMaxBitmapSize(stringValue);
+						PinchImageView.setMaxBitmapSize(Integer.parseInt(stringValue));
 					}
 
 					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.

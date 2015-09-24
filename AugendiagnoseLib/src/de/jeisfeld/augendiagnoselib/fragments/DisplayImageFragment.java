@@ -679,14 +679,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @return true if should be shown in full resoltion.
 	 */
 	public final boolean allowFullResolution() {
-		String fullResolutionFlag =
-				PreferenceUtil.getSharedPreferenceString(R.string.key_full_resolution);
+		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, 0);
 
 		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
-			return !"0".equals(fullResolutionFlag);
+			return fullResolutionFlag > 0;
 		}
 		else {
-			return "2".equals(fullResolutionFlag);
+			return fullResolutionFlag == 2;
 		}
 	}
 

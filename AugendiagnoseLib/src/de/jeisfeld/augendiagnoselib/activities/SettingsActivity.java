@@ -117,20 +117,7 @@ public class SettingsActivity extends BaseActivity {
 		PreferenceUtil.setAllHints(!showTips);
 
 		// Inform PinchImageView about maxBitmapSize
-		pushMaxBitmapSize(PreferenceUtil.getSharedPreferenceString(R.string.key_max_bitmap_size));
-	}
-
-	/**
-	 * Validate the maxBitmapSize. If not numeric, replace with default. In any case, inform PinchImageView about it.
-	 *
-	 * @param value
-	 *            the String value to be set
-	 * @return the maxBitmapSize
-	 */
-	public static int pushMaxBitmapSize(final String value) {
-		int maxBitmapSize = Integer.parseInt(value);
-		PinchImageView.setMaxBitmapSize(maxBitmapSize);
-		return maxBitmapSize;
+		PinchImageView.setMaxBitmapSize(PreferenceUtil.getSharedPreferenceIntString(R.string.key_max_bitmap_size, 0));
 	}
 
 	@Override
