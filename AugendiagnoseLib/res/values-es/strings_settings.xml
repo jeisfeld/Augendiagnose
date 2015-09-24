@@ -6,6 +6,7 @@
 
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
+    <string name="pref_screen_camera_settings">Ajustes de la cámera</string>
     <string name="pref_screen_premium">Paquetes premium / Ayuda</string>
     <string name="pref_screen_hints">Consejos</string>
 
@@ -22,7 +23,9 @@
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
     <string name="pref_title_language">Idioma</string>
     <string name="pref_title_user_key">Clave de usuario</string>
-
+    <string name="pref_title_enable_flash">Activar el flash</string>
+    <string name="pref_title_camera_api_version">Compatibilidad de la cámara</string>
+    
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
@@ -63,5 +66,10 @@
         <item>Deutsch</item>
         <item>Español</item>
     </string-array>
-
+    <string-array name="pref_list_titles_camera_api_version">
+        <item>Por defecto</item>
+        <item>Android 4</item>
+        <item>Android 5</item>
+    </string-array>
+    
 </resources>

@@ -126,9 +126,22 @@ public class SettingsFragment extends PreferenceFragment {
 			bindPreferenceSummaryToValue(R.string.key_store_option);
 			bindPreferenceSummaryToValue(R.string.key_full_resolution);
 			bindPreferenceSummaryToValue(R.string.key_language);
+			bindPreferenceSummaryToValue(R.string.key_camera_api_version);
 
 			if (getString(R.string.pref_title_folder_input).length() == 0) {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
+			}
+
+			if (!SystemUtil.isAndroid5()) {
+				PreferenceScreen cameraScreen = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_camera));
+				if (SystemUtil.hasFlashlight()) {
+					// No Android 5, but flashlight
+					cameraScreen.removePreference(findPreference(getString(R.string.key_camera_api_version)));
+				}
+				else {
+					// Neither flashlight nor Android 5
+					getPreferenceScreen().removePreference(cameraScreen);
+				}
 			}
 
 			addHintButtonListener(R.string.key_dummy_show_hints, false);

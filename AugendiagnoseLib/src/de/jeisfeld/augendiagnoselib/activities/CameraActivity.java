@@ -10,12 +10,12 @@ import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIG
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -50,6 +50,7 @@ import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -89,7 +90,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The used flashlight modes.
 	 */
-	private static final FlashMode[] FLASHLIGHT_MODES = { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH };
+	private static FlashMode[] mFlashlightModes;
 
 	/**
 	 * The current rightLeft in the activity.
@@ -213,21 +214,7 @@ public class CameraActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_camera);
 
-		// TODO: add proper logic to distinguish between camera interfaces
-		boolean useCamera2 = true;
-
-		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
-		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
-		if (useCamera2) {
-			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
-			camera1View.setVisibility(View.GONE);
-			camera2View.setVisibility(View.VISIBLE);
-		}
-		else {
-			mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
-			camera1View.setVisibility(View.VISIBLE);
-			camera2View.setVisibility(View.GONE);
-		}
+		setCameraHandler();
 
 		configureMainButtons();
 		configureConfigButtons();
@@ -451,13 +438,18 @@ public class CameraActivity extends BaseActivity {
 		});
 
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+		if (SystemUtil.hasFlashlight()) {
+			determineAvailableFlashlightModes();
 			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
 			FlashMode storedFlashlightMode;
 			try {
 				storedFlashlightMode = FlashMode.valueOf(storedFlashlightString);
 			}
 			catch (Exception e) {
+				storedFlashlightMode = FlashMode.OFF;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
+			}
+			if (!Arrays.asList(mFlashlightModes).contains(storedFlashlightMode)) {
 				storedFlashlightMode = FlashMode.OFF;
 				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
 			}
@@ -469,13 +461,13 @@ public class CameraActivity extends BaseActivity {
 				public void onClick(final View v) {
 					// Determine next flashlight mode
 					int flashlightModeIndex = 0;
-					for (int i = 0; i < FLASHLIGHT_MODES.length; i++) {
-						if (FLASHLIGHT_MODES[i].equals(mCurrentFlashlightMode)) {
+					for (int i = 0; i < mFlashlightModes.length; i++) {
+						if (mFlashlightModes[i].equals(mCurrentFlashlightMode)) {
 							flashlightModeIndex = i;
 						}
 					}
-					flashlightModeIndex = (flashlightModeIndex + 1) % FLASHLIGHT_MODES.length;
-					FlashMode newFlashlightMode = FLASHLIGHT_MODES[flashlightModeIndex];
+					flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.length;
+					FlashMode newFlashlightMode = mFlashlightModes[flashlightModeIndex];
 					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
 
 					setFlashlightMode(newFlashlightMode);
@@ -922,6 +914,44 @@ public class CameraActivity extends BaseActivity {
 		// Factor 8/3 due to 75% size of base overlay circle.
 		// Math/min factor due to strange implementation in OverlayPinchImageView.
 		return ((float) Math.min(width, height)) / Math.max(width, height) * 8 / 3; // MAGIC_NUMBER
+	}
+
+	/**
+	 * Get the list of available flashlight modes.
+	 */
+	private void determineAvailableFlashlightModes() {
+		boolean enableFlashlight = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash);
+
+		if (enableFlashlight) {
+			mFlashlightModes = new FlashMode[] { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH };
+		}
+		else {
+			mFlashlightModes = new FlashMode[] { FlashMode.OFF, FlashMode.TORCH };
+		}
+	}
+
+	/**
+	 * Set the camera handler.
+	 */
+	private void setCameraHandler() {
+		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, R.string.pref_default_camera_api_version);
+
+		if (cameraApiVersion == 0) {
+			cameraApiVersion = SystemUtil.isAndroid5() ? 2 : 1;
+		}
+
+		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
+		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
+		if (cameraApiVersion == 2) {
+			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
+			camera1View.setVisibility(View.GONE);
+			camera2View.setVisibility(View.VISIBLE);
+		}
+		else {
+			mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
+			camera1View.setVisibility(View.VISIBLE);
+			camera2View.setVisibility(View.GONE);
+		}
 	}
 
 	/**

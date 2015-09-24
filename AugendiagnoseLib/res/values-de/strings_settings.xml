@@ -6,6 +6,7 @@
 
     <string name="pref_screen_storage_settings">Speichereinstellungen</string>
     <string name="pref_screen_display_settings">Anzeigeeinstellungen</string>
+    <string name="pref_screen_camera_settings">Kameraeinstellungen</string>
     <string name="pref_screen_premium">Premium-Pakete / Hilfe</string>
     <string name="pref_screen_hints">Tipps</string>
 
@@ -22,7 +23,9 @@
     <string name="pref_title_overlay_color">Standardfarbe für Overlays</string>
     <string name="pref_title_language">Sprache</string>
     <string name="pref_title_user_key">Nutzerschlüssel</string>
-
+    <string name="pref_title_enable_flash">Blitzlicht erlauben</string>
+    <string name="pref_title_camera_api_version">Kamera-Kompatibilität</string>
+    
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
@@ -63,5 +66,10 @@
         <item>Deutsch</item>
         <item>Español</item>
     </string-array>
-
+    <string-array name="pref_list_titles_camera_api_version">
+        <item>Standard</item>
+        <item>Android 4</item>
+        <item>Android 5</item>
+    </string-array>
+    
 </resources>

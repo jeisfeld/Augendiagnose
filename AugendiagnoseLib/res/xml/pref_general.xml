@@ -79,6 +79,23 @@
             android:title="@string/pref_title_store_options" />
     </PreferenceScreen>
     <PreferenceScreen
+        android:key="@string/key_dummy_screen_camera"
+        android:title="@string/pref_screen_camera_settings" >
+        <ListPreference
+            android:defaultValue="@string/pref_default_camera_api_version"
+            android:entries="@array/pref_list_titles_camera_api_version"
+            android:entryValues="@array/pref_list_values_camera_api_version"
+            android:key="@string/key_camera_api_version"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_camera_api_version" />
+
+        <CheckBoxPreference
+            android:defaultValue="@string/pref_default_enable_flash"
+            android:key="@string/key_enable_flash"
+            android:title="@string/pref_title_enable_flash" />
+    </PreferenceScreen>
+    <PreferenceScreen
         android:key="@string/key_dummy_screen_premium"
         android:title="@string/pref_screen_premium" >
         <Preference
@@ -86,7 +103,6 @@
             android:order="101"
             android:summary="@string/menu_detail_unlocker_app"
             android:title="@string/menu_title_unlocker_app" />
-
         <Preference
             android:key="@string/key_dummy_contact_developer"
             android:order="102"

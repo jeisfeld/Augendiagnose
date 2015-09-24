@@ -157,7 +157,7 @@ public final class PreferenceUtil {
 	}
 
 	/**
-	 * Set a Boolean shared preference.
+	 * Set a String shared preference from a boolean.
 	 *
 	 * @param preferenceId
 	 *            the id of the shared preference.
@@ -208,6 +208,40 @@ public final class PreferenceUtil {
 		int newValue = getSharedPreferenceInt(preferenceId, 0) + 1;
 		setSharedPreferenceInt(preferenceId, newValue);
 		return newValue;
+	}
+
+	/**
+	 * Retrieve an integer from a shared preference string.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param defaultId
+	 *            the String key of the default value.
+	 * @return the corresponding preference value.
+	 */
+	public static int getSharedPreferenceIntString(final int preferenceId, final int defaultId) {
+		String resultString = getSharedPreferenceString(preferenceId, defaultId);
+		if (resultString == null) {
+			return 0;
+		}
+		try {
+			return Integer.parseInt(resultString);
+		}
+		catch (NumberFormatException e) {
+			return 0;
+		}
+	}
+
+	/**
+	 * Set a string shared preference from an integer.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param i
+	 *            the target value of the preference.
+	 */
+	public static void setSharedPreferenceIntString(final int preferenceId, final int i) {
+		setSharedPreferenceString(preferenceId, Integer.toString(i));
 	}
 
 	/**

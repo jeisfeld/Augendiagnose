@@ -79,6 +79,17 @@ public final class SystemUtil {
 	}
 
 	/**
+	 * Determine if the device has a flashlight.
+	 *
+	 * @return true if the device has a flashlight.
+	 */
+	public static boolean hasFlashlight() {
+		PackageManager pm = Application.getAppContext().getPackageManager();
+
+		return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+	}
+
+	/**
 	 * Determine if an app is installed.
 	 *
 	 * @param appPackage
