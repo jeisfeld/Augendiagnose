@@ -39,10 +39,9 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
-import de.jeisfeld.augendiagnoselib.activities.CameraActivity.OnPictureTakenHandler;
 
 /**
  * A handler to take pictures with the camera via the new Camera interface.
@@ -69,7 +68,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private OnPictureTakenHandler mOnPictureTakenHandler;
+	private CameraCallback mCameraCallback;
 
 	/**
 	 * Constructor of the Camera1Handler.
@@ -80,15 +79,15 @@ public class Camera2Handler implements CameraHandler {
 	 *            The FrameLayout holding the preview.
 	 * @param preview
 	 *            The view holding the preview.
-	 * @param onPictureTakenHandler
+	 * @param cameraCallback
 	 *            The handler called when the picture is taken.
 	 */
 	public Camera2Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
-			final OnPictureTakenHandler onPictureTakenHandler) {
+			final CameraCallback cameraCallback) {
 		this.mActivity = activity;
 		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
-		this.mOnPictureTakenHandler = onPictureTakenHandler;
+		this.mCameraCallback = cameraCallback;
 	}
 
 	/**
@@ -199,8 +198,7 @@ public class Camera2Handler implements CameraHandler {
 			cameraDevice.close();
 			mCameraDevice = null;
 
-			Log.e(Application.TAG, "Error on camera - " + error);
-			DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera);
+			mCameraCallback.onCameraError("Error on camera: " + error, null);
 		}
 
 	};
@@ -223,7 +221,10 @@ public class Camera2Handler implements CameraHandler {
 			buffer.get(data);
 			image.close();
 
-			mOnPictureTakenHandler.onPictureTaken(data);
+			mCameraCallback.onPictureTaken(data);
+
+			// Keep track that use of Camera2 API was once successful.
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera2_successful, true);
 		}
 	};
 
@@ -446,12 +447,10 @@ public class Camera2Handler implements CameraHandler {
 			}
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to access camera", e);
 		}
 		catch (NullPointerException e) {
-			Log.e(Application.TAG, "Camera2 API seems to be not supported", e);
-			DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera);
-			// TODO: fallback to normal Camera API
+			mCameraCallback.onCameraError("Camera2 API does not seem to work", e);
 		}
 	}
 
@@ -475,7 +474,7 @@ public class Camera2Handler implements CameraHandler {
 			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to open camera", e);
 		}
 		catch (InterruptedException e) {
 			throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
@@ -502,7 +501,7 @@ public class Camera2Handler implements CameraHandler {
 			}
 		}
 		catch (InterruptedException e) {
-			throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
+			Log.e(TAG, "Interrupted while trying to lock camera closing.", e);
 		}
 		finally {
 			mCameraOpenCloseLock.release();
@@ -546,14 +545,14 @@ public class Camera2Handler implements CameraHandler {
 							mActivity.runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera_display);
+									mCameraCallback.onCameraError("Failed to create capture session", null);
 								}
 							});
 						}
 					}, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to create preview session", e);
 		}
 	}
 
@@ -613,7 +612,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to lock focus", e);
 		}
 	}
 
@@ -631,7 +630,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to run precapture sequence", e);
 		}
 	}
 
@@ -658,10 +657,10 @@ public class Camera2Handler implements CameraHandler {
 			mState = CameraState.STATE_WAITING_UNLOCK;
 			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
 
-			mOnPictureTakenHandler.onTakingPicture();
+			mCameraCallback.onTakingPicture();
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to capture picture", e);
 		}
 	}
 
@@ -679,7 +678,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException e) {
-			e.printStackTrace();
+			mCameraCallback.onCameraError("Failed to unlock focus", e);
 		}
 	}
 
@@ -706,7 +705,7 @@ public class Camera2Handler implements CameraHandler {
 				mBackgroundHandler = null;
 			}
 			catch (InterruptedException e) {
-				e.printStackTrace();
+				// ignore
 			}
 		}
 	}
@@ -758,7 +757,7 @@ public class Camera2Handler implements CameraHandler {
 				doPreviewConfiguration();
 			}
 			catch (CameraAccessException e) {
-				e.printStackTrace();
+				mCameraCallback.onCameraError("Failed to reconfigure the camera", e);
 			}
 		}
 	}
@@ -781,7 +780,7 @@ public class Camera2Handler implements CameraHandler {
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}
 			catch (CameraAccessException e) {
-				e.printStackTrace();
+				mCameraCallback.onCameraError("Failed to do the preview configuration", e);
 			}
 		}
 	}

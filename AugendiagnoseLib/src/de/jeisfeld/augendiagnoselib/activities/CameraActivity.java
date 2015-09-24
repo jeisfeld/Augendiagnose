@@ -46,6 +46,7 @@ import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAct
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.Camera2Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
@@ -834,7 +835,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private OnPictureTakenHandler mOnPictureTakenHandler = new OnPictureTakenHandler() {
+	private CameraCallback mOnPictureTakenHandler = new CameraCallback() {
 		@Override
 		public void onTakingPicture() {
 			runOnUiThread(new Runnable() {
@@ -897,6 +898,28 @@ public class CameraActivity extends BaseActivity {
 			});
 		}
 
+		@Override
+		public void onCameraError(final String message, final Exception e) {
+			if (e == null) {
+				Log.e(Application.TAG, message);
+			}
+			else {
+				Log.e(Application.TAG, message, e);
+			}
+
+			boolean isCamera2Api = mCameraHandler instanceof Camera2Handler;
+			boolean wasCamera2Successful = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera2_successful);
+
+			if (isCamera2Api && !wasCamera2Successful) {
+				// Reconfigure to Camera 1 API
+				PreferenceUtil.setSharedPreferenceIntString(R.string.key_camera_api_version, 1);
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_use_camera2, true);
+			}
+			else {
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_open_camera, true);
+			}
+		}
+
 	};
 
 	/**
@@ -948,7 +971,7 @@ public class CameraActivity extends BaseActivity {
 			camera2View.setVisibility(View.VISIBLE);
 		}
 		else {
-			mCameraHandler = new Camera1Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
+			mCameraHandler = new Camera1Handler((FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
 			camera1View.setVisibility(View.VISIBLE);
 			camera2View.setVisibility(View.GONE);
 		}
@@ -1019,7 +1042,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Handler called after the picture is taken.
 	 */
-	public interface OnPictureTakenHandler {
+	public interface CameraCallback {
 		/**
 		 * Callback called just when the picture is taken.
 		 */
@@ -1032,6 +1055,16 @@ public class CameraActivity extends BaseActivity {
 		 *            The image data.
 		 */
 		void onPictureTaken(byte[] data);
+
+		/**
+		 * Callback called on fatal camera errors.
+		 *
+		 * @param message
+		 *            The error message as String
+		 * @param e
+		 *            The exception
+		 */
+		void onCameraError(final String message, final Exception e);
 	}
 
 	/**

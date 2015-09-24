@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import android.app.Activity;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -12,9 +11,8 @@ import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
-import de.jeisfeld.augendiagnoselib.activities.CameraActivity.OnPictureTakenHandler;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -53,11 +51,6 @@ public class Camera1Handler implements CameraHandler {
 	private String mCurrentFlashlightMode = null;
 
 	/**
-	 * The activity using the handler.
-	 */
-	private Activity mActivity;
-
-	/**
 	 * The FrameLayout holding the preview.
 	 */
 	private FrameLayout mPreviewFrame;
@@ -70,25 +63,22 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private OnPictureTakenHandler mOnPictureTakenHandler;
+	private CameraCallback mCameraCallback;
 
 	/**
 	 * Constructor of the Camera1Handler.
 	 *
-	 * @param activity
-	 *            The activity using the handler.
 	 * @param previewFrame
 	 *            The FrameLayout holding the preview.
 	 * @param preview
 	 *            The view holding the preview.
-	 * @param onPictureTakenHandler
+	 * @param cameraCallback
 	 *            The handler called when the picture is taken.
 	 */
-	public Camera1Handler(final Activity activity, final FrameLayout previewFrame, final SurfaceView preview,
-			final OnPictureTakenHandler onPictureTakenHandler) {
-		this.mActivity = activity;
+	public Camera1Handler(final FrameLayout previewFrame, final SurfaceView preview,
+			final CameraCallback cameraCallback) {
 		this.mPreviewFrame = previewFrame;
-		this.mOnPictureTakenHandler = onPictureTakenHandler;
+		this.mCameraCallback = cameraCallback;
 
 		mPreviewHolder = preview.getHolder();
 		mPreviewHolder.addCallback(mSurfaceCallback);
@@ -141,9 +131,9 @@ public class Camera1Handler implements CameraHandler {
 			try {
 				mCamera.setPreviewDisplay(mPreviewHolder);
 			}
-			catch (Throwable t) {
-				Log.e(Application.TAG, "Exception in setPreviewDisplay()", t);
-				DialogUtil.displayToast(mActivity, R.string.message_dialog_failed_to_open_camera_display);
+			catch (Exception e) {
+				mCameraCallback.onCameraError("Cannot set preview", e);
+				return;
 			}
 
 			if (!mIsCameraConfigured) {
@@ -209,8 +199,7 @@ public class Camera1Handler implements CameraHandler {
 			mCamera = getCameraInstance();
 
 			if (mCamera == null) {
-				// The activity depends on the camera.
-				DialogUtil.displayError(mActivity, R.string.message_dialog_failed_to_open_camera, true);
+				mCameraCallback.onCameraError("Cannot open camera", null);
 				return;
 			}
 		}
@@ -244,7 +233,7 @@ public class Camera1Handler implements CameraHandler {
 	@Override
 	public final void takePicture() {
 		mCamera.takePicture(null, null, mPhotoCallback);
-		mOnPictureTakenHandler.onTakingPicture();
+		mCameraCallback.onTakingPicture();
 	}
 
 	/**
@@ -260,7 +249,7 @@ public class Camera1Handler implements CameraHandler {
 				}
 			}
 			catch (Exception e) {
-				DialogUtil.displayError(mActivity, R.string.message_dialog_failed_to_open_camera, true);
+				mCameraCallback.onCameraError("Failed to start preview", e);
 			}
 		}
 
@@ -284,7 +273,7 @@ public class Camera1Handler implements CameraHandler {
 		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
 			mIsInPreview = false;
-			mOnPictureTakenHandler.onPictureTaken(data);
+			mCameraCallback.onPictureTaken(data);
 		}
 	};
 

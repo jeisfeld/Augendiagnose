@@ -150,6 +150,7 @@
     <string name="key_internal_counter_tempfiles" translatable="false">counter_tempfiles</string>
     <string name="key_internal_camera_circle_type" translatable="false">camera_circle_type</string>
     <string name="key_internal_camera_flashlight_mode" translatable="false">camera_flashlight_type</string>
+    <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
