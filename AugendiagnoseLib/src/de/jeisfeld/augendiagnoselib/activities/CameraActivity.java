@@ -957,7 +957,7 @@ public class CameraActivity extends BaseActivity {
 	 * Set the camera handler.
 	 */
 	private void setCameraHandler() {
-		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, R.string.pref_default_camera_api_version);
+		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, 0);
 
 		if (cameraApiVersion == 0) {
 			cameraApiVersion = SystemUtil.isAndroid5() ? 2 : 1;

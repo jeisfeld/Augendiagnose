@@ -335,4 +335,16 @@ public final class PreferenceUtil {
 		}
 	}
 
+	/**
+	 * Set the default camera settings.
+	 */
+	public static void setDefaultCameraSettings() {
+		String cameraApiVersion = getSharedPreferenceString(R.string.key_camera_api_version);
+
+		if (cameraApiVersion == null || cameraApiVersion.length() == 0) {
+			cameraApiVersion = SystemUtil.isAndroid5() ? "2" : "1";
+
+			setSharedPreferenceString(R.string.key_camera_api_version, cameraApiVersion);
+		}
+	}
 }

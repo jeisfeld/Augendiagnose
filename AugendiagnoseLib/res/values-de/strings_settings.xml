@@ -67,7 +67,6 @@
         <item>Español</item>
     </string-array>
     <string-array name="pref_list_titles_camera_api_version">
-        <item>Standard</item>
         <item>Android 4</item>
         <item>Android 5</item>
     </string-array>

@@ -110,8 +110,11 @@ public class SettingsActivity extends BaseActivity {
 			}
 		}
 
-		// Delta setting for full resolution setting and for max bitmap size - dependent on available memory.
+		// Setting for full resolution setting and for max bitmap size - dependent on available memory.
 		PreferenceUtil.setDefaultResolutionSettings();
+
+		// Setting for camera API - dependent on OS version.
+		PreferenceUtil.setDefaultCameraSettings();
 
 		boolean showTips = Boolean.parseBoolean(PreferenceUtil.getSharedPreferenceString(R.string.pref_default_show_tips));
 		PreferenceUtil.setAllHints(!showTips);

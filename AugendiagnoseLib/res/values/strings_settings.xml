@@ -34,7 +34,6 @@
     <string name="pref_title_enable_flash">Enable flash</string>
     <string name="pref_default_enable_flash" translatable="false">false</string>
     <string name="pref_title_camera_api_version">Camera compatibility</string>
-    <string name="pref_default_camera_api_version" translatable="false">0</string>
     
     <!-- Strings related to Setting arrays -->
 
@@ -107,12 +106,10 @@
         <item>3</item>
     </string-array>
     <string-array name="pref_list_titles_camera_api_version">
-        <item>Default</item>
         <item>Android 4</item>
         <item>Android 5</item>
     </string-array>
     <string-array name="pref_list_values_camera_api_version" translatable="false">
-        <item>0</item>
         <item>1</item>
         <item>2</item>
     </string-array>

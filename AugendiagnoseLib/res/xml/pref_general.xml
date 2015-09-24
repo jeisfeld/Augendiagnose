@@ -82,7 +82,6 @@
         android:key="@string/key_dummy_screen_camera"
         android:title="@string/pref_screen_camera_settings" >
         <ListPreference
-            android:defaultValue="@string/pref_default_camera_api_version"
             android:entries="@array/pref_list_titles_camera_api_version"
             android:entryValues="@array/pref_list_values_camera_api_version"
             android:key="@string/key_camera_api_version"
