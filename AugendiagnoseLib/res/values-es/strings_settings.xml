@@ -6,7 +6,7 @@
 
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
-    <string name="pref_screen_camera_settings">Ajustes de la cámera</string>
+    <string name="pref_screen_camera_settings">Ajustes de la cámara</string>
     <string name="pref_screen_premium">Paquetes premium / Ayuda</string>
     <string name="pref_screen_hints">Consejos</string>
 
