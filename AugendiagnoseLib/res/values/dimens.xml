@@ -26,6 +26,7 @@
     <dimen name="camera_thumb_frame_size">98dp</dimen>
     <dimen name="camera_thumb_frame_boundary">4dp</dimen>
     <dimen name="camera_thumb_size">90dp</dimen>
+    <dimen name="camera_seekbar_size">240dp</dimen>
     <dimen name="camerabutton_overlay_circle_radius">14dp</dimen>
-    
+
 </resources>

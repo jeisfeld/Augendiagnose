@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.util;
 import java.util.Arrays;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -87,6 +88,23 @@ public final class SystemUtil {
 		PackageManager pm = Application.getAppContext().getPackageManager();
 
 		return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+	}
+
+	/**
+	 * Determine if the device supports a manual sensor.
+	 *
+	 * @return true if the device supports a manual sensor.
+	 */
+	@SuppressLint("InlinedApi")
+	public static boolean hasManualSensor() {
+		PackageManager pm = Application.getAppContext().getPackageManager();
+
+		if (isAndroid5()) {
+			return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_CAPABILITY_MANUAL_SENSOR);
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**

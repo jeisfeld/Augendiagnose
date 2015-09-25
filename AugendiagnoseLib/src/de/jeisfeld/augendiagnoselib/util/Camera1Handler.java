@@ -1,5 +1,8 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -13,6 +16,7 @@ import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -49,6 +53,11 @@ public class Camera1Handler implements CameraHandler {
 	 * The current flashlight mode.
 	 */
 	private String mCurrentFlashlightMode = null;
+
+	/**
+	 * The current focus mode.
+	 */
+	private String mCurrentFocusMode = null;
 
 	/**
 	 * The FrameLayout holding the preview.
@@ -110,6 +119,31 @@ public class Camera1Handler implements CameraHandler {
 		updateFlashlight();
 	}
 
+	@Override
+	public final void setFocusMode(final FocusMode focusMode) {
+		if (focusMode == null) {
+			mCurrentFocusMode = null;
+			return;
+		}
+
+		switch (focusMode) {
+		case AUTO:
+			mCurrentFocusMode = Parameters.FOCUS_MODE_AUTO;
+			break;
+		case MACRO:
+			mCurrentFocusMode = Parameters.FOCUS_MODE_MACRO;
+			break;
+		case CONTINUOUS:
+			mCurrentFocusMode = Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
+			break;
+		default:
+			mCurrentFocusMode = null;
+			break;
+		}
+
+		updateFocus();
+	}
+
 	/**
 	 * Update the flashlight.
 	 */
@@ -119,6 +153,17 @@ public class Camera1Handler implements CameraHandler {
 			if (parameters.getSupportedFlashModes().contains(mCurrentFlashlightMode)) {
 				parameters.setFlashMode(mCurrentFlashlightMode);
 			}
+			mCamera.setParameters(parameters);
+		}
+	}
+
+	/**
+	 * Update the focus.
+	 */
+	private void updateFocus() {
+		if (mCamera != null) {
+			Parameters parameters = mCamera.getParameters();
+			parameters.setFocusMode(mCurrentFocusMode);
 			mCamera.setParameters(parameters);
 		}
 	}
@@ -151,9 +196,10 @@ public class Camera1Handler implements CameraHandler {
 				parameters.setPictureSize(pictureSize.width, pictureSize.height);
 				parameters.setPictureFormat(ImageFormat.JPEG);
 
+				updateAvailableModes(parameters.getSupportedFocusModes());
+
 				try {
-					// getSupportedFocusModes is not reliable.
-					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+					parameters.setFocusMode(mCurrentFocusMode);
 				}
 				catch (Exception e) {
 					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
@@ -264,6 +310,29 @@ public class Camera1Handler implements CameraHandler {
 			mIsSurfaceCreated = false;
 		}
 	};
+
+	/**
+	 * Update the available focus modes.
+	 *
+	 * @param supportedFocusModes
+	 *            the supported focus modes.
+	 */
+	private void updateAvailableModes(final List<String> supportedFocusModes) {
+		List<FocusMode> focusModes = new ArrayList<FocusMode>();
+		for (String focusMode : supportedFocusModes) {
+			if (Camera.Parameters.FOCUS_MODE_AUTO.equals(focusMode)) {
+				focusModes.add(FocusMode.AUTO);
+			}
+			else if (Camera.Parameters.FOCUS_MODE_MACRO.equals(focusMode)) {
+				focusModes.add(FocusMode.MACRO);
+			}
+			else if (Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE.equals(focusMode)) {
+				focusModes.add(FocusMode.CONTINUOUS);
+			}
+		}
+
+		mCameraCallback.updateAvailableModes(focusModes);
+	}
 
 	/**
 	 * The callback called when pictures are taken.

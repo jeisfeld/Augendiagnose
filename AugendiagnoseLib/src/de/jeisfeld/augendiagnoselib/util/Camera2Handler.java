@@ -42,6 +42,7 @@ import android.widget.FrameLayout;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
 
 /**
  * A handler to take pictures with the camera via the new Camera interface.
@@ -113,6 +114,7 @@ public class Camera2Handler implements CameraHandler {
 
 		@Override
 		public boolean onSurfaceTextureDestroyed(final SurfaceTexture texture) {
+			closeCamera();
 			return true;
 		}
 
@@ -143,6 +145,11 @@ public class Camera2Handler implements CameraHandler {
 	private CameraDevice mCameraDevice;
 
 	/**
+	 * A reference to the camera characteristics.
+	 */
+	private CameraCharacteristics mCameraCharacteristics;
+
+	/**
 	 * The {@link android.util.Size} of camera preview.
 	 */
 	private Size mPreviewSize;
@@ -161,6 +168,21 @@ public class Camera2Handler implements CameraHandler {
 	 * The flash mode.
 	 */
 	private int mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
+
+	/**
+	 * The focus mode for the preview.
+	 */
+	private int mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE;
+
+	/**
+	 * The current focal distance (in case of manual focus).
+	 */
+	private float mCurrentRelativeFocalDistance = 0;
+
+	/**
+	 * The minimal focal distance.
+	 */
+	private float mMinimalFocalDistance = 0;
 
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
@@ -401,16 +423,15 @@ public class Camera2Handler implements CameraHandler {
 		CameraManager manager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
 		try {
 			for (String cameraId : manager.getCameraIdList()) {
-				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
+				CameraCharacteristics cameraCharacteristics = manager.getCameraCharacteristics(cameraId);
 
 				// We don't use a front facing camera in this sample.
-				Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+				Integer facing = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING);
 				if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
 					continue;
 				}
 
-				StreamConfigurationMap map = characteristics.get(
-						CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+				StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 				if (map == null) {
 					continue;
 				}
@@ -443,6 +464,9 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewFrame.setLayoutParams(layoutParams);
 
 				mCameraId = cameraId;
+				mCameraCharacteristics = cameraCharacteristics;
+				updateAvailableModes();
+
 				return;
 			}
 		}
@@ -649,7 +673,7 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.addTarget(mImageReader.getSurface());
 
 			// Use the same AE and AF modes as the preview.
-			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 			captureBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
 			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 
@@ -743,6 +767,49 @@ public class Camera2Handler implements CameraHandler {
 		reconfigureCamera();
 	}
 
+	@Override
+	public final void setFocusMode(final FocusMode focusMode) {
+		if (focusMode == null) {
+			mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_AUTO;
+		}
+		else {
+			switch (focusMode) {
+			case CONTINUOUS:
+				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE;
+				break;
+			case AUTO:
+				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_AUTO;
+				break;
+			case MACRO:
+				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_MACRO;
+				break;
+			case MANUAL:
+				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_OFF;
+				break;
+			default:
+				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_AUTO;
+				break;
+			}
+		}
+
+		if (mCameraDevice == null) {
+			return;
+		}
+
+		reconfigureCamera();
+	}
+
+	/**
+	 * Update the focal distance of the camera (relative to the minimal focal distance).
+	 *
+	 * @param relativeFocalDistance
+	 *            The new relative focal distance.
+	 */
+	public final void setRelativeFocalDistance(final float relativeFocalDistance) {
+		mCurrentRelativeFocalDistance = relativeFocalDistance;
+		reconfigureCamera();
+	}
+
 	/**
 	 * Reconfigure the camera with new flash and focus settings.
 	 */
@@ -773,9 +840,12 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 				mPreviewRequestBuilder.addTarget(mSurface);
 
-				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 				mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
+
+				mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
+
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}
@@ -783,6 +853,37 @@ public class Camera2Handler implements CameraHandler {
 				mCameraCallback.onCameraError("Failed to do the preview configuration", e);
 			}
 		}
+	}
+
+	/**
+	 * Update the available focus modes.
+	 */
+	private void updateAvailableModes() {
+		List<FocusMode> focusModes = new ArrayList<FocusMode>();
+		int[] availableFocusModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+		for (int focusMode : availableFocusModes) {
+			if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_OFF) {
+				if (SystemUtil.hasManualSensor()) {
+					focusModes.add(FocusMode.MANUAL);
+				}
+			}
+			else if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_MACRO) {
+				focusModes.add(FocusMode.MACRO);
+			}
+			else if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_CONTINUOUS_PICTURE) {
+				focusModes.add(FocusMode.CONTINUOUS);
+			}
+			else if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_AUTO) {
+				focusModes.add(FocusMode.AUTO);
+			}
+		}
+
+		Float minFocalDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
+		if (minFocalDistance != null) {
+			mMinimalFocalDistance = minFocalDistance;
+		}
+
+		mCameraCallback.updateAvailableModes(focusModes);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
+import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
 
 /**
  * An interface to take pictures with the camera.
@@ -13,6 +14,14 @@ public interface CameraHandler {
 	 *            The new flashlight mode.
 	 */
 	void setFlashlightMode(final FlashMode flashlightMode);
+
+	/**
+	 * Set the focus mode.
+	 *
+	 * @param focusMode
+	 *            The new focus mode.
+	 */
+	void setFocusMode(final FocusMode focusMode);
 
 	/**
 	 * Start the camera preview. Should be idempotent.

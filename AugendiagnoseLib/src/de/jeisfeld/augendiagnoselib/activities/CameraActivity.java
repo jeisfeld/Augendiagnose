@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -40,6 +41,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -89,9 +92,13 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private static final int DEFAULT_CIRCLE_TYPE = 2;
 	/**
+	 * The available focus modes.
+	 */
+	private static List<FocusMode> mFocusModes;
+	/**
 	 * The used flashlight modes.
 	 */
-	private static FlashMode[] mFlashlightModes;
+	private static List<FlashMode> mFlashlightModes;
 
 	/**
 	 * The current rightLeft in the activity.
@@ -102,6 +109,11 @@ public class CameraActivity extends BaseActivity {
 	 * The current flashlight mode.
 	 */
 	private FlashMode mCurrentFlashlightMode;
+
+	/**
+	 * The current focus mode.
+	 */
+	private FocusMode mCurrentFocusMode;
 
 	/**
 	 * The current eye.
@@ -218,7 +230,10 @@ public class CameraActivity extends BaseActivity {
 		setCameraHandler();
 
 		configureMainButtons();
-		configureConfigButtons();
+		configureThumbButtons();
+		configureCircleButton();
+		configureFlashlightButton();
+		// Focus button is configured after callback from CameraHandler.
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
 		if (photoFolderName != null) {
@@ -420,65 +435,25 @@ public class CameraActivity extends BaseActivity {
 					}
 				});
 
+		// Hide application specific buttons
+		TypedArray hiddenButtons = getResources().obtainTypedArray(R.array.hidden_camera_buttons);
+		for (int i = 0; i < hiddenButtons.length(); i++) {
+			int id = hiddenButtons.getResourceId(i, 0);
+			if (id != 0) {
+				View view = findViewById(id);
+				if (view != null) {
+					view.setVisibility(View.GONE);
+					view.setEnabled(false);
+				}
+			}
+		}
+		hiddenButtons.recycle();
 	}
 
 	/**
 	 * Configure configuration buttons in this activity.
 	 */
-	private void configureConfigButtons() {
-
-		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraOverlayCircle);
-		overlayCircleButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				int currentCircleType = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
-				int nextCircleType = (currentCircleType + 1) % CIRCLE_RADII.length;
-				PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_circle_type, nextCircleType);
-				drawOverlayCircle(nextCircleType);
-			}
-		});
-
-		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		if (SystemUtil.hasFlashlight()) {
-			determineAvailableFlashlightModes();
-			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
-			FlashMode storedFlashlightMode;
-			try {
-				storedFlashlightMode = FlashMode.valueOf(storedFlashlightString);
-			}
-			catch (Exception e) {
-				storedFlashlightMode = FlashMode.OFF;
-				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
-			}
-			if (!Arrays.asList(mFlashlightModes).contains(storedFlashlightMode)) {
-				storedFlashlightMode = FlashMode.OFF;
-				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
-			}
-
-			setFlashlightMode(storedFlashlightMode);
-
-			flashlightButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					// Determine next flashlight mode
-					int flashlightModeIndex = 0;
-					for (int i = 0; i < mFlashlightModes.length; i++) {
-						if (mFlashlightModes[i].equals(mCurrentFlashlightMode)) {
-							flashlightModeIndex = i;
-						}
-					}
-					flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.length;
-					FlashMode newFlashlightMode = mFlashlightModes[flashlightModeIndex];
-					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
-
-					setFlashlightMode(newFlashlightMode);
-				}
-			});
-		}
-		else {
-			setFlashlightMode(null);
-			flashlightButton.setVisibility(View.GONE);
-		}
+	private void configureThumbButtons() {
 
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setOnClickListener(new OnClickListener() {
@@ -496,19 +471,125 @@ public class CameraActivity extends BaseActivity {
 			}
 		});
 
-		// Hide application specific buttons
-		TypedArray hiddenButtons = getResources().obtainTypedArray(R.array.hidden_camera_buttons);
-		for (int i = 0; i < hiddenButtons.length(); i++) {
-			int id = hiddenButtons.getResourceId(i, 0);
-			if (id != 0) {
-				View view = findViewById(id);
-				if (view != null) {
-					view.setVisibility(View.GONE);
-					view.setEnabled(false);
+	}
+
+	/**
+	 * Configure the button for setting the overlay circle size.
+	 */
+	private void configureCircleButton() {
+		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraOverlayCircle);
+		overlayCircleButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				int currentCircleType = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
+				int nextCircleType = (currentCircleType + 1) % CIRCLE_RADII.length;
+				PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_circle_type, nextCircleType);
+				drawOverlayCircle(nextCircleType);
+			}
+		});
+	}
+
+	/**
+	 * Configure the button for setting flashlight.
+	 */
+	private void configureFlashlightButton() {
+		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
+		if (SystemUtil.hasFlashlight()) {
+			determineAvailableFlashlightModes();
+			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
+			FlashMode storedFlashlightMode;
+			try {
+				storedFlashlightMode = FlashMode.valueOf(storedFlashlightString);
+			}
+			catch (Exception e) {
+				storedFlashlightMode = FlashMode.OFF;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
+			}
+			if (!mFlashlightModes.contains(storedFlashlightMode)) {
+				storedFlashlightMode = FlashMode.OFF;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFlashlightMode.toString());
+			}
+
+			setFlashlightMode(storedFlashlightMode);
+
+			flashlightButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					int flashlightModeIndex = mFlashlightModes.indexOf(mCurrentFlashlightMode);
+					flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.size();
+					FlashMode newFlashlightMode = mFlashlightModes.get(flashlightModeIndex);
+					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
+
+					setFlashlightMode(newFlashlightMode);
+				}
+			});
+		}
+		else {
+			setFlashlightMode(null);
+			flashlightButton.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * Configure the button for setting focus.
+	 */
+	private void configureFocusButton() {
+		String storedFocusModeString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_focus_mode);
+		FocusMode storedFocusMode;
+		try {
+			storedFocusMode = FocusMode.valueOf(storedFocusModeString);
+		}
+		catch (Exception e) {
+			storedFocusMode = FocusMode.CONTINUOUS;
+			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
+		}
+		if (!mFocusModes.contains(storedFocusMode)) {
+			storedFocusMode = FocusMode.AUTO;
+			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFocusMode.toString());
+		}
+
+		setFocusMode(storedFocusMode);
+
+		Button focusButton = (Button) findViewById(R.id.buttonCameraFocus);
+		focusButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				int focusModeIndex = mFocusModes.indexOf(mCurrentFocusMode);
+				focusModeIndex = (focusModeIndex + 1) % mFocusModes.size();
+				FocusMode newFocusMode = mFocusModes.get(focusModeIndex);
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, newFocusMode.toString());
+
+				setFocusMode(newFocusMode);
+			}
+		});
+
+		SeekBar focusSeekbar = (SeekBar) findViewById(R.id.seekbarCameraFocus);
+		focusSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onStartTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+				if (isCamera2()) {
+					Camera2Handler cameraHandler = (Camera2Handler) mCameraHandler;
+					PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, progress);
+
+					float focusBarEnd = 100.1f; // MAGIC_NUMBER
+					float focalDistance = focusBarEnd / (focusBarEnd - progress);
+					focalDistance = focalDistance * focalDistance;
+
+					cameraHandler.setRelativeFocalDistance(focalDistance);
 				}
 			}
-		}
-		hiddenButtons.recycle();
+		});
+		focusSeekbar.setProgress(PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, 1));
 	}
 
 	/**
@@ -635,10 +716,25 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private void setFlashlightMode(final FlashMode flashlightMode) {
 		mCurrentFlashlightMode = flashlightMode;
-		mCameraHandler.setFlashlightMode(flashlightMode);
-		if (flashlightMode != null) {
-			updateFlashlight();
-		}
+		updateFlashlight();
+	}
+
+	/**
+	 * Update the focus mode.
+	 *
+	 * @param focusMode
+	 *            The new focus mode.
+	 */
+	private void setFocusMode(final FocusMode focusMode) {
+		mCurrentFocusMode = focusMode;
+
+		SeekBar seekbarCameraFocus = (SeekBar) findViewById(R.id.seekbarCameraFocus);
+		seekbarCameraFocus.setVisibility(mCurrentFocusMode == FocusMode.MANUAL ? View.VISIBLE : View.GONE);
+
+		mCameraHandler.setFocusMode(mCurrentFocusMode);
+
+		Button buttonCameraFocus = (Button) findViewById(R.id.buttonCameraFocus);
+		buttonCameraFocus.setText(mCurrentFocusMode.toDisplayString());
 	}
 
 	/**
@@ -920,6 +1016,12 @@ public class CameraActivity extends BaseActivity {
 			}
 		}
 
+		@Override
+		public void updateAvailableModes(final List<FocusMode> focusModes) {
+			mFocusModes = focusModes;
+			configureFocusButton();
+		}
+
 	};
 
 	/**
@@ -946,10 +1048,10 @@ public class CameraActivity extends BaseActivity {
 		boolean enableFlashlight = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash);
 
 		if (enableFlashlight) {
-			mFlashlightModes = new FlashMode[] { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH };
+			mFlashlightModes = Arrays.asList(new FlashMode[] { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH });
 		}
 		else {
-			mFlashlightModes = new FlashMode[] { FlashMode.OFF, FlashMode.TORCH };
+			mFlashlightModes = Arrays.asList(new FlashMode[] { FlashMode.OFF, FlashMode.TORCH });
 		}
 	}
 
@@ -957,15 +1059,9 @@ public class CameraActivity extends BaseActivity {
 	 * Set the camera handler.
 	 */
 	private void setCameraHandler() {
-		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, 0);
-
-		if (cameraApiVersion == 0) {
-			cameraApiVersion = SystemUtil.isAndroid5() ? 2 : 1;
-		}
-
 		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
 		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
-		if (cameraApiVersion == 2) {
+		if (isCamera2()) {
 			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
 			camera1View.setVisibility(View.GONE);
 			camera2View.setVisibility(View.VISIBLE);
@@ -975,6 +1071,16 @@ public class CameraActivity extends BaseActivity {
 			camera1View.setVisibility(View.VISIBLE);
 			camera2View.setVisibility(View.GONE);
 		}
+	}
+
+	/**
+	 * Get information if Camera2 API is used.
+	 *
+	 * @return true if Camera2 API is used.
+	 */
+	private boolean isCamera2() {
+		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, 0);
+		return cameraApiVersion == 2;
 	}
 
 	/**
@@ -1065,6 +1171,14 @@ public class CameraActivity extends BaseActivity {
 		 *            The exception
 		 */
 		void onCameraError(final String message, final Exception e);
+
+		/**
+		 * Give information which focus modes and flash modes are supported by the camera.
+		 *
+		 * @param focusModes
+		 *            The supported focus modes.
+		 */
+		void updateAvailableModes(List<FocusMode> focusModes);
 	}
 
 	/**
@@ -1109,6 +1223,44 @@ public class CameraActivity extends BaseActivity {
 		 * The flash is permanently on.
 		 */
 		TORCH
+	}
+
+	/**
+	 * Enumeration for modes of the camera focus.
+	 */
+	public static enum FocusMode {
+		/**
+		 * Continuous autofocus.
+		 */
+		CONTINUOUS,
+		/**
+		 * Autofocus.
+		 */
+		AUTO,
+		/**
+		 * Macro.
+		 */
+		MACRO,
+		/**
+		 * Manual focus.
+		 */
+		MANUAL;
+
+		/**
+		 * Convert into a display string, to be used in the GUI.
+		 *
+		 * @return the display string.
+		 */
+		public final String toDisplayString() {
+			switch (this) {
+			case AUTO:
+				return "AUTO\nSINGLE";
+			case CONTINUOUS:
+				return "AUTO\nCONT";
+			default:
+				return toString();
+			}
+		}
 	}
 
 }

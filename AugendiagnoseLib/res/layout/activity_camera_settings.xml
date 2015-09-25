@@ -20,4 +20,30 @@
         android:layout_marginTop="@dimen/camerabutton_distance"
         android:background="@drawable/circlebutton_noflash" />
 
+    <LinearLayout
+        android:id="@+id/layoutCameraFocus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/camerabutton_distance"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonCameraFocus"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:background="@drawable/circlebutton_base"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seekbarCameraFocus"
+            android:layout_width="@dimen/camera_seekbar_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/camerabutton_distance"
+            android:background="#7F000000"
+            android:max="100" />
+    </LinearLayout>
+
 </LinearLayout>
