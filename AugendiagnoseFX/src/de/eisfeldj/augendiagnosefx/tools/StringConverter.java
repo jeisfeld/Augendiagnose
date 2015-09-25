@@ -327,7 +327,6 @@ public final class StringConverter {
 		@SuppressWarnings("resource")
 		protected FilteredFileWriter(final File file) throws IOException {
 			super(new FileWriter(file));
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
