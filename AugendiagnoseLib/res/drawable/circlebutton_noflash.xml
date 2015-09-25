@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item>
-        <selector>
-            <item
-                android:state_enabled="true"
-                android:state_pressed="true">
-                <shape
-                    android:innerRadius="10dp"
-                    android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#4F4F4F" />
-
-                    <stroke
-                        android:width="1dp"
-                        android:color="#5F5F5F" />
-                </shape>
-            </item>
-            <item>
-                <shape
-                    android:innerRadius="10dp"
-                    android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#2F2F2F" />
-
-                    <stroke
-                        android:width="1dp"
-                        android:color="#3F3F3F" />
-                </shape>
-            </item>
-        </selector>
-    </item>
+    <item android:drawable="@drawable/circlebutton_base"/>
     <item
         android:bottom="@dimen/camerabutton_padding"
         android:left="@dimen/camerabutton_padding"
@@ -38,4 +9,4 @@
         android:top="@dimen/camerabutton_padding">
         <bitmap android:src="@drawable/ic_noflash" />
     </item>
-</layer-list>
+</layer-list>

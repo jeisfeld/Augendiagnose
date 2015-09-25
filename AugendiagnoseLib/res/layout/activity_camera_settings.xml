@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left|bottom"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonCameraOverlayCircle"
+        android:layout_width="@dimen/camerabutton_size"
+        android:layout_height="@dimen/camerabutton_size"
+        android:layout_marginTop="@dimen/camerabutton_distance"
+        android:background="@drawable/circlebutton_overlay_circle" />
+
+    <Button
+        android:id="@+id/buttonCameraFlashlight"
+        android:layout_width="@dimen/camerabutton_size"
+        android:layout_height="@dimen/camerabutton_size"
+        android:layout_marginTop="@dimen/camerabutton_distance"
+        android:background="@drawable/circlebutton_noflash" />
+
+</LinearLayout>
