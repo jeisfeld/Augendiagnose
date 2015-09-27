@@ -34,7 +34,7 @@
         <item>Increased trial period to 2 weeks. Enabled various guidance circles on camera. Bugfixes.</item>
         <item>Flashlight can be used in camera. Vertical photos are possible. Bugfixes.</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Selection of camera focus modes. Base enablement of Android 5 camera features. Bugfixes</item>
     </string-array>
 
 </resources>

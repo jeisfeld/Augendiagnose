@@ -34,7 +34,7 @@
             android:background="@drawable/circlebutton_base"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/camerabutton_text_size" />
 
         <SeekBar
             android:id="@+id/seekbarCameraFocus"

@@ -89,7 +89,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Añadido donaciones a través de compra en aplicación. Habilitado apagamiento de anuncios. Reorganizado los ajustes. Corrección De Errores.</item>
         <item>Nuevo proceso para la toma de fotografías desde la aplicación. Hecho libre versión de la aplicación solamente una versión de prueba. Corrección de errores</item>
         <item>Hecho cámara opcional de nuevo.</item>
-        <item>Corrección de errores</item>
+        <item>Selección de modos de enfoque de la cámara. Habilitación de la base de las características de Android 5 de la cámara. Corrección de errores.</item>
     </string-array>
 
 </resources>

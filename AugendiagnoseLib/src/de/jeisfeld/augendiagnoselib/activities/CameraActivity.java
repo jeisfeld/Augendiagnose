@@ -540,7 +540,7 @@ public class CameraActivity extends BaseActivity {
 			storedFocusMode = FocusMode.valueOf(storedFocusModeString);
 		}
 		catch (Exception e) {
-			storedFocusMode = FocusMode.CONTINUOUS;
+			storedFocusMode = FocusMode.MACRO;
 			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
 		}
 		if (!mFocusModes.contains(storedFocusMode)) {
@@ -1012,7 +1012,7 @@ public class CameraActivity extends BaseActivity {
 				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_use_camera2, true);
 			}
 			else {
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_open_camera, true);
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true);
 			}
 		}
 
@@ -1253,10 +1253,8 @@ public class CameraActivity extends BaseActivity {
 		 */
 		public final String toDisplayString() {
 			switch (this) {
-			case AUTO:
-				return "AUTO\nSINGLE";
 			case CONTINUOUS:
-				return "AUTO\nCONT";
+				return "AUTO\n∞";
 			default:
 				return toString();
 			}
