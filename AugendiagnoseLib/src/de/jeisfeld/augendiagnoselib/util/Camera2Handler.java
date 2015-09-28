@@ -130,7 +130,7 @@ public class Camera2Handler implements CameraHandler {
 	private String mCameraId;
 
 	/**
-	 * An {@link AutoFitTextureView} for camera preview.
+	 * A {@link TextureView} for camera preview.
 	 */
 	private TextureView mTextureView;
 

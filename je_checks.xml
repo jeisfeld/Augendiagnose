@@ -23,6 +23,7 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="JavadocVariable"/>
     <module name="JavadocStyle">
       <property name="checkEmptyJavadoc" value="true"/>
+      <property name="checkHtml" value="false"/>
     </module>
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>

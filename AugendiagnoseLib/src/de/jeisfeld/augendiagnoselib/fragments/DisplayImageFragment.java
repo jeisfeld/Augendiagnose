@@ -205,7 +205,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            The index of the view (required if there are multiple such fragments)
 	 * @param initialRightLeft
 	 *            Information if it is the right or left eye (if not in image metadata)
-	 * @return
 	 */
 	public final void setParameters(final String initialFile, final int initialImageIndex,
 			final RightLeft initialRightLeft) {

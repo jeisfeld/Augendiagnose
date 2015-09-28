@@ -29,7 +29,13 @@ public class IabException extends Exception {
 		this(new IabResult(response, message), cause);
 	}
 
-	/** Returns the IAB result (error) that this exception signals. */
+	// JAVADOC:ON
+
+	/**
+	 * Returns the IAB result (error) that this exception signals.
+	 *
+	 * @return the IAP result.
+	 */
 	public final IabResult getResult() {
 		return mResult;
 	}

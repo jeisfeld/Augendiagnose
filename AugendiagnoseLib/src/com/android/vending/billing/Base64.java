@@ -26,22 +26,28 @@ import android.annotation.SuppressLint;
  * Base64 converter class. This code is not a complete MIME encoder; it simply converts binary data to base64 data and
  * back.
  *
- * <p>Note {@link CharBase64} is a GWT-compatible implementation of this class.
+ * <p>Note CharBase64 is a GWT-compatible implementation of this class.
  */
 public final class Base64 {
 
-	// JAVADOC:OFF
-
-	/** Specify encoding (value is {@code true}). */
+	/**
+	 * Specify encoding (value is {@code true}).
+	 */
 	public static final boolean ENCODE = true;
 
-	/** Specify decoding (value is {@code false}). */
+	/**
+	 * Specify decoding (value is {@code false}).
+	 */
 	public static final boolean DECODE = false;
 
-	/** The equals sign (=) as a byte. */
+	/**
+	 * The equals sign (=) as a byte.
+	 */
 	private static final byte EQUALS_SIGN = (byte) '=';
 
-	/** The new line character (\n) as a byte. */
+	/**
+	 * The new line character (\n) as a byte.
+	 */
 	private static final byte NEW_LINE = (byte) '\n';
 
 	/**
@@ -116,7 +122,9 @@ public final class Base64 {
 			 */
 	};
 
-	/** The web safe decodabet */
+	/**
+	 * The web safe decodabet.
+	 */
 	private static final byte[] WEBSAFE_DECODABET =
 			{ -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 0 - 8
 					-5, -5, // Whitespace: Tab and Linefeed
@@ -151,12 +159,18 @@ public final class Base64 {
 			 */
 			};
 
-	// Indicates white space in encoding
+	/**
+	 * Indicates white space in encoding.
+	 */
 	private static final byte WHITE_SPACE_ENC = -5;
-	// Indicates equals sign in encoding
+	/**
+	 * Indicates equals sign in encoding.
+	 */
 	private static final byte EQUALS_SIGN_ENC = -1;
 
-	/** Defeats instantiation. */
+	/**
+	 * Defeats instantiation.
+	 */
 	private Base64() {
 	}
 
@@ -232,6 +246,7 @@ public final class Base64 {
 	 *
 	 * @param source
 	 *            The data to convert
+	 * @return the encoded data.
 	 * @since 1.4
 	 */
 	public static String encode(final byte[] source) {
@@ -245,6 +260,7 @@ public final class Base64 {
 	 *            The data to convert
 	 * @param doPadding
 	 *            is {@code true} to pad result with '=' chars if it does not fall on 3 byte boundaries
+	 * @return the encoded byte array.
 	 */
 	public static String encodeWebSafe(final byte[] source, final boolean doPadding) {
 		return encode(source, 0, source.length, WEBSAFE_ALPHABET, doPadding);
@@ -263,6 +279,7 @@ public final class Base64 {
 	 *            the encoding alphabet
 	 * @param doPadding
 	 *            is {@code true} to pad result with '=' chars if it does not fall on 3 byte boundaries
+	 * @return the encoded byte array.
 	 * @since 1.4
 	 */
 	public static String encode(final byte[] source, final int off, final int len, final byte[] alphabet,
@@ -414,6 +431,8 @@ public final class Base64 {
 	 * @param s
 	 *            the string to decode (decoded in default encoding)
 	 * @return the decoded data
+	 * @throws Base64DecoderException
+	 *             thrown if there is an exception while decoding.
 	 * @since 1.4
 	 */
 	public static byte[] decode(final String s) throws Base64DecoderException {
@@ -427,6 +446,8 @@ public final class Base64 {
 	 * @param s
 	 *            the string to decode (decoded in default encoding)
 	 * @return the decoded data
+	 * @throws Base64DecoderException
+	 *             thrown if there is an exception while decoding.
 	 */
 	public static byte[] decodeWebSafe(final String s) throws Base64DecoderException {
 		byte[] bytes = s.getBytes();
@@ -454,6 +475,8 @@ public final class Base64 {
 	 * @param source
 	 *            the string to decode (decoded in default encoding)
 	 * @return the decoded data
+	 * @throws Base64DecoderException
+	 *             thrown if there is an exception while decoding.
 	 */
 	public static byte[] decodeWebSafe(final byte[] source)
 			throws Base64DecoderException {
@@ -490,6 +513,8 @@ public final class Base64 {
 	 * @param len
 	 *            the length of characters to decode
 	 * @return decoded data
+	 * @throws Base64DecoderException
+	 *             thrown if there is an exception while decoding.
 	 */
 	public static byte[] decodeWebSafe(final byte[] source, final int off, final int len)
 			throws Base64DecoderException {
@@ -508,6 +533,8 @@ public final class Base64 {
 	 * @param decodabet
 	 *            the decodabet for decoding Base64 content
 	 * @return decoded data
+	 * @throws Base64DecoderException
+	 *             thrown if there is an exception while decoding.
 	 */
 	public static byte[] decode(final byte[] source, final int off, final int len, final byte[] decodabet)
 			throws Base64DecoderException {

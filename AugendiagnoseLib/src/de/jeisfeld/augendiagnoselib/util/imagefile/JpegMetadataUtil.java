@@ -178,8 +178,6 @@ public final class JpegMetadataUtil {
 	 *            the file to be validated.
 	 * @throws IOException
 	 *             thrown if the file is no jpg.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
 	 */
 	public static void checkJpeg(final String jpegImageFileName) throws IOException {
 		File file = new File(jpegImageFileName);
