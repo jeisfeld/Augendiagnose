@@ -25,6 +25,7 @@
     <string name="pref_title_user_key">Clave de usuario</string>
     <string name="pref_title_enable_flash">Activar el flash</string>
     <string name="pref_title_camera_api_version">Compatibilidad de la cámara</string>
+    <string name="pref_title_camera_screen_position">Posición de la pantalla de la cámara</string>
     
     <!-- Strings related to Setting arrays -->
 
@@ -69,6 +70,11 @@
     <string-array name="pref_list_titles_camera_api_version">
         <item>Android 4</item>
         <item>Android 5</item>
+    </string-array>
+    <string-array name="pref_list_titles_camera_screen_position">
+        <item>Pantalla completa</item>
+        <item>Desplazamiento a la derecha</item>
+        <item>Desplazamiento a la izquierda</item>
     </string-array>
     
 </resources>

@@ -25,6 +25,7 @@
     <string name="pref_title_user_key">Nutzerschlüssel</string>
     <string name="pref_title_enable_flash">Blitzlicht erlauben</string>
     <string name="pref_title_camera_api_version">Kamera-Kompatibilität</string>
+    <string name="pref_title_camera_screen_position">Kamera-Bildschirmposition</string>
     
     <!-- Strings related to Setting arrays -->
 
@@ -70,5 +71,10 @@
         <item>Android 4</item>
         <item>Android 5</item>
     </string-array>
-    
+    <string-array name="pref_list_titles_camera_screen_position">
+        <item>Ganzer Bildschirm</item>
+        <item>Nach rechts versetzt</item>
+        <item>Nach links versetzt</item>
+    </string-array>
+
 </resources>

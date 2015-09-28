@@ -34,7 +34,9 @@
     <string name="pref_title_enable_flash">Enable flash</string>
     <string name="pref_default_enable_flash" translatable="false">false</string>
     <string name="pref_title_camera_api_version">Camera compatibility</string>
-    
+    <string name="pref_title_camera_screen_position">Camera screen position</string>
+    <string name="pref_default_camera_screen_position" translatable="false">0</string>
+
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
@@ -113,7 +115,17 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    
+    <string-array name="pref_list_titles_camera_screen_position">
+        <item>Full screen</item>
+        <item>Offset to the right</item>
+        <item>Offset to the left</item>
+    </string-array>
+    <string-array name="pref_list_values_camera_screen_position" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- Strings related to stored preferences -->
 
     <string name="key_folder_input" translatable="false">folder_input</string>
@@ -128,6 +140,7 @@
     <string name="key_user_key" translatable="false">user_key</string>
     <string name="key_enable_flash" translatable="false">enable_flash</string>
     <string name="key_camera_api_version" translatable="false">camera_api_version</string>
+    <string name="key_camera_screen_position" translatable="false">camera_screen_position</string>
     <string name="key_dummy_screen_hints" translatable="false">dummy_screen_hints</string>
     <string name="key_dummy_screen_premium" translatable="false">dummy_screen_premium</string>
     <string name="key_dummy_screen_camera" translatable="false">dummy_screen_camera</string>

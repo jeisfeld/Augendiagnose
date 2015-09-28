@@ -127,6 +127,7 @@ public class SettingsFragment extends PreferenceFragment {
 			bindPreferenceSummaryToValue(R.string.key_full_resolution);
 			bindPreferenceSummaryToValue(R.string.key_language);
 			bindPreferenceSummaryToValue(R.string.key_camera_api_version);
+			bindPreferenceSummaryToValue(R.string.key_camera_screen_position);
 
 			if (getString(R.string.pref_title_folder_input).length() == 0) {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));

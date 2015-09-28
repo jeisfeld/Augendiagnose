@@ -28,6 +28,7 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
@@ -234,6 +235,21 @@ public class CameraActivity extends BaseActivity {
 		configureCircleButton();
 		configureFlashlightButton();
 		// Focus button is configured after callback from CameraHandler.
+
+		int screenAppearance =
+				PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_screen_position, R.string.pref_default_camera_screen_position);
+		if (screenAppearance > 0) {
+			FrameLayout cameraOverallFrame = (FrameLayout) findViewById(R.id.camera_overall_frame);
+			int offset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 8, getResources().getDisplayMetrics()); // MAGIC_NUMBER
+			if (screenAppearance == 1) {
+				// value 1: left offset
+				cameraOverallFrame.setPadding(offset, 0, 0, 0);
+			}
+			else {
+				// value 2: right offset
+				cameraOverallFrame.setPadding(0, 0, offset, 0);
+			}
+		}
 
 		String photoFolderName = getIntent().getStringExtra(STRING_EXTRA_PHOTOFOLDER);
 		if (photoFolderName != null) {

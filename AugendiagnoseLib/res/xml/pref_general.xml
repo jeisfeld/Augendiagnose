@@ -93,6 +93,15 @@
             android:defaultValue="@string/pref_default_enable_flash"
             android:key="@string/key_enable_flash"
             android:title="@string/pref_title_enable_flash" />
+
+        <ListPreference
+            android:defaultValue="@array/pref_list_titles_camera_screen_position"
+            android:entries="@array/pref_list_titles_camera_screen_position"
+            android:entryValues="@array/pref_list_values_camera_screen_position"
+            android:key="@string/key_camera_screen_position"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_camera_screen_position" />
     </PreferenceScreen>
     <PreferenceScreen
         android:key="@string/key_dummy_screen_premium"
