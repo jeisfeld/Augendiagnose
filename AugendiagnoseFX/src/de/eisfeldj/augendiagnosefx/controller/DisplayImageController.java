@@ -300,7 +300,7 @@ public class DisplayImageController extends BaseController implements Initializa
 			// Save only if comment changed.
 			if (!(newComment == null && mOldComment == null) && !(newComment != null && newComment.equals(mOldComment))) {
 				JpegMetadata metadata = mEyePhoto.getImageMetadata();
-				metadata.mComment = newComment;
+				metadata.setComment(newComment);
 				mEyePhoto.storeImageMetadata(metadata);
 			}
 
@@ -378,8 +378,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		if (isInitialized()) {
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				metadata.mBrightness = (float) mSliderBrightness.getValue();
-				metadata.mContrast = OverlayImageView.seekbarContrastToStoredContrast((float) mSliderContrast.getValue());
+				metadata.setBrightness((float) mSliderBrightness.getValue());
+				metadata.setContrast(OverlayImageView.seekbarContrastToStoredContrast((float) mSliderContrast.getValue()));
 
 				mEyePhoto.storeImageMetadata(metadata);
 			}
@@ -411,9 +411,9 @@ public class DisplayImageController extends BaseController implements Initializa
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
 				MetadataPosition position = mDisplayImageView.getPosition();
-				metadata.mXPosition = position.mXCenter;
-				metadata.mYPosition = position.mYCenter;
-				metadata.mZoomFactor = position.mZoom;
+				metadata.setXPosition(position.mXCenter);
+				metadata.setYPosition(position.mYCenter);
+				metadata.setZoomFactor(position.mZoom);
 
 				mEyePhoto.storeImageMetadata(metadata);
 			}
@@ -431,9 +431,9 @@ public class DisplayImageController extends BaseController implements Initializa
 		if (isInitialized()) {
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
-				metadata.mXPosition = null;
-				metadata.mYPosition = null;
-				metadata.mZoomFactor = null;
+				metadata.setXPosition((Float) null);
+				metadata.setYPosition((Float) null);
+				metadata.setZoomFactor((Float) null);
 
 				mEyePhoto.storeImageMetadata(metadata);
 				// re-set eyePhoto in order to do initial scaling again.
@@ -458,9 +458,9 @@ public class DisplayImageController extends BaseController implements Initializa
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
 				MetadataPosition position = mDisplayImageView.getPosition();
-				metadata.mXPosition = position.mXCenter;
-				metadata.mYPosition = position.mYCenter;
-				metadata.mZoomFactor = position.mZoom;
+				metadata.setXPosition(position.mXCenter);
+				metadata.setYPosition(position.mYCenter);
+				metadata.setZoomFactor(position.mZoom);
 
 				controller.setImage(metadata, mDisplayImageView.getImageView().getImage());
 			}
@@ -479,9 +479,9 @@ public class DisplayImageController extends BaseController implements Initializa
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 
 		if (metadata.hasBrightnessContrast()) {
-			mSliderBrightness.setValue(metadata.mBrightness);
-			mSliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.mContrast));
-			mDisplayImageView.initializeBrightnessContrast(metadata.mBrightness, metadata.mContrast);
+			mSliderBrightness.setValue(metadata.getBrightness());
+			mSliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.getContrast()));
+			mDisplayImageView.initializeBrightnessContrast(metadata.getBrightness(), metadata.getContrast());
 		}
 		// Only now the listeners should be initialized, as image is not yet loaded and listeners should not
 		// react on initial slider setup.
@@ -491,7 +491,7 @@ public class DisplayImageController extends BaseController implements Initializa
 
 		enableOverlayButtons(metadata.hasOverlayPosition());
 
-		mTxtImageComment.setText(metadata.mComment);
+		mTxtImageComment.setText(metadata.getComment());
 	}
 
 	/**

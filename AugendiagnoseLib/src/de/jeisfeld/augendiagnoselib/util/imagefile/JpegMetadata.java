@@ -13,26 +13,164 @@ public final class JpegMetadata implements Parcelable {
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
 
-	// PUBLIC_FIELDS:START
-	public String mTitle = null;
-	public String mDescription = null;
-	public String mSubject = null;
-	public String mComment = null;
-	public String mPerson = null;
-	public Float mXCenter = null;
-	public Float mYCenter = null;
-	public Float mOverlayScaleFactor = null;
-	public Float mXPosition = null;
-	public Float mYPosition = null;
-	public Float mZoomFactor = null;
-	public Date mOrganizeDate = null;
-	public RightLeft mRightLeft = null;
-	public Float mBrightness = null;
-	public Float mContrast = null;
-	public Integer mOverlayColor = null;
-	public Short mOrientation = null;
+	private String mTitle = null;
+	private String mDescription = null;
+	private String mSubject = null;
+	private String mComment = null;
+	private String mPerson = null;
+	private Float mXCenter = null;
+	private Float mYCenter = null;
+	private Float mOverlayScaleFactor = null;
+	private Float mXPosition = null;
+	private Float mYPosition = null;
+	private Float mZoomFactor = null;
+	private Date mOrganizeDate = null;
+	private RightLeft mRightLeft = null;
+	private Float mBrightness = null;
+	private Float mContrast = null;
+	private Integer mOverlayColor = null;
 
-	// PUBLIC_FIELDS:END
+	public String getTitle() {
+		return mTitle;
+	}
+
+	public void setTitle(final String title) {
+		this.mTitle = title;
+	}
+
+	public String getDescription() {
+		return mDescription;
+	}
+
+	public void setDescription(final String description) {
+		this.mDescription = description;
+	}
+
+	public String getSubject() {
+		return mSubject;
+	}
+
+	public void setSubject(final String subject) {
+		this.mSubject = subject;
+	}
+
+	public String getComment() {
+		return mComment;
+	}
+
+	public void setComment(final String comment) {
+		this.mComment = comment;
+	}
+
+	public String getPerson() {
+		return mPerson;
+	}
+
+	public void setPerson(final String person) {
+		this.mPerson = person;
+	}
+
+	public Float getXCenter() {
+		return mXCenter;
+	}
+
+	public void setXCenter(final Float xCenter) {
+		this.mXCenter = xCenter;
+	}
+
+	public Float getYCenter() {
+		return mYCenter;
+	}
+
+	public void setYCenter(final Float yCenter) {
+		this.mYCenter = yCenter;
+	}
+
+	public Float getOverlayScaleFactor() {
+		return mOverlayScaleFactor;
+	}
+
+	public void setOverlayScaleFactor(final Float overlayScaleFactor) {
+		this.mOverlayScaleFactor = overlayScaleFactor;
+	}
+
+	public Float getXPosition() {
+		return mXPosition;
+	}
+
+	public void setXPosition(final Float xPosition) {
+		this.mXPosition = xPosition;
+	}
+
+	public Float getYPosition() {
+		return mYPosition;
+	}
+
+	public void setYPosition(final Float yPosition) {
+		this.mYPosition = yPosition;
+	}
+
+	public Float getZoomFactor() {
+		return mZoomFactor;
+	}
+
+	public void setZoomFactor(final Float zoomFactor) {
+		this.mZoomFactor = zoomFactor;
+	}
+
+	public Date getOrganizeDate() {
+		return mOrganizeDate;
+	}
+
+	public void setOrganizeDate(final Date organizeDate) {
+		this.mOrganizeDate = organizeDate;
+	}
+
+	public RightLeft getRightLeft() {
+		return mRightLeft;
+	}
+
+	public void setRightLeft(final RightLeft rightLeft) {
+		this.mRightLeft = rightLeft;
+	}
+
+	public Float getBrightness() {
+		return mBrightness;
+	}
+
+	public void setBrightness(final Float brightness) {
+		this.mBrightness = brightness;
+	}
+
+	public Float getContrast() {
+		return mContrast;
+	}
+
+	public void setContrast(final Float contrast) {
+		this.mContrast = contrast;
+	}
+
+	public Integer getOverlayColor() {
+		return mOverlayColor;
+	}
+
+	public void setOverlayColor(final Integer overlayColor) {
+		this.mOverlayColor = overlayColor;
+	}
+
+	/**
+	 * The EXIF orientation is not persisted in the XMP Metadata structure, but only used for storage in EXIF.
+	 */
+	private Short mOrientation = null;
+
+	public Short getOrientation() {
+		return mOrientation;
+	}
+
+	public void setOrientation(final Short orientation) {
+		this.mOrientation = orientation;
+	}
+
 	// JAVADOC:ON
 
 	/**
@@ -154,11 +292,11 @@ public final class JpegMetadata implements Parcelable {
 		return mOverlayColor == null ? null : Integer.toHexString(mOverlayColor);
 	}
 
-	public void setOrientation(final String value) {
+	private void setOrientation(final String value) {
 		mOrientation = value == null ? null : (short) Short.parseShort(value);
 	}
 
-	public String getOrientationString() {
+	private String getOrientationString() {
 		return mOrientation == null ? null : Short.toString(mOrientation);
 	}
 
@@ -172,8 +310,8 @@ public final class JpegMetadata implements Parcelable {
 		str.append("Subject: " + mSubject + LINE_BREAK);
 		str.append("Comment: " + mComment + LINE_BREAK);
 		str.append("Person: " + mPerson + LINE_BREAK);
-		str.append("X-Position: " + mXCenter + LINE_BREAK);
-		str.append("Y-Position: " + mYCenter + LINE_BREAK);
+		str.append("X-Center: " + mXCenter + LINE_BREAK);
+		str.append("Y-Center: " + mYCenter + LINE_BREAK);
 		str.append("OverlayScaleFactor: " + mOverlayScaleFactor + LINE_BREAK);
 		str.append("X-Position: " + mXPosition + LINE_BREAK);
 		str.append("Y-Position: " + mYPosition + LINE_BREAK);

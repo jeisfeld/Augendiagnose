@@ -129,11 +129,11 @@ public final class JpegMetadataUtil {
 		XmpHandler parser = new XmpHandler(xmpString);
 
 		// Standard fields are pre-filled with custom data
-		result.mTitle = parser.getJeItem(XmpHandler.ITEM_TITLE);
-		result.mDescription = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
-		result.mSubject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
-		result.mComment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
-		result.mPerson = parser.getJeItem(XmpHandler.ITEM_PERSON);
+		result.setTitle(parser.getJeItem(XmpHandler.ITEM_TITLE));
+		result.setDescription(parser.getJeItem(XmpHandler.ITEM_DESCRIPTION));
+		result.setSubject(parser.getJeItem(XmpHandler.ITEM_SUBJECT));
+		result.setComment(parser.getJeItem(XmpHandler.ITEM_COMMENT));
+		result.setPerson(parser.getJeItem(XmpHandler.ITEM_PERSON));
 
 		result.setXCenter(parser.getJeItem(XmpHandler.ITEM_X_CENTER));
 		result.setYCenter(parser.getJeItem(XmpHandler.ITEM_Y_CENTER));
@@ -141,27 +141,27 @@ public final class JpegMetadataUtil {
 		result.setXPosition(parser.getJeItem(XmpHandler.ITEM_X_POSITION));
 		result.setYPosition(parser.getJeItem(XmpHandler.ITEM_Y_POSITION));
 		result.setZoomFactor(parser.getJeItem(XmpHandler.ITEM_ZOOM_FACTOR));
-		result.mOrganizeDate = parser.getJeDate(XmpHandler.ITEM_ORGANIZE_DATE);
+		result.setOrganizeDate(parser.getJeDate(XmpHandler.ITEM_ORGANIZE_DATE));
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
 		result.setOverlayColor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_COLOR));
 
 		// For standard fields, use custom data only if there is no other data.
-		if (result.mDescription == null) {
-			result.mDescription = parser.getDcDescription();
+		if (result.getDescription() == null) {
+			result.setDescription(parser.getDcDescription());
 		}
-		if (result.mSubject == null) {
-			result.mSubject = parser.getDcSubject();
+		if (result.getSubject() == null) {
+			result.setSubject(parser.getDcSubject());
 		}
-		if (result.mPerson == null) {
-			result.mPerson = parser.getMicrosoftPerson();
+		if (result.getPerson() == null) {
+			result.setPerson(parser.getMicrosoftPerson());
 		}
-		if (result.mTitle == null) {
-			result.mTitle = parser.getDcTitle();
+		if (result.getTitle() == null) {
+			result.setTitle(parser.getDcTitle());
 		}
-		if (result.mComment == null) {
-			result.mComment = parser.getUserComment();
+		if (result.getComment() == null) {
+			result.setComment(parser.getUserComment());
 		}
 
 		// Retrieve EXIF data
@@ -181,8 +181,8 @@ public final class JpegMetadataUtil {
 
 			// EXIF data have precedence only if saving EXIF is allowed
 			TiffField title = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
-			if (title != null && (changeExifAllowed() || result.mTitle == null)) {
-				result.mTitle = title.getStringValue().trim();
+			if (title != null && (changeExifAllowed() || result.getTitle() == null)) {
+				result.setTitle(title.getStringValue().trim());
 			}
 			String exifComment = null;
 			TiffField comment = tiffImageMetadata.findField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
@@ -194,12 +194,12 @@ public final class JpegMetadataUtil {
 				// XPComment takes precedence if existing
 				exifComment = comment2.getStringValue().trim();
 			}
-			if (exifComment != null && (changeExifAllowed() || result.mComment == null)) {
-				result.mComment = exifComment;
+			if (exifComment != null && (changeExifAllowed() || result.getComment() == null)) {
+				result.setComment(exifComment);
 			}
 			TiffField subject = tiffImageMetadata.findField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
-			if (subject != null && (changeExifAllowed() || result.mSubject == null)) {
-				result.mSubject = subject.getStringValue().trim();
+			if (subject != null && (changeExifAllowed() || result.getSubject() == null)) {
+				result.setSubject(subject.getStringValue().trim());
 			}
 		}
 		catch (Exception e) {
@@ -207,20 +207,20 @@ public final class JpegMetadataUtil {
 		}
 
 		// If fields are still null, try to get them from custom XMP
-		if (result.mDescription == null) {
-			result.mDescription = parser.getJeItem(XmpHandler.ITEM_DESCRIPTION);
+		if (result.getDescription() == null) {
+			result.setDescription(parser.getJeItem(XmpHandler.ITEM_DESCRIPTION));
 		}
-		if (result.mSubject == null) {
-			result.mSubject = parser.getJeItem(XmpHandler.ITEM_SUBJECT);
+		if (result.getSubject() == null) {
+			result.setSubject(parser.getJeItem(XmpHandler.ITEM_SUBJECT));
 		}
-		if (result.mPerson == null) {
-			result.mPerson = parser.getJeItem(XmpHandler.ITEM_PERSON);
+		if (result.getPerson() == null) {
+			result.setPerson(parser.getJeItem(XmpHandler.ITEM_PERSON));
 		}
-		if (result.mTitle == null) {
-			result.mTitle = parser.getJeItem(XmpHandler.ITEM_TITLE);
+		if (result.getTitle() == null) {
+			result.setTitle(parser.getJeItem(XmpHandler.ITEM_TITLE));
 		}
-		if (result.mComment == null) {
-			result.mComment = parser.getJeItem(XmpHandler.ITEM_COMMENT);
+		if (result.getComment() == null) {
+			result.setComment(parser.getJeItem(XmpHandler.ITEM_COMMENT));
 		}
 
 		return result;
@@ -300,24 +300,24 @@ public final class JpegMetadataUtil {
 			final TiffOutputDirectory rootDirectory = outputSet.getOrCreateRootDirectory();
 			final TiffOutputDirectory exifDirectory = outputSet.getOrCreateExifDirectory();
 
-			if (metadata.mTitle != null) {
+			if (metadata.getTitle() != null) {
 				rootDirectory.removeField(MicrosoftTagConstants.EXIF_TAG_XPTITLE);
-				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, metadata.mTitle);
+				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, metadata.getTitle());
 
 				rootDirectory.removeField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
-				rootDirectory.add(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, metadata.mTitle);
+				rootDirectory.add(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, metadata.getTitle());
 			}
 
-			if (metadata.mComment != null) {
+			if (metadata.getComment() != null) {
 				rootDirectory.removeField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
-				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, metadata.mComment);
+				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, metadata.getComment());
 				exifDirectory.removeField(ExifTagConstants.EXIF_TAG_USER_COMMENT);
-				exifDirectory.add(ExifTagConstants.EXIF_TAG_USER_COMMENT, metadata.mComment);
+				exifDirectory.add(ExifTagConstants.EXIF_TAG_USER_COMMENT, metadata.getComment());
 			}
 
-			if (metadata.mSubject != null) {
+			if (metadata.getSubject() != null) {
 				rootDirectory.removeField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
-				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.mSubject);
+				rootDirectory.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, metadata.getSubject());
 			}
 
 			try {
@@ -378,18 +378,18 @@ public final class JpegMetadataUtil {
 
 			if (changeExifAllowed()) {
 				// Change standard fields only if EXIF allowed
-				parser.setDcTitle(metadata.mTitle);
-				parser.setDcDescription(metadata.mDescription);
-				parser.setDcSubject(metadata.mSubject);
-				parser.setUserComment(metadata.mComment);
-				parser.setMicrosoftPerson(metadata.mPerson);
+				parser.setDcTitle(metadata.getTitle());
+				parser.setDcDescription(metadata.getDescription());
+				parser.setDcSubject(metadata.getSubject());
+				parser.setUserComment(metadata.getComment());
+				parser.setMicrosoftPerson(metadata.getPerson());
 			}
 
-			parser.setJeItem(XmpHandler.ITEM_TITLE, metadata.mTitle);
-			parser.setJeItem(XmpHandler.ITEM_DESCRIPTION, metadata.mDescription);
-			parser.setJeItem(XmpHandler.ITEM_SUBJECT, metadata.mSubject);
-			parser.setJeItem(XmpHandler.ITEM_COMMENT, metadata.mComment);
-			parser.setJeItem(XmpHandler.ITEM_PERSON, metadata.mPerson);
+			parser.setJeItem(XmpHandler.ITEM_TITLE, metadata.getTitle());
+			parser.setJeItem(XmpHandler.ITEM_DESCRIPTION, metadata.getDescription());
+			parser.setJeItem(XmpHandler.ITEM_SUBJECT, metadata.getSubject());
+			parser.setJeItem(XmpHandler.ITEM_COMMENT, metadata.getComment());
+			parser.setJeItem(XmpHandler.ITEM_PERSON, metadata.getPerson());
 
 			parser.setJeItem(XmpHandler.ITEM_X_CENTER, metadata.getXCenterString());
 			parser.setJeItem(XmpHandler.ITEM_Y_CENTER, metadata.getYCenterString());
@@ -397,7 +397,7 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_X_POSITION, metadata.getXPositionString());
 			parser.setJeItem(XmpHandler.ITEM_Y_POSITION, metadata.getYPositionString());
 			parser.setJeItem(XmpHandler.ITEM_ZOOM_FACTOR, metadata.getZoomFactorString());
-			parser.setJeDate(XmpHandler.ITEM_ORGANIZE_DATE, metadata.mOrganizeDate);
+			parser.setJeDate(XmpHandler.ITEM_ORGANIZE_DATE, metadata.getOrganizeDate());
 			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
 			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
 			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());

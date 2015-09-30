@@ -357,7 +357,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onClick(final View v) {
 				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
-						mImageView.getMetadata().mComment);
+						mImageView.getMetadata().getComment());
 				DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
 			}
 		});

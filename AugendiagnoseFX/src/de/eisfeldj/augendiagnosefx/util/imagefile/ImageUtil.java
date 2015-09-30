@@ -123,9 +123,7 @@ public final class ImageUtil {
 						0,
 						OVERLAY_SIZE,
 						OVERLAY_SIZE,
-						colorNoAlpha
-				)
-				);
+						colorNoAlpha));
 
 		// Type 2 is not changed in color.
 		if (overlayType != 2) {
@@ -281,8 +279,8 @@ public final class ImageUtil {
 		}
 		else if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
 			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
-					metadata.mXCenter, metadata.mYCenter,
-					metadata.mOverlayScaleFactor, brightness, contrast, resolution);
+					metadata.getXCenter(), metadata.getYCenter(),
+					metadata.getOverlayScaleFactor(), brightness, contrast, resolution);
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,

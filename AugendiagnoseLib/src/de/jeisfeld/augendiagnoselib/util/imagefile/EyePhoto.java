@@ -398,8 +398,8 @@ public class EyePhoto {
 				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
-			if (metadata.mPerson == null || metadata.mPerson.length() == 0 || metadata.mPerson.equals(getPersonName())) {
-				metadata.mPerson = targetName;
+			if (metadata.getPerson() == null || metadata.getPerson().length() == 0 || metadata.getPerson().equals(getPersonName())) {
+				metadata.setPerson(targetName);
 			}
 			target.storeImageMetadata(metadata);
 		}
@@ -426,7 +426,7 @@ public class EyePhoto {
 				metadata = new JpegMetadata();
 				target.updateMetadataWithDefaults(metadata);
 			}
-			metadata.mOrganizeDate = newDate;
+			metadata.setOrganizeDate(newDate);
 			target.storeImageMetadata(metadata);
 		}
 
@@ -510,10 +510,10 @@ public class EyePhoto {
 	 *            the metadata object to be enhanced by the default information.
 	 */
 	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
-		metadata.mPerson = getPersonName();
-		metadata.mOrganizeDate = getDate();
-		metadata.mRightLeft = getRightLeft();
-		metadata.mTitle = getPersonName() + " - " + getRightLeft().getTitleSuffix();
+		metadata.setPerson(getPersonName());
+		metadata.setOrganizeDate(getDate());
+		metadata.setRightLeft(getRightLeft());
+		metadata.setTitle(getPersonName() + " - " + getRightLeft().getTitleSuffix());
 	}
 
 	/**

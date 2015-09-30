@@ -983,18 +983,18 @@ public class CameraActivity extends BaseActivity {
 
 			if (metadata == null) {
 				metadata = new JpegMetadata();
-				metadata.mRightLeft = mCurrentRightLeft;
-				metadata.mComment = "";
-				metadata.mOrganizeDate = new Date();
-				metadata.mOrientation = exifAngle;
+				metadata.setRightLeft(mCurrentRightLeft);
+				metadata.setComment("");
+				metadata.setOrganizeDate(new Date());
+				metadata.setOrientation(exifAngle);
 			}
 
 			int overlayCircleRadius =
 					CIRCLE_RADII[PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE)];
 			if (overlayCircleRadius > 0) {
-				metadata.mXCenter = 0.5f; // MAGIC_NUMBER
-				metadata.mYCenter = 0.5f; // MAGIC_NUMBER
-				metadata.mOverlayScaleFactor = ((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor();
+				metadata.setXCenter(0.5f); // MAGIC_NUMBER
+				metadata.setYCenter(0.5f); // MAGIC_NUMBER
+				metadata.setOverlayScaleFactor(((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor());
 			}
 
 			// save photo

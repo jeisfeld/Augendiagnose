@@ -300,12 +300,12 @@ public class SizableImageView extends ScrollPane {
 	 */
 	private void doInitialScaling(final JpegMetadata metadata) {
 		if (metadata != null && metadata.hasViewPosition()) {
-			mZoomProperty.set(getDefaultScaleFactor() * metadata.mZoomFactor);
+			mZoomProperty.set(getDefaultScaleFactor() * metadata.getZoomFactor());
 		}
 		else if (metadata != null && metadata.hasOverlayPosition()) {
 			mZoomProperty.set(Math.min(getWidth(), getHeight())
 					/ Math.max(mImageView.getImage().getWidth(), mImageView.getImage().getHeight())
-					/ metadata.mOverlayScaleFactor);
+					/ metadata.getOverlayScaleFactor());
 		}
 		else {
 			mZoomProperty.set(getDefaultScaleFactor());
@@ -320,12 +320,12 @@ public class SizableImageView extends ScrollPane {
 			float yCenter;
 
 			if (metadata.hasViewPosition()) {
-				xCenter = metadata.mXPosition;
-				yCenter = metadata.mYPosition;
+				xCenter = metadata.getXPosition();
+				yCenter = metadata.getYPosition();
 			}
 			else {
-				xCenter = metadata.mXCenter;
-				yCenter = metadata.mYCenter;
+				xCenter = metadata.getXCenter();
+				yCenter = metadata.getYCenter();
 			}
 
 			ScrollPosition scrollPosition =

@@ -322,11 +322,11 @@ public final class DialogUtil {
 		try {
 			JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(eyePhoto.getAbsolutePath());
 
-			if (metadata.mPerson != null && metadata.mPerson.length() > 0) {
-				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.mPerson));
+			if (metadata.getPerson() != null && metadata.getPerson().length() > 0) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_name, metadata.getPerson()));
 			}
-			if (metadata.mComment != null && metadata.mComment.length() > 0) {
-				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.mComment));
+			if (metadata.getComment() != null && metadata.getComment().length() > 0) {
+				message.append(formatImageInfoLine(activity, R.string.imageinfo_line_comment, metadata.getComment()));
 			}
 		}
 		catch (Exception e) {

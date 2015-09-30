@@ -285,9 +285,9 @@ public class OverlayPinchImageView extends PinchImageView {
 							if (mMetadata != null && mMetadata.hasOverlayPosition()) {
 								// stored position of overlay
 								mHasOverlayPosition = true;
-								mOverlayX = mMetadata.mXCenter;
-								mOverlayY = mMetadata.mYCenter;
-								mOverlayScaleFactor = mMetadata.mOverlayScaleFactor
+								mOverlayX = mMetadata.getXCenter();
+								mOverlayY = mMetadata.getYCenter();
+								mOverlayScaleFactor = mMetadata.getOverlayScaleFactor()
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 								lockOverlay(true, false);
 								if (mGuiElementUpdater != null) {
@@ -302,16 +302,16 @@ public class OverlayPinchImageView extends PinchImageView {
 								mHasViewPosition = true;
 							}
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
-								mBrightness = mMetadata.mBrightness.floatValue();
-								mContrast = mMetadata.mContrast.floatValue();
+								mBrightness = mMetadata.getBrightness().floatValue();
+								mContrast = mMetadata.getContrast().floatValue();
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
 									mGuiElementUpdater
 											.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 								}
 							}
-							if (mMetadata != null && mMetadata.mOverlayColor != null) {
-								mOverlayColor = mMetadata.mOverlayColor.intValue();
+							if (mMetadata != null && mMetadata.getOverlayColor() != null) {
+								mOverlayColor = mMetadata.getOverlayColor().intValue();
 								mGuiElementUpdater.updateOverlayColorButton(mOverlayColor);
 							}
 
@@ -348,9 +348,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	protected final void doInitialScaling() {
 		// If available, use stored position
 		if (!mInitialized && mHasViewPosition) {
-			mPosX = mMetadata.mXPosition;
-			mPosY = mMetadata.mYPosition;
-			mScaleFactor = mMetadata.mZoomFactor * getOrientationIndependentScaleFactor();
+			mPosX = mMetadata.getXPosition();
+			mPosY = mMetadata.getYPosition();
+			mScaleFactor = mMetadata.getZoomFactor() * getOrientationIndependentScaleFactor();
 			mLastScaleFactor = mScaleFactor;
 			mInitialized = true;
 		}
@@ -515,15 +515,14 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		if (lock && store && mInitialized) {
 			if (mMetadata != null) {
-				if (mMetadata.mRightLeft == null) {
+				if (mMetadata.getRightLeft() == null) {
 					// If image did not yet pass metadata setting, do it now.
 					mEyePhoto.updateMetadataWithDefaults(mMetadata);
 				}
 
-				mMetadata.mXCenter = mOverlayX;
-				mMetadata.mYCenter = mOverlayY;
-				mMetadata.mOverlayScaleFactor = mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight())
-						* OVERLAY_SIZE;
+				mMetadata.setXCenter(mOverlayX);
+				mMetadata.setYCenter(mOverlayY);
+				mMetadata.setOverlayScaleFactor(mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight()) * OVERLAY_SIZE);
 				mEyePhoto.storeImageMetadata(mMetadata);
 
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
@@ -544,9 +543,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		mOverlayY = ONE_HALF;
 		if (store && mInitialized) {
 			if (mMetadata != null) {
-				mMetadata.mXCenter = null;
-				mMetadata.mYCenter = null;
-				mMetadata.mOverlayScaleFactor = null;
+				mMetadata.setXCenter((Float) null);
+				mMetadata.setYCenter((Float) null);
+				mMetadata.setOverlayScaleFactor((Float) null);
 				mEyePhoto.storeImageMetadata(mMetadata);
 			}
 		}
@@ -698,8 +697,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void storeBrightnessContrast(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
-				mMetadata.mBrightness = null;
-				mMetadata.mContrast = null;
+				mMetadata.setBrightness((Float) null);
+				mMetadata.setContrast((Float) null);
 				mBrightness = 0;
 				mContrast = 1;
 				if (mGuiElementUpdater != null) {
@@ -708,8 +707,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 			}
 			else {
-				mMetadata.mBrightness = mBrightness;
-				mMetadata.mContrast = mContrast;
+				mMetadata.setBrightness(mBrightness);
+				mMetadata.setContrast(mContrast);
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -750,9 +749,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
 				mHasViewPosition = false;
-				mMetadata.mXPosition = null;
-				mMetadata.mYPosition = null;
-				mMetadata.mZoomFactor = null;
+				mMetadata.setXPosition((Float) null);
+				mMetadata.setYPosition((Float) null);
+				mMetadata.setZoomFactor((Float) null);
 
 				// Reset to original view size
 				mInitialized = false;
@@ -760,9 +759,9 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 			else {
 				mHasViewPosition = true;
-				mMetadata.mXPosition = mPosX;
-				mMetadata.mYPosition = mPosY;
-				mMetadata.mZoomFactor = mScaleFactor / getOrientationIndependentScaleFactor();
+				mMetadata.setXPosition(mPosX);
+				mMetadata.setYPosition(mPosY);
+				mMetadata.setZoomFactor(mScaleFactor / getOrientationIndependentScaleFactor());
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -778,11 +777,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void storeOverlayColor(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
-				mMetadata.mOverlayColor = null;
+				mMetadata.setOverlayColor((Integer) null);
 				setOverlayColor(mGuiElementUpdater.getOverlayDefaultColor());
 			}
 			else {
-				mMetadata.mOverlayColor = mOverlayColor;
+				mMetadata.setOverlayColor(mOverlayColor);
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);
@@ -1147,7 +1146,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void storeComment(final String comment) {
 		if (mInitialized && mMetadata != null) {
-			mMetadata.mComment = comment;
+			mMetadata.setComment(comment);
 			mEyePhoto.storeImageMetadata(mMetadata);
 
 			PreferenceUtil.incrementCounter(R.string.key_statistics_countcomment);
