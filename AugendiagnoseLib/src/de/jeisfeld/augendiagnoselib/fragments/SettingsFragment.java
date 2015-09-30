@@ -133,16 +133,12 @@ public class SettingsFragment extends PreferenceFragment {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
 			}
 
+			PreferenceScreen cameraScreen = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_camera));
 			if (!SystemUtil.isAndroid5()) {
-				PreferenceScreen cameraScreen = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_camera));
-				if (SystemUtil.hasFlashlight()) {
-					// No Android 5, but flashlight
-					cameraScreen.removePreference(findPreference(getString(R.string.key_camera_api_version)));
-				}
-				else {
-					// Neither flashlight nor Android 5
-					getPreferenceScreen().removePreference(cameraScreen);
-				}
+				cameraScreen.removePreference(findPreference(getString(R.string.key_camera_api_version)));
+			}
+			if (!SystemUtil.hasFlashlight()) {
+				cameraScreen.removePreference(findPreference(getString(R.string.key_enable_flash)));
 			}
 
 			addHintButtonListener(R.string.key_dummy_show_hints, false);
