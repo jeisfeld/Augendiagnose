@@ -37,6 +37,16 @@ public final class ImageUtil {
 	// JAVADOC:ON
 
 	/**
+	 * The ratio of overlay circle diameter to overlay size.
+	 */
+	private static final float OVERLAY_CIRCLE_RATIO = 0.75f;
+
+	/**
+	 * The size of the mesh used to deform the overlays.
+	 */
+	private static final int OVERLAY_MESH_SIZE = 128;
+
+	/**
 	 * Number of milliseconds for retry of getting bitmap.
 	 */
 	private static final long BITMAP_RETRY = 50;
@@ -414,6 +424,84 @@ public final class ImageUtil {
 		p.setColorFilter(filter);
 		Canvas canvas = new Canvas(ret);
 		canvas.drawBitmap(sourceBitmap, 0, 0, p);
+		return ret;
+	}
+
+	/**
+	 * Deform the overlay bitmap according to a different pupil size.
+	 *
+	 * @param sourceBitmap
+	 *            The original overlay bitmap.
+	 * @param origPupilSize
+	 *            The pupil size (relative to iris) in the original overlay bitmap.
+	 * @param destPupilSize
+	 *            The pupil size (relative to iris) in the target overlay bitmap.
+	 * @param pupilOffsetX
+	 *            The x offset of the pupil center, relative to the iris size
+	 * @param pupilOffsetY
+	 *            The y offset of the pupil center, relative to the iris size
+	 * @return The deformed overlay bitmap.
+	 */
+	public static Bitmap deformOverlayByPupilSize(final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
+			final float pupilOffsetX, final float pupilOffsetY) {
+		int overlaySize = sourceBitmap.getWidth();
+		int overlayHalfSize = overlaySize / 2;
+		float irisRadius = overlayHalfSize * OVERLAY_CIRCLE_RATIO;
+
+		// the center of enlargement
+		float targetCenterX = overlayHalfSize + 2 * irisRadius * pupilOffsetX / (1 - destPupilSize);
+		float targetCenterY = overlayHalfSize + 2 * irisRadius * pupilOffsetY / (1 - destPupilSize);
+
+		// The linear transformation constants
+		float linTransA = (destPupilSize - origPupilSize) / (1 - origPupilSize);
+		float linTransB = (1 - destPupilSize) / (irisRadius * (1 - origPupilSize));
+
+		Bitmap ret = Bitmap.createBitmap(overlaySize, overlaySize, sourceBitmap.getConfig());
+		Canvas canvas = new Canvas(ret);
+
+		float[] verts = new float[2 * (OVERLAY_MESH_SIZE + 1) * (OVERLAY_MESH_SIZE + 1)];
+		int vertsIndex = 0;
+		for (int y = 0; y <= OVERLAY_MESH_SIZE; y++) {
+			for (int x = 0; x <= OVERLAY_MESH_SIZE; x++) {
+				// The positions of the original mesh vertices in pixels relative to the center
+				float xPos = (float) x * overlaySize / OVERLAY_MESH_SIZE - overlayHalfSize;
+				float yPos = (float) y * overlaySize / OVERLAY_MESH_SIZE - overlayHalfSize;
+				float centerDist = (float) Math.sqrt(xPos * xPos + yPos * yPos);
+
+				if (centerDist >= irisRadius) {
+					// outside the iris, take original position
+					verts[vertsIndex++] = overlayHalfSize + xPos;
+					verts[vertsIndex++] = overlayHalfSize + yPos;
+				}
+				else if (centerDist == 0) {
+					verts[vertsIndex++] = targetCenterX;
+					verts[vertsIndex++] = targetCenterY;
+				}
+				else {
+					// original direction
+					float xDirection = xPos / centerDist;
+					float yDirection = yPos / centerDist;
+
+					// corresponding iris boundary point
+					float xBound = overlayHalfSize + xDirection * irisRadius;
+					float yBound = overlayHalfSize + yDirection * irisRadius;
+
+					float radialPosition;
+					if (centerDist <= origPupilSize * irisRadius) {
+						radialPosition = destPupilSize * centerDist / (origPupilSize * irisRadius);
+					}
+					else {
+						radialPosition = linTransA + centerDist * linTransB;
+					}
+
+					verts[vertsIndex++] = targetCenterX + (xBound - targetCenterX) * radialPosition;
+					verts[vertsIndex++] = targetCenterY + (yBound - targetCenterY) * radialPosition;
+				}
+			}
+		}
+
+		canvas.drawBitmapMesh(sourceBitmap, OVERLAY_MESH_SIZE, OVERLAY_MESH_SIZE, verts, 0, null, 0, null);
+
 		return ret;
 	}
 

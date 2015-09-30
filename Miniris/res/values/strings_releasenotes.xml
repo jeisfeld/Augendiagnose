@@ -26,7 +26,7 @@
         <item>1.0</item>
         <item>1.0.1</item>
         <item>1.0.2</item>
-        <item>1.0.3</item>
+        <item>1.1</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
