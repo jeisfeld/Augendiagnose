@@ -146,6 +146,9 @@ public final class JpegMetadataUtil {
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
 		result.setOverlayColor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_COLOR));
+		result.setPupilSize(parser.getJeItem(XmpHandler.ITEM_PUPIL_SIZE));
+		result.setPupilXOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET));
+		result.setPupilYOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET));
 
 		// For standard fields, use custom data only if there is no other data.
 		if (result.getDescription() == null) {
@@ -402,6 +405,9 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
 			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_COLOR, metadata.getOverlayColorString());
+			parser.setJeItem(XmpHandler.ITEM_PUPIL_SIZE, metadata.getPupilSizeString());
+			parser.setJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET, metadata.getPupilXOffsetString());
+			parser.setJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET, metadata.getPupilYOffsetString());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);

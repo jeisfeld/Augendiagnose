@@ -47,6 +47,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
+import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.Camera2Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
@@ -83,7 +84,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The size of the circle overlay bitmap.
 	 */
-	private static final int CIRCLE_BITMAP_SIZE = 1024;
+	private static final int CIRCLE_BITMAP_SIZE = OverlayPinchImageView.OVERLAY_SIZE;
 	/**
 	 * The array of possible radii of overlay circles.
 	 */
@@ -92,6 +93,7 @@ public class CameraActivity extends BaseActivity {
 	 * The default circle size.
 	 */
 	private static final int DEFAULT_CIRCLE_TYPE = 2;
+
 	/**
 	 * The available focus modes.
 	 */
@@ -995,6 +997,7 @@ public class CameraActivity extends BaseActivity {
 				metadata.setXCenter(0.5f); // MAGIC_NUMBER
 				metadata.setYCenter(0.5f); // MAGIC_NUMBER
 				metadata.setOverlayScaleFactor(((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor());
+				metadata.setPupilSize(OverlayPinchImageView.DEFAULT_PUPIL_SIZE);
 			}
 
 			// save photo

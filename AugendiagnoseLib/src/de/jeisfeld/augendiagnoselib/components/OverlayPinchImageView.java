@@ -50,7 +50,12 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The size of the overlays (in pixels).
 	 */
-	private static final int OVERLAY_SIZE = 1024;
+	public static final int OVERLAY_SIZE = 1024;
+
+	/**
+	 * The pupil size used as default in display.
+	 */
+	public static final float DEFAULT_PUPIL_SIZE = Float.parseFloat(Application.getResourceString(R.string.overlay_default_pupil_size));
 
 	/**
 	 * The minimum scale factor allowed.
@@ -590,10 +595,6 @@ public class OverlayPinchImageView extends PinchImageView {
 				String origPupilSizeString = getResources().getStringArray(R.array.overlay_pupil_sizes)[position];
 				float origPupilSize = Float.parseFloat(origPupilSizeString);
 
-				// TODO: take from metadata
-				String destPupilSizeString = getResources().getString(R.string.overlay_default_pupil_size);
-				float destPupilSize = Float.parseFloat(destPupilSizeString);
-
 				Drawable drawable;
 				if (mEyePhoto.getRightLeft().equals(RightLeft.RIGHT)) {
 					drawable = overlaysRight.getDrawable(position);
@@ -601,12 +602,10 @@ public class OverlayPinchImageView extends PinchImageView {
 				else {
 					drawable = overlaysLeft.getDrawable(position);
 				}
-				if (overlayTypes[position] == 1) {
-					mOverlayCache[position] = getModifiedDrawable(drawable, mOverlayColor, origPupilSize, destPupilSize, 0, 0);
-				}
-				else {
-					mOverlayCache[position] = getModifiedDrawable(drawable, -1, origPupilSize, destPupilSize, 0, 0);
-				}
+
+				Integer targetColor = overlayTypes[position] == 1 ? mOverlayColor : null;
+				mOverlayCache[position] = getModifiedDrawable(drawable, targetColor, origPupilSize, mMetadata.getPupilSize(),
+						mMetadata.getPupilXOffset(), mMetadata.getPupilYOffset());
 			}
 			overlaysLeft.recycle();
 			overlaysRight.recycle();
@@ -632,11 +631,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *            The relative y offset of the pupil center
 	 * @return The modified drawable, with the intended color.
 	 */
-	private Drawable getModifiedDrawable(final Drawable sourceDrawable, final int color, final float origPupilSize, final float destPupilSize,
-			final float pupilOffsetX, final float pupilOffsetY) {
+	private Drawable getModifiedDrawable(final Drawable sourceDrawable, final Integer color, final float origPupilSize, final Float destPupilSize,
+			final Float pupilOffsetX, final Float pupilOffsetY) {
 		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
-		Bitmap colouredBitmap = color == -1 ? bitmap : ImageUtil.changeBitmapColor(bitmap, color);
-		Bitmap deformedBitmap = ImageUtil.deformOverlayByPupilSize(colouredBitmap, origPupilSize, destPupilSize, pupilOffsetX, pupilOffsetY);
+		Bitmap colouredBitmap = color == null ? bitmap : ImageUtil.changeBitmapColor(bitmap, color);
+
+		float targetPupilSize = destPupilSize == null ? DEFAULT_PUPIL_SIZE : destPupilSize;
+		Bitmap deformedBitmap = ImageUtil.deformOverlayByPupilSize(colouredBitmap, origPupilSize, targetPupilSize, pupilOffsetX, pupilOffsetY);
 		return new BitmapDrawable(getResources(), deformedBitmap);
 	}
 

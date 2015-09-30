@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import android.util.Log;
-import de.jeisfeld.augendiagnoselib.Application;
-
 import com.adobe.xmp.XMPDateTime;
 import com.adobe.xmp.XMPDateTimeFactory;
 import com.adobe.xmp.XMPException;
@@ -15,6 +12,9 @@ import com.adobe.xmp.XMPMetaFactory;
 import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
+
+import android.util.Log;
+import de.jeisfeld.augendiagnoselib.Application;
 
 /**
  * Helper class to handle XML data in a JPEG file.
@@ -50,6 +50,9 @@ public class XmpHandler {
 	public static final String ITEM_RIGHT_LEFT = "rightLeft";
 	public static final String ITEM_BRIGHTNESS = "brightness";
 	public static final String ITEM_CONTRAST = "contrast";
+	public static final String ITEM_PUPIL_SIZE = "pupilSize";
+	public static final String ITEM_PUPIL_X_OFFSET = "pupilXOffset";
+	public static final String ITEM_PUPIL_Y_OFFSET = "pupilYOffset";
 	public static final String ITEM_OVERLAY_COLOR = "overlayColor";
 
 	// JAVADOC:ON

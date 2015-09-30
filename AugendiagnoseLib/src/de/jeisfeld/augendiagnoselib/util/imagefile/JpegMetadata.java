@@ -28,6 +28,9 @@ public final class JpegMetadata implements Parcelable {
 	private RightLeft mRightLeft = null;
 	private Float mBrightness = null;
 	private Float mContrast = null;
+	private Float mPupilSize = null;
+	private Float mPupilXOffset = null;
+	private Float mPupilYOffset = null;
 	private Integer mOverlayColor = null;
 
 	public String getTitle() {
@@ -156,6 +159,30 @@ public final class JpegMetadata implements Parcelable {
 
 	public void setOverlayColor(final Integer overlayColor) {
 		this.mOverlayColor = overlayColor;
+	}
+
+	public Float getPupilSize() {
+		return mPupilSize;
+	}
+
+	public void setPupilSize(final Float pupilSize) {
+		this.mPupilSize = pupilSize;
+	}
+
+	public Float getPupilXOffset() {
+		return mPupilXOffset;
+	}
+
+	public void setPupilXOffset(final Float pupilXOffset) {
+		this.mPupilXOffset = pupilXOffset;
+	}
+
+	public Float getPupilYOffset() {
+		return mPupilYOffset;
+	}
+
+	public void setPupilYOffset(final Float pupilYOffset) {
+		this.mPupilYOffset = pupilYOffset;
 	}
 
 	/**
@@ -292,6 +319,30 @@ public final class JpegMetadata implements Parcelable {
 		return mOverlayColor == null ? null : Integer.toHexString(mOverlayColor);
 	}
 
+	public void setPupilSize(final String value) {
+		mPupilSize = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilSizeString() {
+		return mPupilSize == null ? null : mPupilSize.toString();
+	}
+
+	public void setPupilXOffset(final String value) {
+		mPupilXOffset = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilXOffsetString() {
+		return mPupilXOffset == null ? null : mPupilXOffset.toString();
+	}
+
+	public void setPupilYOffset(final String value) {
+		mPupilYOffset = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilYOffsetString() {
+		return mPupilYOffset == null ? null : mPupilYOffset.toString();
+	}
+
 	private void setOrientation(final String value) {
 		mOrientation = value == null ? null : (short) Short.parseShort(value);
 	}
@@ -322,6 +373,9 @@ public final class JpegMetadata implements Parcelable {
 		str.append("Contrast: " + mContrast + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
 		str.append("Orientation: " + getOrientationString() + LINE_BREAK);
+		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
+		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);
+		str.append("Pupil-Y-Offset: " + mPupilYOffset + LINE_BREAK);
 		return str.toString();
 	}
 
@@ -346,6 +400,9 @@ public final class JpegMetadata implements Parcelable {
 		dest.writeString(getBrightnessString());
 		dest.writeString(getContrastString());
 		dest.writeString(getOverlayColorString());
+		dest.writeString(getPupilSizeString());
+		dest.writeString(getPupilXOffsetString());
+		dest.writeString(getPupilYOffsetString());
 		dest.writeString(getOrientationString());
 	}
 
@@ -369,6 +426,9 @@ public final class JpegMetadata implements Parcelable {
 			metadata.setBrightness(in.readString());
 			metadata.setContrast(in.readString());
 			metadata.setOverlayColor(in.readString());
+			metadata.setPupilSize(in.readString());
+			metadata.setPupilXOffset(in.readString());
+			metadata.setPupilYOffset(in.readString());
 			metadata.setOrientation(in.readString());
 			return metadata;
 		}

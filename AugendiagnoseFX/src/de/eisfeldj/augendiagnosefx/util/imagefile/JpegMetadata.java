@@ -26,6 +26,9 @@ public final class JpegMetadata {
 	private RightLeft mRightLeft = null;
 	private Float mBrightness = null;
 	private Float mContrast = null;
+	private Float mPupilSize = null;
+	private Float mPupilXOffset = null;
+	private Float mPupilYOffset = null;
 	private Integer mOverlayColor = null;
 
 	public String getTitle() {
@@ -156,6 +159,30 @@ public final class JpegMetadata {
 		this.mOverlayColor = overlayColor;
 	}
 
+	public Float getPupilSize() {
+		return mPupilSize;
+	}
+
+	public void setPupilSize(final Float pupilSize) {
+		this.mPupilSize = pupilSize;
+	}
+
+	public Float getPupilXOffset() {
+		return mPupilXOffset;
+	}
+
+	public void setPupilXOffset(final Float pupilXOffset) {
+		this.mPupilXOffset = pupilXOffset;
+	}
+
+	public Float getPupilYOffset() {
+		return mPupilYOffset;
+	}
+
+	public void setPupilYOffset(final Float pupilYOffset) {
+		this.mPupilYOffset = pupilYOffset;
+	}
+
 	// JAVADOC:ON
 
 	/**
@@ -269,6 +296,30 @@ public final class JpegMetadata {
 		return mOverlayColor == null ? null : Integer.toHexString(mOverlayColor);
 	}
 
+	public void setPupilSize(final String value) {
+		mPupilSize = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilSizeString() {
+		return mPupilSize == null ? null : mPupilSize.toString();
+	}
+
+	public void setPupilXOffset(final String value) {
+		mPupilXOffset = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilXOffsetString() {
+		return mPupilXOffset == null ? null : mPupilXOffset.toString();
+	}
+
+	public void setPupilYOffset(final String value) {
+		mPupilYOffset = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getPupilYOffsetString() {
+		return mPupilYOffset == null ? null : mPupilYOffset.toString();
+	}
+
 	// JAVADOC:ON
 
 	@Override
@@ -290,6 +341,9 @@ public final class JpegMetadata {
 		str.append("Brightness: " + mBrightness + LINE_BREAK);
 		str.append("Contrast: " + mContrast + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
+		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
+		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);
+		str.append("Pupil-Y-Offset: " + mPupilYOffset + LINE_BREAK);
 		return str.toString();
 	}
 

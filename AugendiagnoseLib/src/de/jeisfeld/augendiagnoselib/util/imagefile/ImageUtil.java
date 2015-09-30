@@ -443,16 +443,22 @@ public final class ImageUtil {
 	 * @return The deformed overlay bitmap.
 	 */
 	public static Bitmap deformOverlayByPupilSize(final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
-			final float pupilOffsetX, final float pupilOffsetY) {
+			final Float pupilOffsetX, final Float pupilOffsetY) {
 		int overlaySize = sourceBitmap.getWidth();
 		int overlayHalfSize = overlaySize / 2;
 		float irisRadius = overlayHalfSize * OVERLAY_CIRCLE_RATIO;
 
 		// the center of enlargement
-		float targetCenterX = overlayHalfSize + 2 * irisRadius * pupilOffsetX / (1 - destPupilSize);
-		float targetCenterY = overlayHalfSize + 2 * irisRadius * pupilOffsetY / (1 - destPupilSize);
+		float targetCenterX = overlayHalfSize;
+		float targetCenterY = overlayHalfSize;
+		if (pupilOffsetX != null) {
+			targetCenterX += 2 * irisRadius * pupilOffsetX / (1 - destPupilSize);
+		}
+		if (pupilOffsetY != null) {
+			targetCenterY += 2 * irisRadius * pupilOffsetY / (1 - destPupilSize);
+		}
 
-		// The linear transformation constants
+		// Constants used for linear transformation of the iris part of the overlay.
 		float linTransA = (destPupilSize - origPupilSize) / (1 - origPupilSize);
 		float linTransB = (1 - destPupilSize) / (irisRadius * (1 - origPupilSize));
 
