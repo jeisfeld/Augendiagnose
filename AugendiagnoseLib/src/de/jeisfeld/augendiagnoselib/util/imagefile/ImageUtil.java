@@ -22,6 +22,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 
 /**
@@ -35,11 +36,6 @@ public final class ImageUtil {
 	private static final int ROTATION_270 = 270;
 
 	// JAVADOC:ON
-
-	/**
-	 * The ratio of overlay circle diameter to overlay size.
-	 */
-	private static final float OVERLAY_CIRCLE_RATIO = 0.75f;
 
 	/**
 	 * The size of the mesh used to deform the overlays.
@@ -451,7 +447,7 @@ public final class ImageUtil {
 
 		int overlaySize = sourceBitmap.getWidth();
 		int overlayHalfSize = overlaySize / 2;
-		float irisRadius = overlayHalfSize * OVERLAY_CIRCLE_RATIO;
+		float irisRadius = overlayHalfSize * OverlayPinchImageView.OVERLAY_CIRCLE_RATIO;
 
 		// the center of enlargement
 		float targetCenterX = overlayHalfSize;
