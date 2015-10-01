@@ -93,6 +93,16 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mOverlayScaleFactor, mLastOverlayScaleFactor;
 
 	/**
+	 * These are the relative positions of the pupil overlay center on the bitmap. Range: [0,1]
+	 */
+	private float mPupilOverlayX, mPupilOverlayY;
+
+	/**
+	 * The scale factor of the pupil overlays.
+	 */
+	private float mPupilOverlayScaleFactor, mLastPupilOverlayScaleFactor;
+
+	/**
 	 * An array indicating which overlays are displayed.
 	 */
 	private boolean[] mShowOverlay = new boolean[OVERLAY_COUNT];
@@ -101,6 +111,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Flag indicating if the overlays are locked.
 	 */
 	private boolean mLocked = false;
+
+	/**
+	 * The way in which pinching is done.
+	 */
+	private PinchMode mPinchMode = PinchMode.ALL;
 
 	/**
 	 * The eye photo displayed.
@@ -326,7 +341,7 @@ public class OverlayPinchImageView extends PinchImageView {
 									Bitmap.Config.ARGB_8888);
 							mCanvas = new Canvas(mCanvasBitmap);
 							doInitialScaling();
-							updateScaleGestureDetector();
+							updatePinchMode();
 
 							refresh(HIGH);
 							showFullResolutionSnapshot(true);
@@ -342,7 +357,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 			mCanvas = new Canvas(mCanvasBitmap);
 			doInitialScaling();
-			updateScaleGestureDetector();
+			updatePinchMode();
 			refresh(HIGH);
 			showFullResolutionSnapshot(true);
 		}
@@ -496,7 +511,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 		}
 		refresh(HIGH);
-		updateScaleGestureDetector();
+		updatePinchMode();
 
 		if (hasOverlay()) {
 			showNormalResolution();
@@ -516,7 +531,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void lockOverlay(final boolean lock, final boolean store) {
 		this.mLocked = lock;
-		updateScaleGestureDetector();
+		updatePinchMode();
 
 		if (lock && store && mInitialized) {
 			if (mMetadata != null) {
@@ -556,6 +571,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		mLocked = false;
+		updatePinchMode();
+
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			mShowOverlay[i] = false;
 		}
@@ -568,8 +585,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Set the correct ScaleGestureDetector.
 	 */
-	private void updateScaleGestureDetector() {
-		if (pinchAll()) {
+	private void updatePinchMode() {
+		mPinchMode = determinePinchMode();
+		if (mPinchMode == PinchMode.ALL) {
 			mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 		}
 		else {
@@ -642,13 +660,13 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Utility method to check if pinching includes overlays and the main picture.
+	 * Utility method to determine the pinch mode.
 	 *
-	 * @return true if pinching includes everything. false if pinching should just pinch the overlay.
+	 * @return the pinch mode.
 	 */
-	private boolean pinchAll() {
+	private PinchMode determinePinchMode() {
 		if (mLocked) {
-			return true;
+			return PinchMode.ALL;
 		}
 
 		int overlayCount = 0;
@@ -657,7 +675,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				overlayCount++;
 			}
 		}
-		return overlayCount == 0;
+		return overlayCount == 0 ? PinchMode.ALL : PinchMode.OVERLAY;
 	}
 
 	/**
@@ -816,7 +834,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	protected final boolean handlePointerMove(final MotionEvent ev) {
 		showNormalResolution();
 
-		if (pinchAll()) {
+		if (mPinchMode == PinchMode.ALL) {
 			return super.handlePointerMove(ev);
 		}
 		boolean moved = false;
@@ -1194,6 +1212,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		bundle.putFloat("mOverlayScaleFactor", this.mOverlayScaleFactor);
 		bundle.putBooleanArray("mShowOverlay", this.mShowOverlay);
 		bundle.putBoolean("mLocked", this.mLocked);
+		bundle.putSerializable("mPinchMode", mPinchMode);
 		bundle.putFloat("mBrightness", this.mBrightness);
 		bundle.putFloat("mContrast", this.mContrast);
 		bundle.putInt("mOverlayColor", mOverlayColor);
@@ -1212,6 +1231,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mLastOverlayScaleFactor = mOverlayScaleFactor;
 			this.mShowOverlay = bundle.getBooleanArray("mShowOverlay");
 			this.mLocked = bundle.getBoolean("mLocked");
+			this.mPinchMode = (PinchMode) bundle.getSerializable("mPinchMode");
 			this.mBrightness = bundle.getFloat("mBrightness");
 			this.mContrast = bundle.getFloat("mContrast");
 			this.mOverlayColor = bundle.getInt("mOverlayColor");
@@ -1355,10 +1375,39 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public enum Resolution {
 		/**
-		 * The three resolution values. LOW corresponds to thumbnail resolution, while FULL applies to full resolution
-		 * of the current part of the picture.
+		 * Thumbnail resolution.
 		 */
-		LOW, HIGH, FULL;
+		LOW,
+		/**
+		 * High resolution, as specified in the settings.
+		 */
+		HIGH,
+		/**
+		 * Full resolution.
+		 */
+		FULL;
+	}
+
+	/**
+	 * The way of pinching.
+	 */
+	public enum PinchMode {
+		/**
+		 * Pinch everything together.
+		 */
+		ALL,
+		/**
+		 * Pinch only the overlay.
+		 */
+		OVERLAY,
+		/**
+		 * Pinch the pupil overlay.
+		 */
+		PUPIL,
+		/**
+		 * Pinch the pupil overlay, but keep it in the center.
+		 */
+		PUPIL_CENTER
 	}
 
 }
