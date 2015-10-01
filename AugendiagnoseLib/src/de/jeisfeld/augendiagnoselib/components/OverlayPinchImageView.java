@@ -43,7 +43,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
  */
 public class OverlayPinchImageView extends PinchImageView {
 	/**
-	 * The number of overlays (including circle).
+	 * The number of overlays (including circle and pupil overlays).
 	 */
 	public static final int OVERLAY_COUNT = Application.getAppContext().getResources().getIntArray(R.array.overlay_types).length;
 
@@ -56,6 +56,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * The pupil size used as default in display.
 	 */
 	public static final float DEFAULT_PUPIL_SIZE = Float.parseFloat(Application.getResourceString(R.string.overlay_default_pupil_size));
+
+	/**
+	 * The index of the pupil overlay.
+	 */
+	public static final int OVERLAY_PUPIL_INDEX = OVERLAY_COUNT - 1;
 
 	/**
 	 * The minimum scale factor allowed.
@@ -313,6 +318,15 @@ public class OverlayPinchImageView extends PinchImageView {
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.setLockChecked(true);
 								}
+
+								if (mMetadata.getPupilSize() == null) {
+									mPupilOverlayX = mOverlayX;
+									mPupilOverlayY = mOverlayY;
+									mPupilOverlayScaleFactor = mOverlayScaleFactor;
+								}
+								else {
+									// TODO: retrieve stored values
+								}
 							}
 							else {
 								// initial position of overlay
@@ -432,11 +446,20 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		// position overlays
 		for (int i = 1; i < mLayerDrawable.getNumberOfLayers(); i++) {
-			mLayerDrawable.setLayerInset(i, (int) (mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2
-					* mOverlayScaleFactor), (int) (mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2
-							* mOverlayScaleFactor), //
-					(int) (width - mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor), //
-					(int) (height - mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
+			boolean isPupil = overlayPositions.get(i - 1) == OVERLAY_PUPIL_INDEX;
+
+			if (isPupil) {
+				mLayerDrawable.setLayerInset(i, (int) (mPupilOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2
+						* mPupilOverlayScaleFactor), (int) (mPupilOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mPupilOverlayScaleFactor),
+						(int) (width - mPupilOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mPupilOverlayScaleFactor),
+						(int) (height - mPupilOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mPupilOverlayScaleFactor));
+			}
+			else {
+				mLayerDrawable.setLayerInset(i, (int) (mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2
+						* mOverlayScaleFactor), (int) (mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
+						(int) (width - mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
+						(int) (height - mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
+			}
 		}
 
 		mLayerDrawable.setBounds(0, 0, width, height);
@@ -478,7 +501,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Get information if an overlay is shown.
 	 *
-	 * @return true if an overlay is snown.
+	 * @return true if an overlay is shown.
 	 */
 	private boolean hasOverlay() {
 		return getOverlayPositions().size() > 0;
@@ -495,23 +518,26 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Trigger one overlay. If it is active, it will be deactivated. If it was inactive, then it will be activated, and
-	 * the previous one will be deactivated.
+	 * Trigger one overlay either for activation or for deactivation.
 	 *
 	 * @param position
 	 *            number of the overlay
+	 * @param pinchMode
+	 *            the way in which pinching should be done. ALL indicates that the overlay should not be shown.
 	 */
-	public final void triggerOverlay(final int position) {
+	public final void triggerOverlay(final int position, final PinchMode pinchMode) {
 		for (int i = 0; i < mShowOverlay.length; i++) {
 			if (i == position) {
-				mShowOverlay[i] = !mShowOverlay[i];
+				mShowOverlay[i] = pinchMode != PinchMode.ALL;
 			}
 			else {
 				mShowOverlay[i] = false;
 			}
 		}
-		refresh(HIGH);
+		mPinchMode = pinchMode;
+
 		updatePinchMode();
+		refresh(HIGH);
 
 		if (hasOverlay()) {
 			showNormalResolution();
@@ -543,6 +569,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.setXCenter(mOverlayX);
 				mMetadata.setYCenter(mOverlayY);
 				mMetadata.setOverlayScaleFactor(mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight()) * OVERLAY_SIZE);
+				// TODO: store pupil data
 				mEyePhoto.storeImageMetadata(mMetadata);
 
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
@@ -559,8 +586,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void resetOverlayPosition(final boolean store) {
 		float size = Math.min(mBitmap.getWidth(), mBitmap.getHeight());
 		mOverlayScaleFactor = size / OVERLAY_SIZE;
+		mPupilOverlayScaleFactor = mOverlayScaleFactor;
 		mOverlayX = ONE_HALF;
 		mOverlayY = ONE_HALF;
+		mPupilOverlayX = ONE_HALF;
+		mPupilOverlayY = ONE_HALF;
 		if (store && mInitialized) {
 			if (mMetadata != null) {
 				mMetadata.setXCenter((Float) null);
@@ -571,6 +601,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		mLocked = false;
+		mPinchMode = PinchMode.ALL;
 		updatePinchMode();
 
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
@@ -590,8 +621,11 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mPinchMode == PinchMode.ALL) {
 			mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 		}
-		else {
+		else if (mPinchMode == PinchMode.ALL) {
 			mScaleDetector = new ScaleGestureDetector(getContext(), new OverlayScaleListener());
+		}
+		else {
+			mScaleDetector = new ScaleGestureDetector(getContext(), new PupilOverlayScaleListener());
 		}
 	}
 
@@ -665,6 +699,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @return the pinch mode.
 	 */
 	private PinchMode determinePinchMode() {
+		if (mPinchMode == PinchMode.PUPIL || mPinchMode == PinchMode.PUPIL_CENTER) {
+			// do not update pupil pinch modes implicitly.
+			return mPinchMode;
+		}
+
 		if (mLocked) {
 			return PinchMode.ALL;
 		}
@@ -837,58 +876,121 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mPinchMode == PinchMode.ALL) {
 			return super.handlePointerMove(ev);
 		}
-		boolean moved = false;
+		else if (mPinchMode == PinchMode.PUPIL_CENTER) {
+			if (mPupilOverlayScaleFactor == mLastPupilOverlayScaleFactor) {
+				return false;
+			}
+			else {
+				mLastPupilOverlayScaleFactor = mPupilOverlayScaleFactor;
+				mPupilOverlayX = mOverlayX;
+				mPupilOverlayY = mOverlayY;
+				refresh(LOW);
+				return true;
+			}
+		}
 
+		boolean moved = false;
 		final int pointerIndex = ev.findPointerIndex(mActivePointerId);
 		final float x = ev.getX(pointerIndex);
 		final float y = ev.getY(pointerIndex);
 
-		if (mActivePointerId2 == INVALID_POINTER_ID) {
-			// Only move if the ScaleGestureDetector isn't processing a gesture.
-			final float dx = x - mLastTouchX;
-			final float dy = y - mLastTouchY;
-			mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
-			mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
-		}
-		else {
-			// When resizing, move according to the center of the two pinch points
-			final int pointerIndex2 = ev.findPointerIndex(mActivePointerId2);
-			final float x0 = (ev.getX(pointerIndex2) + x) / 2;
-			final float y0 = (ev.getY(pointerIndex2) + y) / 2;
-			final float dx = x0 - mLastTouchX0;
-			final float dy = y0 - mLastTouchY0;
-			mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
-			mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
-			if (mOverlayScaleFactor != mLastOverlayScaleFactor) {
-				// When resizing, then position also changes
-				final float changeFactor = mOverlayScaleFactor / mLastOverlayScaleFactor;
-				final float pinchX = (x0 - getWidth() / 2) / mScaleFactor / mBitmap.getWidth() + mPosX;
-				final float pinchY = (y0 - getHeight() / 2) / mScaleFactor / mBitmap.getHeight() + mPosY;
-				mOverlayX = pinchX + (mOverlayX - pinchX) * changeFactor;
-				mOverlayY = pinchY + (mOverlayY - pinchY) * changeFactor;
-				mLastOverlayScaleFactor = mOverlayScaleFactor;
+		if (mPinchMode == PinchMode.PUPIL) {
+			if (mActivePointerId2 == INVALID_POINTER_ID) {
+				// Only move if the ScaleGestureDetector isn't processing a gesture.
+				final float dx = x - mLastTouchX;
+				final float dy = y - mLastTouchY;
+				mPupilOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+				mPupilOverlayY += dy / mScaleFactor / mBitmap.getHeight();
+			}
+			else {
+				// When resizing, move according to the center of the two pinch points
+				final int pointerIndex2 = ev.findPointerIndex(mActivePointerId2);
+				final float x0 = (ev.getX(pointerIndex2) + x) / 2;
+				final float y0 = (ev.getY(pointerIndex2) + y) / 2;
+				final float dx = x0 - mLastTouchX0;
+				final float dy = y0 - mLastTouchY0;
+				mPupilOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+				mPupilOverlayY += dy / mScaleFactor / mBitmap.getHeight();
+				if (mPupilOverlayScaleFactor != mLastPupilOverlayScaleFactor) {
+					// When resizing, then position also changes
+					final float changeFactor = mPupilOverlayScaleFactor / mLastPupilOverlayScaleFactor;
+					final float pinchX = (x0 - getWidth() / 2) / mScaleFactor / mBitmap.getWidth() + mPosX;
+					final float pinchY = (y0 - getHeight() / 2) / mScaleFactor / mBitmap.getHeight() + mPosY;
+					mPupilOverlayX = pinchX + (mPupilOverlayX - pinchX) * changeFactor;
+					mPupilOverlayY = pinchY + (mPupilOverlayY - pinchY) * changeFactor;
+					mLastPupilOverlayScaleFactor = mPupilOverlayScaleFactor;
+					moved = true;
+				}
+				mLastTouchX0 = x0;
+				mLastTouchY0 = y0;
+			}
+			if (x != mLastTouchX || y != mLastTouchY) {
+				mLastTouchX = x;
+				mLastTouchY = y;
 				moved = true;
 			}
-			mLastTouchX0 = x0;
-			mLastTouchY0 = y0;
-		}
-		if (x != mLastTouchX || y != mLastTouchY) {
-			mLastTouchX = x;
-			mLastTouchY = y;
-			moved = true;
-		}
 
-		if (mOverlayX < 0) {
-			mOverlayX = 0;
+			if (mPupilOverlayX < 0) {
+				mPupilOverlayX = 0;
+			}
+			if (mPupilOverlayY < 0) {
+				mPupilOverlayY = 0;
+			}
+			if (mPupilOverlayX > 1) {
+				mPupilOverlayX = 1f;
+			}
+			if (mPupilOverlayY > 1) {
+				mPupilOverlayY = 1f;
+			}
 		}
-		if (mOverlayY < 0) {
-			mOverlayY = 0;
-		}
-		if (mOverlayX > 1) {
-			mOverlayX = 1f;
-		}
-		if (mOverlayY > 1) {
-			mOverlayY = 1f;
+		else {
+			if (mActivePointerId2 == INVALID_POINTER_ID) {
+				// Only move if the ScaleGestureDetector isn't processing a gesture.
+				final float dx = x - mLastTouchX;
+				final float dy = y - mLastTouchY;
+				mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+				mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
+			}
+			else {
+				// When resizing, move according to the center of the two pinch points
+				final int pointerIndex2 = ev.findPointerIndex(mActivePointerId2);
+				final float x0 = (ev.getX(pointerIndex2) + x) / 2;
+				final float y0 = (ev.getY(pointerIndex2) + y) / 2;
+				final float dx = x0 - mLastTouchX0;
+				final float dy = y0 - mLastTouchY0;
+				mOverlayX += dx / mScaleFactor / mBitmap.getWidth();
+				mOverlayY += dy / mScaleFactor / mBitmap.getHeight();
+				if (mOverlayScaleFactor != mLastOverlayScaleFactor) {
+					// When resizing, then position also changes
+					final float changeFactor = mOverlayScaleFactor / mLastOverlayScaleFactor;
+					final float pinchX = (x0 - getWidth() / 2) / mScaleFactor / mBitmap.getWidth() + mPosX;
+					final float pinchY = (y0 - getHeight() / 2) / mScaleFactor / mBitmap.getHeight() + mPosY;
+					mOverlayX = pinchX + (mOverlayX - pinchX) * changeFactor;
+					mOverlayY = pinchY + (mOverlayY - pinchY) * changeFactor;
+					mLastOverlayScaleFactor = mOverlayScaleFactor;
+					moved = true;
+				}
+				mLastTouchX0 = x0;
+				mLastTouchY0 = y0;
+			}
+			if (x != mLastTouchX || y != mLastTouchY) {
+				mLastTouchX = x;
+				mLastTouchY = y;
+				moved = true;
+			}
+
+			if (mOverlayX < 0) {
+				mOverlayX = 0;
+			}
+			if (mOverlayY < 0) {
+				mOverlayY = 0;
+			}
+			if (mOverlayX > 1) {
+				mOverlayX = 1f;
+			}
+			if (mOverlayY > 1) {
+				mOverlayY = 1f;
+			}
 		}
 
 		refresh(LOW);
@@ -1210,6 +1312,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		bundle.putFloat("mOverlayX", this.mOverlayX);
 		bundle.putFloat("mOverlayY", this.mOverlayY);
 		bundle.putFloat("mOverlayScaleFactor", this.mOverlayScaleFactor);
+		bundle.putFloat("mPupilOverlayX", this.mPupilOverlayX);
+		bundle.putFloat("mPupilOverlayY", this.mPupilOverlayY);
+		bundle.putFloat("mPupilOverlayScaleFactor", this.mPupilOverlayScaleFactor);
 		bundle.putBooleanArray("mShowOverlay", this.mShowOverlay);
 		bundle.putBoolean("mLocked", this.mLocked);
 		bundle.putSerializable("mPinchMode", mPinchMode);
@@ -1229,6 +1334,10 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mOverlayY = bundle.getFloat("mOverlayY");
 			this.mOverlayScaleFactor = bundle.getFloat("mOverlayScaleFactor");
 			mLastOverlayScaleFactor = mOverlayScaleFactor;
+			this.mPupilOverlayX = bundle.getFloat("mPupilOverlayX");
+			this.mPupilOverlayY = bundle.getFloat("mPupilOverlayY");
+			this.mPupilOverlayScaleFactor = bundle.getFloat("mPupilOverlayScaleFactor");
+			mLastPupilOverlayScaleFactor = mPupilOverlayScaleFactor;
 			this.mShowOverlay = bundle.getBooleanArray("mShowOverlay");
 			this.mLocked = bundle.getBoolean("mLocked");
 			this.mPinchMode = (PinchMode) bundle.getSerializable("mPinchMode");
@@ -1261,6 +1370,21 @@ public class OverlayPinchImageView extends PinchImageView {
 			// Don't let the object get too small or too large.
 			mOverlayScaleFactor =
 					Math.max(MIN_OVERLAY_SCALE_FACTOR, Math.min(mOverlayScaleFactor, MAX_OVERLAY_SCALE_FACTOR));
+			invalidate();
+			return true;
+		}
+	}
+
+	/**
+	 * A listener determining the pupil scale factor.
+	 */
+	private class PupilOverlayScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+		@Override
+		public boolean onScale(final ScaleGestureDetector detector) {
+			mPupilOverlayScaleFactor *= detector.getScaleFactor();
+			// Don't let the object get too small or too large.
+			mPupilOverlayScaleFactor =
+					Math.max(MIN_OVERLAY_SCALE_FACTOR, Math.min(mPupilOverlayScaleFactor, MAX_OVERLAY_SCALE_FACTOR));
 			invalidate();
 			return true;
 		}

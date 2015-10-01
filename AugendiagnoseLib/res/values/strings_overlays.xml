@@ -14,6 +14,7 @@
         <item>@drawable/overlay_topo5_l</item>
         <item>@drawable/overlay_topo6_l</item>
         <item>@drawable/overlay_topo7_l</item>
+        <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlays_right">
         <item>@drawable/overlay_circle</item>
@@ -24,6 +25,7 @@
         <item>@drawable/overlay_topo5_r</item>
         <item>@drawable/overlay_topo6_r</item>
         <item>@drawable/overlay_topo7_r</item>
+        <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlay_buttons">
         <item>@id/toggleButtonOverlayCircle</item>
@@ -34,6 +36,7 @@
         <item>@id/toggleButtonOverlay5</item>
         <item>@id/toggleButtonOverlay6</item>
         <item>@id/toggleButtonOverlay7</item>
+        <item>@id/toggleButtonPupil</item>
     </array>
 
     <string-array name="overlay_pupil_sizes">
@@ -45,12 +48,14 @@
         <item>0.20</item>
         <item>0.22</item>
         <item>0.19</item>
+        <item>0</item>
     </string-array>
 
     <integer-array name="overlay_types">
         <item>1</item>
         <item>1</item>
         <item>0</item>
+        <item>1</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>

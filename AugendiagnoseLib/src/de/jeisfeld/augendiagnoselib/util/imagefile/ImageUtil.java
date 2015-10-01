@@ -444,6 +444,11 @@ public final class ImageUtil {
 	 */
 	public static Bitmap deformOverlayByPupilSize(final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
 			final Float pupilOffsetX, final Float pupilOffsetY) {
+		if (origPupilSize == 0) {
+			// non-deformable overlay, such as pupil overlay.
+			return sourceBitmap;
+		}
+
 		int overlaySize = sourceBitmap.getWidth();
 		int overlayHalfSize = overlaySize / 2;
 		float irisRadius = overlayHalfSize * OVERLAY_CIRCLE_RATIO;

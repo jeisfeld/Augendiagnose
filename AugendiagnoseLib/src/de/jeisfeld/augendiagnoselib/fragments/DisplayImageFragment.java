@@ -25,6 +25,7 @@ import de.jeisfeld.augendiagnoselib.activities.DisplayImageActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.GuiElementUpdater;
+import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.PinchMode;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerConstants;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerDialog;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
@@ -130,9 +131,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private OverlayPinchImageView mImageView;
 
 	/**
-	 * The number of overlay images.
+	 * The number of overlay images, excluding the pupil overlay.
 	 */
-	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT;
+	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT - 1;
 
 	/**
 	 * The button for showing the image in full resolution.
@@ -455,6 +456,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            The number of the overlay button.
 	 */
 	private void onToggleOverlayClicked(final int position) {
+		boolean isChecked = mToggleOverlayButtons[position].isChecked();
 		boolean buttonGetsUnchecked = false;
 
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
@@ -480,9 +482,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			// TODO: save pupil setting
 		}
 
-		mImageView.triggerOverlay(position);
+		mImageView.triggerOverlay(position, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
 
-		if (mToggleOverlayButtons[position].isChecked() && !buttonGetsUnchecked) {
+		if (isChecked && !buttonGetsUnchecked) {
 			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay, R.string.key_tip_overlay);
 		}
 	}
@@ -514,15 +516,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		setPupilButtonBitmap();
 
-		if (mPupilButtonStatus != PupilButtonStatus.OFF) {
+		if (mPupilButtonStatus == PupilButtonStatus.OFF) {
+			mImageView.triggerOverlay(OverlayPinchImageView.OVERLAY_PUPIL_INDEX, PinchMode.ALL);
+		}
+		else {
 			for (int i = 0; i < OVERLAY_COUNT; i++) {
 				if (mToggleOverlayButtons[i].isChecked()) {
 					mToggleOverlayButtons[i].setChecked(false);
-
-					// TODO: replace by proper logic for pupil view.
-					mImageView.triggerOverlay(i);
 				}
 			}
+
+			PinchMode pinchMode = mPupilButtonStatus == PupilButtonStatus.CENTER ? PinchMode.PUPIL_CENTER : PinchMode.PUPIL;
+			mImageView.triggerOverlay(OverlayPinchImageView.OVERLAY_PUPIL_INDEX, pinchMode);
 		}
 
 		// TODO: align with lock button
