@@ -7,7 +7,8 @@
     <dimen name="list_picture_height">160dp</dimen>
     <dimen name="list_second_picture_height">140dp</dimen>
     <dimen name="togglebutton_circlesize">24sp</dimen>
-
+    <dimen name="togglebutton_fullsize">56dp</dimen>
+    
     <!-- Camera settings -->
     <dimen name="camerabutton_size">84dp</dimen>
     <dimen name="camerabutton_padding">15dp</dimen>

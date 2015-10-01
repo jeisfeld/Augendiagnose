@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -172,6 +175,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private ToggleButton mLockButton;
 
 	/**
+	 * The button for setting pupil position.
+	 */
+	private ToggleButton mPupilButton;
+
+	/**
 	 * The color selector button.
 	 */
 	private Button mSelectColorButton;
@@ -195,6 +203,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The overlay color.
 	 */
 	private int mOverlayColor = Color.RED;
+
+	/**
+	 * The status of the pupil button.
+	 */
+	private PupilButtonStatus mPupilButtonStatus;
 
 	/**
 	 * Initialize the fragment with the file name.
@@ -277,10 +290,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (savedInstanceState != null) {
 			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
 			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
+			mPupilButtonStatus = (PupilButtonStatus) savedInstanceState.getSerializable("pupilButtonStatus");
 		}
 		else {
 			mShowUtilities = getDefaultShowUtilities();
 			mOverlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+			mPupilButtonStatus = PupilButtonStatus.OFF;
 		}
 
 		mImageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
@@ -296,7 +311,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		overlayButtonResources.recycle();
 
 		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
-
+		mPupilButton = (ToggleButton) getView().findViewById(R.id.toggleButtonPupil);
 		mSelectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
 
 		mClarityButton = (Button) getView().findViewById(R.id.buttonClarity);
@@ -309,20 +324,59 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		showUtilities(mShowUtilities);
 
 		// Initialize the onClick listeners for the buttons
+		setButtonListeners();
+
+		// Initialize the listeners for the seekbars (brightness and contrast)
+		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
+		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+				mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+			}
+		});
+
+		mSeekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
+		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+				mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+			}
+		});
+
+		// The following also updates the selectColorButton
+		mImageView.setOverlayColor(mOverlayColor);
+
+		// Layout for circle button
+		ImageSpan imageSpan = new ImageSpan(getActivity(), R.drawable.ic_btn_wheel);
+		SpannableString content = new SpannableString("X");
+		content.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mToggleOverlayButtons[0].setText(content);
+		mToggleOverlayButtons[0].setTextOn(content);
+		mToggleOverlayButtons[0].setTextOff(content);
+
+		// Layout for pupil button
+		setPupilButtonBitmap();
+	}
+
+	/**
+	 * Initialize the on-click actions for the buttons.
+	 */
+	private void setButtonListeners() {
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			final int index = i;
 			mToggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					onToggleOverlayClicked(v, index);
+					onToggleOverlayClicked(index);
 				}
 			});
 		}
 
 		mLockButton.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(final View v) {
-				onToggleLockClicked(v);
+				onToggleLockClicked();
 			}
 		});
 
@@ -386,37 +440,21 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		// Initialize the listeners for the seekbars (brightness and contrast)
-		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
-		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		mPupilButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+			public void onClick(final View v) {
+				onTogglePupilClicked();
 			}
 		});
-
-		mSeekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
-		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			@Override
-			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
-			}
-		});
-
-		// The following also updates the selectColorButton
-		mImageView.setOverlayColor(mOverlayColor);
-
 	}
 
 	/**
 	 * Helper method for onClick actions for Button to toggle display of Overlays.
 	 *
-	 * @param view
-	 *            The overlay button.
 	 * @param position
 	 *            The number of the overlay button.
 	 */
-	private void onToggleOverlayClicked(final View view, final int position) {
+	private void onToggleOverlayClicked(final int position) {
 		boolean buttonGetsUnchecked = false;
 
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
@@ -435,6 +473,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		}
 
+		if (mPupilButtonStatus != PupilButtonStatus.OFF) {
+			mPupilButtonStatus = PupilButtonStatus.OFF;
+			setPupilButtonBitmap();
+
+			// TODO: save pupil setting
+		}
+
 		mImageView.triggerOverlay(position);
 
 		if (mToggleOverlayButtons[position].isChecked() && !buttonGetsUnchecked) {
@@ -444,13 +489,45 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 	/**
 	 * onClick action for Button to switch link between overlay and image.
-	 *
-	 * @param view
-	 *            The view of the link button.
 	 */
-	private void onToggleLockClicked(final View view) {
-		ToggleButton button = (ToggleButton) view;
-		mImageView.lockOverlay(button.isChecked(), true);
+	private void onToggleLockClicked() {
+		mImageView.lockOverlay(mLockButton.isChecked(), true);
+	}
+
+	/**
+	 * onClick action for Button to change pupil size and position.
+	 */
+	private void onTogglePupilClicked() {
+		switch (mPupilButtonStatus) {
+		case OFF:
+			mPupilButtonStatus = PupilButtonStatus.CENTER;
+			break;
+		case CENTER:
+			mPupilButtonStatus = PupilButtonStatus.MOVE;
+			break;
+		case MOVE:
+			mPupilButtonStatus = PupilButtonStatus.OFF;
+			break;
+		default:
+			break;
+		}
+
+		setPupilButtonBitmap();
+
+		if (mPupilButtonStatus != PupilButtonStatus.OFF) {
+			for (int i = 0; i < OVERLAY_COUNT; i++) {
+				if (mToggleOverlayButtons[i].isChecked()) {
+					mToggleOverlayButtons[i].setChecked(false);
+
+					// TODO: replace by proper logic for pupil view.
+					mImageView.triggerOverlay(i);
+				}
+			}
+		}
+
+		// TODO: align with lock button
+
+		// TODO: handle pupil update.
 	}
 
 	/**
@@ -636,6 +713,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", mShowUtilities);
 		outState.putInt("overlayColor", mOverlayColor);
+		outState.putSerializable("pupilButtonStatus", mPupilButtonStatus);
 	}
 
 	/**
@@ -746,6 +824,36 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
+	 * Set the bitmap of the pupil button.
+	 */
+	private void setPupilButtonBitmap() {
+		int pupilButtonResource = 0;
+
+		switch (mPupilButtonStatus) {
+		case OFF:
+			pupilButtonResource = R.drawable.ic_btn_pupil_0;
+			break;
+		case CENTER:
+			pupilButtonResource = R.drawable.ic_btn_pupil_1;
+			break;
+		case MOVE:
+			pupilButtonResource = R.drawable.ic_btn_pupil_2;
+			break;
+		default:
+			break;
+		}
+
+		ImageSpan imageSpan = new ImageSpan(getActivity(), pupilButtonResource);
+		SpannableString content = new SpannableString("X");
+		content.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mPupilButton.setText(content);
+		mPupilButton.setTextOn(content);
+		mPupilButton.setTextOff(content);
+
+		mPupilButton.setChecked(mPupilButtonStatus != PupilButtonStatus.OFF);
+	}
+
+	/**
 	 * Base implementation of OnSeekBarChangeListener, used for brightness and contrast seekbars.
 	 */
 	private abstract class OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
@@ -758,5 +866,23 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		public void onStartTrackingTouch(final SeekBar seekBar) {
 			// do nothing
 		}
+	}
+
+	/**
+	 * Status of the button to move the pupil.
+	 */
+	public static enum PupilButtonStatus {
+		/**
+		 * Button is off.
+		 */
+		OFF,
+		/**
+		 * Button is configured for keeping pupil in the center.
+		 */
+		CENTER,
+		/**
+		 * Button allows to move the pupil.
+		 */
+		MOVE
 	}
 }

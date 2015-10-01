@@ -506,7 +506,9 @@ public final class ImageUtil {
 			}
 		}
 
-		canvas.drawBitmapMesh(sourceBitmap, OVERLAY_MESH_SIZE, OVERLAY_MESH_SIZE, verts, 0, null, 0, null);
+		Paint paint = new Paint();
+		paint.setFilterBitmap(true);
+		canvas.drawBitmapMesh(sourceBitmap, OVERLAY_MESH_SIZE, OVERLAY_MESH_SIZE, verts, 0, null, 0, paint);
 
 		return ret;
 	}
