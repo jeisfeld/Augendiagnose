@@ -123,6 +123,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mPupilOverlayScaleFactor, mLastPupilOverlayScaleFactor;
 
 	/**
+	 * Flag indicating if the pupil has been changed.
+	 */
+	private boolean mIsPupilChanged = false;
+
+	/**
 	 * An array indicating which overlays are displayed.
 	 */
 	private boolean[] mShowOverlay = new boolean[OVERLAY_COUNT];
@@ -592,14 +597,6 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.setYCenter(mOverlayY);
 				mMetadata.setOverlayScaleFactor(mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight()) * OVERLAY_SIZE);
 
-				if (mPinchMode == PinchMode.PUPIL || mPinchMode == PinchMode.PUPIL_CENTER) {
-					mMetadata.setPupilSize(mPupilOverlayScaleFactor);
-					mMetadata.setPupilXOffset(mPupilOverlayX);
-					mMetadata.setPupilYOffset(mPupilOverlayY);
-
-					resetOverlayCache();
-				}
-
 				mEyePhoto.storeImageMetadata(mMetadata);
 
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
@@ -610,12 +607,18 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Get information if the overlay is locked.
-	 *
-	 * @return true if the overlay is locked.
+	 * Store the pupil position in the metadata, if changed.
 	 */
-	public final boolean isLocked() {
-		return mLocked;
+	public final void storePupilPosition() {
+		if (mIsPupilChanged && mMetadata != null && mMetadata.hasOverlayPosition()) {
+			mMetadata.setPupilSize(mPupilOverlayScaleFactor);
+			mMetadata.setPupilXOffset(mPupilOverlayX);
+			mMetadata.setPupilYOffset(mPupilOverlayY);
+
+			mEyePhoto.storeImageMetadata(mMetadata);
+			resetOverlayCache();
+			mIsPupilChanged = false;
+		}
 	}
 
 	/**
@@ -935,6 +938,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mLastPupilOverlayScaleFactor = mPupilOverlayScaleFactor;
 				mPupilOverlayX = 0;
 				mPupilOverlayY = 0;
+				mIsPupilChanged = true;
 				refresh(LOW);
 				return true;
 			}
@@ -997,6 +1001,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				mPupilOverlayX = mPupilOverlayX * correctionFactor;
 				mPupilOverlayY = mPupilOverlayY * correctionFactor;
 			}
+
+			mIsPupilChanged = mIsPupilChanged || moved;
 		}
 		else {
 			if (mActivePointerId2 == INVALID_POINTER_ID) {

@@ -356,6 +356,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mToggleOverlayButtons[0].setTextOff(content);
 
 		// Layout for pupil button
+		mPupilButton.setEnabled(mLockButton.isChecked());
 		setPupilButtonBitmap();
 	}
 
@@ -478,7 +479,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (mPupilButtonStatus != PupilButtonStatus.OFF) {
 			mPupilButtonStatus = PupilButtonStatus.OFF;
 			setPupilButtonBitmap();
-			mLockButton.setChecked(mImageView.isLocked());
+			mImageView.storePupilPosition();
 		}
 
 		mImageView.triggerOverlay(position, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
@@ -493,13 +494,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	private void onToggleLockClicked() {
 		mImageView.lockOverlay(mLockButton.isChecked(), true);
-
-		if (mLockButton.isChecked() && mPupilButtonStatus != PupilButtonStatus.OFF) {
-			// Switch off overlay
-			mPupilButtonStatus = PupilButtonStatus.OFF;
-			setPupilButtonBitmap();
-			mImageView.triggerOverlay(-1, PinchMode.ALL);
-		}
+		mPupilButton.setEnabled(mLockButton.isChecked());
 	}
 
 	/**
@@ -523,11 +518,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		setPupilButtonBitmap();
 
 		if (mPupilButtonStatus == PupilButtonStatus.OFF) {
-			mLockButton.setChecked(mImageView.isLocked());
 			mImageView.triggerOverlay(OverlayPinchImageView.OVERLAY_PUPIL_INDEX, PinchMode.ALL);
+			mImageView.storePupilPosition();
 		}
 		else {
-			mLockButton.setChecked(false);
 			for (int i = 0; i < OVERLAY_COUNT; i++) {
 				if (mToggleOverlayButtons[i].isChecked()) {
 					mToggleOverlayButtons[i].setChecked(false);
@@ -792,6 +786,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Override
 	public final void setLockChecked(final boolean checked) {
 		mLockButton.setChecked(checked);
+		mPupilButton.setEnabled(checked);
 	}
 
 	@Override
