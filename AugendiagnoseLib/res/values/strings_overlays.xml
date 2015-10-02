@@ -2,8 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Resources defining overlay characteristics -->
-
-    <string name="overlay_default_pupil_size">0.3</string>
+    <string name="overlay_default_pupil_size" translatable="false">0.3</string>
 
     <array name="overlays_left">
         <item>@drawable/overlay_circle</item>
@@ -39,7 +38,7 @@
         <item>@id/toggleButtonPupil</item>
     </array>
 
-    <string-array name="overlay_pupil_sizes">
+    <string-array name="overlay_pupil_sizes" translatable="false">
         <item>0.25</item>
         <item>0.28</item>
         <item>0.28</item>

@@ -189,7 +189,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	public final void checkUnlockerApp() {
 		Intent intent = getPackageManager().getLaunchIntentForPackage("de.jeisfeld.augendiagnoseunlocker");
 		if (intent == null) {
-			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 		}
 		else {
@@ -202,6 +202,25 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		}
 	}
 
+	/**
+	 * Update the status of the unlocker app. Set to "true" if found. Set to false only after some failed retries.
+	 *
+	 * @param isCheckSuccessful
+	 *            flag indicating if the verification with unlocker app was successful.
+	 */
+	private void updateUnlockerAppStatus(final boolean isCheckSuccessful) {
+		if (isCheckSuccessful) {
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, true);
+			PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_unlocker_app_retries, 0);
+		}
+		else {
+			int retries = PreferenceUtil.incrementCounter(R.string.key_internal_unlocker_app_retries);
+			if (retries > 10) { // MAGIC_NUMBER
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+			}
+		}
+	}
+
 	// OVERRIDABLE
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -210,7 +229,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			String expectedResponseKey = EncryptionUtil.createHash(mRandomAuthorizationString + getString(R.string.private_unlock_key));
 
 			if (expectedResponseKey.equals(responseKey)) {
-				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, true);
+				updateUnlockerAppStatus(true);
 
 				if (mIsCreationFailed) {
 					finish();
@@ -218,12 +237,12 @@ public abstract class BaseActivity extends AdMarvelActivity {
 				}
 			}
 			else {
-				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+				updateUnlockerAppStatus(false);
 				checkPremiumPackAfterAuthorizationFailure();
 			}
 		}
 		else {
-			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
+			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 			super.onActivityResult(requestCode, resultCode, data);
 		}

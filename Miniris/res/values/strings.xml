@@ -8,7 +8,7 @@
     <string name="title_activity_organize_new_photos">Set Name and Date</string>
     <string name="section_select_photos"></string>
     <string name="menu_move_to_input_folder">Assign different name</string>
-    <string name="overlay_default_pupil_size">0.22</string>
+    <string name="overlay_default_pupil_size" translatable="false">0.22</string>
     
     <!-- Resources configuring behaviour of activities in the app -->
 
