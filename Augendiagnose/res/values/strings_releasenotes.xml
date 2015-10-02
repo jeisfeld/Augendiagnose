@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="releasenotes_current_remark_version" translatable="false">45</string>
     <string name="releasenotes_first_usage">
 <![CDATA[
 <h3>Important information:</h3>
@@ -138,7 +139,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>New workflow for taking pictures out of the app. Made free app version only a test version. Bugfixes</item>
         <item>Made camera optional again.</item>
         <item>Selection of camera focus modes. Base enablement of Android 5 camera features. Bugfixes</item>
-        <item>Possibility to shift the camera screen via the settings. Bugfixes</item>
+        <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings.\nBugfixes</item>
     </string-array>
 
 </resources>

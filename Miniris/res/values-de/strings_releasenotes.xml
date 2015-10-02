@@ -26,7 +26,7 @@
         <item>Blitzlicht kann in Kamera genutzt werden. Vertikale Fotos sind möglich. Fehlerkorrekturen.</item>
         <item>Fehlerkorrekturen</item>
         <item>Auswahl des Fokus-Modus der Kamera. Grundlegende Nutzung der Kamera-Funktionen von Android 5. Fehlerkorrekturen</item>
-        <item>Möglichkeit, den Kamera-Bildschirm über die Einstellungen zu verschieben (wenn Tasten durch das Miniris-Band abgedeckt werden). Fehlerkorrekturen</item>
+        <item>Anpassung der Overlays an die Pupillengröße und -lage.\nMöglichkeit, den Kamera-Bildschirm über die Einstellungen zu verschieben (wenn Tasten durch das Miniris-Band abgedeckt werden).\nFehlerkorrekturen</item>
     </string-array>
 
 </resources>

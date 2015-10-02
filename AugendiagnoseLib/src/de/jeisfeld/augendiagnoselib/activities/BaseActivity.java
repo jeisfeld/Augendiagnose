@@ -70,23 +70,16 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			}
 			else {
 				if (savedInstanceState == null) {
-					boolean firstStart = false;
-
 					// Initial tip is triggered first, so that it is hidden behind release notes.
 					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
 
 					// When starting from launcher, check if started the first time in this version. If yes, display release
 					// notes.
-					String storedVersionString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_stored_version);
-					if (storedVersionString == null || storedVersionString.length() == 0) {
-						storedVersionString = "0";
-						firstStart = true;
-					}
-					int storedVersion = Integer.parseInt(storedVersionString);
+					int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
 					int currentVersion = Application.getVersion();
 
 					if (storedVersion < currentVersion) {
-						ReleaseNotesUtil.displayReleaseNotes(this, firstStart, storedVersion + 1, currentVersion);
+						ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
 					}
 
 					// Check unlocker app.

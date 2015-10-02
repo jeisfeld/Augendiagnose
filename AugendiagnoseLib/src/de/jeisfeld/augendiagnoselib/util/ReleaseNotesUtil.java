@@ -65,7 +65,12 @@ public final class ReleaseNotesUtil {
 			message.append(context.getString(R.string.releasenotes_first_usage));
 		}
 		else {
-			message.append(context.getString(R.string.releasenotes_current_remark));
+			int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
+			int currentRemarkVersion = Integer.parseInt(context.getString(R.string.releasenotes_current_remark_version));
+			if (storedVersion < currentRemarkVersion) {
+				message.append(context.getString(R.string.releasenotes_current_remark));
+			}
+
 			message.append("<h3>");
 			message.append(context.getString(R.string.releasenotes_changes));
 			message.append("</h3>");
@@ -77,10 +82,11 @@ public final class ReleaseNotesUtil {
 				message.append(" ");
 				message.append(names[i - 1]);
 				message.append("</h5><p>");
-				message.append(notes[i - 1]);
+				message.append(notes[i - 1].replace("\n", "<br>"));
 				message.append("</p>");
 			}
 		}
+
 		return message.toString();
 	}
 
@@ -96,8 +102,7 @@ public final class ReleaseNotesUtil {
 	 * @param toVersion
 	 *            last version to which to show release notes
 	 */
-	public static void displayReleaseNotes(final Activity activity, final boolean firstStart, final int fromVersion,
-			final int toVersion) {
+	public static void displayReleaseNotes(final Activity activity, final boolean firstStart, final int fromVersion, final int toVersion) {
 		String message = getReleaseNotesHtml(activity, firstStart, fromVersion, toVersion);
 		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
 		Bundle bundle = new Bundle();
@@ -134,8 +139,7 @@ public final class ReleaseNotesUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							int version = Application.getVersion();
-							PreferenceUtil.setSharedPreferenceString(R.string.key_internal_stored_version,
-									Integer.toString(version));
+							PreferenceUtil.setSharedPreferenceString(R.string.key_internal_stored_version, Integer.toString(version));
 							dialog.dismiss();
 						}
 					});

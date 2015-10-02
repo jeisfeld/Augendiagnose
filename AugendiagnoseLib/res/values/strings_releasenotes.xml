@@ -6,7 +6,8 @@
     <string name="releasenotes_release">Release</string>
     <string name="releasenotes_first_usage" translatable="false"></string>
     <string name="releasenotes_current_remark" translatable="false"></string>
-
+    <string name="releasenotes_current_remark_version" translatable="false">1000000</string>
+    
     <string-array name="releasenotes_version_names" translatable="false"></string-array>
     <string-array name="releasenotes_version_notes"></string-array>
 

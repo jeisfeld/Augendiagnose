@@ -172,9 +172,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				MediaStoreUtil.deleteThumbnail(pairToModify.getRightEye().getAbsolutePath());
 
 				// delete images
-				boolean success =
-						pairToModify.moveToFolder(PreferenceUtil
-								.getSharedPreferenceString(R.string.key_folder_input));
+				boolean success = pairToModify.moveToFolder(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
 				// update list of images
 				updateEyePhotoPairs();
 

@@ -53,7 +53,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static String getSharedPreferenceString(final int preferenceId) {
-		return getSharedPreferences().getString(Application.getAppContext().getString(preferenceId), "");
+		return getSharedPreferences().getString(Application.getAppContext().getString(preferenceId), null);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public final class PreferenceUtil {
 	 * @return the corresponding preference value.
 	 */
 	public static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
-		String result = getSharedPreferences().getString(Application.getAppContext().getString(preferenceId), null);
+		String result = getSharedPreferenceString(preferenceId);
 		if (result == null) {
 			result = Application.getAppContext().getString(defaultId);
 			setSharedPreferenceString(preferenceId, result);
@@ -216,12 +216,19 @@ public final class PreferenceUtil {
 	 * @param preferenceId
 	 *            the id of the shared preference.
 	 * @param defaultId
-	 *            the String key of the default value.
+	 *            the String key of the default value. If not existing, value 0 is returned.
 	 * @return the corresponding preference value.
 	 */
-	public static int getSharedPreferenceIntString(final int preferenceId, final int defaultId) {
-		String resultString = getSharedPreferenceString(preferenceId, defaultId);
-		if (resultString == null) {
+	public static int getSharedPreferenceIntString(final int preferenceId, final Integer defaultId) {
+		String resultString;
+
+		if (defaultId == null) {
+			resultString = getSharedPreferenceString(preferenceId);
+		}
+		else {
+			resultString = getSharedPreferenceString(preferenceId, defaultId);
+		}
+		if (resultString == null || resultString.length() == 0) {
 			return 0;
 		}
 		try {

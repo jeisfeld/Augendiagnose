@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="releasenotes_first_usage">
+    <string name="releasenotes_first_usage">
 <![CDATA[
 	<h3>Important information:</h3>
 
@@ -36,7 +35,7 @@
         <item>Flashlight can be used in camera. Vertical photos are possible. Bugfixes.</item>
         <item>Bugfixes</item>
         <item>Selection of camera focus modes. Base enablement of Android 5 camera features. Bugfixes</item>
-        <item>Possibility to shift the camera screen via the settings (if buttons are covered by the Miniris ribbon). Bugfixes</item>
+        <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings (if buttons are covered by the Miniris ribbon).\nBugfixes</item>
     </string-array>
 
 </resources>

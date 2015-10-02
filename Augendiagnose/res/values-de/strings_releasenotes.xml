@@ -94,7 +94,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Neuer Ablauf für die Aufnahme von Fotos aus der App heraus. Die freie App ist ab jetzt für neue Downloads nur noch eine Testversion. Fehlerkorrekturen</item>
         <item>Kamera ist wieder optional.</item>
         <item>Auswahl des Fokus-Modus der Kamera. Grundlegende Nutzung der Kamera-Funktionen von Android 5. Fehlerkorrekturen</item>
-        <item>Möglichkeit, den Kamera-Bildschirm über die Einstellungen zu verschieben. Fehlerkorrekturen</item>
+        <item>Anpassung der Overlays an die Pupillengröße und -lage.\nMöglichkeit, den Kamera-Bildschirm über die Einstellungen zu verschieben.\nFehlerkorrekturen</item>
     </string-array>
 
 </resources>

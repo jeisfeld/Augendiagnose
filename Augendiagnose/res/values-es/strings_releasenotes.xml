@@ -90,7 +90,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Nuevo proceso para la toma de fotografías desde la aplicación. Hecho libre versión de la aplicación solamente una versión de prueba. Corrección de errores</item>
         <item>Hecho cámara opcional de nuevo.</item>
         <item>Selección de modos de enfoque de la cámara. Habilitación de la base de las características de Android 5 de la cámara. Corrección de errores.</item>
-        <item>Posibilidad de desplazar la pantalla de la cámara a través de las ajustes. Corrección de errores</item>
+        <item>Adaptación de superposiciones en el tamaño y la posición de la pupila.\nPosibilidad de desplazar la pantalla de la cámara a través de las ajustes.\nCorrección de errores</item>
     </string-array>
 
 </resources>

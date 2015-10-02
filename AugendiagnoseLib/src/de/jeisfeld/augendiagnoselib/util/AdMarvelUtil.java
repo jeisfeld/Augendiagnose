@@ -79,7 +79,8 @@ public final class AdMarvelUtil {
 		}
 
 		// Special user to test ads
-		if (PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(FORCE_AD_USER)) {
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		if (userKey != null && userKey.startsWith(FORCE_AD_USER)) {
 			return true;
 		}
 

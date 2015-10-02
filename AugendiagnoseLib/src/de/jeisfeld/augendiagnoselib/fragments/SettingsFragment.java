@@ -279,7 +279,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 					// Apply change of language
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
-						if (!mLanguageString.equals(value)) {
+						if (mLanguageString == null || !mLanguageString.equals(value)) {
 							Application.setLanguage();
 							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
 

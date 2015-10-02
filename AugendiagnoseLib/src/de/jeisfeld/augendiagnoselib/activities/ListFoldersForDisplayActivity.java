@@ -73,7 +73,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 						.commit();
 
 				String defaultName = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_last_name);
-				if (defaultName.length() > 0 && new File(getParentFolder(), defaultName).exists()) {
+				if (defaultName != null && defaultName.length() > 0 && new File(getParentFolder(), defaultName).exists()) {
 					listPicturesForName(defaultName);
 				}
 
