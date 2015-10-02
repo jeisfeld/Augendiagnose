@@ -176,7 +176,7 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
-	 * Add an entry for unlocker app.
+	 * Add the listener for unlocker app.
 	 */
 	private void addUnlockerAppButtonListener() {
 		Preference unlockPreference = findPreference(getString(R.string.key_dummy_unlocker_app));
@@ -198,7 +198,7 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
-	 * Add an entry for developer contact.
+	 * Add the listener for developer contact.
 	 */
 	private void addDeveloperContactButtonListener() {
 		Preference contactPreference = findPreference(getString(R.string.key_dummy_contact_developer));
