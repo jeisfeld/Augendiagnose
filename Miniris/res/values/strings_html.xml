@@ -55,7 +55,10 @@
 			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
 		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
 			photo.</li>
-		<li>On the left side, there is a flashlight button. Here you can select if you want to use the device flash.</li>
+		<li>On the bottom left, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select the focus mode of the
+			camera. For closeups, the MACRO mode is normally a good choice.</li>
+		<li>Above, there is a flashlight button. Here you can switch on the light of your device. As a flashlight in front of
+			your eye is dangerous, this is disabled by default, but you may enable it in the settings.</li>
 		<li>Above, there is a button with a circle. Here you can select how big the iris should be on the photo.</li>
 	</ul>
 
@@ -181,6 +184,27 @@
 		</tr>
 	</table>
 
+	<h3>Camera Settings</h3>
+
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Camera compatibility</td>
+			<td width="70%" valign="top">If your device runs on Android 5 or higher, then here you can select if the camera
+				functionality should use the new Android 5 features or not. Selection of &ldquo;Android 4&rdquo; makes sense in case
+				of issues with Android 5 compatibility.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Enable flash</td>
+			<td width="70%" valign="top">Here you may enable the flashlight functionality. By default, this is disabled, as it is
+				dangereous to use the flashlight close to the eye.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Camera screen position</td>
+			<td width="70%" valign="top">If the Miniris ribbon hides some buttons on the camera screen, then you can use this
+				setting to shift the camera screen to the right or left.</td>
+		</tr>
+	</table>
+
 	<h3>Premium Packs / Support</h3>
 
 	<p>This page offers the possibility to purchase a premium pack which gives you anlimited access to all functions of the
@@ -251,8 +275,14 @@
 		<li>Change of brightness and contrast via sliders <img src="../drawable/ic_seek_brightness.png" /><img
 			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Display of iris topographies as overlay (numbered buttons), adaption of the overlay to the iris and storage of
-			overlay position (lock button <img src="../drawable/ic_lock_open.png" />)
+		<li>Display of iris topographies as overlay (circle button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
+			and numbered buttons), adaption of the overlay to the iris and storage of overlay position (lock button <img
+			src="../drawable/ic_lock_open.png" />)
+		</li>
+
+		<li>Set the pupil size for the overlays (button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />). Here
+			you can either keep the pupil centered (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />) or move it
+			freely (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
 		</li>
 
 		<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; <img
@@ -269,8 +299,9 @@
 	</ul>
 
 	<p>
-		These features may be enabled or disabled via the button &ldquo;Show/Hide utilities&rdquo; <img
-			src="../drawable/ic_tools_up.png" />.
+		These features may be enabled or disabled via the button &ldquo;Show/Hide utilities&rdquo; (<img
+			src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
+			src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />).
 	</p>
 </body>
 </html>

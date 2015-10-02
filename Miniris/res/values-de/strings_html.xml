@@ -54,8 +54,11 @@
 		<li>In den oberen Ecken befindet sich die Anzeige des rechten und linken Augenfotos. Die rote Markierung zeigt an,
 			welches Auge als nächstes aufgenommen wird. Wenn Sie auf eine dieser Flächen drücken, können Sie die Seite wechseln.</li>
 		<li>Auf der Kameraanzeige befindet sich ein großer Kreis. Dieser Kreis zeigt an, wo Sie die Iris aufnehmen sollten.</li>
-		<li>Links unten befindet sich ein Blitz-Knopf. Hier können Sie einstellen, ob Sie das Blitzlicht des Gerätes benutzen
-			wollen.</li>
+		<li>Links unten befindet sich ein Knopf mit dem Text &bdquo;MACRO&ldquo; oder &bdquo;AUTO&ldquo;. Hier können Sie den Fokus-Modus der Kamera
+			einstellen. Für Nahaufnahmen ist der MACRO-Modus normalerweise eine gute Wahl.</li>
+		<li>Darüber befindet sich ein Blitz-Knopf. Hier können Sie das Licht Ihres Smartphones einschalten. Hier können Sie
+			auch den Kamera-Blitz einschalten. Da dieser für das Auge gefährlich ist, muss der Kamera-Blitz aber zunächst über
+			die Einstellungen freigeschaltet werden.</li>
 		<li>Darüber befindet sich ein Knopf mit einem Kreis. Hier können Sie auswählen, wie groß die Iris auf dem Foto sein
 			sollte.</li>
 	</ul>
@@ -186,6 +189,27 @@
 		</tr>
 	</table>
 
+	<h3>Kameraeinstellungen</h3>
+
+	<table width="100%" border="1">
+		<tr>
+			<td width="30%" valign="top">Kamera-Kompatibilität</td>
+			<td width="70%" valign="top">Falls Ihr Smartphone Android 5 oder höher nutzt, dann kann hier eingestellt werden, ob
+				die neuen Kamera-Funktionen von Android 5 genutzt werden sollen. Die Wahl &bdquo;Android 4&ldquo; ist sinnvoll im
+				Fall von Problemen mit den Kamerafunktionen von Android 5.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Blitzlicht erlauben</td>
+			<td width="70%" valign="top">Hier können Sie die Verwendung des Blitzlichtes erlauben. In der Voreinstellung ist dies
+				nicht erlaubt, da das Blitzlicht direkt vor dem Auge gefährlich ist.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Kamera-Bildschirmposition</td>
+			<td width="70%" valign="top">Wenn das Miniris-Band Knöpfe auf dem Kamera-Bildschirm verbirgt, dann können Sie diese
+				Einstellung verwenden, um den Kamera-Bildschirm nach rechts oder links zu verschieben.</td>
+		</tr>
+	</table>
+
 	<h3>Premium-Pakete / Hilfe</h3>
 
 	<p>Diese Seite ermöglicht den Erwerb eines Premium-Paketes, über das die unbegrenzte Nutzung aller Funktionen der App
@@ -260,8 +284,14 @@
 		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
 			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Anzeige von Iristopographien als Overlay (nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern der
-			Position der Overlays (Lock-Button <img src="../drawable/ic_lock_open.png" />)
+		<li>Anzeige von Iristopographien als Overlay (Kreis-Button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
+			und nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern der Position der Overlays (Lock-Button <img
+			src="../drawable/ic_lock_open.png" />)
+		</li>
+
+		<li>Anpassen der Pupillengröße für die Overlays (Button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />).
+			Hier können Sie die Pupille entweder zentriert lassen (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />)
+			oder frei bewegen (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
 		</li>
 
 		<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button <img
@@ -278,8 +308,10 @@
 	</ul>
 
 	<p>
-		Die zugehörigen Tools können über den Button &bdquo;Hilfsmittel anzeigen/verbergen&ldquo; <img
-			src="../drawable/ic_tools_up.png" /> aktiviert oder deaktiviert werden.
+		Die zugehörigen Tools können über den Button &bdquo;Hilfsmittel anzeigen/verbergen&ldquo; (<img
+			src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
+			src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />) aktiviert oder deaktiviert
+		werden.
 	</p>
 </body>
 </html>

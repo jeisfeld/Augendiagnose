@@ -163,6 +163,7 @@
     <string name="key_internal_camera_focus_mode" translatable="false">camera_focus_mode</string>
     <string name="key_internal_camera_focal_distance_seekbar_progress" translatable="false">camera_focal_distance_seekbar_progress</string>
     <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
+    <string name="key_internal_initialized_hints" translatable="false">initialized_hints</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>

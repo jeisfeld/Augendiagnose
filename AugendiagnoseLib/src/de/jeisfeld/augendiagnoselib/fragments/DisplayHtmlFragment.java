@@ -24,6 +24,7 @@ public class DisplayHtmlFragment extends Fragment {
 			"<style type=\"text/css\">"
 					+ "body{color: #ffffff;} "
 					+ "img {width: 24px; height: 24px; vertical-align: middle;} "
+					+ "img.frameless {width: 18px; height: 18px;} "
 					+ "a {color: #7fffff;} "
 					+ "li {margin-top: 6px; }"
 					+ "</style>";

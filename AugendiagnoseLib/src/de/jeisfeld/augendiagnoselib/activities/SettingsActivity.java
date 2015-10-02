@@ -116,8 +116,12 @@ public class SettingsActivity extends BaseActivity {
 		// Setting for camera API - dependent on OS version.
 		PreferenceUtil.setDefaultCameraSettings();
 
-		boolean showTips = Boolean.parseBoolean(context.getString(R.string.pref_default_show_tips));
-		PreferenceUtil.setAllHints(!showTips);
+		// Do the initialization of hint settings
+		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_initialized_hints)) {
+			boolean showTips = Boolean.parseBoolean(context.getString(R.string.pref_default_show_tips));
+			PreferenceUtil.setAllHints(!showTips);
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_initialized_hints, true);
+		}
 
 		// Inform PinchImageView about maxBitmapSize
 		PinchImageView.setMaxBitmapSize(PreferenceUtil.getSharedPreferenceIntString(R.string.key_max_bitmap_size, 0));
