@@ -1002,6 +1002,8 @@ public class CameraActivity extends BaseActivity {
 				metadata.setYCenter(0.5f); // MAGIC_NUMBER
 				metadata.setOverlayScaleFactor(((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor());
 				metadata.setPupilSize(OverlayPinchImageView.DEFAULT_PUPIL_SIZE);
+				metadata.setPupilXOffset(0f);
+				metadata.setPupilYOffset(0f);
 			}
 
 			// save photo

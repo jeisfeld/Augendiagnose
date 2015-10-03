@@ -340,12 +340,16 @@ public class OverlayPinchImageView extends PinchImageView {
 								}
 
 								if (mMetadata.getPupilSize() == null) {
-									mPupilOverlayX = 0;
-									mPupilOverlayY = 0;
 									mPupilOverlayScaleFactor = DEFAULT_PUPIL_SIZE;
 								}
 								else {
 									mPupilOverlayScaleFactor = mMetadata.getPupilSize();
+								}
+								if (mMetadata.getPupilXOffset() == null || mMetadata.getPupilYOffset() == null) {
+									mPupilOverlayX = 0;
+									mPupilOverlayY = 0;
+								}
+								else {
 									mPupilOverlayX = mMetadata.getPupilXOffset();
 									mPupilOverlayY = mMetadata.getPupilYOffset();
 								}
