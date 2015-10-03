@@ -29,6 +29,7 @@
         <item>1.1</item>
         <item>1.1.1</item>
         <item>1.1.2</item>
+        <item>1.1.3</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -39,6 +40,7 @@
         <item>Bugfixes</item>
         <item>Selection of camera focus modes. Base enablement of Android 5 camera features. Bugfixes</item>
         <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings (if buttons are covered by the Miniris ribbon).\nBugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
