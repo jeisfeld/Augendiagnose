@@ -333,12 +333,16 @@ public class CameraActivity extends BaseActivity {
 	@Override
 	public final void onResume() {
 		super.onResume();
-		mCameraHandler.startPreview();
+		if (mCameraHandler != null) {
+			mCameraHandler.startPreview();
+		}
 	}
 
 	@Override
 	public final void onPause() {
-		mCameraHandler.stopPreview();
+		if (mCameraHandler != null) {
+			mCameraHandler.stopPreview();
+		}
 		super.onPause();
 	}
 
