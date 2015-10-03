@@ -91,6 +91,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.0.2</item>
         <item>1.1</item>
         <item>1.1.1</item>
+        <item>1.1.2</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -141,6 +142,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Made camera optional again.</item>
         <item>Selection of camera focus modes. Base enablement of Android 5 camera features. Bugfixes</item>
         <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings.\nBugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
