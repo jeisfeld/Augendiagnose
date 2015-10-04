@@ -42,7 +42,7 @@
         <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings (if buttons are covered by the Miniris ribbon).\nBugfixes</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Allow zooming while reviewing images from camera. Bugfixes</item>
     </string-array>
 
 </resources>

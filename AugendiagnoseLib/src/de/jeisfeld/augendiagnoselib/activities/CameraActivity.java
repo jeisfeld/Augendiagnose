@@ -48,6 +48,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
+import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.Camera2Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
@@ -634,6 +635,7 @@ public class CameraActivity extends BaseActivity {
 		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
 		Button buttonOverlayCircle = (Button) findViewById(R.id.buttonCameraOverlayCircle);
 		ImageView imageViewReview = (ImageView) findViewById(R.id.camera_review);
+		FrameLayout cameraPreviewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
 
 		switch (action) {
 		case TAKE_PHOTO:
@@ -648,6 +650,7 @@ public class CameraActivity extends BaseActivity {
 			}
 			buttonOverlayCircle.setEnabled(true);
 			imageViewReview.setVisibility(View.GONE);
+			cameraPreviewFrame.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setEnabled(true);
 			cameraThumbRight.setEnabled(true);
 
@@ -668,6 +671,7 @@ public class CameraActivity extends BaseActivity {
 			buttonViewImages.setVisibility(View.INVISIBLE);
 			buttonOverlayCircle.setEnabled(false);
 			imageViewReview.setVisibility(View.VISIBLE);
+			cameraPreviewFrame.setVisibility(View.GONE);
 			cameraThumbLeft.setEnabled(false);
 			cameraThumbRight.setEnabled(false);
 			updateFlashlight();
@@ -681,6 +685,7 @@ public class CameraActivity extends BaseActivity {
 			}
 			buttonOverlayCircle.setEnabled(true);
 			imageViewReview.setVisibility(View.GONE);
+			cameraPreviewFrame.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setEnabled(true);
 			cameraThumbRight.setEnabled(true);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
@@ -837,11 +842,11 @@ public class CameraActivity extends BaseActivity {
 	 *            The data representing the image.
 	 */
 	private void setReviewImage(final byte[] data) {
-		ImageView imageView = (ImageView) findViewById(R.id.camera_review);
+		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
 
-		imageView.setImageBitmap(bitmap);
+		imageView.setImage(bitmap, this, 1);
 	}
 
 	/**

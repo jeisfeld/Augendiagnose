@@ -30,12 +30,6 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/text_initializing" />
 
-        <ImageView
-            android:id="@+id/camera_review"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/text_initializing" />
-
         <View
             android:id="@+id/camera_flash"
             android:layout_width="match_parent"
@@ -44,6 +38,12 @@
             android:background="@android:color/white"
             android:visibility="gone" />
     </FrameLayout>
+
+    <de.jeisfeld.augendiagnoselib.components.PinchImageView
+        android:id="@+id/camera_review"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/text_initializing" />
 
     <LinearLayout
         android:id="@+id/camera_thumb_layout_right"

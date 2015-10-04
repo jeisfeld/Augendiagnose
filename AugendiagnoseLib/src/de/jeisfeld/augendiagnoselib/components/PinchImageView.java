@@ -274,6 +274,25 @@ public class PinchImageView extends ImageView {
 	}
 
 	/**
+	 * Fill with an image from a bitmap object, making the image fit into the view.
+	 *
+	 * @param bitmap
+	 *            The image resource id
+	 * @param activity
+	 *            The triggering activity (required for bitmap caching)
+	 * @param cacheIndex
+	 *            A unique index of the view in the activity
+	 */
+	public final void setImage(final Bitmap bitmap, final Activity activity, final int cacheIndex) {
+		// do not use retainFragment in this case - only used on CameraActivity, which is landscape only.
+		mBitmap = bitmap;
+		super.setImageBitmap(mBitmap);
+		mIsBitmapSet = true;
+		mInitialized = false;
+		doInitialScaling();
+	}
+
+	/**
 	 * Return the natural scale factor that fits the image into the view.
 	 *
 	 * @return The natural scale factor fitting the image into the view.

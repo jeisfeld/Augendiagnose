@@ -145,7 +145,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Adaptation of overlays to pupil size and position.\nPossibility to shift the camera screen via the settings.\nBugfixes</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Allow zooming while reviewing images from camera. Bugfixes</item>
     </string-array>
 
 </resources>
