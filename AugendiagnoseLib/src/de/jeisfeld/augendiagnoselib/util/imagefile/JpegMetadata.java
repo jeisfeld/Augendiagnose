@@ -13,7 +13,7 @@ public final class JpegMetadata implements Parcelable {
 	/**
 	 * Flag indicating that the overlay size has been set automatically by camera activity ant not by user.
 	 */
-	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 2;
+	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 0b10;
 
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
