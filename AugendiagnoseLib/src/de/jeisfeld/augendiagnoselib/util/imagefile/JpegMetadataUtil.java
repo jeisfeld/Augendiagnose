@@ -234,6 +234,7 @@ public final class JpegMetadataUtil {
 		result.setPupilSize(parser.getJeItem(XmpHandler.ITEM_PUPIL_SIZE));
 		result.setPupilXOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET));
 		result.setPupilYOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET));
+		result.setFlags(parser.getJeInt(XmpHandler.ITEM_FLAGS));
 
 		// For standard fields, use custom data only if there is no other data.
 		if (result.getDescription() == null) {
@@ -503,6 +504,7 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_SIZE, metadata.getPupilSizeString());
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET, metadata.getPupilXOffsetString());
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET, metadata.getPupilYOffsetString());
+			parser.setJeInt(XmpHandler.ITEM_FLAGS, metadata.getFlags());
 
 			os = new FileOutputStream(tempFile);
 			os = new BufferedOutputStream(os);

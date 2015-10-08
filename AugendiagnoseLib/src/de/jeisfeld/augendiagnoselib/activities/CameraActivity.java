@@ -1006,6 +1006,7 @@ public class CameraActivity extends BaseActivity {
 				metadata.setXCenter(0.5f); // MAGIC_NUMBER
 				metadata.setYCenter(0.5f); // MAGIC_NUMBER
 				metadata.setOverlayScaleFactor(((float) overlayCircleRadius) / CIRCLE_BITMAP_SIZE * getDefaultOverlayScaleFactor());
+				metadata.addFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY);
 			}
 
 			// save photo

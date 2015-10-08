@@ -334,9 +334,12 @@ public class OverlayPinchImageView extends PinchImageView {
 								mOverlayY = mMetadata.getYCenter();
 								mOverlayScaleFactor = mMetadata.getOverlayScaleFactor()
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
-								lockOverlay(true, false);
-								if (mGuiElementUpdater != null) {
-									mGuiElementUpdater.setLockChecked(true);
+
+								if (!mMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)) {
+									lockOverlay(true, false);
+									if (mGuiElementUpdater != null) {
+										mGuiElementUpdater.setLockChecked(true);
+									}
 								}
 
 								if (mMetadata.getPupilSize() == null) {
@@ -600,6 +603,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.setXCenter(mOverlayX);
 				mMetadata.setYCenter(mOverlayY);
 				mMetadata.setOverlayScaleFactor(mOverlayScaleFactor / Math.max(mBitmap.getWidth(), mBitmap.getHeight()) * OVERLAY_SIZE);
+				mMetadata.removeFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY);
 
 				mEyePhoto.storeImageMetadata(mMetadata);
 

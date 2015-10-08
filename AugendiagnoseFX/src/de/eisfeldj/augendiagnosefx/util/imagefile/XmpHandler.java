@@ -53,6 +53,7 @@ public class XmpHandler {
 	public static final String ITEM_PUPIL_X_OFFSET = "pupilXOffset";
 	public static final String ITEM_PUPIL_Y_OFFSET = "pupilYOffset";
 	public static final String ITEM_OVERLAY_COLOR = "overlayColor";
+	public static final String ITEM_FLAGS = "flags";
 
 	// JAVADOC:ON
 
@@ -130,6 +131,22 @@ public class XmpHandler {
 		}
 		catch (Exception e) {
 			return null;
+		}
+	}
+
+	/**
+	 * Get an int item from the custom namespace.
+	 *
+	 * @param item
+	 *            the name of the item.
+	 * @return the value of the item.
+	 */
+	public final int getJeInt(final String item) {
+		try {
+			return mXmpMeta.getPropertyInteger(NS_JE, item);
+		}
+		catch (Exception e) {
+			return 0;
 		}
 	}
 
@@ -253,6 +270,20 @@ public class XmpHandler {
 		else {
 			removeJeItem(item);
 		}
+	}
+
+	/**
+	 * Set an int entry in the custom namespace.
+	 *
+	 * @param item
+	 *            the name of the entry.
+	 * @param value
+	 *            the value of the entry.
+	 * @throws XMPException
+	 *             thrown in case of issues with XMP handling.
+	 */
+	public final void setJeInt(final String item, final int value) throws XMPException {
+		mXmpMeta.setProperty(NS_JE, item, value);
 	}
 
 	/**

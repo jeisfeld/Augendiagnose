@@ -8,6 +8,11 @@ import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
  * Helper class holding the metadata to be written into the file.
  */
 public final class JpegMetadata {
+	/**
+	 * Flag indicating that the overlay size has been set automatically by camera activity ant not by user.
+	 */
+	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 2;
+
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
 
@@ -30,6 +35,7 @@ public final class JpegMetadata {
 	private Float mPupilXOffset = null;
 	private Float mPupilYOffset = null;
 	private Integer mOverlayColor = null;
+	private int mFlags = 0;
 
 	public String getTitle() {
 		return mTitle;
@@ -183,6 +189,14 @@ public final class JpegMetadata {
 		this.mPupilYOffset = pupilYOffset;
 	}
 
+	protected int getFlags() {
+		return mFlags;
+	}
+
+	protected void setFlags(final int flags) {
+		this.mFlags = flags;
+	}
+
 	// JAVADOC:ON
 
 	/**
@@ -322,6 +336,37 @@ public final class JpegMetadata {
 
 	// JAVADOC:ON
 
+	/**
+	 * Add a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be added.
+	 */
+	public void addFlag(final int flag) {
+		mFlags |= flag;
+	}
+
+	/**
+	 * Remove a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be removed.
+	 */
+	public void removeFlag(final int flag) {
+		mFlags &= ~flag;
+	}
+
+	/**
+	 * Get a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be retrieved.
+	 * @return true if the flag is set.
+	 */
+	public boolean hasFlag(final int flag) {
+		return (mFlags & flag) != 0;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
@@ -344,6 +389,7 @@ public final class JpegMetadata {
 		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
 		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);
 		str.append("Pupil-Y-Offset: " + mPupilYOffset + LINE_BREAK);
+		str.append("Flags: " + mFlags + LINE_BREAK);
 		return str.toString();
 	}
 

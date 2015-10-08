@@ -10,6 +10,11 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
  * Helper class holding the metadata to be written into the file.
  */
 public final class JpegMetadata implements Parcelable {
+	/**
+	 * Flag indicating that the overlay size has been set automatically by camera activity ant not by user.
+	 */
+	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 2;
+
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
 
@@ -32,6 +37,7 @@ public final class JpegMetadata implements Parcelable {
 	private Float mPupilXOffset = null;
 	private Float mPupilYOffset = null;
 	private Integer mOverlayColor = null;
+	private int mFlags = 0;
 
 	public String getTitle() {
 		return mTitle;
@@ -183,6 +189,14 @@ public final class JpegMetadata implements Parcelable {
 
 	public void setPupilYOffset(final Float pupilYOffset) {
 		this.mPupilYOffset = pupilYOffset;
+	}
+
+	protected int getFlags() {
+		return mFlags;
+	}
+
+	protected void setFlags(final int flags) {
+		this.mFlags = flags;
 	}
 
 	/**
@@ -353,6 +367,37 @@ public final class JpegMetadata implements Parcelable {
 
 	// JAVADOC:ON
 
+	/**
+	 * Add a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be added.
+	 */
+	public void addFlag(final int flag) {
+		mFlags |= flag;
+	}
+
+	/**
+	 * Remove a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be removed.
+	 */
+	public void removeFlag(final int flag) {
+		mFlags &= ~flag;
+	}
+
+	/**
+	 * Get a flag from the constants JpegMetadata.FLAG_XXX.
+	 *
+	 * @param flag
+	 *            The flag to be retrieved.
+	 * @return true if the flag is set.
+	 */
+	public boolean hasFlag(final int flag) {
+		return (mFlags & flag) != 0;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
@@ -372,10 +417,11 @@ public final class JpegMetadata implements Parcelable {
 		str.append("Brightness: " + mBrightness + LINE_BREAK);
 		str.append("Contrast: " + mContrast + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
-		str.append("Orientation: " + getOrientationString() + LINE_BREAK);
 		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
 		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);
 		str.append("Pupil-Y-Offset: " + mPupilYOffset + LINE_BREAK);
+		str.append("Flags: " + mFlags + LINE_BREAK);
+		str.append("Orientation: " + getOrientationString() + LINE_BREAK);
 		return str.toString();
 	}
 
@@ -403,6 +449,7 @@ public final class JpegMetadata implements Parcelable {
 		dest.writeString(getPupilSizeString());
 		dest.writeString(getPupilXOffsetString());
 		dest.writeString(getPupilYOffsetString());
+		dest.writeInt(mFlags);
 		dest.writeString(getOrientationString());
 	}
 
@@ -429,6 +476,7 @@ public final class JpegMetadata implements Parcelable {
 			metadata.setPupilSize(in.readString());
 			metadata.setPupilXOffset(in.readString());
 			metadata.setPupilYOffset(in.readString());
+			metadata.mFlags = in.readInt();
 			metadata.setOrientation(in.readString());
 			return metadata;
 		}
