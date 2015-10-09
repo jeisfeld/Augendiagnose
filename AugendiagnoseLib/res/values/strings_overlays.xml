@@ -8,22 +8,22 @@
         <item>@drawable/overlay_circle</item>
         <item>@drawable/overlay_topo1_l</item>
         <item>@drawable/overlay_topo2_l</item>
-        <item>@drawable/overlay_topo3_l</item>
+        <item>@drawable/overlay_topo_jensen_l</item>
         <item>@drawable/overlay_topo4_l</item>
         <item>@drawable/overlay_topo5_l</item>
         <item>@drawable/overlay_topo6_l</item>
-        <item>@drawable/overlay_topo7_l</item>
+        <item>@drawable/overlay_topo3_l</item>
         <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlays_right">
         <item>@drawable/overlay_circle</item>
         <item>@drawable/overlay_topo1_r</item>
         <item>@drawable/overlay_topo2_r</item>
-        <item>@drawable/overlay_topo3_r</item>
+        <item>@drawable/overlay_topo_jensen_r</item>
         <item>@drawable/overlay_topo4_r</item>
         <item>@drawable/overlay_topo5_r</item>
         <item>@drawable/overlay_topo6_r</item>
-        <item>@drawable/overlay_topo7_r</item>
+        <item>@drawable/overlay_topo3_r</item>
         <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlay_buttons">
@@ -42,11 +42,11 @@
         <item>0.25</item>
         <item>0.28</item>
         <item>0.28</item>
+        <item>0.21</item>
+        <item>0.24</item>
+        <item>0.21</item>
+        <item>0.24</item>
         <item>0.16</item>
-        <item>0.24</item>
-        <item>0.21</item>
-        <item>0.24</item>
-        <item>0.21</item>
         <item>0</item>
     </string-array>
 
