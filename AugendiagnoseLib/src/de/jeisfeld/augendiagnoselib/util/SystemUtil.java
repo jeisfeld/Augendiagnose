@@ -225,6 +225,11 @@ public final class SystemUtil {
 	public static boolean isJeDevice() {
 		String[] jeDevices = Application.getAppContext().getResources().getStringArray(R.array.private_je_devices);
 
-		return Arrays.asList(jeDevices).contains(getDeviceId());
+		try {
+			return Arrays.asList(jeDevices).contains(getDeviceId());
+		}
+		catch (SecurityException e) {
+			return false;
+		}
 	}
 }
