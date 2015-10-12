@@ -814,7 +814,9 @@ public class OverlayPinchImageView extends PinchImageView {
 		mOverlayColor = overlayColor;
 		resetOverlayCache();
 		mGuiElementUpdater.updateOverlayColorButton(overlayColor);
-		refresh(HIGH);
+		if (getOverlayPositions().size() > 0) {
+			refresh(HIGH);
+		}
 	}
 
 	/**
