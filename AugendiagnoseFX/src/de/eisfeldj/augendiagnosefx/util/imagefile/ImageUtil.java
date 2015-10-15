@@ -8,8 +8,11 @@ import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_5_PREFI
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_6_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_7_PREFIX;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
@@ -52,13 +55,22 @@ public final class ImageUtil {
 	/**
 	 * Get an image from a file.
 	 *
-	 * @param url
-	 *            The image URL.
+	 * @param file
+	 *            The image file.
 	 * @param resolution
 	 *            Indicator of the resolution in which the image should be returned.
 	 * @return the image.
 	 */
-	public static Image getImage(final URL url, final Resolution resolution) {
+	public static Image getImage(final File file, final Resolution resolution) {
+		URL url = null;
+		try {
+			url = file.toURI().toURL();
+		}
+		catch (MalformedURLException e) {
+			Logger.error("Could not convert to URL", e);
+			throw new RuntimeException(e);
+		}
+
 		if (resolution == Resolution.FULL) {
 			// no specification of size required in case of full resolution.
 			return new Image(url.toExternalForm());
@@ -67,9 +79,46 @@ public final class ImageUtil {
 		int maxSize = resolution == Resolution.THUMB
 				? PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_THUMBNAIL_SIZE)
 				: PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
-		// Load the thumbnail in the background. Main image needs to be loaded in foreground, as dimensions are
-		// required.
-		return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
+
+		int rotation = JpegMetadataUtil.getExifOrientationAngle(file);
+
+		if (rotation == 0) {
+			return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
+		}
+		else {
+			// need to load in foreground and apply rotation.
+			Image image = new Image(url.toExternalForm(), maxSize, maxSize, true, true);
+			double width = image.getWidth();
+			double height = image.getHeight();
+
+			Canvas canvas;
+			GraphicsContext gc;
+
+			switch (rotation) {
+			case 90: // MAGIC_NUMBER
+				canvas = new Canvas(height, width);
+				gc = canvas.getGraphicsContext2D();
+				gc.setTransform(0, 1, -1, 0, height, 0);
+				break;
+			case 180: // MAGIC_NUMBER
+				canvas = new Canvas(width, height);
+				gc = canvas.getGraphicsContext2D();
+				gc.setTransform(-1, 0, 0, -1, width, height);
+				break;
+			case 270: // MAGIC_NUMBER
+				canvas = new Canvas(height, width);
+				gc = canvas.getGraphicsContext2D();
+				gc.setTransform(0, -1, 1, 0, 0, width);
+				break;
+			default:
+				canvas = new Canvas(width, height);
+				gc = canvas.getGraphicsContext2D();
+			}
+
+			gc.drawImage(image, 0, 0);
+
+			return canvas.snapshot(null, null);
+		}
 	}
 
 	/**

@@ -1,8 +1,6 @@
 package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
@@ -295,21 +293,6 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Retrieve the photo as URL.
-	 *
-	 * @return the URL.
-	 */
-	public final URL getUrl() {
-		try {
-			return getFile().toURI().toURL();
-		}
-		catch (MalformedURLException e) {
-			Logger.error("Could not convert to URL", e);
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
 	 * Check if the file exists.
 	 *
 	 * @return true if the file exists.
@@ -390,10 +373,10 @@ public class EyePhoto {
 	 */
 	public final synchronized void precalculateImage(final Resolution resolution) {
 		if (mCachedThumbnail == null) {
-			mCachedThumbnail = ImageUtil.getImage(getUrl(), Resolution.THUMB);
+			mCachedThumbnail = ImageUtil.getImage(getFile(), Resolution.THUMB);
 		}
 		if (mCachedImage == null && resolution == Resolution.NORMAL) {
-			mCachedImage = ImageUtil.getImage(getUrl(), Resolution.NORMAL);
+			mCachedImage = ImageUtil.getImage(getFile(), Resolution.NORMAL);
 		}
 	}
 
@@ -414,7 +397,7 @@ public class EyePhoto {
 			return mCachedImage;
 		case FULL:
 			// Full size image is not cached.
-			return ImageUtil.getImage(getUrl(), Resolution.FULL);
+			return ImageUtil.getImage(getFile(), Resolution.FULL);
 		default:
 			return null;
 		}

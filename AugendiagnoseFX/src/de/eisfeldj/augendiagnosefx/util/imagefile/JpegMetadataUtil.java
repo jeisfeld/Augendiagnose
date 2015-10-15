@@ -18,7 +18,10 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
@@ -69,6 +72,73 @@ public final class JpegMetadataUtil {
 
 		for (TiffImageMetadata.Item item : items) {
 			Logger.info(item.getTiffField().toString());
+		}
+
+	}
+
+	/**
+	 * Retrieve the orientation of a file from the EXIF data.
+	 *
+	 * @param imageFile
+	 *            the image file.
+	 * @return the orientation value.
+	 */
+	protected static int getExifOrientation(final File imageFile) {
+		try {
+			final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+			TiffImageMetadata tiffImageMetadata = null;
+
+			if (metadata instanceof JpegImageMetadata) {
+				tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
+			}
+			else if (metadata instanceof TiffImageMetadata) {
+				tiffImageMetadata = (TiffImageMetadata) metadata;
+			}
+			else {
+				return TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL;
+			}
+
+			TiffField field = tiffImageMetadata.findField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+			if (field != null) {
+				return field.getIntValue();
+			}
+			else {
+				TagInfo tagInfo = new TagInfoShort("Orientation", 274, 1, TiffDirectoryType.TIFF_DIRECTORY_IFD0); // MAGIC_NUMBER
+				field = tiffImageMetadata.findField(tagInfo);
+				if (field != null) {
+					return field.getIntValue();
+				}
+				else {
+					return TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL;
+				}
+			}
+		}
+		catch (Exception e) {
+			return TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL;
+		}
+	}
+
+	/**
+	 * Retrieve the orientation angle of a file from the EXIF data.
+	 *
+	 * @param imageFile
+	 *            the image file.
+	 * @return the orientation angle.
+	 */
+	public static int getExifOrientationAngle(final File imageFile) {
+		final int exifValue = getExifOrientation(imageFile);
+
+		switch (exifValue) {
+		case TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL:
+			return 0;
+		case TiffTagConstants.ORIENTATION_VALUE_ROTATE_90_CW:
+			return 90; // MAGIC_NUMBER
+		case TiffTagConstants.ORIENTATION_VALUE_ROTATE_180:
+			return 180; // MAGIC_NUMBER
+		case TiffTagConstants.ORIENTATION_VALUE_ROTATE_270_CW:
+			return 270; // MAGIC_NUMBER
+		default:
+			return 0;
 		}
 
 	}
