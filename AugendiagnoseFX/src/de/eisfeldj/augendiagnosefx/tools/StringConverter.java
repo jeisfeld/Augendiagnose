@@ -30,22 +30,22 @@ public final class StringConverter {
 	 * The global Strings file.
 	 */
 	private static final File[] XML_FILES_GLOBAL = { new File("../Augendiagnose/res/values/strings.xml"),
-			new File("../Augendiagnose/res/values/strings_menu.xml"),
-			new File("../Augendiagnose/res/values/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values/strings_menu.xml"),
+			new File("../AugendiagnoseLib/res/values/strings_settings.xml") };
 
 	/**
 	 * The German String file.
 	 */
 	private static final File[] XML_FILES_DE = { new File("../Augendiagnose/res/values-de/strings.xml"),
-			new File("../Augendiagnose/res/values-de/strings_menu.xml"),
-			new File("../Augendiagnose/res/values-de/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values-de/strings_menu.xml"),
+			new File("../AugendiagnoseLib/res/values-de/strings_settings.xml") };
 
 	/**
 	 * The Spanish String file.
 	 */
 	private static final File[] XML_FILES_ES = { new File("../Augendiagnose/res/values-es/strings.xml"),
-			new File("../Augendiagnose/res/values-es/strings_menu.xml"),
-			new File("../Augendiagnose/res/values-es/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values-es/strings_menu.xml"),
+			new File("../AugendiagnoseLib/res/values-es/strings_settings.xml") };
 
 	/**
 	 * The global Properties file.
@@ -237,6 +237,28 @@ public final class StringConverter {
 	}
 
 	/**
+	 * Convert the non-ISO characters of an input String into its unicode representation.
+	 *
+	 * @param input
+	 *            The input String
+	 * @return The converted String.
+	 */
+	private static String convertToUnicode(final String input) {
+		StringBuffer result = new StringBuffer();
+		for (char character : input.toCharArray()) {
+			String hexString = Integer.toHexString(character | 0x10000).substring(1); // MAGIC_NUMBER
+			if (hexString.startsWith("00")) {
+				result.append(character);
+			}
+			else {
+				result.append("\\u" + hexString);
+			}
+		}
+
+		return result.toString();
+	}
+
+	/**
 	 * SAX handler to parse the strings.xml file.
 	 */
 	private static class SaxHandler extends DefaultHandler {
@@ -313,7 +335,7 @@ public final class StringConverter {
 	}
 
 	/**
-	 * Utility writer to remove the date string from the Properties output.
+	 * Utility writer to remove the date string from the Properties output and to convert non-iso Strings to unicode.
 	 */
 	private static class FilteredFileWriter extends BufferedWriter {
 		/**
@@ -332,7 +354,7 @@ public final class StringConverter {
 		@Override
 		public void write(final String str) throws IOException {
 			if (!str.startsWith("#") || !str.matches("#.*[0-9][0-9]:[0-9][0-9]:[0-9][0-9].*")) {
-				super.write(str);
+				super.write(convertToUnicode(str));
 			}
 		}
 	}

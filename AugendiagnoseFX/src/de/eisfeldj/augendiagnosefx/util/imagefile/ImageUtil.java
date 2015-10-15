@@ -1,6 +1,12 @@
 package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_2_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_3_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_4_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_5_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_6_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_7_PREFIX;
 
 import java.net.URL;
 
@@ -67,6 +73,63 @@ public final class ImageUtil {
 	}
 
 	/**
+	 * Get the name of an overlay image file.
+	 *
+	 * @param overlayType
+	 *            The type of the overlay.
+	 * @param side
+	 *            The side of the eye.
+	 * @return The file name of the overlay file.
+	 */
+	private static String getOverlayFileName(final int overlayType, final RightLeft side) {
+		String baseName = "";
+		switch (overlayType) {
+		case 0:
+			baseName = "overlay_circle";
+			break;
+		case 1:
+			baseName = ResourceUtil.getString(OVERLAY_1_PREFIX);
+			break;
+		case 2:
+			baseName = ResourceUtil.getString(OVERLAY_2_PREFIX);
+			break;
+		case 3: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_3_PREFIX);
+			break;
+		case 4: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_4_PREFIX);
+			break;
+		case 5: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_5_PREFIX);
+			break;
+		case 6: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_6_PREFIX);
+			break;
+		case 7: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_7_PREFIX);
+			break;
+		default:
+			baseName = "overlay_topo" + overlayType;
+		}
+
+		String suffix = ".png";
+
+		if (overlayType > 0) {
+			switch (side) {
+			case LEFT:
+				suffix = "_l" + suffix;
+				break;
+			case RIGHT:
+				suffix = "_r" + suffix;
+				break;
+			default:
+			}
+		}
+
+		return baseName + suffix;
+	}
+
+	/**
 	 * Retrieve an overlay image.
 	 *
 	 * @param overlayType
@@ -85,30 +148,7 @@ public final class ImageUtil {
 			return mCachedOverlay;
 		}
 
-		String baseName = "";
-		switch (overlayType) {
-		case 0:
-			baseName = "overlay_circle";
-			break;
-		case 1:
-			baseName = ResourceUtil.getString(OVERLAY_1_PREFIX);
-			break;
-		default:
-			baseName = "overlay_topo" + overlayType;
-		}
-
-		String suffix = "";
-		switch (side) {
-		case LEFT:
-			suffix = "_l.png";
-			break;
-		case RIGHT:
-			suffix = "_r.png";
-			break;
-		default:
-		}
-
-		URL imageUrl = ClassLoader.getSystemResource("overlay/" + baseName + suffix);
+		URL imageUrl = ClassLoader.getSystemResource("overlay/" + getOverlayFileName(overlayType, side));
 
 		Image image = new Image(imageUrl.toExternalForm());
 
