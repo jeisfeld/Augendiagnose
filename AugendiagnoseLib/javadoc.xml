@@ -6,7 +6,7 @@
         <javadoc
             access="private"
             author="false"
-            classpath="bin/classes;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;libs/android-support-v13.jar;libsExtra/xmpcore.jar;libsExtra/annotations.jar;libs/admarvel-android-sdk-core.jar"
+            classpath="bin/classes;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;libs/android-support-v13.jar;libsExtra/xmpcore.jar;libsExtra/annotations.jar;libs/admarvel-android-sdk-core-adcolony.jar"
             destdir="doc"
             linksource="true"
             nodeprecated="false"
@@ -28,7 +28,7 @@
                 offline="true"
                 packagelistLoc="C:\Program Files (x86)\Android\android-sdk\docs\reference" />
 
-            <link href="file:/D:/Git/Augendiagnose/Augendiagnose/doc/" />
+            <link href="file:/D:/Git/Augendiagnose/AugendiagnoseLib/doc/" />
         </javadoc>
     </target>
 
