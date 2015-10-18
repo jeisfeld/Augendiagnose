@@ -22,6 +22,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.DisplacementMap;
+import javafx.scene.effect.FloatMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -33,6 +35,16 @@ public final class ImageUtil {
 	 * The size of the overlays (in pixels).
 	 */
 	private static final int OVERLAY_SIZE = 1024;
+
+	/**
+	 * The relative radius of the iris on the overlay.
+	 */
+	private static final float OVERLAY_CIRCLE_RATIO = 0.75f;
+
+	/**
+	 * The pupil sizes in the original overlay images.
+	 */
+	private static final float[] ORIG_PUPIL_SIZES = { 0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.21f, 0.24f, 0.16f };
 
 	/**
 	 * A cache of one overlay - to prevent frequent recalculation while sliding brightness and contrast.
@@ -71,11 +83,6 @@ public final class ImageUtil {
 			throw new RuntimeException(e);
 		}
 
-		if (resolution == Resolution.FULL) {
-			// no specification of size required in case of full resolution.
-			return new Image(url.toExternalForm());
-		}
-
 		int maxSize = resolution == Resolution.THUMB
 				? PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_THUMBNAIL_SIZE)
 				: PreferenceUtil.getPreferenceInt(PreferenceUtil.KEY_MAX_BITMAP_SIZE);
@@ -83,11 +90,23 @@ public final class ImageUtil {
 		int rotation = JpegMetadataUtil.getExifOrientationAngle(file);
 
 		if (rotation == 0) {
-			return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
+			if (resolution == Resolution.FULL) {
+				return new Image(url.toExternalForm(), true);
+			}
+			else {
+				return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
+			}
 		}
 		else {
 			// need to load in foreground and apply rotation.
-			Image image = new Image(url.toExternalForm(), maxSize, maxSize, true, true);
+			Image image;
+			if (resolution == Resolution.FULL) {
+				image = new Image(url.toExternalForm());
+			}
+			else {
+				image = new Image(url.toExternalForm(), maxSize, maxSize, true, true);
+			}
+
 			double width = image.getWidth();
 			double height = image.getHeight();
 
@@ -190,13 +209,7 @@ public final class ImageUtil {
 	 *
 	 * @return The overlay image.
 	 */
-	public static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
-		if (mCachedOverlayType != null && overlayType == mCachedOverlayType
-				&& side == mCachedOverlaySide
-				&& color.equals(mCachedOverlayColor)) {
-			return mCachedOverlay;
-		}
-
+	private static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color) {
 		URL imageUrl = ClassLoader.getSystemResource("overlay/" + getOverlayFileName(overlayType, side));
 
 		Image image = new Image(imageUrl.toExternalForm());
@@ -220,6 +233,102 @@ public final class ImageUtil {
 		}
 		canvas.getGraphicsContext2D().setGlobalAlpha(color.getOpacity());
 		canvas.getGraphicsContext2D().drawImage(image, 0, 0, OVERLAY_SIZE, OVERLAY_SIZE);
+		SnapshotParameters parameters = new SnapshotParameters();
+		parameters.setFill(Color.TRANSPARENT);
+
+		return canvas.snapshot(parameters, null);
+	}
+
+	/**
+	 * Retrieve an overlay image, warped due to pupil size and position.
+	 *
+	 * @param overlayType
+	 *            The overlay type.
+	 * @param side
+	 *            The side of the eye.
+	 * @param color
+	 *            The overlay color.
+	 * @param pupilXOffset
+	 *            The horizontal offset of the pupil.
+	 * @param pupilYOffset
+	 *            The vertical offset of the pupil.
+	 * @param pupilSize
+	 *            The relative size of the pupil.
+	 * @return The overlay image.
+	 */
+	private static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color,
+			final float pupilXOffset, final float pupilYOffset, final float pupilSize) {
+		if (mCachedOverlayType != null && overlayType == mCachedOverlayType
+				&& side == mCachedOverlaySide
+				&& color.equals(mCachedOverlayColor)) {
+			return mCachedOverlay;
+		}
+
+		Image originalImage = getOverlayImage(overlayType, side, color);
+		Canvas canvas = new Canvas(OVERLAY_SIZE, OVERLAY_SIZE);
+
+		int overlayHalfSize = OVERLAY_SIZE / 2;
+		int irisRadius = (int) (OVERLAY_CIRCLE_RATIO * overlayHalfSize);
+		long irisRadiusSquare = irisRadius * irisRadius;
+		float pupilXCenter = OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO * pupilXOffset / (1 - pupilSize);
+		float pupilYCenter = OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO * pupilYOffset / (1 - pupilSize);
+		float origPupilSize = ORIG_PUPIL_SIZES[overlayType];
+		float pupilShrinkFactor = origPupilSize / pupilSize;
+		float linTransA = pupilSize == 1 ? 0 : (1 - origPupilSize) / (1 - pupilSize);
+		float linTransB = 1 - linTransA;
+
+		FloatMap floatMap = new FloatMap(OVERLAY_SIZE, OVERLAY_SIZE);
+		for (int x = 0; x < OVERLAY_SIZE; x++) {
+			int xPos = x - overlayHalfSize;
+			float xPosP = xPos - pupilXCenter;
+
+			for (int y = 0; y < OVERLAY_SIZE; y++) {
+				int yPos = y - overlayHalfSize;
+				float yPosP = yPos - pupilYCenter;
+
+				long centerDistSquare = xPos * xPos + yPos * yPos;
+				float pupilCenterDistSquare = xPosP * xPosP + yPosP * yPosP;
+
+				if (centerDistSquare >= irisRadiusSquare) {
+					floatMap.setSamples(x, y, 0, 0);
+				}
+				else if (pupilCenterDistSquare == 0) {
+					floatMap.setSamples(x, y, -xPos / OVERLAY_SIZE, -yPos / OVERLAY_SIZE);
+				}
+				else {
+					// Determine corresponding iris boundary point via quadratic equation
+					float plusMinusTerm = (float) Math.sqrt(2 * xPosP * yPosP * pupilXCenter * pupilYCenter
+							+ irisRadius * irisRadius * pupilCenterDistSquare
+							- (pupilXCenter * pupilXCenter * yPosP * yPosP)
+							- (pupilYCenter * pupilYCenter * xPosP * xPosP));
+
+					float xBound = (yPosP * yPosP * pupilXCenter - yPosP * xPosP * pupilYCenter + xPosP * plusMinusTerm) / pupilCenterDistSquare;
+					float yBound = (xPosP * xPosP * pupilYCenter - xPosP * yPosP * pupilXCenter + yPosP * plusMinusTerm) / pupilCenterDistSquare;
+
+					// distance of the current point from the center - 1 corresponds to iris boundary
+					float relativeDistance = (float) Math.sqrt(pupilCenterDistSquare
+							/ ((xBound - pupilXCenter) * (xBound - pupilXCenter) + (yBound - pupilYCenter) * (yBound - pupilYCenter)));
+
+					float sourceRelativeDistance;
+					if (relativeDistance <= pupilSize) {
+						sourceRelativeDistance = relativeDistance * pupilShrinkFactor;
+					}
+					else {
+						sourceRelativeDistance = linTransA * relativeDistance + linTransB;
+					}
+
+					float sourceX = xBound * sourceRelativeDistance;
+					float sourceY = yBound * sourceRelativeDistance;
+
+					floatMap.setSamples(x, y, (sourceX - xPos) / OVERLAY_SIZE, (sourceY - yPos) / OVERLAY_SIZE);
+				}
+
+			}
+		}
+		DisplacementMap displacementMap = new DisplacementMap(floatMap);
+		canvas.getGraphicsContext2D().setEffect(displacementMap);
+		canvas.getGraphicsContext2D().drawImage(originalImage, 0, 0, OVERLAY_SIZE, OVERLAY_SIZE);
+
 		SnapshotParameters parameters = new SnapshotParameters();
 		parameters.setFill(Color.TRANSPARENT);
 
@@ -247,6 +356,12 @@ public final class ImageUtil {
 	 *            The y position of the overlay.
 	 * @param scaleFactor
 	 *            The scale factor of the overlay.
+	 * @param pupilXOffset
+	 *            The horizontal offset of the pupil.
+	 * @param pupilYOffset
+	 *            The vertical offset of the pupil.
+	 * @param pupilSize
+	 *            The relative size of the pupil.
 	 * @param brightness
 	 *            The brightness of the image.
 	 * @param contrast
@@ -257,7 +372,8 @@ public final class ImageUtil {
 	 */
 	private static Image getImageWithOverlay( // SUPPRESS_CHECKSTYLE Too many parameters
 			final Image baseImage, final Integer overlayType, final RightLeft side,
-			final Color color, final double xPosition, final double yPosition, final double scaleFactor,
+			final Color color, final float xPosition, final float yPosition, final float scaleFactor,
+			final float pupilXOffset, final float pupilYOffset, final float pupilSize,
 			final float brightness, final float contrast, final Resolution resolution) {
 		if (brightness == 0 && contrast == 1 && overlayType == null) {
 			return baseImage;
@@ -331,7 +447,7 @@ public final class ImageUtil {
 		}
 
 		if (overlayType != null) {
-			Image overlayImage = getOverlayImage(overlayType, side, color);
+			Image overlayImage = getOverlayImage(overlayType, side, color, pupilXOffset, pupilYOffset, pupilSize);
 			gc.setEffect(null);
 			gc.setGlobalBlendMode(BlendMode.SRC_OVER);
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
@@ -367,14 +483,32 @@ public final class ImageUtil {
 			return image;
 		}
 		else if (metadata != null && metadata.hasOverlayPosition() && overlayType != null) {
-			return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
-					metadata.getXCenter(), metadata.getYCenter(),
-					metadata.getOverlayScaleFactor(), brightness, contrast, resolution);
+			if (metadata.getPupilSize() == null) {
+				return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
+						metadata.getXCenter(), metadata.getYCenter(), metadata.getOverlayScaleFactor(),
+						0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
+			}
+			else {
+				return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
+						metadata.getXCenter(), metadata.getYCenter(), metadata.getOverlayScaleFactor(),
+						metadata.getPupilXOffset(), metadata.getPupilYOffset(), metadata.getPupilSize(),
+						brightness, contrast, resolution);
+			}
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
-					0, 0, 0, brightness, contrast, resolution);
+					0, 0, 1, 0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
 		}
+	}
+
+	/**
+	 * Clean the overlay cache.
+	 */
+	public static void cleanOverlayCache() {
+		mCachedOverlay = null;
+		mCachedOverlayColor = null;
+		mCachedOverlaySide = null;
+		mCachedOverlayType = null;
 	}
 
 	/**
