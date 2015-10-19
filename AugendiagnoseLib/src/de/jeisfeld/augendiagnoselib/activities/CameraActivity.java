@@ -574,6 +574,12 @@ public class CameraActivity extends BaseActivity {
 		setFocusMode(storedFocusMode);
 
 		Button focusButton = (Button) findViewById(R.id.buttonCameraFocus);
+
+		if (mFocusModes.size() < 2) {
+			focusButton.setVisibility(View.GONE);
+			return;
+		}
+
 		focusButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
