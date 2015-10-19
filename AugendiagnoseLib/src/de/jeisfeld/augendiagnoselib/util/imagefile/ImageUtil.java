@@ -460,8 +460,9 @@ public final class ImageUtil {
 		}
 
 		// Constants used for linear transformation of the iris part of the overlay.
-		float linTransA = (destPupilSize - origPupilSize) / (1 - origPupilSize);
-		float linTransB = (1 - destPupilSize) / (irisRadius * (1 - origPupilSize));
+		float linTransB = (destPupilSize - origPupilSize) / (1 - origPupilSize);
+		float linTransM = (1 - destPupilSize) / (irisRadius * (1 - origPupilSize));
+		float absOrigPupilSize = origPupilSize * irisRadius;
 
 		Bitmap ret = Bitmap.createBitmap(overlaySize, overlaySize, sourceBitmap.getConfig());
 		Canvas canvas = new Canvas(ret);
@@ -493,12 +494,9 @@ public final class ImageUtil {
 					float xBound = overlayHalfSize + xDirection * irisRadius;
 					float yBound = overlayHalfSize + yDirection * irisRadius;
 
-					float radialPosition;
-					if (centerDist <= origPupilSize * irisRadius) {
-						radialPosition = destPupilSize * centerDist / (origPupilSize * irisRadius);
-					}
-					else {
-						radialPosition = linTransA + centerDist * linTransB;
+					float radialPosition = linTransM * centerDist + linTransB;
+					if (centerDist < absOrigPupilSize) {
+						radialPosition -= linTransB * Math.pow(1 - centerDist / absOrigPupilSize, 1.5f); // MAGIC_NUMBER
 					}
 
 					verts[vertsIndex++] = targetCenterX + (xBound - targetCenterX) * radialPosition;

@@ -268,4 +268,9 @@ JE Customizations of Sun Checks (Eclipse)
     <property name="commentFormat" value="SYSTEMOUT"/>
     <property name="checkFormat" value="RegexpSingleline"/>
   </module>
+  <module name="SuppressWithNearbyCommentFilter">
+    <metadata name="net.sf.eclipsecs.core.comment" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
+    <property name="commentFormat" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
+    <property name="checkFormat" value="BooleanExpressionComplexity"/>
+  </module>
 </module>

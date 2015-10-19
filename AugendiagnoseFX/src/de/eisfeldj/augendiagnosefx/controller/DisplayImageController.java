@@ -19,7 +19,6 @@ import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
-import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 import javafx.beans.value.ChangeListener;
@@ -214,7 +213,6 @@ public class DisplayImageController extends BaseController implements Initializa
 		mSliderContrast.setValue(0);
 		mSliderContrast.setMax(1);
 
-		ImageUtil.cleanOverlayCache();
 		mIsInitialized = true;
 	}
 

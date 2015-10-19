@@ -54,6 +54,9 @@ public final class ImageUtil {
 	private static Integer mCachedOverlayType = null;
 	private static RightLeft mCachedOverlaySide;
 	private static Color mCachedOverlayColor;
+	private static float mCachedPupilSize;
+	private static float mCachedPupilXOffset;
+	private static float mCachedPupilYOffset;
 
 	// JAVADOC:ON
 
@@ -91,7 +94,7 @@ public final class ImageUtil {
 
 		if (rotation == 0) {
 			if (resolution == Resolution.FULL) {
-				return new Image(url.toExternalForm(), true);
+				return new Image(url.toExternalForm());
 			}
 			else {
 				return new Image(url.toExternalForm(), maxSize, maxSize, true, true, true);
@@ -258,9 +261,9 @@ public final class ImageUtil {
 	 */
 	private static Image getOverlayImage(final int overlayType, final RightLeft side, final Color color,
 			final float pupilXOffset, final float pupilYOffset, final float pupilSize) {
-		if (mCachedOverlayType != null && overlayType == mCachedOverlayType
-				&& side == mCachedOverlaySide
-				&& color.equals(mCachedOverlayColor)) {
+		if (mCachedOverlayType != null && overlayType == mCachedOverlayType // BOOLEAN_EXPRESSION_COMPLEXITY
+				&& side == mCachedOverlaySide && color.equals(mCachedOverlayColor)
+				&& pupilXOffset == mCachedPupilXOffset && pupilYOffset == mCachedPupilYOffset && pupilSize == mCachedPupilSize) {
 			return mCachedOverlay;
 		}
 
@@ -273,9 +276,8 @@ public final class ImageUtil {
 		float pupilXCenter = OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO * pupilXOffset / (1 - pupilSize);
 		float pupilYCenter = OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO * pupilYOffset / (1 - pupilSize);
 		float origPupilSize = ORIG_PUPIL_SIZES[overlayType];
-		float pupilShrinkFactor = origPupilSize / pupilSize;
-		float linTransA = pupilSize == 1 ? 0 : (1 - origPupilSize) / (1 - pupilSize);
-		float linTransB = 1 - linTransA;
+		float linTransM = pupilSize == 1 ? 0 : (1 - origPupilSize) / (1 - pupilSize);
+		float linTransB = 1 - linTransM;
 
 		FloatMap floatMap = new FloatMap(OVERLAY_SIZE, OVERLAY_SIZE);
 		for (int x = 0; x < OVERLAY_SIZE; x++) {
@@ -309,12 +311,9 @@ public final class ImageUtil {
 					float relativeDistance = (float) Math.sqrt(pupilCenterDistSquare
 							/ ((xBound - pupilXCenter) * (xBound - pupilXCenter) + (yBound - pupilYCenter) * (yBound - pupilYCenter)));
 
-					float sourceRelativeDistance;
-					if (relativeDistance <= pupilSize) {
-						sourceRelativeDistance = relativeDistance * pupilShrinkFactor;
-					}
-					else {
-						sourceRelativeDistance = linTransA * relativeDistance + linTransB;
+					float sourceRelativeDistance = linTransM * relativeDistance + linTransB;
+					if (relativeDistance < pupilSize) {
+						sourceRelativeDistance -= linTransB * Math.pow(1 - relativeDistance / pupilSize, 1.1f); // MAGIC_NUMBER
 					}
 
 					float sourceX = xBound * sourceRelativeDistance;
@@ -336,6 +335,9 @@ public final class ImageUtil {
 		mCachedOverlayType = overlayType;
 		mCachedOverlaySide = side;
 		mCachedOverlayColor = color;
+		mCachedPupilSize = pupilSize;
+		mCachedPupilXOffset = pupilXOffset;
+		mCachedPupilYOffset = pupilYOffset;
 		return mCachedOverlay;
 	}
 
@@ -499,16 +501,6 @@ public final class ImageUtil {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
 					0, 0, 1, 0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
 		}
-	}
-
-	/**
-	 * Clean the overlay cache.
-	 */
-	public static void cleanOverlayCache() {
-		mCachedOverlay = null;
-		mCachedOverlayColor = null;
-		mCachedOverlaySide = null;
-		mCachedOverlayType = null;
 	}
 
 	/**
