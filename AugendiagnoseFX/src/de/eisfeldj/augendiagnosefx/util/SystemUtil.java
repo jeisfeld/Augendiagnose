@@ -98,9 +98,10 @@ public final class SystemUtil {
 	public static String getApplicationExecutable() {
 		File javaHome = new File(System.getProperties().getProperty("java.home"));
 
-		File applicationDir = javaHome.getParentFile().getParentFile();
+		File applicationDir1 = javaHome.getParentFile();
+		File applicationDir2 = applicationDir1.getParentFile();
 
-		File[] files = applicationDir.listFiles(new FilenameFilter() {
+		File[] files = applicationDir1.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(final File dir, final String name) {
 				return name.startsWith(Application.APPLICATION_NAME) && name.endsWith(".exe");
@@ -111,7 +112,19 @@ public final class SystemUtil {
 			return files[0].getAbsolutePath();
 		}
 		else {
-			return null;
+			files = applicationDir2.listFiles(new FilenameFilter() {
+				@Override
+				public boolean accept(final File dir, final String name) {
+					return name.startsWith(Application.APPLICATION_NAME) && name.endsWith(".exe");
+				}
+			});
+
+			if (files != null && files.length > 0) {
+				return files[0].getAbsolutePath();
+			}
+			else {
+				return null;
+			}
 		}
 	}
 
