@@ -26,7 +26,6 @@ public final class ResourceConstants {
 	public static final String BUTTON_OVERLAY_5 = "button_overlay_5";
 	public static final String BUTTON_OVERLAY_6 = "button_overlay_6";
 	public static final String BUTTON_OVERLAY_7 = "button_overlay_7";
-	public static final String BUTTON_OVERLAY_CIRCLE = "button_overlay_circle";
 	public static final String BUTTON_SAVE_COMMENT = "button_save_comment";
 	public static final String DOCUMENTATION_URL = "documentation_url";
 	public static final String FILE_INFIX_LEFT = "file_infix_left";

@@ -20,9 +20,9 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.RowConstraints
 
-component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	define ToggleGroup id overlayGroup
-	GridPane id mDisplayImage {
+component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith
+"../css/application.css" {
+	define ToggleGroup id overlayGroup GridPane id mDisplayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",
 
@@ -49,7 +49,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static halignment : "CENTER",
 			static valignment : "CENTER",
 			contextMenu : ContextMenu {
-				items: [
+				items : [
 					MenuItem {
 						text : rstring "menu_store_brightness",
 						onAction : controllermethod storeBrightnessContrast
@@ -77,7 +77,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static columnIndex : 0,
 			static rowIndex : 1,
 			hgap : 5,
-			vgap: 5,
+			vgap : 5,
 			padding : Insets {
 				bottom : 5,
 				top : 5
@@ -125,7 +125,11 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					text : rstring "label_overlays"
 				},
 				ToggleButton id mBtnOverlayCircle {
-					text : rstring "button_overlay_circle",
+					graphic : ImageView {
+						image : Image {
+							url : location "img/wheel.png"
+						}
+					},
 					styleClass : "toggleOverlay",
 					selected : false,
 					alignment : "CENTER",
@@ -209,7 +213,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod btnClarityPressed,
 					graphic : ImageView {
 						image : Image {
-							url: location "img/clarity.png"
+							url : location "img/clarity.png"
 						}
 					},
 					toggleGroup : idref overlayGroup
@@ -221,7 +225,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod displayInFullWindow,
 					graphic : ImageView {
 						image : Image {
-							url: location "img/fullscreen.png"
+							url : location "img/fullscreen.png"
 						}
 					}
 				}
@@ -235,7 +239,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					hgrow : "NEVER"
 				},
 				ColumnConstraints {
-					hgrow: "SOMETIMES"
+					hgrow : "SOMETIMES"
 				}
 			],
 			Label {

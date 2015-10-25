@@ -19,9 +19,9 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.RowConstraints
 import javafx.scene.layout.VBox
 
-component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
-	define ToggleGroup id overlayGroup
-	GridPane id mDisplayImage {
+component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith
+"../css/application.css" {
+	define ToggleGroup id overlayGroup GridPane id mDisplayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",
 
@@ -50,7 +50,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			static valignment : "CENTER",
 			static vgrow : "SOMETIMES",
 			contextMenu : ContextMenu {
-				items: [
+				items : [
 					MenuItem {
 						text : rstring "menu_store_brightness",
 						onAction : controllermethod storeBrightnessContrast
@@ -89,7 +89,11 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					text : rstring "label_overlays"
 				},
 				ToggleButton id mBtnOverlayCircle {
-					text : rstring "button_overlay_circle",
+					graphic : ImageView {
+						image : Image {
+							url : location "img/wheel.png"
+						}
+					},
 					styleClass : "toggleOverlay",
 					selected : false,
 					alignment : "CENTER",
@@ -173,7 +177,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod btnClarityPressed,
 					graphic : ImageView {
 						image : Image {
-							url: location "img/clarity.png"
+							url : location "img/clarity.png"
 						}
 					},
 					toggleGroup : idref overlayGroup
@@ -185,7 +189,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod displayInFullWindow,
 					graphic : ImageView {
 						image : Image {
-							url: location "img/fullscreen.png"
+							url : location "img/fullscreen.png"
 						}
 					}
 				}

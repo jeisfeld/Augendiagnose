@@ -45,7 +45,14 @@
 	<GridPane fx:id="mOverlayPane" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
 		<VBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
-			<ToggleButton fx:id="mBtnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlayCircle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+				<graphic>
+					<ImageView> 
+						<image>
+							<Image url="@img/wheel.png"/> 
+						</image>
+					</ImageView>
+				</graphic>
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
 			<Separator/> 

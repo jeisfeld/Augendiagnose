@@ -58,7 +58,14 @@
 		<Slider fx:id="mSliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<HBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
-			<ToggleButton fx:id="mBtnOverlayCircle" text="%button_overlay_circle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+			<ToggleButton fx:id="mBtnOverlayCircle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+				<graphic>
+					<ImageView> 
+						<image>
+							<Image url="@img/wheel.png"/> 
+						</image>
+					</ImageView>
+				</graphic>
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
 			<Separator/> 
