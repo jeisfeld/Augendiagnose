@@ -166,7 +166,7 @@ public final class AdMarvelUtil {
 		 * @param activity
 		 *            The triggering activity.
 		 */
-		public AdMarvelListener(final AdMarvelActivity activity) {
+		AdMarvelListener(final AdMarvelActivity activity) {
 			this.mActivity = activity;
 		}
 
@@ -178,12 +178,12 @@ public final class AdMarvelUtil {
 		}
 
 		@Override
-		public void onClose() {
+		public void onClose(final AdMarvelView arg0) {
 			// do nothing.
 		}
 
 		@Override
-		public void onExpand() {
+		public void onExpand(final AdMarvelView arg0) {
 			// do nothing.
 		}
 

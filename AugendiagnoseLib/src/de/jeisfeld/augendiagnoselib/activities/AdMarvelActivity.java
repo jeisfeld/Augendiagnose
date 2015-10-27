@@ -50,16 +50,7 @@ public abstract class AdMarvelActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
-			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)
-					|| Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
-				// do not trigger again after it was once clicked.
-				mAdMarvelView.setVisibility(View.GONE);
-				mAdMarvelView.destroy();
-				mAdMarvelView = null;
-			}
-			else {
-				mAdMarvelView.start(this);
-			}
+			mAdMarvelView.start(this);
 		}
 	}
 
@@ -68,7 +59,17 @@ public abstract class AdMarvelActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		if (mAdMarvelView != null && mAdMarvelView.getVisibility() != View.GONE) {
-			mAdMarvelView.resume(this);
+			if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_admarvel_iscurrentlyclicked)
+					|| Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
+				// do not trigger again after it was once clicked.
+				mAdMarvelView.setVisibility(View.GONE);
+				mAdMarvelView.destroy();
+				deleteAdMarvelView();
+				mAdMarvelView = null;
+			}
+			else {
+				mAdMarvelView.resume(this);
+			}
 		}
 	}
 
