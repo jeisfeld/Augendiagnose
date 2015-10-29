@@ -148,11 +148,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	private EyePhoto mEyePhoto;
 
 	/**
-	 * The drawable on which eye photo and overlays are drawn.
-	 */
-	private LayerDrawable mLayerDrawable;
-
-	/**
 	 * The bitmap drawn on the canvas.
 	 */
 	private Bitmap mCanvasBitmap;
@@ -446,10 +441,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mCanvas == null || !mInitialized) {
 			return;
 		}
-		if (resolution == FULL) {
-			showFullResolutionSnapshot(false);
-			return;
-		}
 
 		// Determine overlays to be shown
 		List<Integer> overlayPositions = getOverlayPositions();
@@ -457,6 +448,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		Drawable[] layers = new Drawable[overlayPositions.size() + 1];
 		Bitmap modBitmap;
 
+		// Even in full resolution, first calculate high resolution image.
 		if (resolution == LOW) {
 			// for performance reasons, use only low resolution bitmap while pinching
 			modBitmap = changeBitmapContrastBrightness(mBitmapSmall, mContrast, mBrightness);
@@ -471,38 +463,43 @@ public class OverlayPinchImageView extends PinchImageView {
 			layers[i + 1] = getOverlayDrawable(overlayPositions.get(i));
 		}
 
-		mLayerDrawable = new LayerDrawable(layers);
+		LayerDrawable layerDrawable = new LayerDrawable(layers);
 
 		int width = mBitmap.getWidth();
 		int height = mBitmap.getHeight();
 
 		// position overlays
-		for (int i = 1; i < mLayerDrawable.getNumberOfLayers(); i++) {
+		for (int i = 1; i < layerDrawable.getNumberOfLayers(); i++) {
 			boolean isPupil = overlayPositions.get(i - 1) == OVERLAY_PUPIL_INDEX;
 
 			if (isPupil) {
 				float totalPupilOverlayScaleFactor = mPupilOverlayScaleFactor * mOverlayScaleFactor * OVERLAY_SIZE / 2;
 				float overlayAbsoluteSize = mOverlayScaleFactor * OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO;
-				mLayerDrawable.setLayerInset(i,
-						(int) (mPupilOverlayX * overlayAbsoluteSize + mOverlayX * mBitmap.getWidth() - totalPupilOverlayScaleFactor),
-						(int) (mPupilOverlayY * overlayAbsoluteSize + mOverlayY * mBitmap.getHeight() - totalPupilOverlayScaleFactor),
-						(int) (width - mPupilOverlayX * overlayAbsoluteSize - mOverlayX * mBitmap.getWidth() - totalPupilOverlayScaleFactor),
-						(int) (height - mPupilOverlayY * overlayAbsoluteSize - mOverlayY * mBitmap.getHeight() - totalPupilOverlayScaleFactor));
+				layerDrawable.setLayerInset(i,
+						(int) (mPupilOverlayX * overlayAbsoluteSize + mOverlayX * width - totalPupilOverlayScaleFactor),
+						(int) (mPupilOverlayY * overlayAbsoluteSize + mOverlayY * height - totalPupilOverlayScaleFactor),
+						(int) (width - mPupilOverlayX * overlayAbsoluteSize - mOverlayX * width - totalPupilOverlayScaleFactor),
+						(int) (height - mPupilOverlayY * overlayAbsoluteSize - mOverlayY * height - totalPupilOverlayScaleFactor));
 			}
 			else {
-				mLayerDrawable.setLayerInset(i, (int) (mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
-						(int) (mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
-						(int) (width - mOverlayX * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
-						(int) (height - mOverlayY * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
+				layerDrawable.setLayerInset(i, (int) (mOverlayX * width - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
+						(int) (mOverlayY * height - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
+						(int) (width - mOverlayX * width - OVERLAY_SIZE / 2 * mOverlayScaleFactor),
+						(int) (height - mOverlayY * height - OVERLAY_SIZE / 2 * mOverlayScaleFactor));
 			}
 		}
 
-		mLayerDrawable.setBounds(0, 0, width, height);
+		layerDrawable.setBounds(0, 0, width, height);
 
-		mLayerDrawable.draw(mCanvas);
+		layerDrawable.draw(mCanvas);
 
-		setImageBitmap(mCanvasBitmap);
-		invalidate();
+		if (resolution == FULL) {
+			showFullResolutionSnapshot(true);
+		}
+		else {
+			setImageBitmap(mCanvasBitmap);
+			invalidate();
+		}
 
 		mRequiresBrightnessContrastUpdate = false;
 	}
@@ -511,7 +508,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Refresh with high resolution (or full resolution if applicable).
 	 */
 	public final void refresh() {
-		refresh(mPartialBitmapFullResolution == null ? HIGH : FULL);
+		refresh(mFullResolutionFlag ? FULL : HIGH);
 	}
 
 	/**
@@ -531,15 +528,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		return overlayPositions;
-	}
-
-	/**
-	 * Get information if an overlay is shown.
-	 *
-	 * @return true if an overlay is shown.
-	 */
-	private boolean hasOverlay() {
-		return getOverlayPositions().size() > 0;
 	}
 
 	/**
@@ -572,14 +560,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		mPinchMode = pinchMode;
 
 		updatePinchMode();
-		refresh(HIGH);
-
-		if (hasOverlay()) {
-			showNormalResolution();
-		}
-		else {
-			showFullResolutionSnapshot(true);
-		}
+		refresh();
 	}
 
 	/**
@@ -815,7 +796,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		resetOverlayCache();
 		mGuiElementUpdater.updateOverlayColorButton(overlayColor);
 		if (getOverlayPositions().size() > 0) {
-			refresh(HIGH);
+			refresh();
 		}
 	}
 
@@ -1081,8 +1062,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	@Override
 	protected final void finishPointerMove(final MotionEvent ev) {
-		refresh(HIGH);
-		showFullResolutionSnapshot(true);
+		refresh();
 	}
 
 	/**
@@ -1201,16 +1181,77 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Add the current overlay to the partial Bitmap. (This is done similar to refresh().)
+	 *
+	 * @param partialBitmap
+	 *            the partial bitmap before applying the overlay
+	 * @return the partial bitmap with overlay.
+	 */
+	public final Bitmap addOverlayToPartialBitmap(final Bitmap partialBitmap) {
+		List<Integer> overlayPositions = getOverlayPositions();
+		if (overlayPositions.size() == 0) {
+			return partialBitmap;
+		}
+
+		Drawable[] layers = new Drawable[overlayPositions.size() + 1];
+
+		layers[0] = new BitmapDrawable(getResources(), partialBitmap);
+
+		for (int i = 0; i < overlayPositions.size(); i++) {
+			layers[i + 1] = getOverlayDrawable(overlayPositions.get(i));
+		}
+
+		LayerDrawable layerDrawable = new LayerDrawable(layers);
+
+		// position overlays
+		for (int i = 1; i < layerDrawable.getNumberOfLayers(); i++) {
+			boolean isPupil = overlayPositions.get(i - 1) == OVERLAY_PUPIL_INDEX;
+
+			if (isPupil) {
+				float totalPupilOverlayScaleFactor = mPupilOverlayScaleFactor * mOverlayScaleFactor * OVERLAY_SIZE / 2;
+				float pupilAdjustedOverlayX =
+						mOverlayX + mPupilOverlayX * mOverlayScaleFactor * OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO / mBitmap.getWidth();
+				float pupilAdjustedOverlayY =
+						mOverlayY + mPupilOverlayY * mOverlayScaleFactor * OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO / mBitmap.getHeight();
+				layerDrawable.setLayerInset(i,
+						(int) (((pupilAdjustedOverlayX - mPosX) * mBitmap.getWidth() - totalPupilOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getWidth() / 2),
+						(int) (((pupilAdjustedOverlayY - mPosY) * mBitmap.getHeight() - totalPupilOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getHeight() / 2),
+						(int) (((mPosX - pupilAdjustedOverlayX) * mBitmap.getWidth() - totalPupilOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getWidth() / 2),
+						(int) (((mPosY - pupilAdjustedOverlayY) * mBitmap.getHeight() - totalPupilOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getHeight() / 2));
+			}
+			else {
+				layerDrawable.setLayerInset(i,
+						(int) (((mOverlayX - mPosX) * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getWidth() / 2),
+						(int) (((mOverlayY - mPosY) * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getHeight() / 2),
+						(int) (((mPosX - mOverlayX) * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getWidth() / 2),
+						(int) (((mPosY - mOverlayY) * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
+								+ partialBitmap.getHeight() / 2));
+			}
+		}
+
+		layerDrawable.setBounds(0, 0, partialBitmap.getWidth(), partialBitmap.getHeight());
+
+		Bitmap canvasBitmap = Bitmap.createBitmap(partialBitmap.getWidth(), partialBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(canvasBitmap);
+		layerDrawable.draw(canvas);
+
+		return canvasBitmap;
+	}
+
+	/**
 	 * Show the current view in full resolution.
 	 *
 	 * @param async
 	 *            A flag indicating if the bitmap creation should happen in a separate thread.
 	 */
 	public final void showFullResolutionSnapshot(final boolean async) {
-		if (async && hasOverlay()) {
-			// Do not trigger full resolution thread if there is an overlay.
-			return;
-		}
 		if (async && !mFullResolutionFlag) {
 			// Do not trigger full resolution thread if flag is configured for manual handling of full resolution.
 			return;
@@ -1236,6 +1277,8 @@ public class OverlayPinchImageView extends PinchImageView {
 				final Bitmap partialBitmapWithBrightness =
 						changeBitmapContrastBrightness(mPartialBitmapFullResolution, mContrast, mBrightness);
 
+				final Bitmap partialBitmapWithOverlay = addOverlayToPartialBitmap(partialBitmapWithBrightness);
+
 				if (isInterrupted()) {
 					// Do not display the result if the thread has been interrupted.
 					mPartialBitmapFullResolution = null;
@@ -1247,7 +1290,7 @@ public class OverlayPinchImageView extends PinchImageView {
 						@Override
 						public void run() {
 							if (mPartialBitmapFullResolution != null) {
-								setImageBitmap(partialBitmapWithBrightness);
+								setImageBitmap(partialBitmapWithOverlay);
 								setImageMatrix(null);
 							}
 						}
@@ -1315,7 +1358,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		mPartialBitmapFullResolution = null;
 
 		if (mRequiresBrightnessContrastUpdate) {
-			refresh(HIGH);
+			refresh();
 		}
 		else {
 			setImageBitmap(mCanvasBitmap);

@@ -288,10 +288,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 		if (savedInstanceState != null) {
 			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
 			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
 			mPupilButtonStatus = (PupilButtonStatus) savedInstanceState.getSerializable("pupilButtonStatus");
+			mLockButton.setChecked(savedInstanceState.getBoolean("lockButtonIsChecked"));
 		}
 		else {
 			mShowUtilities = getDefaultShowUtilities();
@@ -301,7 +303,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		mImageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		mImageView.setGuiElementUpdater(this);
-		mImageView.allowFullResolution(allowFullResolution());
+		mImageView.allowFullResolution(hasAutoFullResolution());
 
 		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
 		mToggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
@@ -311,7 +313,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		overlayButtonResources.recycle();
 
-		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 		mPupilButton = (ToggleButton) getView().findViewById(R.id.toggleButtonPupil);
 		mSelectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
 
@@ -389,7 +390,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		if (!allowFullResolution()) {
+		if (!hasAutoFullResolution()) {
 			mClarityButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -716,6 +717,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", mShowUtilities);
 		outState.putInt("overlayColor", mOverlayColor);
+		outState.putBoolean("lockButtonIsChecked", mLockButton.isChecked());
 		outState.putSerializable("pupilButtonStatus", mPupilButtonStatus);
 	}
 
@@ -758,7 +760,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *
 	 * @return true if should be shown in full resoltion.
 	 */
-	public final boolean allowFullResolution() {
+	public final boolean hasAutoFullResolution() {
 		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, 0);
 
 		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
@@ -875,7 +877,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Status of the button to move the pupil.
 	 */
-	public static enum PupilButtonStatus {
+	public enum PupilButtonStatus {
 		/**
 		 * Button is off.
 		 */
