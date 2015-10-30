@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.components;
 
 import static de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.Resolution.FULL;
+import static de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.Resolution.FULL_HIGH;
 import static de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.Resolution.HIGH;
 import static de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.Resolution.LOW;
 
@@ -200,7 +201,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Flag indicating if brightness/contrast is changed, but not yet applied to mBitmap.
 	 */
-	private boolean mRequiresBrightnessContrastUpdate = false;
+	private boolean mNeedsBitmapRefresh = false;
 
 	/**
 	 * Last height of the view. Used to make sure that full resolution is abandoned as soon as view size changes.
@@ -442,6 +443,11 @@ public class OverlayPinchImageView extends PinchImageView {
 			return;
 		}
 
+		if (resolution == FULL) {
+			showFullResolutionSnapshot(true);
+			return;
+		}
+
 		// Determine overlays to be shown
 		List<Integer> overlayPositions = getOverlayPositions();
 
@@ -493,22 +499,23 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		layerDrawable.draw(mCanvas);
 
-		if (resolution == FULL) {
+		if (resolution == FULL_HIGH) {
 			showFullResolutionSnapshot(true);
 		}
 		else {
 			setImageBitmap(mCanvasBitmap);
+			setMatrix();
 			invalidate();
 		}
 
-		mRequiresBrightnessContrastUpdate = false;
+		mNeedsBitmapRefresh = false;
 	}
 
 	/**
 	 * Refresh with high resolution (or full resolution if applicable).
 	 */
 	public final void refresh() {
-		refresh(mFullResolutionFlag ? FULL : HIGH);
+		refresh(mFullResolutionFlag ? FULL_HIGH : HIGH);
 	}
 
 	/**
@@ -560,6 +567,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		mPinchMode = pinchMode;
 
 		updatePinchMode();
+
+		mNeedsBitmapRefresh = true;
 		refresh();
 	}
 
@@ -680,7 +689,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @return The overlay drawable.
 	 */
 	private Drawable getOverlayDrawable(final int position) {
-		if (mOverlayCache[position] == null) {
+		Drawable overlayDrawable = mOverlayCache[position];
+
+		if (overlayDrawable == null) {
 			int[] overlayTypes = getResources().getIntArray(R.array.overlay_types);
 
 			TypedArray overlaysLeft = getResources().obtainTypedArray(R.array.overlays_left);
@@ -699,14 +710,15 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 
 				Integer targetColor = overlayTypes[position] == 1 ? mOverlayColor : null;
-				mOverlayCache[position] = getModifiedDrawable(drawable, targetColor, origPupilSize, mMetadata.getPupilSize(),
+
+				overlayDrawable = getModifiedDrawable(drawable, targetColor, origPupilSize, mMetadata.getPupilSize(),
 						mMetadata.getPupilXOffset(), mMetadata.getPupilYOffset());
+				mOverlayCache[position] = overlayDrawable;
 			}
 			overlaysLeft.recycle();
 			overlaysRight.recycle();
 		}
-
-		return mOverlayCache[position];
+		return overlayDrawable;
 	}
 
 	/**
@@ -768,7 +780,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
-		mRequiresBrightnessContrastUpdate = true;
+		mNeedsBitmapRefresh = true;
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
@@ -781,7 +793,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setContrast(final float contrast) {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
-		mRequiresBrightnessContrastUpdate = true;
+		mNeedsBitmapRefresh = true;
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
@@ -1050,7 +1062,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/*
-	 * Overridden to refresh the view in full details.
+	 * Overridden to refresh the view in high resolution.
 	 */
 	@Override
 	protected final void startPointerMove(final MotionEvent ev) {
@@ -1200,7 +1212,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		for (int i = 0; i < overlayPositions.size(); i++) {
 			layers[i + 1] = getOverlayDrawable(overlayPositions.get(i));
 		}
-
 		LayerDrawable layerDrawable = new LayerDrawable(layers);
 
 		// position overlays
@@ -1357,7 +1368,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		interruptFullResolutionThread();
 		mPartialBitmapFullResolution = null;
 
-		if (mRequiresBrightnessContrastUpdate) {
+		if (mNeedsBitmapRefresh) {
 			refresh();
 		}
 		else {
@@ -1623,7 +1634,11 @@ public class OverlayPinchImageView extends PinchImageView {
 		/**
 		 * Full resolution.
 		 */
-		FULL;
+		FULL,
+		/**
+		 * Full resolution, but high resolution should be prepared.
+		 */
+		FULL_HIGH;
 	}
 
 	/**
