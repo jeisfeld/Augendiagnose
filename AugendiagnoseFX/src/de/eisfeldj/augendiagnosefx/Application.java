@@ -21,7 +21,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -72,9 +74,12 @@ public class Application extends javafx.application.Application {
 
 		MainController mainController = (MainController) FxmlUtil.getRootFromFxml(FxmlConstants.FXML_MAIN);
 
-		mScene =
-				new Scene(mainController.getRoot(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X),
-						PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
+		// In case of screen change, ensure that window is not bigger than screen.
+		Rectangle2D mainScreen = Screen.getPrimary().getVisualBounds();
+		double width = Math.min(mainScreen.getWidth(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_X));
+		double height = Math.min(mainScreen.getHeight(), PreferenceUtil.getPreferenceDouble(KEY_WINDOW_SIZE_Y));
+
+		mScene = new Scene(mainController.getRoot(), width, height);
 
 		// Store window size on close.
 		primaryStage.setOnCloseRequest(
