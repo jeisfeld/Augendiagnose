@@ -154,7 +154,7 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Task to save a JPEG file asynchronously with changed metadata.
 	 */
-	private static class JpegSaverTask extends AsyncTask<Void, Void, Exception> {
+	private static final class JpegSaverTask extends AsyncTask<Void, Void, Exception> {
 		/**
 		 * The path of the jpg file.
 		 */
@@ -172,7 +172,7 @@ public final class JpegSynchronizationUtil {
 		 * @param metadata
 		 *            the metadata.
 		 */
-		public JpegSaverTask(final String pathname, final JpegMetadata metadata) {
+		private JpegSaverTask(final String pathname, final JpegMetadata metadata) {
 			this.mPathname = pathname;
 			this.mMetadata = metadata;
 		}

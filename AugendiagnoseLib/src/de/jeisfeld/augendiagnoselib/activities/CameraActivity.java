@@ -1244,7 +1244,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Enumeration for modes of the camera flash.
 	 */
-	public static enum FlashMode {
+	public enum FlashMode {
 		/**
 		 * The flash is off.
 		 */
@@ -1262,7 +1262,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Enumeration for modes of the camera focus.
 	 */
-	public static enum FocusMode {
+	public enum FocusMode {
 		/**
 		 * Continuous autofocus.
 		 */

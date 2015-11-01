@@ -220,7 +220,7 @@ public class Application extends android.app.Application {
 	/**
 	 * The level of authorization of the class.
 	 */
-	public static enum AuthorizationLevel {
+	public enum AuthorizationLevel {
 		/**
 		 * Only trial access.
 		 */

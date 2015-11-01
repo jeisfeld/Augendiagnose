@@ -242,16 +242,16 @@ public final class MediaStoreUtil {
 	/**
 	 * Utility exception to be thrown if an image cannot be found.
 	 */
-	private static class ImageNotFoundException extends Exception {
+	private static final class ImageNotFoundException extends Exception {
 		/**
 		 * The default serial version id.
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public ImageNotFoundException() {
+		private ImageNotFoundException() {
 		}
 
-		public ImageNotFoundException(final Throwable e) {
+		private ImageNotFoundException(final Throwable e) {
 			super(e);
 		}
 	}
