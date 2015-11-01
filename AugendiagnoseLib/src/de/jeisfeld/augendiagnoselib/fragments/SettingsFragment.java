@@ -6,6 +6,7 @@ import java.util.List;
 import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
+import com.immersion.hapticmediasdk.utils.Log;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -20,7 +21,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
@@ -49,9 +49,10 @@ public class SettingsFragment extends PreferenceFragment {
 	public static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
-	 * The resource key of the flag indicating if only packs should be shown.
+	 * The resource key of the flag indicating the type of settings to be shown.
+	 * This key is used as well in pref_header.xml.
 	 */
-	protected static final String STRING_ONLY_PACKS = "de.jeisfeld.augendiagnoselib.ONLY_PACKS";
+	public static final String STRING_PREF_TYPE = "prefType";
 
 	/**
 	 * A prefix put before the productId to define the according preference key.
@@ -72,14 +73,9 @@ public class SettingsFragment extends PreferenceFragment {
 	private String mFolderPhotos;
 
 	/**
-	 * The flag indicating if only packs should be shown.
+	 * The type of fragment to be shown.
 	 */
-	private boolean mOnlyPacks = false;
-
-	/**
-	 * The preference screen handling purchases.
-	 */
-	private PreferenceScreen mScreenPurchase;
+	private String mType = null;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
@@ -89,12 +85,12 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Initialize the fragment with onlyPacks flag.
 	 *
-	 * @param showOnlyPacks
-	 *            The flag indicating if only packs should be shown.
+	 * @param prefType
+	 *            The type of preferences to be shown.
 	 */
-	public final void setParameters(final boolean showOnlyPacks) {
+	public final void setParameters(final String prefType) {
 		Bundle args = new Bundle();
-		args.putBoolean(STRING_ONLY_PACKS, showOnlyPacks);
+		args.putString(STRING_PREF_TYPE, prefType);
 		setArguments(args);
 	}
 
@@ -102,55 +98,58 @@ public class SettingsFragment extends PreferenceFragment {
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getArguments() != null) {
-			mOnlyPacks = getArguments().getBoolean(STRING_ONLY_PACKS);
+		if (getArguments() == null) {
+			Log.e(Application.TAG, "Illegal call of SettingsFragment without parameters");
+			return;
 		}
 
-		if (mOnlyPacks) {
-			// Load the preferences from an XML resource
-			addPreferencesFromResource(R.xml.pref_only_purchase);
+		mType = getArguments().getString(STRING_PREF_TYPE);
 
-		}
-		else {
-			// Load the preferences from an XML resource
-			addPreferencesFromResource(R.xml.pref_general);
+		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_basic_settings))) {
+			addPreferencesFromResource(R.xml.prefs_basic);
 
-			// Fill variables in order to detect changed values.
-			mLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
-			mFolderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
-
 			bindPreferenceSummaryToValue(R.string.key_folder_input);
-			bindPreferenceSummaryToValue(R.string.key_folder_photos);
-			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
-			bindPreferenceSummaryToValue(R.string.key_store_option);
-			bindPreferenceSummaryToValue(R.string.key_full_resolution);
+		}
+		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_display_settings))) {
+			addPreferencesFromResource(R.xml.prefs_display);
+
+			mLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 			bindPreferenceSummaryToValue(R.string.key_language);
-			bindPreferenceSummaryToValue(R.string.key_camera_api_version);
-			bindPreferenceSummaryToValue(R.string.key_camera_screen_position);
-
-			if (getString(R.string.pref_title_folder_input).length() == 0) {
-				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_folder_input)));
-			}
-
-			PreferenceScreen cameraScreen = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_camera));
-			if (!SystemUtil.isAndroid5()) {
-				cameraScreen.removePreference(findPreference(getString(R.string.key_camera_api_version)));
-			}
-			if (!SystemUtil.hasFlashlight()) {
-				cameraScreen.removePreference(findPreference(getString(R.string.key_enable_flash)));
-			}
 
 			addHintButtonListener(R.string.key_dummy_show_hints, false);
 			addHintButtonListener(R.string.key_dummy_hide_hints, true);
 		}
+		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_storage_settings))) {
+			addPreferencesFromResource(R.xml.prefs_storage);
 
-		addDeveloperContactButtonListener();
-		addUnlockerAppButtonListener();
+			mFolderPhotos = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos);
+			bindPreferenceSummaryToValue(R.string.key_folder_photos);
+			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
+			bindPreferenceSummaryToValue(R.string.key_store_option);
+			bindPreferenceSummaryToValue(R.string.key_full_resolution);
+		}
+		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_camera_settings))) {
+			addPreferencesFromResource(R.xml.prefs_camera);
+			bindPreferenceSummaryToValue(R.string.key_camera_api_version);
+			bindPreferenceSummaryToValue(R.string.key_camera_screen_position);
 
-		mScreenPurchase = (PreferenceScreen) findPreference(getString(R.string.key_dummy_screen_premium));
+			if (!SystemUtil.isAndroid5()) {
+				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_camera_api_version)));
+			}
+			if (!SystemUtil.hasFlashlight()) {
+				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_enable_flash)));
+			}
+		}
+		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
+			addPreferencesFromResource(R.xml.prefs_premium);
 
-		GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+			addDeveloperContactButtonListener();
+			addUnlockerAppButtonListener();
+
+			GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+		}
+
 	}
 
 	/**
@@ -167,9 +166,8 @@ public class SettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				PreferenceUtil.setAllHints(hintPreferenceValue);
-				((PreferenceScreen) findPreference(getActivity().getString(R.string.key_dummy_screen_hints)))
-						.getDialog()
-						.dismiss();
+				DialogUtil.displayInfo(getActivity(), null,
+						hintPreferenceValue ? R.string.message_dialog_no_hints_will_be_shown : R.string.message_dialog_hints_will_be_shown);
 				return true;
 			}
 		});
@@ -224,12 +222,14 @@ public class SettingsFragment extends PreferenceFragment {
 	 *            The preference to be bound.
 	 */
 	private void bindPreferenceSummaryToValue(final Preference preference) {
-		// Set the listener to watch for value changes.
-		preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
+		if (preference != null) {
+			// Set the listener to watch for value changes.
+			preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
 
-		// Trigger the listener immediately with the preference's current value.
-		mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
-				.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+			// Trigger the listener immediately with the preference's current value.
+			mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
+					.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+		}
 	}
 
 	/**
@@ -403,7 +403,8 @@ public class SettingsFragment extends PreferenceFragment {
 				purchasePreference.setTitle(title);
 				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
-				mScreenPurchase.addPreference(purchasePreference);
+
+				getPreferenceScreen().addPreference(purchasePreference);
 			}
 			for (SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
@@ -418,7 +419,7 @@ public class SettingsFragment extends PreferenceFragment {
 						return false;
 					}
 				});
-				mScreenPurchase.addPreference(skuPreference);
+				getPreferenceScreen().addPreference(skuPreference);
 			}
 		}
 	};
@@ -462,6 +463,7 @@ public class SettingsFragment extends PreferenceFragment {
 		if (SystemUtil.isAndroid5()) {
 			onActivityResultLollipop(requestCode, resultCode, data);
 		}
+		GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
 	}
 
 	/**
@@ -540,4 +542,11 @@ public class SettingsFragment extends PreferenceFragment {
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
 	}
 
+	@Override
+	public final void onDestroy() {
+		super.onDestroy();
+		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
+			GoogleBillingHelper.dispose();
+		}
+	}
 }

@@ -42,7 +42,8 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	protected AuthorizationLevel getAuthorizationLevel() {
 		AuthorizationLevel level = super.getAuthorizationLevel();
 
-		if (PreferenceUtil.getSharedPreferenceString(R.string.key_user_key).startsWith(AdMarvelUtil.FORCE_AD_USER)) {
+		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		if (userKey != null && userKey.startsWith(AdMarvelUtil.FORCE_AD_USER)) {
 			return AuthorizationLevel.FULL_ACCESS_WITH_ADS;
 		}
 

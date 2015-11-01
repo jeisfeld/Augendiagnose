@@ -23,7 +23,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 
 /**
- * Base activity being the subclass of most application activities. Handles the help menu.
+ * Base activity being the subclass of most application activities. Handles the help menu, and handles startup activities related to authorization.
  */
 public abstract class BaseActivity extends AdMarvelActivity {
 	/**
@@ -145,7 +145,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			return true;
 		}
 		else if (itemId == R.id.action_settings) {
-			SettingsActivity.startActivity(this, false);
+			SettingsActivity.startActivity(this, null);
 			return true;
 		}
 		else if (itemId == R.id.action_camera) {

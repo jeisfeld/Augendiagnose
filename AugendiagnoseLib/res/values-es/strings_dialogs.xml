@@ -45,6 +45,8 @@
     <string name="message_dialog_confirm_no_jpeg">Las fotos seleccionadas no son JPG fotos. Por lo tanto, parte de la funcionalidad (tal como almacenamiento de información) no funcionará. ¿Quiere continuar?</string>
     <string name="message_dialog_confirm_overwrite">Para el nombre «%1$s» ya hay fotos de ojo de %2$s. ¿Desea sobrescribir estos?\n\nDe lo contrario, por favor seleccione un nombre o una fecha diferente.</string>
     <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
+    <string name="message_dialog_hints_will_be_shown">A partir de ahora, la aplicación mostrará consejos en diversas situaciones (incluyendo los que usted apaga antes). Puede apagarlas individualmente.</string>
+    <string name="message_dialog_no_hints_will_be_shown">A partir de ahora, la aplicación no mostrará ninguna de los consejos existentes en la actualidad. Si las futuras versiones de la aplicación tienen nuevos consejos, éstos se muestran.</string>
     <string name="imageinfo_line_filename">Nombre del archivo:</string>
     <string name="imageinfo_line_filedate">Fecha del archivo:</string>
     <string name="imageinfo_line_name">Nombre:</string>

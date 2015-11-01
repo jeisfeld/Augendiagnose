@@ -4,11 +4,11 @@
 
     <!-- Strings related to Subscreens -->
 
+    <string name="pref_screen_basic_settings">Grundeinstellungen</string>
     <string name="pref_screen_storage_settings">Speichereinstellungen</string>
     <string name="pref_screen_display_settings">Anzeigeeinstellungen</string>
     <string name="pref_screen_camera_settings">Kameraeinstellungen</string>
-    <string name="pref_screen_premium">Premium-Pakete / Hilfe</string>
-    <string name="pref_screen_hints">Tipps</string>
+    <string name="pref_screen_premium_settings">Premium-Pakete / Hilfe</string>
 
     <!-- Strings related to Settings -->
 

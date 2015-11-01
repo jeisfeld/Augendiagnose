@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_basic_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_basic_settings" />
+    </header>
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_display_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_display_settings" />
+    </header>
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_storage_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_storage_settings" />
+    </header>
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_camera_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_camera_settings" />
+    </header>
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_premium_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_premium_settings" />
+    </header>
+
+</preference-headers>

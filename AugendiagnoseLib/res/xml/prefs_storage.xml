@@ -1,0 +1,39 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="@string/key_dummy_screen_storage_settings"
+    android:title="@string/pref_screen_storage_settings" >
+
+    <de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference
+        android:defaultValue="@string/pref_default_folder_photos"
+        android:entries="@array/pref_list_titles_folder_photos"
+        android:entryValues="@array/pref_list_values_folder_photos"
+        android:key="@string/key_folder_photos"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_folder_photos" />
+
+    <ListPreference
+        android:defaultValue="@null"
+        android:entries="@array/pref_list_titles_max_bitmap_size"
+        android:entryValues="@array/pref_list_values_max_bitmap_size"
+        android:key="@string/key_max_bitmap_size"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_max_bitmap_size" />
+    <ListPreference
+        android:defaultValue="@null"
+        android:entries="@array/pref_list_titles_full_resolution"
+        android:entryValues="@array/pref_list_values_full_resolution"
+        android:key="@string/key_full_resolution"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_full_resolution" />
+    <ListPreference
+        android:defaultValue="@string/pref_default_store_options"
+        android:entries="@array/pref_list_titles_store_options"
+        android:entryValues="@array/pref_list_values_store_options"
+        android:key="@string/key_store_option"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_store_options" />
+
+</PreferenceScreen>
