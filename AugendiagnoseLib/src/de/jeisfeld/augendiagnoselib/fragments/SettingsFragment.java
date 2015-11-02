@@ -134,6 +134,10 @@ public class SettingsFragment extends PreferenceFragment {
 			bindPreferenceSummaryToValue(R.string.key_camera_api_version);
 			bindPreferenceSummaryToValue(R.string.key_camera_screen_position);
 
+			if (getString(R.string.pref_title_folder_input).length() > 0) {
+				// Eye photo sequence is in input settings and can be hidden here.
+				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_eye_sequence_choice)));
+			}
 			if (!SystemUtil.isAndroid5()) {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_camera_api_version)));
 			}

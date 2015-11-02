@@ -2,6 +2,11 @@
     android:key="@string/key_dummy_screen_camera_settings"
     android:title="@string/pref_screen_camera_settings" >
 
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_eye_sequence_value"
+        android:key="@string/key_eye_sequence_choice"
+        android:title="@string/pref_title_eye_sequence_choice" />
+
     <ListPreference
         android:entries="@array/pref_list_titles_camera_api_version"
         android:entryValues="@array/pref_list_values_camera_api_version"

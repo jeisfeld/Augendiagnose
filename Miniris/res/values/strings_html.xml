@@ -187,6 +187,11 @@
 
 	<table width="100%" border="1">
 		<tr>
+			<td width="30%" valign="top">Start with left eye</td>
+			<td width="70%" valign="top">Here you can define which eye should be photographed first. By default this is
+				the right eye.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Camera compatibility</td>
 			<td width="70%" valign="top">If your device runs on Android 5 or higher, then here you can select if the camera
 				functionality should use the new Android 5 features or not. Selection of &ldquo;Android 4&rdquo; makes sense in case

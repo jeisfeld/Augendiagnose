@@ -191,6 +191,11 @@
 
 	<table width="100%" border="1">
 		<tr>
+			<td width="30%" valign="top">Mit linkem Auge starten</td>
+			<td width="70%" valign="top">Hier kann eingestellt werden, welches Auge zuerst fotografiert werden soll.
+				Standardmäßig ist hier das rechte Auge gewählt.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Kamera-Kompatibilität</td>
 			<td width="70%" valign="top">Falls Ihr Smartphone Android 5 oder höher nutzt, dann kann hier eingestellt werden, ob
 				die neuen Kamera-Funktionen von Android 5 genutzt werden sollen. Die Wahl &bdquo;Android 4&ldquo; ist sinnvoll im

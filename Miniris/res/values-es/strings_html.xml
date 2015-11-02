@@ -186,6 +186,11 @@
 
 	<table width="100%" border="1">
 		<tr>
+			<td width="30%" valign="top">Comenzar con el ojo izquierdo</td>
+			<td width="70%" valign="top">Aquí puede definir el ojo que debería ser fotografiada primero. Como
+				configuración predeterminada este es el ojo derecho.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Compatibilidad de la cámara</td>
 			<td width="70%" valign="top">Si el dispositivo funciona con Android 5 o superior, entonces aquí se puede seleccionar
 				si la cámara debe utilizar los nuevos Android 5 funciones o no. Selección de &laquo;Android 4&raquo; tiene sentido
