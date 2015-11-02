@@ -3,10 +3,10 @@
 
     <header
         android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
-        android:title="@string/pref_screen_basic_settings" >
+        android:title="@string/pref_screen_input_settings" >
         <extra
             android:name="prefType"
-            android:value="@string/key_dummy_screen_basic_settings" />
+            android:value="@string/key_dummy_screen_input_settings" />
     </header>
     <header
         android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"

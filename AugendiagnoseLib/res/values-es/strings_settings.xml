@@ -4,7 +4,7 @@
 
     <!-- Strings related to Subscreens -->
 
-    <string name="pref_screen_basic_settings">Ajustes básicos</string>
+    <string name="pref_screen_input_settings">Ajustes de entrada</string>
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
     <string name="pref_screen_camera_settings">Ajustes de la cámara</string>

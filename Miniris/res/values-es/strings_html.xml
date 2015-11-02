@@ -99,12 +99,6 @@
 
 	<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Última foto es ojo derecho</td>
-			<td width="70%" valign="top">Aquí puede definir si la última foto es el ojo derecho o el ojo izquierdo. Como
-				configuración predeterminada este es el ojo izquierdo (lo que significa que usted hizo primero una foto del ojo
-				derecho y luego del ojo izquierdo).</td>
-		</tr>
-		<tr>
 			<td width="30%" valign="top">Ordenar por apellido</td>
 			<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
 		</tr>
@@ -119,9 +113,13 @@
 				fuerza un reinicio de la aplicación.</td>
 		</tr>
 		<tr>
-			<td width="30%" valign="top">Consejos</td>
-			<td width="70%" valign="top">Aquí se puede volver a habilitar todos los consejos, o puede desactivar todas consejos
-				existentes (que es útile después de la nueva instalación si ya conoce la aplicación).</td>
+			<td width="30%" valign="top">Mostrar todos los consejos</td>
+			<td width="70%" valign="top">Aquí se puede volver a habilitar todos los consejos.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">No mostrar consejos</td>
+			<td width="70%" valign="top">Aquí se puede desactivar todas consejos existentes (que es útile después de la nueva
+				instalación si ya conoce la aplicación).</td>
 		</tr>
 	</table>
 

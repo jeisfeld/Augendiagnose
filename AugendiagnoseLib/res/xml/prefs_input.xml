@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="@string/key_dummy_screen_basic_settings"
-    android:title="@string/pref_screen_basic_settings" >
+    android:key="@string/key_dummy_screen_input_settings"
+    android:title="@string/pref_screen_input_settings" >
 
     <de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference
         android:defaultValue="@string/pref_dummy_folder_input"
@@ -11,4 +11,8 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_folder_input" />
 
-</PreferenceScreen>
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_eye_sequence_value"
+        android:key="@string/key_eye_sequence_choice"
+        android:title="@string/pref_title_eye_sequence_choice" />
+</PreferenceScreen>

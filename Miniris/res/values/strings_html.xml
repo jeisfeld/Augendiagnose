@@ -103,11 +103,6 @@
 
 	<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Last photo is right eye</td>
-			<td width="70%" valign="top">Here you can define if the last photo is the right or the left eye. By default this is
-				the left eye (which means that you made first a photo of the right eye and then of the left eye).</td>
-		</tr>
-		<tr>
 			<td width="30%" valign="top">Sort by last name</td>
 			<td width="70%" valign="top">Here you may decide that names are not ordered strictly alphabetically as given, but by
 				the last name.</td>
@@ -122,9 +117,13 @@
 				restart of the app.</td>
 		</tr>
 		<tr>
-			<td width="30%" valign="top">Hints</td>
-			<td width="70%" valign="top">Here you can re-enable all hints, or you can disable all existing hints (which is
-				helpful after new installation if you know the app already).</td>
+			<td width="30%" valign="top">Display all hints</td>
+			<td width="70%" valign="top">Here you can re-enable all hints.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Do not display hints</td>
+			<td width="70%" valign="top">Here you can disable all existing hints (which is helpful after new installation if you
+				know the app already).</td>
 		</tr>
 	</table>
 

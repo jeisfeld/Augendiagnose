@@ -105,8 +105,8 @@ public class SettingsFragment extends PreferenceFragment {
 
 		mType = getArguments().getString(STRING_PREF_TYPE);
 
-		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_basic_settings))) {
-			addPreferencesFromResource(R.xml.prefs_basic);
+		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_input_settings))) {
+			addPreferencesFromResource(R.xml.prefs_input);
 
 			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_input);

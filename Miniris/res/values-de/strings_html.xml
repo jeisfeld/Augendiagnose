@@ -104,12 +104,6 @@
 
 	<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Letztes Foto ist rechtes Auge</td>
-			<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge ist.
-				Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das linke
-				Auge fotografiert haben).</td>
-		</tr>
-		<tr>
 			<td width="30%" valign="top">Sortieren nach Nachname</td>
 			<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden
 				soll.</td>
@@ -125,13 +119,17 @@
 				erzwingt einen Neustart der App.</td>
 		</tr>
 		<tr>
-			<td width="30%" valign="top">Tipps</td>
-			<td width="70%" valign="top">Hier können Sie alle Tipps reaktivieren, oder Sie können alle vorhandenen Tipps
-				deaktivieren (was nützlich ist, wenn Sie die App schon kennen, aber neu installieren).</td>
+			<td width="30%" valign="top">Alle Tipps zeigen</td>
+			<td width="70%" valign="top">Hier können Sie alle Tipps reaktivieren.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Tipps nicht mehr zeigen</td>
+			<td width="70%" valign="top">Hier können Sie alle vorhandenen Tipps deaktivieren (was nützlich ist, wenn Sie die App
+				schon kennen, aber neu installieren).</td>
 		</tr>
 	</table>
 
-	<h3>Speichereinstellungen</h3>
+	<h3>Speicher- und Leistungseinstellungen</h3>
 
 	<table width="100%" border="1">
 		<tr>

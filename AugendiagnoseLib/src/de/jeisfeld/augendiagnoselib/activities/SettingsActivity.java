@@ -100,7 +100,7 @@ public class SettingsActivity extends PreferenceActivity {
 				Header header = baseHeaders.get(i);
 				String listPrefType = header.fragmentArguments == null ? "" : header.fragmentArguments.getString(SettingsFragment.STRING_PREF_TYPE);
 
-				if (listPrefType.equals(getString(R.string.key_dummy_screen_basic_settings))
+				if (listPrefType.equals(getString(R.string.key_dummy_screen_input_settings))
 						&& getString(R.string.pref_title_folder_input).length() == 0) {
 					// ignore basic settings if there is no need to enter input folder
 					continue;
@@ -154,7 +154,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 */
 	@SuppressLint("SdCardPath")
 	public static final void setDefaultSharedPreferences(final Context context) {
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_basic, true);
+		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_input, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_display, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_storage, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_camera, true);
