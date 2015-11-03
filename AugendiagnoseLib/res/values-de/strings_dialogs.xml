@@ -27,7 +27,7 @@
     <string name="message_dialog_failed_to_change_date">Datum der Fotos von %1$s vom %2$s konnte nicht auf %3$s geändert werden</string>
     <string name="message_dialog_failed_to_store_metadata">Konnte Bildinformationen nicht in Datei %1$s speichern</string>
     <string name="message_dialog_failed_to_store_exif">Konnte EXIF-Informationen nicht in Datei %1$s speichern - bitte Kontaktieren Sie den Entwickler!</string>
-    <string name="message_dialog_failed_to_access_camera">Beim Zugriff auf die Kamera ist ein Fehler aufgetreten.</string>
+    <string name="message_dialog_failed_to_access_camera">Beim Zugriff auf die Kamera ist ein Fehler aufgetreten.\n\nFehlerdetails: %1$s</string>
     <string name="message_dialog_failed_to_use_camera2">Ihr Smartphone scheint die Android 5-Funktionen der Kamera nicht zu unterstützen. Die App wurde nun auf Android 4-Kompatibilität konfiguriert. Bitte starten Sie die App erneut.</string>
     <string name="message_dialog_failed_to_open_google_play">Google Play konnte nicht gestartet werden.</string>
     <string name="message_dialog_trial_names">In der Testversion der App können Sie nur bis zu drei Namen vergeben. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>

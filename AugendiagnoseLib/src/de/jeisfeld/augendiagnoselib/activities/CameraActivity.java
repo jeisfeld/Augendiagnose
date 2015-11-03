@@ -1030,11 +1030,13 @@ public class CameraActivity extends BaseActivity {
 
 		@Override
 		public void onCameraError(final String message, final Exception e) {
+			String messageString = message;
 			if (e == null) {
 				Log.e(Application.TAG, message);
 			}
 			else {
 				Log.e(Application.TAG, message, e);
+				messageString += "\n" + e.toString();
 			}
 
 			boolean isCamera2Api = mCameraHandler instanceof Camera2Handler;
@@ -1043,10 +1045,10 @@ public class CameraActivity extends BaseActivity {
 			if (isCamera2Api && !wasCamera2Successful) {
 				// Reconfigure to Camera 1 API
 				PreferenceUtil.setSharedPreferenceIntString(R.string.key_camera_api_version, 1);
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_use_camera2, true);
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_use_camera2, true, messageString);
 			}
 			else {
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true);
+				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true, messageString);
 			}
 		}
 
