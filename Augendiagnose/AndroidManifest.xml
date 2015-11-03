@@ -143,7 +143,12 @@
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"
+                tools:ignore="UnusedAttribute" />
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity"
