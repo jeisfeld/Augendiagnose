@@ -193,6 +193,7 @@ public final class GoogleBillingHelper {
 	 * Clean up GoogleBillingHelper instance.
 	 */
 	public static void dispose() {
+		Log.d(TAG, "Disposing GoogleBillingHelper");
 		synchronized (GoogleBillingHelper.class) {
 			if (mInstance != null) {
 				if (mInstance.mIabHelper != null) {
@@ -267,11 +268,6 @@ public final class GoogleBillingHelper {
 				@Override
 				public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
 					Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-
-					// if we were disposed of in the meantime, quit.
-					if (mIabHelper == null) {
-						return;
-					}
 
 					if (result.isFailure()) {
 						Log.e(TAG, "Error purchasing: " + result);

@@ -10,10 +10,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/AugendiagnoseLib/libsExtra/annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="/AugendiagnoseLib/libsExtra/xmpcore.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/D:/Jörg/Eclipse/Android/XMPCore/doc/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -151,6 +151,7 @@ public class SettingsFragment extends PreferenceFragment {
 			addDeveloperContactButtonListener();
 			addUnlockerAppButtonListener();
 
+			// Google Billing is done on activity level - intent is started by activity, not by fragment!
 			GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
 		}
 
@@ -464,10 +465,10 @@ public class SettingsFragment extends PreferenceFragment {
 	@Override
 	public final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
 		if (SystemUtil.isAndroid5()) {
 			onActivityResultLollipop(requestCode, resultCode, data);
 		}
-		GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
 	}
 
 	/**

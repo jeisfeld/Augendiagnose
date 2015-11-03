@@ -18,6 +18,7 @@ import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.fragments.SettingsFragment;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 
@@ -200,5 +201,13 @@ public class SettingsActivity extends PreferenceActivity {
 
 		// Inform PinchImageView about maxBitmapSize
 		PinchImageView.setMaxBitmapSize(PreferenceUtil.getSharedPreferenceIntString(R.string.key_max_bitmap_size, 0));
+	}
+
+	@Override
+	public final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		// Google Billing is started by Fragment, but on Activity level!
+		GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
 	}
 }

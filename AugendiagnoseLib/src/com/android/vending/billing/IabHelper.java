@@ -435,6 +435,7 @@ public class IabHelper {
 	 *         related to a purchase, in which case you should handle it normally.
 	 */
 	public final boolean handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		logDebug("Got activity result for " + requestCode + ". Expected: " + mRequestCode);
 		IabResult result;
 		if (requestCode != mRequestCode) {
 			return false;
