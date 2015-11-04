@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="overlay_names">
+        <item>Mapa de sectores</item>
+        <item>Mapa combinado textual</item>
+        <item>Mapa combinado gráfico</item>
+        <item>Mapa di Bernard Jensen</item>
+        <item>Mapa di Zupan (alemán)</item>
+        <item>Mapa di Siegfried Rizzi (italiano)</item>
+        <item>Mapa di Josef Deck (alemán)</item>
+        <item>Mapa di Werner Theegarten (alemán)</item>
+        <item>Círculo de la pupila (alemán)</item>
+    </string-array>
+
+</resources>

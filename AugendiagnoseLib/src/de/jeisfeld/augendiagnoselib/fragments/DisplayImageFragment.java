@@ -8,9 +8,11 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
@@ -131,9 +133,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private OverlayPinchImageView mImageView;
 
 	/**
-	 * The number of overlay images, excluding the pupil overlay.
+	 * The number of overlay buttons, excluding the pupil overlay.
 	 */
-	private static final int OVERLAY_COUNT = OverlayPinchImageView.OVERLAY_COUNT - 1;
+	public static final int OVERLAY_BUTTON_COUNT;
 
 	/**
 	 * The button for showing the image in full resolution.
@@ -209,6 +211,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The status of the pupil button.
 	 */
 	private PupilButtonStatus mPupilButtonStatus;
+
+	static {
+		TypedArray overlayButtonResources = Application.getAppContext().getResources().obtainTypedArray(R.array.overlay_buttons);
+		OVERLAY_BUTTON_COUNT = overlayButtonResources.length() - 1;
+		overlayButtonResources.recycle();
+	}
 
 	/**
 	 * Initialize the fragment with the file name.
@@ -306,8 +314,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mImageView.allowFullResolution(hasAutoFullResolution());
 
 		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
-		mToggleOverlayButtons = new ToggleButton[OVERLAY_COUNT];
-		for (int i = 0; i < OVERLAY_COUNT; i++) {
+		mToggleOverlayButtons = new ToggleButton[OVERLAY_BUTTON_COUNT];
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			mToggleOverlayButtons[i] = (ToggleButton) getView().findViewById(overlayButtonResources.getResourceId(i, -1));
 			mToggleOverlayButtons[i].setVisibility(View.VISIBLE);
 		}
@@ -365,7 +373,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Initialize the on-click actions for the buttons.
 	 */
 	private void setButtonListeners() {
-		for (int i = 0; i < OVERLAY_COUNT; i++) {
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			final int index = i;
 			mToggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
 				@Override
@@ -373,6 +381,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					onToggleOverlayClicked(index);
 				}
 			});
+		}
+		for (int i = 1; i < OVERLAY_BUTTON_COUNT; i++) {
+			final int index = i;
+			mToggleOverlayButtons[i].setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(final View v) {
+					return onToggleOverlayLongClicked(index);
+				}
+			});
+			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) < 0) {
+				mToggleOverlayButtons[i].setVisibility(View.GONE);
+			}
 		}
 
 		mLockButton.setOnClickListener(new OnClickListener() {
@@ -452,7 +472,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
-	 * Helper method for onClick actions for Button to toggle display of Overlays.
+	 * Helper method for onClick actions for overlay buttons.
 	 *
 	 * @param position
 	 *            The number of the overlay button.
@@ -468,7 +488,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			return;
 		}
 
-		for (int i = 0; i < OVERLAY_COUNT; i++) {
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			if (position != i) {
 				if (mToggleOverlayButtons[i].isChecked()) {
 					mToggleOverlayButtons[i].setChecked(false);
@@ -483,11 +503,91 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			mImageView.storePupilPosition();
 		}
 
-		mImageView.triggerOverlay(position, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
+		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+
+		if (overlayPosition >= 0 || !isChecked) {
+			mImageView.triggerOverlay(overlayPosition, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
+		}
 
 		if (isChecked && !buttonGetsUnchecked) {
 			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay, R.string.key_tip_overlay);
 		}
+	}
+
+	/**
+	 * Helper method for onLongClick actions for overlay buttons.
+	 *
+	 * @param position
+	 *            The number of the overlay button.
+	 * @return
+	 * 		true if long click was processed.
+	 */
+	private boolean onToggleOverlayLongClicked(final int position) {
+		PopupMenu popupMenu = new PopupMenu(getActivity(), mToggleOverlayButtons[position]);
+		Menu menu = popupMenu.getMenu();
+
+		if (position == getHighestOverlayButtonIndex()) {
+			if (position > 1) {
+				MenuItem menuItemRemove = menu.add(getString(R.string.menu_remove_overlay_button));
+				menuItemRemove.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(final MenuItem item) {
+						mToggleOverlayButtons[position].setChecked(false);
+						onToggleOverlayClicked(position);
+						PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+						mToggleOverlayButtons[position].setVisibility(View.GONE);
+						return true;
+					}
+				});
+			}
+
+			if (position < OVERLAY_BUTTON_COUNT - 1) {
+				MenuItem menuItemAdd = menu.add(getString(R.string.menu_add_overlay_button));
+				menuItemAdd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(final MenuItem item) {
+						int newPosition = position + 1;
+						mToggleOverlayButtons[newPosition].setVisibility(View.VISIBLE);
+						onToggleOverlayLongClicked(newPosition);
+						return true;
+					}
+				});
+			}
+		}
+
+		String[] overlayNames = getResources().getStringArray(R.array.overlay_names);
+		for (int i = 1; i < overlayNames.length - 1; i++) {
+			final int index = i;
+			MenuItem menuItem = menu.add(overlayNames[i]);
+
+			menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(final MenuItem item) {
+					PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, index);
+					mToggleOverlayButtons[position].setChecked(true);
+					onToggleOverlayClicked(position);
+					return true;
+				}
+			});
+		}
+
+		popupMenu.show();
+		return true;
+	}
+
+	/**
+	 * Get the index of the highest active overlay button.
+	 *
+	 * @return The index of the highest active overlay button.
+	 */
+	private int getHighestOverlayButtonIndex() {
+		int maxIndex = -1;
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
+			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) >= 0) {
+				maxIndex = i;
+			}
+		}
+		return maxIndex;
 	}
 
 	/**
@@ -523,7 +623,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			mImageView.storePupilPosition();
 		}
 		else {
-			for (int i = 0; i < OVERLAY_COUNT; i++) {
+			for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 				if (mToggleOverlayButtons[i].isChecked()) {
 					mToggleOverlayButtons[i].setChecked(false);
 				}
@@ -815,7 +915,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 	@Override
 	public final void resetOverlays() {
-		for (int i = 0; i < OVERLAY_COUNT; i++) {
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			mToggleOverlayButtons[i].setChecked(false);
 		}
 	}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="overlay_names">
+        <item>Sektorkarte</item>
+        <item>Kombinierte Textkarte</item>
+        <item>Kombinierte Bildkarte</item>
+        <item>Karte nach Bernard Jensen</item>
+        <item>Karte nach Zupan</item>
+        <item>Karte nach Siegfried Rizzi (Italienisch)</item>
+        <item>Karte nach Josef Deck</item>
+        <item>Karte nach Werner Theegarten</item>
+        <item>Pupillenkreis</item>
+    </string-array>
+
+</resources>

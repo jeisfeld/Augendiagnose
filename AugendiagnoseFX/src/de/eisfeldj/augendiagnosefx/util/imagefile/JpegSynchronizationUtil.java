@@ -156,7 +156,7 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Thread to save a JPEG file asynchronously with changed metadata.
 	 */
-	private static class JpegSaverThread extends Thread {
+	private static final class JpegSaverThread extends Thread {
 		/**
 		 * The path of the jpg file.
 		 */
@@ -174,7 +174,7 @@ public final class JpegSynchronizationUtil {
 		 * @param metadata
 		 *            the metadata.
 		 */
-		public JpegSaverThread(final String pathname, final JpegMetadata metadata) {
+		private JpegSaverThread(final String pathname, final JpegMetadata metadata) {
 			this.mPathname = pathname;
 			this.mMetadata = metadata;
 		}

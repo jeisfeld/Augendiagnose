@@ -38,6 +38,17 @@
         <item>@id/toggleButtonPupil</item>
     </array>
 
+    <string-array name="overlay_names">
+        <item>Sector map</item>
+        <item>Combined textual map</item>
+        <item>Combined graphical map</item>
+        <item>Bernard Jensen map</item>
+        <item>Zupan map (German)</item>
+        <item>Siegfried Rizzi map (Italian)</item>
+        <item>Josef Deck map (German)</item>
+        <item>Werner Theegarten map (German)</item>
+        <item>Pupil circle</item>
+    </string-array>
     <string-array name="overlay_pupil_sizes" translatable="false">
         <item>0.25</item>
         <item>0.28</item>

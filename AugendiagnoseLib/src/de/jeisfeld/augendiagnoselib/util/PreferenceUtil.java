@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 
 /**
  * Utility class for handling the shared preferences.
@@ -291,6 +292,93 @@ public final class PreferenceUtil {
 	}
 
 	/**
+	 * Get an indexed preference key that allows to store a shared preference with index.
+	 *
+	 * @param preferenceId
+	 *            The base preference id
+	 * @param index
+	 *            The index
+	 * @return The indexed preference key.
+	 */
+	private static String getIndexedPreferenceKey(final int preferenceId, final int index) {
+		return Application.getAppContext().getString(preferenceId) + "[" + index + "]";
+	}
+
+	/**
+	 * Retrieve an indexed String shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @return the corresponding preference value.
+	 */
+	public static String getIndexedSharedPreferenceString(final int preferenceId, final int index) {
+		return getSharedPreferences().getString(getIndexedPreferenceKey(preferenceId, index), null);
+	}
+
+	/**
+	 * Set an indexed String shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @param s
+	 *            the target value of the preference.
+	 */
+	public static void setIndexedSharedPreferenceString(final int preferenceId, final int index, final String s) {
+		Editor editor = getSharedPreferences().edit();
+		editor.putString(getIndexedPreferenceKey(preferenceId, index), s);
+		editor.commit();
+	}
+
+	/**
+	 * Retrieve an indexed int shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @param defaultValue
+	 *            the default value of the shared preference.
+	 * @return the corresponding preference value.
+	 */
+	public static int getIndexedSharedPreferenceInt(final int preferenceId, final int index, final int defaultValue) {
+		return getSharedPreferences().getInt(getIndexedPreferenceKey(preferenceId, index), defaultValue);
+	}
+
+	/**
+	 * Set an indexed int shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @param i
+	 *            the target value of the preference.
+	 */
+	public static void setIndexedSharedPreferenceInt(final int preferenceId, final int index, final int i) {
+		Editor editor = getSharedPreferences().edit();
+		editor.putInt(getIndexedPreferenceKey(preferenceId, index), i);
+		editor.commit();
+	}
+
+	/**
+	 * Remove an indexed shared preference.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 */
+	public static void removeIndexedSharedPreference(final int preferenceId, final int index) {
+		Editor editor = getSharedPreferences().edit();
+		editor.remove(getIndexedPreferenceKey(preferenceId, index));
+		editor.commit();
+	}
+
+	/**
 	 * Set all hint preferences to the given value.
 	 *
 	 * @param value
@@ -354,4 +442,21 @@ public final class PreferenceUtil {
 			setSharedPreferenceString(R.string.key_camera_api_version, cameraApiVersion);
 		}
 	}
+
+	/**
+	 * Set the default overlay button settings.
+	 */
+	public static void setDefaultOverlayButtonSettings() {
+		int dummyNumber = -2; // MAGIC_NUMBER
+
+		for (int i = 0; i < DisplayImageFragment.OVERLAY_BUTTON_COUNT; i++) {
+			int overlayNumber = getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, dummyNumber);
+
+			if (overlayNumber == dummyNumber) {
+				// By default, each overlay button is mapped to the overlay of the same index.
+				setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, i);
+			}
+		}
+	}
+
 }

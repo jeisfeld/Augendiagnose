@@ -16,6 +16,8 @@
     <string name="menu_change_date">Datum ändern</string>
     <string name="menu_move_to_input_folder">In Eingangsverzeichnis verschieben</string>
     <string name="menu_change_name">Name ändern</string>
+    <string name="menu_remove_overlay_button">Button entfernen</string>
+    <string name="menu_add_overlay_button">Button hinzufügen</string>
 
     <!-- Entries related to buttons in the settings -->
 

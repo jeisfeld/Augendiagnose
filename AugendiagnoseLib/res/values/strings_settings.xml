@@ -126,7 +126,7 @@
         <item>2</item>
     </string-array>
 
-    <!-- Strings related to stored preferences -->
+    <!-- Strings for keys or stored preferences -->
 
     <string name="key_folder_input" translatable="false">folder_input</string>
     <string name="key_folder_photos" translatable="false">folder_photos</string>
@@ -141,6 +141,9 @@
     <string name="key_enable_flash" translatable="false">enable_flash</string>
     <string name="key_camera_api_version" translatable="false">camera_api_version</string>
     <string name="key_camera_screen_position" translatable="false">camera_screen_position</string>
+
+    <!-- Dummy keys for preference screens -->
+
     <string name="key_dummy_screen_input_settings" translatable="false">dummy_screen_input_settings</string>
     <string name="key_dummy_screen_display_settings" translatable="false">dummy_screen_display_settings</string>
     <string name="key_dummy_screen_storage_settings" translatable="false">dummy_screen_storage_settings</string>
@@ -150,6 +153,9 @@
     <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
     <string name="key_dummy_unlocker_app" translatable="false">dummy_unlocker_app</string>
     <string name="key_dummy_contact_developer" translatable="false">dummy_contact_developer</string>
+
+    <!-- Internal preferences (not accessible via settings) -->
+
     <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
     <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
@@ -184,5 +190,9 @@
     <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
     <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>
     <string name="key_admarvel_iscurrentlyclicked" translatable="false">admarvel_iscurrentlyclicked</string>
+
+    <!-- Indexed keys -->
+
+    <string name="key_indexed_overlaytype" translatable="false">overlaytype</string>
 
 </resources>

@@ -261,7 +261,7 @@ public final class StringConverter {
 	/**
 	 * SAX handler to parse the strings.xml file.
 	 */
-	private static class SaxHandler extends DefaultHandler {
+	private static final class SaxHandler extends DefaultHandler {
 		/**
 		 * Storage for the resource key.
 		 */
@@ -282,7 +282,7 @@ public final class StringConverter {
 		 * @param searchKey
 		 *            The String to be looked for.
 		 */
-		public SaxHandler(final String searchKey) {
+		private SaxHandler(final String searchKey) {
 			this.mSearchKey = searchKey;
 		}
 

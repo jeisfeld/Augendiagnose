@@ -192,6 +192,9 @@ public class SettingsActivity extends PreferenceActivity {
 		// Setting for camera API - dependent on OS version.
 		PreferenceUtil.setDefaultCameraSettings();
 
+		// Settings for overlay buttons.
+		PreferenceUtil.setDefaultOverlayButtonSettings();
+
 		// Do the initialization of hint settings
 		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_initialized_hints)) {
 			boolean showTips = Boolean.parseBoolean(context.getString(R.string.pref_default_show_tips));
