@@ -490,8 +490,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		boolean isChecked = mToggleOverlayButtons[position].isChecked();
 		boolean buttonGetsUnchecked = false;
 
-		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-				&& position >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+
+		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && isChecked
+				&& overlayPosition >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
 			DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
 			mToggleOverlayButtons[position].setChecked(false);
 			return;
@@ -511,8 +513,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			setPupilButtonBitmap();
 			mImageView.storePupilPosition();
 		}
-
-		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
 
 		if (overlayPosition >= 0 || !isChecked) {
 			mImageView.triggerOverlay(overlayPosition, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
@@ -593,6 +593,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
+						if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
+								&& index >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+							DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
+							return true;
+						}
+
 						if (oldButtonPosition != null && oldButtonPosition != position) {
 							// If the same overlay is already used, switch overlays
 							int currentOverlay = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
