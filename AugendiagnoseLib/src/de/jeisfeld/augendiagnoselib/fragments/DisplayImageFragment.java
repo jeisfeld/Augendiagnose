@@ -585,7 +585,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					else {
 						itemName.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, itemName.length(), 0);
 					}
-					menuItem = menu.add(itemName);
+					menuItem = menu.add(Menu.NONE, Menu.NONE, OverlayPinchImageView.OVERLAY_COUNT + oldButtonPosition, itemName);
 				}
 			}
 
