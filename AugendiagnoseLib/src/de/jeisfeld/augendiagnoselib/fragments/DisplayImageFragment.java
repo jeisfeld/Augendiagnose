@@ -3,10 +3,14 @@ package de.jeisfeld.augendiagnoselib.fragments;
 import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +20,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnDismissListener;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -382,12 +387,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 			});
 		}
+		String[] overlayButtonStrings = getResources().getStringArray(R.array.overlay_button_strings);
 		for (int i = 1; i < OVERLAY_BUTTON_COUNT; i++) {
+			mToggleOverlayButtons[i].setText(overlayButtonStrings[i]);
+			mToggleOverlayButtons[i].setTextOn(overlayButtonStrings[i]);
+			mToggleOverlayButtons[i].setTextOff(overlayButtonStrings[i]);
 			final int index = i;
 			mToggleOverlayButtons[i].setOnLongClickListener(new OnLongClickListener() {
 				@Override
 				public boolean onLongClick(final View v) {
-					return onToggleOverlayLongClicked(index);
+					return displayOverlaySelectionPopup(index, false);
 				}
 			});
 			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) < 0) {
@@ -515,20 +524,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
-	 * Helper method for onLongClick actions for overlay buttons.
+	 * Display a popup for the selection of an overlay type.
 	 *
 	 * @param position
 	 *            The number of the overlay button.
+	 * @param forNewButton
+	 *            Flag indicating the popup is displayed for a new button. Then it is enforced to select a new overlay.
 	 * @return
 	 * 		true if long click was processed.
 	 */
-	private boolean onToggleOverlayLongClicked(final int position) {
+	private boolean displayOverlaySelectionPopup(final int position, final boolean forNewButton) {
 		PopupMenu popupMenu = new PopupMenu(getActivity(), mToggleOverlayButtons[position]);
 		Menu menu = popupMenu.getMenu();
 
 		if (position == getHighestOverlayButtonIndex()) {
 			if (position > 1) {
-				MenuItem menuItemRemove = menu.add(getString(R.string.menu_remove_overlay_button));
+				MenuItem menuItemRemove = menu.add(Html.fromHtml("<b>" + getString(R.string.menu_remove_overlay_button) + "</b>"));
 				menuItemRemove.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
@@ -542,13 +553,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 
 			if (position < OVERLAY_BUTTON_COUNT - 1) {
-				MenuItem menuItemAdd = menu.add(getString(R.string.menu_add_overlay_button));
+				MenuItem menuItemAdd = menu.add(Html.fromHtml("<b>" + getString(R.string.menu_add_overlay_button) + "</b>"));
 				menuItemAdd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
 						int newPosition = position + 1;
 						mToggleOverlayButtons[newPosition].setVisibility(View.VISIBLE);
-						onToggleOverlayLongClicked(newPosition);
+						displayOverlaySelectionPopup(newPosition, true);
 						return true;
 					}
 				});
@@ -558,15 +569,52 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		String[] overlayNames = getResources().getStringArray(R.array.overlay_names);
 		for (int i = 1; i < overlayNames.length - 1; i++) {
 			final int index = i;
-			MenuItem menuItem = menu.add(overlayNames[i]);
 
-			menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			final Integer oldButtonPosition = buttonForOverlayWithIndex(i);
+			MenuItem menuItem = null;
+			if (oldButtonPosition == null) {
+				menuItem = menu.add(overlayNames[i]);
+			}
+			else {
+				if (!forNewButton) {
+					SpannableString itemName = new SpannableString(
+							getResources().getStringArray(R.array.overlay_button_strings)[oldButtonPosition] + " " + overlayNames[i]);
+					if (oldButtonPosition == position) {
+						itemName.setSpan(new StyleSpan(Typeface.BOLD), 0, itemName.length(), 0);
+					}
+					else {
+						itemName.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, itemName.length(), 0);
+					}
+					menuItem = menu.add(itemName);
+				}
+			}
+
+			if (menuItem != null) {
+				menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(final MenuItem item) {
+						if (oldButtonPosition != null && oldButtonPosition != position) {
+							// If the same overlay is already used, switch overlays
+							int currentOverlay = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+							PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, oldButtonPosition, currentOverlay);
+						}
+						PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, index);
+						mToggleOverlayButtons[position].setChecked(true);
+						onToggleOverlayClicked(position);
+						return true;
+					}
+				});
+			}
+		}
+
+		if (forNewButton) {
+			popupMenu.setOnDismissListener(new OnDismissListener() {
 				@Override
-				public boolean onMenuItemClick(final MenuItem item) {
-					PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, index);
-					mToggleOverlayButtons[position].setChecked(true);
-					onToggleOverlayClicked(position);
-					return true;
+				public void onDismiss(final PopupMenu menu2) {
+					int selectedOverlay = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+					if (selectedOverlay < 0) {
+						mToggleOverlayButtons[position].setVisibility(View.GONE);
+					}
 				}
 			});
 		}
@@ -588,6 +636,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		}
 		return maxIndex;
+	}
+
+	/**
+	 * Check if there is already a button configured for a certain overlay type.
+	 *
+	 * @param index
+	 *            The index of the overlay type.
+	 * @return The button index configured for this overlay type.
+	 */
+	private Integer buttonForOverlayWithIndex(final int index) {
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
+			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) == index) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 	/**

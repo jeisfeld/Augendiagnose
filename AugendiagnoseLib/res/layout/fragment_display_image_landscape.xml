@@ -127,8 +127,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_1"
-            android:textOn="@string/toggle_overlay_1"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -140,8 +138,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_2"
-            android:textOn="@string/toggle_overlay_2"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -153,8 +149,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_3"
-            android:textOn="@string/toggle_overlay_3"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -166,8 +160,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_4"
-            android:textOn="@string/toggle_overlay_4"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -179,8 +171,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_5"
-            android:textOn="@string/toggle_overlay_5"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -192,8 +182,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_6"
-            android:textOn="@string/toggle_overlay_6"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -205,8 +193,6 @@
             android:layout_weight="1"
             android:checked="false"
             android:padding="0dp"
-            android:textOff="@string/toggle_overlay_7"
-            android:textOn="@string/toggle_overlay_7"
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
@@ -228,8 +214,6 @@
             android:checked="false"
             android:gravity="center"
             android:padding="0dp"
-            android:textOff="@string/toggle_circle"
-            android:textOn="@string/toggle_circle"
             android:textSize="@dimen/togglebutton_circlesize" />
 
         <ToggleButton

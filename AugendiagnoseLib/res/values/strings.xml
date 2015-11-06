@@ -38,14 +38,6 @@
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
     <string name="button_purchased_item">%1$s (bought)</string>
-    <string name="toggle_circle" translatable="false">\u2299</string>
-    <string name="toggle_overlay_1" translatable="false">\u2460</string>
-    <string name="toggle_overlay_2" translatable="false">\u2461</string>
-    <string name="toggle_overlay_3" translatable="false">\u2462</string>
-    <string name="toggle_overlay_4" translatable="false">\u2463</string>
-    <string name="toggle_overlay_5" translatable="false">\u2464</string>
-    <string name="toggle_overlay_6" translatable="false">\u2465</string>
-    <string name="toggle_overlay_7" translatable="false">\u2466</string>
     <string name="overlay_trial_count" translatable="false">3</string>
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>

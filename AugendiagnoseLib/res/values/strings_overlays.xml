@@ -3,7 +3,7 @@
 
     <!-- Resources defining overlay characteristics -->
     <string name="overlay_default_pupil_size" translatable="false">0.3</string>
-
+    
     <array name="overlays_left">
         <item>@drawable/overlay_circle</item>
         <item>@drawable/overlay_topo1_l</item>
@@ -38,6 +38,17 @@
         <item>@id/toggleButtonPupil</item>
     </array>
 
+    <string-array name="overlay_button_strings" translatable="false">
+        <item></item>
+        <item>\u2460</item>
+        <item>\u2461</item>
+        <item>\u2462</item>
+        <item>\u2463</item>
+        <item>\u2464</item>
+        <item>\u2465</item>
+        <item>\u2466</item>
+        <item></item>
+    </string-array>
     <string-array name="overlay_names">
         <item>Sector map</item>
         <item>Combined textual map</item>
