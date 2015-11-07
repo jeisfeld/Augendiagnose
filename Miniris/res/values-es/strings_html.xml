@@ -187,8 +187,8 @@
 	<table width="100%" border="1">
 		<tr>
 			<td width="30%" valign="top">Comenzar con el ojo izquierdo</td>
-			<td width="70%" valign="top">Aquí puede definir el ojo que debería ser fotografiada primero. Como
-				configuración predeterminada este es el ojo derecho.</td>
+			<td width="70%" valign="top">Aquí puede definir el ojo que debería ser fotografiada primero. Como configuración
+				predeterminada este es el ojo derecho.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Compatibilidad de la cámara</td>
@@ -207,6 +207,12 @@
 				puede utilizar este ajuste para desplazar la pantalla de la cámara hacia la derecha o izquierda.</td>
 		</tr>
 	</table>
+
+	<h3>Botones de superposición</h3>
+
+	<p>Esta página le permite definir que superposiciones topografía del iris se puede visualizar pulsando los botones de
+		superposición. Esto también se puede hacer mientras ve las fotos, haciendo una pulsación larga en algún botón de
+		superposición.</p>
 
 	<h3>Paquetes premium / Ayuda</h3>
 
@@ -282,9 +288,14 @@
 		<li>Cambio de brillo y contraste mediante correderas <img src="../drawable/ic_seek_brightness.png" /><img
 			src="../drawable/ic_seek_contrast.png" /></li>
 
-		<li>Visualización de una topografía de iris como superposición (botón círculo <img src="../drawable/ic_btn_wheel.png"
-			class="frameless" /> y botones numerados), adaptación de la superposición al iris y almacenamiento de la posición de
-			superposición (botón de cerradura <img src="../drawable/ic_lock_open.png" />)
+		<li>
+			<p>
+				Visualización de una topografía de iris como superposición (botón círculo <img src="../drawable/ic_btn_wheel.png"
+					class="frameless" /> y botones numerados), adaptación de la superposición al iris y almacenamiento de la posición
+				de superposición (botón de cerradura <img src="../drawable/ic_lock_open.png" />)
+			</p>
+			<p>Al hacer una pulsación larga en uno de los botones numerados, puede cambiar la superposición para este botón. Por
+				el último botón numerado, esto le permite también eliminar el botón o añadir otro botón.</p>
 		</li>
 
 		<li>Adaptación del tamaño de la pupila de las superposiciones (botón <img src="../drawable/ic_btn_pupil_0.png"

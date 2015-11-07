@@ -27,6 +27,8 @@ public class DisplayHtmlFragment extends Fragment {
 					+ "img.frameless {width: 18px; height: 18px;} "
 					+ "a {color: #7fffff;} "
 					+ "li {margin-top: 6px; }"
+					+ "table p, li p {padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 6px; }"
+					+ "table p:last-child, table ul:last-child {margin-bottom: 2px; }"
 					+ "</style>";
 
 	/**
