@@ -3,7 +3,8 @@
 
     <!-- Resources defining overlay characteristics -->
 
-    <!-- Arrays on overlays (first is wheel, last is pupil -->
+
+    <!-- Arrays on overlays (first is wheel, last is pupil -->
 
     <array name="overlays_left">
         <item>@drawable/overlay_circle</item>
@@ -74,6 +75,9 @@
         <item>@id/toggleButtonOverlay5</item>
         <item>@id/toggleButtonOverlay6</item>
         <item>@id/toggleButtonOverlay7</item>
+        <item>@id/toggleButtonOverlay8</item>
+        <item>@id/toggleButtonOverlay9</item>
+        <item>@id/toggleButtonOverlay10</item>
         <item>@id/toggleButtonPupil</item>
     </array>
 
@@ -86,6 +90,9 @@
         <item>\u2464</item>
         <item>\u2465</item>
         <item>\u2466</item>
+        <item>\u2467</item>
+        <item>\u2468</item>
+        <item>\u2469</item>
         <item></item>
     </string-array>
 

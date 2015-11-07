@@ -219,7 +219,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 	static {
 		TypedArray overlayButtonResources = Application.getAppContext().getResources().obtainTypedArray(R.array.overlay_buttons);
-		OVERLAY_BUTTON_COUNT = overlayButtonResources.length() - 1;
+		OVERLAY_BUTTON_COUNT = Math.min(overlayButtonResources.length(), OverlayPinchImageView.OVERLAY_COUNT) - 1;
 		overlayButtonResources.recycle();
 	}
 

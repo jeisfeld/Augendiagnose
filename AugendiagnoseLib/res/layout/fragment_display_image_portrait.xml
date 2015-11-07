@@ -203,6 +203,42 @@
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/buttonSelectColor"
             android:layout_width="0dp"

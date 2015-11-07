@@ -40,7 +40,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * The maximum scale factor allowed.
 	 */
-	private static final float MAX_SCALE_FACTOR = 25f;
+	private static final float MAX_SCALE_FACTOR = 30f;
 
 	// PUBLIC_FIELDS:START
 	// Fields are used also in OverlayPinchImageView.

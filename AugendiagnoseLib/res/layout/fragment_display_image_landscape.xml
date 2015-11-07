@@ -196,6 +196,39 @@
             android:textSize="@dimen/togglebutton_circlesize"
             android:visibility="gone" />
 
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay8"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:padding="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay9"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:padding="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonOverlay10"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="-6dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:padding="0dp"
+            android:textSize="@dimen/togglebutton_circlesize"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/buttonSelectColor"
             android:layout_width="match_parent"
@@ -219,11 +252,11 @@
         <ToggleButton
             android:id="@+id/toggleButtonLink"
             android:layout_width="wrap_content"
-            android:padding="0dp"
             android:layout_height="4dp"
             android:layout_weight="1"
             android:background="@drawable/lock"
             android:checked="false"
+            android:padding="0dp"
             android:textOff=""
             android:textOn="" />
     </LinearLayout>
