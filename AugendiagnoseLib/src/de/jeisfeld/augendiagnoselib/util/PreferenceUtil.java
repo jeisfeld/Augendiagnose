@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 
 /**
@@ -447,16 +448,27 @@ public final class PreferenceUtil {
 	 * Set the default overlay button settings.
 	 */
 	public static void setDefaultOverlayButtonSettings() {
+		// only set values if never set before.
 		int dummyNumber = -2; // MAGIC_NUMBER
+		int overlayNumber = getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, 0, dummyNumber);
 
-		for (int i = 0; i < DisplayImageFragment.OVERLAY_BUTTON_COUNT; i++) {
-			int overlayNumber = getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, dummyNumber);
+		if (overlayNumber == dummyNumber) {
+			int numberOfOverlays =
+					Math.min(Math.max((int) Math.floor(SystemUtil.getPhysicalDisplaySize() * 2.5 - 3), 2), // MAGIC_NUMBER
+							OverlayPinchImageView.OVERLAY_COUNT);
 
-			if (overlayNumber == dummyNumber) {
-				// By default, each overlay button is mapped to the overlay of the same index.
-				setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, i);
+			for (int i = 0; i < DisplayImageFragment.OVERLAY_BUTTON_COUNT; i++) {
+				// limit default number of buttons based on screen size.
+				if (i < numberOfOverlays) {
+					// By default, each overlay button is mapped to the overlay of the same index.
+					setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, i);
+				}
+				else {
+					setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1);
+				}
 			}
 		}
+
 	}
 
 }

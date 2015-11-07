@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 import de.jeisfeld.augendiagnoselib.Application;
@@ -164,6 +165,21 @@ public final class SystemUtil {
 		Point p = new Point();
 		getDefaultDisplay().getSize(p);
 		return Math.max(p.x, p.y);
+	}
+
+	/**
+	 * Retrieve the display size in inches (min of x and y value).
+	 *
+	 * @return the display size.
+	 */
+	public static double getPhysicalDisplaySize() {
+		DisplayMetrics dm = new DisplayMetrics();
+		getDefaultDisplay().getMetrics(dm);
+		Point p = new Point();
+		getDefaultDisplay().getSize(p);
+		double x = p.x / dm.xdpi;
+		double y = p.y / dm.ydpi;
+		return Math.max(x, y);
 	}
 
 	/**
