@@ -4,10 +4,16 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.graphics.Color;
 import android.preference.DialogPreference;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
  * The ColorDialogPreference class is responsible for selecting a color as shared preference.
@@ -28,6 +34,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	 */
 	public ColorDialogPreference(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
+		updateSummary();
 	}
 
 	@Override
@@ -37,7 +44,21 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 			persistInt(mSelectedColor);
 		}
 
+		updateSummary();
+
 		super.onDialogClosed(positiveResult);
+	}
+
+	/**
+	 * Update the summary of the preference.
+	 */
+	public final void updateSummary() {
+		SpannableString summary = new SpannableString(Application.getAppContext().getString(R.string.button_select_color));
+		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+		summary.setSpan(new ForegroundColorSpan(overlayColor), 0, summary.length(), 0);
+		summary.setSpan(new RelativeSizeSpan(1.2f), 0, summary.length(), 0); // MAGIC_NUMBER
+		summary.setSpan(new ScaleXSpan(5), 0, summary.length(), 0); // MAGIC_NUMBER
+		setSummary(summary);
 	}
 
 	@Override

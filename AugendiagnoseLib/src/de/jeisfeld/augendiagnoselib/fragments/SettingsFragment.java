@@ -366,7 +366,7 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
-	 * A preference value change listener that updates the preference's summary to reflect its new value.
+	 * A listener handling the change of preferences.
 	 */
 	private OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
 			new OnPreferenceChangeListener() {
@@ -450,12 +450,24 @@ public class SettingsFragment extends PreferenceFragment {
 						}
 					}
 
-					// set summary
+					updateSummary(preference, stringValue);
+
+					return true;
+				}
+
+				/**
+				 * Update the summary for a preference;
+				 *
+				 * @param preference
+				 *            The preference.
+				 * @param value
+				 *            the new value of the preference.
+				 */
+				private void updateSummary(final Preference preference, final String value) {
 					if (preference.getClass().equals(ListPreference.class)) {
-						// For list preferences (except customized ones), look up the correct display value in
-						// the preference's 'entries' list.
+						// For list preferences (except customized ones), look up the correct display value in the preference's 'entries' list.
 						ListPreference listPreference = (ListPreference) preference;
-						int index = listPreference.findIndexOfValue(stringValue);
+						int index = listPreference.findIndexOfValue(value);
 
 						if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
 							updateSummaryForOverlayPreference(listPreference);
@@ -470,12 +482,9 @@ public class SettingsFragment extends PreferenceFragment {
 						}
 					}
 					else {
-						// For all other preferences, set the summary to the value's
-						// simple string representation.
-						preference.setSummary(stringValue);
+						// For all other preferences, set the summary to the value's simple string representation.
+						preference.setSummary(value);
 					}
-
-					return true;
 				}
 
 				/**
@@ -578,14 +587,11 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
-		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-				final boolean isPremium) {
+		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts, final boolean isPremium) {
 			// List inventory items.
 			for (PurchasedSku purchase : purchases) {
 				Preference purchasePreference = new Preference(getActivity());
-				String title =
-						String.format(getString(R.string.button_purchased_item), purchase.getSkuDetails()
-								.getDisplayTitle(getActivity()));
+				String title = String.format(getString(R.string.button_purchased_item), purchase.getSkuDetails().getDisplayTitle(getActivity()));
 				purchasePreference.setTitle(title);
 				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
 				purchasePreference.setEnabled(false);
@@ -619,9 +625,7 @@ public class SettingsFragment extends PreferenceFragment {
 			if (addedPremiumProduct) {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
 			}
-			int messageResource =
-					addedPremiumProduct ? R.string.message_dialog_purchase_thanks_premium
-							: R.string.message_dialog_purchase_thanks;
+			int messageResource = addedPremiumProduct ? R.string.message_dialog_purchase_thanks_premium : R.string.message_dialog_purchase_thanks;
 
 			MessageDialogListener listener = new MessageDialogListener() {
 				private static final long serialVersionUID = 1L;
