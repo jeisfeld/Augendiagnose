@@ -44,7 +44,7 @@
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Made Jensen topography multilingual - now at position 3.\nAllow zooming while reviewing images from camera.\nBugfixes</item>
-        <item>Bugfixes</item>
+        <item>Users can now specify which overlays are associated with the overlay buttons. Bugfixes.</item>
     </string-array>
 
 </resources>

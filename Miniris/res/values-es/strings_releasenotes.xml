@@ -30,7 +30,7 @@
         <item>Corrección de errores</item>
         <item>Corrección de errores</item>
         <item>Versión en español de la topografía di Jensen (Posición 3).\nPermitir el zoom mientras se revisan las imágenes de la cámara.\nCorrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Ahora los usuarios pueden especificar qué superposiciones están asociados con los botones de superposición. Corrección de errores.</item>
     </string-array>
 
 </resources>
