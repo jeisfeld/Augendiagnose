@@ -13,8 +13,9 @@
 
 <p>El objetivo de esta aplicación es la organización y visualización de fotos en los ojos. Antes del primer uso, es necesario
 hacer lo siguiente: </p>
-<p>1. Definir una carpeta de entrada para nuevas fotos oculares y copiar todas sus fotos oculares existentes en esta carpeta.</p>
-<p>2. Configurar esta carpeta como &laquo;carpeta de entrada&raquo; en los ajustes (primera entrada). </p>
+<p>1. Definir una carpeta de entrada para nuevas fotos oculares y 
+<a href="appcode://selectInputFolder">configurar la carpeta de entrada en los ajustes</a>.</p>
+<p>2. Copiar todas sus fotos oculares existentes en la carpeta de entrada.</p>
 <p>3. Asignar estas fotos a las personas y las fechas y cambiar a la carpeta de fotos ojo de la aplicación, utilizando la funcionalidad &laquo;Organizar nuevas fotos&raquo;.</p>
 <p>Después de esta preparación, puede utilizar la funcionalidad &laquo;Visualizar las fotos&raquo; para ver y analizar sus fotos.</p>
 

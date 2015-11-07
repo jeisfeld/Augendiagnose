@@ -49,7 +49,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * @param prefType
 	 *            The type of preferences to be displayed.
 	 */
-	public static final void startActivity(final Context context, final String prefType) {
+	public static final void startActivity(final Context context, final Integer prefType) {
 		Intent intent = new Intent(context, SettingsActivity.class);
 		if (prefType != null) {
 			intent.putExtra(STRING_EXTRA_PREF_TYPE, prefType);
@@ -61,13 +61,13 @@ public class SettingsActivity extends PreferenceActivity {
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		String prefType = getIntent().getStringExtra(STRING_EXTRA_PREF_TYPE);
+		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
 
-		if (prefType != null) {
+		if (prefType != -1) {
 			SettingsFragment fragment = (SettingsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 			if (fragment == null) {
 				fragment = new SettingsFragment();
-				fragment.setParameters(prefType);
+				fragment.setParameters(getString(prefType));
 
 				getFragmentManager().beginTransaction().replace(android.R.id.content, fragment, FRAGMENT_TAG).commit();
 				getFragmentManager().executePendingTransactions();
@@ -92,8 +92,8 @@ public class SettingsActivity extends PreferenceActivity {
 	public final void onBuildHeaders(final List<Header> target) {
 		List<Header> baseHeaders = new ArrayList<Header>();
 
-		String prefType = getIntent().getStringExtra(STRING_EXTRA_PREF_TYPE);
-		if (prefType == null) {
+		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
+		if (prefType == -1) {
 			// Load resource only into preliminary list, in order to allow manipulation.
 			loadHeadersFromResource(R.xml.pref_header, baseHeaders);
 
@@ -116,11 +116,8 @@ public class SettingsActivity extends PreferenceActivity {
 				}
 
 				target.add(header);
-
 			}
-
 		}
-
 	}
 
 	@Override

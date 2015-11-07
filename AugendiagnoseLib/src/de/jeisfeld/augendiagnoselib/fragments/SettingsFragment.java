@@ -21,8 +21,11 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
+import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference.OnDialogClosedListener;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
@@ -104,12 +107,39 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 
 		mType = getArguments().getString(STRING_PREF_TYPE);
-
 		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_input_settings))) {
 			addPreferencesFromResource(R.xml.prefs_input);
 
 			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_input);
+		}
+		else if (mType.equals(getActivity().getString(R.string.key_folder_input))) {
+			// Special fragment for displaying only input folder.
+			addPreferencesFromResource(R.xml.prefs_input);
+
+			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
+			bindPreferenceSummaryToValue(R.string.key_folder_input);
+
+			PreferenceScreen screen = getPreferenceScreen();
+
+			for (int i = 0; i < screen.getPreferenceCount(); i++) {
+				Preference pref = screen.getPreference(i);
+				if (pref.getKey().equals(getActivity().getString(R.string.key_folder_input))) {
+					DirectorySelectionPreference preference = (DirectorySelectionPreference) pref;
+
+					preference.setOnDialogClosedListener(new OnDialogClosedListener() {
+						@Override
+						public void onDialogClosed() {
+							getActivity().finish();
+						}
+					});
+
+					preference.showDialog();
+				}
+				else {
+					screen.removePreference(pref);
+				}
+			}
 		}
 		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_display_settings))) {
 			addPreferencesFromResource(R.xml.prefs_display);

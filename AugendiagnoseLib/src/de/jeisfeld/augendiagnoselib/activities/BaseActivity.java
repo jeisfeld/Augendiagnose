@@ -70,6 +70,8 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			}
 			else {
 				if (savedInstanceState == null) {
+					test();
+
 					// Initial tip is triggered first, so that it is hidden behind release notes.
 					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
 
@@ -96,7 +98,6 @@ public abstract class BaseActivity extends AdMarvelActivity {
 						}
 					});
 
-					test();
 				}
 			}
 		}

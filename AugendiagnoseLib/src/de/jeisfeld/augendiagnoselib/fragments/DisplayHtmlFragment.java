@@ -72,7 +72,7 @@ public class DisplayHtmlFragment extends Fragment {
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
 
-		setOpenLinksInExternalBrowser(webView);
+		setOpenLinksInExternalBrowser(webView, null);
 
 		String html = getString(mResource);
 		if (mResource == R.string.html_release_notes_base) {
@@ -94,14 +94,24 @@ public class DisplayHtmlFragment extends Fragment {
 	 *
 	 * @param webView
 	 *            The webView.
+	 * @param callback
+	 *            A callback that can be used to trigger application code from links.
 	 */
-	public static void setOpenLinksInExternalBrowser(final WebView webView) {
+	public static void setOpenLinksInExternalBrowser(final WebView webView, final WebViewLinkCallback callback) {
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
-				if (url != null && url.startsWith("http://")) {
+				if (url == null) {
+					return false;
+				}
+				else if (url.startsWith("http://")) {
 					view.getContext().startActivity(
 							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+					return true;
+				}
+				else if (url.startsWith("appcode://") && callback != null) {
+					String action = url.substring("appcode://".length());
+					callback.handleLinkAction(action);
 					return true;
 				}
 				else {
@@ -109,6 +119,19 @@ public class DisplayHtmlFragment extends Fragment {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Callback that allows to trigger code from links in WebView.
+	 */
+	public interface WebViewLinkCallback {
+		/**
+		 * Callback handler for a WebView link action.
+		 *
+		 * @param linkAction
+		 *            The action in the link.
+		 */
+		void handleLinkAction(String linkAction);
 	}
 
 }

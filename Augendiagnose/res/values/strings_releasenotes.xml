@@ -14,8 +14,9 @@
 
 <p>The purpose of this app is the organization and display of eye photos. On first usage, you need
 to do the following:</p>
-<p>1. Define an incoming folder for new eye photos and copy all your existing eye photos into this folder</p>
-<p>2. Configure this folder as &ldquo;Input folder&rdquo; in the settings (first entry).</p>
+<p>1. Define an input folder for new eye photos and 
+<a href="appcode://selectInputFolder">configure the input folder in the settings</a>.</p>
+<p>2. Copy all your existing eye photos into the input folder.</p>
 <p>3. Assign these photos to persons and dates and shift them to the app&apos;s eye photo folder, using the &ldquo;Organize new photos&rdquo; functionality.</p>
 <p>After this preparation, you can use the &ldquo;Display photos&rdquo; functionality to view and analyze your photos.</p>
 

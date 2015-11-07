@@ -54,6 +54,11 @@ public class DirectorySelectionPreference extends ListPreference {
 	private int mCustomIndex = -1;
 
 	/**
+	 * A listener called when the dialog is closed.
+	 */
+	private OnDialogClosedListener mOnDialogClosedListener = null;
+
+	/**
 	 * The constructor replaces placeholders for external storage and camera folder.
 	 *
 	 * @param context
@@ -187,7 +192,6 @@ public class DirectorySelectionPreference extends ListPreference {
 	@Override
 	protected final void onDialogClosed(final boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
-
 		if (positiveResult && mSelectedIndex >= 0 && getEntryValues() != null) {
 			String value;
 			if (mSelectedCustomDir != null) {
@@ -201,6 +205,36 @@ public class DirectorySelectionPreference extends ListPreference {
 				setSummary(value);
 			}
 		}
+		if (mOnDialogClosedListener != null) {
+			mOnDialogClosedListener.onDialogClosed();
+		}
+	}
+
+	/**
+	 * Trigger the dialog programmatically.
+	 */
+	public final void showDialog() {
+		showDialog(null);
+	}
+
+	/**
+	 * Set a listener called when the dialog is closed.
+	 *
+	 * @param listener
+	 *            The listener.
+	 */
+	public final void setOnDialogClosedListener(final OnDialogClosedListener listener) {
+		mOnDialogClosedListener = listener;
+	}
+
+	/**
+	 * Listener for additional actions to be done when the dialog is closed.
+	 */
+	public interface OnDialogClosedListener {
+		/**
+		 * Actions done when the dialog is closed.
+		 */
+		void onDialogClosed();
 	}
 
 }

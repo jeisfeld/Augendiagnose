@@ -171,14 +171,14 @@ public final class DialogUtil {
 
 			@Override
 			public void onDialogClick(final DialogFragment dialog) {
-				SettingsActivity.startActivity(activity, activity.getString(R.string.key_dummy_screen_premium_settings));
+				SettingsActivity.startActivity(activity, R.string.key_dummy_screen_premium_settings);
 				activity.finish();
 			}
 
 			@Override
 			public void onDialogCancel(final DialogFragment dialog) {
 				if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
-					SettingsActivity.startActivity(activity, activity.getString(R.string.key_dummy_screen_premium_settings));
+					SettingsActivity.startActivity(activity, R.string.key_dummy_screen_premium_settings);
 					activity.finish();
 				}
 			}
