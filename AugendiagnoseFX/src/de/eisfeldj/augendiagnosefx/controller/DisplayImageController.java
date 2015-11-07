@@ -34,6 +34,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
@@ -49,7 +50,7 @@ import javafx.scene.layout.RowConstraints;
  */
 public class DisplayImageController extends BaseController implements Initializable {
 	/**
-	 * The number of available overlay buttons (excluding circle).
+	 * The number of available overlay buttons (excluding circle). Must be at most OVERLAY_COUNT.
 	 */
 	public static final int OVERLAY_BUTTON_COUNT = 7;
 
@@ -310,12 +311,15 @@ public class DisplayImageController extends BaseController implements Initializa
 				});
 				menu.getItems().add(menuItemAdd);
 			}
+			menu.getItems().add(new SeparatorMenuItem());
 		}
+
+		MenuItem[] secondaryMenuItems = new MenuItem[OVERLAY_BUTTON_COUNT];
 
 		for (int i = 1; i <= OVERLAY_COUNT; i++) {
 			final int index = i;
 
-			final Integer oldButtonPosition = buttonForOverlayWithIndex(i);
+			final Integer oldButtonPosition = getButtonForOverlayWithIndex(i);
 			MenuItem menuItem = null;
 			if (oldButtonPosition == null) {
 				menuItem = new MenuItem();
@@ -326,7 +330,10 @@ public class DisplayImageController extends BaseController implements Initializa
 				if (!forNewButton) {
 					menuItem = new MenuItem();
 					menuItem.setText(OVERLAY_BUTTON_STRINGS[oldButtonPosition - 1] + " " + OVERLAY_NAMES[i - 1]);
-					menu.getItems().add(menuItem);
+					if (oldButtonPosition == position) {
+						menuItem.getStyleClass().add("bold");
+					}
+					secondaryMenuItems[oldButtonPosition - 1] = menuItem;
 				}
 			}
 
@@ -347,6 +354,12 @@ public class DisplayImageController extends BaseController implements Initializa
 						createOverlayButtonContextMenus();
 					}
 				});
+			}
+		}
+
+		for (MenuItem menuItem : secondaryMenuItems) {
+			if (menuItem != null) {
+				menu.getItems().add(menuItem);
 			}
 		}
 
@@ -375,7 +388,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The index of the overlay type.
 	 * @return The button index configured for this overlay type.
 	 */
-	public static Integer buttonForOverlayWithIndex(final int index) {
+	private static Integer getButtonForOverlayWithIndex(final int index) {
 		if (index < 0) {
 			return null;
 		}

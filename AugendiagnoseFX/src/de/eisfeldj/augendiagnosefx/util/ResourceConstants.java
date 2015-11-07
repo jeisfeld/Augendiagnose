@@ -20,12 +20,15 @@ public final class ResourceConstants {
 	public static final String BUTTON_EDIT_COMMENT = "button_edit_comment";
 	public static final String BUTTON_OK = "button_ok";
 	public static final String BUTTON_OVERLAY_1 = "button_overlay_1";
+	public static final String BUTTON_OVERLAY_10 = "button_overlay_10";
 	public static final String BUTTON_OVERLAY_2 = "button_overlay_2";
 	public static final String BUTTON_OVERLAY_3 = "button_overlay_3";
 	public static final String BUTTON_OVERLAY_4 = "button_overlay_4";
 	public static final String BUTTON_OVERLAY_5 = "button_overlay_5";
 	public static final String BUTTON_OVERLAY_6 = "button_overlay_6";
 	public static final String BUTTON_OVERLAY_7 = "button_overlay_7";
+	public static final String BUTTON_OVERLAY_8 = "button_overlay_8";
+	public static final String BUTTON_OVERLAY_9 = "button_overlay_9";
 	public static final String BUTTON_SAVE_COMMENT = "button_save_comment";
 	public static final String DOCUMENTATION_URL = "documentation_url";
 	public static final String FILE_INFIX_LEFT = "file_infix_left";

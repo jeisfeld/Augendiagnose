@@ -35,6 +35,10 @@
 	-fx-font-weight: normal;
 }
 
+.context-menu .bold {
+	-fx-font-weight: bold;
+}
+
 .toggleOverlay {
 	-fx-font-size: 14.0pt;
 }
