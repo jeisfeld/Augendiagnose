@@ -1115,7 +1115,7 @@ public class CameraActivity extends BaseActivity {
 	 * @return true if Camera2 API is used.
 	 */
 	private boolean isCamera2() {
-		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, 0);
+		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, null);
 		return cameraApiVersion == 2;
 	}
 

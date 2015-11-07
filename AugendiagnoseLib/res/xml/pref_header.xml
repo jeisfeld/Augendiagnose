@@ -31,6 +31,13 @@
     </header>
     <header
         android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
+        android:title="@string/pref_screen_overlay_settings" >
+        <extra
+            android:name="prefType"
+            android:value="@string/key_dummy_screen_overlay_settings" />
+    </header>
+    <header
+        android:fragment="de.jeisfeld.augendiagnoselib.fragments.SettingsFragment"
         android:title="@string/pref_screen_premium_settings" >
         <extra
             android:name="prefType"

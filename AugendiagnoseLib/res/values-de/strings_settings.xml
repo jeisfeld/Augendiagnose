@@ -8,6 +8,7 @@
     <string name="pref_screen_storage_settings">Speicher- und Leistungseinstellungen</string>
     <string name="pref_screen_display_settings">Anzeigeeinstellungen</string>
     <string name="pref_screen_camera_settings">Kameraeinstellungen</string>
+    <string name="pref_screen_overlay_settings">Overlay-Buttons</string>
     <string name="pref_screen_premium_settings">Premium-Pakete / Hilfe</string>
 
     <!-- Strings related to Settings -->
@@ -26,6 +27,8 @@
     <string name="pref_title_enable_flash">Blitzlicht erlauben</string>
     <string name="pref_title_camera_api_version">Kamera-Kompatibilität</string>
     <string name="pref_title_camera_screen_position">Kamera-Bildschirmposition</string>
+    <string name="pref_title_overlay_button">Overlay-Button %1$s</string>
+    <string name="pref_value_overlay_button_empty">(Unbenutzt)</string>
     
     <!-- Strings related to Setting arrays -->
 

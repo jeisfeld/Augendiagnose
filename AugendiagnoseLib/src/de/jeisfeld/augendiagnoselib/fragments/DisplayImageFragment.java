@@ -399,7 +399,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					return displayOverlaySelectionPopup(index, false);
 				}
 			});
-			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) < 0) {
+			if (PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1) < 0) {
 				mToggleOverlayButtons[i].setVisibility(View.GONE);
 			}
 		}
@@ -490,7 +490,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		boolean isChecked = mToggleOverlayButtons[position].isChecked();
 		boolean buttonGetsUnchecked = false;
 
-		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
 
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && isChecked
 				&& overlayPosition >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
@@ -545,7 +545,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					public boolean onMenuItemClick(final MenuItem item) {
 						mToggleOverlayButtons[position].setChecked(false);
 						onToggleOverlayClicked(position);
-						PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+						PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
 						mToggleOverlayButtons[position].setVisibility(View.GONE);
 						return true;
 					}
@@ -601,10 +601,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 						if (oldButtonPosition != null && oldButtonPosition != position) {
 							// If the same overlay is already used, switch overlays
-							int currentOverlay = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
-							PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, oldButtonPosition, currentOverlay);
+							int currentOverlay = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
+							PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition, currentOverlay);
 						}
-						PreferenceUtil.setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, index);
+						PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, index);
 						mToggleOverlayButtons[position].setChecked(true);
 						onToggleOverlayClicked(position);
 						return true;
@@ -617,7 +617,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			popupMenu.setOnDismissListener(new OnDismissListener() {
 				@Override
 				public void onDismiss(final PopupMenu menu2) {
-					int selectedOverlay = PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, position, -1);
+					int selectedOverlay = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
 					if (selectedOverlay < 0) {
 						mToggleOverlayButtons[position].setVisibility(View.GONE);
 					}
@@ -634,10 +634,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *
 	 * @return The index of the highest active overlay button.
 	 */
-	private int getHighestOverlayButtonIndex() {
+	public static int getHighestOverlayButtonIndex() {
 		int maxIndex = -1;
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
-			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) >= 0) {
+			if (PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1) >= 0) {
 				maxIndex = i;
 			}
 		}
@@ -651,9 +651,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *            The index of the overlay type.
 	 * @return The button index configured for this overlay type.
 	 */
-	private Integer buttonForOverlayWithIndex(final int index) {
+	public static Integer buttonForOverlayWithIndex(final int index) {
+		if (index < 0) {
+			return null;
+		}
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
-			if (PreferenceUtil.getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1) == index) {
+			if (PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1) == index) { // MAGIC_NUMBER
 				return i;
 			}
 		}
@@ -931,7 +934,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @return true if should be shown in full resoltion.
 	 */
 	public final boolean hasAutoFullResolution() {
-		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, 0);
+		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, null);
 
 		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
 			return fullResolutionFlag > 0;

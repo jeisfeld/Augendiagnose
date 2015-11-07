@@ -8,6 +8,7 @@
     <string name="pref_screen_storage_settings">Storage and Memory Settings</string>
     <string name="pref_screen_display_settings">Display Settings</string>
     <string name="pref_screen_camera_settings">Camera Settings</string>
+    <string name="pref_screen_overlay_settings">Overlay Button Configuration</string>
     <string name="pref_screen_premium_settings">Premium Packs / Support</string>
 
     <!-- Strings related to Settings -->
@@ -36,7 +37,9 @@
     <string name="pref_title_camera_api_version">Camera compatibility</string>
     <string name="pref_title_camera_screen_position">Camera screen position</string>
     <string name="pref_default_camera_screen_position" translatable="false">0</string>
-
+    <string name="pref_title_overlay_button">Overlay button %1$s</string>
+    <string name="pref_value_overlay_button_empty">(Unused)</string>
+    
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
@@ -148,6 +151,7 @@
     <string name="key_dummy_screen_display_settings" translatable="false">dummy_screen_display_settings</string>
     <string name="key_dummy_screen_storage_settings" translatable="false">dummy_screen_storage_settings</string>
     <string name="key_dummy_screen_camera_settings" translatable="false">dummy_screen_camera_settings</string>
+    <string name="key_dummy_screen_overlay_settings" translatable="false">dummy_screen_overlay_settings</string>
     <string name="key_dummy_screen_premium_settings" translatable="false">dummy_screen_premium_settings</string>
     <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
     <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>

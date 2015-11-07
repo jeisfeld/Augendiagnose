@@ -301,8 +301,28 @@ public final class PreferenceUtil {
 	 *            The index
 	 * @return The indexed preference key.
 	 */
-	private static String getIndexedPreferenceKey(final int preferenceId, final int index) {
+	public static String getIndexedPreferenceKey(final int preferenceId, final int index) {
 		return Application.getAppContext().getString(preferenceId) + "[" + index + "]";
+	}
+
+	/**
+	 * Get the index from an indexed preference key.
+	 *
+	 * @param key
+	 *            The preference key.
+	 * @return The index.
+	 */
+	public static Integer getIndexFromPreferenceKey(final String key) {
+		String[] parts = key.split("\\[|\\]");
+		if (parts.length < 2) {
+			return null;
+		}
+		try {
+			return Integer.parseInt(parts[1]);
+		}
+		catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -363,6 +383,45 @@ public final class PreferenceUtil {
 		Editor editor = getSharedPreferences().edit();
 		editor.putInt(getIndexedPreferenceKey(preferenceId, index), i);
 		editor.commit();
+	}
+
+	/**
+	 * Retrieve an indexed String shared preference as integer.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @param defaultValue
+	 *            the default value of the shared preference.
+	 * @return the corresponding preference value.
+	 */
+	public static int getIndexedSharedPreferenceIntString(final int preferenceId, final int index, final int defaultValue) {
+		String resultString = getIndexedSharedPreferenceString(preferenceId, index);
+
+		if (resultString == null || resultString.length() == 0) {
+			return defaultValue;
+		}
+		try {
+			return Integer.parseInt(resultString);
+		}
+		catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * Set an indexed String shared preference from an integer.
+	 *
+	 * @param preferenceId
+	 *            the id of the shared preference.
+	 * @param index
+	 *            The index
+	 * @param i
+	 *            the target value of the preference.
+	 */
+	public static void setIndexedSharedPreferenceIntString(final int preferenceId, final int index, final int i) {
+		setIndexedSharedPreferenceString(preferenceId, index, Integer.toString(i));
 	}
 
 	/**
@@ -450,7 +509,7 @@ public final class PreferenceUtil {
 	public static void setDefaultOverlayButtonSettings() {
 		// only set values if never set before.
 		int dummyNumber = -2; // MAGIC_NUMBER
-		int overlayNumber = getIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, 0, dummyNumber);
+		int overlayNumber = getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, 0, dummyNumber);
 
 		if (overlayNumber == dummyNumber) {
 			int numberOfOverlays =
@@ -461,10 +520,10 @@ public final class PreferenceUtil {
 				// limit default number of buttons based on screen size.
 				if (i < numberOfOverlays) {
 					// By default, each overlay button is mapped to the overlay of the same index.
-					setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, i);
+					setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, i);
 				}
 				else {
-					setIndexedSharedPreferenceInt(R.string.key_indexed_overlaytype, i, -1);
+					setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1);
 				}
 			}
 		}

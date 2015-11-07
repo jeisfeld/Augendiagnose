@@ -8,6 +8,7 @@
     <string name="pref_screen_storage_settings">Ajustes de almacenamiento y memoria</string>
     <string name="pref_screen_display_settings">Ajustes de la visualización</string>
     <string name="pref_screen_camera_settings">Ajustes de la cámara</string>
+    <string name="pref_screen_overlay_settings">Botones de superposición</string>
     <string name="pref_screen_premium_settings">Paquetes premium / Ayuda</string>
 
     <!-- Strings related to Settings -->
@@ -26,6 +27,8 @@
     <string name="pref_title_enable_flash">Activar el flash</string>
     <string name="pref_title_camera_api_version">Compatibilidad de la cámara</string>
     <string name="pref_title_camera_screen_position">Posición de la pantalla de la cámara</string>
+    <string name="pref_title_overlay_button">Botón de superposición %1$s</string>
+    <string name="pref_value_overlay_button_empty">(No usado)</string>
     
     <!-- Strings related to Setting arrays -->
 

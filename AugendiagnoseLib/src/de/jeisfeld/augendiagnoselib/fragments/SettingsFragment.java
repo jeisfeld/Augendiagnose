@@ -12,6 +12,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +24,15 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference.OnDialogClosedListener;
+import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
@@ -62,10 +69,6 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private static final String SKU_KEY_PREFIX = "sku_";
 
-	/**
-	 * Field holding the value of the language preference, in order to detect a real change.
-	 */
-	private String mLanguageString;
 	/**
 	 * Field holding the value of the input folder preference, in order to detect a real change.
 	 */
@@ -144,7 +147,6 @@ public class SettingsFragment extends PreferenceFragment {
 		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_display_settings))) {
 			addPreferencesFromResource(R.xml.prefs_display);
 
-			mLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 			bindPreferenceSummaryToValue(R.string.key_language);
 
 			addHintButtonListener(R.string.key_dummy_show_hints, false);
@@ -173,6 +175,24 @@ public class SettingsFragment extends PreferenceFragment {
 			}
 			if (!SystemUtil.hasFlashlight()) {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_enable_flash)));
+			}
+		}
+		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_overlay_settings))) {
+			PreferenceScreen preferenceScreen = getPreferenceManager().createPreferenceScreen(getActivity());
+			setPreferenceScreen(preferenceScreen);
+
+			String[] buttonStrings = getResources().getStringArray(R.array.overlay_button_strings);
+
+			for (int btnIndex = 1; btnIndex < DisplayImageFragment.OVERLAY_BUTTON_COUNT; btnIndex++) {
+				ListPreference preference = new ListPreference(getActivity());
+				preference.setTitle(String.format(getString(R.string.pref_title_overlay_button), buttonStrings[btnIndex]));
+
+				updateOverlayPreferenceEntries(btnIndex, preference);
+
+				preference.setKey(PreferenceUtil.getIndexedPreferenceKey(R.string.key_indexed_overlaytype, btnIndex));
+				bindPreferenceSummaryToValue(preference);
+
+				preferenceScreen.addPreference(preference);
 			}
 		}
 		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
@@ -249,6 +269,74 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
+	 * Set the choice entries for all overlay button preferences.
+	 */
+	private void updateOverlayPreferenceEntries() {
+		for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
+			ListPreference preference = (ListPreference) getPreferenceScreen().getPreference(i);
+			int buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+			updateOverlayPreferenceEntries(buttonIndex, preference);
+		}
+	}
+
+	/**
+	 * Set the choice entries for an overlay button preference.
+	 *
+	 * @param buttonIndex
+	 *            The index of the button.
+	 * @param preference
+	 *            The preference.
+	 */
+	private void updateOverlayPreferenceEntries(final int buttonIndex, final ListPreference preference) {
+		int highestOverlayButtonIndex = DisplayImageFragment.getHighestOverlayButtonIndex();
+		if (buttonIndex > highestOverlayButtonIndex + 1) {
+			preference.setEnabled(false);
+			return;
+		}
+		else {
+			preference.setEnabled(true);
+		}
+
+		String[] buttonStrings = getResources().getStringArray(R.array.overlay_button_strings);
+		String[] overlayNames = getResources().getStringArray(R.array.overlay_names);
+		boolean showUnused = buttonIndex >= highestOverlayButtonIndex;
+		int numberOfEntries = showUnused ? OverlayPinchImageView.OVERLAY_COUNT - 1 : OverlayPinchImageView.OVERLAY_COUNT - 2;
+
+		CharSequence[] entries = new CharSequence[numberOfEntries];
+		CharSequence[] entryValues = new CharSequence[numberOfEntries];
+
+		for (int i = 0; i < OverlayPinchImageView.OVERLAY_COUNT - 2; i++) {
+			int overlayIndex = i + 1;
+			entryValues[i] = Integer.toString(overlayIndex);
+			Integer currentButton = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
+
+			SpannableString entry;
+			if (currentButton == null) {
+				entry = new SpannableString(overlayNames[overlayIndex]);
+			}
+			else {
+				entry = new SpannableString(buttonStrings[currentButton] + " " + overlayNames[overlayIndex]);
+				if (currentButton == buttonIndex) {
+					entry.setSpan(new StyleSpan(Typeface.BOLD), 0, entry.length(), 0);
+				}
+				else {
+					entry.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, entry.length(), 0);
+				}
+			}
+			entries[i] = entry;
+		}
+		if (showUnused) {
+			SpannableString entry = new SpannableString(getString(R.string.pref_value_overlay_button_empty));
+			entry.setSpan(new StyleSpan(Typeface.ITALIC), 0, entry.length(), 0);
+			entries[OverlayPinchImageView.OVERLAY_COUNT - 2] = entry;
+			entryValues[OverlayPinchImageView.OVERLAY_COUNT - 2] = "-1";
+		}
+
+		preference.setEntries(entries);
+		preference.setEntryValues(entryValues);
+	}
+
+	/**
 	 * Binds a preference's summary to its value. More specifically, when the preference's value is changed, its summary
 	 * (line of text below the preference title) is updated to reflect the value. The summary is also immediately
 	 * updated upon calling this method. The exact display format is dependent on the type of preference.
@@ -285,7 +373,6 @@ public class SettingsFragment extends PreferenceFragment {
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
 					String stringValue = value.toString();
-					boolean acceptChange = true;
 
 					// For maxBitmapSize, inform PinchImageView
 					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
@@ -296,25 +383,32 @@ public class SettingsFragment extends PreferenceFragment {
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
 						if (!mFolderPhotos.equals(value)) {
 							mCurrentFolder = new File(stringValue);
-							acceptChange = checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
-							if (acceptChange) {
+							if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS)) {
 								mFolderPhotos = mCurrentFolder.getAbsolutePath();
+							}
+							else {
+								// Do not accept change.
+								return false;
 							}
 						}
 					}
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
 						if (!mFolderInput.equals(value)) {
 							mCurrentFolder = new File(stringValue);
-							acceptChange = checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT);
-							if (acceptChange) {
+							if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT)) {
 								mFolderInput = mCurrentFolder.getAbsolutePath();
+							}
+							else {
+								// Do not accept change.
+								return false;
 							}
 						}
 					}
 
 					// Apply change of language
 					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
-						if (mLanguageString == null || !mLanguageString.equals(value)) {
+						String oldLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
+						if (oldLanguageString == null || !oldLanguageString.equals(value)) {
 							Application.setLanguage();
 							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
 
@@ -327,24 +421,81 @@ public class SettingsFragment extends PreferenceFragment {
 						}
 					}
 
-					// set summary
-					if (acceptChange) {
-						if (preference.getClass().equals(ListPreference.class)) {
-							// For list preferences (except customized ones), look up the correct display value in
-							// the preference's 'entries' list.
-							ListPreference listPreference = (ListPreference) preference;
-							int index = listPreference.findIndexOfValue(stringValue);
+					else if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+						int overlayIndex = Integer.parseInt(stringValue);
+						int buttonPosition = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						Integer oldButtonPosition = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
+						int oldOverlayIndex =
+								PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonPosition, -1);
 
-							preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
-						}
-						else {
-							// For all other preferences, set the summary to the value's
-							// simple string representation.
-							preference.setSummary(stringValue);
+						if (oldOverlayIndex != overlayIndex) {
+							if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
+									&& overlayIndex >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+								DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
+								return false;
+							}
+
+							if (oldButtonPosition != null && oldButtonPosition != buttonPosition) {
+								// If the same overlay is already used, switch overlays
+								PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition,
+										oldOverlayIndex);
+
+								ListPreference oldButtonPreference = (ListPreference) findPreference(
+										PreferenceUtil.getIndexedPreferenceKey(R.string.key_indexed_overlaytype, oldButtonPosition));
+								updateSummaryForOverlayPreference(oldButtonPreference);
+							}
+
+							PreferenceUtil.setIndexedSharedPreferenceString(R.string.key_indexed_overlaytype, buttonPosition, stringValue);
+							updateOverlayPreferenceEntries();
 						}
 					}
 
-					return acceptChange;
+					// set summary
+					if (preference.getClass().equals(ListPreference.class)) {
+						// For list preferences (except customized ones), look up the correct display value in
+						// the preference's 'entries' list.
+						ListPreference listPreference = (ListPreference) preference;
+						int index = listPreference.findIndexOfValue(stringValue);
+
+						if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+							updateSummaryForOverlayPreference(listPreference);
+						}
+						else if (index < 0) {
+							preference.setSummary(null);
+						}
+						else {
+							String entryValue = listPreference.getEntries()[index].toString();
+
+							preference.setSummary(entryValue);
+						}
+					}
+					else {
+						// For all other preferences, set the summary to the value's
+						// simple string representation.
+						preference.setSummary(stringValue);
+					}
+
+					return true;
+				}
+
+				/**
+				 * Set the summary for an overlay preference.
+				 *
+				 * @param preference
+				 *            The overlay preference.
+				 */
+				private void updateSummaryForOverlayPreference(final ListPreference preference) {
+					if (preference != null && preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+						int buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						int overlayIndex = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonIndex, -1);
+						if (overlayIndex > 0) {
+							String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayIndex];
+							preference.setSummary(overlayName);
+						}
+						else {
+							preference.setSummary(R.string.pref_value_overlay_button_empty);
+						}
+					}
 				}
 
 				/**
