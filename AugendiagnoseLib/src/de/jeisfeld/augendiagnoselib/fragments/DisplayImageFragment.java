@@ -20,7 +20,6 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnDismissListener;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -557,9 +556,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				menuItemAdd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
-						int newPosition = position + 1;
-						mToggleOverlayButtons[newPosition].setVisibility(View.VISIBLE);
-						displayOverlaySelectionPopup(newPosition, true);
+						displayOverlaySelectionPopup(position + 1, true);
 						return true;
 					}
 				});
@@ -606,23 +603,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 						}
 						PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, index);
 						mToggleOverlayButtons[position].setChecked(true);
+						mToggleOverlayButtons[position].setVisibility(View.VISIBLE);
 						onToggleOverlayClicked(position);
 						return true;
 					}
 				});
 			}
-		}
-
-		if (forNewButton) {
-			popupMenu.setOnDismissListener(new OnDismissListener() {
-				@Override
-				public void onDismiss(final PopupMenu menu2) {
-					int selectedOverlay = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
-					if (selectedOverlay < 0) {
-						mToggleOverlayButtons[position].setVisibility(View.GONE);
-					}
-				}
-			});
 		}
 
 		popupMenu.show();
@@ -656,7 +642,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			return null;
 		}
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
-			if (PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1) == index) { // MAGIC_NUMBER
+			if (PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1) == index) {
 				return i;
 			}
 		}

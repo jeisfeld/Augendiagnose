@@ -4,6 +4,8 @@
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
 	-fx-alignment: center;
+    -fx-border-insets: 1px;
+    -fx-background-insets: 1px;
 }
 
 .button:pressed {
@@ -19,14 +21,22 @@
 	-fx-font-family: "Arial Narrow";
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
+	-fx-padding: 6px;
+    -fx-border-insets: 1px;
+    -fx-background-insets: 1px;
 }
 
 .toggle-button:selected {
 	-fx-background-color: linear-gradient(#ffa265, #BF1600);
 }
 
+.context-menu {
+	-fx-font-size: 11.0pt;
+	-fx-font-weight: normal;
+}
+
 .toggleOverlay {
-	-fx-font-size: 14pt;
+	-fx-font-size: 14.0pt;
 }
 
 .imageButton {

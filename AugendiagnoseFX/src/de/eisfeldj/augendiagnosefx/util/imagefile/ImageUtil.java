@@ -180,7 +180,7 @@ public final class ImageUtil {
 			baseName = ResourceUtil.getString(OVERLAY_7_PREFIX);
 			break;
 		default:
-			baseName = "overlay_topo" + overlayType;
+			return null;
 		}
 
 		String suffix = ".png";

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.prefs.Preferences;
 
 import de.eisfeldj.augendiagnosefx.Application;
+import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
 import javafx.scene.paint.Color;
 
 /**
@@ -92,6 +93,11 @@ public final class PreferenceUtil {
 	public static final String KEY_LAST_KNOWN_VERSION = "key_last_known_version";
 
 	/**
+	 * Preference key for the last known version that has already been checked.
+	 */
+	public static final String KEY_INDEXED_OVERLAY_TYPE = "key_overlay_type";
+
+	/**
 	 * A map of default values for preferences.
 	 */
 	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
@@ -118,6 +124,8 @@ public final class PreferenceUtil {
 		DEFAULT_MAP.put(KEY_UPDATE_AUTOMATICALLY, false);
 		DEFAULT_MAP.put(KEY_LANGUAGE, 0);
 		DEFAULT_MAP.put(KEY_LAST_KNOWN_VERSION, VersioningUtil.CURRENT_VERSION.getVersionNumber());
+
+		setDefaultOverlayTypes();
 	}
 
 	/**
@@ -252,6 +260,63 @@ public final class PreferenceUtil {
 	public static Color getPreferenceColor(final String key) {
 		String colorString = mPrefs.get(key, (String) DEFAULT_MAP.get(key));
 		return Color.web(colorString);
+	}
+
+	/**
+	 * Retrieve an indexed integer shared preference.
+	 *
+	 * @param key
+	 *            the key of the preference.
+	 * @param index
+	 *            the index of the preference.
+	 * @param defaultValue
+	 *            the default value of the preference.
+	 * @return the corresponding preference value.
+	 */
+	public static int getIndexedPreferenceInt(final String key, final int index, final int defaultValue) {
+		return mPrefs.getInt(getIndexedPreferenceKey(key, index), defaultValue);
+	}
+
+	/**
+	 * Set an indexed integer shared preference.
+	 *
+	 * @param key
+	 *            The key of the preference.
+	 * @param index
+	 *            the index of the preference.
+	 * @param value
+	 *            The value of the preference.
+	 */
+	public static void setIndexedPreference(final String key, final int index, final int value) {
+		mPrefs.putInt(getIndexedPreferenceKey(key, index), value);
+	}
+
+	/**
+	 * Get an indexed preference key that allows to store a shared preference with index.
+	 *
+	 * @param key
+	 *            The base key of the preference.
+	 * @param index
+	 *            The index
+	 * @return The indexed preference key.
+	 */
+	public static String getIndexedPreferenceKey(final String key, final int index) {
+		return key + "[" + index + "]";
+	}
+
+	/**
+	 * Set the default value of overlay types, if not yet defined.
+	 */
+	public static void setDefaultOverlayTypes() {
+		int dummyValue = -2; // MAGIC_NUMBER
+		int testType = getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, 0, dummyValue);
+
+		// If not yet set before, then define a default overlay mapping.
+		if (testType == dummyValue) { // MAGIC_NUMBER
+			for (int i = 0; i <= DisplayImageController.OVERLAY_BUTTON_COUNT; i++) {
+				setIndexedPreference(KEY_INDEXED_OVERLAY_TYPE, i, i);
+			}
+		}
 	}
 
 }

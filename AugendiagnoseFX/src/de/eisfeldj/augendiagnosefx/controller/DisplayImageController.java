@@ -1,5 +1,6 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_INDEXED_OVERLAY_TYPE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
@@ -17,6 +18,7 @@ import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
@@ -30,6 +32,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
@@ -44,6 +48,26 @@ import javafx.scene.layout.RowConstraints;
  * BaseController for the "Display Image" page.
  */
 public class DisplayImageController extends BaseController implements Initializable {
+	/**
+	 * The number of available overlay buttons (excluding circle).
+	 */
+	public static final int OVERLAY_BUTTON_COUNT = 7;
+
+	/**
+	 * The number of available overlays (excluding circle).
+	 */
+	public static final int OVERLAY_COUNT = 7;
+
+	/**
+	 * The names of the overlays.
+	 */
+	private static final String[] OVERLAY_NAMES = new String[OVERLAY_COUNT];
+
+	/**
+	 * The button texts of the overlays.
+	 */
+	private static final String[] OVERLAY_BUTTON_STRINGS = new String[OVERLAY_BUTTON_COUNT];
+
 	/**
 	 * The main pane holding the image.
 	 */
@@ -142,6 +166,9 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton mBtnOverlay6;
 	@FXML
 	private ToggleButton mBtnOverlay7;
+
+	private ToggleButton[] mOverlayButtons;
+
 	// JAVADOC:ON
 
 	/**
@@ -174,6 +201,15 @@ public class DisplayImageController extends BaseController implements Initializa
 	 * Storage for the current overlay type.
 	 */
 	private Integer mCurrentOverlayType = null;
+
+	static {
+		for (int i = 0; i < OVERLAY_COUNT; i++) {
+			OVERLAY_NAMES[i] = ResourceUtil.getString("overlay_" + (i + 1) + "_name");
+		}
+		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
+			OVERLAY_BUTTON_STRINGS[i] = ResourceUtil.getString("button_overlay_" + (i + 1));
+		}
+	}
 
 	/**
 	 * Update the stored current resolution, redisplay if the resolution changed, and update the clarityButton if
@@ -213,7 +249,142 @@ public class DisplayImageController extends BaseController implements Initializa
 		mSliderContrast.setValue(0);
 		mSliderContrast.setMax(1);
 
+		mOverlayButtons = new ToggleButton[] { mBtnOverlayCircle,
+				mBtnOverlay1, mBtnOverlay2, mBtnOverlay3, mBtnOverlay4, mBtnOverlay5, mBtnOverlay6, mBtnOverlay7 };
+		createOverlayButtonContextMenus();
+
 		mIsInitialized = true;
+	}
+
+	/**
+	 * Create the context menus of the overlay buttons.
+	 */
+	private void createOverlayButtonContextMenus() {
+		for (int i = 1; i < mOverlayButtons.length; i++) {
+			mOverlayButtons[i].setContextMenu(createOverlayButtonContextMenu(i, false));
+		}
+	}
+
+	/**
+	 * Create the context menu of an overlay button.
+	 *
+	 * @param position
+	 *            The position of the button.
+	 * @param forNewButton
+	 *            Flag indicating the popup is displayed for a new button. Then it is enforced to select a new overlay.
+	 * @return the context menu.
+	 */
+	private ContextMenu createOverlayButtonContextMenu(final int position, final boolean forNewButton) {
+		ToggleButton button = mOverlayButtons[position];
+		ContextMenu menu = new ContextMenu();
+
+		if (position == getHighestOverlayButtonIndex()) {
+			if (position > 1) {
+				MenuItem menuItemRemove = new MenuItem();
+				menuItemRemove.setText(ResourceUtil.getString(ResourceConstants.MENU_REMOVE_OVERLAY_BUTTON));
+
+				menuItemRemove.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						mOverlayButtons[position].setSelected(false);
+						handleBtnOverlayPressed(mOverlayButtons[position]);
+						PreferenceUtil.setIndexedPreference(KEY_INDEXED_OVERLAY_TYPE, position, -1);
+						mOverlayButtons[position].setVisible(false);
+						mOverlayButtons[position].setManaged(false);
+						createOverlayButtonContextMenus();
+					}
+				});
+				menu.getItems().add(menuItemRemove);
+			}
+
+			if (position < OVERLAY_BUTTON_COUNT) {
+				MenuItem menuItemAdd = new MenuItem();
+				menuItemAdd.setText(ResourceUtil.getString(ResourceConstants.MENU_ADD_OVERLAY_BUTTON));
+
+				menuItemAdd.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						ContextMenu contextMenu = createOverlayButtonContextMenu(position + 1, true);
+						contextMenu.show(button, menu.getAnchorX(), menu.getAnchorY());
+					}
+				});
+				menu.getItems().add(menuItemAdd);
+			}
+		}
+
+		for (int i = 1; i <= OVERLAY_COUNT; i++) {
+			final int index = i;
+
+			final Integer oldButtonPosition = buttonForOverlayWithIndex(i);
+			MenuItem menuItem = null;
+			if (oldButtonPosition == null) {
+				menuItem = new MenuItem();
+				menuItem.setText(OVERLAY_NAMES[i - 1]);
+				menu.getItems().add(menuItem);
+			}
+			else {
+				if (!forNewButton) {
+					menuItem = new MenuItem();
+					menuItem.setText(OVERLAY_BUTTON_STRINGS[oldButtonPosition - 1] + " " + OVERLAY_NAMES[i - 1]);
+					menu.getItems().add(menuItem);
+				}
+			}
+
+			if (menuItem != null) {
+				menuItem.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						if (oldButtonPosition != null && oldButtonPosition != position) {
+							// If the same overlay is already used, switch overlays
+							int currentOverlay = PreferenceUtil.getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, position, -1);
+							PreferenceUtil.setIndexedPreference(KEY_INDEXED_OVERLAY_TYPE, oldButtonPosition, currentOverlay);
+						}
+						PreferenceUtil.setIndexedPreference(KEY_INDEXED_OVERLAY_TYPE, position, index);
+						mOverlayButtons[position].setSelected(true);
+						mOverlayButtons[position].setVisible(true);
+						mOverlayButtons[position].setManaged(true);
+						handleBtnOverlayPressed(mOverlayButtons[position]);
+						createOverlayButtonContextMenus();
+					}
+				});
+			}
+		}
+
+		return menu;
+	}
+
+	/**
+	 * Get the index of the highest active overlay button.
+	 *
+	 * @return The index of the highest active overlay button.
+	 */
+	public static int getHighestOverlayButtonIndex() {
+		int maxIndex = -1;
+		for (int i = 0; i <= OVERLAY_BUTTON_COUNT; i++) {
+			if (PreferenceUtil.getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, i, -1) >= 0) {
+				maxIndex = i;
+			}
+		}
+		return maxIndex;
+	}
+
+	/**
+	 * Check if there is already a button configured for a certain overlay type.
+	 *
+	 * @param index
+	 *            The index of the overlay type.
+	 * @return The button index configured for this overlay type.
+	 */
+	public static Integer buttonForOverlayWithIndex(final int index) {
+		if (index < 0) {
+			return null;
+		}
+		for (int i = 0; i <= OVERLAY_BUTTON_COUNT; i++) {
+			if (PreferenceUtil.getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, i, -1) == index) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -317,19 +488,30 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	public final void btnOverlayPressed(final ActionEvent event) {
-		ToggleButton source = (ToggleButton) event.getSource();
-		if (source.isSelected()) {
-			String btnId = source.getId();
-			Integer overlayType = null;
+		handleBtnOverlayPressed((ToggleButton) event.getSource());
+	}
+
+	/**
+	 * Perform the display of overlay after toggleButton is pressed.
+	 *
+	 * @param button
+	 *            The button.
+	 */
+	private void handleBtnOverlayPressed(final ToggleButton button) {
+		if (button.isSelected()) {
+			String btnId = button.getId();
+			int buttonPosition;
 
 			switch (btnId) {
 			case "mBtnOverlayCircle":
-				overlayType = 0;
+				buttonPosition = 0;
 				break;
 			default:
 				String indexStr = btnId.substring("mBtnOverlay".length());
-				overlayType = Integer.parseInt(indexStr);
+				buttonPosition = Integer.parseInt(indexStr);
 			}
+
+			int overlayType = PreferenceUtil.getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, buttonPosition, -1);
 
 			updateResolution(NORMAL);
 			showOverlay(overlayType);
@@ -552,14 +734,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            Indicator if the overlay buttons should be enabled.
 	 */
 	private void enableOverlayButtons(final boolean enabled) {
-		mBtnOverlayCircle.setDisable(!enabled);
-		mBtnOverlay1.setDisable(!enabled);
-		mBtnOverlay2.setDisable(!enabled);
-		mBtnOverlay3.setDisable(!enabled);
-		mBtnOverlay4.setDisable(!enabled);
-		mBtnOverlay5.setDisable(!enabled);
-		mBtnOverlay6.setDisable(!enabled);
-		mBtnOverlay7.setDisable(!enabled);
+		for (int i = 0; i < mOverlayButtons.length; i++) {
+			mOverlayButtons[i].setDisable(!enabled);
+			boolean isVisible = PreferenceUtil.getIndexedPreferenceInt(KEY_INDEXED_OVERLAY_TYPE, i, -1) >= 0;
+			mOverlayButtons[i].setVisible(isVisible);
+			mOverlayButtons[i].setManaged(isVisible);
+		}
 		mColorPicker.setDisable(!enabled);
 	}
 
@@ -571,5 +751,4 @@ public class DisplayImageController extends BaseController implements Initializa
 	private boolean isInitialized() {
 		return mIsInitialized && mDisplayImageView.isInitialized();
 	}
-
 }

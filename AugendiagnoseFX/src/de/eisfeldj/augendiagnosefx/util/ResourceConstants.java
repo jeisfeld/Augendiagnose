@@ -34,6 +34,7 @@ public final class ResourceConstants {
 	public static final String LABEL_COMMENT = "label_comment";
 	public static final String LABEL_OVERLAYS = "label_overlays";
 	public static final String MENU_ABOUT = "menu_about";
+	public static final String MENU_ADD_OVERLAY_BUTTON = "menu_add_overlay_button";
 	public static final String MENU_CHECK_UPDATES = "menu_check_updates";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
@@ -44,6 +45,7 @@ public final class ResourceConstants {
 	public static final String MENU_ONLINE_MANUAL = "menu_online_manual";
 	public static final String MENU_OVERLAY_PANE = "menu_overlay_pane";
 	public static final String MENU_PREFERENCES = "menu_preferences";
+	public static final String MENU_REMOVE_OVERLAY_BUTTON = "menu_remove_overlay_button";
 	public static final String MENU_RESET_BRIGHTNESS = "menu_reset_brightness";
 	public static final String MENU_RESET_POSITION = "menu_reset_position";
 	public static final String MENU_SPLIT_WINDOW = "menu_split_window";
@@ -63,12 +65,19 @@ public final class ResourceConstants {
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTO = "message_progress_loading_photo";
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTOS = "message_progress_loading_photos";
 	public static final String MESSAGE_PROGRESS_LOADING_UPDATE = "message_progress_loading_update";
+	public static final String OVERLAY_1_NAME = "overlay_1_name";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
+	public static final String OVERLAY_2_NAME = "overlay_2_name";
 	public static final String OVERLAY_2_PREFIX = "overlay_2_prefix";
+	public static final String OVERLAY_3_NAME = "overlay_3_name";
 	public static final String OVERLAY_3_PREFIX = "overlay_3_prefix";
+	public static final String OVERLAY_4_NAME = "overlay_4_name";
 	public static final String OVERLAY_4_PREFIX = "overlay_4_prefix";
+	public static final String OVERLAY_5_NAME = "overlay_5_name";
 	public static final String OVERLAY_5_PREFIX = "overlay_5_prefix";
+	public static final String OVERLAY_6_NAME = "overlay_6_name";
 	public static final String OVERLAY_6_PREFIX = "overlay_6_prefix";
+	public static final String OVERLAY_7_NAME = "overlay_7_name";
 	public static final String OVERLAY_7_PREFIX = "overlay_7_prefix";
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
 	public static final String PREF_TITLE_LANGUAGE = "pref_title_language";
