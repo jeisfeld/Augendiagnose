@@ -1,9 +1,11 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableString;
@@ -11,6 +13,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -533,7 +536,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * 		true if long click was processed.
 	 */
 	private boolean displayOverlaySelectionPopup(final int position, final boolean forNewButton) {
-		PopupMenu popupMenu = new PopupMenu(getActivity(), mToggleOverlayButtons[position]);
+		PopupMenu popupMenu;
+		View anchorView = isLandscape() ? getActivity().findViewById(R.id.anchorForContextMenu) : mToggleOverlayButtons[position];
+
+		if (SystemUtil.isAtLeastVersion(Build.VERSION_CODES.KITKAT)) {
+			popupMenu = getPopupMenuKitkat(anchorView);
+		}
+		else {
+			popupMenu = new PopupMenu(getActivity(), anchorView);
+		}
+
 		Menu menu = popupMenu.getMenu();
 
 		if (position == getHighestOverlayButtonIndex()) {
@@ -613,6 +625,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		popupMenu.show();
 		return true;
+	}
+
+	/**
+	 * Get popup menu with gravity right - only supported for Kitkat orlater.
+	 *
+	 * @param anchorView
+	 *            The anchor view.
+	 * @return The popup menu.
+	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	private PopupMenu getPopupMenuKitkat(final View anchorView) {
+		return new PopupMenu(getActivity(), anchorView, Gravity.RIGHT);
 	}
 
 	/**
@@ -783,7 +807,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	protected final void showUtilities(final boolean show) {
 		if (show) {
-			if (mIsLandscape) {
+			if (isLandscape()) {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
 			}
 			else {
@@ -797,7 +821,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		}
 		else {
-			if (mIsLandscape) {
+			if (isLandscape()) {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_left, 0);
 			}
 			else {
