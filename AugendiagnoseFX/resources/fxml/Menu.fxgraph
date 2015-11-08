@@ -70,11 +70,6 @@ component Menu controlledby MenuController resourcefile "../bundles/Strings.prop
 					},
 					SeparatorMenuItem,
 					MenuItem {
-						text : rstring "menu_uninstall",
-						onAction : controllermethod uninstall
-					},
-					SeparatorMenuItem,
-					MenuItem {
 						text : rstring "menu_about",
 						onAction : controllermethod displayAboutMessage
 					}

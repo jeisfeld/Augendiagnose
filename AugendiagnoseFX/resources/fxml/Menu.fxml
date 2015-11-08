@@ -40,8 +40,6 @@
 				<MenuItem text="%menu_online_manual" onAction="#showHelp"/> 
 				<MenuItem text="%menu_check_updates" onAction="#checkUpdates"/> 
 				<SeparatorMenuItem/> 
-				<MenuItem text="%menu_uninstall" onAction="#uninstall"/> 
-				<SeparatorMenuItem/> 
 				<MenuItem text="%menu_about" onAction="#displayAboutMessage"/> 
 			</items>
 		</Menu>

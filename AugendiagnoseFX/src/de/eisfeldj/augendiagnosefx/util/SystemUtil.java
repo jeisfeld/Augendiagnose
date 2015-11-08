@@ -129,31 +129,6 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Get the path of the executable for uninstalling the application.
-	 *
-	 * @return The path of the application executable
-	 */
-	public static String getUninstallExecutable() {
-		File javaHome = new File(System.getProperties().getProperty("java.home"));
-
-		File applicationDir = javaHome.getParentFile().getParentFile();
-
-		File[] files = applicationDir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(final File dir, final String name) {
-				return name.startsWith("unins") && name.endsWith(".exe");
-			}
-		});
-
-		if (files != null && files.length > 0) {
-			return files[0].getAbsolutePath();
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
 	 * Get the current classpath.
 	 *
 	 * @return The classpath.
@@ -290,19 +265,6 @@ public final class SystemUtil {
 			return;
 		}
 
-	}
-
-	/**
-	 * Uninstall the application via Windows command.
-	 */
-	public static void uninstallApplication() {
-		String uninstallExecutable = getUninstallExecutable();
-
-		// Need no confirmation dialog, as the uninstall executable will ask for confirmation.
-		if (uninstallExecutable != null) {
-			Application.exitAfterConfirmation();
-			runMultipleWindowsCommands(WAITING_TIME, QUOTE + uninstallExecutable + QUOTE);
-		}
 	}
 
 }
