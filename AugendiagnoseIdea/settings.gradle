@@ -1,0 +1,4 @@
+include ':augendiagnoseLib'
+include ':augendiagnose'
+include ':miniris'
+include ':augendiagnoseUnlocker'

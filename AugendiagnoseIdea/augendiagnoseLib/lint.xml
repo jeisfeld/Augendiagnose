@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+
+    <issue id="IconLauncherShape" >
+
+        <ignore regexp="res/drawable-nodpi/ic_launcher.*\.png" />
+    </issue>
+
+    <issue id="IconDuplicates" >
+
+        <ignore regexp="res/drawable-nodpi/ic_launcher.*\.png" />
+    </issue>
+
+</lint>

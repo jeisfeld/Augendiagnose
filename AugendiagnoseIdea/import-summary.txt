@@ -1,0 +1,2237 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From Augendiagnose:
+* .checkstyle
+* .gitignore
+* Augendiagnose.apk
+* External Resources\
+* External Resources\Augendiagnose.Spp
+* External Resources\Screenshot_2014-09-10-23-19-13a.jpg
+* doc\
+* doc\allclasses-frame.html
+* doc\allclasses-noframe.html
+* doc\com\
+* doc\com\android\
+* doc\com\android\vending\
+* doc\com\android\vending\billing\
+* doc\com\android\vending\billing\Base64.html
+* doc\com\android\vending\billing\Base64DecoderException.html
+* doc\com\android\vending\billing\IInAppBillingService.Stub.html
+* doc\com\android\vending\billing\IInAppBillingService.html
+* doc\com\android\vending\billing\IabException.html
+* doc\com\android\vending\billing\IabHelper.OnConsumeFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnIabSetupFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.QueryInventoryFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.html
+* doc\com\android\vending\billing\IabResult.html
+* doc\com\android\vending\billing\Inventory.html
+* doc\com\android\vending\billing\Purchase.html
+* doc\com\android\vending\billing\PurchasedSku.html
+* doc\com\android\vending\billing\Security.html
+* doc\com\android\vending\billing\SkuDetails.html
+* doc\com\android\vending\billing\class-use\
+* doc\com\android\vending\billing\class-use\Base64.html
+* doc\com\android\vending\billing\class-use\Base64DecoderException.html
+* doc\com\android\vending\billing\class-use\IInAppBillingService.Stub.html
+* doc\com\android\vending\billing\class-use\IInAppBillingService.html
+* doc\com\android\vending\billing\class-use\IabException.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnConsumeFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnIabSetupFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.QueryInventoryFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.html
+* doc\com\android\vending\billing\class-use\IabResult.html
+* doc\com\android\vending\billing\class-use\Inventory.html
+* doc\com\android\vending\billing\class-use\Purchase.html
+* doc\com\android\vending\billing\class-use\PurchasedSku.html
+* doc\com\android\vending\billing\class-use\Security.html
+* doc\com\android\vending\billing\class-use\SkuDetails.html
+* doc\com\android\vending\billing\package-frame.html
+* doc\com\android\vending\billing\package-summary.html
+* doc\com\android\vending\billing\package-tree.html
+* doc\com\android\vending\billing\package-use.html
+* doc\constant-values.html
+* doc\de\
+* doc\de\eisfeldj\
+* doc\de\eisfeldj\augendiagnose\
+* doc\de\eisfeldj\augendiagnose\Application.html
+* doc\de\eisfeldj\augendiagnose\ApplicationSettings.html
+* doc\de\eisfeldj\augendiagnose\BuildConfig.html
+* doc\de\eisfeldj\augendiagnose\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\R.array.html
+* doc\de\eisfeldj\augendiagnose\R.attr.html
+* doc\de\eisfeldj\augendiagnose\R.dimen.html
+* doc\de\eisfeldj\augendiagnose\R.drawable.html
+* doc\de\eisfeldj\augendiagnose\R.html
+* doc\de\eisfeldj\augendiagnose\R.id.html
+* doc\de\eisfeldj\augendiagnose\R.layout.html
+* doc\de\eisfeldj\augendiagnose\R.menu.html
+* doc\de\eisfeldj\augendiagnose\R.raw.html
+* doc\de\eisfeldj\augendiagnose\R.string.html
+* doc\de\eisfeldj\augendiagnose\R.style.html
+* doc\de\eisfeldj\augendiagnose\R.styleable.html
+* doc\de\eisfeldj\augendiagnose\R.xml.html
+* doc\de\eisfeldj\augendiagnose\activities\
+* doc\de\eisfeldj\augendiagnose\activities\AdMarvelActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\BaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayHtmlActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayImageActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayOneActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayTwoActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplayActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplaySecondActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForNameBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForSecondNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\MainActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\SettingsActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\TakePicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\
+* doc\de\eisfeldj\augendiagnose\activities\class-use\AdMarvelActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\BaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayHtmlActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayImageActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayOneActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayTwoActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersForDisplayActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersForDisplaySecondActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForNameBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForSecondNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\MainActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\OrganizeNewPhotosActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SelectTwoPicturesActivity.FilePair.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SelectTwoPicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SettingsActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\TakePicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\package-frame.html
+* doc\de\eisfeldj\augendiagnose\activities\package-summary.html
+* doc\de\eisfeldj\augendiagnose\activities\package-tree.html
+* doc\de\eisfeldj\augendiagnose\activities\package-use.html
+* doc\de\eisfeldj\augendiagnose\class-use\
+* doc\de\eisfeldj\augendiagnose\class-use\Application.html
+* doc\de\eisfeldj\augendiagnose\class-use\ApplicationSettings.html
+* doc\de\eisfeldj\augendiagnose\class-use\BuildConfig.html
+* doc\de\eisfeldj\augendiagnose\class-use\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.array.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.attr.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.dimen.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.drawable.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.id.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.layout.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.menu.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.raw.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.string.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.style.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.styleable.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.xml.html
+* doc\de\eisfeldj\augendiagnose\components\
+* doc\de\eisfeldj\augendiagnose\components\ContextMenuReferenceHolder.html
+* doc\de\eisfeldj\augendiagnose\components\DirectorySelectionPreference.html
+* doc\de\eisfeldj\augendiagnose\components\EyeImageView.html
+* doc\de\eisfeldj\augendiagnose\components\InstantAutoCompleteTextView.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.Resolution.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.ScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\SelectTwoPicturesArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\VerticalSeekBar.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\
+* doc\de\eisfeldj\augendiagnose\components\class-use\ContextMenuReferenceHolder.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\DirectorySelectionPreference.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\EyeImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\InstantAutoCompleteTextView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.Resolution.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.ScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\SelectTwoPicturesArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\VerticalSeekBar.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorDialogPreference.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerConstants.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerDialog.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerPalette.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorStateDrawable.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorDialogPreference.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerConstants.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerDialog.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerPalette.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerSwatch.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorStateDrawable.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-frame.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-summary.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-tree.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-use.html
+* doc\de\eisfeldj\augendiagnose\components\package-frame.html
+* doc\de\eisfeldj\augendiagnose\components\package-summary.html
+* doc\de\eisfeldj\augendiagnose\components\package-tree.html
+* doc\de\eisfeldj\augendiagnose\components\package-use.html
+* doc\de\eisfeldj\augendiagnose\fragments\
+* doc\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHtmlFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragmentHalfscreen.html
+* doc\de\eisfeldj\augendiagnose\fragments\EditCommentFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForSecondNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\SettingsFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DirectoryChooserDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHelpNavigatonFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHtmlFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragmentHalfscreen.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\EditCommentFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplayFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplaySecondFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForSecondNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\SettingsFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-frame.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-summary.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-tree.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-use.html
+* doc\de\eisfeldj\augendiagnose\package-frame.html
+* doc\de\eisfeldj\augendiagnose\package-summary.html
+* doc\de\eisfeldj\augendiagnose\package-tree.html
+* doc\de\eisfeldj\augendiagnose\package-use.html
+* doc\de\eisfeldj\augendiagnose\util\
+* doc\de\eisfeldj\augendiagnose\util\AdMarvelUtil.AdMarvelListener.html
+* doc\de\eisfeldj\augendiagnose\util\AdMarvelUtil.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.html
+* doc\de\eisfeldj\augendiagnose\util\BaseImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\DateUtil.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayTipFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.html
+* doc\de\eisfeldj\augendiagnose\util\EncryptionUtil.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.html
+* doc\de\eisfeldj\augendiagnose\util\ImageSelectionAndDisplayHandler.html
+* doc\de\eisfeldj\augendiagnose\util\KeyboardUtil.html
+* doc\de\eisfeldj\augendiagnose\util\Logger.html
+* doc\de\eisfeldj\augendiagnose\util\PreferenceUtil.html
+* doc\de\eisfeldj\augendiagnose\util\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.html
+* doc\de\eisfeldj\augendiagnose\util\SystemUtil.html
+* doc\de\eisfeldj\augendiagnose\util\TwoImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\
+* doc\de\eisfeldj\augendiagnose\util\class-use\AdMarvelUtil.AdMarvelListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AdMarvelUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\BaseImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DateUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.ConfirmDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayTipFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\EncryptionUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ImageSelectionAndDisplayHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\KeyboardUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\Logger.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\PreferenceUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ReleaseNotesUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\SystemUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\TwoImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.RightLeft.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhotoPair.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\FileUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadata.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\XmpHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhoto.RightLeft.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhoto.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhotoPair.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\FileUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\ImageUtil.ImageFileFilter.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\ImageUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadata.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadataUtil.ExifStorageException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadataUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegSynchronizationUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\MediaStoreUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\XmpHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-frame.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-summary.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-tree.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-use.html
+* doc\de\eisfeldj\augendiagnose\util\package-frame.html
+* doc\de\eisfeldj\augendiagnose\util\package-summary.html
+* doc\de\eisfeldj\augendiagnose\util\package-tree.html
+* doc\de\eisfeldj\augendiagnose\util\package-use.html
+* doc\deprecated-list.html
+* doc\help-doc.html
+* doc\index-files\
+* doc\index-files\index-1.html
+* doc\index-files\index-10.html
+* doc\index-files\index-11.html
+* doc\index-files\index-12.html
+* doc\index-files\index-13.html
+* doc\index-files\index-14.html
+* doc\index-files\index-15.html
+* doc\index-files\index-16.html
+* doc\index-files\index-17.html
+* doc\index-files\index-18.html
+* doc\index-files\index-19.html
+* doc\index-files\index-2.html
+* doc\index-files\index-20.html
+* doc\index-files\index-21.html
+* doc\index-files\index-22.html
+* doc\index-files\index-23.html
+* doc\index-files\index-24.html
+* doc\index-files\index-25.html
+* doc\index-files\index-26.html
+* doc\index-files\index-3.html
+* doc\index-files\index-4.html
+* doc\index-files\index-5.html
+* doc\index-files\index-6.html
+* doc\index-files\index-7.html
+* doc\index-files\index-8.html
+* doc\index-files\index-9.html
+* doc\index.html
+* doc\overview-frame.html
+* doc\overview-summary.html
+* doc\overview-tree.html
+* doc\package-list
+* doc\script.js
+* doc\serialized-form.html
+* doc\src-html\
+* doc\src-html\com\
+* doc\src-html\com\android\
+* doc\src-html\com\android\vending\
+* doc\src-html\com\android\vending\billing\
+* doc\src-html\com\android\vending\billing\Base64.html
+* doc\src-html\com\android\vending\billing\Base64DecoderException.html
+* doc\src-html\com\android\vending\billing\IabException.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnConsumeFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnIabSetupFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.QueryInventoryFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.html
+* doc\src-html\com\android\vending\billing\IabResult.html
+* doc\src-html\com\android\vending\billing\Inventory.html
+* doc\src-html\com\android\vending\billing\Purchase.html
+* doc\src-html\com\android\vending\billing\PurchasedSku.html
+* doc\src-html\com\android\vending\billing\Security.html
+* doc\src-html\com\android\vending\billing\SkuDetails.html
+* doc\src-html\de\
+* doc\src-html\de\eisfeldj\
+* doc\src-html\de\eisfeldj\augendiagnose\
+* doc\src-html\de\eisfeldj\augendiagnose\Application.html
+* doc\src-html\de\eisfeldj\augendiagnose\ApplicationSettings.html
+* doc\src-html\de\eisfeldj\augendiagnose\PrivateConstants.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\
+* doc\src-html\de\eisfeldj\augendiagnose\activities\AdMarvelActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\BaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayHtmlActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayImageActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayOneActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayTwoActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersBaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplayActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplaySecondActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForNameActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForNameBaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForSecondNameActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\MainActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SettingsActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\TakePicturesActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\
+* doc\src-html\de\eisfeldj\augendiagnose\components\ContextMenuReferenceHolder.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\DirectorySelectionPreference.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\EyeImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\InstantAutoCompleteTextView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.Resolution.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.RetainFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.RetainFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.ScaleListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\SelectTwoPicturesArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\VerticalSeekBar.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorDialogPreference.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerConstants.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerDialog.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerPalette.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorStateDrawable.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHtmlFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragmentHalfscreen.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\EditCommentFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameBaseFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForSecondNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\SettingsFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\
+* doc\src-html\de\eisfeldj\augendiagnose\util\AdMarvelUtil.AdMarvelListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AdMarvelUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\BaseImageSelectionHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DateUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayTipFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\EncryptionUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ImageSelectionAndDisplayHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\KeyboardUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\Logger.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\PreferenceUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\PrivateConstants.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\SystemUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\TwoImageSelectionHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.RightLeft.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhotoPair.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\FileUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadata.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\XmpHandler.html
+* doc\stylesheet.css
+* ic_launcher-web.png
+* javadoc.xml
+* proguard-project.txt
+From AugendiagnoseLib:
+* .checkstyle
+* .gitignore
+* External Resources\
+* External Resources\CannotReadImage.Spp
+* External Resources\Circle_Big.dpp
+* External Resources\Circle_Icon.dpp
+* External Resources\Clarity.Spp
+* External Resources\Eye_Icons.Spp
+* External Resources\Flash.Spp
+* External Resources\Iridology-Jensen - Kopie (2).dpp
+* External Resources\Iridology-Jensen - Kopie.dpp
+* External Resources\Iridology-Jensen.dpp
+* External Resources\Kreis.Spp
+* External Resources\Menu.Spp
+* External Resources\Menu_Arrow.Spp
+* External Resources\Schloss.Spp
+* External Resources\commons-imaging-1.0-SNAPSHOT\
+* External Resources\commons-imaging-1.0-SNAPSHOT\LICENSE.txt
+* External Resources\commons-imaging-1.0-SNAPSHOT\NOTICE.txt
+* External Resources\commons-imaging-1.0-SNAPSHOT\README.txt
+* External Resources\commons-imaging-1.0-SNAPSHOT\RELEASE-NOTES.txt
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\allclasses-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\allclasses-noframe.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\constant-values.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\deprecated-list.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\help-doc.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\index-all.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\index.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ColorTools.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\FormatCompliance.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageDump.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageFormat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageFormats.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageReadException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImageWriteException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\Imaging.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImagingConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\ImagingException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\PixelDensity.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ColorTools.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\FormatCompliance.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageDump.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageFormat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageFormats.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageReadException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImageWriteException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\Imaging.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImagingConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\ImagingException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\class-use\PixelDensity.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorCieLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorCieLch.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorCieLuv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorCmy.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorCmyk.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorConversions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorHsl.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorHsv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorHunterLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\ColorXyz.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorCieLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorCieLch.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorCieLuv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorCmy.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorCmyk.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorConversions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorHsl.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorHsv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorHunterLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\class-use\ColorXyz.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\color\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\BasicCParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\BinaryConstant.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\BinaryFileParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\BinaryFunctions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\BinaryOutputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\ByteConversions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\IBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\IImageMetadata.IImageMetadataItem.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\IImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\ImageBuilder.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\ImageMetadata.Item.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\ImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\PackBits.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\RationalNumber.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\RgbBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\SimpleBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\ByteSource.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\ByteSourceArray.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\ByteSourceFile.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\ByteSourceInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\class-use\ByteSource.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\class-use\ByteSourceArray.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\class-use\ByteSourceFile.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\class-use\ByteSourceInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\bytesource\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\BasicCParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\BinaryConstant.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\BinaryFileParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\BinaryFunctions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\BinaryOutputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\ByteConversions.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\IBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\IImageMetadata.IImageMetadataItem.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\IImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\ImageBuilder.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\ImageMetadata.Item.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\ImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\PackBits.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\RationalNumber.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\RgbBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\class-use\SimpleBufferedImageFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\T4AndT6Compression.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\class-use\T4AndT6Compression.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\itu_t4\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\BitsToByteInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyBitInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyBitOutputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyLzwCompressor.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyLzwCompressor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyLzwDecompressor.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\MyLzwDecompressor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\BitsToByteInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyBitInputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyBitOutputStream.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyLzwCompressor.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyLzwCompressor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyLzwDecompressor.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\class-use\MyLzwDecompressor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\mylzw\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\common\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\BmpImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\class-use\BmpImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\bmp\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\DcxImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\class-use\DcxImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\dcx\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\GifImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\class-use\GifImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\gif\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\IcnsImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\class-use\IcnsImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\icns\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\IcoImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\class-use\IcoImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\ico\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegPhotoshopMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegUtils.Visitor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\JpegUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegPhotoshopMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegUtils.Visitor.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\class-use\JpegUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\JpegDecoder.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\class-use\JpegDecoder.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\decoder\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\ExifRewriter.ExifOverflowException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\ExifRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\class-use\ExifRewriter.ExifOverflowException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\class-use\ExifRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\exif\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcBlock.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcRecord.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcTypeLookup.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\IptcTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\JpegIptcRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\PhotoshopApp13Data.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcBlock.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcRecord.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcTypeLookup.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\IptcTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\JpegIptcRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\class-use\PhotoshopApp13Data.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\iptc\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\App13Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\App14Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\App2Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\AppnSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\ComSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\DhtSegment.HuffmanTable.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\DhtSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\DqtSegment.QuantizationTable.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\DqtSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\GenericSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\JfifSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\SofnSegment.Component.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\SofnSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\SosSegment.Component.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\SosSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\UnknownSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\App13Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\App14Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\App2Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\AppnSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\ComSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\DhtSegment.HuffmanTable.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\DhtSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\DqtSegment.QuantizationTable.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\DqtSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\GenericSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\JfifSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\Segment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\SofnSegment.Component.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\SofnSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\SosSegment.Component.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\SosSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\class-use\UnknownSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\segments\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.JFIFPiece.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.JFIFPieceImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.JFIFPieceSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.JFIFPieces.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.JpegSegmentOverflowException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegXmpParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\JpegXmpRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.JFIFPiece.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.JFIFPieceImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.JFIFPieceSegment.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.JFIFPieces.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.JpegSegmentOverflowException.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegXmpParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\class-use\JpegXmpRewriter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\jpeg\xmp\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\PcxConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\PcxImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\class-use\PcxConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\class-use\PcxImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pcx\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\ChunkType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\ColorType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\GammaCorrection.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\InterlaceMethod.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngImageInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngText.Itxt.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngText.Text.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngText.Ztxt.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\PngText.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\ChunkType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\ColorType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\GammaCorrection.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\InterlaceMethod.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngImageInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngText.Itxt.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngText.Text.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngText.Ztxt.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\class-use\PngText.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\png\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\PnmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\class-use\PnmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\pnm\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\ImageContents.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\PsdHeaderInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\PsdImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\class-use\ImageContents.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\class-use\PsdHeaderInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\class-use\PsdImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\psd\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\RgbeImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\class-use\RgbeImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\rgbe\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tga\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tga\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tga\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tga\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tga\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\JpegImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffContents.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffDirectory.ImageDataElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffElement.DataElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffElement.Stub.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffField.OversizeValueElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffField.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffHeader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageData.ByteSourceData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageData.Data.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageData.Strips.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageData.Tiles.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageMetadata.Directory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageMetadata.GPSInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageMetadata.Item.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffReader.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\TiffReader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\JpegImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffContents.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffDirectory.ImageDataElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffElement.DataElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffElement.Stub.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffField.OversizeValueElement.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffField.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffHeader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageData.ByteSourceData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageData.Data.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageData.Strips.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageData.Tiles.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageData.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageMetadata.Directory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageMetadata.GPSInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageMetadata.Item.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageMetadata.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffReader.Listener.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\class-use\TiffReader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\AdobePageMaker6TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\AdobePhotoshopTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\AliasSketchbookProTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\AllTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\DcfTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\DngTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\ExifTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\GdalLibraryTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\GeoTiffTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\GpsTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\HylaFaxTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\MicrosoftHdPhotoTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\MicrosoftTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\MolecularDynamicsGelTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\OceScanjobTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\Rfc2301TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TagConstantsUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\Tiff4TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TiffConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TiffDirectoryConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TiffDirectoryType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TiffEpTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\TiffTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\WangTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\AdobePageMaker6TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\AdobePhotoshopTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\AliasSketchbookProTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\AllTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\DcfTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\DngTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\ExifTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\GdalLibraryTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\GeoTiffTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\GpsTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\HylaFaxTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\MicrosoftHdPhotoTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\MicrosoftTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\MolecularDynamicsGelTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\OceScanjobTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\Rfc2301TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TagConstantsUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\Tiff4TagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TiffConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TiffDirectoryConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TiffDirectoryType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TiffEpTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\TiffTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\class-use\WangTagConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\constants\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\DataReader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\DataReaderStrips.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\DataReaderTiled.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\class-use\DataReader.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\class-use\DataReaderStrips.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\class-use\DataReaderTiled.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\datareaders\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeAscii.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeDouble.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeFloat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\FieldTypeShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldType.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeAscii.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeDouble.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeFloat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\class-use\FieldTypeShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\fieldtypes\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterBiLevel.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterCieLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterCmyk.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterLogLuv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterPalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterRgb.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\PhotometricInterpreterYCbCr.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreter.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterBiLevel.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterCieLab.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterCmyk.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterLogLuv.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterPalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterRgb.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\class-use\PhotometricInterpreterYCbCr.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\photometricinterpreters\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoAny.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoAscii.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoAsciiOrByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoAsciiOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoByteOrShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoDouble.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoFloat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoGpsText.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoLongOrIFD.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoSByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoSLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoSRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoSShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoShortOrLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoShortOrLongOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoShortOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoUndefined.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoUnknown.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\TagInfoXpString.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoAny.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoAscii.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoAsciiOrByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoAsciiOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoByteOrShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoDouble.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoFloat.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoGpsText.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoLongOrIFD.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoSByte.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoSLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoSRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoSShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoShort.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoShortOrLong.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoShortOrLongOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoShortOrRational.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoUndefined.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoUnknown.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\class-use\TagInfoXpString.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\taginfos\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffImageWriterBase.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffImageWriterLossless.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffImageWriterLossy.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffOutputDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffOutputField.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\TiffOutputSet.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffImageWriterBase.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffImageWriterLossless.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffImageWriterLossy.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffOutputDirectory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffOutputField.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\class-use\TiffOutputSet.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\tiff\write\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\WbmpImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\class-use\WbmpImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\wbmp\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\XbmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\class-use\XbmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xbm\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\XpmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\class-use\XpmImageParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\formats\xpm\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccProfileInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccProfileParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccTag.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccTagDataTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\IccTagTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccConstants.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccProfileInfo.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccProfileParser.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccTag.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccTagDataTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\class-use\IccTagTypes.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\icc\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\Dithering.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\MedianCutImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\MedianCutLongestAxisImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\MedianCutMostPopulatedBoxesImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\MedianCutQuantizer.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\Palette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\PaletteFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\QuantizedPalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\SimplePalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\Dithering.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\MedianCutImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\MedianCutLongestAxisImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\MedianCutMostPopulatedBoxesImplementation.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\MedianCutQuantizer.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\Palette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\PaletteFactory.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\QuantizedPalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\class-use\SimplePalette.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\palette\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\Debug.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\IoUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\class-use\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\class-use\Debug.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\class-use\IoUtils.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\package-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\package-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\package-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\org\apache\commons\imaging\util\package-use.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\overview-frame.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\overview-summary.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\overview-tree.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\package-list
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\resources\
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\resources\inherit.gif
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\serialized-form.html
+* External Resources\commons-imaging-1.0-SNAPSHOT\apidocs\stylesheet.css
+* External Resources\commons-imaging-1.0-SNAPSHOT\commons-imaging-1.0-SNAPSHOT-javadoc.jar
+* External Resources\commons-imaging-1.0-SNAPSHOT\commons-imaging-1.0-SNAPSHOT-sources.jar
+* External Resources\commons-imaging-1.0-SNAPSHOT\commons-imaging-1.0-SNAPSHOT-test-sources.jar
+* External Resources\commons-imaging-1.0-SNAPSHOT\commons-imaging-1.0-SNAPSHOT-tests.jar
+* External Resources\ic_accept_decline.Spp
+* doc\
+* doc\allclasses-frame.html
+* doc\allclasses-noframe.html
+* doc\com\
+* doc\com\android\
+* doc\com\android\vending\
+* doc\com\android\vending\billing\
+* doc\com\android\vending\billing\Base64.html
+* doc\com\android\vending\billing\Base64DecoderException.html
+* doc\com\android\vending\billing\IInAppBillingService.Stub.html
+* doc\com\android\vending\billing\IInAppBillingService.html
+* doc\com\android\vending\billing\IabException.html
+* doc\com\android\vending\billing\IabHelper.OnConsumeFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.OnIabSetupFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.QueryInventoryFinishedListener.html
+* doc\com\android\vending\billing\IabHelper.html
+* doc\com\android\vending\billing\IabResult.html
+* doc\com\android\vending\billing\Inventory.html
+* doc\com\android\vending\billing\Purchase.html
+* doc\com\android\vending\billing\PurchasedSku.html
+* doc\com\android\vending\billing\Security.html
+* doc\com\android\vending\billing\SkuDetails.html
+* doc\com\android\vending\billing\class-use\
+* doc\com\android\vending\billing\class-use\Base64.html
+* doc\com\android\vending\billing\class-use\Base64DecoderException.html
+* doc\com\android\vending\billing\class-use\IInAppBillingService.Stub.html
+* doc\com\android\vending\billing\class-use\IInAppBillingService.html
+* doc\com\android\vending\billing\class-use\IabException.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnConsumeFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.OnIabSetupFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.QueryInventoryFinishedListener.html
+* doc\com\android\vending\billing\class-use\IabHelper.html
+* doc\com\android\vending\billing\class-use\IabResult.html
+* doc\com\android\vending\billing\class-use\Inventory.html
+* doc\com\android\vending\billing\class-use\Purchase.html
+* doc\com\android\vending\billing\class-use\PurchasedSku.html
+* doc\com\android\vending\billing\class-use\Security.html
+* doc\com\android\vending\billing\class-use\SkuDetails.html
+* doc\com\android\vending\billing\package-frame.html
+* doc\com\android\vending\billing\package-summary.html
+* doc\com\android\vending\billing\package-tree.html
+* doc\com\android\vending\billing\package-use.html
+* doc\constant-values.html
+* doc\de\
+* doc\de\eisfeldj\
+* doc\de\eisfeldj\augendiagnose\
+* doc\de\eisfeldj\augendiagnose\Application.html
+* doc\de\eisfeldj\augendiagnose\BuildConfig.html
+* doc\de\eisfeldj\augendiagnose\R.array.html
+* doc\de\eisfeldj\augendiagnose\R.attr.html
+* doc\de\eisfeldj\augendiagnose\R.dimen.html
+* doc\de\eisfeldj\augendiagnose\R.drawable.html
+* doc\de\eisfeldj\augendiagnose\R.html
+* doc\de\eisfeldj\augendiagnose\R.id.html
+* doc\de\eisfeldj\augendiagnose\R.layout.html
+* doc\de\eisfeldj\augendiagnose\R.menu.html
+* doc\de\eisfeldj\augendiagnose\R.raw.html
+* doc\de\eisfeldj\augendiagnose\R.string.html
+* doc\de\eisfeldj\augendiagnose\R.style.html
+* doc\de\eisfeldj\augendiagnose\R.styleable.html
+* doc\de\eisfeldj\augendiagnose\R.xml.html
+* doc\de\eisfeldj\augendiagnose\activities\
+* doc\de\eisfeldj\augendiagnose\activities\AdMarvelActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\BaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayHtmlActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayImageActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayOneActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\DisplayTwoActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplayActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplaySecondActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForNameBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\ListPicturesForSecondNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\MainActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\SettingsActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\TakePicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\
+* doc\de\eisfeldj\augendiagnose\activities\class-use\AdMarvelActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\BaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayHtmlActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayImageActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayOneActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\DisplayTwoActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersForDisplayActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListFoldersForDisplaySecondActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForNameBaseActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\ListPicturesForSecondNameActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\MainActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\OrganizeNewPhotosActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SelectTwoPicturesActivity.FilePair.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SelectTwoPicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\SettingsActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\class-use\TakePicturesActivity.html
+* doc\de\eisfeldj\augendiagnose\activities\package-frame.html
+* doc\de\eisfeldj\augendiagnose\activities\package-summary.html
+* doc\de\eisfeldj\augendiagnose\activities\package-tree.html
+* doc\de\eisfeldj\augendiagnose\activities\package-use.html
+* doc\de\eisfeldj\augendiagnose\class-use\
+* doc\de\eisfeldj\augendiagnose\class-use\Application.html
+* doc\de\eisfeldj\augendiagnose\class-use\BuildConfig.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.array.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.attr.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.dimen.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.drawable.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.id.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.layout.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.menu.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.raw.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.string.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.style.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.styleable.html
+* doc\de\eisfeldj\augendiagnose\class-use\R.xml.html
+* doc\de\eisfeldj\augendiagnose\components\
+* doc\de\eisfeldj\augendiagnose\components\ContextMenuReferenceHolder.html
+* doc\de\eisfeldj\augendiagnose\components\DirectorySelectionPreference.html
+* doc\de\eisfeldj\augendiagnose\components\EyeImageView.html
+* doc\de\eisfeldj\augendiagnose\components\InstantAutoCompleteTextView.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.Resolution.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.ScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\PinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\SelectTwoPicturesArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\VerticalSeekBar.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\
+* doc\de\eisfeldj\augendiagnose\components\class-use\ContextMenuReferenceHolder.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\DirectorySelectionPreference.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\EyeImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\InstantAutoCompleteTextView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.Resolution.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\OverlayPinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.RetainFragment.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.ScaleListener.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\PinchImageView.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\SelectTwoPicturesArrayAdapter.html
+* doc\de\eisfeldj\augendiagnose\components\class-use\VerticalSeekBar.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorDialogPreference.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerConstants.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerDialog.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerPalette.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\ColorStateDrawable.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorDialogPreference.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerConstants.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerDialog.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerPalette.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorPickerSwatch.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\class-use\ColorStateDrawable.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-frame.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-summary.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-tree.html
+* doc\de\eisfeldj\augendiagnose\components\colorpicker\package-use.html
+* doc\de\eisfeldj\augendiagnose\components\package-frame.html
+* doc\de\eisfeldj\augendiagnose\components\package-summary.html
+* doc\de\eisfeldj\augendiagnose\components\package-tree.html
+* doc\de\eisfeldj\augendiagnose\components\package-use.html
+* doc\de\eisfeldj\augendiagnose\fragments\
+* doc\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayHtmlFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\DisplayImageFragmentHalfscreen.html
+* doc\de\eisfeldj\augendiagnose\fragments\EditCommentFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\ListPicturesForSecondNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\SettingsFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DirectoryChooserDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHelpNavigatonFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayHtmlFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\DisplayImageFragmentHalfscreen.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\EditCommentFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplayFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListFoldersForDisplaySecondFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameBaseFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\ListPicturesForSecondNameFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\class-use\SettingsFragment.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-frame.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-summary.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-tree.html
+* doc\de\eisfeldj\augendiagnose\fragments\package-use.html
+* doc\de\eisfeldj\augendiagnose\package-frame.html
+* doc\de\eisfeldj\augendiagnose\package-summary.html
+* doc\de\eisfeldj\augendiagnose\package-tree.html
+* doc\de\eisfeldj\augendiagnose\package-use.html
+* doc\de\eisfeldj\augendiagnose\util\
+* doc\de\eisfeldj\augendiagnose\util\AdMarvelUtil.AdMarvelListener.html
+* doc\de\eisfeldj\augendiagnose\util\AdMarvelUtil.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.html
+* doc\de\eisfeldj\augendiagnose\util\BaseImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\DateUtil.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayTipFragment.html
+* doc\de\eisfeldj\augendiagnose\util\DialogUtil.html
+* doc\de\eisfeldj\augendiagnose\util\EncryptionUtil.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.html
+* doc\de\eisfeldj\augendiagnose\util\ImageSelectionAndDisplayHandler.html
+* doc\de\eisfeldj\augendiagnose\util\KeyboardUtil.html
+* doc\de\eisfeldj\augendiagnose\util\Logger.html
+* doc\de\eisfeldj\augendiagnose\util\PreferenceUtil.html
+* doc\de\eisfeldj\augendiagnose\util\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.html
+* doc\de\eisfeldj\augendiagnose\util\SystemUtil.html
+* doc\de\eisfeldj\augendiagnose\util\TwoImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\
+* doc\de\eisfeldj\augendiagnose\util\class-use\AdMarvelUtil.AdMarvelListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AdMarvelUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\AutoKeyboardLayoutUtility.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\BaseImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DateUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.ConfirmDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.DisplayTipFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\DialogUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\EncryptionUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\GoogleBillingHelper.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ImageSelectionAndDisplayHandler.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\KeyboardUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\Logger.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\PreferenceUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\PrivateConstants.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\ReleaseNotesUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\SystemUtil.html
+* doc\de\eisfeldj\augendiagnose\util\class-use\TwoImageSelectionHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.RightLeft.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\EyePhotoPair.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\FileUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadata.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\XmpHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhoto.RightLeft.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhoto.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\EyePhotoPair.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\FileUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\ImageUtil.ImageFileFilter.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\ImageUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadata.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadataUtil.ExifStorageException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegMetadataUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\JpegSynchronizationUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\MediaStoreUtil.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\class-use\XmpHandler.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-frame.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-summary.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-tree.html
+* doc\de\eisfeldj\augendiagnose\util\imagefile\package-use.html
+* doc\de\eisfeldj\augendiagnose\util\package-frame.html
+* doc\de\eisfeldj\augendiagnose\util\package-summary.html
+* doc\de\eisfeldj\augendiagnose\util\package-tree.html
+* doc\de\eisfeldj\augendiagnose\util\package-use.html
+* doc\de\jeisfeld\
+* doc\de\jeisfeld\augendiagnoselib\
+* doc\de\jeisfeld\augendiagnoselib\Application.AuthorizationLevel.html
+* doc\de\jeisfeld\augendiagnoselib\Application.html
+* doc\de\jeisfeld\augendiagnoselib\ApplicationSettings.html
+* doc\de\jeisfeld\augendiagnoselib\activities\
+* doc\de\jeisfeld\augendiagnoselib\activities\AdMarvelActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\BaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.Action.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.CameraCallback.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.FlashMode.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.FocusMode.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.SavePhotoTask.html
+* doc\de\jeisfeld\augendiagnoselib\activities\CameraActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\DisplayHtmlActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\DisplayImageActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\DisplayOneActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\DisplayTwoActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListFoldersBaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListFoldersForDisplayActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListFoldersForDisplaySecondActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListPicturesForNameActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListPicturesForNameBaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\ListPicturesForSecondNameActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.NextAction.html
+* doc\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\de\jeisfeld\augendiagnoselib\activities\SelectTwoPicturesActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\SettingsActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\AdMarvelActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\BaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.Action.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.CameraCallback.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.FlashMode.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.FocusMode.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.SavePhotoTask.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\CameraActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\DisplayHtmlActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\DisplayImageActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\DisplayOneActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\DisplayTwoActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListFoldersBaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListFoldersForDisplayActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListFoldersForDisplaySecondActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListPicturesForNameActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListPicturesForNameBaseActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\ListPicturesForSecondNameActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\OrganizeNewPhotosActivity.NextAction.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\OrganizeNewPhotosActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\SelectTwoPicturesActivity.FilePair.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\SelectTwoPicturesActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\class-use\SettingsActivity.html
+* doc\de\jeisfeld\augendiagnoselib\activities\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\activities\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\activities\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\activities\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\class-use\
+* doc\de\jeisfeld\augendiagnoselib\class-use\Application.AuthorizationLevel.html
+* doc\de\jeisfeld\augendiagnoselib\class-use\Application.html
+* doc\de\jeisfeld\augendiagnoselib\class-use\ApplicationSettings.html
+* doc\de\jeisfeld\augendiagnoselib\components\
+* doc\de\jeisfeld\augendiagnoselib\components\ContextMenuReferenceHolder.html
+* doc\de\jeisfeld\augendiagnoselib\components\DirectorySelectionPreference.html
+* doc\de\jeisfeld\augendiagnoselib\components\EyeImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\InstantAutoCompleteTextView.html
+* doc\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.PinchMode.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.PupilOverlayScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.Resolution.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.RetainFragment.html
+* doc\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\PinchImageView.RetainFragment.html
+* doc\de\jeisfeld\augendiagnoselib\components\PinchImageView.ScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\PinchImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\SelectTwoPicturesArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\VerticalSeekBar.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\ContextMenuReferenceHolder.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\DirectorySelectionPreference.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\EyeImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\InstantAutoCompleteTextView.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\ListPicturesForNameArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\ListPicturesForNameBaseArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\ListPicturesForSecondNameArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.GuiElementUpdater.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.OverlayScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.PinchMode.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.PupilOverlayScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.Resolution.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.RetainFragment.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\OverlayPinchImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\PinchImageView.RetainFragment.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\PinchImageView.ScaleListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\PinchImageView.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\SelectTwoPicturesArrayAdapter.html
+* doc\de\jeisfeld\augendiagnoselib\components\class-use\VerticalSeekBar.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorDialogPreference.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerConstants.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerDialog.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerPalette.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerSwatch.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorStateDrawable.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorDialogPreference.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorPickerConstants.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorPickerDialog.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorPickerPalette.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorPickerSwatch.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\class-use\ColorStateDrawable.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\components\colorpicker\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\components\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\components\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\components\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\components\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\
+* doc\de\jeisfeld\augendiagnoselib\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DirectoryChooserDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayHelpNavigatonFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayHtmlFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.PupilButtonStatus.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragmentHalfscreen.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\EditCommentFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersBaseFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplayFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameBaseFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForSecondNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\SettingsFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DirectoryChooserDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayHelpNavigatonFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayHtmlFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayImageFragment.PupilButtonStatus.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayImageFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\DisplayImageFragmentHalfscreen.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\EditCommentFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersBaseFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersForDisplayFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListFoldersForDisplaySecondFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListPicturesForNameBaseFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListPicturesForNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\ListPicturesForSecondNameFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\class-use\SettingsFragment.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\fragments\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\util\
+* doc\de\jeisfeld\augendiagnoselib\util\AdMarvelUtil.AdMarvelListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\AdMarvelUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.html
+* doc\de\jeisfeld\augendiagnoselib\util\BaseImageSelectionHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\Camera1Handler.html
+* doc\de\jeisfeld\augendiagnoselib\util\Camera2Handler.CameraState.html
+* doc\de\jeisfeld\augendiagnoselib\util\Camera2Handler.CompareSizesBySmallestSide.html
+* doc\de\jeisfeld\augendiagnoselib\util\Camera2Handler.html
+* doc\de\jeisfeld\augendiagnoselib\util\CameraHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\DateUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.ConfirmDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayTipFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\DialogUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\EncryptionUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.html
+* doc\de\jeisfeld\augendiagnoselib\util\ImageSelectionAndDisplayHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\KeyboardUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\Logger.html
+* doc\de\jeisfeld\augendiagnoselib\util\OrientationManager.OrientationListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\OrientationManager.ScreenOrientation.html
+* doc\de\jeisfeld\augendiagnoselib\util\OrientationManager.html
+* doc\de\jeisfeld\augendiagnoselib\util\PreferenceUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\ReleaseNotesUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\SystemUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\TwoImageSelectionHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\AdMarvelUtil.AdMarvelListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\AdMarvelUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\AutoKeyboardLayoutUtility.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\BaseImageSelectionHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\Camera1Handler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\Camera2Handler.CameraState.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\Camera2Handler.CompareSizesBySmallestSide.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\Camera2Handler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\CameraHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DateUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.ConfirmDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.DisplayMessageDialogFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.DisplayTipFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\DialogUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\EncryptionUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\GoogleBillingHelper.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\ImageSelectionAndDisplayHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\KeyboardUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\Logger.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\OrientationManager.OrientationListener.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\OrientationManager.ScreenOrientation.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\OrientationManager.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\PreferenceUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\ReleaseNotesUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\SystemUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\class-use\TwoImageSelectionHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhoto.RightLeft.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhoto.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhotoPair.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\FileUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\ImageUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadata.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadataUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\JpegSynchronizationUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\MediaStoreUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\XmpHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\EyePhoto.RightLeft.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\EyePhoto.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\EyePhotoPair.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\FileUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\ImageUtil.ImageFileFilter.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\ImageUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\JpegMetadata.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\JpegMetadataUtil.ExifStorageException.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\JpegMetadataUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\JpegSynchronizationUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\MediaStoreUtil.ImageNotFoundException.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\MediaStoreUtil.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\class-use\XmpHandler.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\util\imagefile\package-use.html
+* doc\de\jeisfeld\augendiagnoselib\util\package-frame.html
+* doc\de\jeisfeld\augendiagnoselib\util\package-summary.html
+* doc\de\jeisfeld\augendiagnoselib\util\package-tree.html
+* doc\de\jeisfeld\augendiagnoselib\util\package-use.html
+* doc\deprecated-list.html
+* doc\help-doc.html
+* doc\index-files\
+* doc\index-files\index-1.html
+* doc\index-files\index-10.html
+* doc\index-files\index-11.html
+* doc\index-files\index-12.html
+* doc\index-files\index-13.html
+* doc\index-files\index-14.html
+* doc\index-files\index-15.html
+* doc\index-files\index-16.html
+* doc\index-files\index-17.html
+* doc\index-files\index-18.html
+* doc\index-files\index-19.html
+* doc\index-files\index-2.html
+* doc\index-files\index-20.html
+* doc\index-files\index-21.html
+* doc\index-files\index-22.html
+* doc\index-files\index-23.html
+* doc\index-files\index-24.html
+* doc\index-files\index-25.html
+* doc\index-files\index-26.html
+* doc\index-files\index-3.html
+* doc\index-files\index-4.html
+* doc\index-files\index-5.html
+* doc\index-files\index-6.html
+* doc\index-files\index-7.html
+* doc\index-files\index-8.html
+* doc\index-files\index-9.html
+* doc\index.html
+* doc\overview-frame.html
+* doc\overview-summary.html
+* doc\overview-tree.html
+* doc\package-list
+* doc\script.js
+* doc\serialized-form.html
+* doc\src-html\
+* doc\src-html\com\
+* doc\src-html\com\android\
+* doc\src-html\com\android\vending\
+* doc\src-html\com\android\vending\billing\
+* doc\src-html\com\android\vending\billing\Base64.html
+* doc\src-html\com\android\vending\billing\Base64DecoderException.html
+* doc\src-html\com\android\vending\billing\IabException.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnConsumeFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnConsumeMultiFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnIabPurchaseFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.OnIabSetupFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.QueryInventoryFinishedListener.html
+* doc\src-html\com\android\vending\billing\IabHelper.html
+* doc\src-html\com\android\vending\billing\IabResult.html
+* doc\src-html\com\android\vending\billing\Inventory.html
+* doc\src-html\com\android\vending\billing\Purchase.html
+* doc\src-html\com\android\vending\billing\PurchasedSku.html
+* doc\src-html\com\android\vending\billing\Security.html
+* doc\src-html\com\android\vending\billing\SkuDetails.html
+* doc\src-html\de\
+* doc\src-html\de\eisfeldj\
+* doc\src-html\de\eisfeldj\augendiagnose\
+* doc\src-html\de\eisfeldj\augendiagnose\Application.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\
+* doc\src-html\de\eisfeldj\augendiagnose\activities\AdMarvelActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\BaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayHtmlActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayImageActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayOneActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\DisplayTwoActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersBaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplayActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListFoldersForDisplaySecondActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForNameActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForNameBaseActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\ListPicturesForSecondNameActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\MainActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\OrganizeNewPhotosActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SelectTwoPicturesActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\SettingsActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\activities\TakePicturesActivity.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\
+* doc\src-html\de\eisfeldj\augendiagnose\components\ContextMenuReferenceHolder.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\DirectorySelectionPreference.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\EyeImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\InstantAutoCompleteTextView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.Resolution.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.RetainFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\OverlayPinchImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.RetainFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.ScaleListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\PinchImageView.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\SelectTwoPicturesArrayAdapter.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\VerticalSeekBar.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorDialogPreference.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerConstants.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerDialog.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerPalette.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorPickerSwatch.html
+* doc\src-html\de\eisfeldj\augendiagnose\components\colorpicker\ColorStateDrawable.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DirectoryChooserDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHelpNavigatonFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayHtmlFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\DisplayImageFragmentHalfscreen.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\EditCommentFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersBaseFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplayFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameBaseFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\ListPicturesForSecondNameFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\fragments\SettingsFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\
+* doc\src-html\de\eisfeldj\augendiagnose\util\AdMarvelUtil.AdMarvelListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AdMarvelUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\AutoKeyboardLayoutUtility.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\BaseImageSelectionHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DateUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.ConfirmDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayErrorDialogAndReturnFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.DisplayTipFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\DialogUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\EncryptionUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\GoogleBillingHelper.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ImageSelectionAndDisplayHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\KeyboardUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\Logger.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\PreferenceUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\PrivateConstants.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\ReleaseNotesUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\SystemUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\TwoImageSelectionHandler.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.RightLeft.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhoto.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\EyePhotoPair.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\FileUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\ImageUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadata.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegMetadataUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\JpegSynchronizationUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\MediaStoreUtil.html
+* doc\src-html\de\eisfeldj\augendiagnose\util\imagefile\XmpHandler.html
+* doc\src-html\de\jeisfeld\
+* doc\src-html\de\jeisfeld\augendiagnoselib\
+* doc\src-html\de\jeisfeld\augendiagnoselib\Application.AuthorizationLevel.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\Application.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\ApplicationSettings.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\AdMarvelActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\BaseActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.Action.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.CameraCallback.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.FlashMode.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.FocusMode.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.SavePhotoTask.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\CameraActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\DisplayHtmlActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\DisplayImageActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\DisplayOneActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\DisplayTwoActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListFoldersBaseActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListFoldersForDisplayActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListFoldersForDisplaySecondActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListPicturesForNameActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListPicturesForNameBaseActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\ListPicturesForSecondNameActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.DateDialogFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.NextAction.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\OrganizeNewPhotosActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\SelectTwoPicturesActivity.FilePair.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\SelectTwoPicturesActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\activities\SettingsActivity.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\ContextMenuReferenceHolder.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\DirectorySelectionPreference.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\EyeImageView.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\InstantAutoCompleteTextView.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameArrayAdapter.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameBaseArrayAdapter.CacheRange.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\ListPicturesForNameBaseArrayAdapter.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\ListPicturesForSecondNameArrayAdapter.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.GuiElementUpdater.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.OverlayScaleListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.PinchMode.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.PupilOverlayScaleListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.Resolution.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.RetainFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\OverlayPinchImageView.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\PinchImageView.RetainFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\PinchImageView.ScaleListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\PinchImageView.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\SelectTwoPicturesArrayAdapter.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\VerticalSeekBar.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorDialogPreference.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerConstants.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerDialog.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerPalette.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerSwatch.OnColorSelectedListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorPickerSwatch.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\components\colorpicker\ColorStateDrawable.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DirectoryChooserDialogFragment.ChosenDirectoryListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DirectoryChooserDialogFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayHelpNavigatonFragment.ShowHelpOnClickListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayHelpNavigatonFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayHtmlFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.OnSeekBarChangeListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.PupilButtonStatus.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\DisplayImageFragmentHalfscreen.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\EditCommentFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersBaseFragment.DisplayChangeNameFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersBaseFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplayFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplayFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplaySecondFragment.ShowContentsOnClickListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListFoldersForDisplaySecondFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameBaseFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.DateChangeDialogFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.ListPicturesForNameFragmentHolder.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForNameFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\ListPicturesForSecondNameFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\fragments\SettingsFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\AdMarvelUtil.AdMarvelListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\AdMarvelUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.OnKeyboardChangeListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\AutoKeyboardLayoutUtility.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\BaseImageSelectionHandler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\Camera1Handler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\Camera2Handler.CameraState.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\Camera2Handler.CompareSizesBySmallestSide.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\Camera2Handler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\CameraHandler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DateUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.ConfirmDialogFragment.ConfirmDialogListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.ConfirmDialogFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayMessageDialogFragment.MessageDialogListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayMessageDialogFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.DisplayTipFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\DialogUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\EncryptionUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.OnInventoryFinishedListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.OnPurchaseSuccessListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\GoogleBillingHelper.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\ImageSelectionAndDisplayHandler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\KeyboardUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\Logger.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\OrientationManager.OrientationListener.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\OrientationManager.ScreenOrientation.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\OrientationManager.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\PreferenceUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\ReleaseNotesUtil.DisplayReleaseNotesFragment.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\ReleaseNotesUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\SystemUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\TwoImageSelectionHandler.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhoto.RightLeft.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhoto.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\EyePhotoPair.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\FileUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\ImageUtil.ImageFileFilter.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\ImageUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadata.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadataUtil.ExifStorageException.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\JpegMetadataUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\JpegSynchronizationUtil.JpegSaverTask.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\JpegSynchronizationUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\MediaStoreUtil.ImageNotFoundException.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\MediaStoreUtil.html
+* doc\src-html\de\jeisfeld\augendiagnoselib\util\imagefile\XmpHandler.html
+* doc\stylesheet.css
+* javadoc.xml
+* libsExtra\
+* libsExtra\annotations.jar
+* libsExtra\xmpcore.jar
+* proguard-project.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In AugendiagnoseLib:
+* AndroidManifest.xml => augendiagnoseLib\src\main\AndroidManifest.xml
+* libs\admarvel-android-sdk-core-adcolony.jar => augendiagnoseLib\libs\admarvel-android-sdk-core-adcolony.jar
+* libs\android-support-v13.jar => augendiagnoseLib\libs\android-support-v13.jar
+* lint.xml => augendiagnoseLib\lint.xml
+* res\ => augendiagnoseLib\src\main\res\
+* src\ => augendiagnoseLib\src\main\java\
+* src\com\android\vending\billing\IInAppBillingService.aidl => augendiagnoseLib\src\main\aidl\com\android\vending\billing\IInAppBillingService.aidl
+In Augendiagnose:
+* AndroidManifest.xml => augendiagnose\src\main\AndroidManifest.xml
+* lint.xml => augendiagnose\lint.xml
+* res\ => augendiagnose\src\main\res\
+* src\ => augendiagnose\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

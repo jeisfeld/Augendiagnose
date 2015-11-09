@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <issue
+        id="IconColors"
+        severity="informational" />
+
+    <issue id="InconsistentArrays" >
+
+        <ignore regexp="res/values/strings.*\.xml" />
+    </issue>
+
+</lint>

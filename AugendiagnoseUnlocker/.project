@@ -42,4 +42,26 @@
 		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>AndroidManifest.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseUnlocker/src/main/AndroidManifest.xml</locationURI>
+		</link>
+		<link>
+			<name>libs</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseUnlocker/libs</locationURI>
+		</link>
+		<link>
+			<name>res</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseUnlocker/src/main/res</locationURI>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseUnlocker/src/main/java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
