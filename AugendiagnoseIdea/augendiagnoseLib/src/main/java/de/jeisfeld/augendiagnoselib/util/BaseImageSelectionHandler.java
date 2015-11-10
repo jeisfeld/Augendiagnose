@@ -31,6 +31,7 @@ public abstract class BaseImageSelectionHandler {
 	 *
 	 * @param highlight indicator if the views should be highlighted
 	 */
+	@SuppressWarnings("deprecation")
 	private void highlightSelectedViews(final boolean highlight) {
 		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
