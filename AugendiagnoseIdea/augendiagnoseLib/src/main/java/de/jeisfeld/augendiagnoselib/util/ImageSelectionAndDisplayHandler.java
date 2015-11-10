@@ -72,7 +72,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	}
 
 	/**
-	 * Set the activiy for second selection.
+	 * Set the activity for second selection.
 	 *
 	 * @param secondActivity The activity to be set.
 	 */
@@ -93,12 +93,8 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	 * @param view The view to be prepared.
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
-		if (getSelectedImage() == null) {
-			return;
-		}
-
 		// Ensure that selected view stays selected after rotating device
-		if (hasSelectedView() && getSelectedImage().equals(view.getEyePhoto())) {
+		if (getSelectedImage() != null && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
 

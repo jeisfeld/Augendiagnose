@@ -60,7 +60,7 @@ public class Application extends android.app.Application {
 			mApplicationSettings =
 					(ApplicationSettings) Class.forName(getResourceString(R.string.class_application_settings))
 							.getDeclaredMethod("getInstance", new Class<?>[0])
-							.invoke(null, new Object[0]);
+							.invoke(null);
 		}
 		catch (Exception e) {
 			Log.e(TAG, "Error in getting PrivateConstants and ApplicationSettings", e);

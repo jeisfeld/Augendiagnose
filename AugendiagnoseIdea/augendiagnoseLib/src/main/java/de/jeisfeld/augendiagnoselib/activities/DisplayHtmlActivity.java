@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.fragments.DisplayHelpNavigatonFragment;
+import de.jeisfeld.augendiagnoselib.fragments.DisplayHelpNavigationFragment;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
@@ -98,7 +98,7 @@ public class DisplayHtmlActivity extends Activity {
 	 */
 	private void displayNavigation() {
 		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_list : R.id.fragment_container;
-		DisplayHelpNavigatonFragment fragment = new DisplayHelpNavigatonFragment();
+		DisplayHelpNavigationFragment fragment = new DisplayHelpNavigationFragment();
 		getFragmentManager().beginTransaction()
 				.replace(containerViewId, fragment, FRAGMENT_TAG)
 				.commit();

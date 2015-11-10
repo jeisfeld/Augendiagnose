@@ -1307,7 +1307,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Interrupt the full resolution shapshot creation, if in process.
+	 * Interrupt the full resolution snapshot creation, if in process.
 	 */
 	private void interruptFullResolutionThread() {
 		synchronized (mFullResolutionThreads) {

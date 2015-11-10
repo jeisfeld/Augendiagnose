@@ -144,7 +144,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 	/**
 	 * Set the default shared preferences (after first installation) Regarding paths, choose external folder as base
-	 * folder. For Bluestacks, chose bluestacks shared folder as base folder.
+	 * folder.
 	 *
 	 * @param context The Context in which the preferences should be set.
 	 */

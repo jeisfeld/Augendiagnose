@@ -122,7 +122,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	}
 
 	/*
-	 * After cacheRange.length entries, the views are recycled, i.e. row cacheange.length is stored in the same view as
+	 * After cacheRange.length entries, the views are recycled, i.e. row cacheRange.length is stored in the same view as
 	 * row 0.
 	 */
 	@Override

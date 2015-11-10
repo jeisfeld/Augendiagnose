@@ -11,7 +11,7 @@ import android.os.Bundle;
  */
 public class UnlockActivity extends Activity {
 	/**
-	 * The resource key for the authorizaton with the unlocker app.
+	 * The resource key for the authorization with the unlocker app.
 	 */
 	private static final String STRING_EXTRA_REQUEST_KEY = "de.jeisfeld.augendiagnoseunlocker.REQUEST_KEY";
 	/**

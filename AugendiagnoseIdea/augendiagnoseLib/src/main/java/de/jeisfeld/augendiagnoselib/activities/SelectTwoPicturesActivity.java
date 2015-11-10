@@ -333,7 +333,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		 */
 		private final File mFile1;
 		/**
-		 * The sedong file stored in the container.
+		 * The second file stored in the container.
 		 */
 		private final File mFile2;
 

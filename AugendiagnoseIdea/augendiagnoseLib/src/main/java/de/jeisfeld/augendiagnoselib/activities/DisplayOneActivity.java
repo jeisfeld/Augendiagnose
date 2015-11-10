@@ -159,7 +159,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 		mFragmentImage.initializeImages();
 	}
 
-	// implemenation of interface ActivityWithExplicitLayoutTrigger
+	// implementation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
 	public final void requestLayout() {

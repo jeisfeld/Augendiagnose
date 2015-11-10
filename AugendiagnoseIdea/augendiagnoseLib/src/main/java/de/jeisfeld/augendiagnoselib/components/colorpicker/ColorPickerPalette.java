@@ -104,7 +104,7 @@ public class ColorPickerPalette extends TableLayout {
 	 * Adds swatches to table in a serpentine format.
 	 *
 	 * @param colors        The colors to be added.
-	 * @param selectedColor The preseleted color.
+	 * @param selectedColor The preselected color.
 	 */
 	public final void drawPalette(final int[] colors, final int selectedColor) {
 		if (colors == null) {

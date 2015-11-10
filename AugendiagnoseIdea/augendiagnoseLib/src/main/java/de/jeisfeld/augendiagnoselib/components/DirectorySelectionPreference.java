@@ -14,7 +14,7 @@ import de.jeisfeld.augendiagnoselib.fragments.DirectoryChooserDialogFragment.Cho
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 
 /**
- * A variant of ListPreference that allows to choose from a list of given folders (conigured in the menu configuration)
+ * A variant of ListPreference that allows to choose from a list of given folders (configured in the menu configuration)
  * or to select a custom folder via the directory browser.
  */
 public class DirectorySelectionPreference extends ListPreference {

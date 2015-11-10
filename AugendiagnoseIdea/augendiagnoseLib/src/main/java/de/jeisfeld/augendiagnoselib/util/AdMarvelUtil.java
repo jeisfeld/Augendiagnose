@@ -92,11 +92,8 @@ public final class AdMarvelUtil {
 		}
 
 		// no ads before user has had some minimum usage of app
-		if (PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countdisplay, 0) < 2) {
-			return false;
-		}
+		return PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countdisplay, 0) >= 2;
 
-		return true;
 	}
 
 	/**

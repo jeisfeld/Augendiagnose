@@ -15,7 +15,7 @@ import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 /**
  * Fragment to display the navigation list of help screens.
  */
-public class DisplayHelpNavigatonFragment extends ListFragment {
+public class DisplayHelpNavigationFragment extends ListFragment {
 
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
@@ -34,15 +34,15 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 	 * Fill the contents of the navigation page.
 	 */
 	private void createList() {
-		TypedArray htmlNavigationResoucces =
+		TypedArray htmlNavigationResources =
 				getActivity().getResources().obtainTypedArray(R.array.html_navigation_resources);
 
-		String[] folderNames = new String[htmlNavigationResoucces.length()];
+		String[] folderNames = new String[htmlNavigationResources.length()];
 
-		for (int i = 0; i < htmlNavigationResoucces.length(); i++) {
-			folderNames[i] = htmlNavigationResoucces.getString(i);
+		for (int i = 0; i < htmlNavigationResources.length(); i++) {
+			folderNames[i] = htmlNavigationResources.getString(i);
 		}
-		htmlNavigationResoucces.recycle();
+		htmlNavigationResources.recycle();
 
 		ArrayAdapter<String> directoryListAdapter =
 				new ArrayAdapter<>(getActivity(), R.layout.adapter_list_names, folderNames);

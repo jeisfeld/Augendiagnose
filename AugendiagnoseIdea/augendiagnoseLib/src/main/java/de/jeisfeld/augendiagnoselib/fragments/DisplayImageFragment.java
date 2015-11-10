@@ -623,7 +623,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
-	 * Get popup menu with gravity right - only supported for Kitkat orlater.
+	 * Get popup menu with gravity right - only supported for Kitkat or later.
 	 *
 	 * @param anchorView The anchor view.
 	 * @return The popup menu.
@@ -830,7 +830,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
-	 * Get information if utilies should be shown according to default.
+	 * Get information if utilities should be shown according to default.
 	 *
 	 * @return true if utilities should be shown by default.
 	 */
@@ -933,7 +933,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Method indicating if images should be displayed in full resolution automatically.
 	 *
-	 * @return true if should be shown in full resoltion.
+	 * @return true if should be shown in full resolution.
 	 */
 	private boolean hasAutoFullResolution() {
 		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, null);

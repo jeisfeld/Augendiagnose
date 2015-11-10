@@ -210,7 +210,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		mFragmentImage2.initializeImages();
 	}
 
-	// implemenation of interface ActivityWithExplicitLayoutTrigger
+	// implementation of interface ActivityWithExplicitLayoutTrigger
 
 	@Override
 	public final void requestLayout() {

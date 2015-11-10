@@ -46,7 +46,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * The list view showing the pictures.
 	 */
-	private ListView mListview;
+	private ListView mListView;
 
 	/**
 	 * The array of eye photo pairs.
@@ -90,11 +90,11 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 
 		createAndStoreEyePhotoList();
 
-		mListview = (ListView) getView().findViewById(R.id.listViewForName);
+		mListView = (ListView) getView().findViewById(R.id.listViewForName);
 
 		// prevent highlighting
-		mListview.setCacheColorHint(Color.TRANSPARENT);
-		mListview.setSelector(new StateListDrawable());
+		mListView.setCacheColorHint(Color.TRANSPARENT);
+		mListView.setSelector(new StateListDrawable());
 	}
 
 	/**
@@ -176,7 +176,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	}
 
 	protected final ListView getListView() {
-		return mListview;
+		return mListView;
 	}
 
 	protected final EyePhotoPair[] getEyePhotoPairs() {

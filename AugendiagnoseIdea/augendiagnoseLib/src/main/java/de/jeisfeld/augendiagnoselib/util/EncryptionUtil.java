@@ -129,7 +129,7 @@ public final class EncryptionUtil {
 	 * Create a cryptographic hash from a String.
 	 *
 	 * @param input the input for creating the hash. (Will be username.)
-	 * @return the cryptocraphic hash.
+	 * @return the cryptographic hash.
 	 */
 	private static String createCryptoHash(final String input) {
 		try {

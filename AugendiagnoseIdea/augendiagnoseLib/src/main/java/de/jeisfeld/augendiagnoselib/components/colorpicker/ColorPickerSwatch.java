@@ -47,7 +47,7 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 	/**
 	 * Set the checked flag of the swatch.
 	 *
-	 * @param checked The falue of the flag.
+	 * @param checked The value of the flag.
 	 */
 	private void setChecked(final boolean checked) {
 		if (checked) {

@@ -57,7 +57,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 
 	/**
 	 * A field for storing the fragment which was triggering the context menu. (For implementation of
-	 * ContextMenuReferenceHoler).
+	 * ContextMenuReferenceHolder).
 	 */
 	private Object mContextMenuReference;
 

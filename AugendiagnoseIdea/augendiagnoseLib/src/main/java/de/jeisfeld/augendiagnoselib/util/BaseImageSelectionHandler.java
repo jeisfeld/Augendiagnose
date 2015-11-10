@@ -34,10 +34,10 @@ public abstract class BaseImageSelectionHandler {
 	private void highlightSelectedViews(final boolean highlight) {
 		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light, null));
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
 			}
 			else {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent, null));
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent));
 			}
 		}
 	}
