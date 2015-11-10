@@ -39,6 +39,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
@@ -54,12 +55,12 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The activity using the handler.
 	 */
-	private Activity mActivity;
+	private final Activity mActivity;
 
 	/**
 	 * The FrameLayout holding the preview.
 	 */
-	private FrameLayout mPreviewFrame;
+	private final FrameLayout mPreviewFrame;
 
 	/**
 	 * Flag indicating if the camera is in preview state.
@@ -69,22 +70,18 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private CameraCallback mCameraCallback;
+	private final CameraCallback mCameraCallback;
 
 	/**
 	 * Constructor of the Camera1Handler.
 	 *
-	 * @param activity
-	 *            The activity using the handler.
-	 * @param previewFrame
-	 *            The FrameLayout holding the preview.
-	 * @param preview
-	 *            The view holding the preview.
-	 * @param cameraCallback
-	 *            The handler called when the picture is taken.
+	 * @param activity       The activity using the handler.
+	 * @param previewFrame   The FrameLayout holding the preview.
+	 * @param preview        The view holding the preview.
+	 * @param cameraCallback The handler called when the picture is taken.
 	 */
 	public Camera2Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
-			final CameraCallback cameraCallback) {
+						  final CameraCallback cameraCallback) {
 		this.mActivity = activity;
 		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
@@ -132,7 +129,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * A {@link TextureView} for camera preview.
 	 */
-	private TextureView mTextureView;
+	private final TextureView mTextureView;
 
 	/**
 	 * A {@link CameraCaptureSession } for camera preview.
@@ -270,12 +267,12 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * A {@link Semaphore} to prevent the app from exiting before closing the camera.
 	 */
-	private Semaphore mCameraOpenCloseLock = new Semaphore(1);
+	private final Semaphore mCameraOpenCloseLock = new Semaphore(1);
 
 	/**
 	 * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
 	 */
-	private CaptureCallback mCaptureCallback = new CaptureCallback() {
+	private final CaptureCallback mCaptureCallback = new CaptureCallback() {
 
 		private void process(final CaptureResult result) {
 			switch (mState) {
@@ -327,15 +324,15 @@ public class Camera2Handler implements CameraHandler {
 
 		@Override
 		public void onCaptureProgressed(@NonNull final CameraCaptureSession session,
-				@NonNull final CaptureRequest request,
-				@NonNull final CaptureResult partialResult) {
+										@NonNull final CaptureRequest request,
+										@NonNull final CaptureResult partialResult) {
 			process(partialResult);
 		}
 
 		@Override
 		public void onCaptureCompleted(@NonNull final CameraCaptureSession session,
-				@NonNull final CaptureRequest request,
-				@NonNull final TotalCaptureResult result) {
+									   @NonNull final CaptureRequest request,
+									   @NonNull final TotalCaptureResult result) {
 			process(result);
 		}
 
@@ -346,19 +343,15 @@ public class Camera2Handler implements CameraHandler {
 	 * width and height are at least as large as the respective requested values, and whose aspect
 	 * ratio matches with the specified value.
 	 *
-	 * @param choices
-	 *            The list of sizes that the camera supports for the intended output class
-	 * @param width
-	 *            The minimum desired width
-	 * @param height
-	 *            The minimum desired height
-	 * @param aspectRatio
-	 *            The aspect ratio
+	 * @param choices     The list of sizes that the camera supports for the intended output class
+	 * @param width       The minimum desired width
+	 * @param height      The minimum desired height
+	 * @param aspectRatio The aspect ratio
 	 * @return The optimal {@code Size}, or an arbitrary one if none were big enough
 	 */
 	private static Size chooseOptimalPreviewSize(final Size[] choices, final int width, final int height, final Size aspectRatio) {
 		// Collect the supported resolutions that are at least as big as the preview Surface
-		List<Size> bigEnough = new ArrayList<Size>();
+		List<Size> bigEnough = new ArrayList<>();
 		Size biggest = null;
 
 		int w = aspectRatio.getWidth();
@@ -414,10 +407,8 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Sets up member variables related to camera.
 	 *
-	 * @param width
-	 *            The width of available size for camera preview
-	 * @param height
-	 *            The height of available size for camera preview
+	 * @param width  The width of available size for camera preview
+	 * @param height The height of available size for camera preview
 	 */
 	private void setUpCameraOutputs(final int width, final int height) {
 		CameraManager manager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
@@ -481,10 +472,8 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Opens the camera specified by {@link Camera2Handler#mCameraId}.
 	 *
-	 * @param width
-	 *            the width of the preview
-	 * @param height
-	 *            the height of the preview
+	 * @param width  the width of the preview
+	 * @param height the height of the preview
 	 */
 	private void openCamera(final int width, final int height) {
 		mIsInPreview = true;
@@ -585,10 +574,8 @@ public class Camera2Handler implements CameraHandler {
 	 * This method should be called after the camera preview size is determined in
 	 * setUpCameraOutputs and also the size of `mTextureView` is fixed.
 	 *
-	 * @param viewWidth
-	 *            The width of `mTextureView`
-	 * @param viewHeight
-	 *            The height of `mTextureView`
+	 * @param viewWidth  The width of `mTextureView`
+	 * @param viewHeight The height of `mTextureView`
 	 */
 	private void configureTransform(final int viewWidth, final int viewHeight) {
 		if (null == mTextureView || null == mPreviewSize || null == mActivity) {
@@ -802,8 +789,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Update the focal distance of the camera (relative to the minimal focal distance).
 	 *
-	 * @param relativeFocalDistance
-	 *            The new relative focal distance.
+	 * @param relativeFocalDistance The new relative focal distance.
 	 */
 	public final void setRelativeFocalDistance(final float relativeFocalDistance) {
 		mCurrentRelativeFocalDistance = relativeFocalDistance;
@@ -859,9 +845,9 @@ public class Camera2Handler implements CameraHandler {
 	 * Update the available focus modes.
 	 */
 	private void updateAvailableModes() {
-		List<FocusMode> focusModes = new ArrayList<FocusMode>();
+		List<FocusMode> focusModes = new ArrayList<>();
 		int[] availableFocusModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
-		for (int focusMode : availableFocusModes) {
+		for (int focusMode : availableFocusModes != null ? availableFocusModes : new int[0]) {
 			if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_OFF) {
 				if (SystemUtil.hasManualSensor()) {
 					focusModes.add(FocusMode.MANUAL);
@@ -889,7 +875,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Compares two {@code Size}s based on their areas.
 	 */
-	static class CompareSizesBySmallestSide implements Comparator<Size> {
+	private static class CompareSizesBySmallestSide implements Comparator<Size> {
 		@Override
 		public int compare(final Size lhs, final Size rhs) {
 			int leftSize = Math.min(lhs.getWidth(), lhs.getHeight());

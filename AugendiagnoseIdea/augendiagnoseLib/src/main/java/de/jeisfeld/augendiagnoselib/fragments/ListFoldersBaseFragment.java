@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -46,7 +47,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * The list of folder names which should be shown on top of the list.
 	 */
-	protected static final String[] FOLDERS_TOP = { "TOPOGRAPH", "TOPOGRAF", "IRIDOLOG" };
+	protected static final String[] FOLDERS_TOP = {"TOPOGRAPH", "TOPOGRAF", "IRIDOLOG"};
 
 	/**
 	 * The maximum allowed number of names in the trial version.
@@ -68,11 +69,6 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	// PUBLIC_FIELDS:END
 
 	/**
-	 * The editText in which the name can be searched.
-	 */
-	private EditText mEditTextSearch;
-
-	/**
 	 * The array adapter displaying the list of names.
 	 */
 	private ArrayAdapter<String> mDirectoryListAdapter = null;
@@ -80,8 +76,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Initialize the listFoldersFragment with parentFolder.
 	 *
-	 * @param initialParentFolder
-	 *            The parent folder for which the fragment should be created.
+	 * @param initialParentFolder The parent folder for which the fragment should be created.
 	 */
 	public final void setParameters(final String initialParentFolder) {
 		Bundle args = new Bundle();
@@ -103,7 +98,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 */
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-			final Bundle savedInstanceState) {
+								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_names, container, false);
 	}
 
@@ -111,12 +106,15 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	@Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		mListView = (ListView) getView().findViewById(R.id.listViewNames);
 		createList();
 
-		mEditTextSearch = (EditText) getView().findViewById(R.id.searchName);
-		mEditTextSearch.addTextChangedListener(new TextWatcher() {
+		EditText editTextSearch = (EditText) getView().findViewById(R.id.searchName);
+		editTextSearch.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 				mDirectoryListAdapter.getFilter().filter(s.toString());
@@ -144,15 +142,15 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Fill the list of subfolders and create the list adapter.
 	 */
-	protected final void createList() {
+	private void createList() {
 		List<String> folderNames = getFolderNames(mParentFolder);
 		if (folderNames == null) {
-			folderNames = new ArrayList<String>();
+			folderNames = new ArrayList<>();
 		}
 
 		if (mDirectoryListAdapter == null) {
 			// fill initial adapter
-			mDirectoryListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
+			mDirectoryListAdapter = new ArrayAdapter<>(getActivity(), R.layout.adapter_list_names, folderNames);
 			mListView.setAdapter(mDirectoryListAdapter);
 			mListView.setTextFilterEnabled(true);
 		}
@@ -169,8 +167,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Get the list of subfolders, using getFileNameForSorting() for ordering.
 	 *
-	 * @param parentFolder
-	 *            The parent folder.
+	 * @param parentFolder The parent folder.
 	 * @return The list of subfolders.
 	 */
 	public static final List<String> getFolderNames(final File parentFolder) {
@@ -182,7 +179,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		});
 
 		if (folders == null) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
@@ -191,12 +188,13 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
 		});
-		List<String> folderNames = new ArrayList<String>();
+		List<String> folderNames = new ArrayList<>();
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
 
-		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && folderNames.size() > TRIAL_MAX_NAMES) {
+		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
+				&& folderNames.size() > TRIAL_MAX_NAMES) {
 			folderNames = folderNames.subList(0, TRIAL_MAX_NAMES);
 		}
 
@@ -207,8 +205,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * Helper method to return the name of the file for sorting. Allows sorting by last name, and giving precedence to
 	 * iris topography folders.
 	 *
-	 * @param f
-	 *            The file
+	 * @param f The file
 	 * @return The name for Sorting
 	 */
 	private static String getFilenameForSorting(final File f) {
@@ -237,12 +234,10 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Rename a folder in the list, and rename all files in it (according to EyePhoto name policy).
 	 *
-	 * @param oldName
-	 *            the old name.
-	 * @param newName
-	 *            the new name.
+	 * @param oldName the old name.
+	 * @param newName the new name.
 	 */
-	protected final void renameFolderAndFiles(final String oldName, final String newName) {
+	private void renameFolderAndFiles(final String oldName, final String newName) {
 		final File oldFolder = new File(mParentFolder, oldName.trim());
 		final File newFolder = new File(mParentFolder, newName.trim());
 
@@ -298,8 +293,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Delete a folder in the list, including all photos.
 	 *
-	 * @param name
-	 *            the name for which the folder should be deleted.
+	 * @param name the name for which the folder should be deleted.
 	 */
 	protected final void deleteFolder(final String name) {
 		File folder = new File(mParentFolder, name.trim());
@@ -324,10 +318,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * Show the dialog to change the selected name.
 	 *
-	 * @param oldName
-	 *            The old name to be renamed
-	 * @param inputText
-	 *            The name to be initially displayed
+	 * @param oldName   The old name to be renamed
+	 * @param inputText The name to be initially displayed
 	 */
 	protected final void showChangeNameDialog(final CharSequence oldName, final CharSequence inputText) {
 		DisplayChangeNameFragment fragment = new DisplayChangeNameFragment();
@@ -370,8 +362,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							ListFoldersBaseActivity activity = (ListFoldersBaseActivity) getActivity();
-							activity.getListFoldersFragment().renameFolderAndFiles(oldName.toString(), input.getText()
-									.toString());
+							activity.getListFoldersFragment().renameFolderAndFiles(oldName.toString(), input.getText().toString());
 						}
 					});
 

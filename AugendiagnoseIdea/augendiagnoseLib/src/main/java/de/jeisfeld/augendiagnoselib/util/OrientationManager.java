@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.WindowManager;
+
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**
@@ -46,12 +47,9 @@ public class OrientationManager extends OrientationEventListener {
 	/**
 	 * Constructor for the orientation manager.
 	 *
-	 * @param context
-	 *            The context/activity starting the orientation manager.
-	 * @param rate
-	 *            The rate at which the sensor should be checked.
-	 * @param listener
-	 *            The listener called in case of orientation change.
+	 * @param context  The context/activity starting the orientation manager.
+	 * @param rate     The rate at which the sensor should be checked.
+	 * @param listener The listener called in case of orientation change.
 	 */
 	public OrientationManager(final Context context, final int rate, final OrientationListener listener) {
 		super(context, rate);
@@ -97,7 +95,7 @@ public class OrientationManager extends OrientationEventListener {
 		}
 	}
 
-	public final void setListener(final OrientationListener listener) {
+	private void setListener(final OrientationListener listener) {
 		this.mListener = listener;
 	}
 
@@ -110,7 +108,7 @@ public class OrientationManager extends OrientationEventListener {
 	 *
 	 * @return The default orientation of the device.
 	 */
-	public static int getDeviceDefaultOrientation() {
+	private static int getDeviceDefaultOrientation() {
 		WindowManager windowManager = (WindowManager) Application.getAppContext().getSystemService(Context.WINDOW_SERVICE);
 		Configuration config = Application.getAppContext().getResources().getConfiguration();
 		int rotation = windowManager.getDefaultDisplay().getRotation();
@@ -135,8 +133,7 @@ public class OrientationManager extends OrientationEventListener {
 		/**
 		 * Callback method for orientation change.
 		 *
-		 * @param screenOrientation
-		 *            The new screen orientation.
+		 * @param screenOrientation The new screen orientation.
 		 */
 		void onOrientationChange(ScreenOrientation screenOrientation);
 	}

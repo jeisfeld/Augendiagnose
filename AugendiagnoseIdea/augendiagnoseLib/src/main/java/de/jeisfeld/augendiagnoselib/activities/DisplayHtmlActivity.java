@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHelpNavigatonFragment;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
@@ -41,10 +42,8 @@ public class DisplayHtmlActivity extends Activity {
 	/**
 	 * Static helper method to start the activity, passing the resource holding the HTML as string.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param resource
-	 *            The resource to be displayed.
+	 * @param context  The context in which the activity is started.
+	 * @param resource The resource to be displayed.
 	 */
 	public static void startActivity(final Context context, final int resource) {
 		Intent intent = new Intent(context, DisplayHtmlActivity.class);
@@ -55,8 +54,7 @@ public class DisplayHtmlActivity extends Activity {
 	/**
 	 * Static helper method to start the activity without resource - just start navigation.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
+	 * @param context The context in which the activity is started.
 	 */
 	public static void startActivity(final Context context) {
 		Intent intent = new Intent(context, DisplayHtmlActivity.class);
@@ -68,7 +66,7 @@ public class DisplayHtmlActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
-		if (Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName())) {
+		if (getActionBar() != null && Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName())) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
@@ -98,7 +96,7 @@ public class DisplayHtmlActivity extends Activity {
 	/**
 	 * Display the navigation page.
 	 */
-	public final void displayNavigation() {
+	private void displayNavigation() {
 		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_list : R.id.fragment_container;
 		DisplayHelpNavigatonFragment fragment = new DisplayHelpNavigatonFragment();
 		getFragmentManager().beginTransaction()
@@ -110,8 +108,7 @@ public class DisplayHtmlActivity extends Activity {
 	/**
 	 * Display a details HTML page.
 	 *
-	 * @param resourceId
-	 *            The resource to be shown in the details.
+	 * @param resourceId The resource to be shown in the details.
 	 */
 	public final void displayDetails(final int resourceId) {
 		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_detail : R.id.fragment_container;

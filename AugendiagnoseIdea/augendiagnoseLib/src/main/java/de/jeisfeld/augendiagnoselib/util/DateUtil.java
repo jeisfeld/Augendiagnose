@@ -24,13 +24,10 @@ public final class DateUtil {
 	/**
 	 * Transfer a date String into a date object, using a given date format.
 	 *
-	 * @param date
-	 *            the date string
-	 * @param format
-	 *            the date format
+	 * @param date   the date string
+	 * @param format the date format
 	 * @return the date object
-	 * @throws ParseException
-	 *             thrown if the date string cannot be parsed.
+	 * @throws ParseException thrown if the date string cannot be parsed.
 	 */
 	public static Date parse(final String date, final String format) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
@@ -40,10 +37,8 @@ public final class DateUtil {
 	/**
 	 * Format a date object into a date String using a given date format.
 	 *
-	 * @param date
-	 *            the date object
-	 * @param format
-	 *            the date format
+	 * @param date   the date object
+	 * @param format the date format
 	 * @return the formatted date
 	 */
 	public static String format(final Date date, final String format) {
@@ -54,8 +49,7 @@ public final class DateUtil {
 	/**
 	 * Format a date object into a date String using the Android system default date format.
 	 *
-	 * @param date
-	 *            the date object
+	 * @param date the date object
 	 * @return the formatted date
 	 */
 	public static String format(final Date date) {
@@ -66,8 +60,7 @@ public final class DateUtil {
 	/**
 	 * Get display format of the date.
 	 *
-	 * @param calendar
-	 *            the date as calendar object
+	 * @param calendar the date as calendar object
 	 * @return the date formatted for display
 	 */
 	public static String getDisplayDate(final Calendar calendar) {

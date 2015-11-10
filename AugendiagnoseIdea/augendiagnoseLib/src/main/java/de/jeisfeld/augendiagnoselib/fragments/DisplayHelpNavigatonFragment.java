@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
@@ -32,7 +33,7 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 	/**
 	 * Fill the contents of the navigation page.
 	 */
-	protected final void createList() {
+	private void createList() {
 		TypedArray htmlNavigationResoucces =
 				getActivity().getResources().obtainTypedArray(R.array.html_navigation_resources);
 
@@ -44,7 +45,7 @@ public class DisplayHelpNavigatonFragment extends ListFragment {
 		htmlNavigationResoucces.recycle();
 
 		ArrayAdapter<String> directoryListAdapter =
-				new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_names, folderNames);
+				new ArrayAdapter<>(getActivity(), R.layout.adapter_list_names, folderNames);
 		setListAdapter(directoryListAdapter);
 	}
 

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+
 import com.android.vending.billing.IabHelper;
 import com.android.vending.billing.IabResult;
 import com.android.vending.billing.Inventory;
@@ -11,9 +15,6 @@ import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 
@@ -73,16 +74,6 @@ public final class GoogleBillingHelper {
 	private OnPurchaseSuccessListener mOnPurchaseSuccessListener;
 
 	/**
-	 * The list of purchases.
-	 */
-	private List<PurchasedSku> mPurchases = null;
-
-	/**
-	 * The list of non-purchased products.
-	 */
-	private List<SkuDetails> mNonPurchases = null;
-
-	/**
 	 * Flag indicating if there is a purchase setting premium status.
 	 */
 	private boolean mIsPremium = false;
@@ -97,10 +88,8 @@ public final class GoogleBillingHelper {
 	/**
 	 * Initialize an instance of GoogleBillingHelper.
 	 *
-	 * @param activity
-	 *            The activity triggering Google Billing.
-	 * @param listener
-	 *            a listener called after the inventory has been retrieved.
+	 * @param activity The activity triggering Google Billing.
+	 * @param listener a listener called after the inventory has been retrieved.
 	 */
 	public static void initialize(final Activity activity, final OnInventoryFinishedListener listener) {
 		synchronized (GoogleBillingHelper.class) {
@@ -145,10 +134,8 @@ public final class GoogleBillingHelper {
 	/**
 	 * Launch the purchase flow for a product.
 	 *
-	 * @param productId
-	 *            The productId.
-	 * @param listener
-	 *            a listener called after the purchase has been completed.
+	 * @param productId The productId.
+	 * @param listener  a listener called after the purchase has been completed.
 	 */
 	public static void launchPurchaseFlow(final String productId, final OnPurchaseSuccessListener listener) {
 		if (mInstance == null || mInstance.mIabHelper == null) {
@@ -172,14 +159,11 @@ public final class GoogleBillingHelper {
 	/**
 	 * To be called in the onActivityResult method of the activity launching the purchase flow.
 	 *
-	 * @param requestCode
-	 *            The integer request code originally supplied to startActivityForResult(), allowing you to identify who
-	 *            this result came from.
-	 * @param resultCode
-	 *            The integer result code returned by the child activity through its setResult().
-	 * @param data
-	 *            An Intent, which can return result data to the caller (various data can be attached to Intent
-	 *            "extras").
+	 * @param requestCode The integer request code originally supplied to startActivityForResult(), allowing you to identify who
+	 *                    this result came from.
+	 * @param resultCode  The integer result code returned by the child activity through its setResult().
+	 * @param data        An Intent, which can return result data to the caller (various data can be attached to Intent
+	 *                    "extras").
 	 */
 	public static void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (requestCode == REQUEST_CODE) {
@@ -207,7 +191,7 @@ public final class GoogleBillingHelper {
 	/**
 	 * The onInventoryFinishedListener started after the inventory is loaded.
 	 */
-	private IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
+	private final IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
 			new IabHelper.QueryInventoryFinishedListener() {
 				@Override
 				public void onQueryInventoryFinished(final IabResult result, final Inventory inventory) {
@@ -226,10 +210,8 @@ public final class GoogleBillingHelper {
 
 					Log.d(TAG, "Query inventory was successful.");
 
-					synchronized (GoogleBillingHelper.class) {
-						mPurchases = new ArrayList<PurchasedSku>();
-						mNonPurchases = new ArrayList<SkuDetails>();
-					}
+					List<PurchasedSku> purchases = new ArrayList<>();
+					List<SkuDetails> nonPurchases = new ArrayList<>();
 					for (String purchaseId : Arrays.asList(PRODUCT_IDS)) {
 						Purchase purchase = inventory.getPurchase(purchaseId);
 						SkuDetails skuDetails = inventory.getSkuDetails(purchaseId);
@@ -240,11 +222,11 @@ public final class GoogleBillingHelper {
 						else {
 							synchronized (GoogleBillingHelper.class) {
 								if (purchase == null) {
-									mNonPurchases.add(skuDetails);
+									nonPurchases.add(skuDetails);
 								}
 								else {
 									Log.d(TAG, "Found purchase: " + purchase);
-									mPurchases.add(new PurchasedSku(skuDetails, purchase));
+									purchases.add(new PurchasedSku(skuDetails, purchase));
 									if (Arrays.asList(PREMIUM_IDS).contains(purchase.getSku())) {
 										mIsPremium = true;
 									}
@@ -255,7 +237,7 @@ public final class GoogleBillingHelper {
 					}
 
 					if (mOnInventoryFinishedListener != null) {
-						mOnInventoryFinishedListener.handleProducts(mPurchases, mNonPurchases, mIsPremium);
+						mOnInventoryFinishedListener.handleProducts(purchases, nonPurchases, mIsPremium);
 					}
 				}
 			};
@@ -263,7 +245,7 @@ public final class GoogleBillingHelper {
 	/**
 	 * Callback for when a purchase is finished.
 	 */
-	private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
+	private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
 			new IabHelper.OnIabPurchaseFinishedListener() {
 				@Override
 				public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
@@ -291,15 +273,12 @@ public final class GoogleBillingHelper {
 		/**
 		 * Handler called after inventory has been retrieved.
 		 *
-		 * @param purchases
-		 *            The list of bought purchases.
-		 * @param availableProducts
-		 *            The list of available products.
-		 * @param isPremium
-		 *            Flag indicating if there is a purchase setting premium status.
+		 * @param purchases         The list of bought purchases.
+		 * @param availableProducts The list of available products.
+		 * @param isPremium         Flag indicating if there is a purchase setting premium status.
 		 */
 		void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts,
-				boolean isPremium);
+							boolean isPremium);
 	}
 
 	/**
@@ -309,10 +288,8 @@ public final class GoogleBillingHelper {
 		/**
 		 * Handler called after a purchase has been successfully completed.
 		 *
-		 * @param purchase
-		 *            The completed purchase.
-		 * @param addedPremiumProduct
-		 *            Flag indicating if there was a premium upgrade.
+		 * @param purchase            The completed purchase.
+		 * @param addedPremiumProduct Flag indicating if there was a premium upgrade.
 		 */
 		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
 	}

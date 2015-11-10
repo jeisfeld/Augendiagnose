@@ -10,16 +10,14 @@ public interface CameraHandler {
 	/**
 	 * Set the flashlight mode.
 	 *
-	 * @param flashlightMode
-	 *            The new flashlight mode.
+	 * @param flashlightMode The new flashlight mode.
 	 */
 	void setFlashlightMode(final FlashMode flashlightMode);
 
 	/**
 	 * Set the focus mode.
 	 *
-	 * @param focusMode
-	 *            The new focus mode.
+	 * @param focusMode The new focus mode.
 	 */
 	void setFocusMode(final FocusMode focusMode);
 

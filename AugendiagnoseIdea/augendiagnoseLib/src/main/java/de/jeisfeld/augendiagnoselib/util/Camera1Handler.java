@@ -13,10 +13,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -62,7 +64,7 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The FrameLayout holding the preview.
 	 */
-	private FrameLayout mPreviewFrame;
+	private final FrameLayout mPreviewFrame;
 
 	/**
 	 * The surface of the preview.
@@ -72,25 +74,22 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The handler called when the picture is taken.
 	 */
-	private CameraCallback mCameraCallback;
+	private final CameraCallback mCameraCallback;
 
 	/**
 	 * Constructor of the Camera1Handler.
 	 *
-	 * @param previewFrame
-	 *            The FrameLayout holding the preview.
-	 * @param preview
-	 *            The view holding the preview.
-	 * @param cameraCallback
-	 *            The handler called when the picture is taken.
+	 * @param previewFrame   The FrameLayout holding the preview.
+	 * @param preview        The view holding the preview.
+	 * @param cameraCallback The handler called when the picture is taken.
 	 */
 	public Camera1Handler(final FrameLayout previewFrame, final SurfaceView preview,
-			final CameraCallback cameraCallback) {
+						  final CameraCallback cameraCallback) {
 		this.mPreviewFrame = previewFrame;
 		this.mCameraCallback = cameraCallback;
 
 		mPreviewHolder = preview.getHolder();
-		mPreviewHolder.addCallback(mSurfaceCallback);
+		mPreviewHolder.addCallback(getSurfaceCallback());
 		mPreviewHolder.setKeepScreenOn(true);
 	}
 
@@ -283,42 +282,45 @@ public class Camera1Handler implements CameraHandler {
 	}
 
 	/**
-	 * The callback client for the preview.
+	 * Creage the callback client for the preview.
+	 *
+	 * @return the callback client.
 	 */
-	private SurfaceHolder.Callback mSurfaceCallback = new SurfaceHolder.Callback() {
-		@Override
-		public void surfaceCreated(final SurfaceHolder holder) {
-			mIsSurfaceCreated = true;
-			try {
-				if (mIsPreviewRequested) {
-					startPreview();
+	private SurfaceHolder.Callback getSurfaceCallback() {
+		return new SurfaceHolder.Callback() {
+			@Override
+			public void surfaceCreated(final SurfaceHolder holder) {
+				mIsSurfaceCreated = true;
+				try {
+					if (mIsPreviewRequested) {
+						startPreview();
+					}
+				}
+				catch (Exception e) {
+					mCameraCallback.onCameraError("Failed to start preview", e);
 				}
 			}
-			catch (Exception e) {
-				mCameraCallback.onCameraError("Failed to start preview", e);
+
+			@Override
+			public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
+				// do nothing.
 			}
-		}
 
-		@Override
-		public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
-			// do nothing.
-		}
-
-		@Override
-		public void surfaceDestroyed(final SurfaceHolder holder) {
-			stopPreview();
-			mIsSurfaceCreated = false;
-		}
-	};
+			@Override
+			public void surfaceDestroyed(final SurfaceHolder holder) {
+				stopPreview();
+				mIsSurfaceCreated = false;
+			}
+		};
+	}
 
 	/**
 	 * Update the available focus modes.
 	 *
-	 * @param supportedFocusModes
-	 *            the supported focus modes.
+	 * @param supportedFocusModes the supported focus modes.
 	 */
 	private void updateAvailableModes(final List<String> supportedFocusModes) {
-		List<FocusMode> focusModes = new ArrayList<FocusMode>();
+		List<FocusMode> focusModes = new ArrayList<>();
 		for (String focusMode : supportedFocusModes) {
 			if (Camera.Parameters.FOCUS_MODE_AUTO.equals(focusMode)) {
 				focusModes.add(FocusMode.AUTO);
@@ -337,7 +339,7 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private PictureCallback mPhotoCallback = new PictureCallback() {
+	private final PictureCallback mPhotoCallback = new PictureCallback() {
 		@Override
 		@SuppressFBWarnings(value = "VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG", justification = "Intentionally sending byte array")
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
@@ -393,10 +395,8 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * Get the best preview size.
 	 *
-	 * @param aspectRatio
-	 *            The aspect ratio of the picture.
-	 * @param parameters
-	 *            The camera parameters.
+	 * @param aspectRatio The aspect ratio of the picture.
+	 * @param parameters  The camera parameters.
 	 * @return The best preview size.
 	 */
 	private static Camera.Size getBestPreviewSize(final float aspectRatio, final Camera.Parameters parameters) {
@@ -424,8 +424,7 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * Get the biggest possible picture size.
 	 *
-	 * @param parameters
-	 *            The camera parameters.
+	 * @param parameters The camera parameters.
 	 * @return The biggest picture size.
 	 */
 	private static Camera.Size getBiggestPictureSize(final Camera.Parameters parameters) {

@@ -10,6 +10,7 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
@@ -27,10 +28,8 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	/**
 	 * ColorDialogPreference constructor.
 	 *
-	 * @param context
-	 *            of this class.
-	 * @param attrs
-	 *            custom xml attributes.
+	 * @param context of this class.
+	 * @param attrs   custom xml attributes.
 	 */
 	public ColorDialogPreference(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
@@ -52,7 +51,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	/**
 	 * Update the summary of the preference.
 	 */
-	public final void updateSummary() {
+	private void updateSummary() {
 		SpannableString summary = new SpannableString(Application.getAppContext().getString(R.string.button_select_color));
 		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		summary.setSpan(new ForegroundColorSpan(overlayColor), 0, summary.length(), 0);

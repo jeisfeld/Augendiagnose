@@ -29,23 +29,23 @@ public final class StringConverter {
 	/**
 	 * The global Strings file.
 	 */
-	private static final File[] XML_FILES_GLOBAL = { new File("../Augendiagnose/res/values/strings.xml"),
+	private static final File[] XML_FILES_GLOBAL = {new File("../Augendiagnose/res/values/strings.xml"),
 			new File("../AugendiagnoseLib/res/values/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values/strings_settings.xml")};
 
 	/**
 	 * The German String file.
 	 */
-	private static final File[] XML_FILES_DE = { new File("../Augendiagnose/res/values-de/strings.xml"),
+	private static final File[] XML_FILES_DE = {new File("../Augendiagnose/res/values-de/strings.xml"),
 			new File("../AugendiagnoseLib/res/values-de/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values-de/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values-de/strings_settings.xml")};
 
 	/**
 	 * The Spanish String file.
 	 */
-	private static final File[] XML_FILES_ES = { new File("../Augendiagnose/res/values-es/strings.xml"),
+	private static final File[] XML_FILES_ES = {new File("../Augendiagnose/res/values-es/strings.xml"),
 			new File("../AugendiagnoseLib/res/values-es/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values-es/strings_settings.xml") };
+			new File("../AugendiagnoseLib/res/values-es/strings_settings.xml")};
 
 	/**
 	 * The global Properties file.
@@ -330,7 +330,7 @@ public final class StringConverter {
 
 		@Override
 		public synchronized Enumeration<Object> keys() {
-			return Collections.enumeration(new TreeSet<Object>(super.keySet()));
+			return Collections.enumeration(new TreeSet<>(super.keySet()));
 		}
 	}
 

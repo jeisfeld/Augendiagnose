@@ -4,6 +4,7 @@ import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 
 /**
@@ -370,8 +371,7 @@ public final class JpegMetadata implements Parcelable {
 	/**
 	 * Add a flag from the constants JpegMetadata.FLAG_XXX.
 	 *
-	 * @param flag
-	 *            The flag to be added.
+	 * @param flag The flag to be added.
 	 */
 	public void addFlag(final int flag) {
 		mFlags |= flag;
@@ -380,8 +380,7 @@ public final class JpegMetadata implements Parcelable {
 	/**
 	 * Remove a flag from the constants JpegMetadata.FLAG_XXX.
 	 *
-	 * @param flag
-	 *            The flag to be removed.
+	 * @param flag The flag to be removed.
 	 */
 	public void removeFlag(final int flag) {
 		mFlags &= ~flag;
@@ -390,8 +389,7 @@ public final class JpegMetadata implements Parcelable {
 	/**
 	 * Get a flag from the constants JpegMetadata.FLAG_XXX.
 	 *
-	 * @param flag
-	 *            The flag to be retrieved.
+	 * @param flag The flag to be retrieved.
 	 * @return true if the flag is set.
 	 */
 	public boolean hasFlag(final int flag) {

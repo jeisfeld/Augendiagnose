@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 
@@ -44,11 +45,6 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	 * The text view showing the current folder.
 	 */
 	private TextView mCurrentFolderView;
-
-	/**
-	 * The list view showing the sub-elements.
-	 */
-	private ListView mListView;
 
 	/**
 	 * The current folder.
@@ -68,20 +64,17 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
 	 * The backstack of last browsed folders.
 	 */
-	private Stack<String> mBackStack = new Stack<String>();
+	private final Stack<String> mBackStack = new Stack<>();
 
 	/**
 	 * Create a DirectoryChooserDialogFragment.
 	 *
-	 * @param activity
-	 *            The activity calling the dialog.
-	 * @param listener
-	 *            The callback listener reacting on the dialog response.
-	 * @param dir
-	 *            The start folder.
+	 * @param activity The activity calling the dialog.
+	 * @param listener The callback listener reacting on the dialog response.
+	 * @param dir      The start folder.
 	 */
 	public static void displayDirectoryChooserDialog(final Activity activity, final ChosenDirectoryListener listener,
-			final String dir) {
+													 final String dir) {
 		DirectoryChooserDialogFragment fragment = new DirectoryChooserDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("dir", dir);
@@ -100,6 +93,9 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		String dir = getArguments().getString("dir");
 		final ChosenDirectoryListener listener = (ChosenDirectoryListener) getArguments().getSerializable("listener");
 
+		if (dir == null) {
+			dir = getSdCardDirectory();
+		}
 		File dirFile = new File(dir);
 		if (!dirFile.exists() || !dirFile.isDirectory()) {
 			dir = getSdCardDirectory();
@@ -130,11 +126,11 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		mCurrentFolderView = (TextView) layout.findViewById(R.id.textCurrentFolder);
 		mCurrentFolderView.setText(dir);
 
-		mListView = (ListView) layout.findViewById(R.id.listViewSubfolders);
+		ListView listView = (ListView) layout.findViewById(R.id.listViewSubfolders);
 		mListAdapter = createListAdapter(mSubdirs);
-		mListView.setAdapter(mListAdapter);
+		listView.setAdapter(mListAdapter);
 
-		mListView.setOnItemClickListener(new OnItemClickListener() {
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				mBackStack.push(mDir);
@@ -195,12 +191,11 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
 	 * Get the list of subdirectories of the current directory. Returns ".." as first value if appropriate.
 	 *
-	 * @param dir
-	 *            The current directory.
+	 * @param dir The current directory.
 	 * @return The list of subdirectories.
 	 */
 	private List<String> getDirectories(final String dir) {
-		List<String> dirs = new ArrayList<String>();
+		List<String> dirs = new ArrayList<>();
 
 		if (dir != null && dir.startsWith(File.separator) && !dir.equals(File.separator)) {
 			dirs.add("..");
@@ -260,8 +255,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	/**
 	 * Create the list adapter for the list of folders.
 	 *
-	 * @param items
-	 *            The list of folders.
+	 * @param items The list of folders.
 	 * @return The list adapter.
 	 */
 	private ArrayAdapter<String> createListAdapter(final List<String> items) {
@@ -305,8 +299,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		/**
 		 * Called when a folder is selected.
 		 *
-		 * @param chosenDir
-		 *            The selected folder.
+		 * @param chosenDir The selected folder.
 		 */
 		void onChosenDir(final String chosenDir);
 

@@ -20,6 +20,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
@@ -50,8 +51,7 @@ public final class ImageUtil {
 	/**
 	 * The file endings considered as image files.
 	 */
-	private static final List<String> IMAGE_SUFFIXES = Arrays.asList(
-			new String[] { "JPG", "JPEG", "PNG", "BMP", "TIF", "TIFF", "GIF" });
+	private static final List<String> IMAGE_SUFFIXES = Arrays.asList("JPG", "JPEG", "PNG", "BMP", "TIF", "TIFF", "GIF");
 
 	/**
 	 * Hide default constructor.
@@ -63,8 +63,7 @@ public final class ImageUtil {
 	/**
 	 * Get the date field with the EXIF date from the file If not existing, use the last modified date.
 	 *
-	 * @param path
-	 *            The file path of the image
+	 * @param path The file path of the image
 	 * @return the date stored in the EXIF data.
 	 */
 	public static Date getExifDate(final String path) {
@@ -92,11 +91,10 @@ public final class ImageUtil {
 	/**
 	 * Retrieve the rotation angle from the Exif data of an image.
 	 *
-	 * @param path
-	 *            The file path of the image
+	 * @param path The file path of the image
 	 * @return the rotation stored in the exif data, mapped into degrees.
 	 */
-	public static int getExifRotation(final String path) {
+	private static int getExifRotation(final String path) {
 		int rotation = 0;
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -130,10 +128,8 @@ public final class ImageUtil {
 	/**
 	 * Return a bitmap of this photo.
 	 *
-	 * @param path
-	 *            The file path of the image.
-	 * @param maxSize
-	 *            The maximum size of this bitmap. If bigger, it will be resized.
+	 * @param path    The file path of the image.
+	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized.
 	 * @return the bitmap.
 	 */
 	public static Bitmap getImageBitmap(final String path, final int maxSize) {
@@ -203,14 +199,12 @@ public final class ImageUtil {
 	/**
 	 * Return a bitmap of a photo directly from byte array data.
 	 *
-	 * @param data
-	 *            The byte array data of the bitmap.
-	 * @param maxSize
-	 *            The maximum size of this bitmap. If bigger, it will be resized.
+	 * @param data    The byte array data of the bitmap.
+	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized.
 	 * @return the bitmap.
 	 */
 	public static Bitmap getImageBitmap(final byte[] data, final int maxSize) {
-		Bitmap bitmap = null;
+		Bitmap bitmap;
 
 		if (maxSize <= 0) {
 			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -245,37 +239,28 @@ public final class ImageUtil {
 	/**
 	 * Retrieve a part of a bitmap in full resolution.
 	 *
-	 * @param fullBitmap
-	 *            The bitmap from which to get the part.
-	 * @param minX
-	 *            The minimum X position to retrieve.
-	 * @param maxX
-	 *            The maximum X position to retrieve.
-	 * @param minY
-	 *            The minimum Y position to retrieve.
-	 * @param maxY
-	 *            The maximum Y position to retrieve.
+	 * @param fullBitmap The bitmap from which to get the part.
+	 * @param minX       The minimum X position to retrieve.
+	 * @param maxX       The maximum X position to retrieve.
+	 * @param minY       The minimum Y position to retrieve.
+	 * @param maxY       The maximum Y position to retrieve.
 	 * @return The bitmap.
 	 */
 	public static Bitmap getPartialBitmap(final Bitmap fullBitmap, final float minX, final float maxX,
-			final float minY,
-			final float maxY) {
-		Bitmap partialBitmap =
-				Bitmap.createBitmap(fullBitmap, Math.round(minX * fullBitmap.getWidth()),
-						Math.round(minY * fullBitmap.getHeight()),
-						Math.round((maxX - minX) * fullBitmap.getWidth()),
-						Math.round((maxY - minY) * fullBitmap.getHeight()));
+										  final float minY,
+										  final float maxY) {
 
-		return partialBitmap;
+		return Bitmap.createBitmap(fullBitmap, Math.round(minX * fullBitmap.getWidth()),
+				Math.round(minY * fullBitmap.getHeight()),
+				Math.round((maxX - minX) * fullBitmap.getWidth()),
+				Math.round((maxY - minY) * fullBitmap.getHeight()));
 	}
 
 	/**
 	 * Utility to retrieve the sample size for BitmapFactory.decodeFile.
 	 *
-	 * @param filepath
-	 *            the path of the bitmap.
-	 * @param targetSize
-	 *            the target size of the bitmap
+	 * @param filepath   the path of the bitmap.
+	 * @param targetSize the target size of the bitmap
 	 * @return the sample size to be used.
 	 */
 	private static int getBitmapFactor(final String filepath, final int targetSize) {
@@ -289,10 +274,8 @@ public final class ImageUtil {
 	/**
 	 * Utility to retrieve the sample size for BitmapFactory.decodeFile.
 	 *
-	 * @param data
-	 *            the data of the bitmap.
-	 * @param targetSize
-	 *            the target size of the bitmap
+	 * @param data       the data of the bitmap.
+	 * @param targetSize the target size of the bitmap
 	 * @return the sample size to be used.
 	 */
 	private static int getBitmapFactor(final byte[] data, final int targetSize) {
@@ -306,13 +289,11 @@ public final class ImageUtil {
 	/**
 	 * Rotate a bitmap.
 	 *
-	 * @param source
-	 *            The original bitmap
-	 * @param angle
-	 *            The rotation angle
+	 * @param source The original bitmap
+	 * @param angle  The rotation angle
 	 * @return the rotated bitmap.
 	 */
-	public static Bitmap rotateBitmap(final Bitmap source, final float angle) {
+	private static Bitmap rotateBitmap(final Bitmap source, final float angle) {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
@@ -321,8 +302,7 @@ public final class ImageUtil {
 	/**
 	 * Get Mime type from URI.
 	 *
-	 * @param uri
-	 *            The URI
+	 * @param uri The URI
 	 * @return the mime type.
 	 */
 	public static String getMimeType(final Uri uri) {
@@ -344,13 +324,11 @@ public final class ImageUtil {
 	/**
 	 * Check if a file is an image file.
 	 *
-	 * @param file
-	 *            The file
-	 * @param strict
-	 *            if true, then the file content will be checked, otherwise the suffix is sufficient.
+	 * @param file   The file
+	 * @param strict if true, then the file content will be checked, otherwise the suffix is sufficient.
 	 * @return true if it is an image file.
 	 */
-	public static boolean isImage(final File file, final boolean strict) {
+	private static boolean isImage(final File file, final boolean strict) {
 		if (file == null || !file.exists() || file.isDirectory()) {
 			return false;
 		}
@@ -373,12 +351,11 @@ public final class ImageUtil {
 	/**
 	 * Get the list of image files in a folder.
 	 *
-	 * @param folderName
-	 *            The folder name.
+	 * @param folderName The folder name.
 	 * @return The list of image files in this folder.
 	 */
 	public static ArrayList<String> getImagesInFolder(final String folderName) {
-		ArrayList<String> fileNames = new ArrayList<String>();
+		ArrayList<String> fileNames = new ArrayList<>();
 		if (folderName == null) {
 			return fileNames;
 		}
@@ -405,10 +382,8 @@ public final class ImageUtil {
 	/**
 	 * Utility method to change a bitmap colour.
 	 *
-	 * @param sourceBitmap
-	 *            The original bitmap
-	 * @param color
-	 *            The target color
+	 * @param sourceBitmap The original bitmap
+	 * @param color        The target color
 	 * @return the bitmap with the target color.
 	 */
 	public static Bitmap changeBitmapColor(final Bitmap sourceBitmap, final int color) {
@@ -426,20 +401,15 @@ public final class ImageUtil {
 	/**
 	 * Deform the overlay bitmap according to a different pupil size.
 	 *
-	 * @param sourceBitmap
-	 *            The original overlay bitmap.
-	 * @param origPupilSize
-	 *            The pupil size (relative to iris) in the original overlay bitmap.
-	 * @param destPupilSize
-	 *            The pupil size (relative to iris) in the target overlay bitmap.
-	 * @param pupilOffsetX
-	 *            The x offset of the pupil center, relative to the iris size
-	 * @param pupilOffsetY
-	 *            The y offset of the pupil center, relative to the iris size
+	 * @param sourceBitmap  The original overlay bitmap.
+	 * @param origPupilSize The pupil size (relative to iris) in the original overlay bitmap.
+	 * @param destPupilSize The pupil size (relative to iris) in the target overlay bitmap.
+	 * @param pupilOffsetX  The x offset of the pupil center, relative to the iris size
+	 * @param pupilOffsetY  The y offset of the pupil center, relative to the iris size
 	 * @return The deformed overlay bitmap.
 	 */
 	public static Bitmap deformOverlayByPupilSize(final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
-			final Float pupilOffsetX, final Float pupilOffsetY) {
+												  final Float pupilOffsetX, final Float pupilOffsetY) {
 		if (origPupilSize == 0) {
 			// non-deformable overlay, such as pupil overlay.
 			return sourceBitmap;
@@ -517,7 +487,7 @@ public final class ImageUtil {
 	 *
 	 * @return the dummy bitmap.
 	 */
-	public static Bitmap getDummyBitmap() {
+	private static Bitmap getDummyBitmap() {
 		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.cannot_read_image);
 	}
 

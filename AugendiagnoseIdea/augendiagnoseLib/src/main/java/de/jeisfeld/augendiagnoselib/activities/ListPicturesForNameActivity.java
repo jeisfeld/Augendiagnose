@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
@@ -19,12 +20,9 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current
 	 * folder.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param parentFolder
-	 *            The parent folder of the application.
-	 * @param name
-	 *            The name of the image folder to be shown.
+	 * @param context      The context in which the activity is started.
+	 * @param parentFolder The parent folder of the application.
+	 * @param name         The name of the image folder to be shown.
 	 */
 	public static final void startActivity(final Context context, final String parentFolder, final String name) {
 		Intent intent = new Intent(context, ListPicturesForNameActivity.class);

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**
@@ -33,16 +34,18 @@ public final class MediaStoreUtil {
 	/**
 	 * Get a real file path from the URI of the media store.
 	 *
-	 * @param contentUri
-	 *            Thr URI of the media store
+	 * @param contentUri Thr URI of the media store
 	 * @return the file path.
 	 */
 	@SuppressWarnings("static-access")
 	public static String getRealPathFromUri(final Uri contentUri) {
 		Cursor cursor = null;
 		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
+			String[] proj = {MediaStore.Images.Media.DATA};
 			cursor = Application.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
+			if (cursor == null) {
+				return null;
+			}
 			int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(columnIndex);
@@ -60,11 +63,9 @@ public final class MediaStoreUtil {
 	/**
 	 * Retrieve a the image id of an image in the Mediastore from the path.
 	 *
-	 * @param path
-	 *            The path of the image
+	 * @param path The path of the image
 	 * @return the image id.
-	 * @throws ImageNotFoundException
-	 *             thrown if the image is not found in the media store.
+	 * @throws ImageNotFoundException thrown if the image is not found in the media store.
 	 */
 	@SuppressWarnings("static-access")
 	private static int getImageId(final String path) throws ImageNotFoundException {
@@ -72,8 +73,11 @@ public final class MediaStoreUtil {
 
 		try {
 			Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + " = ?",
-					new String[] { path }, MediaStore.Images.Media.DATE_ADDED + " desc");
+					new String[] {MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + " = ?",
+					new String[] {path}, MediaStore.Images.Media.DATE_ADDED + " desc");
+			if (imagecursor == null) {
+				throw new ImageNotFoundException();
+			}
 			imagecursor.moveToFirst();
 
 			if (!imagecursor.isAfterLast()) {
@@ -94,16 +98,18 @@ public final class MediaStoreUtil {
 	/**
 	 * Get an Uri from an file path.
 	 *
-	 * @param path
-	 *            The file path.
+	 * @param path The file path.
 	 * @return The Uri.
 	 */
 	public static Uri getUriFromFile(final String path) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		Cursor filecursor = resolver.query(MediaStore.Files.getContentUri("external"),
-				new String[] { BaseColumns._ID }, MediaColumns.DATA + " = ?",
-				new String[] { path }, MediaColumns.DATE_ADDED + " desc");
+				new String[] {BaseColumns._ID}, MediaColumns.DATA + " = ?",
+				new String[] {path}, MediaColumns.DATE_ADDED + " desc");
+		if (filecursor == null) {
+			return null;
+		}
 		filecursor.moveToFirst();
 
 		if (filecursor.isAfterLast()) {
@@ -124,17 +130,16 @@ public final class MediaStoreUtil {
 	/**
 	 * Get the Album Id from an Audio file.
 	 *
-	 * @param file
-	 *            The audio file.
+	 * @param file The audio file.
 	 * @return The Album ID.
 	 */
 	@SuppressWarnings("resource")
 	public static int getAlbumIdFromAudioFile(final File file) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 		Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				new String[] { MediaStore.Audio.AlbumColumns.ALBUM_ID },
+				new String[] {MediaStore.Audio.AlbumColumns.ALBUM_ID},
 				MediaStore.MediaColumns.DATA + "=?",
-				new String[] { file.getAbsolutePath() }, null);
+				new String[] {file.getAbsolutePath()}, null);
 		if (cursor == null || !cursor.moveToFirst()) {
 			// Entry not available - create entry.
 			if (cursor != null) {
@@ -150,9 +155,9 @@ public final class MediaStoreUtil {
 			resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
 		}
 		cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				new String[] { MediaStore.Audio.AlbumColumns.ALBUM_ID },
+				new String[] {MediaStore.Audio.AlbumColumns.ALBUM_ID},
 				MediaStore.MediaColumns.DATA + "=?",
-				new String[] { file.getAbsolutePath() }, null);
+				new String[] {file.getAbsolutePath()}, null);
 		if (cursor == null) {
 			return 0;
 		}
@@ -168,8 +173,7 @@ public final class MediaStoreUtil {
 	/**
 	 * Add a picture to the media store (via scanning).
 	 *
-	 * @param path
-	 *            the path of the image.
+	 * @param path the path of the image.
 	 */
 	public static void addFileToMediaStore(final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -182,10 +186,8 @@ public final class MediaStoreUtil {
 	/**
 	 * Retrieve a thumbnail of a bitmap from the mediastore.
 	 *
-	 * @param path
-	 *            The path of the image
-	 * @param maxSize
-	 *            The maximum size of this bitmap (used for selecting the sample size)
+	 * @param path    The path of the image
+	 * @param maxSize The maximum size of this bitmap (used for selecting the sample size)
 	 * @return the thumbnail.
 	 */
 	public static Bitmap getThumbnailFromPath(final String path, final int maxSize) {
@@ -209,8 +211,7 @@ public final class MediaStoreUtil {
 	/**
 	 * Add a picture to the media store (via scanning).
 	 *
-	 * @param path
-	 *            the path of the image.
+	 * @param path the path of the image.
 	 */
 	public static void addPictureToMediaStore(final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -223,8 +224,7 @@ public final class MediaStoreUtil {
 	/**
 	 * Delete the thumbnail of a bitmap.
 	 *
-	 * @param path
-	 *            The path of the image
+	 * @param path The path of the image
 	 */
 	public static void deleteThumbnail(final String path) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
@@ -232,7 +232,7 @@ public final class MediaStoreUtil {
 		try {
 			int imageId = getImageId(path);
 			resolver.delete(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
-					MediaStore.Images.Thumbnails.IMAGE_ID + " = ?", new String[] { "" + imageId });
+					MediaStore.Images.Thumbnails.IMAGE_ID + " = ?", new String[] {"" + imageId});
 		}
 		catch (ImageNotFoundException e) {
 			// ignore

@@ -11,8 +11,10 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -29,14 +31,14 @@ public class Application extends android.app.Application {
 	/**
 	 * The default tag for logging.
 	 */
-	public static final String TAG = "Augendiagnose.Application.JE";
+	public static final String TAG = "Augendiagnose.JE";
 
 	/**
 	 * The private constants of this app.
 	 */
 	private ApplicationSettings mApplicationSettings = null;
 
-	public static ApplicationSettings getApplicationSettings() {
+	private static ApplicationSettings getApplicationSettings() {
 		return mApplication.mApplicationSettings;
 	}
 
@@ -122,9 +124,7 @@ public class Application extends android.app.Application {
 	/**
 	 * start the application.
 	 *
-	 * @param triggeringActivity
-	 *            the triggering activity.
-	 *
+	 * @param triggeringActivity the triggering activity.
 	 */
 	public static void startApplication(final Activity triggeringActivity) {
 		getApplicationSettings().startApplication(triggeringActivity);
@@ -133,8 +133,7 @@ public class Application extends android.app.Application {
 	/**
 	 * Get a resource string.
 	 *
-	 * @param resourceId
-	 *            the id of the resource.
+	 * @param resourceId the id of the resource.
 	 * @return the value of the String resource.
 	 */
 	public static String getResourceString(final int resourceId) {
@@ -206,8 +205,7 @@ public class Application extends android.app.Application {
 	/**
 	 * Set the locale.
 	 *
-	 * @param locale
-	 *            The locale to be set.
+	 * @param locale The locale to be set.
 	 */
 	private static void setLocale(final Locale locale) {
 		Resources res = getAppContext().getResources();

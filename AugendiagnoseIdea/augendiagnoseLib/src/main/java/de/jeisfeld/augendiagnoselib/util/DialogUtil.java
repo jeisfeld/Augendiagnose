@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -63,18 +64,14 @@ public final class DialogUtil {
 	/**
 	 * Display an information message and go back to the current activity.
 	 *
-	 * @param activity
-	 *            the current activity
-	 * @param listener
-	 *            an optional listener waiting for the dialog response. If a listener is given, then the dialog will not
-	 *            be automatically recreated on orientation change!
-	 * @param resource
-	 *            the message resource
-	 * @param args
-	 *            arguments for the error message
+	 * @param activity the current activity
+	 * @param listener an optional listener waiting for the dialog response. If a listener is given, then the dialog will not
+	 *                 be automatically recreated on orientation change!
+	 * @param resource the message resource
+	 * @param args     arguments for the error message
 	 */
 	public static void displayInfo(final Activity activity, final MessageDialogListener listener, final int resource,
-			final Object... args) {
+								   final Object... args) {
 		String message = String.format(activity.getString(resource), args);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
@@ -91,17 +88,13 @@ public final class DialogUtil {
 	/**
 	 * Display an error and either go back to the current activity or finish the current activity.
 	 *
-	 * @param activity
-	 *            the current activity
-	 * @param resource
-	 *            the error message
-	 * @param listener
-	 *            listener to react on dialog confirmation or dismissal.
-	 * @param args
-	 *            arguments for the error message
+	 * @param activity the current activity
+	 * @param resource the error message
+	 * @param listener listener to react on dialog confirmation or dismissal.
+	 * @param args     arguments for the error message
 	 */
-	public static void displayError(final Activity activity, final int resource, final MessageDialogListener listener,
-			final Object... args) {
+	private static void displayError(final Activity activity, final int resource, final MessageDialogListener listener,
+									 final Object... args) {
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
@@ -120,17 +113,13 @@ public final class DialogUtil {
 	/**
 	 * Display an error and either go back to the current activity or finish the current activity.
 	 *
-	 * @param activity
-	 *            the current activity
-	 * @param resource
-	 *            the error message
-	 * @param finishActivity
-	 *            a flag indicating if the activity should be finished.
-	 * @param args
-	 *            arguments for the error message
+	 * @param activity       the current activity
+	 * @param resource       the error message
+	 * @param finishActivity a flag indicating if the activity should be finished.
+	 * @param args           arguments for the error message
 	 */
 	public static void displayError(final Activity activity, final int resource, final boolean finishActivity,
-			final Object... args) {
+									final Object... args) {
 		MessageDialogListener listener = null;
 
 		if (finishActivity) {
@@ -157,10 +146,8 @@ public final class DialogUtil {
 	/**
 	 * Display an error indicating insignificant authorization and redirect to settings.
 	 *
-	 * @param activity
-	 *            the current activity
-	 * @param resource
-	 *            the error message
+	 * @param activity the current activity
+	 * @param resource the error message
 	 */
 	public static void displayAuthorizationError(final Activity activity, final int resource) {
 		MessageDialogListener listener = new MessageDialogListener() {
@@ -189,12 +176,9 @@ public final class DialogUtil {
 	/**
 	 * Display an error just as toast.
 	 *
-	 * @param context
-	 *            the current activity or context
-	 * @param resource
-	 *            the error message
-	 * @param args
-	 *            arguments for the error message
+	 * @param context  the current activity or context
+	 * @param resource the error message
+	 * @param args     arguments for the error message
 	 */
 	public static void displayToast(final Context context, final int resource, final Object... args) {
 		String message = String.format(context.getString(resource), args);
@@ -205,20 +189,15 @@ public final class DialogUtil {
 	/**
 	 * Display a confirmation message asking for cancel or ok.
 	 *
-	 * @param activity
-	 *            the current activity
-	 * @param listener
-	 *            The listener waiting for the response
-	 * @param buttonResource
-	 *            the display on the positive button
-	 * @param messageResource
-	 *            the confirmation message
-	 * @param args
-	 *            arguments for the confirmation message
+	 * @param activity        the current activity
+	 * @param listener        The listener waiting for the response
+	 * @param buttonResource  the display on the positive button
+	 * @param messageResource the confirmation message
+	 * @param args            arguments for the confirmation message
 	 */
 	public static void displayConfirmationMessage(final Activity activity,
-			final ConfirmDialogListener listener, final int buttonResource,
-			final int messageResource, final Object... args) {
+												  final ConfirmDialogListener listener, final int buttonResource,
+												  final int messageResource, final Object... args) {
 		String message = String.format(activity.getString(messageResource), args);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
@@ -232,34 +211,26 @@ public final class DialogUtil {
 	/**
 	 * Display a tip.
 	 *
-	 * @param activity
-	 *            the triggering activity
-	 * @param messageResource
-	 *            The resource containing the text of the tip.
-	 * @param preferenceResource
-	 *            The resource for the key of the preference storing the information if the tip should be skipped later.
+	 * @param activity           the triggering activity
+	 * @param messageResource    The resource containing the text of the tip.
+	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
 	 */
 	public static void displayTip(final Activity activity, final int messageResource,
-			final int preferenceResource) {
+								  final int preferenceResource) {
 		displayTip(activity, R.string.title_dialog_tip, R.drawable.ic_title_tipp, messageResource, preferenceResource);
 	}
 
 	/**
 	 * Display a tip.
 	 *
-	 * @param activity
-	 *            the triggering activity
-	 * @param titleResource
-	 *            The resource containing the title.
-	 * @param iconResource
-	 *            The resource containing the icon.
-	 * @param messageResource
-	 *            The resource containing the text of the tip.
-	 * @param preferenceResource
-	 *            The resource for the key of the preference storing the information if the tip should be skipped later.
+	 * @param activity           the triggering activity
+	 * @param titleResource      The resource containing the title.
+	 * @param iconResource       The resource containing the icon.
+	 * @param messageResource    The resource containing the text of the tip.
+	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
 	 */
-	public static void displayTip(final Activity activity, final int titleResource, final int iconResource,
-			final int messageResource, final int preferenceResource) {
+	private static void displayTip(final Activity activity, final int titleResource, final int iconResource,
+								   final int messageResource, final int preferenceResource) {
 		String message = activity.getString(messageResource);
 
 		boolean skip = PreferenceUtil.getSharedPreferenceBoolean(preferenceResource);
@@ -280,12 +251,9 @@ public final class DialogUtil {
 	/**
 	 * Format one line of the image display.
 	 *
-	 * @param activity
-	 *            the triggering activity.
-	 * @param resource
-	 *            The resource containing the label of the line.
-	 * @param value
-	 *            The value of the parameter.
+	 * @param activity the triggering activity.
+	 * @param resource The resource containing the label of the line.
+	 * @param value    The value of the parameter.
 	 * @return The formatted line.
 	 */
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -309,10 +277,8 @@ public final class DialogUtil {
 	/**
 	 * Display the info of this photo.
 	 *
-	 * @param activity
-	 *            the triggering activity
-	 * @param eyePhoto
-	 *            the photo for which the image should be displayed.
+	 * @param activity the triggering activity
+	 * @param eyePhoto the photo for which the image should be displayed.
 	 */
 	public static void displayImageInfo(final Activity activity, final EyePhoto eyePhoto) {
 		StringBuffer message = new StringBuffer();
@@ -345,8 +311,7 @@ public final class DialogUtil {
 	/**
 	 * Check if there was an out of memory error, and if so, display a corresponding message.
 	 *
-	 * @param activity
-	 *            the triggering activity
+	 * @param activity the triggering activity
 	 */
 	public static void checkOutOfMemoryError(final Activity activity) {
 		boolean hadOutOfMemoryError = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror);
@@ -400,8 +365,7 @@ public final class DialogUtil {
 							dialog.dismiss();
 						}
 					});
-			Dialog dialog = builder.create();
-			return dialog;
+			return builder.create();
 		}
 
 		@Override
@@ -430,16 +394,14 @@ public final class DialogUtil {
 			/**
 			 * Callback method for ok click from the dialog.
 			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
+			 * @param dialog the confirmation dialog fragment.
 			 */
 			void onDialogClick(final DialogFragment dialog);
 
 			/**
 			 * Callback method for cancellation of the dialog.
 			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
+			 * @param dialog the confirmation dialog fragment.
 			 */
 			void onDialogCancel(final DialogFragment dialog);
 		}
@@ -464,14 +426,18 @@ public final class DialogUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the positive button event back to the host activity
-							listener.onDialogNegativeClick(ConfirmDialogFragment.this);
+							if (listener != null) {
+								listener.onDialogNegativeClick(ConfirmDialogFragment.this);
+							}
 						}
 					}) //
 					.setPositiveButton(confirmButtonResource, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the negative button event back to the host activity
-							listener.onDialogPositiveClick(ConfirmDialogFragment.this);
+							if (listener != null) {
+								listener.onDialogPositiveClick(ConfirmDialogFragment.this);
+							}
 						}
 					});
 			return builder.create();
@@ -485,16 +451,14 @@ public final class DialogUtil {
 			/**
 			 * Callback method for positive click from the confirmation dialog.
 			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
+			 * @param dialog the confirmation dialog fragment.
 			 */
 			void onDialogPositiveClick(final DialogFragment dialog);
 
 			/**
 			 * Callback method for negative click from the confirmation dialog.
 			 *
-			 * @param dialog
-			 *            the confirmation dialog fragment.
+			 * @param dialog the confirmation dialog fragment.
 			 */
 			void onDialogNegativeClick(final DialogFragment dialog);
 		}
@@ -522,12 +486,12 @@ public final class DialogUtil {
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
-							PreferenceUtil.setSharedPreferenceBoolean(key, true);
-							dialog.dismiss();
-						}
-					});
+				@Override
+				public void onClick(final DialogInterface dialog, final int id) {
+					PreferenceUtil.setSharedPreferenceBoolean(key, true);
+					dialog.dismiss();
+				}
+			});
 			return builder.create();
 		}
 	}

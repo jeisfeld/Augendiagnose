@@ -13,8 +13,8 @@ public class Inventory {
 
 	// JAVADOC:OFF
 
-	private Map<String, SkuDetails> mSkuMap = new HashMap<String, SkuDetails>();
-	private Map<String, Purchase> mPurchaseMap = new HashMap<String, Purchase>();
+	private final Map<String, SkuDetails> mSkuMap = new HashMap<>();
+	private final Map<String, Purchase> mPurchaseMap = new HashMap<>();
 
 	Inventory() {
 	}
@@ -24,8 +24,7 @@ public class Inventory {
 	/**
 	 * Returns the listing details for an in-app product.
 	 *
-	 * @param sku
-	 *            the product
+	 * @param sku the product
 	 * @return The listing details for that product.
 	 */
 	public final SkuDetails getSkuDetails(final String sku) {
@@ -35,8 +34,7 @@ public class Inventory {
 	/**
 	 * Returns purchase information for a given product, or null if there is no purchase.
 	 *
-	 * @param sku
-	 *            The product.
+	 * @param sku The product.
 	 * @return The purchase information for that product.
 	 */
 	public final Purchase getPurchase(final String sku) {
@@ -46,8 +44,7 @@ public class Inventory {
 	/**
 	 * Returns whether or not there exists a purchase of the given product.
 	 *
-	 * @param sku
-	 *            The product.
+	 * @param sku The product.
 	 * @return true if there exists a purchase of this product.
 	 */
 	public final boolean hasPurchase(final String sku) {
@@ -57,8 +54,7 @@ public class Inventory {
 	/**
 	 * Return whether or not details about the given product are available.
 	 *
-	 * @param sku
-	 *            The product.
+	 * @param sku The product.
 	 * @return True if details are available.
 	 */
 	public final boolean hasDetails(final String sku) {
@@ -71,8 +67,7 @@ public class Inventory {
 	 * to be up to date, and you have just consumed an item successfully, which means that erasing its purchase data
 	 * from the Inventory you already have is quicker than querying for a new Inventory.
 	 *
-	 * @param sku
-	 *            The purchase to be erased.
+	 * @param sku The purchase to be erased.
 	 */
 	public final void erasePurchase(final String sku) {
 		if (mPurchaseMap.containsKey(sku)) {
@@ -86,18 +81,17 @@ public class Inventory {
 	 * @return A list of all owned product IDs.
 	 */
 	protected final List<String> getAllOwnedSkus() {
-		return new ArrayList<String>(mPurchaseMap.keySet());
+		return new ArrayList<>(mPurchaseMap.keySet());
 	}
 
 	/**
 	 * Returns a list of all owned product IDs of a given type.
 	 *
-	 * @param itemType
-	 *            The item type
+	 * @param itemType The item type
 	 * @return The list of all owned product IDs of this type.
 	 */
 	protected final List<String> getAllOwnedSkus(final String itemType) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (Purchase p : mPurchaseMap.values()) {
 			if (p.getItemType().equals(itemType)) {
 				result.add(p.getSku());
@@ -112,7 +106,7 @@ public class Inventory {
 	 * @return The list of all purchases.
 	 */
 	protected final List<Purchase> getAllPurchases() {
-		return new ArrayList<Purchase>(mPurchaseMap.values());
+		return new ArrayList<>(mPurchaseMap.values());
 	}
 
 	protected final void addSkuDetails(final SkuDetails d) {

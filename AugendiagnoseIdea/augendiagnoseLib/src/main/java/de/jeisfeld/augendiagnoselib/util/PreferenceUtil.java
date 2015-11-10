@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
@@ -20,7 +21,7 @@ public final class PreferenceUtil {
 	/**
 	 * The list of preferences used for switching on and off hints.
 	 */
-	private static final Integer[] HINT_PREFERENCES = { R.string.key_tip_admarvel,
+	private static final Integer[] HINT_PREFERENCES = {R.string.key_tip_admarvel,
 			R.string.key_tip_clarity,
 			R.string.key_tip_displaydetails,
 			R.string.key_tip_displaynames,
@@ -29,7 +30,7 @@ public final class PreferenceUtil {
 			R.string.key_tip_firstuse,
 			R.string.key_tip_organizephotos,
 			R.string.key_tip_overlay,
-			R.string.key_tip_saveview };
+			R.string.key_tip_saveview};
 
 	/**
 	 * Hide default constructor.
@@ -43,15 +44,14 @@ public final class PreferenceUtil {
 	 *
 	 * @return the default shared preferences.
 	 */
-	public static SharedPreferences getSharedPreferences() {
+	private static SharedPreferences getSharedPreferences() {
 		return PreferenceManager.getDefaultSharedPreferences(Application.getAppContext());
 	}
 
 	/**
 	 * Retrieve a String shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
+	 * @param preferenceId the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static String getSharedPreferenceString(final int preferenceId) {
@@ -61,13 +61,11 @@ public final class PreferenceUtil {
 	/**
 	 * Retrieve a String shared preference, setting a default value if the preference is not set.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultId
-	 *            the String key of the default value.
+	 * @param preferenceId the id of the shared preference.
+	 * @param defaultId    the String key of the default value.
 	 * @return the corresponding preference value.
 	 */
-	public static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
+	private static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
 		String result = getSharedPreferenceString(preferenceId);
 		if (result == null) {
 			result = Application.getAppContext().getString(defaultId);
@@ -79,22 +77,19 @@ public final class PreferenceUtil {
 	/**
 	 * Set a String shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param s
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param s            the target value of the preference.
 	 */
 	public static void setSharedPreferenceString(final int preferenceId, final String s) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putString(Application.getAppContext().getString(preferenceId), s);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Retrieve an Uri shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
+	 * @param preferenceId the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static Uri getSharedPreferenceUri(final int preferenceId) {
@@ -114,7 +109,7 @@ public final class PreferenceUtil {
 	 * @return The tree URIs.
 	 */
 	public static Uri[] getTreeUris() {
-		List<Uri> uris = new ArrayList<Uri>();
+		List<Uri> uris = new ArrayList<>();
 
 		Uri uri1 = getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos);
 		if (uri1 != null) {
@@ -131,10 +126,8 @@ public final class PreferenceUtil {
 	/**
 	 * Set a shared preference for an Uri.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param uri
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param uri          the target value of the preference.
 	 */
 	public static void setSharedPreferenceUri(final int preferenceId, final Uri uri) {
 		Editor editor = getSharedPreferences().edit();
@@ -144,14 +137,13 @@ public final class PreferenceUtil {
 		else {
 			editor.putString(Application.getAppContext().getString(preferenceId), uri.toString());
 		}
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Retrieve a boolean shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
+	 * @param preferenceId the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static boolean getSharedPreferenceBoolean(final int preferenceId) {
@@ -161,24 +153,20 @@ public final class PreferenceUtil {
 	/**
 	 * Set a String shared preference from a boolean.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param b
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param b            the target value of the preference.
 	 */
 	public static void setSharedPreferenceBoolean(final int preferenceId, final boolean b) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putBoolean(Application.getAppContext().getString(preferenceId), b);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Retrieve an integer shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultValue
-	 *            the default value of the shared preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param defaultValue the default value of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static int getSharedPreferenceInt(final int preferenceId, final int defaultValue) {
@@ -188,22 +176,19 @@ public final class PreferenceUtil {
 	/**
 	 * Set an integer shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param i
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param i            the target value of the preference.
 	 */
 	public static void setSharedPreferenceInt(final int preferenceId, final int i) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putInt(Application.getAppContext().getString(preferenceId), i);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Increment a counter shared preference, and return the new value.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
+	 * @param preferenceId the id of the shared preference.
 	 * @return the new value.
 	 */
 	public static int incrementCounter(final int preferenceId) {
@@ -215,10 +200,8 @@ public final class PreferenceUtil {
 	/**
 	 * Retrieve an integer from a shared preference string.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultId
-	 *            the String key of the default value. If not existing, value 0 is returned.
+	 * @param preferenceId the id of the shared preference.
+	 * @param defaultId    the String key of the default value. If not existing, value 0 is returned.
 	 * @return the corresponding preference value.
 	 */
 	public static int getSharedPreferenceIntString(final int preferenceId, final Integer defaultId) {
@@ -244,10 +227,8 @@ public final class PreferenceUtil {
 	/**
 	 * Set a string shared preference from an integer.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param i
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param i            the target value of the preference.
 	 */
 	public static void setSharedPreferenceIntString(final int preferenceId, final int i) {
 		setSharedPreferenceString(preferenceId, Integer.toString(i));
@@ -256,10 +237,8 @@ public final class PreferenceUtil {
 	/**
 	 * Retrieve a long shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param defaultValue
-	 *            the default value of the shared preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param defaultValue the default value of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static long getSharedPreferenceLong(final int preferenceId, final long defaultValue) {
@@ -269,36 +248,31 @@ public final class PreferenceUtil {
 	/**
 	 * Set a long shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param i
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param i            the target value of the preference.
 	 */
 	public static void setSharedPreferenceLong(final int preferenceId, final long i) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putLong(Application.getAppContext().getString(preferenceId), i);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Remove a shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
+	 * @param preferenceId the id of the shared preference.
 	 */
 	public static void removeSharedPreference(final int preferenceId) {
 		Editor editor = getSharedPreferences().edit();
 		editor.remove(Application.getAppContext().getString(preferenceId));
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Get an indexed preference key that allows to store a shared preference with index.
 	 *
-	 * @param preferenceId
-	 *            The base preference id
-	 * @param index
-	 *            The index
+	 * @param preferenceId The base preference id
+	 * @param index        The index
 	 * @return The indexed preference key.
 	 */
 	public static String getIndexedPreferenceKey(final int preferenceId, final int index) {
@@ -308,8 +282,7 @@ public final class PreferenceUtil {
 	/**
 	 * Get the index from an indexed preference key.
 	 *
-	 * @param key
-	 *            The preference key.
+	 * @param key The preference key.
 	 * @return The index.
 	 */
 	public static Integer getIndexFromPreferenceKey(final String key) {
@@ -328,41 +301,33 @@ public final class PreferenceUtil {
 	/**
 	 * Retrieve an indexed String shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
 	 * @return the corresponding preference value.
 	 */
-	public static String getIndexedSharedPreferenceString(final int preferenceId, final int index) {
+	private static String getIndexedSharedPreferenceString(final int preferenceId, final int index) {
 		return getSharedPreferences().getString(getIndexedPreferenceKey(preferenceId, index), null);
 	}
 
 	/**
 	 * Set an indexed String shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
-	 * @param s
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
+	 * @param s            the target value of the preference.
 	 */
 	public static void setIndexedSharedPreferenceString(final int preferenceId, final int index, final String s) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putString(getIndexedPreferenceKey(preferenceId, index), s);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Retrieve an indexed int shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
-	 * @param defaultValue
-	 *            the default value of the shared preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
+	 * @param defaultValue the default value of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static int getIndexedSharedPreferenceInt(final int preferenceId, final int index, final int defaultValue) {
@@ -372,28 +337,22 @@ public final class PreferenceUtil {
 	/**
 	 * Set an indexed int shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
-	 * @param i
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
+	 * @param i            the target value of the preference.
 	 */
 	public static void setIndexedSharedPreferenceInt(final int preferenceId, final int index, final int i) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putInt(getIndexedPreferenceKey(preferenceId, index), i);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Retrieve an indexed String shared preference as integer.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
-	 * @param defaultValue
-	 *            the default value of the shared preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
+	 * @param defaultValue the default value of the shared preference.
 	 * @return the corresponding preference value.
 	 */
 	public static int getIndexedSharedPreferenceIntString(final int preferenceId, final int index, final int defaultValue) {
@@ -413,12 +372,9 @@ public final class PreferenceUtil {
 	/**
 	 * Set an indexed String shared preference from an integer.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
-	 * @param i
-	 *            the target value of the preference.
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
+	 * @param i            the target value of the preference.
 	 */
 	public static void setIndexedSharedPreferenceIntString(final int preferenceId, final int index, final int i) {
 		setIndexedSharedPreferenceString(preferenceId, index, Integer.toString(i));
@@ -427,22 +383,19 @@ public final class PreferenceUtil {
 	/**
 	 * Remove an indexed shared preference.
 	 *
-	 * @param preferenceId
-	 *            the id of the shared preference.
-	 * @param index
-	 *            The index
+	 * @param preferenceId the id of the shared preference.
+	 * @param index        The index
 	 */
 	public static void removeIndexedSharedPreference(final int preferenceId, final int index) {
 		Editor editor = getSharedPreferences().edit();
 		editor.remove(getIndexedPreferenceKey(preferenceId, index));
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
 	 * Set all hint preferences to the given value.
 	 *
-	 * @param value
-	 *            The value.
+	 * @param value The value.
 	 */
 	public static void setAllHints(final boolean value) {
 		for (int preferenceId : Arrays.asList(HINT_PREFERENCES)) {

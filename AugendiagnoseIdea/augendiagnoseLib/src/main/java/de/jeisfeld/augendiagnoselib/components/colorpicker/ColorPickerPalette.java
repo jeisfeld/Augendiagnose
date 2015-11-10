@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 
@@ -45,10 +46,8 @@ public class ColorPickerPalette extends TableLayout {
 	/**
 	 * Constructor passing attributes.
 	 *
-	 * @param context
-	 *            The context.
-	 * @param attrs
-	 *            The attributes.
+	 * @param context The context.
+	 * @param attrs   The attributes.
 	 */
 	public ColorPickerPalette(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
@@ -57,8 +56,7 @@ public class ColorPickerPalette extends TableLayout {
 	/**
 	 * Standard constructor.
 	 *
-	 * @param context
-	 *            The context.
+	 * @param context The context.
 	 */
 	public ColorPickerPalette(final Context context) {
 		super(context);
@@ -68,12 +66,9 @@ public class ColorPickerPalette extends TableLayout {
 	 * Initialize the size, columns, and listener. Size should be a pre-defined size (SIZE_LARGE or SIZE_SMALL) from
 	 * ColorPickerDialogFragment.
 	 *
-	 * @param size
-	 *            The size of the palette (SIZE_LARGE or SIZE_SMALL)
-	 * @param columns
-	 *            The number of columns
-	 * @param listener
-	 *            The listener to be called when a color is selected.
+	 * @param size     The size of the palette (SIZE_LARGE or SIZE_SMALL)
+	 * @param columns  The number of columns
+	 * @param listener The listener to be called when a color is selected.
 	 */
 	public final void init(final int size, final int columns, final OnColorSelectedListener listener) {
 		mNumColumns = columns;
@@ -108,10 +103,8 @@ public class ColorPickerPalette extends TableLayout {
 	/**
 	 * Adds swatches to table in a serpentine format.
 	 *
-	 * @param colors
-	 *            The colors to be added.
-	 * @param selectedColor
-	 *            The preseleted color.
+	 * @param colors        The colors to be added.
+	 * @param selectedColor The preseleted color.
 	 */
 	public final void drawPalette(final int[] colors, final int selectedColor) {
 		if (colors == null) {
@@ -155,10 +148,8 @@ public class ColorPickerPalette extends TableLayout {
 	/**
 	 * Appends a swatch to the end of the row.
 	 *
-	 * @param row
-	 *            The row.
-	 * @param swatch
-	 *            The swatch to be added.
+	 * @param row    The row.
+	 * @param swatch The swatch to be added.
 	 */
 	private static void addSwatchToRow(final TableRow row, final View swatch) {
 		row.addView(swatch);
@@ -169,20 +160,15 @@ public class ColorPickerPalette extends TableLayout {
 	 * other row will need to compensate for the fact that the colors are added in an opposite direction from their
 	 * left to right/top to bottom order, which is how the system will arrange them for accessibility purposes.
 	 *
-	 * @param rowNumber
-	 *            The row number.
-	 * @param index
-	 *            The index of the view.
-	 * @param rowElements
-	 *            The number of elements in the row.
-	 * @param selected
-	 *            Flag indicating if the swatch is selected.
-	 * @param swatch
-	 *            The swatch to be affected.
+	 * @param rowNumber   The row number.
+	 * @param index       The index of the view.
+	 * @param rowElements The number of elements in the row.
+	 * @param selected    Flag indicating if the swatch is selected.
+	 * @param swatch      The swatch to be affected.
 	 */
 	private void setSwatchDescription(final int rowNumber, final int index, final int rowElements,
-			final boolean selected,
-			final View swatch) {
+									  final boolean selected,
+									  final View swatch) {
 		int accessibilityIndex;
 		if (rowNumber % 2 == 0) {
 			// We're in a regular-ordered row
@@ -220,10 +206,8 @@ public class ColorPickerPalette extends TableLayout {
 	/**
 	 * Creates a color swatch.
 	 *
-	 * @param color
-	 *            The color of the swatch.
-	 * @param selectedColor
-	 *            The selected color.
+	 * @param color         The color of the swatch.
+	 * @param selectedColor The selected color.
 	 * @return the created color swatch.
 	 */
 	private ColorPickerSwatch createColorSwatch(final int color, final int selectedColor) {

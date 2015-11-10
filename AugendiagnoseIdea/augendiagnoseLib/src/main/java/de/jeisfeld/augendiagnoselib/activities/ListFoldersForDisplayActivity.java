@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersForDisplayFragment;
@@ -39,8 +40,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
+	 * @param context The context in which the activity is started.
 	 */
 	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
@@ -112,8 +112,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	/**
 	 * Display the list of pictures for a selected name.
 	 *
-	 * @param name
-	 *            The name for which pictures should be shown.
+	 * @param name The name for which pictures should be shown.
 	 */
 	public final void listPicturesForName(final String name) {
 		if (SystemUtil.isTablet()) {
@@ -164,8 +163,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	/**
 	 * Handle the removal of a name in tablet view - if pictures of this name are viewed, this is cleaned up.
 	 *
-	 * @param name
-	 *            The removed name.
+	 * @param name The removed name.
 	 */
 	public final void handleRemoveName(final String name) {
 		if (SystemUtil.isTablet() && getListPicturesForNameFragment() != null) {

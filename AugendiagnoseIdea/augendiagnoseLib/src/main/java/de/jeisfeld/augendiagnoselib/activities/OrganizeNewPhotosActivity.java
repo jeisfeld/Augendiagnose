@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -124,17 +125,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Static helper method to start the activity, passing the source folder, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param inputFolderName
-	 *            The folder containing the input files.
-	 * @param rightEyeLast
-	 *            A flag indicating if the last picture is the right eye.
-	 * @param nextAction
-	 *            The next action to be done after organizing a pair of images.
+	 * @param context         The context in which the activity is started.
+	 * @param inputFolderName The folder containing the input files.
+	 * @param rightEyeLast    A flag indicating if the last picture is the right eye.
+	 * @param nextAction      The next action to be done after organizing a pair of images.
 	 */
 	public static final void startActivity(final Context context, final String inputFolderName,
-			final boolean rightEyeLast, final NextAction nextAction) {
+										   final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -146,17 +143,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Static helper method to start the activity, passing the list of files, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param fileNames
-	 *            The list of files.
-	 * @param rightEyeLast
-	 *            A flag indicating if the last picture is the right eye.
-	 * @param nextAction
-	 *            The next action to be done after organizing a pair of images.
+	 * @param context      The context in which the activity is started.
+	 * @param fileNames    The list of files.
+	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
+	 * @param nextAction   The next action to be done after organizing a pair of images.
 	 */
 	public static final void startActivity(final Context context, final String[] fileNames,
-			final boolean rightEyeLast, final NextAction nextAction) {
+										   final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -194,7 +187,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		// when editing the "name" field, show suggestions
 		mEditName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
-		mEditName.setAdapter(new ArrayAdapter<String>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
+		mEditName.setAdapter(new ArrayAdapter<>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
 				.getFolderNames(mParentFolder)));
 		// Ensure that Keyboard "ok" click already triggers next step.
 		mEditName.setOnEditorActionListener(new OnEditorActionListener() {
@@ -329,8 +322,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Helper methods to load the pictures and to preset the date (from the pictures).
 	 *
-	 * @param update
-	 *            Value true means that values are not initially filled, but updated after organizing an eye photo pair.
+	 * @param update Value true means that values are not initially filled, but updated after organizing an eye photo pair.
 	 */
 	private void setPicturesAndValues(final boolean update) {
 		File[] files;
@@ -357,8 +349,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			});
 		}
 		else {
-			ArrayList<File> fileList = new ArrayList<File>();
-			ArrayList<String> fileNameList = new ArrayList<String>();
+			ArrayList<File> fileList = new ArrayList<>();
+			ArrayList<String> fileNameList = new ArrayList<>();
 
 			for (String fileName : mFileNames) {
 				File file = new File(fileName);
@@ -424,8 +416,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Display the two images. As these are only two thumbnails, we do this in the main thread. Separate thread may lead
 	 * to issues when returning from SelectTwoImages after orientation change
 	 *
-	 * @param updateDate
-	 *            if true, then the date will be updated from the images.
+	 * @param updateDate if true, then the date will be updated from the images.
 	 */
 	private void updateImages(final boolean updateDate) {
 		mImageRight.setImageBitmap(mPhotoRight.getImageBitmap(MediaStoreUtil.MINI_THUMB_SIZE));
@@ -443,10 +434,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Helper method to display an error message.
 	 *
-	 * @param resource
-	 *            The resource containing the error message.
-	 * @param args
-	 *            The arguments of the error message.
+	 * @param resource The resource containing the error message.
+	 * @param args     The arguments of the error message.
 	 */
 	private void displayError(final int resource, final Object... args) {
 		DialogUtil.displayError(this, resource, false, args);
@@ -455,8 +444,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * onClick action for Button "Switch images".
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
 	public final void switchImages(final View view) {
 		mRightEyeLast = !mRightEyeLast;
@@ -469,12 +457,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * onClick action for Button "Ok". Moves and renames the selected files after making JPG validation.
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
-	public final void onOkClick(final View view) {
+	private void onOkClick(final View view) {
 		final String name = mEditName.getText().toString().trim();
-		if (name == null || name.length() < 1) {
+		if (name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;
 		}
@@ -492,11 +479,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 	/**
 	 * Move and rename the selected files after making JPG validation.
-	 *
 	 */
-	public final void validateAndMovePhotos() {
+	private void validateAndMovePhotos() {
 		final String name = mEditName.getText().toString();
-		if (name == null || name.length() < 1) {
+		if (name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
 			return;
 		}
@@ -588,12 +574,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Move and rename the selected files.
 	 *
-	 * @param targetPhotoRight
-	 *            The right eye photo.
-	 * @param targetPhotoLeft
-	 *            The left eye photo.
-	 * @param name
-	 *            The selected name.
+	 * @param targetPhotoRight The right eye photo.
+	 * @param targetPhotoLeft  The left eye photo.
+	 * @param name             The selected name.
 	 */
 	private void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
 		if (mInputFolder != null) {
@@ -676,10 +659,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * onClick action for date field. Opens a date picker dialog.
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
-	public final void openDateDialog(final View view) {
+	private void openDateDialog(final View view) {
 		Bundle bundle = new Bundle();
 		bundle.putInt("Year", mPictureDate.get(Calendar.YEAR));
 		bundle.putInt("Month", mPictureDate.get(Calendar.MONTH));
@@ -703,14 +685,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Set the displayed date.
 	 *
-	 * @param yearSelected
-	 *            The year.
-	 * @param monthOfYear
-	 *            The month of the year.
-	 * @param dayOfMonth
-	 *            The day of the month.
+	 * @param yearSelected The year.
+	 * @param monthOfYear  The month of the year.
+	 * @param dayOfMonth   The day of the month.
 	 */
-	public final void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
+	private void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
 		mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
 		mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
 		mEditDate.invalidate();
@@ -719,8 +698,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * onClick action for displaying the two pictures.
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
 	public final void displayNewImages(final View view) {
 		DisplayTwoActivity.startActivity(this, mPhotoRight.getAbsolutePath(), mPhotoLeft.getAbsolutePath(), true);
@@ -729,8 +707,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * onClick action - overrides other onClick action to ensure that nothing happens.
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
 	public final void doNothing(final View view) {
 		// do nothing
@@ -739,7 +716,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * Fragment for the date dialog.
 	 */
-	public class DateDialogFragment extends DialogFragment {
+	public static class DateDialogFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");
@@ -749,8 +726,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 				@Override
 				public void onDateSet(final DatePicker view, final int yearSelected, final int monthOfYear,
-						final int dayOfMonth) {
-					setDate(yearSelected, monthOfYear, dayOfMonth);
+									  final int dayOfMonth) {
+					((OrganizeNewPhotosActivity) getActivity()).setDate(yearSelected, monthOfYear, dayOfMonth);
 				}
 			};
 			return new DatePickerDialog(getActivity(), dateSetListener, year, month, date);

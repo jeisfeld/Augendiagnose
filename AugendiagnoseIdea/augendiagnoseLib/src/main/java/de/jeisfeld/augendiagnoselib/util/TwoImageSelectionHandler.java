@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.util;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -43,8 +44,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Set the activity for first selection.
 	 *
-	 * @param activity
-	 *            The activity.
+	 * @param activity The activity.
 	 */
 	public void setActivity(final SelectTwoPicturesActivity activity) {
 		this.mActivity = activity;
@@ -60,11 +60,10 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Highlight an EyeImageView if it is selected.
 	 *
-	 * @param view
-	 *            the EyeImageView.
+	 * @param view the EyeImageView.
 	 */
 	public void highlightIfSelected(final EyeImageView view) {
-		if (hasSelectedView() && getSelectedImage().equals(view.getEyePhoto())) {
+		if (getSelectedImage() != null && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
 	}
@@ -72,16 +71,14 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Prepare a GridView for selection of the pictures.
 	 *
-	 * @param view
-	 *            The GridView to be prepared.
-	 * @param hasContextMenu
-	 *            Flag indicating if a context menu should be enabled.
+	 * @param view           The GridView to be prepared.
+	 * @param hasContextMenu Flag indicating if a context menu should be enabled.
 	 */
 	public void prepareViewForSelection(final EyeImageView view, final boolean hasContextMenu) {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				if (!hasSelectedView()) {
+				if (getSelectedImage() == null) {
 					selectView(view);
 				}
 				else if (getSelectedImage().equals(view.getEyePhoto())) {
@@ -102,10 +99,8 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Return the paths of the two selected files to the parent activity.
 	 *
-	 * @param image1
-	 *            the first selected image.
-	 * @param image2
-	 *            the second selected image.
+	 * @param image1 the first selected image.
+	 * @param image2 the second selected image.
 	 */
 	private void createResponse(final EyePhoto image1, final EyePhoto image2) {
 		mActivity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhotoPair;
 
@@ -22,7 +23,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Keep up to 25 rows in memory before reusing views.
 	 */
-	private CacheRange mCacheRange = new CacheRange(CACHE_SIZE);
+	private final CacheRange mCacheRange = new CacheRange(CACHE_SIZE);
 
 	// PUBLIC_FIELDS:START
 	/**
@@ -40,10 +41,8 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Constructor for the adapter.
 	 *
-	 * @param activity
-	 *            The activity using the adapter.
-	 * @param eyePhotoPairs
-	 *            The array of eye photo pairs to be displayed.
+	 * @param activity      The activity using the adapter.
+	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
@@ -54,8 +53,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Default adapter to be used by the framework.
 	 *
-	 * @param context
-	 *            The Context the view is running in.
+	 * @param context The Context the view is running in.
 	 */
 	public ListPicturesForNameBaseArrayAdapter(final Context context) {
 		super(context, R.layout.adapter_list_pictures_for_name);
@@ -72,8 +70,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * Abstract method to prepare the image views for selection of pictures.
 	 *
-	 * @param view
-	 *            The image view to be prepared.
+	 * @param view The image view to be prepared.
 	 */
 	protected abstract void prepareViewForSelection(EyeImageView view);
 
@@ -154,7 +151,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		/**
 		 * Length of the cache.
 		 */
-		private int mLength;
+		private final int mLength;
 		/**
 		 * Start position of the cache. Moves to ensure that the current pointer is always within the cache.
 		 */
@@ -163,8 +160,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		/**
 		 * Initialize the cache with a given length.
 		 *
-		 * @param length
-		 *            The length of the cache.
+		 * @param length The length of the cache.
 		 */
 		public CacheRange(final int length) {
 			this.mStart = 0;
@@ -174,8 +170,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		/**
 		 * Check if a given number is within the range of the cache.
 		 *
-		 * @param n
-		 *            The number to be checked.
+		 * @param n The number to be checked.
 		 * @return True if the number is in the cache.
 		 */
 		public final boolean isInRange(final int n) {
@@ -190,8 +185,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		/**
 		 * Push a given number into the cache. The start position of the cache is adapted accordingly.
 		 *
-		 * @param n
-		 *            The number to be pushed.
+		 * @param n The number to be pushed.
 		 */
 		public final void putIntoRange(final int n) {
 			if (n < mStart) {

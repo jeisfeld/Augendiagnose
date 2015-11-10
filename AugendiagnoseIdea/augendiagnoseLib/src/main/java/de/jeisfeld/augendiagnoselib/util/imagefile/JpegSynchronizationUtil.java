@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -26,23 +27,22 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Storage for currently running save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> mRunningSaveRequests = new HashMap<String, JpegMetadata>();
+	private static final HashMap<String, JpegMetadata> RUNNING_SAVE_REQUESTS = new HashMap<>();
 	/**
 	 * Storage for queued save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> mQueuedSaveRequests = new HashMap<String, JpegMetadata>();
+	private static final HashMap<String, JpegMetadata> QUEUED_SAVE_REQUESTS = new HashMap<>();
 	/**
 	 * The tag for logging.
 	 */
-	private static final String TAG = Application.TAG + ".JpegSynchronizationUtil";
+	private static final String TAG = Application.TAG + ".JSU";
 
 	/**
 	 * This method handles a request to retrieve metadata for a file. If there is no running async task to update
 	 * metadata for this file, then the data is taken directly from the file. Otherwise, it is taken from the last
 	 * metadata to be stored for this file.
 	 *
-	 * @param pathname
-	 *            the path of the jpg file.
+	 * @param pathname the path of the jpg file.
 	 * @return null for non-JPEG files. The metadata from the file if readable. Otherwise empty metadata.
 	 */
 	public static JpegMetadata getJpegMetadata(final String pathname) {
@@ -57,11 +57,11 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			if (mQueuedSaveRequests.containsKey(pathname)) {
-				cachedMetadata = mQueuedSaveRequests.get(pathname);
+			if (QUEUED_SAVE_REQUESTS.containsKey(pathname)) {
+				cachedMetadata = QUEUED_SAVE_REQUESTS.get(pathname);
 			}
-			else if (mRunningSaveRequests.containsKey(pathname)) {
-				cachedMetadata = mRunningSaveRequests.get(pathname);
+			else if (RUNNING_SAVE_REQUESTS.containsKey(pathname)) {
+				cachedMetadata = RUNNING_SAVE_REQUESTS.get(pathname);
 			}
 		}
 
@@ -84,10 +84,8 @@ public final class JpegSynchronizationUtil {
 	 * This method handles a request to update metadata on a file. If no such request on the file is in process, then an
 	 * async task is started to update the metadata. Otherwise, it is put on the queue.
 	 *
-	 * @param pathname
-	 *            the path of the jpg file.
-	 * @param metadata
-	 *            the metadata.
+	 * @param pathname the path of the jpg file.
+	 * @param metadata the metadata.
 	 */
 	public static void storeJpegMetadata(final String pathname, final JpegMetadata metadata) {
 		try {
@@ -99,8 +97,8 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			if (mRunningSaveRequests.containsKey(pathname)) {
-				mQueuedSaveRequests.put(pathname, metadata);
+			if (RUNNING_SAVE_REQUESTS.containsKey(pathname)) {
+				QUEUED_SAVE_REQUESTS.put(pathname, metadata);
 			}
 			else {
 				triggerJpegSaverTask(pathname, metadata);
@@ -111,16 +109,15 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Do cleanup from the last JpegSaverTask and trigger the next task on the same file, if existing.
 	 *
-	 * @param pathname
-	 *            The path of the jpg file.
+	 * @param pathname The path of the jpg file.
 	 */
 	private static void triggerNextFromQueue(final String pathname) {
 		synchronized (JpegSynchronizationUtil.class) {
-			mRunningSaveRequests.remove(pathname);
-			if (mQueuedSaveRequests.containsKey(pathname)) {
+			RUNNING_SAVE_REQUESTS.remove(pathname);
+			if (QUEUED_SAVE_REQUESTS.containsKey(pathname)) {
 				Log.i(TAG, "Executing queued store request for file " + pathname);
-				JpegMetadata newMetadata = mQueuedSaveRequests.get(pathname);
-				mQueuedSaveRequests.remove(pathname);
+				JpegMetadata newMetadata = QUEUED_SAVE_REQUESTS.get(pathname);
+				QUEUED_SAVE_REQUESTS.remove(pathname);
 				triggerJpegSaverTask(pathname, newMetadata);
 			}
 		}
@@ -129,13 +126,11 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Utility method to start the JpegSaverTask so save a jpg file with metadata.
 	 *
-	 * @param pathname
-	 *            the path of the jpg file.
-	 * @param metadata
-	 *            the metadata.
+	 * @param pathname the path of the jpg file.
+	 * @param metadata the metadata.
 	 */
 	private static void triggerJpegSaverTask(final String pathname, final JpegMetadata metadata) {
-		mRunningSaveRequests.put(pathname, metadata);
+		RUNNING_SAVE_REQUESTS.put(pathname, metadata);
 		JpegSaverTask task = new JpegSaverTask(pathname, metadata);
 		task.execute();
 
@@ -148,7 +143,7 @@ public final class JpegSynchronizationUtil {
 	 * @return true if an image is currently saved.
 	 */
 	public static boolean isSaving() {
-		return mRunningSaveRequests.size() > 0;
+		return RUNNING_SAVE_REQUESTS.size() > 0;
 	}
 
 	/**
@@ -158,19 +153,17 @@ public final class JpegSynchronizationUtil {
 		/**
 		 * The path of the jpg file.
 		 */
-		private String mPathname;
+		private final String mPathname;
 		/**
 		 * The changed metadata.
 		 */
-		private JpegMetadata mMetadata;
+		private final JpegMetadata mMetadata;
 
 		/**
 		 * Constructor for the task.
 		 *
-		 * @param pathname
-		 *            the path of the jpg file.
-		 * @param metadata
-		 *            the metadata.
+		 * @param pathname the path of the jpg file.
+		 * @param metadata the metadata.
 		 */
 		private JpegSaverTask(final String pathname, final JpegMetadata metadata) {
 			this.mPathname = pathname;

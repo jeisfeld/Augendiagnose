@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
@@ -53,8 +54,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Set the activity for first selection (mobile design).
 	 *
-	 * @param activity
-	 *            The activity to be set.
+	 * @param activity The activity to be set.
 	 */
 	public void setActivity(final ListPicturesForNameActivity activity) {
 		this.mActivity = activity;
@@ -64,8 +64,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Set the activity for first selection (tablet design).
 	 *
-	 * @param activity
-	 *            The activity to be set.
+	 * @param activity The activity to be set.
 	 */
 	public void setActivity(final ListFoldersForDisplayActivity activity) {
 		this.mActivity = activity;
@@ -75,8 +74,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Set the activiy for second selection.
 	 *
-	 * @param secondActivity
-	 *            The activity to be set.
+	 * @param secondActivity The activity to be set.
 	 */
 	public void setSecondActivity(final ListPicturesForSecondNameActivity secondActivity) {
 		this.mSecondActivity = secondActivity;
@@ -92,10 +90,13 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Prepare an EyeImageView for selection of the first picture.
 	 *
-	 * @param view
-	 *            The view to be prepared.
+	 * @param view The view to be prepared.
 	 */
 	public void prepareViewForFirstSelection(final EyeImageView view) {
+		if (getSelectedImage() == null) {
+			return;
+		}
+
 		// Ensure that selected view stays selected after rotating device
 		if (hasSelectedView() && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
@@ -142,8 +143,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Prepare an EyeImageView for selection of the second picture.
 	 *
-	 * @param view
-	 *            The view to be prepared.
+	 * @param view The view to be prepared.
 	 */
 	public void prepareViewForSecondSelection(final EyeImageView view) {
 		view.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +175,7 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	/**
 	 * Select a specific view.
 	 *
-	 * @param view
-	 *            the view to be selected.
+	 * @param view the view to be selected.
 	 */
 	@Override
 	protected void selectView(final EyeImageView view) {

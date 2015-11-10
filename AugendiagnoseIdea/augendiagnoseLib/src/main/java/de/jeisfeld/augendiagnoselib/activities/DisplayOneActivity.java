@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 import de.jeisfeld.augendiagnoselib.fragments.EditCommentFragment;
@@ -57,10 +58,8 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param filename
-	 *            The filename of the picture.
+	 * @param context  The context in which the activity is started.
+	 * @param filename The filename of the picture.
 	 */
 	public static void startActivity(final Context context, final String filename) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
@@ -72,10 +71,8 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	/**
 	 * Static helper method to start the activity, passing the path of the picture.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param fileResource
-	 *            The resource id of the picture.
+	 * @param context      The context in which the activity is started.
+	 * @param fileResource The resource id of the picture.
 	 */
 	public static void startActivity(final Context context, final int fileResource) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
@@ -122,6 +119,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");
+			//noinspection ResourceType
 			mViewFragmentEdit.setVisibility(fragmentEditVisibility);
 
 			if (fragmentEditVisibility == View.VISIBLE) {

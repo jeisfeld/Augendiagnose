@@ -12,7 +12,7 @@ public class IabException extends Exception {
 
 	private final IabResult mResult;
 
-	public IabException(final IabResult r) {
+	private IabException(final IabResult r) {
 		this(r, null);
 	}
 
@@ -20,7 +20,7 @@ public class IabException extends Exception {
 		this(new IabResult(response, message));
 	}
 
-	public IabException(final IabResult r, final Exception cause) {
+	private IabException(final IabResult r, final Exception cause) {
 		super(r.getMessage(), cause);
 		mResult = r;
 	}

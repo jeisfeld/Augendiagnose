@@ -12,8 +12,7 @@ public interface ContextMenuReferenceHolder {
 	/**
 	 * Store a reference to the context menu holder.
 	 *
-	 * @param o
-	 *            the reference to be stored (typically a fragment)
+	 * @param o the reference to be stored (typically a fragment)
 	 */
 	void setContextMenuReference(Object o);
 

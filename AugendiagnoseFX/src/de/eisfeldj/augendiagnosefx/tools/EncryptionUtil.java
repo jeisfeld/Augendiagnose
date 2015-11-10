@@ -55,7 +55,7 @@ public final class EncryptionUtil {
 	static {
 		boolean foundPrivateConstants = false;
 
-		List<String> specialKeys = new ArrayList<String>();
+		List<String> specialKeys = new ArrayList<>();
 		String key = "";
 		try {
 			// Looking for a class PrivateConstants with fields SPECIAL_KEYS and KEY_STRING - not in repository

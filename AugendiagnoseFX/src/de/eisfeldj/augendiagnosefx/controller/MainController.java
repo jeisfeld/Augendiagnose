@@ -12,6 +12,7 @@ import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -79,12 +80,12 @@ public class MainController extends BaseController implements Initializable {
 	/**
 	 * The list of subpages.
 	 */
-	private List<BaseController> mSubPageRegistry = new ArrayList<BaseController>();
+	private List<BaseController> mSubPageRegistry = new ArrayList<>();
 
 	/**
 	 * A list storing the handlers for closing windows.
 	 */
-	private List<EventHandler<ActionEvent>> mCloseHandlerList = new ArrayList<EventHandler<ActionEvent>>();
+	private List<EventHandler<ActionEvent>> mCloseHandlerList = new ArrayList<>();
 
 	/**
 	 * Indicator if two panes are shown.
@@ -118,7 +119,7 @@ public class MainController extends BaseController implements Initializable {
 			splitPane.getItems().add(body1);
 			splitPane.getItems().add(body2);
 
-			mBodies = new StackPane[] { body1, body2, mBody };
+			mBodies = new StackPane[] {body1, body2, mBody};
 
 			// retain old body as left pane.
 			body1.getChildren().addAll(mBody.getChildren());
@@ -135,7 +136,7 @@ public class MainController extends BaseController implements Initializable {
 			removeSubPage(mSubPageRegistry.get(1));
 			mBody.getChildren().addAll(mBodies[0].getChildren());
 
-			mBodies = new StackPane[] { mBody };
+			mBodies = new StackPane[] {mBody};
 		}
 	}
 
@@ -146,7 +147,7 @@ public class MainController extends BaseController implements Initializable {
 
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
-		mBodies = new StackPane[] { mBody };
+		mBodies = new StackPane[] {mBody};
 	}
 
 	/**

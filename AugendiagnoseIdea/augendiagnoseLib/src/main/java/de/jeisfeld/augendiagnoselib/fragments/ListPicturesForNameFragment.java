@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -62,13 +63,16 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-			final Bundle savedInstanceState) {
+								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_name, container, false);
 	}
 
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		mButtonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
@@ -79,7 +83,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	/**
 	 * Update the list of eye photo pairs.
 	 */
-	protected final void updateEyePhotoPairs() {
+	private void updateEyePhotoPairs() {
 		createAndStoreEyePhotoList();
 		mAdapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
 		getListView().setAdapter(mAdapter);
@@ -267,8 +271,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 		/**
 		 * Set the ListPicturesForNameFragment.
 		 *
-		 * @param fragment
-		 *            the fragment.
+		 * @param fragment the fragment.
 		 */
 		void setListPicturesForNameFragment(final ListPicturesForNameFragment fragment);
 	}

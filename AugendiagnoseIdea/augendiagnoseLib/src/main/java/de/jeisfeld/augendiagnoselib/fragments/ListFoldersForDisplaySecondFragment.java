@@ -3,8 +3,9 @@ package de.jeisfeld.augendiagnoselib.fragments;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity;
 import android.widget.TextView;
+
+import de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity;
 
 /**
  * Fragment to display the list of subfolders of the eye photo folder as dialog with the goal to select a second picture

@@ -7,6 +7,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import android.media.ExifInterface;
+import android.util.Log;
+
+import com.adobe.xmp.XMPException;
+
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -26,14 +35,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
-import com.adobe.xmp.XMPException;
-
-import android.media.ExifInterface;
-import android.util.Log;
-import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-
 /**
  * Helper clase to retrieve and save metadata in a JPEG file.
  */
@@ -49,17 +50,14 @@ public final class JpegMetadataUtil {
 	/**
 	 * Log all Exif data of the file.
 	 *
-	 * @param imageFile
-	 *            the image file.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
+	 * @param imageFile the image file.
+	 * @throws ImageReadException thrown if the metadata cannot be read.
+	 * @throws IOException        thrown in case of other errors while reading metadata.
 	 */
 	public static void printAllExifData(final File imageFile) throws ImageReadException, IOException {
 		final IImageMetadata metadata = Imaging.getMetadata(imageFile);
 
-		TiffImageMetadata tiffImageMetadata = null;
+		TiffImageMetadata tiffImageMetadata;
 		if (metadata instanceof JpegImageMetadata) {
 			tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
 		}
@@ -81,17 +79,14 @@ public final class JpegMetadataUtil {
 	/**
 	 * Get the Exif date of an image file.
 	 *
-	 * @param imageFile
-	 *            the image file.
+	 * @param imageFile the image file.
 	 * @return The EXIF date.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
+	 * @throws ImageReadException thrown if the metadata cannot be read.
+	 * @throws IOException        thrown in case of other errors while reading metadata.
 	 */
 	public static String getExifDate(final File imageFile) throws ImageReadException, IOException {
 		final IImageMetadata metadata = Imaging.getMetadata(imageFile);
-		TiffImageMetadata tiffImageMetadata = null;
+		TiffImageMetadata tiffImageMetadata;
 		if (metadata instanceof JpegImageMetadata) {
 			tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
 		}
@@ -115,14 +110,13 @@ public final class JpegMetadataUtil {
 	 * Retrieve the orientation of a file from the EXIF data. Required, as built-in ExifInterface is not always
 	 * reliable.
 	 *
-	 * @param imageFile
-	 *            the image file.
+	 * @param imageFile the image file.
 	 * @return the orientation value.
 	 */
 	protected static int getExifOrientation(final File imageFile) {
 		try {
 			final IImageMetadata metadata = Imaging.getMetadata(imageFile);
-			TiffImageMetadata tiffImageMetadata = null;
+			TiffImageMetadata tiffImageMetadata;
 
 			if (metadata instanceof JpegImageMetadata) {
 				tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
@@ -157,14 +151,10 @@ public final class JpegMetadataUtil {
 	/**
 	 * Log all XML data of the file.
 	 *
-	 * @param imageFile
-	 *            the file.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
-	 * @throws XMPException
-	 *             thrown in case of issues with XML handling.
+	 * @param imageFile the file.
+	 * @throws ImageReadException thrown if the metadata cannot be read.
+	 * @throws IOException        thrown in case of other errors while reading metadata.
+	 * @throws XMPException       thrown in case of issues with XML handling.
 	 */
 	public static void printAllXmpData(final File imageFile) throws ImageReadException, IOException, XMPException {
 		final String xmpString = Imaging.getXmpXml(imageFile);
@@ -174,10 +164,8 @@ public final class JpegMetadataUtil {
 	/**
 	 * Validate that the file is a JPEG file.
 	 *
-	 * @param jpegImageFileName
-	 *            the file to be validated.
-	 * @throws IOException
-	 *             thrown if the file is no jpg.
+	 * @param jpegImageFileName the file to be validated.
+	 * @throws IOException thrown if the file is no jpg.
 	 */
 	public static void checkJpeg(final String jpegImageFileName) throws IOException {
 		File file = new File(jpegImageFileName);
@@ -196,13 +184,10 @@ public final class JpegMetadataUtil {
 	/**
 	 * Retrieve the relevant metadata of an image file.
 	 *
-	 * @param jpegImageFileName
-	 *            the file for which metadata should be retrieved.
+	 * @param jpegImageFileName the file for which metadata should be retrieved.
 	 * @return the metadata of the file.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
+	 * @throws ImageReadException thrown if the metadata cannot be read.
+	 * @throws IOException        thrown in case of other errors while reading metadata.
 	 */
 	public static JpegMetadata getMetadata(final String jpegImageFileName) throws ImageReadException, IOException {
 		checkJpeg(jpegImageFileName);
@@ -257,7 +242,7 @@ public final class JpegMetadataUtil {
 		try {
 			final IImageMetadata metadata = Imaging.getMetadata(imageFile);
 
-			TiffImageMetadata tiffImageMetadata = null;
+			TiffImageMetadata tiffImageMetadata;
 			if (metadata instanceof JpegImageMetadata) {
 				tiffImageMetadata = ((JpegImageMetadata) metadata).getExif();
 			}
@@ -318,18 +303,12 @@ public final class JpegMetadataUtil {
 	/**
 	 * Change metadata of the image (EXIF and XMP as far as applicable).
 	 *
-	 * @param jpegImageFileName
-	 *            the file for which metadata should be changed.
-	 * @param metadata
-	 *            the new metadata.
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws ImageWriteException
-	 *             thrown if the metadata cannot be written.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
-	 * @throws XMPException
-	 *             thrown in case of issues with XML handling.
+	 * @param jpegImageFileName the file for which metadata should be changed.
+	 * @param metadata          the new metadata.
+	 * @throws ImageReadException  thrown if the metadata cannot be read.
+	 * @throws ImageWriteException thrown if the metadata cannot be written.
+	 * @throws IOException         thrown in case of other errors while reading metadata.
+	 * @throws XMPException        thrown in case of issues with XML handling.
 	 */
 	public static void changeMetadata(final String jpegImageFileName, final JpegMetadata metadata) throws IOException,
 			ImageReadException, ImageWriteException, XMPException {
@@ -351,16 +330,11 @@ public final class JpegMetadataUtil {
 	/**
 	 * Change the EXIF metadata.
 	 *
-	 * @param jpegImageFileName
-	 *            the file for which metadata should be changed.
-	 * @param metadata
-	 *            the new metadata
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws ImageWriteException
-	 *             thrown if the metadata cannot be written.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
+	 * @param jpegImageFileName the file for which metadata should be changed.
+	 * @param metadata          the new metadata
+	 * @throws ImageReadException  thrown if the metadata cannot be read.
+	 * @throws ImageWriteException thrown if the metadata cannot be written.
+	 * @throws IOException         thrown in case of other errors while reading metadata.
 	 */
 	@SuppressWarnings("resource")
 	private static void changeExifMetadata(final String jpegImageFileName, final JpegMetadata metadata)
@@ -446,19 +420,12 @@ public final class JpegMetadataUtil {
 	/**
 	 * Change the XMP metadata.
 	 *
-	 * @param jpegImageFileName
-	 *            the file for which metadata should be changed.
-	 * @param metadata
-	 *            the new metadata.
-	 *
-	 * @throws ImageReadException
-	 *             thrown if the metadata cannot be read.
-	 * @throws ImageWriteException
-	 *             thrown if the metadata cannot be written.
-	 * @throws IOException
-	 *             thrown in case of other errors while reading metadata.
-	 * @throws XMPException
-	 *             thrown in case of issues with XML handling.
+	 * @param jpegImageFileName the file for which metadata should be changed.
+	 * @param metadata          the new metadata.
+	 * @throws ImageReadException  thrown if the metadata cannot be read.
+	 * @throws ImageWriteException thrown if the metadata cannot be written.
+	 * @throws IOException         thrown in case of other errors while reading metadata.
+	 * @throws XMPException        thrown in case of issues with XML handling.
 	 */
 	@SuppressWarnings("resource")
 	private static void changeXmpMetadata(final String jpegImageFileName, final JpegMetadata metadata)
@@ -526,8 +493,7 @@ public final class JpegMetadataUtil {
 	/**
 	 * Verify if the temporary file already exists. If yes, delete it.
 	 *
-	 * @param tempFile
-	 *            the temporary file.
+	 * @param tempFile the temporary file.
 	 */
 	private static void verifyTempFile(final File tempFile) {
 		if (tempFile.exists()) {
@@ -544,7 +510,7 @@ public final class JpegMetadataUtil {
 	 *
 	 * @return true if it is allowed to change image files.
 	 */
-	public static boolean changeJpegAllowed() {
+	private static boolean changeJpegAllowed() {
 		int storeOption = PreferenceUtil.getSharedPreferenceIntString(R.string.key_store_option, R.string.pref_default_store_options);
 		return storeOption > 0;
 	}
@@ -571,8 +537,7 @@ public final class JpegMetadataUtil {
 		/**
 		 * Standard constructor, passing the causing exception.
 		 *
-		 * @param cause
-		 *            The exception.
+		 * @param cause The exception.
 		 */
 		private ExifStorageException(final Throwable cause) {
 			super(cause);

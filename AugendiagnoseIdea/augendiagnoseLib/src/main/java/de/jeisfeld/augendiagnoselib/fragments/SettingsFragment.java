@@ -3,11 +3,6 @@ package de.jeisfeld.augendiagnoselib.fragments;
 import java.io.File;
 import java.util.List;
 
-import com.android.vending.billing.Purchase;
-import com.android.vending.billing.PurchasedSku;
-import com.android.vending.billing.SkuDetails;
-import com.immersion.hapticmediasdk.utils.Log;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -27,6 +22,12 @@ import android.preference.PreferenceScreen;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+
+import com.android.vending.billing.Purchase;
+import com.android.vending.billing.PurchasedSku;
+import com.android.vending.billing.SkuDetails;
+import com.immersion.hapticmediasdk.utils.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -51,12 +52,12 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * The requestCode with which the storage access framework is triggered for photo folder.
 	 */
-	public static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 3;
+	private static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 3;
 
 	/**
 	 * The requestCode with which the storage access framework is triggered for input folder.
 	 */
-	public static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
+	private static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
 	 * The resource key of the flag indicating the type of settings to be shown.
@@ -91,8 +92,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Initialize the fragment with onlyPacks flag.
 	 *
-	 * @param prefType
-	 *            The type of preferences to be shown.
+	 * @param prefType The type of preferences to be shown.
 	 */
 	public final void setParameters(final String prefType) {
 		Bundle args = new Bundle();
@@ -210,10 +210,8 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Add the listener for a "hints" button.
 	 *
-	 * @param preferenceId
-	 *            The id of the button.
-	 * @param hintPreferenceValue
-	 *            The value to be set to all the hints preferences.
+	 * @param preferenceId        The id of the button.
+	 * @param hintPreferenceValue The value to be set to all the hints preferences.
 	 */
 	private void addHintButtonListener(final int preferenceId, final boolean hintPreferenceValue) {
 		Preference showPreference = findPreference(getString(preferenceId));
@@ -274,18 +272,18 @@ public class SettingsFragment extends PreferenceFragment {
 	private void updateOverlayPreferenceEntries() {
 		for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
 			ListPreference preference = (ListPreference) getPreferenceScreen().getPreference(i);
-			int buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
-			updateOverlayPreferenceEntries(buttonIndex, preference);
+			Integer buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+			if (buttonIndex != null) {
+				updateOverlayPreferenceEntries(buttonIndex, preference);
+			}
 		}
 	}
 
 	/**
 	 * Set the choice entries for an overlay button preference.
 	 *
-	 * @param buttonIndex
-	 *            The index of the button.
-	 * @param preference
-	 *            The preference.
+	 * @param buttonIndex The index of the button.
+	 * @param preference  The preference.
 	 */
 	private void updateOverlayPreferenceEntries(final int buttonIndex, final ListPreference preference) {
 		int highestOverlayButtonIndex = DisplayImageFragment.getHighestOverlayButtonIndex();
@@ -341,8 +339,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 * (line of text below the preference title) is updated to reflect the value. The summary is also immediately
 	 * updated upon calling this method. The exact display format is dependent on the type of preference.
 	 *
-	 * @param preference
-	 *            The preference to be bound.
+	 * @param preference The preference to be bound.
 	 */
 	private void bindPreferenceSummaryToValue(final Preference preference) {
 		if (preference != null) {
@@ -358,8 +355,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Helper method for easier call of {@link #bindPreferenceSummaryToValue(android.preference.Preference)}.
 	 *
-	 * @param preferenceKey
-	 *            The key of the preference.
+	 * @param preferenceKey The key of the preference.
 	 */
 	private void bindPreferenceSummaryToValue(final int preferenceKey) {
 		bindPreferenceSummaryToValue(findPreference(getString(preferenceKey)));
@@ -368,7 +364,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the change of preferences.
 	 */
-	private OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
+	private final OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
 			new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(final Preference preference, final Object value) {
@@ -511,7 +507,7 @@ public class SettingsFragment extends PreferenceFragment {
 				 * Check the folder for writeability. If not, then on Android 5 retrieve Uri for extsdcard via Storage
 				 * Access Framework.
 				 *
-				 * @param folderName
+				 * @param folder
 				 *            The folder to be checked.
 				 * @param code
 				 *            The request code of the type of folder check.
@@ -541,7 +537,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 								@Override
 								public void onDialogCancel(final DialogFragment dialog) {
-									return;
+									// do nothing.
 								}
 							};
 
@@ -570,10 +566,7 @@ public class SettingsFragment extends PreferenceFragment {
 				/**
 				 * Trigger the storage access framework to access the base folder of the ext sd card.
 				 *
-				 * @param code
-				 *            The request code to be used.
-				 *
-				 * @param requestCode
+				 * @param code The request code to be used.
 				 */
 				@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 				private void triggerStorageAccessFramework(final int code) {
@@ -585,7 +578,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the response after reading the in-add purchase inventory.
 	 */
-	private OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
+	private final OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
 		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts, final boolean isPremium) {
 			// List inventory items.
@@ -619,7 +612,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the response after purchasing a product.
 	 */
-	private OnPurchaseSuccessListener mOnPurchaseSuccessListener = new OnPurchaseSuccessListener() {
+	private final OnPurchaseSuccessListener mOnPurchaseSuccessListener = new OnPurchaseSuccessListener() {
 		@Override
 		public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
 			if (addedPremiumProduct) {
@@ -660,17 +653,14 @@ public class SettingsFragment extends PreferenceFragment {
 	 * After triggering the Storage Access Framework, ensure that folder is really writable. Set preferences
 	 * accordingly.
 	 *
-	 * @param requestCode
-	 *            The integer request code originally supplied to startActivityForResult(), allowing you to identify who
-	 *            this result came from.
-	 * @param resultCode
-	 *            The integer result code returned by the child activity through its setResult().
-	 * @param data
-	 *            An Intent, which can return result data to the caller (various data can be attached to Intent
-	 *            "extras").
+	 * @param requestCode The integer request code originally supplied to startActivityForResult(), allowing you to identify who
+	 *                    this result came from.
+	 * @param resultCode  The integer result code returned by the child activity through its setResult().
+	 * @param data        An Intent, which can return result data to the caller (various data can be attached to Intent
+	 *                    "extras").
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public final void onActivityResultLollipop(final int requestCode, final int resultCode, final Intent data) {
+	private void onActivityResultLollipop(final int requestCode, final int resultCode, final Intent data) {
 		int preferenceKeyUri;
 		int preferenceKeyFolder;
 		String oldFolder;
@@ -728,7 +718,8 @@ public class SettingsFragment extends PreferenceFragment {
 		// Persist access permissions.
 		final int takeFlags = data.getFlags()
 				& (Intent.FLAG_GRANT_READ_URI_PERMISSION
-						| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+		// noinspection ResourceType
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
 	}
 

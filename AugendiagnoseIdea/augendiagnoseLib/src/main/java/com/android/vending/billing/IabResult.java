@@ -10,8 +10,8 @@ public class IabResult {
 
 	// JAVADOC:OFF
 
-	private int mResponse;
-	private String mMessage;
+	private final int mResponse;
+	private final String mMessage;
 
 	public IabResult(final int response, final String message) {
 		mResponse = response;

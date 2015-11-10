@@ -12,7 +12,7 @@ public abstract class BaseController implements Controller {
 	/**
 	 * The list of all controllers.
 	 */
-	private static List<BaseController> mControllerRegistry = new ArrayList<BaseController>();
+	private static List<BaseController> mControllerRegistry = new ArrayList<>();
 
 	/**
 	 * Indicator if there is data pending to be saved.
@@ -59,7 +59,7 @@ public abstract class BaseController implements Controller {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <C extends BaseController> List<C> getControllers(final Class<C> controllerClass) {
-		List<C> result = new ArrayList<C>();
+		List<C> result = new ArrayList<>();
 
 		for (BaseController controller : mControllerRegistry) {
 			if (controllerClass.isAssignableFrom(controller.getClass())) {

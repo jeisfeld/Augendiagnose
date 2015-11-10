@@ -2,7 +2,9 @@ package de.jeisfeld.miniris;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

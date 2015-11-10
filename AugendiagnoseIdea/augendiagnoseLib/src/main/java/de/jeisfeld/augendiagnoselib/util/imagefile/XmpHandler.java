@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import android.util.Log;
+
 import com.adobe.xmp.XMPDateTime;
 import com.adobe.xmp.XMPDateTimeFactory;
 import com.adobe.xmp.XMPException;
@@ -13,7 +15,6 @@ import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
 
-import android.util.Log;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**
@@ -71,8 +72,7 @@ public class XmpHandler {
 	/**
 	 * Create an XmpHandler from an XMP String.
 	 *
-	 * @param xmpString
-	 *            the XMP String.
+	 * @param xmpString the XMP String.
 	 */
 	public XmpHandler(final String xmpString) {
 		prepareRegistry();
@@ -122,8 +122,7 @@ public class XmpHandler {
 	/**
 	 * Get an item from the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the item.
+	 * @param item the name of the item.
 	 * @return the value of the item.
 	 */
 	public final String getJeItem(final String item) {
@@ -138,8 +137,7 @@ public class XmpHandler {
 	/**
 	 * Get an int item from the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the item.
+	 * @param item the name of the item.
 	 * @return the value of the item.
 	 */
 	public final int getJeInt(final String item) {
@@ -154,8 +152,7 @@ public class XmpHandler {
 	/**
 	 * Get a date item from the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the item.
+	 * @param item the name of the item.
 	 * @return the value of the item.
 	 */
 	public final Date getJeDate(final String item) {
@@ -171,8 +168,7 @@ public class XmpHandler {
 	/**
 	 * Get an item from the DC namespace.
 	 *
-	 * @param item
-	 *            the name of the item.
+	 * @param item the name of the item.
 	 * @return the value of the item.
 	 */
 	private String getDcItem(final String item) {
@@ -257,12 +253,9 @@ public class XmpHandler {
 	/**
 	 * Set an entry in the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the entry.
-	 * @param value
-	 *            the value of the entry.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param item  the name of the entry.
+	 * @param value the value of the entry.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setJeItem(final String item, final String value) throws XMPException {
 		if (value != null) {
@@ -276,12 +269,9 @@ public class XmpHandler {
 	/**
 	 * Set an int entry in the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the entry.
-	 * @param value
-	 *            the value of the entry.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param item  the name of the entry.
+	 * @param value the value of the entry.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setJeInt(final String item, final int value) throws XMPException {
 		mXmpMeta.setProperty(NS_JE, item, value);
@@ -290,12 +280,9 @@ public class XmpHandler {
 	/**
 	 * Set a date entry in the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the entry.
-	 * @param date
-	 *            the value of the entry.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param item the name of the entry.
+	 * @param date the value of the entry.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setJeDate(final String item, final Date date) throws XMPException {
 		if (date != null) {
@@ -309,24 +296,19 @@ public class XmpHandler {
 	/**
 	 * Delete an entry from the custom namespace.
 	 *
-	 * @param item
-	 *            the name of the entry.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param item the name of the entry.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	public final void removeJeItem(final String item) throws XMPException {
+	private void removeJeItem(final String item) {
 		mXmpMeta.deleteProperty(NS_JE, item);
 	}
 
 	/**
 	 * Set an entry in the DC namespace.
 	 *
-	 * @param item
-	 *            the name of the entry.
-	 * @param value
-	 *            the value of the entry.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param item  the name of the entry.
+	 * @param value the value of the entry.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	private void setDcItem(final String item, final String value) throws XMPException {
 		if (value != null) {
@@ -342,10 +324,8 @@ public class XmpHandler {
 	/**
 	 * Set the image title.
 	 *
-	 * @param title
-	 *            the image title.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param title the image title.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setDcTitle(final String title) throws XMPException {
 		setDcItem("title", title);
@@ -354,10 +334,8 @@ public class XmpHandler {
 	/**
 	 * Set the image description.
 	 *
-	 * @param description
-	 *            the image description.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param description the image description.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setDcDescription(final String description) throws XMPException {
 		setDcItem("description", description);
@@ -366,10 +344,8 @@ public class XmpHandler {
 	/**
 	 * Set the image subject.
 	 *
-	 * @param subject
-	 *            the image subject.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param subject the image subject.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setDcSubject(final String subject) throws XMPException {
 		setDcItem("subject", subject);
@@ -378,10 +354,8 @@ public class XmpHandler {
 	/**
 	 * Set the User Comment.
 	 *
-	 * @param userComment
-	 *            the user comment.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param userComment the user comment.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setUserComment(final String userComment) throws XMPException {
 		if (userComment != null) {
@@ -397,10 +371,8 @@ public class XmpHandler {
 	/**
 	 * Set the image person name.
 	 *
-	 * @param name
-	 *            the image person name.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @param name the image person name.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final void setMicrosoftPerson(final String name) throws XMPException {
 		if (name != null) {
@@ -421,8 +393,7 @@ public class XmpHandler {
 	 * Get the XMP String.
 	 *
 	 * @return the XMP String.
-	 * @throws XMPException
-	 *             thrown in case of issues with XMP handling.
+	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	public final String getXmpString() throws XMPException {
 		return XMPMetaFactory.serializeToString(mXmpMeta, null);

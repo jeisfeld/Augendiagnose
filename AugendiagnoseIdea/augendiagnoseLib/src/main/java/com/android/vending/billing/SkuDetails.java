@@ -1,10 +1,11 @@
 package com.android.vending.billing;
 
+import android.content.Context;
+
+import de.jeisfeld.augendiagnoselib.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.content.Context;
-import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Represents an in-app product's listing details.
@@ -13,13 +14,13 @@ public class SkuDetails {
 
 	// JAVADOC:OFF
 
-	private String mItemType;
+	private final String mItemType;
 	private String mSku;
 	private String mType;
 	private String mPrice;
 	private String mTitle;
 	private String mDescription;
-	private String mJson;
+	private final String mJson;
 
 	public SkuDetails(final String jsonSkuDetails) throws JSONException {
 		this(IabHelper.ITEM_TYPE_INAPP, jsonSkuDetails);

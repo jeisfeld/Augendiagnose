@@ -16,7 +16,7 @@ public class ImageViewPane extends Region {
 	/**
 	 * The contained ImageView, stored in a property.
 	 */
-	private ObjectProperty<ImageView> mImageViewProperty = new SimpleObjectProperty<ImageView>();
+	private ObjectProperty<ImageView> mImageViewProperty = new SimpleObjectProperty<>();
 
 	/**
 	 * Getter for the contained ImageView property.

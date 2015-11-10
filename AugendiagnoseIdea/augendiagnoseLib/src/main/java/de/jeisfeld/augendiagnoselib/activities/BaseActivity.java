@@ -5,13 +5,14 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
-import com.android.vending.billing.PurchasedSku;
-import com.android.vending.billing.SkuDetails;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.android.vending.billing.PurchasedSku;
+import com.android.vending.billing.SkuDetails;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -92,7 +93,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 						@Override
 						public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-								final boolean isPremium) {
+												   final boolean isPremium) {
 							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
 							GoogleBillingHelper.dispose();
 						}
@@ -168,7 +169,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 				@Override
 				public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-						final boolean isPremium) {
+										   final boolean isPremium) {
 					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
 					GoogleBillingHelper.dispose();
 
@@ -187,7 +188,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	/**
 	 * Check authorization via unlocker app.
 	 */
-	public final void checkUnlockerApp() {
+	private void checkUnlockerApp() {
 		Intent intent = getPackageManager().getLaunchIntentForPackage("de.jeisfeld.augendiagnoseunlocker");
 		if (intent == null) {
 			updateUnlockerAppStatus(false);
@@ -206,8 +207,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	/**
 	 * Update the status of the unlocker app. Set to "true" if found. Set to false only after some failed retries.
 	 *
-	 * @param isCheckSuccessful
-	 *            flag indicating if the verification with unlocker app was successful.
+	 * @param isCheckSuccessful flag indicating if the verification with unlocker app was successful.
 	 */
 	private void updateUnlockerAppStatus(final boolean isCheckSuccessful) {
 		if (isCheckSuccessful) {
@@ -229,7 +229,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			String responseKey = data.getStringExtra(STRING_RESULT_RESPONSE_KEY);
 			String expectedResponseKey = EncryptionUtil.createHash(mRandomAuthorizationString + getString(R.string.private_unlock_key));
 
-			if (expectedResponseKey.equals(responseKey)) {
+			if (expectedResponseKey != null && expectedResponseKey.equals(responseKey)) {
 				updateUnlockerAppStatus(true);
 
 				if (mIsCreationFailed) {

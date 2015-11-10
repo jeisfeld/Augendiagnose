@@ -1,13 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CANCEL_AND_VIEW_IMAGES;
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.RE_TAKE_PHOTO;
-import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.TAKE_PHOTO;
-import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.LEFT;
-import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIGHT;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Arrays;
@@ -44,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -64,6 +57,14 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
+
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CANCEL_AND_VIEW_IMAGES;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.RE_TAKE_PHOTO;
+import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.TAKE_PHOTO;
+import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.LEFT;
+import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIGHT;
 
 /**
  * An activity to take pictures with the camera.
@@ -182,8 +183,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
-	 * @param activity
-	 *            The activity from which the activity is started.
+	 * @param activity The activity from which the activity is started.
 	 */
 	public static final void startActivity(final Activity activity) {
 		Intent intent = new Intent(activity, CameraActivity.class);
@@ -193,10 +193,8 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
-	 * @param activity
-	 *            The activity from which the activity is started.
-	 * @param photoFolder
-	 *            The folder where to store the photos.
+	 * @param activity    The activity from which the activity is started.
+	 * @param photoFolder The folder where to store the photos.
 	 */
 	public static final void startActivity(final Activity activity, final String photoFolder) {
 		Intent intent = new Intent(activity, CameraActivity.class);
@@ -207,12 +205,9 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity for re-checking two images.
 	 *
-	 * @param activity
-	 *            The activity from which the activity is started.
-	 * @param photoRight
-	 *            The path of the right eye image
-	 * @param photoLeft
-	 *            The path of the left eye image
+	 * @param activity   The activity from which the activity is started.
+	 * @param photoRight The path of the right eye image
+	 * @param photoLeft  The path of the left eye image
 	 */
 	public static final void startActivity(final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
@@ -624,10 +619,8 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Change to the given action.
 	 *
-	 * @param action
-	 *            The new action.
-	 * @param rightLeft
-	 *            the next eye side.
+	 * @param action    The new action.
+	 * @param rightLeft the next eye side.
 	 */
 	private void setAction(final Action action, final RightLeft rightLeft) {
 		mCurrentAction = action;
@@ -744,8 +737,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Update the flashlight mode.
 	 *
-	 * @param flashlightMode
-	 *            The new flashlight mode.
+	 * @param flashlightMode The new flashlight mode.
 	 */
 	private void setFlashlightMode(final FlashMode flashlightMode) {
 		mCurrentFlashlightMode = flashlightMode;
@@ -755,8 +747,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Update the focus mode.
 	 *
-	 * @param focusMode
-	 *            The new focus mode.
+	 * @param focusMode The new focus mode.
 	 */
 	private void setFocusMode(final FocusMode focusMode) {
 		mCurrentFocusMode = focusMode;
@@ -810,8 +801,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Set the thumb image with a byte array.
 	 *
-	 * @param data
-	 *            The data representing the bitmap.
+	 * @param data The data representing the bitmap.
 	 */
 	private void setThumbImage(final byte[] data) {
 		ImageView imageView = (ImageView) findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
@@ -824,10 +814,8 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Set the thumb image from a file.
 	 *
-	 * @param file
-	 *            The file to be put in the thumb.
-	 * @param rightLeft
-	 *            The side of the eye
+	 * @param file      The file to be put in the thumb.
+	 * @param rightLeft The side of the eye
 	 */
 	private void setThumbImage(final String file, final RightLeft rightLeft) {
 		ImageView imageView = (ImageView) findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
@@ -844,8 +832,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Show the captured image for preview as fixed image.
 	 *
-	 * @param data
-	 *            The data representing the image.
+	 * @param data The data representing the image.
 	 */
 	private void setReviewImage(final byte[] data) {
 		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
@@ -890,8 +877,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Draw the overlay circle.
 	 *
-	 * @param circleType
-	 *            the flag holding the circle type.
+	 * @param circleType the flag holding the circle type.
 	 */
 	private void drawOverlayCircle(final int circleType) {
 		Bitmap overlayBitmap = Bitmap.createBitmap(CIRCLE_BITMAP_SIZE, CIRCLE_BITMAP_SIZE, Bitmap.Config.ARGB_8888);
@@ -964,7 +950,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The callback called when pictures are taken.
 	 */
-	private CameraCallback mOnPictureTakenHandler = new CameraCallback() {
+	private final CameraCallback mOnPictureTakenHandler = new CameraCallback() {
 		@Override
 		public void onTakingPicture() {
 			runOnUiThread(new Runnable() {
@@ -1084,10 +1070,10 @@ public class CameraActivity extends BaseActivity {
 		boolean enableFlashlight = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash);
 
 		if (enableFlashlight) {
-			mFlashlightModes = Arrays.asList(new FlashMode[] { FlashMode.OFF, FlashMode.ON, FlashMode.TORCH });
+			mFlashlightModes = Arrays.asList(FlashMode.OFF, FlashMode.ON, FlashMode.TORCH);
 		}
 		else {
-			mFlashlightModes = Arrays.asList(new FlashMode[] { FlashMode.OFF, FlashMode.TORCH });
+			mFlashlightModes = Arrays.asList(FlashMode.OFF, FlashMode.TORCH);
 		}
 	}
 
@@ -1126,27 +1112,24 @@ public class CameraActivity extends BaseActivity {
 		/**
 		 * The data to be saved.
 		 */
-		private byte[] mImageData;
+		private final byte[] mImageData;
 
 		/**
 		 * The side of the eye to be saved.
 		 */
-		private RightLeft mRightLeft;
+		private final RightLeft mRightLeft;
 
 		/**
 		 * The metadata to be stored.
 		 */
-		private JpegMetadata mMetadata;
+		private final JpegMetadata mMetadata;
 
 		/**
 		 * Constructor, passing the data to be saved.
 		 *
-		 * @param data
-		 *            The data to be saved.
-		 * @param rightLeft
-		 *            The side of the eye to be saved.
-		 * @param metadata
-		 *            Metadata to be stored in the photo.
+		 * @param data      The data to be saved.
+		 * @param rightLeft The side of the eye to be saved.
+		 * @param metadata  Metadata to be stored in the photo.
 		 */
 		private SavePhotoTask(final byte[] data, final RightLeft rightLeft, final JpegMetadata metadata) {
 			this.mImageData = data;
@@ -1193,26 +1176,22 @@ public class CameraActivity extends BaseActivity {
 		/**
 		 * Callback called after the picture is taken.
 		 *
-		 * @param data
-		 *            The image data.
+		 * @param data The image data.
 		 */
 		void onPictureTaken(byte[] data);
 
 		/**
 		 * Callback called on fatal camera errors.
 		 *
-		 * @param message
-		 *            The error message as String
-		 * @param e
-		 *            The exception
+		 * @param message The error message as String
+		 * @param e       The exception
 		 */
 		void onCameraError(final String message, final Exception e);
 
 		/**
 		 * Give information which focus modes and flash modes are supported by the camera.
 		 *
-		 * @param focusModes
-		 *            The supported focus modes.
+		 * @param focusModes The supported focus modes.
 		 */
 		void updateAvailableModes(List<FocusMode> focusModes);
 	}

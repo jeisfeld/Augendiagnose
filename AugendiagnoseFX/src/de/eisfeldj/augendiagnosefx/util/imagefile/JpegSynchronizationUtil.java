@@ -6,6 +6,7 @@ import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+
 import javafx.application.Platform;
 
 /**
@@ -24,11 +25,11 @@ public final class JpegSynchronizationUtil {
 	/**
 	 * Storage for currently running save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> mRunningSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mRunningSaveRequests = new HashMap<>();
 	/**
 	 * Storage for queued save tasks.
 	 */
-	private static HashMap<String, JpegMetadata> mQueuedSaveRequests = new HashMap<String, JpegMetadata>();
+	private static HashMap<String, JpegMetadata> mQueuedSaveRequests = new HashMap<>();
 
 	/**
 	 * This method handles a request to retrieve metadata for a file. If there is no running async task to update

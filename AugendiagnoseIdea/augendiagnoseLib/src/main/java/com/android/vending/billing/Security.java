@@ -36,12 +36,9 @@ public final class Security {
 	 * JSON format and signed with a private key. The data also contains the PurchaseState and product ID of the
 	 * purchase.
 	 *
-	 * @param base64PublicKey
-	 *            the base64-encoded public key to use for verifying.
-	 * @param signedData
-	 *            the signed JSON string (signed, not encrypted)
-	 * @param signature
-	 *            the signature for the data, signed with the private key
+	 * @param base64PublicKey the base64-encoded public key to use for verifying.
+	 * @param signedData      the signed JSON string (signed, not encrypted)
+	 * @param signature       the signature for the data, signed with the private key
 	 * @return true if verification was successful.
 	 */
 	public static boolean verifyPurchase(final String base64PublicKey, final String signedData, final String signature) {
@@ -50,11 +47,9 @@ public final class Security {
 			return false;
 		}
 
-		boolean verified = false;
 		if (!TextUtils.isEmpty(signature)) {
 			PublicKey key = Security.generatePublicKey(base64PublicKey);
-			verified = Security.verify(key, signedData, signature);
-			if (!verified) {
+			if (!Security.verify(key, signedData, signature)) {
 				Log.w(TAG, "signature does not match data.");
 				return false;
 			}
@@ -65,11 +60,10 @@ public final class Security {
 	/**
 	 * Generates a PublicKey instance from a string containing the Base64-encoded public key.
 	 *
-	 * @param encodedPublicKey
-	 *            Base64-encoded public key
+	 * @param encodedPublicKey Base64-encoded public key
 	 * @return the PublicKey instance.
 	 */
-	public static PublicKey generatePublicKey(final String encodedPublicKey) {
+	private static PublicKey generatePublicKey(final String encodedPublicKey) {
 		try {
 			byte[] decodedKey = Base64.decode(encodedPublicKey);
 			KeyFactory keyFactory = KeyFactory.getInstance(KEY_FACTORY_ALGORITHM);
@@ -92,15 +86,12 @@ public final class Security {
 	 * Verifies that the signature from the server matches the computed signature on the data. Returns true if the data
 	 * is correctly signed.
 	 *
-	 * @param publicKey
-	 *            public key associated with the developer account
-	 * @param signedData
-	 *            signed data from server
-	 * @param signature
-	 *            server signature
+	 * @param publicKey  public key associated with the developer account
+	 * @param signedData signed data from server
+	 * @param signature  server signature
 	 * @return true if the data and signature match
 	 */
-	public static boolean verify(final PublicKey publicKey, final String signedData, final String signature) {
+	private static boolean verify(final PublicKey publicKey, final String signedData, final String signature) {
 		Signature sig;
 		try {
 			sig = Signature.getInstance(SIGNATURE_ALGORITHM);

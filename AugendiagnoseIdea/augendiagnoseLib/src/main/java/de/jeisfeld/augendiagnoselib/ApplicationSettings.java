@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib;
 import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
+
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -37,8 +38,7 @@ public abstract class ApplicationSettings {
 	/**
 	 * Start the application.
 	 *
-	 * @param triggeringActivity
-	 *            the triggering activity.
+	 * @param triggeringActivity the triggering activity.
 	 */
 	public abstract void startApplication(final Activity triggeringActivity);
 }

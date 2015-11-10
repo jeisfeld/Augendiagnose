@@ -8,7 +8,7 @@ public class PurchasedSku {
 	/**
 	 * The purchase.
 	 */
-	private Purchase mPurchase;
+	private final Purchase mPurchase;
 
 	public final Purchase getPurchase() {
 		return mPurchase;
@@ -17,7 +17,7 @@ public class PurchasedSku {
 	/**
 	 * The SKU details of the purchase.
 	 */
-	private SkuDetails mSkuDetails;
+	private final SkuDetails mSkuDetails;
 
 	public final SkuDetails getSkuDetails() {
 		return mSkuDetails;
@@ -26,10 +26,8 @@ public class PurchasedSku {
 	/**
 	 * Constructor, passing the SKU details and the purchase.
 	 *
-	 * @param skuDetails
-	 *            The SKU details
-	 * @param purchase
-	 *            The purchase.
+	 * @param skuDetails The SKU details
+	 * @param purchase   The purchase.
 	 */
 	public PurchasedSku(final SkuDetails skuDetails, final Purchase purchase) {
 		this.mSkuDetails = skuDetails;

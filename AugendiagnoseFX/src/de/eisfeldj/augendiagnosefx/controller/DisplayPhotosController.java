@@ -1,8 +1,5 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
@@ -25,6 +22,7 @@ import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,6 +38,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
+
 /**
  * BaseController for the "Display Photos" page.
  */
@@ -47,7 +48,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	/**
 	 * The list of folder names which should be shown on top of the list.
 	 */
-	protected static final String[] FOLDERS_TOP = { "TOPOGRAPH", "TOPOGRAF", "IRIDOLOG" };
+	protected static final String[] FOLDERS_TOP = {"TOPOGRAPH", "TOPOGRAF", "IRIDOLOG"};
 
 	/**
 	 * The previous selected name.
@@ -213,7 +214,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			}
 		});
 
-		List<String> folderNames = new ArrayList<String>();
+		List<String> folderNames = new ArrayList<>();
 		if (folders == null) {
 			return folderNames;
 		}
@@ -288,7 +289,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 * @return The list of eye photo pairs.
 	 */
 	private EyePhotoPair[] createEyePhotoList(final File folder) {
-		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
+		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>();
 
 		File[] files = folder.listFiles(new FilenameFilter() {
 			@Override
@@ -324,7 +325,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		}
 
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>(new Comparator<Date>() {
+		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<>(new Comparator<Date>() {
 			@Override
 			public int compare(final Date lhs, final Date rhs) {
 				return rhs.compareTo(lhs);

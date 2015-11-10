@@ -19,15 +19,13 @@ public class ColorStateDrawable extends LayerDrawable {
 	/**
 	 * Ths color of this drawable.
 	 */
-	private int mColor;
+	private final int mColor;
 
 	/**
 	 * Constructor setting the color.
 	 *
-	 * @param layers
-	 *            The layers (required for super constructor)
-	 * @param color
-	 *            The color.
+	 * @param layers The layers (required for super constructor)
+	 * @param color  The color.
 	 */
 	public ColorStateDrawable(final Drawable[] layers, final int color) {
 		super(layers);
@@ -57,8 +55,7 @@ public class ColorStateDrawable extends LayerDrawable {
 	/**
 	 * Given a particular color, adjusts its value by a multiplier.
 	 *
-	 * @param color
-	 *            the color.
+	 * @param color the color.
 	 * @return the adjusted color.
 	 */
 	private static int getPressedColor(final int color) {

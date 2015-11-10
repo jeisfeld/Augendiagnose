@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
@@ -44,8 +45,7 @@ public class DisplayHtmlFragment extends Fragment {
 	/**
 	 * Initialize the listFoldersFragment with the resource.
 	 *
-	 * @param initialResource
-	 *            The resource id of the HTML to be displayed.
+	 * @param initialResource The resource id of the HTML to be displayed.
 	 */
 	public final void setParameters(final int initialResource) {
 		Bundle args = new Bundle();
@@ -63,13 +63,16 @@ public class DisplayHtmlFragment extends Fragment {
 
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-			final Bundle savedInstanceState) {
+								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_display_html, container, false);
 	}
 
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
@@ -94,10 +97,8 @@ public class DisplayHtmlFragment extends Fragment {
 	/**
 	 * Enable a WebView to open links in the external browser.
 	 *
-	 * @param webView
-	 *            The webView.
-	 * @param callback
-	 *            A callback that can be used to trigger application code from links.
+	 * @param webView  The webView.
+	 * @param callback A callback that can be used to trigger application code from links.
 	 */
 	public static void setOpenLinksInExternalBrowser(final WebView webView, final WebViewLinkCallback callback) {
 		webView.setWebViewClient(new WebViewClient() {
@@ -130,8 +131,7 @@ public class DisplayHtmlFragment extends Fragment {
 		/**
 		 * Callback handler for a WebView link action.
 		 *
-		 * @param linkAction
-		 *            The action in the link.
+		 * @param linkAction The action in the link.
 		 */
 		void handleLinkAction(String linkAction);
 	}

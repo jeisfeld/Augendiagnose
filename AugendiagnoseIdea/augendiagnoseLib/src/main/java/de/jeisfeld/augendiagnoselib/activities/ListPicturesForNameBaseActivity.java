@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 
 import android.os.Bundle;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
@@ -63,8 +64,7 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 	/**
 	 * onClick action for Button "additional pictures".
 	 *
-	 * @param view
-	 *            The view triggering the onClick action.
+	 * @param view The view triggering the onClick action.
 	 */
 	public final void selectDifferentPictureActivity(final View view) {
 		ListFoldersForDisplaySecondActivity.startActivity(this);

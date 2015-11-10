@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
@@ -21,7 +22,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	/**
 	 * A map linking the TextViews containing the date to their position.
 	 */
-	private Map<TextView, Integer> mPositionMap = new HashMap<TextView, Integer>();
+	private final Map<TextView, Integer> mPositionMap = new HashMap<>();
 
 	/**
 	 * The fragment using the adapter.
@@ -31,15 +32,12 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	/**
 	 * Constructor for the adapter.
 	 *
-	 * @param activity
-	 *            The activity using the adapter.
-	 * @param fragment
-	 *            The fragment using the adapter.
-	 * @param eyePhotoPairs
-	 *            The array of eye photo pairs to be displayed.
+	 * @param activity      The activity using the adapter.
+	 * @param fragment      The fragment using the adapter.
+	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
 	 */
 	public ListPicturesForNameArrayAdapter(final Activity activity, final ListPicturesForNameFragment fragment,
-			final EyePhotoPair[] eyePhotoPairs) {
+										   final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
 		this.mFragment = fragment;
 	}
@@ -47,8 +45,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	/**
 	 * Default adapter to be used by the framework.
 	 *
-	 * @param context
-	 *            The Context the view is running in.
+	 * @param context The Context the view is running in.
 	 */
 	public ListPicturesForNameArrayAdapter(final Context context) {
 		super(context);
@@ -94,8 +91,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	/**
 	 * Retrieve the row corresponding to a TextView displaying the date.
 	 *
-	 * @param view
-	 *            The TextView displaying the date.
+	 * @param view The TextView displaying the date.
 	 * @return The row
 	 */
 	public final int getRow(final TextView view) {

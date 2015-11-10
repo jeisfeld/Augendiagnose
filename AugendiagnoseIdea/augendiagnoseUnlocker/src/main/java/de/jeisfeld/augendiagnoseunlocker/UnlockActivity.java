@@ -39,11 +39,10 @@ public class UnlockActivity extends Activity {
 	/**
 	 * Create a hash value of a String.
 	 *
-	 * @param input
-	 *            The input string.
+	 * @param input The input string.
 	 * @return The hash value.
 	 */
-	public static String createHash(final String input) {
+	private static String createHash(final String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			md.reset();

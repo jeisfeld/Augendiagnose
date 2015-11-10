@@ -16,6 +16,7 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 
@@ -51,8 +52,7 @@ public final class SystemUtil {
 	/**
 	 * Check if Android version is at least the given version.
 	 *
-	 * @param version
-	 *            The version
+	 * @param version The version
 	 * @return true if Android version is at least the given version
 	 */
 	public static boolean isAtLeastVersion(final int version) {
@@ -100,19 +100,13 @@ public final class SystemUtil {
 	public static boolean hasManualSensor() {
 		PackageManager pm = Application.getAppContext().getPackageManager();
 
-		if (isAndroid5()) {
-			return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_CAPABILITY_MANUAL_SENSOR);
-		}
-		else {
-			return false;
-		}
+		return isAndroid5() && pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_CAPABILITY_MANUAL_SENSOR);
 	}
 
 	/**
 	 * Determine if an app is installed.
 	 *
-	 * @param appPackage
-	 *            the app package name.
+	 * @param appPackage the app package name.
 	 * @return true if the app is installed.
 	 */
 	public static boolean isAppInstalled(final String appPackage) {
@@ -151,7 +145,7 @@ public final class SystemUtil {
 	 *
 	 * @return the default display.
 	 */
-	public static Display getDefaultDisplay() {
+	private static Display getDefaultDisplay() {
 		WindowManager wm = (WindowManager) Application.getAppContext().getSystemService(Context.WINDOW_SERVICE);
 		return wm.getDefaultDisplay();
 	}
@@ -187,7 +181,7 @@ public final class SystemUtil {
 	 *
 	 * @return The device id.
 	 */
-	public static String getDeviceId() {
+	private static String getDeviceId() {
 		TelephonyManager tm =
 				(TelephonyManager) Application.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
 		return tm.getDeviceId();

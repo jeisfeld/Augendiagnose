@@ -12,6 +12,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -39,15 +40,13 @@ public class SettingsActivity extends PreferenceActivity {
 	/**
 	 * The path resources for which external storage prefix should be replaced.
 	 */
-	private static final int[] PATH_RESOURCES = { R.string.key_folder_input, R.string.key_folder_photos };
+	private static final int[] PATH_RESOURCES = {R.string.key_folder_input, R.string.key_folder_photos};
 
 	/**
 	 * Utility method to start the activity.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param prefType
-	 *            The type of preferences to be displayed.
+	 * @param context  The context in which the activity is started.
+	 * @param prefType The type of preferences to be displayed.
 	 */
 	public static final void startActivity(final Context context, final Integer prefType) {
 		Intent intent = new Intent(context, SettingsActivity.class);
@@ -90,7 +89,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 	@Override
 	public final void onBuildHeaders(final List<Header> target) {
-		List<Header> baseHeaders = new ArrayList<Header>();
+		List<Header> baseHeaders = new ArrayList<>();
 
 		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
 		if (prefType == -1) {
@@ -101,7 +100,7 @@ public class SettingsActivity extends PreferenceActivity {
 				Header header = baseHeaders.get(i);
 				String listPrefType = header.fragmentArguments == null ? "" : header.fragmentArguments.getString(SettingsFragment.STRING_PREF_TYPE);
 
-				if (listPrefType.equals(getString(R.string.key_dummy_screen_input_settings))
+				if (listPrefType == null || listPrefType.equals(getString(R.string.key_dummy_screen_input_settings))
 						&& getString(R.string.pref_title_folder_input).length() == 0) {
 					// ignore basic settings if there is no need to enter input folder
 					continue;
@@ -147,8 +146,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * Set the default shared preferences (after first installation) Regarding paths, choose external folder as base
 	 * folder. For Bluestacks, chose bluestacks shared folder as base folder.
 	 *
-	 * @param context
-	 *            The Context in which the preferences should be set.
+	 * @param context The Context in which the preferences should be set.
 	 */
 	@SuppressLint("SdCardPath")
 	public static final void setDefaultSharedPreferences(final Context context) {

@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.os.Bundle;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -30,8 +31,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
 	 * Populate the ListFoldersBaseFragment with parameters.
 	 *
-	 * @param fragment
-	 *            The fragment to be populated.
+	 * @param fragment The fragment to be populated.
 	 */
 	protected final void setFragmentParameters(final ListFoldersBaseFragment fragment) {
 		fragment.setParameters(mParentFolder);
@@ -40,10 +40,8 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
 	 * Display the ListFoldersBaseFragment in the main listFoldersFragment container.
 	 *
-	 * @param fragment
-	 *            The fragment to be displayed.
-	 * @param tag
-	 *            The tag name of the fragment.
+	 * @param fragment The fragment to be displayed.
+	 * @param tag      The tag name of the fragment.
 	 */
 	protected final void displayOnFullScreen(final ListFoldersBaseFragment fragment, final String tag) {
 		getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, tag).commit();

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.fragments.DirectoryChooserDialogFragment;
 import de.jeisfeld.augendiagnoselib.fragments.DirectoryChooserDialogFragment.ChosenDirectoryListener;
@@ -61,10 +62,8 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * The constructor replaces placeholders for external storage and camera folder.
 	 *
-	 * @param context
-	 *            The Context this is associated with.
-	 * @param attrs
-	 *            (from Preference) The attributes of the XML tag that is inflating the preference.
+	 * @param context The Context this is associated with.
+	 * @param attrs   (from Preference) The attributes of the XML tag that is inflating the preference.
 	 */
 	public DirectorySelectionPreference(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
@@ -89,8 +88,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * Replace special folder tags in a path.
 	 *
-	 * @param path
-	 *            The path.
+	 * @param path The path.
 	 * @return The path with special folder tags replaced.
 	 */
 	public static final String replaceSpecialFolderTags(final String path) {
@@ -111,8 +109,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * Standard constructor.
 	 *
-	 * @param context
-	 *            The Context this is associated with.
+	 * @param context The Context this is associated with.
 	 */
 	public DirectorySelectionPreference(final Context context) {
 		this(context, null);
@@ -121,8 +118,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * Create the dialog and prepare the creation of the directory selection dialog.
 	 *
-	 * @param builder
-	 *            The DialogBuilder to be customized.
+	 * @param builder The DialogBuilder to be customized.
 	 */
 	@Override
 	protected final void onPrepareDialogBuilder(final Builder builder) {
@@ -185,9 +181,8 @@ public class DirectorySelectionPreference extends ListPreference {
 	 * Fill the value after closing the dialog. This is mostly the same as in ListPreference, but takes special care in
 	 * the case of custom folder.
 	 *
-	 * @param positiveResult
-	 *            (from DialogPreference) positiveResult Whether the positive button was clicked (true), or the negative
-	 *            button was clicked or the dialog was canceled (false).
+	 * @param positiveResult (from DialogPreference) positiveResult Whether the positive button was clicked (true), or the negative
+	 *                       button was clicked or the dialog was canceled (false).
 	 */
 	@Override
 	protected final void onDialogClosed(final boolean positiveResult) {
@@ -220,8 +215,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * Set a listener called when the dialog is closed.
 	 *
-	 * @param listener
-	 *            The listener.
+	 * @param listener The listener.
 	 */
 	public final void setOnDialogClosedListener(final OnDialogClosedListener listener) {
 		mOnDialogClosedListener = listener;

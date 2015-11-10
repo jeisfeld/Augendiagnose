@@ -17,7 +17,7 @@ public class EyePhotoPair {
 		return mRightEye;
 	}
 
-	public final void setRightEye(final EyePhoto rightEye) {
+	private void setRightEye(final EyePhoto rightEye) {
 		this.mRightEye = rightEye;
 	}
 
@@ -25,15 +25,14 @@ public class EyePhotoPair {
 		return mLeftEye;
 	}
 
-	public final void setLeftEye(final EyePhoto leftEye) {
+	private void setLeftEye(final EyePhoto leftEye) {
 		this.mLeftEye = leftEye;
 	}
 
 	/**
 	 * Set the right or left eye photo in the pair (dependent on the information stored in the photo).
 	 *
-	 * @param eyePhoto
-	 *            the photo to be stored.
+	 * @param eyePhoto the photo to be stored.
 	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		switch (eyePhoto.getRightLeft()) {
@@ -60,8 +59,7 @@ public class EyePhotoPair {
 	/**
 	 * Return the date as String for display (Assumption: both photos should have the same date.).
 	 *
-	 * @param format
-	 *            the date format
+	 * @param format the date format
 	 * @return the formatted date.
 	 */
 	public final String getDateDisplayString(final String format) {
@@ -89,8 +87,7 @@ public class EyePhotoPair {
 	/**
 	 * Move the eye photo pair to a different folder.
 	 *
-	 * @param targetFolder
-	 *            the target folder.
+	 * @param targetFolder the target folder.
 	 * @return true if the move was successful on both eyes.
 	 */
 	public final boolean moveToFolder(final String targetFolder) {
@@ -100,8 +97,7 @@ public class EyePhotoPair {
 	/**
 	 * Change the date of the eye photo pair.
 	 *
-	 * @param newDate
-	 *            the new date.
+	 * @param newDate the new date.
 	 * @return true if the change operation was successful on both eyes.
 	 */
 	public final boolean changeDate(final Date newDate) {

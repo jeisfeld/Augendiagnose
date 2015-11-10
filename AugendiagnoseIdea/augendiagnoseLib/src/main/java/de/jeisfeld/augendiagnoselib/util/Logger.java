@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**
@@ -18,8 +19,7 @@ public final class Logger {
 	/**
 	 * Make a log entry.
 	 *
-	 * @param output
-	 *            the content of th log entry.
+	 * @param output the content of th log entry.
 	 */
 	public static void log(final String output) {
 		if (output == null) {

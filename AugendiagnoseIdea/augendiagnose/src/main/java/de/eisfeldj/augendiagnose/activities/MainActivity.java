@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity {
 			// OrganizeNewPhotosActivity.
 			ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
 			if (imageUris != null) {
-				ArrayList<String> fileNames = new ArrayList<String>();
+				ArrayList<String> fileNames = new ArrayList<>();
 				for (int i = 0; i < imageUris.size(); i++) {
 					if (ImageUtil.getMimeType(imageUris.get(i)).startsWith("image/")) {
 						String fileName = MediaStoreUtil.getRealPathFromUri(imageUris.get(i));
@@ -96,8 +97,7 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * onClick action for Button to open the Eye-Fi app.
 	 *
-	 * @param view
-	 *            the button to open the Eye-Fi app.
+	 * @param view the button to open the Eye-Fi app.
 	 */
 	public final void openEyeFiApp(final View view) {
 		if (SystemUtil.isAppInstalled("fi.eye.android")) {
@@ -118,8 +118,7 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * onClick action for Button to start the activity to take pictures.
 	 *
-	 * @param view
-	 *            the button to take pictures.
+	 * @param view the button to take pictures.
 	 */
 	public final void takePicturesActivity(final View view) {
 		CameraActivity.startActivity(this, PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
@@ -128,8 +127,7 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * onClick action for Button to display eye photos.
 	 *
-	 * @param view
-	 *            the button to display the eye photos.
+	 * @param view the button to display the eye photos.
 	 */
 	public final void listFoldersForDisplayActivity(final View view) {
 		ListFoldersForDisplayActivity.startActivity(this);
@@ -138,8 +136,7 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * onClick action for Button to organize new eye photos.
 	 *
-	 * @param view
-	 *            the button to organize new folders.
+	 * @param view the button to organize new folders.
 	 */
 	public final void organizeNewFoldersActivity(final View view) {
 		OrganizeNewPhotosActivity.startActivity(this,

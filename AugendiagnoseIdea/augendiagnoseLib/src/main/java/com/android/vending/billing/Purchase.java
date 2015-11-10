@@ -10,7 +10,7 @@ public class Purchase {
 
 	// JAVADOC:OFF
 
-	private String mItemType; // ITEM_TYPE_INAPP or ITEM_TYPE_SUBS
+	private final String mItemType; // ITEM_TYPE_INAPP or ITEM_TYPE_SUBS
 	private String mOrderId;
 	private String mPackageName;
 	private String mSku;
@@ -18,7 +18,7 @@ public class Purchase {
 	private int mPurchaseState;
 	private String mDeveloperPayload;
 	private String mToken;
-	private String mOriginalJson;
+	private final String mOriginalJson;
 	private String mSignature;
 
 	public Purchase(final String itemType, final String jsonPurchaseInfo, final String signature) throws JSONException {

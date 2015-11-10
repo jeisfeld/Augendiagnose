@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity;
 import de.jeisfeld.augendiagnoselib.util.TwoImageSelectionHandler;
@@ -27,10 +28,8 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	/**
 	 * Constructor for the adapter.
 	 *
-	 * @param activity
-	 *            The activity using the adapter.
-	 * @param eyePhotos
-	 *            The array of eye photos to be displayed.
+	 * @param activity  The activity using the adapter.
+	 * @param eyePhotos The array of eye photos to be displayed.
 	 */
 	public SelectTwoPicturesArrayAdapter(final SelectTwoPicturesActivity activity, final EyePhoto[] eyePhotos) {
 		super(activity, R.layout.text_view_initializing, eyePhotos);
@@ -41,8 +40,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	/**
 	 * Default adapter to be used by the framework.
 	 *
-	 * @param context
-	 *            The Context the view is running in.
+	 * @param context The Context the view is running in.
 	 */
 	public SelectTwoPicturesArrayAdapter(final Context context) {
 		super(context, R.layout.text_view_initializing);

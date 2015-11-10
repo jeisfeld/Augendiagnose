@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
@@ -23,8 +24,7 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context
-	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
 	 * @see android.view.View#View(Context)
 	 */
 	public EyeImageView(final Context context) {
@@ -34,10 +34,8 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context
-	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs
-	 *            The attributes of the XML tag that is inflating the view.
+	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs   The attributes of the XML tag that is inflating the view.
 	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public EyeImageView(final Context context, final AttributeSet attrs) {
@@ -47,13 +45,10 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context
-	 *            The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs
-	 *            The attributes of the XML tag that is inflating the view.
-	 * @param defStyle
-	 *            An attribute in the current theme that contains a reference to a style resource that supplies default
-	 *            values for the view. Can be 0 to not look for defaults.
+	 * @param context  The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs    The attributes of the XML tag that is inflating the view.
+	 * @param defStyle An attribute in the current theme that contains a reference to a style resource that supplies default
+	 *                 values for the view. Can be 0 to not look for defaults.
 	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public EyeImageView(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -63,12 +58,9 @@ public class EyeImageView extends ImageView {
 	/**
 	 * Set the eye photo and create the bitmap.
 	 *
-	 * @param activity
-	 *            The activity holding the view.
-	 * @param newEyePhoto
-	 *            The eyePhoto to be displayed.
-	 * @param postActivities
-	 *            Activities that may be run on the UI thread after loading the image.
+	 * @param activity       The activity holding the view.
+	 * @param newEyePhoto    The eyePhoto to be displayed.
+	 * @param postActivities Activities that may be run on the UI thread after loading the image.
 	 */
 	public final void setEyePhoto(final Activity activity, final EyePhoto newEyePhoto, final Runnable postActivities) {
 		this.mEyePhoto = newEyePhoto;

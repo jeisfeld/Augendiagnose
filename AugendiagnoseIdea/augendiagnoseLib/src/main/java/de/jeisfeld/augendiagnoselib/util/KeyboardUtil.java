@@ -19,7 +19,7 @@ public final class KeyboardUtil {
 	/**
 	 * Utility method to hide the soft keyboard.
 	 *
-	 * @param context the context.
+	 * @param context  the context.
 	 * @param editText the EditText triggering the soft keyboard.
 	 */
 	public static void hideKeyboard(final Context context, final EditText editText) {

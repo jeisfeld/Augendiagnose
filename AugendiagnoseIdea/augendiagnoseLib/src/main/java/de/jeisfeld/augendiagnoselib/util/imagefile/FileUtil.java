@@ -29,6 +29,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -69,14 +70,12 @@ public final class FileUtil {
 					path = test2;
 				}
 				else {
-					File test3 = new File(path, "100MEDIA/");
-					path = test3;
+					path = new File(path, "100MEDIA/");
 				}
 			}
 		}
 		else {
-			File test3 = new File(path, "Camera/");
-			path = test3;
+			path = new File(path, "Camera/");
 		}
 		return path.getAbsolutePath();
 	}
@@ -84,10 +83,8 @@ public final class FileUtil {
 	/**
 	 * Copy a file. The target file may even be on external SD card for Kitkat.
 	 *
-	 * @param source
-	 *            The source file
-	 * @param target
-	 *            The target file
+	 * @param source The source file
+	 * @param target The target file
 	 * @return true if the copying was successful.
 	 */
 	@SuppressWarnings("null")
@@ -172,8 +169,7 @@ public final class FileUtil {
 	/**
 	 * Delete a file. May be even on external SD card.
 	 *
-	 * @param file
-	 *            the file to be deleted.
+	 * @param file the file to be deleted.
 	 * @return True if successfully deleted.
 	 */
 	public static boolean deleteFile(final File file) {
@@ -209,10 +205,8 @@ public final class FileUtil {
 	/**
 	 * Move a file. The target file may even be on external SD card.
 	 *
-	 * @param source
-	 *            The source file
-	 * @param target
-	 *            The target file
+	 * @param source The source file
+	 * @param target The target file
 	 * @return true if the copying was successful.
 	 */
 	public static boolean moveFile(final File source, final File target) {
@@ -231,10 +225,8 @@ public final class FileUtil {
 	/**
 	 * Rename a folder. In case of extSdCard in Kitkat, the old folder stays in place, but files are moved.
 	 *
-	 * @param source
-	 *            The source folder.
-	 * @param target
-	 *            The target folder.
+	 * @param source The source folder.
+	 * @param target The target folder.
 	 * @return true if the renaming was successful.
 	 */
 	public static boolean renameFolder(final File source, final File target) {
@@ -286,8 +278,7 @@ public final class FileUtil {
 	/**
 	 * Get a temp file.
 	 *
-	 * @param file
-	 *            The base file for which to create a temp file.
+	 * @param file The base file for which to create a temp file.
 	 * @return The temp file.
 	 */
 	public static File getTempFile(final File file) {
@@ -295,8 +286,7 @@ public final class FileUtil {
 		if (!extDir.exists()) {
 			extDir.mkdirs();
 		}
-		File tempFile = new File(extDir, file.getName());
-		return tempFile;
+		return new File(extDir, file.getName());
 	}
 
 	/**
@@ -306,7 +296,7 @@ public final class FileUtil {
 	 */
 	public static File getTempJpegFile() {
 		File tempDir = getTempCameraFolder();
-		File tempFile = null;
+		File tempFile;
 		do {
 			int tempFileCounter = PreferenceUtil.incrementCounter(R.string.key_internal_counter_tempfiles);
 			tempFile = new File(tempDir, "tempFile_" + tempFileCounter + ".jpg");
@@ -331,12 +321,7 @@ public final class FileUtil {
 		});
 		Arrays.sort(files);
 
-		if (files == null) {
-			return new File[0];
-		}
-		else {
-			return files;
-		}
+		return files;
 	}
 
 	/**
@@ -355,8 +340,7 @@ public final class FileUtil {
 	/**
 	 * Create a folder. The folder may even be on external SD card for Kitkat.
 	 *
-	 * @param file
-	 *            The folder to be created.
+	 * @param file The folder to be created.
 	 * @return True if creation was successful.
 	 */
 	public static boolean mkdir(final File file) {
@@ -395,7 +379,9 @@ public final class FileUtil {
 			}
 			try {
 				ParcelFileDescriptor fd = resolver.openFileDescriptor(albumArtUri, "r");
-				fd.close();
+				if (fd != null) {
+					fd.close();
+				}
 			}
 			catch (Exception e) {
 				Log.e(Application.TAG, "Could not open file", e);
@@ -414,9 +400,7 @@ public final class FileUtil {
 	/**
 	 * Delete a folder.
 	 *
-	 * @param file
-	 *            The folder name.
-	 *
+	 * @param file The folder name.
 	 * @return true if successful.
 	 */
 	public static boolean rmdir(final File file) {
@@ -452,7 +436,7 @@ public final class FileUtil {
 
 			// Delete the created entry, such that content provider will delete the file.
 			resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
-					new String[] { file.getAbsolutePath() });
+					new String[] {file.getAbsolutePath()});
 		}
 
 		return !file.exists();
@@ -461,8 +445,7 @@ public final class FileUtil {
 	/**
 	 * Delete all files in a folder.
 	 *
-	 * @param folder
-	 *            the folder
+	 * @param folder the folder
 	 * @return true if successful.
 	 */
 	public static boolean deleteFilesInFolder(final File folder) {
@@ -487,12 +470,9 @@ public final class FileUtil {
 	/**
 	 * Delete a directory asynchronously.
 	 *
-	 * @param activity
-	 *            The activity calling this method.
-	 * @param file
-	 *            The folder name.
-	 * @param postActions
-	 *            Commands to be executed after success.
+	 * @param activity    The activity calling this method.
+	 * @param file        The folder name.
+	 * @param postActions Commands to be executed after success.
 	 */
 	public static void rmdirAsynchronously(final Activity activity, final File file, final Runnable postActions) {
 		new Thread() {
@@ -523,8 +503,7 @@ public final class FileUtil {
 	/**
 	 * Check is a file is writable. Detects write issues on external SD card.
 	 *
-	 * @param file
-	 *            The file
+	 * @param file The file
 	 * @return true if the file is writable.
 	 */
 	public static boolean isWritable(final File file) {
@@ -558,8 +537,7 @@ public final class FileUtil {
 	 * Check for a directory if it is possible to create files within this directory, either via normal writing or via
 	 * Storage Access Framework.
 	 *
-	 * @param folder
-	 *            The directory
+	 * @param folder The directory
 	 * @return true if it is possible to write in this directory.
 	 */
 	public static boolean isWritableNormalOrSaf(final File folder) {
@@ -622,7 +600,7 @@ public final class FileUtil {
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	private static String[] getExtSdCardPaths() {
-		List<String> paths = new ArrayList<String>();
+		List<String> paths = new ArrayList<>();
 		for (File file : Application.getAppContext().getExternalFilesDirs("external")) {
 			if (file != null && !file.equals(Application.getAppContext().getExternalFilesDir("external"))) {
 				int index = file.getAbsolutePath().lastIndexOf("/Android/data");
@@ -647,10 +625,9 @@ public final class FileUtil {
 	/**
 	 * Determine the main folder of the external SD card containing the given file.
 	 *
-	 * @param file
-	 *            the file.
+	 * @param file the file.
 	 * @return The main folder of the external SD card containing this file, if the file is on an SD card. Otherwise,
-	 *         null is returned.
+	 * null is returned.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public static String getExtSdCardFolder(final File file) {
@@ -671,8 +648,7 @@ public final class FileUtil {
 	/**
 	 * Determine if a file is on external sd card. (Kitkat or higher.)
 	 *
-	 * @param file
-	 *            The file.
+	 * @param file The file.
 	 * @return true if on external sd card.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
@@ -684,24 +660,21 @@ public final class FileUtil {
 	 * Get a DocumentFile corresponding to the given file (for writing on ExtSdCard on Android 5). If the file is not
 	 * existing, it is created.
 	 *
-	 * @param file
-	 *            The file.
-	 * @param isDirectory
-	 *            flag indicating if the file should be a directory.
-	 * @param createDirectories
-	 *            flag indicating if intermediate path directories should be created if not existing.
+	 * @param file              The file.
+	 * @param isDirectory       flag indicating if the file should be a directory.
+	 * @param createDirectories flag indicating if intermediate path directories should be created if not existing.
 	 * @return The DocumentFile
 	 */
 	private static DocumentFile getDocumentFile(final File file, final boolean isDirectory,
-			final boolean createDirectories) {
+												final boolean createDirectories) {
 		Uri[] treeUris = PreferenceUtil.getTreeUris();
 		Uri treeUri = null;
 
-		if (treeUris == null || treeUris.length == 0) {
+		if (treeUris.length == 0) {
 			return null;
 		}
 
-		String fullPath = null;
+		String fullPath;
 		try {
 			fullPath = file.getCanonicalPath();
 		}
@@ -765,8 +738,7 @@ public final class FileUtil {
 	/**
 	 * Get the full path of a document from its tree URI.
 	 *
-	 * @param treeUri
-	 *            The tree RI.
+	 * @param treeUri The tree RI.
 	 * @return The path (without trailing file separator).
 	 */
 	private static String getFullPathFromTreeUri(final Uri treeUri) {
@@ -786,7 +758,7 @@ public final class FileUtil {
 			documentPath = documentPath.substring(0, documentPath.length() - 1);
 		}
 
-		if (documentPath != null && documentPath.length() > 0) {
+		if (documentPath.length() > 0) {
 			if (documentPath.startsWith(File.separator)) {
 				return volumePath + documentPath;
 			}
@@ -802,8 +774,7 @@ public final class FileUtil {
 	/**
 	 * Get the path of a certain volume.
 	 *
-	 * @param volumeId
-	 *            The volume id.
+	 * @param volumeId The volume id.
 	 * @return The path.
 	 */
 	private static String getVolumePath(final String volumeId) {
@@ -830,7 +801,7 @@ public final class FileUtil {
 				Boolean primary = (Boolean) isPrimary.invoke(storageVolumeElement);
 
 				// primary volume?
-				if (primary.booleanValue() && PRIMARY_VOLUME_NAME.equals(volumeId)) {
+				if (primary && PRIMARY_VOLUME_NAME.equals(volumeId)) {
 					return (String) getPath.invoke(storageVolumeElement);
 				}
 
@@ -853,8 +824,7 @@ public final class FileUtil {
 	/**
 	 * Get the volume ID from the tree URI.
 	 *
-	 * @param treeUri
-	 *            The tree URI.
+	 * @param treeUri The tree URI.
 	 * @return The volume ID.
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -873,8 +843,7 @@ public final class FileUtil {
 	/**
 	 * Get the document path (relative to volume name) for a tree URI (LOLLIPOP).
 	 *
-	 * @param treeUri
-	 *            The tree URI.
+	 * @param treeUri The tree URI.
 	 * @return the document path.
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -895,15 +864,11 @@ public final class FileUtil {
 	 * Copy a resource file into a private target directory, if the target does not yet exist. Required for the Kitkat
 	 * workaround.
 	 *
-	 * @param resource
-	 *            The resource file.
-	 * @param folderName
-	 *            The folder below app folder where the file is copied to.
-	 * @param targetName
-	 *            The name of the target file.
+	 * @param resource   The resource file.
+	 * @param folderName The folder below app folder where the file is copied to.
+	 * @param targetName The name of the target file.
 	 * @return the dummy file.
-	 * @throws IOException
-	 *             thrown if there are issues while copying.
+	 * @throws IOException thrown if there are issues while copying.
 	 */
 	private static File copyDummyFile(final int resource, final String folderName, final String targetName)
 			throws IOException {

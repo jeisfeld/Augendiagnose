@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.ContextMenuReferenceHolder;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
@@ -85,10 +86,8 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	/**
 	 * Start the EditCommentFragment.
 	 *
-	 * @param fragment
-	 *            the DisplayImageFragment starting the activity
-	 * @param text
-	 *            the old value of the text
+	 * @param fragment the DisplayImageFragment starting the activity
+	 * @param text     the old value of the text
 	 */
 	// OVERRIDABLE
 	public void startEditComment(final DisplayImageFragment fragment, final String text) {
@@ -100,10 +99,8 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	/**
 	 * Process the updated comment returned from the EditCommentFragment.
 	 *
-	 * @param text
-	 *            The new comment text.
-	 * @param success
-	 *            flag indicating if the comment fragment was finished successfully.
+	 * @param text    The new comment text.
+	 * @param success flag indicating if the comment fragment was finished successfully.
 	 */
 	public final void processUpdatedComment(final String text, final boolean success) {
 		if (success) {
@@ -117,8 +114,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	/**
 	 * Show the edit listFoldersFragment.
 	 *
-	 * @param text
-	 *            The initial text to be displayed
+	 * @param text The initial text to be displayed
 	 */
 	// OVERRIDABLE
 	protected void showEditFragment(final String text) {
@@ -184,7 +180,7 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 *
 	 * @return true if the EditCommentFragment is active.
 	 */
-	public final boolean isEditingComment() {
+	private boolean isEditingComment() {
 		return mFragmentEdit != null;
 	}
 

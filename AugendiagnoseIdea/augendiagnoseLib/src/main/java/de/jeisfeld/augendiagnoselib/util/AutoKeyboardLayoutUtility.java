@@ -26,8 +26,7 @@ public final class AutoKeyboardLayoutUtility {
 	/**
 	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
 	 *
-	 * @param activity
-	 *            the activity which uses the workaround.
+	 * @param activity the activity which uses the workaround.
 	 */
 	@SuppressWarnings("unused")
 	public static void assistActivity(final Activity activity) {
@@ -37,24 +36,21 @@ public final class AutoKeyboardLayoutUtility {
 	/**
 	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
 	 *
-	 * @param activity
-	 *            the activity which uses the workaround.
-	 * @param callback
-	 *            a callback to be called if the kayboard is shown or hidden.
-	 * @param changeLayout
-	 *            Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
+	 * @param activity     the activity which uses the workaround.
+	 * @param callback     a callback to be called if the kayboard is shown or hidden.
+	 * @param changeLayout Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
 	 */
 	public static void assistActivity(final Activity activity, final OnKeyboardChangeListener callback,
-			final boolean changeLayout) {
+									  final boolean changeLayout) {
 		AutoKeyboardLayoutUtility instance = new AutoKeyboardLayoutUtility(activity);
 		instance.mCallback = callback;
 		instance.mChangeLayout = changeLayout;
 	}
 
 	// JAVADOC:OFF
-	private View mChildOfContent;
+	private final View mChildOfContent;
 	private int mUsableHeightPrevious;
-	private FrameLayout.LayoutParams mFrameLayoutParams;
+	private final FrameLayout.LayoutParams mFrameLayoutParams;
 	private ActivityWithExplicitLayoutTrigger mActivityWithLayoutTrigger = null;
 
 	// JAVADOC:ON
@@ -72,8 +68,7 @@ public final class AutoKeyboardLayoutUtility {
 	/**
 	 * Constructor, adding a listener to change the global layout if required.
 	 *
-	 * @param activity
-	 *            the activity which uses the workaround.
+	 * @param activity the activity which uses the workaround.
 	 */
 	private AutoKeyboardLayoutUtility(final Activity activity) {
 		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
@@ -154,8 +149,7 @@ public final class AutoKeyboardLayoutUtility {
 		/**
 		 * Callback method that will be called if the keyboard is added or removed.
 		 *
-		 * @param visible
-		 *            true if the keyboard is added, false if the keyboard is removed.
+		 * @param visible true if the keyboard is added, false if the keyboard is removed.
 		 */
 		void onKeyboardChanged(final boolean visible);
 	}

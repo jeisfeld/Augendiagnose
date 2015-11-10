@@ -4,15 +4,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.Activity;
+import android.util.Log;
+import android.view.View;
+
 import com.admarvel.android.ads.AdMarvelUtils;
 import com.admarvel.android.ads.AdMarvelUtils.ErrorReason;
 import com.admarvel.android.ads.AdMarvelUtils.SDKAdNetwork;
 import com.admarvel.android.ads.AdMarvelView;
 import com.admarvel.android.ads.AdMarvelView.AdMarvelViewListener;
 
-import android.app.Activity;
-import android.util.Log;
-import android.view.View;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -25,12 +26,12 @@ public final class AdMarvelUtil {
 	/**
 	 * The AdMarvel partnerId.
 	 */
-	public static final String PARTNER_ID = "50a68fd597efa11b";
+	private static final String PARTNER_ID = "50a68fd597efa11b";
 
 	/**
 	 * SiteId for BNR (320x50).
 	 */
-	public static final String SITE_BNR = "130360";
+	private static final String SITE_BNR = "130360";
 	/**
 	 * SiteId for MREC (300x250).
 	 */
@@ -38,17 +39,17 @@ public final class AdMarvelUtil {
 	/**
 	 * SiteId for LDR (728x90).
 	 */
-	public static final String SITE_LDR = "130362";
+	private static final String SITE_LDR = "130362";
 
 	/**
 	 * The countries where ads are displayed.
 	 */
-	public static final String[] AD_COUNTRIES = { "US" };
+	private static final String[] AD_COUNTRIES = {"US"};
 
 	/**
 	 * Frequency after how many ad displays the tip is displayed.
 	 */
-	public static final int TIP_FREQUENCY = 5;
+	private static final int TIP_FREQUENCY = 5;
 
 	/**
 	 * User key prefix that overrides the country setting for displaying the ad.
@@ -67,7 +68,7 @@ public final class AdMarvelUtil {
 	 *
 	 * @return true if eligible.
 	 */
-	public static boolean isEligibleForAd() {
+	private static boolean isEligibleForAd() {
 		// Only for certain access level.
 		if (Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS_WITH_ADS) {
 			return false;
@@ -101,11 +102,10 @@ public final class AdMarvelUtil {
 	/**
 	 * Initialize the AdMarvel SDK. Currently not used.
 	 *
-	 * @param activity
-	 *            The triggering activity.
+	 * @param activity The triggering activity.
 	 */
 	public static void initializeSdk(final Activity activity) {
-		Map<SDKAdNetwork, String> publisherIds = new HashMap<SDKAdNetwork, String>();
+		Map<SDKAdNetwork, String> publisherIds = new HashMap<>();
 		// publisherIds.put(SDKAdNetwork.ADMARVEL, "<App IDs for that AdNetwork>");
 		AdMarvelUtils.initialize(activity, publisherIds);
 	}
@@ -113,12 +113,11 @@ public final class AdMarvelUtil {
 	/**
 	 * Request a banner ad.
 	 *
-	 * @param activity
-	 *            The triggering activity.
+	 * @param activity The triggering activity.
 	 */
-	public static void requestBannerAd(final AdMarvelActivity activity) {
+	private static void requestBannerAd(final AdMarvelActivity activity) {
 		try {
-			Map<String, Object> targetParams = new HashMap<String, Object>();
+			Map<String, Object> targetParams = new HashMap<>();
 			targetParams.put("KEYWORDS", "HCP");
 			targetParams.put("APP_VERSION", Application.getVersionString());
 			AdMarvelView adMarvelView = activity.getAdMarvelView();
@@ -133,8 +132,7 @@ public final class AdMarvelUtil {
 	/**
 	 * Request a banner ad after checking eligibility.
 	 *
-	 * @param activity
-	 *            The triggering activity.
+	 * @param activity The triggering activity.
 	 */
 	public static void requestBannerAdIfEligible(final AdMarvelActivity activity) {
 		if (AdMarvelUtil.isEligibleForAd()) {
@@ -158,13 +156,12 @@ public final class AdMarvelUtil {
 		/**
 		 * The triggering activity.
 		 */
-		private AdMarvelActivity mActivity;
+		private final AdMarvelActivity mActivity;
 
 		/**
 		 * Constructor handing over the activity.
 		 *
-		 * @param activity
-		 *            The triggering activity.
+		 * @param activity The triggering activity.
 		 */
 		AdMarvelListener(final AdMarvelActivity activity) {
 			this.mActivity = activity;

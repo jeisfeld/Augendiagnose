@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
+
 import javafx.scene.paint.Color;
 
 /**
@@ -100,7 +101,7 @@ public final class PreferenceUtil {
 	/**
 	 * A map of default values for preferences.
 	 */
-	private static final Map<String, Object> DEFAULT_MAP = new HashMap<String, Object>();
+	private static final Map<String, Object> DEFAULT_MAP = new HashMap<>();
 
 	/**
 	 * The user's preferences.

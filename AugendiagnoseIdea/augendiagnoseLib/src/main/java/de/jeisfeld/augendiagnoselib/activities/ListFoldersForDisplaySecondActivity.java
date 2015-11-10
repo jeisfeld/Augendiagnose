@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersForDisplaySecondFragment;
@@ -20,8 +21,7 @@ public class ListFoldersForDisplaySecondActivity extends ListFoldersBaseActivity
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
+	 * @param context The context in which the activity is started.
 	 */
 	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, ListFoldersForDisplaySecondActivity.class);

@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.components.SelectTwoPicturesArrayAdapter;
@@ -81,10 +82,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 *
-	 * @param activity
-	 *            The activity starting this activity.
-	 * @param foldername
-	 *            The image folder.
+	 * @param activity   The activity starting this activity.
+	 * @param foldername The image folder.
 	 */
 	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String foldername) {
 		mStaticParentActivity = activity;
@@ -96,10 +95,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity, passing the list of files.
 	 *
-	 * @param activity
-	 *            The activity starting this activity.
-	 * @param fileNames
-	 *            The list of image files.
+	 * @param activity  The activity starting this activity.
+	 * @param fileNames The list of image files.
 	 */
 	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String[] fileNames) {
 		mStaticParentActivity = activity;
@@ -111,10 +108,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * Static helper method to extract the selected filenames from the activity response.
 	 *
-	 * @param resultCode
-	 *            The result code indicating if the response was successful.
-	 * @param data
-	 *            The activity response data.
+	 * @param resultCode The result code indicating if the response was successful.
+	 * @param data       The activity response data.
 	 * @return The returned file names.
 	 */
 	public static final FilePair getResult(final int resultCode, final Intent data) {
@@ -199,10 +194,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * Helper method: Return the selected filenames and finish the activity.
 	 *
-	 * @param filename1
-	 *            The first filename.
-	 * @param filename2
-	 *            The second filename.
+	 * @param filename1 The first filename.
+	 * @param filename2 The second filename.
 	 */
 	public final void returnResult(final String filename1, final String filename2) {
 		Bundle resultData = new Bundle();
@@ -327,10 +320,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		/**
 		 * Constructor to create a pair of files.
 		 *
-		 * @param name1
-		 *            The first file.
-		 * @param name2
-		 *            The second file.
+		 * @param name1 The first file.
+		 * @param name2 The second file.
 		 */
 		public FilePair(final String name1, final String name2) {
 			mFile1 = new File(name1);
@@ -338,9 +329,13 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		}
 
 		/**
-		 * The two files stored in the container.
+		 * The first file stored in the container.
 		 */
-		private File mFile1, mFile2;
+		private final File mFile1;
+		/**
+		 * The sedong file stored in the container.
+		 */
+		private final File mFile2;
 
 		public final File getFile1() {
 			return mFile1;

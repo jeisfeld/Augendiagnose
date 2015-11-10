@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
@@ -67,8 +68,7 @@ public class EyePhoto {
 	/**
 	 * Create the EyePhoto, giving a filename.
 	 *
-	 * @param filename
-	 *            the file name.
+	 * @param filename the file name.
 	 */
 	public EyePhoto(final String filename) {
 		this(new File(filename));
@@ -77,8 +77,7 @@ public class EyePhoto {
 	/**
 	 * Create the EyePhoto, giving a file resource.
 	 *
-	 * @param file
-	 *            the file.
+	 * @param file the file.
 	 */
 	public EyePhoto(final File file) {
 		setPath(file.getParent());
@@ -95,19 +94,14 @@ public class EyePhoto {
 	/**
 	 * Create the EyePhoto, giving details.
 	 *
-	 * @param path
-	 *            The file path
-	 * @param name
-	 *            The person name
-	 * @param date
-	 *            The date
-	 * @param rightLeft
-	 *            right or left eye?
-	 * @param suffix
-	 *            File suffix (".jpg")
+	 * @param path      The file path
+	 * @param name      The person name
+	 * @param date      The date
+	 * @param rightLeft right or left eye?
+	 * @param suffix    File suffix (".jpg")
 	 */
 	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
-			final String suffix) {
+					final String suffix) {
 		setPath(path);
 		setPersonName(name);
 		setDate(date);
@@ -143,8 +137,7 @@ public class EyePhoto {
 	/**
 	 * Set the filename (extracting from it the person personName, the date and the left/right property).
 	 *
-	 * @param filename
-	 *            the filename
+	 * @param filename the filename
 	 */
 	private void setFilename(final String filename) {
 		this.mFilename = filename;
@@ -176,7 +169,7 @@ public class EyePhoto {
 	 *
 	 * @return the file path.
 	 */
-	public final String getPath() {
+	private String getPath() {
 		return mPath;
 	}
 
@@ -209,8 +202,7 @@ public class EyePhoto {
 	/**
 	 * Set the person name (trimmed).
 	 *
-	 * @param name
-	 *            the person name
+	 * @param name the person name
 	 */
 	private void setPersonName(final String name) {
 		if (name == null) {
@@ -225,11 +217,10 @@ public class EyePhoto {
 	/**
 	 * Retrieve the date as a string.
 	 *
-	 * @param format
-	 *            the date format.
+	 * @param format the date format.
 	 * @return the date string.
 	 */
-	public final String getDateString(final String format) {
+	private String getDateString(final String format) {
 		return DateUtil.format(getDate(), format);
 	}
 
@@ -245,10 +236,8 @@ public class EyePhoto {
 	/**
 	 * Set the date from a String.
 	 *
-	 * @param dateString
-	 *            the date string
-	 * @param format
-	 *            the date format
+	 * @param dateString the date string
+	 * @param format     the date format
 	 * @return true if successful.
 	 */
 	private boolean setDateString(final String dateString, final String format) {
@@ -301,7 +290,7 @@ public class EyePhoto {
 	 *
 	 * @return the file
 	 */
-	public final File getFile() {
+	private File getFile() {
 		return new File(getPath(), getFilename());
 	}
 
@@ -326,10 +315,8 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
-	 * @param target
-	 *            the file information of the target file.
-	 * @param allowOverwrite
-	 *            if true, then an existing file is overwritten.
+	 * @param target         the file information of the target file.
+	 * @param allowOverwrite if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
 	public final boolean moveTo(final EyePhoto target, final boolean allowOverwrite) {
@@ -343,8 +330,7 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target folder.
 	 *
-	 * @param folderName
-	 *            the target folder
+	 * @param folderName the target folder
 	 * @return true if the move was successful.
 	 */
 	public final boolean moveToFolder(final String folderName) {
@@ -366,8 +352,7 @@ public class EyePhoto {
 	/**
 	 * Copy the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
-	 * @param target
-	 *            the file information of the target file.
+	 * @param target the file information of the target file.
 	 * @return true if the copying was successful.
 	 */
 	public final boolean copyTo(final EyePhoto target) {
@@ -382,8 +367,7 @@ public class EyePhoto {
 	/**
 	 * Change the personName renaming the file (keeping the path).
 	 *
-	 * @param targetName
-	 *            the target name
+	 * @param targetName the target name
 	 * @return true if the renaming was successful.
 	 */
 	public final boolean changePersonName(final String targetName) {
@@ -410,8 +394,7 @@ public class EyePhoto {
 	/**
 	 * Change the date renaming the file (keeping the path).
 	 *
-	 * @param newDate
-	 *            the target date.
+	 * @param newDate the target date.
 	 * @return true if the change was successful.
 	 */
 	public final boolean changeDate(final Date newDate) {
@@ -446,15 +429,14 @@ public class EyePhoto {
 	 *
 	 * @return a clone (recreation) of this object having the same absolute path.
 	 */
-	public final EyePhoto cloneFromPath() {
+	private EyePhoto cloneFromPath() {
 		return new EyePhoto(getAbsolutePath());
 	}
 
 	/**
 	 * Calculate a bitmap of this photo and store it for later retrieval.
 	 *
-	 * @param maxSize
-	 *            the target size of the bitmap
+	 * @param maxSize the target size of the bitmap
 	 */
 	public final synchronized void precalculateImageBitmap(final int maxSize) {
 		if (maxSize != mCachedSize || mCachedBitmap == null) {
@@ -466,8 +448,7 @@ public class EyePhoto {
 	/**
 	 * Return a bitmap of this photo.
 	 *
-	 * @param maxSize
-	 *            The maximum size of this bitmap. If bigger, it will be resized
+	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized
 	 * @return the bitmap
 	 */
 	public final Bitmap getImageBitmap(final int maxSize) {
@@ -496,8 +477,7 @@ public class EyePhoto {
 	/**
 	 * Store the metadata in the file.
 	 *
-	 * @param metadata
-	 *            the metadata to be stored.
+	 * @param metadata the metadata to be stored.
 	 */
 	public final void storeImageMetadata(final JpegMetadata metadata) {
 		JpegSynchronizationUtil.storeJpegMetadata(getAbsolutePath(), metadata);
@@ -506,8 +486,7 @@ public class EyePhoto {
 	/**
 	 * Update metadata object with default metadata, based on the file name.
 	 *
-	 * @param metadata
-	 *            the metadata object to be enhanced by the default information.
+	 * @param metadata the metadata object to be enhanced by the default information.
 	 */
 	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
 		metadata.setPerson(getPersonName());
@@ -531,8 +510,7 @@ public class EyePhoto {
 	/**
 	 * Compare two images for equality (by path).
 	 *
-	 * @param other
-	 *            the other image to be compared to
+	 * @param other the other image to be compared to
 	 * @return true if the bitmaps have the same path.
 	 */
 	@Override
@@ -610,8 +588,7 @@ public class EyePhoto {
 		/**
 		 * Convert a String into a RightLeft enum (by first letter).
 		 *
-		 * @param rightLeftString
-		 *            The String to be converted.
+		 * @param rightLeftString The String to be converted.
 		 * @return the converted RightString.
 		 */
 		public static final RightLeft fromString(final String rightLeftString) {

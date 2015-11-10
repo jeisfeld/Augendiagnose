@@ -1,10 +1,11 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import com.admarvel.android.ads.AdMarvelView;
-
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewManager;
+
+import com.admarvel.android.ads.AdMarvelView;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -31,7 +32,7 @@ public abstract class AdMarvelActivity extends Activity {
 	/**
 	 * Delete the ad view.
 	 */
-	protected final void deleteAdMarvelView() {
+	private void deleteAdMarvelView() {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

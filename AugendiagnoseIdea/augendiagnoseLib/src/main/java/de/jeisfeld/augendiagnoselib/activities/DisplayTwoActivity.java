@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragmentHalfscreen;
@@ -40,11 +41,6 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	private static final String FRAGMENT_IMAGE2_TAG = "FRAGMENT_IMAGE2_TAG";
 
 	/**
-	 * Flag indicating if the images are flagged right/left independent of the metadata.
-	 */
-	private boolean mPresetRightLeft;
-
-	/**
 	 * The views displaying the files.
 	 */
 	private View mViewFragmentImage1, mViewFragmentImage2;
@@ -63,17 +59,13 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	/**
 	 * Static helper method to start the activity, passing the paths of the two pictures.
 	 *
-	 * @param context
-	 *            The context in which the activity is started.
-	 * @param filename1
-	 *            The filename of the first picture.
-	 * @param filename2
-	 *            The filename of the second picture.
-	 * @param presetRightLeft
-	 *            Flag indicating if the images are flagged right/left independent of the metadata.
+	 * @param context         The context in which the activity is started.
+	 * @param filename1       The filename of the first picture.
+	 * @param filename2       The filename of the second picture.
+	 * @param presetRightLeft Flag indicating if the images are flagged right/left independent of the metadata.
 	 */
 	public static void startActivity(final Context context, final String filename1, final String filename2,
-			final boolean presetRightLeft) {
+									 final boolean presetRightLeft) {
 		Intent intent = new Intent(context, DisplayTwoActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE1, filename1);
 		intent.putExtra(STRING_EXTRA_FILE2, filename2);
@@ -90,14 +82,14 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 		String file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
 		String file2 = getIntent().getStringExtra(STRING_EXTRA_FILE2);
-		mPresetRightLeft = getIntent().getBooleanExtra(BOOLEAN_EXTRA_PRESETRIGHTLEFT, false);
+		boolean presetRightLeft = getIntent().getBooleanExtra(BOOLEAN_EXTRA_PRESETRIGHTLEFT, false);
 
 		setContentView(R.layout.activity_display_two);
 
 		mFragmentImage1 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
 		if (mFragmentImage1 == null) {
 			mFragmentImage1 = createFragment();
-			mFragmentImage1.setParameters(file1, 1, mPresetRightLeft ? RightLeft.RIGHT : null);
+			mFragmentImage1.setParameters(file1, 1, presetRightLeft ? RightLeft.RIGHT : null);
 
 			getFragmentManager().beginTransaction().add(R.id.fragment_image1, mFragmentImage1, FRAGMENT_IMAGE1_TAG)
 					.commit();
@@ -106,7 +98,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		mFragmentImage2 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
 		if (mFragmentImage2 == null) {
 			mFragmentImage2 = createFragment();
-			mFragmentImage2.setParameters(file2, 2, mPresetRightLeft ? RightLeft.LEFT : null);
+			mFragmentImage2.setParameters(file2, 2, presetRightLeft ? RightLeft.LEFT : null);
 
 			getFragmentManager().beginTransaction().add(R.id.fragment_image2, mFragmentImage2, FRAGMENT_IMAGE2_TAG)
 					.commit();
@@ -129,8 +121,11 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 			int fragmentImage1Visibility = savedInstanceState.getInt("fragmentImage1Visibility");
 			int fragmentImage2Visibility = savedInstanceState.getInt("fragmentImage2Visibility");
 
+			//noinspection ResourceType
 			mViewFragmentEdit.setVisibility(fragmentEditVisibility);
+			//noinspection ResourceType
 			mViewFragmentImage1.setVisibility(fragmentImage1Visibility);
+			//noinspection ResourceType
 			mViewFragmentImage2.setVisibility(fragmentImage2Visibility);
 
 			if (fragmentImage1Visibility == View.GONE) {

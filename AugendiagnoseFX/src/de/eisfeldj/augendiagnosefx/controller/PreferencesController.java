@@ -1,13 +1,5 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LANGUAGE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_UPDATE_AUTOMATICALLY;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +13,7 @@ import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.SystemUtil;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +25,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_FOLDER_PHOTOS;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LANGUAGE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_UPDATE_AUTOMATICALLY;
+
 /**
  * BaseController for the Preferences page.
  */
@@ -39,12 +40,12 @@ public class PreferencesController extends DialogController implements Initializ
 	/**
 	 * A map of language ids to language Strings.
 	 */
-	public static final Map<Integer, String> LANGUAGE_MAP = new HashMap<Integer, String>();
+	public static final Map<Integer, String> LANGUAGE_MAP = new HashMap<>();
 
 	/**
 	 * A map of language Strings to language ids.
 	 */
-	private static final Map<String, Integer> LANGUAGE_MAP_BACK = new HashMap<String, Integer>();
+	private static final Map<String, Integer> LANGUAGE_MAP_BACK = new HashMap<>();
 
 	/**
 	 * The main pane.
@@ -119,7 +120,7 @@ public class PreferencesController extends DialogController implements Initializ
 		LANGUAGE_MAP.put(0, ResourceUtil.getString(ResourceConstants.PREF_VALUE_LANGUAGE_DEFAULT));
 		LANGUAGE_MAP.put(1, "English");
 		LANGUAGE_MAP.put(2, "Deutsch");
-		LANGUAGE_MAP.put(3, "Español"); // MAGIC_NUMBER
+		LANGUAGE_MAP.put(3, "Espaï¿½ol"); // MAGIC_NUMBER
 
 		LANGUAGE_MAP.forEach((key, value) -> LANGUAGE_MAP_BACK.put(value, key));
 

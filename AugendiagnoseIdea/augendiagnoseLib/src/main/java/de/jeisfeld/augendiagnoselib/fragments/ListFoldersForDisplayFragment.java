@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;

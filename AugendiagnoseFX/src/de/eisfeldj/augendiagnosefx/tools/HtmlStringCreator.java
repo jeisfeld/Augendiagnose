@@ -25,22 +25,22 @@ public final class HtmlStringCreator {
 	/**
 	 * A map from the HTML language path names to the Anrdoid language path names.
 	 */
-	private static final Map<String, String> LANGUAGE_MAP = new TreeMap<String, String>();
+	private static final Map<String, String> LANGUAGE_MAP = new TreeMap<>();
 
 	/**
 	 * A map from the HTML file names to the Android string resource names.
 	 */
-	private static final Map<String, String> PAGE_MAP = new TreeMap<String, String>();
+	private static final Map<String, String> PAGE_MAP = new TreeMap<>();
 
 	/**
 	 * A map from app name to the URL of the web page.
 	 */
-	private static final Map<String, String> APP_URL_MAP = new TreeMap<String, String>();
+	private static final Map<String, String> APP_URL_MAP = new TreeMap<>();
 
 	/**
 	 * A map from app name to the resource folder of the Android app.
 	 */
-	private static final Map<String, File> APP_RESOURCE_FOLDER_MAP = new TreeMap<String, File>();
+	private static final Map<String, File> APP_RESOURCE_FOLDER_MAP = new TreeMap<>();
 
 	/**
 	 * The name of the Mininris app.

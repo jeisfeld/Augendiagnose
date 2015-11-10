@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 
@@ -85,20 +86,15 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Create a new ColorPickerDialog.
 	 *
-	 * @param titleResId
-	 *            The resource if of the title.
-	 * @param colors
-	 *            The list of colors to be displayed.
-	 * @param selectedColor
-	 *            The selected color.
-	 * @param columns
-	 *            The number of columns.
-	 * @param size
-	 *            The size of the displayed swatches.
+	 * @param titleResId    The resource if of the title.
+	 * @param colors        The list of colors to be displayed.
+	 * @param selectedColor The selected color.
+	 * @param columns       The number of columns.
+	 * @param size          The size of the displayed swatches.
 	 * @return The dialog.
 	 */
 	public static ColorPickerDialog newInstance(final int titleResId, final int[] colors, final int selectedColor,
-			final int columns, final int size) {
+												final int columns, final int size) {
 		ColorPickerDialog ret = new ColorPickerDialog();
 		ret.initialize(titleResId, colors, selectedColor, columns, size);
 		return ret;
@@ -107,19 +103,14 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Initialize the dialog.
 	 *
-	 * @param titleResId
-	 *            The resource if of the title.
-	 * @param colors
-	 *            The list of colors to be displayed.
-	 * @param selectedColor
-	 *            The selected color.
-	 * @param columns
-	 *            The number of columns.
-	 * @param size
-	 *            The size of the displayed swatches.
+	 * @param titleResId    The resource if of the title.
+	 * @param colors        The list of colors to be displayed.
+	 * @param selectedColor The selected color.
+	 * @param columns       The number of columns.
+	 * @param size          The size of the displayed swatches.
 	 */
 	private void initialize(final int titleResId, final int[] colors, final int selectedColor, final int columns,
-			final int size) {
+							final int size) {
 		setArguments(titleResId, columns, size);
 		setColors(colors, selectedColor);
 	}
@@ -127,12 +118,9 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Set the arguments to be passed to the dialog.
 	 *
-	 * @param titleResId
-	 *            The resource id of the title.
-	 * @param columns
-	 *            The number of columns.
-	 * @param size
-	 *            The size of the displayed swatches.
+	 * @param titleResId The resource id of the title.
+	 * @param columns    The number of columns.
+	 * @param size       The size of the displayed swatches.
 	 */
 	private void setArguments(final int titleResId, final int columns, final int size) {
 		Bundle bundle = new Bundle();
@@ -175,12 +163,10 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 			showPaletteView();
 		}
 
-		AlertDialog alertDialog = new AlertDialog.Builder(activity)
+		return new AlertDialog.Builder(activity)
 				.setTitle(mTitleResId)
 				.setView(view)
 				.create();
-
-		return alertDialog;
 	}
 
 	@Override
@@ -217,10 +203,8 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Set the list of colors and the selected color.
 	 *
-	 * @param colors
-	 *            The list of colors to be displayed.
-	 * @param selectedColor
-	 *            The selected color.
+	 * @param colors        The list of colors to be displayed.
+	 * @param selectedColor The selected color.
 	 */
 	private void setColors(final int[] colors, final int selectedColor) {
 		if (mColors != colors || mSelectedColor != selectedColor) {

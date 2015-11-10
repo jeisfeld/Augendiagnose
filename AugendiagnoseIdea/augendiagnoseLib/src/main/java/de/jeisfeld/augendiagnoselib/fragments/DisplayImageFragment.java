@@ -26,6 +26,7 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -55,7 +56,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * "Show utilities value" indicating that utilities should be shown only on fullscreen.
 	 */
-	protected static final int UTILITIES_SHOW_FULLSCREEN = 2;
+	private static final int UTILITIES_SHOW_FULLSCREEN = 2;
 	/**
 	 * "Show utilities value" indicating that utilities should always be shown.
 	 */
@@ -64,32 +65,32 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
 	 */
-	protected static final String STRING_TYPE = "de.jeisfeld.augendiagnoselib.TYPE";
+	private static final String STRING_TYPE = "de.jeisfeld.augendiagnoselib.TYPE";
 	/**
 	 * The resource key for the file path.
 	 */
-	protected static final String STRING_FILE = "de.jeisfeld.augendiagnoselib.FILE";
+	private static final String STRING_FILE = "de.jeisfeld.augendiagnoselib.FILE";
 	/**
 	 * The resource key for the file resource.
 	 */
-	protected static final String STRING_FILERESOURCE = "de.jeisfeld.augendiagnoselib.FILERESOURCE";
+	private static final String STRING_FILERESOURCE = "de.jeisfeld.augendiagnoselib.FILERESOURCE";
 	/**
 	 * The resource kay for the image index (in case of multiple images).
 	 */
-	protected static final String STRING_IMAGEINDEX = "de.jeisfeld.augendiagnoselib.IMAGEINDEX";
+	private static final String STRING_IMAGEINDEX = "de.jeisfeld.augendiagnoselib.IMAGEINDEX";
 	/**
 	 * The resource kay for the rightleft information (if not contained in the image).
 	 */
-	protected static final String STRING_RIGHTLEFT = "de.jeisfeld.augendiagnoselib.RIGHTLEFT";
+	private static final String STRING_RIGHTLEFT = "de.jeisfeld.augendiagnoselib.RIGHTLEFT";
 
 	/**
 	 * Type value set if the fragment shows an image by filename.
 	 */
-	protected static final int TYPE_FILENAME = 1;
+	private static final int TYPE_FILENAME = 1;
 	/**
 	 * Type value set if the fragment shows an image by resource id.
 	 */
-	protected static final int TYPE_FILERESOURCE = 2;
+	private static final int TYPE_FILERESOURCE = 2;
 
 	/**
 	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
@@ -126,7 +127,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	private boolean mIsLandscape;
 
-	protected final boolean isLandscape() {
+	private boolean isLandscape() {
 		return mIsLandscape;
 	}
 
@@ -228,15 +229,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Initialize the fragment with the file name.
 	 *
-	 * @param initialFile
-	 *            the file path.
-	 * @param initialImageIndex
-	 *            The index of the view (required if there are multiple such fragments)
-	 * @param initialRightLeft
-	 *            Information if it is the right or left eye (if not in image metadata)
+	 * @param initialFile       the file path.
+	 * @param initialImageIndex The index of the view (required if there are multiple such fragments)
+	 * @param initialRightLeft  Information if it is the right or left eye (if not in image metadata)
 	 */
 	public final void setParameters(final String initialFile, final int initialImageIndex,
-			final RightLeft initialRightLeft) {
+									final RightLeft initialRightLeft) {
 		Bundle args = new Bundle();
 		args.putString(STRING_FILE, initialFile);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
@@ -251,10 +249,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Initialize the fragment with the file resource.
 	 *
-	 * @param initialFileResource
-	 *            The file resource.
-	 * @param initialImageIndex
-	 *            The index of the view (required if there are multiple such fragments)
+	 * @param initialFileResource The file resource.
+	 * @param initialImageIndex   The index of the view (required if there are multiple such fragments)
 	 */
 	public final void setParameters(final int initialFileResource, final int initialImageIndex) {
 		Bundle args = new Bundle();
@@ -285,7 +281,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	// OVERRIDABLE
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-			final Bundle savedInstanceState) {
+							 final Bundle savedInstanceState) {
 		if (SystemUtil.isLandscape()) {
 			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
@@ -302,6 +298,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 		if (savedInstanceState != null) {
@@ -485,8 +484,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Helper method for onClick actions for overlay buttons.
 	 *
-	 * @param position
-	 *            The number of the overlay button.
+	 * @param position The number of the overlay button.
 	 */
 	private void onToggleOverlayClicked(final int position) {
 		boolean isChecked = mToggleOverlayButtons[position].isChecked();
@@ -528,12 +526,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Display a popup for the selection of an overlay type.
 	 *
-	 * @param position
-	 *            The number of the overlay button.
-	 * @param forNewButton
-	 *            Flag indicating the popup is displayed for a new button. Then it is enforced to select a new overlay.
-	 * @return
-	 * 		true if long click was processed.
+	 * @param position     The number of the overlay button.
+	 * @param forNewButton Flag indicating the popup is displayed for a new button. Then it is enforced to select a new overlay.
+	 * @return true if long click was processed.
 	 */
 	private boolean displayOverlaySelectionPopup(final int position, final boolean forNewButton) {
 		PopupMenu popupMenu;
@@ -630,8 +625,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Get popup menu with gravity right - only supported for Kitkat orlater.
 	 *
-	 * @param anchorView
-	 *            The anchor view.
+	 * @param anchorView The anchor view.
 	 * @return The popup menu.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
@@ -657,8 +651,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Check if there is already a button configured for a certain overlay type.
 	 *
-	 * @param index
-	 *            The index of the overlay type.
+	 * @param index The index of the overlay type.
 	 * @return The button index configured for this overlay type.
 	 */
 	public static Integer buttonForOverlayWithIndex(final int index) {
@@ -720,8 +713,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * onClick action for Button to select color of overlays.
 	 *
-	 * @param view
-	 *            The view of the select color button.
+	 * @param view The view of the select color button.
 	 */
 	private void onButtonSelectColorClicked(final View view) {
 		ColorPickerDialog dialog =
@@ -738,10 +730,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Create the popup menu for saving metadata.
 	 *
-	 * @param view
-	 *            The view opening the menu.
+	 * @param view The view opening the menu.
 	 */
-	public final void showSaveMenu(final View view) {
+	private void showSaveMenu(final View view) {
 		PopupMenu popup = new PopupMenu(getActivity(), view);
 		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
@@ -792,8 +783,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Store the comment in the image.
 	 *
-	 * @param comment
-	 *            The comment text to be stored.
+	 * @param comment The comment text to be stored.
 	 */
 	public final void storeComment(final String comment) {
 		mImageView.storeComment(comment);
@@ -802,10 +792,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Show or hide the utilities (overlay bar, scrollbars).
 	 *
-	 * @param show
-	 *            If true, the utilities will be shown, otherwise hidden.
+	 * @param show If true, the utilities will be shown, otherwise hidden.
 	 */
-	protected final void showUtilities(final boolean show) {
+	private void showUtilities(final boolean show) {
+		View fragmentView = getView();
+		if (fragmentView == null) {
+			return;
+		}
 		if (show) {
 			if (isLandscape()) {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
@@ -813,9 +806,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			else {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_down);
 			}
-			getView().findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
+			fragmentView.findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
+			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
+			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
 			if (mAllowOverlays) {
 				getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
 			}
@@ -827,10 +820,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			else {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_up);
 			}
-			getView().findViewById(R.id.separatorTools).setVisibility(View.GONE);
-			getView().findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
-			getView().findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
-			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+			fragmentView.findViewById(R.id.separatorTools).setVisibility(View.GONE);
+			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
+			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
+			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 		}
 		requestLayout();
 		mShowUtilities = show;
@@ -841,7 +834,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *
 	 * @return true if utilities should be shown by default.
 	 */
-	protected final boolean getDefaultShowUtilities() {
+	private boolean getDefaultShowUtilities() {
 		int level = getDefaultShowUtilitiesValue();
 
 		return level >= getShowUtilitiesLimitLevel();
@@ -879,8 +872,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Update default for showing utilities.
 	 *
-	 * @param show
-	 *            true means that utilities should be shown.
+	 * @param show true means that utilities should be shown.
 	 */
 	private void updateDefaultShowUtilities(final boolean show) {
 		int level = getDefaultShowUtilitiesValue();
@@ -919,7 +911,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			mImageView.getEyePhoto().setRightLeft(mRightLeft);
 		}
 
-		if (!mImageView.canHandleOverlays()) {
+		if (!mImageView.canHandleOverlays() && getView() != null) {
 			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 			mAllowOverlays = false;
 		}
@@ -943,7 +935,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *
 	 * @return true if should be shown in full resoltion.
 	 */
-	public final boolean hasAutoFullResolution() {
+	private boolean hasAutoFullResolution() {
 		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, null);
 
 		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
@@ -957,8 +949,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Implementation of OnColorSelectedListener, to react on selected overlay color.
 	 *
-	 * @param color
-	 *            the selected color.
+	 * @param color the selected color.
 	 */
 	@Override
 	public final void onColorSelected(final int color) {

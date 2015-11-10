@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.view.View;
+
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 
@@ -16,7 +17,7 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * The views containing the selected image.
 	 */
-	private List<EyeImageView> mSelectedViews = new ArrayList<EyeImageView>();
+	private final List<EyeImageView> mSelectedViews = new ArrayList<>();
 
 	/**
 	 * Get the activity holding the images.
@@ -28,16 +29,15 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * Change highlight setting of the selected views.
 	 *
-	 * @param highlight
-	 *            indicator if the views should be highlighted
+	 * @param highlight indicator if the views should be highlighted
 	 */
-	protected final void highlightSelectedViews(final boolean highlight) {
+	private void highlightSelectedViews(final boolean highlight) {
 		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light, null));
 			}
 			else {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent));
+				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent, null));
 			}
 		}
 	}
@@ -56,8 +56,7 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * Select a specific view.
 	 *
-	 * @param view
-	 *            the view to be selected.
+	 * @param view the view to be selected.
 	 */
 	// OVERRIDABLE
 	protected void selectView(final EyeImageView view) {
@@ -77,12 +76,11 @@ public abstract class BaseImageSelectionHandler {
 	/**
 	 * Get information if a given view is selected.
 	 *
-	 * @param view
-	 *            The given view.
+	 * @param view The given view.
 	 * @return true if the given view is selected.
 	 */
 	protected final boolean isSelectedView(final View view) {
-		return mSelectedViews.contains(view);
+		return view instanceof EyeImageView && mSelectedViews.contains(view);
 	}
 
 	/**

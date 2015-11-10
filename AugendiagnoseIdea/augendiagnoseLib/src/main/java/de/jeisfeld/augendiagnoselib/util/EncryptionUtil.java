@@ -13,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import android.annotation.SuppressLint;
 import android.util.Base64;
 import android.util.Log;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 
@@ -82,8 +83,7 @@ public final class EncryptionUtil {
 	/**
 	 * Utility method to test generation and validation of a user key.
 	 *
-	 * @param name
-	 *            the user name for which key generation is to be tested.
+	 * @param name the user name for which key generation is to be tested.
 	 */
 	public static void test(final String name) {
 		String key = createUserKey(name);
@@ -93,8 +93,7 @@ public final class EncryptionUtil {
 	/**
 	 * Validate a user key.
 	 *
-	 * @param key
-	 *            the user key to be validated.
+	 * @param key the user key to be validated.
 	 * @return true if the user key is valid.
 	 */
 	public static boolean validateUserKey(final String key) {
@@ -119,19 +118,17 @@ public final class EncryptionUtil {
 	/**
 	 * Generate a user key, which is a concatenation of user name and hash.
 	 *
-	 * @param input
-	 *            the user key without hash.
+	 * @param input the user key without hash.
 	 * @return the user key including hash.
 	 */
-	public static String createUserKey(final String input) {
+	private static String createUserKey(final String input) {
 		return input + "-" + createCryptoHash(input);
 	}
 
 	/**
 	 * Create a cryptographic hash from a String.
 	 *
-	 * @param input
-	 *            the input for creating the hash. (Will be username.)
+	 * @param input the input for creating the hash. (Will be username.)
 	 * @return the cryptocraphic hash.
 	 */
 	private static String createCryptoHash(final String input) {
@@ -146,8 +143,7 @@ public final class EncryptionUtil {
 	/**
 	 * Create a hash value from an input.
 	 *
-	 * @param input
-	 *            the input for the hash creation.
+	 * @param input the input for the hash creation.
 	 * @return the hash.
 	 */
 	private static byte[] createHash(final byte[] input) {
@@ -157,8 +153,7 @@ public final class EncryptionUtil {
 	/**
 	 * Do base 64 encoding of a message.
 	 *
-	 * @param bytes
-	 *            the bytes to be encoded.
+	 * @param bytes the bytes to be encoded.
 	 * @return the base 64 encoded String.
 	 */
 	private static String convertBase64(final byte[] bytes) {
@@ -168,16 +163,13 @@ public final class EncryptionUtil {
 	/**
 	 * Encrypt a String using DES.
 	 *
-	 * @param input
-	 *            the String to be encrypted.
+	 * @param input the String to be encrypted.
 	 * @return the encrypted String.
-	 * @throws BadPaddingException
-	 *             if this cipher is in decryption mode, and (un)padding has been requested, but the decrypted data is
-	 *             not bounded by the appropriate padding bytes
-	 * @throws IllegalBlockSizeException
-	 *             if this cipher is a block cipher, no padding has been requested (only in encryption mode), and the
-	 *             total input length of the data processed by this cipher is not a multiple of block size; or if this
-	 *             encryption algorithm is unable to process the input data provided.
+	 * @throws BadPaddingException       if this cipher is in decryption mode, and (un)padding has been requested, but the decrypted data is
+	 *                                   not bounded by the appropriate padding bytes
+	 * @throws IllegalBlockSizeException if this cipher is a block cipher, no padding has been requested (only in encryption mode), and the
+	 *                                   total input length of the data processed by this cipher is not a multiple of block size; or if this
+	 *                                   encryption algorithm is unable to process the input data provided.
 	 */
 	private static byte[] encrypt(final String input) throws BadPaddingException, IllegalBlockSizeException {
 		return mCipherEncrypt.doFinal(input.getBytes());
@@ -186,8 +178,7 @@ public final class EncryptionUtil {
 	/**
 	 * Create a hash value of a String.
 	 *
-	 * @param input
-	 *            The input string.
+	 * @param input The input string.
 	 * @return The hash value.
 	 */
 	public static String createHash(final String input) {

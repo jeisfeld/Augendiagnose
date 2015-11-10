@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayImageActivity;
 import de.jeisfeld.augendiagnoselib.util.KeyboardUtil;
@@ -35,8 +36,7 @@ public class EditCommentFragment extends Fragment {
 	/**
 	 * Initialize the EditCommentFragment with the text.
 	 *
-	 * @param initialText
-	 *            The initial text of the comment.
+	 * @param initialText The initial text of the comment.
 	 */
 	public final void setParameters(final String initialText) {
 		Bundle args = new Bundle();
@@ -54,13 +54,16 @@ public class EditCommentFragment extends Fragment {
 
 	@Override
 	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-			final Bundle savedInstanceState) {
+								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_edit_comment, container, false);
 	}
 
 	@Override
 	public final void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		mEditText = (EditText) getView().findViewById(R.id.input_edit_comment);
 		mEditText.setText(mText);

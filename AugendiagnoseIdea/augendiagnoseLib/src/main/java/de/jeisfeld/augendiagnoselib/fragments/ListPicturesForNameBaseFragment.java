@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -55,10 +56,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * Initialize the listFoldersFragment with parentFolder and name.
 	 *
-	 * @param initialParentFolder
-	 *            The parent folder
-	 * @param initialName
-	 *            the name
+	 * @param initialParentFolder The parent folder
+	 * @param initialName         the name
 	 */
 	public final void setParameters(final String initialParentFolder, final String initialName) {
 		Bundle args = new Bundle();
@@ -82,6 +81,9 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	@Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (getView() == null) {
+			return;
+		}
 
 		TextView headerNameView = (TextView) getView().findViewById(R.id.textTitleName);
 		headerNameView.setText(mName);
@@ -98,12 +100,11 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * Create the list of eye photo pairs for display. Photos are arranged in pairs (right-left) by date.
 	 *
-	 * @param folder
-	 *            the folder where the photos are located.
+	 * @param folder the folder where the photos are located.
 	 * @return The list of eye photo pairs.
 	 */
 	private EyePhotoPair[] createEyePhotoList(final File folder) {
-		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<Date, EyePhotoPair>();
+		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>();
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
 
@@ -134,7 +135,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		}
 
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<Date, EyePhotoPair>(new Comparator<Date>() {
+		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<>(new Comparator<Date>() {
 			@Override
 			public int compare(final Date lhs, final Date rhs) {
 				return rhs.compareTo(lhs);
