@@ -44,6 +44,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 */
 	public static final void startActivity(final Context context) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intent);
 	}
 

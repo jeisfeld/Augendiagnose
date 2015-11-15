@@ -104,7 +104,9 @@ public class VerticalSeekBar extends SeekBar {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
-			mOnSeekBarChangeListener.onStartTrackingTouch(this);
+			if (mOnSeekBarChangeListener != null) {
+				mOnSeekBarChangeListener.onStartTrackingTouch(this);
+			}
 			break;
 
 		case MotionEvent.ACTION_MOVE:
@@ -113,11 +115,15 @@ public class VerticalSeekBar extends SeekBar {
 
 		case MotionEvent.ACTION_UP:
 			setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
-			mOnSeekBarChangeListener.onStopTrackingTouch(this);
+			if (mOnSeekBarChangeListener != null) {
+				mOnSeekBarChangeListener.onStopTrackingTouch(this);
+			}
 			break;
 
 		case MotionEvent.ACTION_CANCEL:
-			mOnSeekBarChangeListener.onStopTrackingTouch(this);
+			if (mOnSeekBarChangeListener != null) {
+				mOnSeekBarChangeListener.onStopTrackingTouch(this);
+			}
 			break;
 
 		default:

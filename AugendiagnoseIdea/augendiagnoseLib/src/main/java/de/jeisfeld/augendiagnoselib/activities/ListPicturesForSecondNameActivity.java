@@ -16,7 +16,7 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	/**
 	 * The requestCode with which this activity is started.
 	 */
-	public static final int REQUEST_CODE = 3;
+	public static final int REQUEST_CODE = 1;
 
 	/**
 	 * Static helper method to start the activity, passing the path of the parent folder and the name of the current

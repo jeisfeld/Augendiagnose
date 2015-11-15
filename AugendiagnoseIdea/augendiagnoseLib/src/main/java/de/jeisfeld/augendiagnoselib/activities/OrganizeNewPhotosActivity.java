@@ -56,7 +56,6 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
  * <p>The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends BaseActivity {
-
 	/**
 	 * The resource key for the input folder.
 	 */
@@ -459,7 +458,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 *
 	 * @param view The view triggering the onClick action.
 	 */
-	private void onOkClick(final View view) {
+	public final void onOkClick(final View view) {
 		final String name = mEditName.getText().toString().trim();
 		if (name.length() < 1) {
 			displayError(R.string.message_dialog_select_name);
@@ -622,9 +621,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		case NEXT_IMAGES:
 			setPicturesAndValues(true);
 			break;
-		case FINISH:
-			finish();
-			break;
 		case VIEW_IMAGES:
 			ListFoldersForDisplayActivity.startActivity(this);
 			finish();
@@ -742,10 +738,6 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		 * Continue the activity with the next image pair (and finish if not existing).
 		 */
 		NEXT_IMAGES,
-		/**
-		 * Finish the activity.
-		 */
-		FINISH,
 		/**
 		 * Continue with viewing images.
 		 */

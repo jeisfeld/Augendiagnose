@@ -184,8 +184,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 					OrganizeNewPhotosActivity.startActivity(getActivity(),
 							PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
 							PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
-							NextAction.FINISH);
-					getActivity().finish();
+							NextAction.VIEW_IMAGES);
 				}
 				else {
 					DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
