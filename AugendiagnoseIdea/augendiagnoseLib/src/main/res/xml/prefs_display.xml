@@ -7,6 +7,11 @@
         android:key="@string/key_sort_by_last_name"
         android:title="@string/pref_title_sort_by_last_name" />
 
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_guided_topo_setup"
+        android:key="@string/key_guided_topo_setup"
+        android:title="@string/pref_title_guided_topo_setup"/>
+
     <de.jeisfeld.augendiagnoselib.components.colorpicker.ColorDialogPreference
         android:key="@string/key_overlay_color"
         android:title="@string/pref_title_overlay_color" />

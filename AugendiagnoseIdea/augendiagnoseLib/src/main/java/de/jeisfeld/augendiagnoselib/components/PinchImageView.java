@@ -72,7 +72,7 @@ public class PinchImageView extends ImageView {
 	protected float mPosX, mPosY;
 
 	/**
-	 * This is the scale factor of the image.
+	 * This is the scale factor of the image. Value 1 means that one image pixel corresponds to one screen pixel.
 	 */
 	protected float mScaleFactor = 1.f;
 

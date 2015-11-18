@@ -1,77 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:id="@+id/fragment_display_one_overlay"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".activities.DisplayOneActivityOverlay" >
+    tools:context=".activities.DisplayOneActivityOverlay">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/buttonClarity"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_clarity" />
+            android:drawableBottom="@drawable/ic_clarity"/>
 
         <Button
             android:id="@+id/buttonInfo"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_action_info" />
+            android:drawableBottom="@drawable/ic_action_info"/>
 
         <Button
             android:id="@+id/buttonComment"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_comment" />
+            android:drawableBottom="@drawable/ic_comment"/>
 
         <Button
             android:id="@+id/buttonSave"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_action_save" />
+            android:drawableBottom="@drawable/ic_action_save"/>
 
         <Button
             android:id="@+id/buttonTools"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_tools_down" />
+            android:drawableBottom="@drawable/ic_tools_down"/>
 
         <Button
             android:id="@+id/buttonHelp"
             style="@style/ActionBarButtonPortrait"
-            android:drawableBottom="@drawable/ic_action_help" />
+            android:drawableBottom="@drawable/ic_action_help"/>
     </LinearLayout>
 
-    <FrameLayout style="@style/SeparatorBarHorizontal" />
+    <FrameLayout style="@style/SeparatorBarHorizontal"/>
 
-    <de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView
-        android:id="@+id/mainImage"
+    <TextView
+        android:id="@+id/textViewGuide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView
+            android:id="@+id/mainImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/circleOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/text_initializing"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/separatorTools"
-        style="@style/SeparatorBarHorizontal" />
+        style="@style/SeparatorBarHorizontal"/>
 
     <LinearLayout
         android:id="@+id/seekBarBrightnessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_brightness"
-            android:src="@drawable/ic_seek_brightness" />
+            android:src="@drawable/ic_seek_brightness"/>
 
         <SeekBar
             android:id="@+id/seekBarBrightness"
@@ -79,20 +100,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:max="100"
-            android:progress="50" />
+            android:progress="50"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/seekBarContrastLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_contrast"
-            android:src="@drawable/ic_seek_contrast" />
+            android:src="@drawable/ic_seek_contrast"/>
 
         <SeekBar
             android:id="@+id/seekBarContrast"
@@ -100,14 +121,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:max="100"
-            android:progress="50" />
+            android:progress="50"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonGuidedTopoSetup"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/togglebutton_fullsize"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="0dp"
+        android:textSize="@dimen/togglebutton_circlesize"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/buttonOverlayLayout"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/togglebutton_fullsize"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="invisible">
+        android:visibility="gone">
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlayCircle"
@@ -118,7 +151,7 @@
             android:gravity="center"
             android:padding="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay1"
@@ -129,7 +162,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay2"
@@ -141,7 +174,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay3"
@@ -153,7 +186,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay4"
@@ -165,7 +198,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay5"
@@ -177,7 +210,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay6"
@@ -189,7 +222,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay7"
@@ -201,7 +234,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay8"
@@ -213,7 +246,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay9"
@@ -225,7 +258,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonOverlay10"
@@ -237,7 +270,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textSize="@dimen/togglebutton_circlesize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/buttonSelectColor"
@@ -248,7 +281,7 @@
             android:gravity="center"
             android:padding="0dp"
             android:text="@string/button_select_color"
-            android:textSize="@dimen/icon_overlay_color_size" />
+            android:textSize="@dimen/icon_overlay_color_size"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonPupil"
@@ -258,7 +291,7 @@
             android:checked="false"
             android:gravity="center"
             android:padding="0dp"
-            android:textSize="@dimen/togglebutton_circlesize" />
+            android:textSize="@dimen/togglebutton_circlesize"/>
 
         <ToggleButton
             android:id="@+id/toggleButtonLink"
@@ -268,7 +301,7 @@
             android:background="@drawable/lock"
             android:checked="false"
             android:textOff=""
-            android:textOn="" />
+            android:textOn=""/>
     </LinearLayout>
 
 </LinearLayout>

@@ -109,7 +109,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mOverlayX, mOverlayY;
 
 	/**
-	 * The scale factor of the overlays.
+	 * The scale factor of the overlays. Value 1 means that one overlay image pixel corresponds to one base image pixel.
 	 */
 	private float mOverlayScaleFactor, mLastOverlayScaleFactor;
 
@@ -322,11 +322,10 @@ public class OverlayPinchImageView extends PinchImageView {
 								mOverlayScaleFactor = mMetadata.getOverlayScaleFactor()
 										* Math.max(mBitmap.getHeight(), mBitmap.getWidth()) / OVERLAY_SIZE;
 
-								if (!mMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)) {
-									lockOverlay(true, false);
-									if (mGuiElementUpdater != null) {
-										mGuiElementUpdater.setLockChecked(true);
-									}
+								boolean shouldBeLocked = !mMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY);
+								lockOverlay(shouldBeLocked, false);
+								if (mGuiElementUpdater != null) {
+									mGuiElementUpdater.setLockChecked(shouldBeLocked);
 								}
 
 								if (mMetadata.getPupilSize() == null) {
@@ -385,6 +384,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else {
 			// orientation change
+			mMetadata = mEyePhoto.getImageMetadata();
+			mHasOverlayPosition = mMetadata != null && mMetadata.hasOverlayPosition();
 			mIsBitmapSet = true;
 			mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 			mCanvas = new Canvas(mCanvasBitmap);
@@ -392,6 +393,11 @@ public class OverlayPinchImageView extends PinchImageView {
 			updatePinchMode();
 			refresh(HIGH);
 			showFullResolutionSnapshot(true);
+			// Update lock status - required in the case that orientation change happened while loading image.
+			if (mMetadata != null && mMetadata.hasOverlayPosition() && mGuiElementUpdater != null
+					&& !mMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)) {
+				mGuiElementUpdater.setLockChecked(true);
+			}
 		}
 
 	}
@@ -422,6 +428,14 @@ public class OverlayPinchImageView extends PinchImageView {
 		super.doInitialScaling();
 
 		resetOverlayCache();
+	}
+
+	/**
+	 * Reapply the initial scaling of the image.
+	 */
+	public final void redoInitialScaling() {
+		mInitialized = false;
+		doInitialScaling();
 	}
 
 	/**
@@ -578,12 +592,26 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.removeFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY);
 
 				mEyePhoto.storeImageMetadata(mMetadata);
+				mHasOverlayPosition = true;
 
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
 			}
 		}
 
 		updatePinchMode();
+	}
+
+	/**
+	 * Set the overlay position, so that it matches a centered circle.
+	 *
+	 * @param circleRadius The relative circle radius (compared to min view dimension)
+	 */
+	public final void setOverlayPosition(final float circleRadius) {
+		mOverlayX = mPosX;
+		mOverlayY = mPosY;
+
+		float bitmapPixelDiameter = Math.min(getWidth(), getHeight()) * 2 * circleRadius / mScaleFactor;
+		mOverlayScaleFactor = bitmapPixelDiameter / (OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO);
 	}
 
 	/**
@@ -598,6 +626,45 @@ public class OverlayPinchImageView extends PinchImageView {
 			mEyePhoto.storeImageMetadata(mMetadata);
 			resetOverlayCache();
 			mIsPupilChanged = false;
+		}
+	}
+
+	/**
+	 * Set the pupil position, so that it matches a centered circle.
+	 *
+	 * @param circleRadius The relative circle radius (compared to min view dimension)
+	 */
+	public final void setPupilPosition(final float circleRadius) {
+		float overlaySizeOnBitmap = OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO * mOverlayScaleFactor;
+		mPupilOverlayX = (mPosX - mOverlayX) * mBitmap.getWidth() / overlaySizeOnBitmap;
+		mPupilOverlayY = (mPosY - mOverlayY) * mBitmap.getHeight() / overlaySizeOnBitmap;
+
+		float bitmapPixelDiameter = Math.min(getWidth(), getHeight()) * 2 * circleRadius / mScaleFactor;
+		mPupilOverlayScaleFactor = bitmapPixelDiameter / overlaySizeOnBitmap;
+
+		// ensure boundary conditions
+		if (mPupilOverlayScaleFactor > MAX_PUPIL_SCALE_FACTOR) {
+			mPupilOverlayScaleFactor = MAX_PUPIL_SCALE_FACTOR;
+		}
+		else if (mPupilOverlayScaleFactor < MIN_PUPIL_SCALE_FACTOR) {
+			mPupilOverlayScaleFactor = MIN_PUPIL_SCALE_FACTOR;
+		}
+		ensureProperPupilOffsets();
+
+		mIsPupilChanged = true;
+	}
+
+	/**
+	 * Ensure that the pupil overlay offsets are within allowed bounds.
+	 */
+	private void ensureProperPupilOffsets() {
+		float maxOffsetSquared = (1 - mPupilOverlayScaleFactor) * (1 - mPupilOverlayScaleFactor) / 4; // MAGIC_NUMBER
+		float currentOffsetSquared = mPupilOverlayX * mPupilOverlayX + mPupilOverlayY * mPupilOverlayY;
+
+		if (currentOffsetSquared > maxOffsetSquared) {
+			float correctionFactor = (float) Math.sqrt(maxOffsetSquared / currentOffsetSquared);
+			mPupilOverlayX = mPupilOverlayX * correctionFactor;
+			mPupilOverlayY = mPupilOverlayY * correctionFactor;
 		}
 	}
 
@@ -630,6 +697,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mMetadata.setPupilXOffset((Float) null);
 				mMetadata.setPupilYOffset((Float) null);
 				mEyePhoto.storeImageMetadata(mMetadata);
+				mHasOverlayPosition = false;
 			}
 		}
 
@@ -962,14 +1030,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				moved = true;
 			}
 
-			float maxOffsetSquared = (1 - mPupilOverlayScaleFactor) * (1 - mPupilOverlayScaleFactor) / 4; // MAGIC_NUMBER
-			float currentOffsetSquared = mPupilOverlayX * mPupilOverlayX + mPupilOverlayY * mPupilOverlayY;
-
-			if (currentOffsetSquared > maxOffsetSquared) {
-				float correctionFactor = (float) Math.sqrt(maxOffsetSquared / currentOffsetSquared);
-				mPupilOverlayX = mPupilOverlayX * correctionFactor;
-				mPupilOverlayY = mPupilOverlayY * correctionFactor;
-			}
+			ensureProperPupilOffsets();
 
 			mIsPupilChanged = mIsPupilChanged || moved;
 		}
@@ -1230,7 +1291,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		Thread fullResolutionThread = new Thread() {
 			@Override
-			public final void run() {
+			public void run() {
 				if (mPartialBitmapFullResolution == null) {
 					try {
 						mPartialBitmapFullResolution = createFullResolutionBitmap();

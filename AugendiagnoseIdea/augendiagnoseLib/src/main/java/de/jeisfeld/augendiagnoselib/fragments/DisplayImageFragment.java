@@ -3,7 +3,10 @@ package de.jeisfeld.augendiagnoselib.fragments;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,9 +25,11 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -93,6 +98,19 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private static final int TYPE_FILERESOURCE = 2;
 
 	/**
+	 * The size of the circle overlay bitmap.
+	 */
+	private static final int CIRCLE_BITMAP_SIZE = OverlayPinchImageView.OVERLAY_SIZE;
+	/**
+	 * The radius of the iris circle displayed.
+	 */
+	private static final int CIRCLE_RADIUS_IRIS = 448;
+	/**
+	 * The radius of the pupil circle displayed.
+	 */
+	private static final int CIRCLE_RADIUS_PUPIL = 384;
+
+	/**
 	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
 	 */
 	private int mType;
@@ -120,7 +138,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Flag indicating if overlays are allowed.
 	 */
-	private boolean mAllowOverlays = true;
+	private OverlayStatus mOverlayStatus;
 
 	/**
 	 * Flag holding information if fragment is shown in landscape mode.
@@ -194,6 +212,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The color selector button.
 	 */
 	private Button mSelectColorButton;
+
+	/**
+	 * The button for the guided setup of iris and pupil position.
+	 */
+	private Button mGuidedTopoSetupButton;
 
 	/**
 	 * The brightness SeekBar.
@@ -302,22 +325,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			return;
 		}
 
-		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
-		if (savedInstanceState != null) {
-			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
-			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
-			mPupilButtonStatus = (PupilButtonStatus) savedInstanceState.getSerializable("pupilButtonStatus");
-			mLockButton.setChecked(savedInstanceState.getBoolean("lockButtonIsChecked"));
-		}
-		else {
-			mShowUtilities = getDefaultShowUtilities();
-			mOverlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
-			mPupilButtonStatus = PupilButtonStatus.OFF;
-		}
-
 		mImageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
 		mImageView.setGuiElementUpdater(this);
 		mImageView.allowFullResolution(hasAutoFullResolution());
+
+		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
 
 		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
 		mToggleOverlayButtons = new ToggleButton[OVERLAY_BUTTON_COUNT];
@@ -336,8 +348,38 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSaveButton = (Button) getView().findViewById(R.id.buttonSave);
 		mToolsButton = (Button) getView().findViewById(R.id.buttonTools);
 		mHelpButton = (Button) getView().findViewById(R.id.buttonHelp);
+		mGuidedTopoSetupButton = (Button) getView().findViewById(R.id.buttonGuidedTopoSetup);
 
-		showUtilities(mShowUtilities);
+		// Layout for circle button
+		ImageSpan imageSpan = new ImageSpan(getActivity(), R.drawable.ic_btn_wheel);
+		SpannableString content = new SpannableString("X");
+		content.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mToggleOverlayButtons[0].setText(content);
+		mToggleOverlayButtons[0].setTextOn(content);
+		mToggleOverlayButtons[0].setTextOff(content);
+
+		// Layout for guided topo setup button
+		mGuidedTopoSetupButton.setText(content);
+
+		if (savedInstanceState != null) {
+			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
+			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
+			mPupilButtonStatus = (PupilButtonStatus) savedInstanceState.getSerializable("pupilButtonStatus");
+			mLockButton.setChecked(savedInstanceState.getBoolean("lockButtonIsChecked"));
+			mOverlayStatus = (OverlayStatus) savedInstanceState.getSerializable("overlayStatus");
+
+			if (mOverlayStatus == OverlayStatus.GUIDED || mOverlayStatus == OverlayStatus.GUIDE_IRIS || mOverlayStatus == OverlayStatus.GUIDE_PUPIL) {
+				drawOverlayCircle();
+			}
+		}
+		else {
+			mShowUtilities = getDefaultShowUtilities();
+			mOverlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+			mPupilButtonStatus = PupilButtonStatus.OFF;
+			mOverlayStatus = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) ? OverlayStatus.GUIDED : OverlayStatus.ALLOWED;
+		}
+
+		showUtilities();
 
 		// Initialize the onClick listeners for the buttons
 		setButtonListeners();
@@ -361,14 +403,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		// The following also updates the selectColorButton
 		mImageView.setOverlayColor(mOverlayColor);
-
-		// Layout for circle button
-		ImageSpan imageSpan = new ImageSpan(getActivity(), R.drawable.ic_btn_wheel);
-		SpannableString content = new SpannableString("X");
-		content.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mToggleOverlayButtons[0].setText(content);
-		mToggleOverlayButtons[0].setTextOn(content);
-		mToggleOverlayButtons[0].setTextOff(content);
 
 		// Layout for pupil button
 		mPupilButton.setEnabled(mLockButton.isChecked());
@@ -460,9 +494,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mToolsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				boolean newShowUtilities = !mShowUtilities;
-				showUtilities(newShowUtilities);
-				updateDefaultShowUtilities(newShowUtilities);
+				mShowUtilities = !mShowUtilities;
+				showUtilities();
+				updateDefaultShowUtilities(mShowUtilities);
 			}
 		});
 
@@ -479,7 +513,87 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				onTogglePupilClicked();
 			}
 		});
+
+		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup)) {
+			mGuidedTopoSetupButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					switch (mOverlayStatus) {
+					case GUIDED:
+						mOverlayStatus = OverlayStatus.GUIDE_IRIS;
+						mImageView.setVisibility(View.INVISIBLE);
+						drawOverlayCircle();
+						requestLayout();
+						break;
+					case GUIDE_IRIS:
+						mImageView.setOverlayPosition((float) CIRCLE_RADIUS_IRIS / CIRCLE_BITMAP_SIZE);
+						mImageView.lockOverlay(true, true);
+						mOverlayStatus = OverlayStatus.GUIDE_PUPIL;
+						drawOverlayCircle();
+						break;
+					case GUIDE_PUPIL:
+						mImageView.setPupilPosition((float) CIRCLE_RADIUS_PUPIL / CIRCLE_BITMAP_SIZE);
+						mImageView.storePupilPosition();
+						mOverlayStatus = OverlayStatus.ALLOWED;
+						setLockChecked(true);
+						drawOverlayCircle();
+						mImageView.post(new Runnable() {
+							@Override
+							public void run() {
+								mImageView.redoInitialScaling();
+							}
+						});
+						break;
+					default:
+						break;
+					}
+				}
+			});
+		}
 	}
+
+	/**
+	 * Draw the overlay circle and print the corresponding guide text.
+	 */
+	private void drawOverlayCircle() {
+		if (getView() == null) {
+			return;
+		}
+
+		mGuidedTopoSetupButton.setEnabled(true);
+		ImageView overlayView = (ImageView) getView().findViewById(R.id.circleOverlay);
+		TextView textViewGuide = (TextView) getView().findViewById(R.id.textViewGuide);
+
+		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL) {
+			overlayView.setVisibility(View.GONE);
+			textViewGuide.setVisibility(View.GONE);
+			mGuidedTopoSetupButton.setText(mToggleOverlayButtons[0].getText());
+			return;
+		}
+
+		mGuidedTopoSetupButton.setText(getString(R.string.button_ok));
+
+		Bitmap overlayBitmap = Bitmap.createBitmap(CIRCLE_BITMAP_SIZE, CIRCLE_BITMAP_SIZE, Bitmap.Config.ARGB_8888);
+
+		Paint paint = new Paint();
+		paint.setAntiAlias(true);
+		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
+		paint.setColor(overlayColor);
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(5); // MAGIC_NUMBER
+
+		Canvas canvas = new Canvas(overlayBitmap);
+		int circleRadius = mOverlayStatus == OverlayStatus.GUIDE_IRIS ? CIRCLE_RADIUS_IRIS : CIRCLE_RADIUS_PUPIL;
+		canvas.drawCircle(CIRCLE_BITMAP_SIZE / 2, CIRCLE_BITMAP_SIZE / 2, circleRadius, paint);
+
+		overlayView.setImageBitmap(overlayBitmap);
+		overlayView.setVisibility(View.VISIBLE);
+
+		textViewGuide.setText(mOverlayStatus == OverlayStatus.GUIDE_IRIS ? getString(R.string.message_guide_resize_iris)
+				: getString(R.string.message_guide_resize_pupil));
+		textViewGuide.setVisibility(View.VISIBLE);
+	}
+
 
 	/**
 	 * Helper method for onClick actions for overlay buttons.
@@ -791,15 +905,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 	/**
 	 * Show or hide the utilities (overlay bar, scrollbars).
-	 *
-	 * @param show If true, the utilities will be shown, otherwise hidden.
 	 */
-	private void showUtilities(final boolean show) {
+	private void showUtilities() {
 		View fragmentView = getView();
 		if (fragmentView == null) {
 			return;
 		}
-		if (show) {
+		if (mShowUtilities) {
 			if (isLandscape()) {
 				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
 			}
@@ -809,8 +921,17 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			fragmentView.findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
 			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
 			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
-			if (mAllowOverlays) {
-				getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+			if (mOverlayStatus == OverlayStatus.ALLOWED) {
+				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+				mGuidedTopoSetupButton.setVisibility(View.GONE);
+			}
+			else if (mOverlayStatus == OverlayStatus.FORBIDDEN) {
+				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+				mGuidedTopoSetupButton.setVisibility(View.GONE);
+			}
+			else {
+				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+				mGuidedTopoSetupButton.setVisibility(View.VISIBLE);
 			}
 		}
 		else {
@@ -824,9 +945,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
 			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
 			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+			mGuidedTopoSetupButton.setVisibility(View.GONE);
 		}
 		requestLayout();
-		mShowUtilities = show;
 	}
 
 	/**
@@ -894,6 +1015,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		outState.putInt("overlayColor", mOverlayColor);
 		outState.putBoolean("lockButtonIsChecked", mLockButton.isChecked());
 		outState.putSerializable("pupilButtonStatus", mPupilButtonStatus);
+		outState.putSerializable("overlayStatus", mOverlayStatus);
 	}
 
 	/**
@@ -910,11 +1032,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (mImageView.getEyePhoto().getRightLeft() == null && mRightLeft != null) {
 			mImageView.getEyePhoto().setRightLeft(mRightLeft);
 		}
-
-		if (!mImageView.canHandleOverlays() && getView() != null) {
-			getView().findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-			mAllowOverlays = false;
-		}
 	}
 
 	/**
@@ -926,6 +1043,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			public void run() {
 				mImageView.requestLayout();
 				mImageView.invalidate();
+				mImageView.setVisibility(View.VISIBLE);
 			}
 		});
 	}
@@ -963,6 +1081,24 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void setLockChecked(final boolean checked) {
 		mLockButton.setChecked(checked);
 		mPupilButton.setEnabled(checked);
+
+		// Set overlay status according to the lock.
+		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL) {
+			if (mImageView.canHandleOverlays()) {
+				if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) && !checked) {
+					mOverlayStatus = OverlayStatus.GUIDED;
+					mGuidedTopoSetupButton.setEnabled(true);
+				}
+				else {
+					mOverlayStatus = OverlayStatus.ALLOWED;
+				}
+			}
+			else {
+				mOverlayStatus = OverlayStatus.FORBIDDEN;
+			}
+		}
+
+		showUtilities();
 	}
 
 	@Override
@@ -1064,5 +1200,31 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		 * Button allows to move the pupil.
 		 */
 		MOVE
+	}
+
+	/**
+	 * Status of the overlay usage.
+	 */
+	public enum OverlayStatus {
+		/**
+		 * Overlays cannot be used.
+		 */
+		FORBIDDEN,
+		/**
+		 * Overlay guided setup can be used.
+		 */
+		GUIDED,
+		/**
+		 * The guide is active to set the iris size.
+		 */
+		GUIDE_IRIS,
+		/**
+		 * The guide is active to set the pupil size.
+		 */
+		GUIDE_PUPIL,
+		/**
+		 * Overlays can be used.
+		 */
+		ALLOWED
 	}
 }

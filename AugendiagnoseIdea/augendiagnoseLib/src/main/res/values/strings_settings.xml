@@ -24,6 +24,8 @@
     <string name="pref_default_eye_sequence_value" translatable="false">false</string>
     <string name="pref_title_sort_by_last_name">Sort by last name</string>
     <string name="pref_default_sort_by_last_name" translatable="false">false</string>
+    <string name="pref_title_guided_topo_setup">Guided setup of iris and pupil position</string>
+    <string name="pref_default_guided_topo_setup" translatable="false">true</string>
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
     <string name="pref_title_full_resolution">Show image in full resolution</string>
@@ -136,6 +138,7 @@
     <string name="key_max_bitmap_size" translatable="false">max_bitmap_size</string>
     <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
     <string name="key_sort_by_last_name" translatable="false">sort_by_last_name</string>
+    <string name="key_guided_topo_setup" translatable="false">guided_topo_setup</string>
     <string name="key_store_option" translatable="false">store_option</string>
     <string name="key_full_resolution" translatable="false">full_resolution</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>

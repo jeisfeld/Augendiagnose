@@ -19,6 +19,7 @@
     <string name="pref_title_max_bitmap_size">Tamaño máximo de mapas de bits</string>
     <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>
     <string name="pref_title_sort_by_last_name">Ordenar por apellido</string>
+    <string name="pref_title_guided_topo_setup">Configuración guiada de iris y pupila</string>
     <string name="pref_title_store_options">Guardar datos adicionales en JPG</string>
     <string name="pref_title_full_resolution">Mostrar imagen en alta resolución</string>
     <string name="pref_title_overlay_color">Color predeterminado de superposiciones</string>
