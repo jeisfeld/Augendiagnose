@@ -3,7 +3,7 @@
 
     <!-- Application specific settings -->
 
-    <string name="app_name" translatable="false">AugendiagnoseLib</string>
+    <string name="app_name">Eye Diagnosis</string>
     <string name="class_application_settings" translatable="false"></string>
 
     <!-- Generic constants -->

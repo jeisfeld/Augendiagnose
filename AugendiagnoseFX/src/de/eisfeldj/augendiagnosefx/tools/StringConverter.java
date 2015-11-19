@@ -2,13 +2,15 @@ package de.eisfeldj.augendiagnosefx.tools;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -29,23 +31,23 @@ public final class StringConverter {
 	/**
 	 * The global Strings file.
 	 */
-	private static final File[] XML_FILES_GLOBAL = {new File("../Augendiagnose/res/values/strings.xml"),
-			new File("../AugendiagnoseLib/res/values/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values/strings_settings.xml")};
+	private static final File[] XML_FILES_GLOBAL = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_menu.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_settings.xml")};
 
 	/**
 	 * The German String file.
 	 */
-	private static final File[] XML_FILES_DE = {new File("../Augendiagnose/res/values-de/strings.xml"),
-			new File("../AugendiagnoseLib/res/values-de/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values-de/strings_settings.xml")};
+	private static final File[] XML_FILES_DE = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_menu.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_settings.xml")};
 
 	/**
 	 * The Spanish String file.
 	 */
-	private static final File[] XML_FILES_ES = {new File("../Augendiagnose/res/values-es/strings.xml"),
-			new File("../AugendiagnoseLib/res/values-es/strings_menu.xml"),
-			new File("../AugendiagnoseLib/res/values-es/strings_settings.xml")};
+	private static final File[] XML_FILES_ES = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_menu.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_settings.xml")};
 
 	/**
 	 * The global Properties file.
@@ -113,11 +115,11 @@ public final class StringConverter {
 		PROP_FILE_DE.renameTo(tmpPropFileDe);
 		PROP_FILE_ES.renameTo(tmpPropFileEs);
 
-		try (Reader reader = new FileReader(tmpPropFile);
+		try (InputStream reader = new FileInputStream(tmpPropFile);
 				Writer writer = new FilteredFileWriter(PROP_FILE_GLOBAL);
-				Reader readerDe = new FileReader(tmpPropFileDe);
+				InputStream readerDe = new FileInputStream(tmpPropFileDe);
 				Writer writerDe = new FilteredFileWriter(PROP_FILE_DE);
-				Reader readerEs = new FileReader(tmpPropFileEs);
+				InputStream readerEs = new FileInputStream(tmpPropFileEs);
 				Writer writerEs = new FilteredFileWriter(PROP_FILE_ES)) {
 
 			AlphabeticProperties props = new AlphabeticProperties();
@@ -348,7 +350,7 @@ public final class StringConverter {
 		 */
 		@SuppressWarnings("resource")
 		protected FilteredFileWriter(final File file) throws IOException {
-			super(new FileWriter(file));
+			super(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("ISO8859-1").newEncoder()));
 		}
 
 		@Override
