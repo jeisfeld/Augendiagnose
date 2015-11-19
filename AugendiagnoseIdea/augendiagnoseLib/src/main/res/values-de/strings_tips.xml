@@ -106,16 +106,30 @@
 </html>
 ]]>
     </string>
-    <string name="message_tip_overlay">
+    <string name="message_tip_overlay_buttons">
 <![CDATA[
 <!DOCTYPE html>
 <html>
 <body>
 	<h2>Iristopographie-Overlays:</h2>
-	<p>Wenn Sie eine Iristopographie über dem Foto anzeigen, können Sie sie mit zwei Fingern so bewegen, dass sie über der Iris liegt.</p>
-	<p>Wenn die Position zur Iris korrekt ist, können Sie auf das &bdquo;Schloss&ldquo; rechts unten drücken, um die Position zu speichern. Anschließend können Sie das Bild vergrößern oder verschieben, und die Position der Iristopographie auf dem Bild bleibt erhalten.</p>
-	<p>Sie können auch die Farbe des Overlays mit Hilfe des &ldquo;Farb&rdquo;-Buttons ändern. (Die Standardfarbe können Sie in den Einstellungen ändern.)</p>
-	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
+	<p>Sie können verschiedene Iristopographien auf Ihrem Foto anzeigen, indem Sie die nummerierten Knöpfe drücken.</p>
+	<p>Wenn Sie lange auf einen dieser Knöpfe drücken, können Sie diesem Knopf eine andere Iristopographie zuordnen.</p>
+	<p>Sie können auch die Farbe des Overlays mit Hilfe des &bdquo;Farb&ldquo;-Buttons ändern. (Die Standardfarbe können Sie in den Einstellungen ändern.)</p>
+	<p>Der &bdquo;Schloss&ldquo;-Button kann benutzt werden, um die Position der Iris auf dem Foto zu lösen und wieder festzulegen. Der Knopf daneben kann genutzt werden, um die Größe und Position der Pupille zu ändern.</p>
+	<p>Hinweis: In der Testversion der App können Sie nur die ersten beiden Topographie-Typen verwenden.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_overlay_guided">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Positionierung von Iris und Pupille:</h2>
+	<p>Wenn Sie den Topographie-Button bei einem neuen Foto drücken, fordert die App Sie auf, die Position der Iris und der Pupille auf dem Foto festzulegen, damit Iristopographien auf dem Foto korrekt angezeigt werden können.</p>
+	<p>Wenn Sie dies nicht wollen, können Sie dieses Verhalten in den Einstellungen ausschalten (unter &bdquo;Anzeigeeinstellungen&ldquo;).</p>
+	<p>Hinweis: das Speichern der Irisposition funktioniert nur bei JPG-Dateien.</p>
 </body>
 </html>
 ]]>

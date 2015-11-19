@@ -520,6 +520,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				public void onClick(final View v) {
 					switch (mOverlayStatus) {
 					case GUIDED:
+						DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_guided, R.string.key_tip_overlay_guided);
 						mOverlayStatus = OverlayStatus.GUIDE_IRIS;
 						mImageView.setVisibility(View.INVISIBLE);
 						drawOverlayCircle();
@@ -633,7 +634,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 
 		if (isChecked && !buttonGetsUnchecked) {
-			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay, R.string.key_tip_overlay);
+			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_buttons, R.string.key_tip_overlay_buttons);
 		}
 	}
 

@@ -60,7 +60,7 @@
 		<li>Arriba, hay un botón con un círculo. Aquí puede seleccionar qué tan grande el iris debe estar en la foto.</li>
 	</ul>
 
-	<p>Después de tomar fotos de ambos ojos, se abre una pagina donde usted puede revisar las dos fotos, y donde se puede
+	<p>Después de tomar fotos de ambos ojos, se abre una página donde usted puede revisar las dos fotos, y donde se puede
 		introducir el nombre de la persona a la que estas fotos se deben asignar. Aquí también se puede cambiar la fecha de la
 		fotos - para cada persona y cada fecha, sólo un par de fotos se pueden almacenar.</p>
 
@@ -101,6 +101,11 @@
 		<tr>
 			<td width="30%" valign="top">Ordenar por apellido</td>
 			<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Configuración guiada de iris y pupila</td>
+			<td width="70%" valign="top">Aquí usted puede decidir si se le guiará a través de la determinación de la posición del
+				iris y de la pupila antes puede mostrar superposiciones.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Color predeterminado de superposiciones</td>
@@ -249,7 +254,7 @@
 <body>
 	<h2>Visualizar las fotos</h2>
 
-	<p>Aqui se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
+	<p>Aquí se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
 		todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
 
 	<p>A continuación, usted tiene las siguientes posibilidades:</p>

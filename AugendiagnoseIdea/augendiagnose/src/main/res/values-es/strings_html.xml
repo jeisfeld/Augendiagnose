@@ -143,6 +143,11 @@
 			<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Configuración guiada de iris y pupila</td>
+			<td width="70%" valign="top">Aquí usted puede decidir si se le guiará a través de la determinación de la posición del
+				iris y de la pupila antes puede mostrar superposiciones.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Color predeterminado de superposiciones</td>
 			<td width="70%" valign="top">Aquí puede definir el color predeterminado para los superposiciones de topografías del
 				iris. (Estándar: rojo)</td>

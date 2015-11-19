@@ -29,7 +29,8 @@ public final class PreferenceUtil {
 			R.string.key_tip_editcomment,
 			R.string.key_tip_firstuse,
 			R.string.key_tip_organizephotos,
-			R.string.key_tip_overlay,
+			R.string.key_tip_overlay_buttons,
+			R.string.key_tip_overlay_guided,
 			R.string.key_tip_saveview};
 
 	/**
@@ -120,7 +121,7 @@ public final class PreferenceUtil {
 		if (uri2 != null) {
 			uris.add(uri2);
 		}
-		return uris.toArray(new Uri[0]);
+		return uris.toArray(new Uri[uris.size()]);
 	}
 
 	/**

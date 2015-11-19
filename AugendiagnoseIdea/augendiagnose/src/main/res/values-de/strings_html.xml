@@ -150,6 +150,11 @@
 				soll.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Angeleitete Einrichtung von Iris- und Pupillenposition</td>
+			<td width="70%" valign="top">Hier können Sie wählen, ob Sie durch die Positionierung von Iris und Pupille geleitet
+				werden, bevor Sie die Iristopographien anzeigen können.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Standardfarbe für Overlays</td>
 			<td width="70%" valign="top">Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays normalerweise
 				angezeigt werden. (Voreinstellung: rot)</td>

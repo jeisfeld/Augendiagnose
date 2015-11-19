@@ -112,17 +112,32 @@
 </html>
 ]]>
     </string>
-    <string name="key_tip_overlay" translatable="false">key_tip_overlay</string>
-    <string name="message_tip_overlay">
+	<string name="key_tip_overlay_buttons" translatable="false">key_tip_overlay_buttons</string>
+    <string name="message_tip_overlay_buttons">
 <![CDATA[
 <!DOCTYPE html>
 <html>
 <body>
-	<h2>Iris Topograph Overlays:</h2>
-	<p>When first displaying an iris topography as overlay, you can move it with two fingers above the eye photo to make it fitting to the iris.</p>
-	<p>If the overlay fits to the iris, you can press the &ldquo;lock&rdquo; button in the right bottom corner in order to store the position of the overlay on the photo. Then the overlay stays at this position, and you can safely zoom the image.</p>
+	<h2>Iris Topography Overlays:</h2>
+	<p>By pressing the different numbered buttons, you can display different Iris topographies on top of your photo.</p>
+	<p>By making a long click on a button, you can select a different iris topography to be shown by this button.</p>
 	<p>You can also change the color of the overlay by means of the &ldquo;color&rdquo; button. (The default color can be changed in the settings.)</p>
-	<p>Note: Saving works only on JPG files.</p>
+	<p>The &ldquo;lock&rdquo; button can be used to unlock or lock the iris position on the photo. The button next to it allows to modify the size and position of the pupil.</p>
+	<p>Note: In the trial version of the app, you can use only the first two topography types.</p>
+</body>
+</html>
+]]>
+    </string>
+	<string name="key_tip_overlay_guided" translatable="false">key_tip_overlay_guided</string>
+    <string name="message_tip_overlay_guided">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Iris and Pupil positioning:</h2>
+	<p>By default, when first pressing the overlay button, you are guided through setting the iris and pupil position, so that iris topographies can be positioned correctly on the photo.</p>
+	<p>If you do not want to use this guide, you can switch it off in the Settings (under &ldquo;Display Settings&rdquo;).</p>
+	<p>Note: Saving of the iris position works only on JPG files.</p>
 </body>
 </html>
 ]]>

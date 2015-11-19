@@ -148,7 +148,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Made Jensen topography multilingual - now at position 3.\nAllow zooming while reviewing images from camera.\nBugfixes</item>
-        <item>Users can now specify which overlays are associated with the overlay buttons. Bugfixes.</item>
+        <item>Added a guided mode to set iris and pupil position.\nUsers can now specify which overlays are associated with the overlay buttons.\nBugfixes.</item>
     </string-array>
 
 </resources>

@@ -78,8 +78,8 @@ public final class HtmlStringCreator {
 		APP_URL_MAP.put(AUGENDIAGNOSE, "http://localhost:8002");
 		APP_URL_MAP.put(MINIRIS, "http://localhost:8007");
 
-		APP_RESOURCE_FOLDER_MAP.put(AUGENDIAGNOSE, new File("../Augendiagnose/res"));
-		APP_RESOURCE_FOLDER_MAP.put(MINIRIS, new File("../Miniris/res"));
+		APP_RESOURCE_FOLDER_MAP.put(AUGENDIAGNOSE, new File("../AugendiagnoseIdea/augendiagnose/src/main/res"));
+		APP_RESOURCE_FOLDER_MAP.put(MINIRIS, new File("../AugendiagnoseIdea/miniris/src/main/res"));
 	}
 
 	/**
