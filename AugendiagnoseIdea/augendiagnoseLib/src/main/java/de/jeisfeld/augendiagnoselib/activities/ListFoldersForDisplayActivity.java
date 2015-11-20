@@ -64,6 +64,9 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 		}
 
 		setListFoldersFragment((ListFoldersBaseFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG));
+		if (savedInstanceState != null && SystemUtil.isTablet()) {
+			setListPicturesForNameFragment((ListPicturesForNameFragment) getFragmentManager().findFragmentByTag(FRAGMENT_LISTPICTURES_TAG));
+		}
 
 		if (getListFoldersFragment() == null) {
 			setListFoldersFragment(new ListFoldersForDisplayFragment());

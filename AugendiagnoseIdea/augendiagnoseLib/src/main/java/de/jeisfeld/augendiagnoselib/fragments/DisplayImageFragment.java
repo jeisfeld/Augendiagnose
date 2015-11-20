@@ -1085,7 +1085,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		// Set overlay status according to the lock.
 		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL) {
-			if (mImageView.canHandleOverlays()) {
+			if (mImageView.canHandleOverlays() || mRightLeft != null) {
 				if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) && !checked) {
 					mOverlayStatus = OverlayStatus.GUIDED;
 					mGuidedTopoSetupButton.setEnabled(true);

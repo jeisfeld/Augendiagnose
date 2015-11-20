@@ -90,6 +90,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		Bundle args = getArguments();
+		//noinspection ConstantConditions
 		mParentFolder = new File(args.getString(STRING_FOLDER));
 	}
 
@@ -158,6 +159,9 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 			// update existing adapter
 			mDirectoryListAdapter.clear();
 			mDirectoryListAdapter.addAll(folderNames);
+			if (getView() != null) {
+				mDirectoryListAdapter.getFilter().filter(((EditText) getView().findViewById(R.id.searchName)).getText());
+			}
 			mDirectoryListAdapter.notifyDataSetChanged();
 		}
 
@@ -222,8 +226,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		}
 
 		if (name.indexOf(' ') < 0) {
-			for (int i = 0; i < FOLDERS_TOP.length; i++) {
-				if (name.contains(FOLDERS_TOP[i])) {
+			for (String folder : FOLDERS_TOP) {
+				if (name.contains(folder)) {
 					return "1" + name;
 				}
 			}
@@ -338,6 +342,9 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			final CharSequence inputText = getArguments().getCharSequence("inputText");
 			final CharSequence oldName = getArguments().getCharSequence("oldName");
+			if (oldName == null) {
+				return null;
+			}
 
 			// This is a workaround - better solution might be a layout.
 			// If the EditText is always recreated, then the content will be lost on orientation change.

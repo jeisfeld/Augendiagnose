@@ -883,7 +883,7 @@ public class CameraActivity extends BaseActivity {
 		fadeOut.setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimationStart(final Animation animation) {
-				flashView.setVisibility(View.VISIBLE);
+				// do nothing
 			}
 
 			@Override
@@ -900,6 +900,7 @@ public class CameraActivity extends BaseActivity {
 		AnimationSet animation = new AnimationSet(false);
 		animation.addAnimation(fadeOut);
 
+		flashView.setVisibility(View.VISIBLE);
 		flashView.startAnimation(animation);
 	}
 

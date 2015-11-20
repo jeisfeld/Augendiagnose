@@ -481,6 +481,15 @@ public final class PreferenceUtil {
 				}
 			}
 		}
+		else {
+			// fill missing entries if overlays/buttons have been added.
+			for (int i = 0; i < DisplayImageFragment.OVERLAY_BUTTON_COUNT; i++) {
+				int value = getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, dummyNumber);
+				if (value == dummyNumber) {
+					setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, i, -1);
+				}
+			}
+		}
 
 	}
 
