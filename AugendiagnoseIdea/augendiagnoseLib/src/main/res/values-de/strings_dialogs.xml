@@ -32,7 +32,7 @@
     <string name="message_dialog_failed_to_open_google_play">Google Play konnte nicht gestartet werden.</string>
     <string name="message_dialog_trial_names">In der Testversion der App können Sie nur bis zu drei Namen vergeben. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
     <string name="message_dialog_trial_time">Die Testversion der App ist nur zwei Wochen nutzbar. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
-    <string name="message_dialog_trial_overlays">Die Testversion der App ist auf zwei Overlays beschränkt. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
+    <string name="message_dialog_trial_overlays">Die Testversion der App ist auf drei Overlays beschränkt. Bitte erwerben Sie ein Premium-Paket, um die App unbegrenzt nutzen zu können.</string>
     <string name="message_dialog_purchase_thanks">Danke für Ihren Kauf!</string>
     <string name="message_dialog_purchase_thanks_premium">Danke für Ihren Kauf! Sie können die App nun unbegrenzt nutzen.</string>
     <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>

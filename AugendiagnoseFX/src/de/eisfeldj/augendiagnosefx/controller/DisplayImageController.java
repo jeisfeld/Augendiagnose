@@ -1,15 +1,5 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_INDEXED_OVERLAY_TYPE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_EDIT_COMMENT;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_SAVE_COMMENT;
-import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.FULL;
-import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.NORMAL;
-import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.THUMB;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,6 +13,7 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -45,6 +36,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_INDEXED_OVERLAY_TYPE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_EDIT_COMMENT;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.BUTTON_SAVE_COMMENT;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.FULL;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.NORMAL;
+import static de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution.THUMB;
+
 /**
  * BaseController for the "Display Image" page.
  */
@@ -52,12 +53,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	/**
 	 * The number of available overlay buttons (excluding circle). Must be at most OVERLAY_COUNT.
 	 */
-	public static final int OVERLAY_BUTTON_COUNT = 7;
+	public static final int OVERLAY_BUTTON_COUNT = 8;
 
 	/**
 	 * The number of available overlays (excluding circle).
 	 */
-	public static final int OVERLAY_COUNT = 7;
+	public static final int OVERLAY_COUNT = 8;
 
 	/**
 	 * The names of the overlays.
@@ -167,6 +168,8 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton mBtnOverlay6;
 	@FXML
 	private ToggleButton mBtnOverlay7;
+	@FXML
+	private ToggleButton mBtnOverlay8;
 
 	private ToggleButton[] mOverlayButtons;
 
@@ -250,8 +253,8 @@ public class DisplayImageController extends BaseController implements Initializa
 		mSliderContrast.setValue(0);
 		mSliderContrast.setMax(1);
 
-		mOverlayButtons = new ToggleButton[] { mBtnOverlayCircle,
-				mBtnOverlay1, mBtnOverlay2, mBtnOverlay3, mBtnOverlay4, mBtnOverlay5, mBtnOverlay6, mBtnOverlay7 };
+		mOverlayButtons = new ToggleButton[] {mBtnOverlayCircle, mBtnOverlay1, mBtnOverlay2, mBtnOverlay3, mBtnOverlay4, mBtnOverlay5, mBtnOverlay6,
+				mBtnOverlay7, mBtnOverlay8};
 		createOverlayButtonContextMenus();
 
 		mIsInitialized = true;

@@ -608,7 +608,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
 
 		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && isChecked
-				&& overlayPosition >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+				&& overlayPosition > Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
 			DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
 			mToggleOverlayButtons[position].setChecked(false);
 			return;
@@ -713,7 +713,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
 						if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-								&& index >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+								&& index > Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
 							DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
 							return true;
 						}

@@ -201,6 +201,15 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					maxWidth : const Double#MAX_VALUE,
 					toggleGroup : idref overlayGroup
 				},
+				ToggleButton id mBtnOverlay8 {
+					text : rstring "button_overlay_8",
+					styleClass : "toggleOverlay",
+					selected : false,
+					alignment : "CENTER",
+					onAction : controllermethod btnOverlayPressed,
+					maxWidth : const Double#MAX_VALUE,
+					toggleGroup : idref overlayGroup
+				},
 				Separator,
 				ColorPicker id mColorPicker {
 					maxWidth : const Double#MAX_VALUE,

@@ -11,6 +11,7 @@
         <item>@drawable/overlay_topo_combined_textual_l</item>
         <item>@drawable/overlay_topo_combined_graphical_l</item>
         <item>@drawable/overlay_topo_jensen_l</item>
+        <item>@drawable/overlay_topo_rayid_l</item>
         <item>@drawable/overlay_topo_zupan_l</item>
         <item>@drawable/overlay_topo_rizzi_l</item>
         <item>@drawable/overlay_topo_deck_l</item>
@@ -22,6 +23,7 @@
         <item>@drawable/overlay_topo_combined_textual_r</item>
         <item>@drawable/overlay_topo_combined_graphical_r</item>
         <item>@drawable/overlay_topo_jensen_r</item>
+        <item>@drawable/overlay_topo_rayid_r</item>
         <item>@drawable/overlay_topo_zupan_r</item>
         <item>@drawable/overlay_topo_rizzi_r</item>
         <item>@drawable/overlay_topo_deck_r</item>
@@ -34,6 +36,7 @@
         <item>Combined textual map</item>
         <item>Combined graphical map</item>
         <item>Bernard Jensen map</item>
+        <item>Rayid map</item>
         <item>Zupan map (German)</item>
         <item>Siegfried Rizzi map (Italian)</item>
         <item>Josef Deck map (German)</item>
@@ -46,6 +49,7 @@
         <item>0.28</item>
         <item>0.21</item>
         <item>0.24</item>
+        <item>0.24</item>
         <item>0.21</item>
         <item>0.24</item>
         <item>0.16</item>
@@ -56,6 +60,7 @@
         <item>1</item>
         <item>1</item>
         <item>0</item>
+        <item>1</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>

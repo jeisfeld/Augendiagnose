@@ -82,6 +82,8 @@ public final class ResourceConstants {
 	public static final String OVERLAY_6_PREFIX = "overlay_6_prefix";
 	public static final String OVERLAY_7_NAME = "overlay_7_name";
 	public static final String OVERLAY_7_PREFIX = "overlay_7_prefix";
+	public static final String OVERLAY_8_NAME = "overlay_8_name";
+	public static final String OVERLAY_8_PREFIX = "overlay_8_prefix";
 	public static final String PREF_TITLE_FOLDER_PHOTOS = "pref_title_folder_photos";
 	public static final String PREF_TITLE_LANGUAGE = "pref_title_language";
 	public static final String PREF_TITLE_MAX_BITMAP_SIZE = "pref_title_max_bitmap_size";

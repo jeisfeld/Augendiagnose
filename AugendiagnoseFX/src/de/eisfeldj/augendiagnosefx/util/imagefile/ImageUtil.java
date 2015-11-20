@@ -1,13 +1,5 @@
 package de.eisfeldj.augendiagnosefx.util.imagefile;
 
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_2_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_3_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_4_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_5_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_6_PREFIX;
-import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_7_PREFIX;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +8,7 @@ import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto.RightLeft;
+
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,6 +19,15 @@ import javafx.scene.effect.DisplacementMap;
 import javafx.scene.effect.FloatMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_2_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_3_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_4_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_5_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_6_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_7_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_8_PREFIX;
 
 /**
  * Utility for handling images.
@@ -44,7 +46,7 @@ public final class ImageUtil {
 	/**
 	 * The pupil sizes in the original overlay images.
 	 */
-	private static final float[] ORIG_PUPIL_SIZES = { 0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.21f, 0.24f, 0.16f };
+	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f};
 
 	/**
 	 * A cache of one overlay - to prevent frequent recalculation while sliding brightness and contrast.
@@ -178,6 +180,9 @@ public final class ImageUtil {
 			break;
 		case 7: // MAGIC_NUMBER
 			baseName = ResourceUtil.getString(OVERLAY_7_PREFIX);
+			break;
+		case 8: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_8_PREFIX);
 			break;
 		default:
 			return null;
