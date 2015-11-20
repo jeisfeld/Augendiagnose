@@ -190,7 +190,9 @@ public final class FileUtil {
 
 			try {
 				Uri uri = MediaStoreUtil.getUriFromFile(file.getAbsolutePath());
-				resolver.delete(uri, null, null);
+				if (uri != null) {
+					resolver.delete(uri, null, null);
+				}
 				return !file.exists();
 			}
 			catch (Exception e) {
@@ -284,6 +286,7 @@ public final class FileUtil {
 	public static File getTempFile(final File file) {
 		File extDir = new File(Application.getAppContext().getExternalCacheDir(), "temp");
 		if (!extDir.exists()) {
+			//noinspection ResultOfMethodCallIgnored
 			extDir.mkdirs();
 		}
 		return new File(extDir, file.getName());
@@ -319,6 +322,9 @@ public final class FileUtil {
 				return file.isFile();
 			}
 		});
+		if (files == null) {
+			files = new File[0];
+		}
 		Arrays.sort(files);
 
 		return files;
@@ -332,6 +338,7 @@ public final class FileUtil {
 	public static File getTempCameraFolder() {
 		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
 		if (!result.exists()) {
+			//noinspection ResultOfMethodCallIgnored
 			result.mkdirs();
 		}
 		return result;
@@ -453,12 +460,12 @@ public final class FileUtil {
 
 		String[] children = folder.list();
 		if (children != null) {
-			for (int i = 0; i < children.length; i++) {
-				File file = new File(folder, children[i]);
+			for (String child : children) {
+				File file = new File(folder, child);
 				if (!file.isDirectory()) {
 					boolean success = FileUtil.deleteFile(file);
 					if (!success) {
-						Log.w(Application.TAG, "Failed to delete file" + children[i]);
+						Log.w(Application.TAG, "Failed to delete file" + child);
 						totalSuccess = false;
 					}
 				}
@@ -525,6 +532,7 @@ public final class FileUtil {
 
 		// Ensure that file is not created during this process.
 		if (!isExisting) {
+			//noinspection ResultOfMethodCallIgnored
 			file.delete();
 		}
 
@@ -619,7 +627,7 @@ public final class FileUtil {
 				}
 			}
 		}
-		return paths.toArray(new String[0]);
+		return paths.toArray(new String[paths.size()]);
 	}
 
 	/**
@@ -633,9 +641,9 @@ public final class FileUtil {
 	public static String getExtSdCardFolder(final File file) {
 		String[] extSdPaths = getExtSdCardPaths();
 		try {
-			for (int i = 0; i < extSdPaths.length; i++) {
-				if (file.getCanonicalPath().startsWith(extSdPaths[i])) {
-					return extSdPaths[i];
+			for (String extSdPath : extSdPaths) {
+				if (file.getCanonicalPath().startsWith(extSdPath)) {
+					return extSdPath;
 				}
 			}
 		}

@@ -486,7 +486,7 @@ public class Camera2Handler implements CameraHandler {
 			}
 			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalArgumentException | SecurityException e) {
 			mCameraCallback.onCameraError("Failed to open camera", e);
 		}
 		catch (InterruptedException e) {

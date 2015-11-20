@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,6 +21,9 @@ import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.SurfaceView;
@@ -70,6 +75,11 @@ import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIG
  * An activity to take pictures with the camera.
  */
 public class CameraActivity extends BaseActivity {
+	/**
+	 * The requestCode for starting the permisson request.
+	 */
+	public static final int REQUEST_CODE_PERMISSION = 5;
+
 	/**
 	 * The resource key for the folder where to store the photos.
 	 */
@@ -224,6 +234,20 @@ public class CameraActivity extends BaseActivity {
 			return;
 		}
 
+		int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+		if (permission == PackageManager.PERMISSION_GRANTED) {
+			setupActivity();
+		}
+		else {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CODE_PERMISSION);
+		}
+	}
+
+	/**
+	 * Do the basic setup of the activity. This is basically the key part of the onCreate method.
+	 */
+	private void setupActivity() {
 		setContentView(R.layout.activity_camera);
 
 		setCameraHandler();
@@ -372,6 +396,7 @@ public class CameraActivity extends BaseActivity {
 						// Analyze next required step
 						if (mCurrentRightLeft == RIGHT) {
 							if (mRightEyeFile != null && mRightEyeFile.exists()) {
+								//noinspection ResultOfMethodCallIgnored
 								mRightEyeFile.delete();
 							}
 							mRightEyeFile = mNewRightEyeFile;
@@ -387,6 +412,7 @@ public class CameraActivity extends BaseActivity {
 						}
 						else {
 							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
+								//noinspection ResultOfMethodCallIgnored
 								mLeftEyeFile.delete();
 							}
 							mLeftEyeFile = mNewLeftEyeFile;
@@ -415,6 +441,7 @@ public class CameraActivity extends BaseActivity {
 						else {
 							if (mCurrentRightLeft == RIGHT) {
 								if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
+									//noinspection ResultOfMethodCallIgnored
 									mNewRightEyeFile.delete();
 								}
 								mNewRightEyeFile = null;
@@ -427,6 +454,7 @@ public class CameraActivity extends BaseActivity {
 							}
 							else {
 								if (mNewLeftEyeFile != null && mNewLeftEyeFile.exists()) {
+									//noinspection ResultOfMethodCallIgnored
 									mNewLeftEyeFile.delete();
 								}
 								mNewLeftEyeFile = null;
@@ -768,6 +796,7 @@ public class CameraActivity extends BaseActivity {
 		File[] tempFiles = FileUtil.getTempCameraFiles();
 		for (File file : tempFiles) {
 			if (!file.equals(mRightEyeFile) & !file.equals(mLeftEyeFile)) {
+				//noinspection ResultOfMethodCallIgnored
 				file.delete();
 			}
 		}
@@ -1103,6 +1132,19 @@ public class CameraActivity extends BaseActivity {
 	private boolean isCamera2() {
 		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, null);
 		return cameraApiVersion == 2;
+	}
+
+	@Override
+	public final void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+		if (requestCode == REQUEST_CODE_PERMISSION) {
+			// If request is cancelled, the result arrays are empty.
+			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				setupActivity();
+			}
+			else {
+				finish();
+			}
+		}
 	}
 
 	/**

@@ -7,6 +7,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -19,6 +20,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
@@ -49,6 +52,11 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
  * Fragment for displaying the settings.
  */
 public class SettingsFragment extends PreferenceFragment {
+	/**
+	 * The requestCode for starting the permisson request.
+	 */
+	public static final int REQUEST_CODE_PERMISSION = 5;
+
 	/**
 	 * The requestCode with which the storage access framework is triggered for photo folder.
 	 */
@@ -201,10 +209,23 @@ public class SettingsFragment extends PreferenceFragment {
 			addDeveloperContactButtonListener();
 			addUnlockerAppButtonListener();
 
-			// Google Billing is done on activity level - intent is started by activity, not by fragment!
-			GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+			int permission = ContextCompat.checkSelfPermission(getActivity(), "com.android.vending.BILLING");
+
+			if (permission == PackageManager.PERMISSION_GRANTED) {
+				initializeGoogleBilling();
+			}
+			else {
+				ActivityCompat.requestPermissions(getActivity(), new String[] {"com.android.vending.BILLING"}, REQUEST_CODE_PERMISSION);
+			}
 		}
 
+	}
+
+	/**
+	 * Initialize Google Billing (after having permission).
+	 */
+	public final void initializeGoogleBilling() {
+		GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
 	}
 
 	/**
@@ -419,7 +440,10 @@ public class SettingsFragment extends PreferenceFragment {
 
 					else if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
 						int overlayIndex = Integer.parseInt(stringValue);
-						int buttonPosition = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						Integer buttonPosition = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						if (buttonPosition == null) {
+							buttonPosition = 0;
+						}
 						Integer oldButtonPosition = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
 						int oldOverlayIndex =
 								PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonPosition, -1);
@@ -431,7 +455,7 @@ public class SettingsFragment extends PreferenceFragment {
 								return false;
 							}
 
-							if (oldButtonPosition != null && oldButtonPosition != buttonPosition) {
+							if (oldButtonPosition != null && !oldButtonPosition.equals(buttonPosition)) {
 								// If the same overlay is already used, switch overlays
 								PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition,
 										oldOverlayIndex);
@@ -491,7 +515,10 @@ public class SettingsFragment extends PreferenceFragment {
 				 */
 				private void updateSummaryForOverlayPreference(final ListPreference preference) {
 					if (preference != null && preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
-						int buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						Integer buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+						if (buttonIndex == null) {
+							buttonIndex = 0;
+						}
 						int overlayIndex = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonIndex, -1);
 						if (overlayIndex > 0) {
 							String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayIndex];

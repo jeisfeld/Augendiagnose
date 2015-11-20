@@ -7,9 +7,11 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -43,6 +45,11 @@ public class SettingsActivity extends PreferenceActivity {
 	private static final int[] PATH_RESOURCES = {R.string.key_folder_input, R.string.key_folder_photos};
 
 	/**
+	 * The settings fragment.
+	 */
+	private SettingsFragment mFragment;
+
+	/**
 	 * Utility method to start the activity.
 	 *
 	 * @param context  The context in which the activity is started.
@@ -63,12 +70,12 @@ public class SettingsActivity extends PreferenceActivity {
 		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
 
 		if (prefType != -1) {
-			SettingsFragment fragment = (SettingsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-			if (fragment == null) {
-				fragment = new SettingsFragment();
-				fragment.setParameters(getString(prefType));
+			mFragment = (SettingsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+			if (mFragment == null) {
+				mFragment = new SettingsFragment();
+				mFragment.setParameters(getString(prefType));
 
-				getFragmentManager().beginTransaction().replace(android.R.id.content, fragment, FRAGMENT_TAG).commit();
+				getFragmentManager().beginTransaction().replace(android.R.id.content, mFragment, FRAGMENT_TAG).commit();
 				getFragmentManager().executePendingTransactions();
 
 				if (savedInstanceState == null) {
@@ -207,5 +214,15 @@ public class SettingsActivity extends PreferenceActivity {
 
 		// Google Billing is started by Fragment, but on Activity level!
 		GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public final void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+		if (requestCode == SettingsFragment.REQUEST_CODE_PERMISSION) {
+			// If request is cancelled, the result arrays are empty.
+			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				mFragment.initializeGoogleBilling();
+			}
+		}
 	}
 }
