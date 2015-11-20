@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.util;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.DialogController;
 import de.eisfeldj.augendiagnosefx.controller.MessageDialogController;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,15 +22,17 @@ public abstract class DialogUtil {
 	 * @param fxmlString
 	 *            The FXML resource.
 	 *
+	 * @param decorated a flag indicating if the dialog should have OS border.
 	 * @return The dialog controller.
 	 */
-	private static DialogController createDialog(final String fxmlString) {
+	private static DialogController createDialog(final String fxmlString, final boolean decorated) {
 		DialogController controller;
 		controller = (DialogController) FxmlUtil.getRootFromFxml(fxmlString);
 
 		Scene scene = new Scene(controller.getRoot());
 		Stage dialog = new Stage();
 		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initStyle(decorated ? StageStyle.DECORATED : StageStyle.UNDECORATED);
 		dialog.initOwner(Application.getStage());
 		dialog.setScene(scene);
 		controller.setStage(dialog);
@@ -54,7 +57,7 @@ public abstract class DialogUtil {
 				Logger.info("Dialog message: " + message);
 
 				MessageDialogController controller =
-						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_MESSAGE);
+						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_MESSAGE, false);
 
 				controller.setHeading(ResourceUtil.getString(title));
 				controller.setMessage(message);
@@ -118,7 +121,7 @@ public abstract class DialogUtil {
 				String message = String.format(ResourceUtil.getString(messageResource), args);
 
 				MessageDialogController controller =
-						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_CONFIRM);
+						(MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_CONFIRM, false);
 
 				controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_CONFIRMATION));
 				controller.setMessage(message);
@@ -152,7 +155,7 @@ public abstract class DialogUtil {
 	 * Display the settings dialog.
 	 */
 	public static void displayPreferencesDialog() {
-		createDialog(FxmlConstants.FXML_PREFERENCES).show();
+		createDialog(FxmlConstants.FXML_PREFERENCES, true).show();
 	}
 
 	/**
@@ -167,7 +170,7 @@ public abstract class DialogUtil {
 	public static ProgressDialog displayProgressDialog(final String messageResource, final Object... args) {
 		String message = String.format(ResourceUtil.getString(messageResource), args);
 
-		MessageDialogController controller = (MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_PROGRESS);
+		MessageDialogController controller = (MessageDialogController) createDialog(FxmlConstants.FXML_DIALOG_PROGRESS, false);
 
 		controller.getStage().initStyle(StageStyle.UNDECORATED);
 		controller.setHeading(ResourceUtil.getString(ResourceConstants.TITLE_DIALOG_PROGRESS));

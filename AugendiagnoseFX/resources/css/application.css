@@ -82,8 +82,12 @@
 
 }
 
-.dialogProgress {
-	-fx-padding: 10.0;
+.dialog {
+	-fx-padding: 5.0;
+}
+
+.dialogFrame {
+	-fx-padding: 5.0;
 	-fx-border-width: 2.0;
 	-fx-border-color: darkgrey;
 }

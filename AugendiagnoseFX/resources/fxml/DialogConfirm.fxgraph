@@ -9,6 +9,7 @@ import javafx.geometry.Insets
 
 component DialogConfirm controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id mDialogPane {
+		styleClass : "dialogFrame",
 		vgap : 10,
 		Label id mDialogHeading {
 			static columnIndex : 0,

@@ -10,6 +10,7 @@ import javafx.geometry.Insets
 component DialogMessage controlledby MessageDialogController resourcefile "../bundles/Strings.properties" styledwith
 "../css/application.css" {
 	GridPane id mDialogPane {
+		styleClass : "dialogFrame",
 		vgap : 10, Label id mDialogHeading {
 			static columnIndex : 0, static rowIndex : 0, static halignment : "CENTER",
 			text : rstring "title_dialog_error"

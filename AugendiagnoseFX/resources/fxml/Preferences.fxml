@@ -18,7 +18,7 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mSettingsPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.PreferencesController" styleClass="display">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mSettingsPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.PreferencesController" styleClass="dialog" hgap="10" vgap="5">
 
 	<columnConstraints>
 		<ColumnConstraints/> 

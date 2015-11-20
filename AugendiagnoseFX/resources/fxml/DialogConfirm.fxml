@@ -12,7 +12,7 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mDialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" vgap="10">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="mDialogPane" fx:controller="de.eisfeldj.augendiagnosefx.controller.MessageDialogController" styleClass="dialogFrame" vgap="10">
 
 	<Label fx:id="mDialogHeading" text="%title_dialog_confirmation" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"/> 
 	<Text fx:id="mDialogMessage" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 

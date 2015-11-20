@@ -15,7 +15,9 @@ import javafx.scene.layout.GridPane
 
 component Settings controlledby PreferencesController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane id mSettingsPane {
-		styleClass : "display",
+		styleClass : "dialog",
+		hgap : 10,
+		vgap : 5,
 		columnConstraints : ColumnConstraints {
 		},
 		columnConstraints : ColumnConstraints {
