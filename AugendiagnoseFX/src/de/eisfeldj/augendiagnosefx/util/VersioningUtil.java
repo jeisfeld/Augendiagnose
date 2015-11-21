@@ -1,7 +1,5 @@
 package de.eisfeldj.augendiagnosefx.util;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,8 +13,12 @@ import java.net.URLConnection;
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javafx.application.Platform;
+
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
 
 /**
  * Utility class for handling the download of new application version.
@@ -25,7 +27,7 @@ public final class VersioningUtil {
 	/**
 	 * The current version of the application.
 	 */
-	public static final VersionInfo CURRENT_VERSION = new VersionInfo(6, "0.1.5");
+	public static final VersionInfo CURRENT_VERSION = new VersionInfo(7, "0.1.6");
 
 	/**
 	 * Base URL for downloading the application.
