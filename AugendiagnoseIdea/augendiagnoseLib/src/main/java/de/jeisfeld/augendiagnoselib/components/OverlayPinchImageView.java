@@ -452,6 +452,10 @@ public class OverlayPinchImageView extends PinchImageView {
 			showFullResolutionSnapshot(true);
 			return;
 		}
+		else if (resolution == HIGH || resolution == LOW) {
+			interruptFullResolutionThread();
+			mPartialBitmapFullResolution = null;
+		}
 
 		// Determine overlays to be shown
 		List<Integer> overlayPositions = getOverlayPositions();
@@ -844,6 +848,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void setOverlayColor(final int overlayColor) {
 		mOverlayColor = overlayColor;
+		mNeedsBitmapRefresh = true;
 		resetOverlayCache();
 		mGuiElementUpdater.updateOverlayColorButton(overlayColor);
 		if (getOverlayPositions().size() > 0) {
@@ -962,9 +967,8 @@ public class OverlayPinchImageView extends PinchImageView {
 			justification = "Using floating point equality to see if value has changed")
 	@Override
 	protected final boolean handlePointerMove(final MotionEvent ev) {
-		showNormalResolution();
-
 		if (mPinchMode == PinchMode.ALL) {
+			mPartialBitmapFullResolution = null;
 			return super.handlePointerMove(ev);
 		}
 		else if (mPinchMode == PinchMode.PUPIL_CENTER) {
@@ -976,7 +980,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mPupilOverlayX = 0;
 				mPupilOverlayY = 0;
 				mIsPupilChanged = true;
-				refresh(LOW);
+				refresh(mFullResolutionFlag ? FULL : LOW);
 				return true;
 			}
 		}
@@ -1084,21 +1088,17 @@ public class OverlayPinchImageView extends PinchImageView {
 			}
 		}
 
-		refresh(LOW);
+		refresh(mFullResolutionFlag ? FULL : LOW);
 		return moved;
 	}
 
-	/*
-	 * Overridden to refresh the view in high resolution.
-	 */
 	@Override
 	protected final void startPointerMove(final MotionEvent ev) {
-		showNormalResolution();
+		if (mPinchMode == PinchMode.ALL) {
+			showNormalResolution();
+		}
 	}
 
-	/*
-	 * Overridden to refresh the view in full details.
-	 */
 	@Override
 	protected final void finishPointerMove(final MotionEvent ev) {
 		refresh();

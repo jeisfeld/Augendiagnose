@@ -22,6 +22,11 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	protected static final String FRAGMENT_EDIT_TAG = "FRAGMENT_EDIT_TAG";
 
+	/**
+	 * Flag checking if the image is initialized.
+	 */
+	private boolean mIsInitialized = false;
+
 	// PUBLIC_FIELDS:START
 	// Fields required by subclasses.
 
@@ -71,8 +76,9 @@ public abstract class DisplayImageActivity extends Activity implements ContextMe
 	 */
 	@Override
 	public final void onWindowFocusChanged(final boolean hasFocus) {
-		if (hasFocus) {
+		if (hasFocus && !mIsInitialized) {
 			initializeImages();
+			mIsInitialized = true;
 		}
 	}
 
