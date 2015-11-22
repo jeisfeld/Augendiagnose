@@ -179,6 +179,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private Bitmap mPartialBitmapFullResolution;
 
 	/**
+	 * The partial bitmap with full resolution, including brightness.
+	 */
+	private Bitmap mPartialBitmapFullResolutionWithBrightness;
+
+	/**
 	 * The full bitmap (full resolution).
 	 */
 	private Bitmap mBitmapFull = null;
@@ -293,7 +298,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		mBitmap = retainFragment.getBitmap();
 		mBitmapSmall = retainFragment.getBitmapSmall();
 		mBitmapFull = retainFragment.getBitmapFullResolution();
-		mPartialBitmapFullResolution = null;
+		cleanFullResolutionBitmaps(false);
 
 		if (mBitmap == null || !pathName.equals(mPathName)) {
 			mHasOverlayPosition = false;
@@ -428,6 +433,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		super.doInitialScaling();
 
 		resetOverlayCache();
+		cleanFullResolutionBitmaps(false);
 	}
 
 	/**
@@ -454,7 +460,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else if (resolution == HIGH || resolution == LOW) {
 			interruptFullResolutionThread();
-			mPartialBitmapFullResolution = null;
+			cleanFullResolutionBitmaps(false);
 		}
 
 		// Determine overlays to be shown
@@ -826,6 +832,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setBrightness(final float brightness) {
 		mBrightness = brightness;
 		mNeedsBitmapRefresh = true;
+		cleanFullResolutionBitmaps(true);
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
@@ -838,6 +845,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
 		mNeedsBitmapRefresh = true;
+		cleanFullResolutionBitmaps(true);
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
 
@@ -875,12 +883,15 @@ public class OverlayPinchImageView extends PinchImageView {
 			if (delete) {
 				mMetadata.setBrightness((Float) null);
 				mMetadata.setContrast((Float) null);
+				mNeedsBitmapRefresh = true;
+				cleanFullResolutionBitmaps(true);
 				mBrightness = 0;
 				mContrast = 1;
 				if (mGuiElementUpdater != null) {
 					mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
 					mGuiElementUpdater.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 				}
+				refresh();
 			}
 			else {
 				mMetadata.setBrightness(mBrightness);
@@ -929,6 +940,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				// Reset to original view size
 				mInitialized = false;
 				doInitialScaling();
+				refresh();
 			}
 			else {
 				mHasViewPosition = true;
@@ -968,7 +980,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	@Override
 	protected final boolean handlePointerMove(final MotionEvent ev) {
 		if (mPinchMode == PinchMode.ALL) {
-			mPartialBitmapFullResolution = null;
+			cleanFullResolutionBitmaps(false);
 			return super.handlePointerMove(ev);
 		}
 		else if (mPinchMode == PinchMode.PUPIL_CENTER) {
@@ -1306,14 +1318,26 @@ public class OverlayPinchImageView extends PinchImageView {
 					}
 				}
 
-				final Bitmap partialBitmapWithBrightness =
-						changeBitmapContrastBrightness(mPartialBitmapFullResolution, mContrast, mBrightness);
+				if (mPartialBitmapFullResolutionWithBrightness == null) {
+					try {
+						mPartialBitmapFullResolutionWithBrightness =
+								changeBitmapContrastBrightness(mPartialBitmapFullResolution, mContrast, mBrightness);
+					}
+					catch (OutOfMemoryError e) {
+						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap with brightness", e);
+						mPartialBitmapFullResolutionWithBrightness = null;
+					}
 
-				final Bitmap partialBitmapWithOverlay = addOverlayToPartialBitmap(partialBitmapWithBrightness);
+					if (mPartialBitmapFullResolutionWithBrightness == null) {
+						return;
+					}
+				}
+
+				final Bitmap partialBitmapWithOverlay = addOverlayToPartialBitmap(mPartialBitmapFullResolutionWithBrightness);
 
 				if (isInterrupted()) {
 					// Do not display the result if the thread has been interrupted.
-					mPartialBitmapFullResolution = null;
+					cleanFullResolutionBitmaps(false);
 				}
 				else {
 					// Make a straight display of this bitmap without any matrix transformation.
@@ -1368,6 +1392,18 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Clean the cached full resolution bitmaps.
+	 *
+	 * @param onlyBrightness Flag indicating if only the brightness/contrast bitmap is cleaned, but the position is kept.
+	 */
+	private void cleanFullResolutionBitmaps(final boolean onlyBrightness) {
+		mPartialBitmapFullResolutionWithBrightness = null;
+		if (!onlyBrightness) {
+			mPartialBitmapFullResolution = null;
+		}
+	}
+
+	/**
 	 * Interrupt the full resolution snapshot creation, if in process.
 	 */
 	private void interruptFullResolutionThread() {
@@ -1379,7 +1415,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				}
 			}
 		}
-		mPartialBitmapFullResolution = null;
+		cleanFullResolutionBitmaps(false);
 	}
 
 	/**
@@ -1387,7 +1423,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	public final void showNormalResolution() {
 		interruptFullResolutionThread();
-		mPartialBitmapFullResolution = null;
+		cleanFullResolutionBitmaps(false);
 
 		if (mNeedsBitmapRefresh) {
 			refresh();
