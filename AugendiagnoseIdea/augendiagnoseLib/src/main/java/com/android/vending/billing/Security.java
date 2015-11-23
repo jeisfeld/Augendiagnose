@@ -9,6 +9,7 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -41,7 +42,7 @@ public final class Security {
 	 * @param signature       the signature for the data, signed with the private key
 	 * @return true if verification was successful.
 	 */
-	public static boolean verifyPurchase(final String base64PublicKey, final String signedData, final String signature) {
+	public static boolean verifyPurchase(@NonNull final String base64PublicKey, @NonNull final String signedData, @NonNull final String signature) {
 		if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey)) {
 			Log.e(TAG, "Purchase verification failed: missing data.");
 			return false;
@@ -63,7 +64,7 @@ public final class Security {
 	 * @param encodedPublicKey Base64-encoded public key
 	 * @return the PublicKey instance.
 	 */
-	private static PublicKey generatePublicKey(final String encodedPublicKey) {
+	private static PublicKey generatePublicKey(@NonNull final String encodedPublicKey) {
 		try {
 			byte[] decodedKey = Base64.decode(encodedPublicKey);
 			KeyFactory keyFactory = KeyFactory.getInstance(KEY_FACTORY_ALGORITHM);
@@ -91,7 +92,7 @@ public final class Security {
 	 * @param signature  server signature
 	 * @return true if the data and signature match
 	 */
-	private static boolean verify(final PublicKey publicKey, final String signedData, final String signature) {
+	private static boolean verify(final PublicKey publicKey, @NonNull final String signedData, @NonNull final String signature) {
 		Signature sig;
 		try {
 			sig = Signature.getInstance(SIGNATURE_ALGORITHM);

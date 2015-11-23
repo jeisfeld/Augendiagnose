@@ -10,6 +10,8 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -123,6 +125,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The file path.
 	 */
+	@Nullable
 	private String mFile;
 
 	/**
@@ -133,11 +136,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Information if right or left image.
 	 */
+	@Nullable
 	private RightLeft mRightLeft;
 
 	/**
 	 * Flag indicating if overlays are allowed.
 	 */
+	@Nullable
 	private OverlayStatus mOverlayStatus;
 
 	/**
@@ -241,6 +246,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The status of the pupil button.
 	 */
+	@Nullable
 	private PupilButtonStatus mPupilButtonStatus;
 
 	static {
@@ -257,7 +263,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @param initialRightLeft  Information if it is the right or left eye (if not in image metadata)
 	 */
 	public final void setParameters(final String initialFile, final int initialImageIndex,
-									final RightLeft initialRightLeft) {
+									@Nullable final RightLeft initialRightLeft) {
 		Bundle args = new Bundle();
 		args.putString(STRING_FILE, initialFile);
 		args.putInt(STRING_TYPE, TYPE_FILENAME);
@@ -302,8 +308,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Inflate View.
 	 */
 	// OVERRIDABLE
+	@Nullable
 	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 							 final Bundle savedInstanceState) {
 		if (SystemUtil.isLandscape()) {
 			setLandscape(true);
@@ -319,7 +326,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Update data from view.
 	 */
 	@Override
-	public final void onActivityCreated(final Bundle savedInstanceState) {
+	public final void onActivityCreated(@Nullable final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (getView() == null) {
 			return;
@@ -388,7 +395,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
 		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
@@ -396,7 +403,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSeekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
 		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 			}
 		});
@@ -743,6 +750,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @param anchorView The anchor view.
 	 * @return The popup menu.
 	 */
+	@NonNull
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	private PopupMenu getPopupMenuKitkat(final View anchorView) {
 		return new PopupMenu(getActivity(), anchorView, Gravity.RIGHT);
@@ -851,7 +859,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		PopupMenu popup = new PopupMenu(getActivity(), view);
 		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
-			public boolean onMenuItemClick(final MenuItem item) {
+			public boolean onMenuItemClick(@NonNull final MenuItem item) {
 				int itemId = item.getItemId();
 				if (itemId == R.id.action_store_brightness) {
 					mImageView.storeBrightnessContrast(false);
@@ -1010,7 +1018,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	@Override
-	public final void onSaveInstanceState(final Bundle outState) {
+	public final void onSaveInstanceState(@NonNull final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("showUtilities", mShowUtilities);
 		outState.putInt("overlayColor", mOverlayColor);

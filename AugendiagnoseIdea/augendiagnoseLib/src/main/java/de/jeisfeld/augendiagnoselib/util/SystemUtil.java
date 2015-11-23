@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -192,6 +193,7 @@ public final class SystemUtil {
 	 *
 	 * @return country code or null
 	 */
+	@Nullable
 	public static String getUserCountry() {
 		Context context = Application.getAppContext();
 		String locale = null;

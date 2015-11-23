@@ -4,6 +4,8 @@ import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 
@@ -19,27 +21,47 @@ public final class JpegMetadata implements Parcelable {
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
 
+	@Nullable
 	private String mTitle = null;
+	@Nullable
 	private String mDescription = null;
+	@Nullable
 	private String mSubject = null;
+	@Nullable
 	private String mComment = null;
+	@Nullable
 	private String mPerson = null;
+	@Nullable
 	private Float mXCenter = null;
+	@Nullable
 	private Float mYCenter = null;
+	@Nullable
 	private Float mOverlayScaleFactor = null;
+	@Nullable
 	private Float mXPosition = null;
+	@Nullable
 	private Float mYPosition = null;
+	@Nullable
 	private Float mZoomFactor = null;
+	@Nullable
 	private Date mOrganizeDate = null;
+	@Nullable
 	private RightLeft mRightLeft = null;
+	@Nullable
 	private Float mBrightness = null;
+	@Nullable
 	private Float mContrast = null;
+	@Nullable
 	private Float mPupilSize = null;
+	@Nullable
 	private Float mPupilXOffset = null;
+	@Nullable
 	private Float mPupilYOffset = null;
+	@Nullable
 	private Integer mOverlayColor = null;
 	private int mFlags = 0;
 
+	@Nullable
 	public String getTitle() {
 		return mTitle;
 	}
@@ -48,6 +70,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mTitle = title;
 	}
 
+	@Nullable
 	public String getDescription() {
 		return mDescription;
 	}
@@ -56,6 +79,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mDescription = description;
 	}
 
+	@Nullable
 	public String getSubject() {
 		return mSubject;
 	}
@@ -64,6 +88,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mSubject = subject;
 	}
 
+	@Nullable
 	public String getComment() {
 		return mComment;
 	}
@@ -72,6 +97,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mComment = comment;
 	}
 
+	@Nullable
 	public String getPerson() {
 		return mPerson;
 	}
@@ -80,6 +106,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mPerson = person;
 	}
 
+	@Nullable
 	public Float getXCenter() {
 		return mXCenter;
 	}
@@ -88,6 +115,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mXCenter = xCenter;
 	}
 
+	@Nullable
 	public Float getYCenter() {
 		return mYCenter;
 	}
@@ -96,6 +124,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mYCenter = yCenter;
 	}
 
+	@Nullable
 	public Float getOverlayScaleFactor() {
 		return mOverlayScaleFactor;
 	}
@@ -104,6 +133,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mOverlayScaleFactor = overlayScaleFactor;
 	}
 
+	@Nullable
 	public Float getXPosition() {
 		return mXPosition;
 	}
@@ -112,6 +142,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mXPosition = xPosition;
 	}
 
+	@Nullable
 	public Float getYPosition() {
 		return mYPosition;
 	}
@@ -120,6 +151,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mYPosition = yPosition;
 	}
 
+	@Nullable
 	public Float getZoomFactor() {
 		return mZoomFactor;
 	}
@@ -128,6 +160,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mZoomFactor = zoomFactor;
 	}
 
+	@Nullable
 	public Date getOrganizeDate() {
 		return mOrganizeDate;
 	}
@@ -136,6 +169,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mOrganizeDate = organizeDate;
 	}
 
+	@Nullable
 	public RightLeft getRightLeft() {
 		return mRightLeft;
 	}
@@ -144,6 +178,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mRightLeft = rightLeft;
 	}
 
+	@Nullable
 	public Float getBrightness() {
 		return mBrightness;
 	}
@@ -152,6 +187,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mBrightness = brightness;
 	}
 
+	@Nullable
 	public Float getContrast() {
 		return mContrast;
 	}
@@ -160,6 +196,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mContrast = contrast;
 	}
 
+	@Nullable
 	public Integer getOverlayColor() {
 		return mOverlayColor;
 	}
@@ -168,6 +205,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mOverlayColor = overlayColor;
 	}
 
+	@Nullable
 	public Float getPupilSize() {
 		return mPupilSize;
 	}
@@ -176,6 +214,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mPupilSize = pupilSize;
 	}
 
+	@Nullable
 	public Float getPupilXOffset() {
 		return mPupilXOffset;
 	}
@@ -184,6 +223,7 @@ public final class JpegMetadata implements Parcelable {
 		this.mPupilXOffset = pupilXOffset;
 	}
 
+	@Nullable
 	public Float getPupilYOffset() {
 		return mPupilYOffset;
 	}
@@ -203,8 +243,10 @@ public final class JpegMetadata implements Parcelable {
 	/**
 	 * The EXIF orientation is not persisted in the XMP Metadata structure, but only used for storage in EXIF.
 	 */
+	@Nullable
 	private Short mOrientation = null;
 
+	@Nullable
 	public Short getOrientation() {
 		return mOrientation;
 	}
@@ -246,50 +288,56 @@ public final class JpegMetadata implements Parcelable {
 
 	// Getters and setters with type conversion.
 
-	public void setXCenter(final String value) {
+	public void setXCenter(@Nullable final String value) {
 		mXCenter = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getXCenterString() {
 		return mXCenter == null ? null : mXCenter.toString();
 	}
 
-	public void setYCenter(final String value) {
+	public void setYCenter(@Nullable final String value) {
 		mYCenter = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getYCenterString() {
 		return mYCenter == null ? null : mYCenter.toString();
 	}
 
-	public void setOverlayScaleFactor(final String value) {
+	public void setOverlayScaleFactor(@Nullable final String value) {
 		mOverlayScaleFactor = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getOverlayScaleFactorString() {
 		return mOverlayScaleFactor == null ? null : mOverlayScaleFactor.toString();
 	}
 
-	public void setXPosition(final String value) {
+	public void setXPosition(@Nullable final String value) {
 		mXPosition = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getXPositionString() {
 		return mXPosition == null ? null : mXPosition.toString();
 	}
 
-	public void setYPosition(final String value) {
+	public void setYPosition(@Nullable final String value) {
 		mYPosition = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getYPositionString() {
 		return mYPosition == null ? null : mYPosition.toString();
 	}
 
-	public void setZoomFactor(final String value) {
+	public void setZoomFactor(@Nullable final String value) {
 		mZoomFactor = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getZoomFactorString() {
 		return mZoomFactor == null ? null : mZoomFactor.toString();
 	}
@@ -302,66 +350,74 @@ public final class JpegMetadata implements Parcelable {
 		mOrganizeDate = timestamp == 0 ? null : new Date(timestamp);
 	}
 
-	public void setRightLeft(final String value) {
+	public void setRightLeft(@Nullable final String value) {
 		mRightLeft = value == null ? null : RightLeft.fromString(value);
 	}
 
+	@Nullable
 	public String getRightLeftString() {
 		return mRightLeft == null ? null : mRightLeft.toString();
 	}
 
-	public void setBrightness(final String value) {
+	public void setBrightness(@Nullable final String value) {
 		mBrightness = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getBrightnessString() {
 		return mBrightness == null ? null : mBrightness.toString();
 	}
 
-	public void setContrast(final String value) {
+	public void setContrast(@Nullable final String value) {
 		mContrast = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getContrastString() {
 		return mContrast == null ? null : mContrast.toString();
 	}
 
-	public void setOverlayColor(final String value) {
+	public void setOverlayColor(@Nullable final String value) {
 		mOverlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
 	}
 
+	@Nullable
 	public String getOverlayColorString() {
 		return mOverlayColor == null ? null : Integer.toHexString(mOverlayColor);
 	}
 
-	public void setPupilSize(final String value) {
+	public void setPupilSize(@Nullable final String value) {
 		mPupilSize = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getPupilSizeString() {
 		return mPupilSize == null ? null : mPupilSize.toString();
 	}
 
-	public void setPupilXOffset(final String value) {
+	public void setPupilXOffset(@Nullable final String value) {
 		mPupilXOffset = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getPupilXOffsetString() {
 		return mPupilXOffset == null ? null : mPupilXOffset.toString();
 	}
 
-	public void setPupilYOffset(final String value) {
+	public void setPupilYOffset(@Nullable final String value) {
 		mPupilYOffset = value == null ? null : Float.parseFloat(value);
 	}
 
+	@Nullable
 	public String getPupilYOffsetString() {
 		return mPupilYOffset == null ? null : mPupilYOffset.toString();
 	}
 
-	private void setOrientation(final String value) {
+	private void setOrientation(@Nullable final String value) {
 		mOrientation = value == null ? null : (short) Short.parseShort(value);
 	}
 
+	@Nullable
 	private String getOrientationString() {
 		return mOrientation == null ? null : Short.toString(mOrientation);
 	}
@@ -429,7 +485,7 @@ public final class JpegMetadata implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(final Parcel dest, final int flags) {
+	public void writeToParcel(@NonNull final Parcel dest, final int flags) {
 		// using String values in order to be fine with null values
 		dest.writeString(mTitle);
 		dest.writeString(mDescription);
@@ -455,8 +511,9 @@ public final class JpegMetadata implements Parcelable {
 	 * Required field for Parcelable implementation.
 	 */
 	public static final Parcelable.Creator<JpegMetadata> CREATOR = new Parcelable.Creator<JpegMetadata>() {
+		@NonNull
 		@Override
-		public JpegMetadata createFromParcel(final Parcel in) {
+		public JpegMetadata createFromParcel(@NonNull final Parcel in) {
 			JpegMetadata metadata = new JpegMetadata();
 			metadata.mTitle = in.readString();
 			metadata.mDescription = in.readString();
@@ -479,6 +536,7 @@ public final class JpegMetadata implements Parcelable {
 			return metadata;
 		}
 
+		@NonNull
 		@Override
 		public JpegMetadata[] newArray(final int size) {
 			return new JpegMetadata[size];

@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.ImageSelectionAndDisplayHandler;
@@ -18,7 +19,7 @@ public class ListPicturesForSecondNameArrayAdapter extends ListPicturesForNameBa
 	 * @param activity      The activity using the adapter.
 	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
 	 */
-	public ListPicturesForSecondNameArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
+	public ListPicturesForSecondNameArrayAdapter(final Activity activity, @NonNull final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, eyePhotoPairs);
 	}
 
@@ -37,7 +38,7 @@ public class ListPicturesForSecondNameArrayAdapter extends ListPicturesForNameBa
 	}
 
 	@Override
-	protected final void prepareViewForSelection(final EyeImageView view) {
+	protected final void prepareViewForSelection(@NonNull final EyeImageView view) {
 		ImageSelectionAndDisplayHandler.getInstance().prepareViewForSecondSelection(view);
 	}
 

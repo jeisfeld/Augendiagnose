@@ -8,6 +8,8 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
@@ -42,14 +44,14 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 *
 	 * @param context The context in which the activity is started.
 	 */
-	public static final void startActivity(final Context context) {
+	public static final void startActivity(@NonNull final Context context) {
 		Intent intent = new Intent(context, ListFoldersForDisplayActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intent);
 	}
 
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		if (isCreationFailed()) {
@@ -118,7 +120,7 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 	 *
 	 * @param name The name for which pictures should be shown.
 	 */
-	public final void listPicturesForName(final String name) {
+	public final void listPicturesForName(@NonNull final String name) {
 		if (SystemUtil.isTablet()) {
 			mListPicturesFragment =
 					(ListPicturesForNameFragment) getFragmentManager().findFragmentByTag(FRAGMENT_LISTPICTURES_TAG);

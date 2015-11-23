@@ -2,6 +2,8 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -29,7 +31,7 @@ public final class AutoKeyboardLayoutUtility {
 	 * @param activity the activity which uses the workaround.
 	 */
 	@SuppressWarnings("unused")
-	public static void assistActivity(final Activity activity) {
+	public static void assistActivity(@NonNull final Activity activity) {
 		new AutoKeyboardLayoutUtility(activity);
 	}
 
@@ -40,7 +42,7 @@ public final class AutoKeyboardLayoutUtility {
 	 * @param callback     a callback to be called if the kayboard is shown or hidden.
 	 * @param changeLayout Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
 	 */
-	public static void assistActivity(final Activity activity, final OnKeyboardChangeListener callback,
+	public static void assistActivity(@NonNull final Activity activity, final OnKeyboardChangeListener callback,
 									  final boolean changeLayout) {
 		AutoKeyboardLayoutUtility instance = new AutoKeyboardLayoutUtility(activity);
 		instance.mCallback = callback;
@@ -50,7 +52,9 @@ public final class AutoKeyboardLayoutUtility {
 	// JAVADOC:OFF
 	private final View mChildOfContent;
 	private int mUsableHeightPrevious;
+	@NonNull
 	private final FrameLayout.LayoutParams mFrameLayoutParams;
+	@Nullable
 	private ActivityWithExplicitLayoutTrigger mActivityWithLayoutTrigger = null;
 
 	// JAVADOC:ON
@@ -58,6 +62,7 @@ public final class AutoKeyboardLayoutUtility {
 	/**
 	 * A callback to be called if the kayboard is shown or hidden.
 	 */
+	@Nullable
 	private OnKeyboardChangeListener mCallback = null;
 
 	/**
@@ -70,7 +75,7 @@ public final class AutoKeyboardLayoutUtility {
 	 *
 	 * @param activity the activity which uses the workaround.
 	 */
-	private AutoKeyboardLayoutUtility(final Activity activity) {
+	private AutoKeyboardLayoutUtility(@NonNull final Activity activity) {
 		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
 		mChildOfContent = content.getChildAt(0);
 		mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -5,6 +5,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.ListPreference;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -47,6 +49,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * The custom directory selected via directory browser. Value is null if no custom directory is selected.
 	 */
+	@Nullable
 	private String mSelectedCustomDir = null;
 
 	/**
@@ -57,6 +60,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	/**
 	 * A listener called when the dialog is closed.
 	 */
+	@Nullable
 	private OnDialogClosedListener mOnDialogClosedListener = null;
 
 	/**
@@ -91,7 +95,8 @@ public class DirectorySelectionPreference extends ListPreference {
 	 * @param path The path.
 	 * @return The path with special folder tags replaced.
 	 */
-	public static final String replaceSpecialFolderTags(final String path) {
+	@NonNull
+	public static final String replaceSpecialFolderTags(@NonNull final String path) {
 		if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
 			return FileUtil.getSdCardPath() + path.substring(EXTERNAL_STORAGE_PREFIX.length());
 		}
@@ -121,7 +126,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	 * @param builder The DialogBuilder to be customized.
 	 */
 	@Override
-	protected final void onPrepareDialogBuilder(final Builder builder) {
+	protected final void onPrepareDialogBuilder(@NonNull final Builder builder) {
 		super.onPrepareDialogBuilder(builder);
 
 		final CharSequence[] entries = getEntries();
@@ -134,7 +139,7 @@ public class DirectorySelectionPreference extends ListPreference {
 
 		builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
+			public void onClick(@NonNull final DialogInterface dialog, final int which) {
 				mSelectedCustomDir = null;
 
 				if (getEntryValues()[which].toString().equals(CUSTOM_FOLDER)) {

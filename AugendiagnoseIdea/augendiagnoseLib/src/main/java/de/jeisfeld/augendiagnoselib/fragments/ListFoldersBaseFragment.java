@@ -14,6 +14,8 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -59,6 +61,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * The parent folder.
 	 */
+	@Nullable
 	protected File mParentFolder;
 
 	/**
@@ -71,6 +74,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	/**
 	 * The array adapter displaying the list of names.
 	 */
+	@Nullable
 	private ArrayAdapter<String> mDirectoryListAdapter = null;
 
 	/**
@@ -98,7 +102,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * Inflate View
 	 */
 	@Override
-	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	public final View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_names, container, false);
 	}
@@ -117,7 +121,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 		EditText editTextSearch = (EditText) getView().findViewById(R.id.searchName);
 		editTextSearch.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+			public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
 				mDirectoryListAdapter.getFilter().filter(s.toString());
 			}
 
@@ -174,10 +178,11 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * @param parentFolder The parent folder.
 	 * @return The list of subfolders.
 	 */
-	public static final List<String> getFolderNames(final File parentFolder) {
+	@NonNull
+	public static final List<String> getFolderNames(@NonNull final File parentFolder) {
 		File[] folders = parentFolder.listFiles(new FileFilter() {
 			@Override
-			public boolean accept(final File pathname) {
+			public boolean accept(@NonNull final File pathname) {
 				return pathname.isDirectory();
 			}
 		});
@@ -188,7 +193,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 
 		Arrays.sort(folders, new Comparator<File>() {
 			@Override
-			public int compare(final File f1, final File f2) {
+			public int compare(@NonNull final File f1, @NonNull final File f2) {
 				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
 			}
 		});
@@ -212,7 +217,8 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * @param f The file
 	 * @return The name for Sorting
 	 */
-	private static String getFilenameForSorting(final File f) {
+	@NonNull
+	private static String getFilenameForSorting(@NonNull final File f) {
 		String name = f.getName().toUpperCase(Locale.getDefault());
 
 		boolean sortByLastName = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_sort_by_last_name);
@@ -241,7 +247,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * @param oldName the old name.
 	 * @param newName the new name.
 	 */
-	private void renameFolderAndFiles(final String oldName, final String newName) {
+	private void renameFolderAndFiles(@NonNull final String oldName, @NonNull final String newName) {
 		final File oldFolder = new File(mParentFolder, oldName.trim());
 		final File newFolder = new File(mParentFolder, newName.trim());
 
@@ -299,7 +305,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 *
 	 * @param name the name for which the folder should be deleted.
 	 */
-	protected final void deleteFolder(final String name) {
+	protected final void deleteFolder(@NonNull final String name) {
 		File folder = new File(mParentFolder, name.trim());
 
 		// delete files in folder.
@@ -362,7 +368,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 					.setView(input) //
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
+						public void onClick(@NonNull final DialogInterface dialog, final int id) {
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {

@@ -1,5 +1,7 @@
 package com.android.vending.billing;
 
+import android.support.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,6 +77,7 @@ public class Purchase {
 		return mSignature;
 	}
 
+	@NonNull
 	@Override
 	public final String toString() {
 		return "PurchaseInfo(type:" + mItemType + "):" + mOriginalJson;

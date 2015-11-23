@@ -3,6 +3,8 @@ package de.jeisfeld.augendiagnoselib.util.imagefile;
 import java.util.HashMap;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -45,7 +47,7 @@ public final class JpegSynchronizationUtil {
 	 * @param pathname the path of the jpg file.
 	 * @return null for non-JPEG files. The metadata from the file if readable. Otherwise empty metadata.
 	 */
-	public static JpegMetadata getJpegMetadata(final String pathname) {
+	public static JpegMetadata getJpegMetadata(@NonNull final String pathname) {
 		JpegMetadata cachedMetadata = null;
 
 		try {
@@ -87,7 +89,7 @@ public final class JpegSynchronizationUtil {
 	 * @param pathname the path of the jpg file.
 	 * @param metadata the metadata.
 	 */
-	public static void storeJpegMetadata(final String pathname, final JpegMetadata metadata) {
+	public static void storeJpegMetadata(@NonNull final String pathname, final JpegMetadata metadata) {
 		try {
 			JpegMetadataUtil.checkJpeg(pathname);
 		}
@@ -187,7 +189,7 @@ public final class JpegSynchronizationUtil {
 		}
 
 		@Override
-		protected void onPostExecute(final Exception e) {
+		protected void onPostExecute(@Nullable final Exception e) {
 			if (e != null) {
 				if (e instanceof ExifStorageException) {
 					Log.e(TAG, "Failed to save file " + mPathname, e);

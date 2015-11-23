@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -55,6 +57,7 @@ public final class PreferenceUtil {
 	 * @param preferenceId the id of the shared preference.
 	 * @return the corresponding preference value.
 	 */
+	@Nullable
 	public static String getSharedPreferenceString(final int preferenceId) {
 		return getSharedPreferences().getString(Application.getAppContext().getString(preferenceId), null);
 	}
@@ -66,6 +69,7 @@ public final class PreferenceUtil {
 	 * @param defaultId    the String key of the default value.
 	 * @return the corresponding preference value.
 	 */
+	@Nullable
 	private static String getSharedPreferenceString(final int preferenceId, final int defaultId) {
 		String result = getSharedPreferenceString(preferenceId);
 		if (result == null) {
@@ -130,7 +134,7 @@ public final class PreferenceUtil {
 	 * @param preferenceId the id of the shared preference.
 	 * @param uri          the target value of the preference.
 	 */
-	public static void setSharedPreferenceUri(final int preferenceId, final Uri uri) {
+	public static void setSharedPreferenceUri(final int preferenceId, @Nullable final Uri uri) {
 		Editor editor = getSharedPreferences().edit();
 		if (uri == null) {
 			editor.putString(Application.getAppContext().getString(preferenceId), null);
@@ -205,7 +209,7 @@ public final class PreferenceUtil {
 	 * @param defaultId    the String key of the default value. If not existing, value 0 is returned.
 	 * @return the corresponding preference value.
 	 */
-	public static int getSharedPreferenceIntString(final int preferenceId, final Integer defaultId) {
+	public static int getSharedPreferenceIntString(final int preferenceId, @Nullable final Integer defaultId) {
 		String resultString;
 
 		if (defaultId == null) {
@@ -276,6 +280,7 @@ public final class PreferenceUtil {
 	 * @param index        The index
 	 * @return The indexed preference key.
 	 */
+	@NonNull
 	public static String getIndexedPreferenceKey(final int preferenceId, final int index) {
 		return Application.getAppContext().getString(preferenceId) + "[" + index + "]";
 	}
@@ -286,7 +291,7 @@ public final class PreferenceUtil {
 	 * @param key The preference key.
 	 * @return The index.
 	 */
-	public static Integer getIndexFromPreferenceKey(final String key) {
+	public static Integer getIndexFromPreferenceKey(@NonNull final String key) {
 		String[] parts = key.split("\\[|\\]");
 		if (parts.length < 2) {
 			return null;
@@ -306,6 +311,7 @@ public final class PreferenceUtil {
 	 * @param index        The index
 	 * @return the corresponding preference value.
 	 */
+	@Nullable
 	private static String getIndexedSharedPreferenceString(final int preferenceId, final int index) {
 		return getSharedPreferences().getString(getIndexedPreferenceKey(preferenceId, index), null);
 	}

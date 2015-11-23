@@ -1,6 +1,8 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
@@ -14,6 +16,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	/**
 	 * The parent folder.
 	 */
+	@Nullable
 	private String mParentFolder;
 	/**
 	 * The fragment displaying the list of folders.
@@ -33,7 +36,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 	 *
 	 * @param fragment The fragment to be populated.
 	 */
-	protected final void setFragmentParameters(final ListFoldersBaseFragment fragment) {
+	protected final void setFragmentParameters(@NonNull final ListFoldersBaseFragment fragment) {
 		fragment.setParameters(mParentFolder);
 	}
 
@@ -61,6 +64,7 @@ public abstract class ListFoldersBaseActivity extends BaseActivity {
 
 	// Setters and getters
 
+	@Nullable
 	protected final String getParentFolder() {
 		return mParentFolder;
 	}

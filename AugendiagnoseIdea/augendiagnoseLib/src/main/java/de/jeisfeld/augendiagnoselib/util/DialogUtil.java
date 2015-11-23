@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
@@ -70,7 +72,7 @@ public final class DialogUtil {
 	 * @param resource the message resource
 	 * @param args     arguments for the error message
 	 */
-	public static void displayInfo(final Activity activity, final MessageDialogListener listener, final int resource,
+	public static void displayInfo(@NonNull final Activity activity, @Nullable final MessageDialogListener listener, final int resource,
 								   final Object... args) {
 		String message = String.format(activity.getString(resource), args);
 		Bundle bundle = new Bundle();
@@ -93,7 +95,7 @@ public final class DialogUtil {
 	 * @param listener listener to react on dialog confirmation or dismissal.
 	 * @param args     arguments for the error message
 	 */
-	private static void displayError(final Activity activity, final int resource, final MessageDialogListener listener,
+	private static void displayError(@NonNull final Activity activity, final int resource, @Nullable final MessageDialogListener listener,
 									 final Object... args) {
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
@@ -118,7 +120,7 @@ public final class DialogUtil {
 	 * @param finishActivity a flag indicating if the activity should be finished.
 	 * @param args           arguments for the error message
 	 */
-	public static void displayError(final Activity activity, final int resource, final boolean finishActivity,
+	public static void displayError(@NonNull final Activity activity, final int resource, final boolean finishActivity,
 									final Object... args) {
 		MessageDialogListener listener = null;
 
@@ -149,7 +151,7 @@ public final class DialogUtil {
 	 * @param activity the current activity
 	 * @param resource the error message
 	 */
-	public static void displayAuthorizationError(final Activity activity, final int resource) {
+	public static void displayAuthorizationError(@NonNull final Activity activity, final int resource) {
 		MessageDialogListener listener = new MessageDialogListener() {
 			/**
 			 * The serial version id.
@@ -180,7 +182,7 @@ public final class DialogUtil {
 	 * @param resource the error message
 	 * @param args     arguments for the error message
 	 */
-	public static void displayToast(final Context context, final int resource, final Object... args) {
+	public static void displayToast(@NonNull final Context context, final int resource, final Object... args) {
 		String message = String.format(context.getString(resource), args);
 		Log.d(Application.TAG, "Toast message: " + message);
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -195,7 +197,7 @@ public final class DialogUtil {
 	 * @param messageResource the confirmation message
 	 * @param args            arguments for the confirmation message
 	 */
-	public static void displayConfirmationMessage(final Activity activity,
+	public static void displayConfirmationMessage(@NonNull final Activity activity,
 												  final ConfirmDialogListener listener, final int buttonResource,
 												  final int messageResource, final Object... args) {
 		String message = String.format(activity.getString(messageResource), args);
@@ -215,7 +217,7 @@ public final class DialogUtil {
 	 * @param messageResource    The resource containing the text of the tip.
 	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
 	 */
-	public static void displayTip(final Activity activity, final int messageResource,
+	public static void displayTip(@NonNull final Activity activity, final int messageResource,
 								  final int preferenceResource) {
 		displayTip(activity, R.string.title_dialog_tip, R.drawable.ic_title_tipp, messageResource, preferenceResource);
 	}
@@ -229,7 +231,7 @@ public final class DialogUtil {
 	 * @param messageResource    The resource containing the text of the tip.
 	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
 	 */
-	private static void displayTip(final Activity activity, final int titleResource, final int iconResource,
+	private static void displayTip(@NonNull final Activity activity, final int titleResource, final int iconResource,
 								   final int messageResource, final int preferenceResource) {
 		String message = activity.getString(messageResource);
 
@@ -257,7 +259,7 @@ public final class DialogUtil {
 	 * @return The formatted line.
 	 */
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private static String formatImageInfoLine(final Activity activity, final int resource, final String value) {
+	private static String formatImageInfoLine(@NonNull final Activity activity, final int resource, @NonNull final String value) {
 		StringBuilder line = new StringBuilder("<b>");
 		line.append(activity.getString(resource));
 		line.append("</b><br>");
@@ -280,7 +282,7 @@ public final class DialogUtil {
 	 * @param activity the triggering activity
 	 * @param eyePhoto the photo for which the image should be displayed.
 	 */
-	public static void displayImageInfo(final Activity activity, final EyePhoto eyePhoto) {
+	public static void displayImageInfo(@NonNull final Activity activity, @NonNull final EyePhoto eyePhoto) {
 		StringBuffer message = new StringBuffer();
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filename, eyePhoto.getFilename()));
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString()));
@@ -313,7 +315,7 @@ public final class DialogUtil {
 	 *
 	 * @param activity the triggering activity
 	 */
-	public static void checkOutOfMemoryError(final Activity activity) {
+	public static void checkOutOfMemoryError(@NonNull final Activity activity) {
 		boolean hadOutOfMemoryError = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror);
 
 		if (hadOutOfMemoryError) {
@@ -330,10 +332,11 @@ public final class DialogUtil {
 		/**
 		 * The listener called when the dialog is ended.
 		 */
+		@Nullable
 		private MessageDialogListener mListener = null;
 
 		@Override
-		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
+		public final Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
@@ -358,7 +361,7 @@ public final class DialogUtil {
 					.setMessage(message)
 					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
+						public void onClick(@NonNull final DialogInterface dialog, final int id) {
 							if (mListener != null) {
 								mListener.onDialogClick(DisplayMessageDialogFragment.this);
 							}
@@ -377,7 +380,7 @@ public final class DialogUtil {
 		}
 
 		@Override
-		public final void onSaveInstanceState(final Bundle outState) {
+		public final void onSaveInstanceState(@NonNull final Bundle outState) {
 			if (mListener != null) {
 				// Typically cannot serialize the listener due to its reference to the activity.
 				mListener = null;
@@ -481,13 +484,13 @@ public final class DialogUtil {
 					.setMessage(message)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
+						public void onClick(@NonNull final DialogInterface dialog, final int id) {
 							PreferenceUtil.setSharedPreferenceBoolean(key, false);
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(final DialogInterface dialog, final int id) {
+				public void onClick(@NonNull final DialogInterface dialog, final int id) {
 					PreferenceUtil.setSharedPreferenceBoolean(key, true);
 					dialog.dismiss();
 				}

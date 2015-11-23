@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -36,8 +37,10 @@ public class Application extends android.app.Application {
 	/**
 	 * The private constants of this app.
 	 */
+	@Nullable
 	private ApplicationSettings mApplicationSettings = null;
 
+	@Nullable
 	private static ApplicationSettings getApplicationSettings() {
 		return mApplication.mApplicationSettings;
 	}

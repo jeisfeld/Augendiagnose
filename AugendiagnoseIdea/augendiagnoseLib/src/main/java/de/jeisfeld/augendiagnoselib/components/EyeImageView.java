@@ -2,6 +2,8 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -15,6 +17,7 @@ public class EyeImageView extends ImageView {
 	/**
 	 * The EyePhoto shown in the view.
 	 */
+	@Nullable
 	private EyePhoto mEyePhoto;
 	/**
 	 * Indicates if the view is initialized.
@@ -62,7 +65,7 @@ public class EyeImageView extends ImageView {
 	 * @param newEyePhoto    The eyePhoto to be displayed.
 	 * @param postActivities Activities that may be run on the UI thread after loading the image.
 	 */
-	public final void setEyePhoto(final Activity activity, final EyePhoto newEyePhoto, final Runnable postActivities) {
+	public final void setEyePhoto(@NonNull final Activity activity, @NonNull final EyePhoto newEyePhoto, @Nullable final Runnable postActivities) {
 		this.mEyePhoto = newEyePhoto;
 		// Fill pictures in separate thread, for performance reasons
 		Thread thread = new Thread() {
@@ -98,6 +101,7 @@ public class EyeImageView extends ImageView {
 	 *
 	 * @return the eye photo.
 	 */
+	@Nullable
 	public final EyePhoto getEyePhoto() {
 		return mEyePhoto;
 	}

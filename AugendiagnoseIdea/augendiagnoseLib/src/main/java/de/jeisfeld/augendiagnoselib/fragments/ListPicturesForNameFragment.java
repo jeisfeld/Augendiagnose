@@ -11,6 +11,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -59,10 +61,11 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	/**
 	 * The date of the pictures - used in case of date change.
 	 */
+	@NonNull
 	private Calendar mPictureDate = new GregorianCalendar();
 
 	@Override
-	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	public final View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_name, container, false);
 	}
@@ -120,7 +123,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * Handle items in the context menu.
 	 */
 	@Override
-	public final boolean onContextItemSelected(final MenuItem item) {
+	public final boolean onContextItemSelected(@NonNull final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_picture_date) {
 			final EyePhotoPair pairToModify = getEyePhotoPairs()[mContextMenuPosition];
 
@@ -210,6 +213,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 	 * Fragment for the dialog to change the date.
 	 */
 	public static class DateChangeDialogFragment extends DialogFragment {
+		@Nullable
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");

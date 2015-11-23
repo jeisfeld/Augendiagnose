@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.support.annotation.NonNull;
 
 import de.jeisfeld.augendiagnoselib.Application;
 
@@ -38,7 +39,7 @@ public final class MediaStoreUtil {
 	 * @return the file path.
 	 */
 	@SuppressWarnings("static-access")
-	public static String getRealPathFromUri(final Uri contentUri) {
+	public static String getRealPathFromUri(@NonNull final Uri contentUri) {
 		Cursor cursor = null;
 		try {
 			String[] proj = {MediaStore.Images.Media.DATA};
@@ -134,7 +135,7 @@ public final class MediaStoreUtil {
 	 * @return The Album ID.
 	 */
 	@SuppressWarnings("resource")
-	public static int getAlbumIdFromAudioFile(final File file) {
+	public static int getAlbumIdFromAudioFile(@NonNull final File file) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 		Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 				new String[] {MediaStore.Audio.AlbumColumns.ALBUM_ID},
@@ -175,7 +176,7 @@ public final class MediaStoreUtil {
 	 *
 	 * @param path the path of the image.
 	 */
-	public static void addFileToMediaStore(final String path) {
+	public static void addFileToMediaStore(@NonNull final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		File file = new File(path);
 		Uri contentUri = Uri.fromFile(file);
@@ -213,7 +214,7 @@ public final class MediaStoreUtil {
 	 *
 	 * @param path the path of the image.
 	 */
-	public static void addPictureToMediaStore(final String path) {
+	public static void addPictureToMediaStore(@NonNull final String path) {
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		File file = new File(path);
 		Uri contentUri = Uri.fromFile(file);

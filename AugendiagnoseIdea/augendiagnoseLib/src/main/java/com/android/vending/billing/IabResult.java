@@ -1,5 +1,8 @@
 package com.android.vending.billing;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 /**
  * Represents the result of an in-app billing operation. A result is composed of a response code (an integer) and
  * possibly a message (String). You can get those by calling {@link #getResponse} and {@link #getMessage()},
@@ -13,7 +16,7 @@ public class IabResult {
 	private final int mResponse;
 	private final String mMessage;
 
-	public IabResult(final int response, final String message) {
+	public IabResult(final int response, @Nullable final String message) {
 		mResponse = response;
 		if (message == null || message.trim().length() == 0) {
 			mMessage = IabHelper.getResponseDesc(response);
@@ -39,6 +42,7 @@ public class IabResult {
 		return !isSuccess();
 	}
 
+	@NonNull
 	@Override
 	public final String toString() {
 		return "IabResult: " + getMessage();

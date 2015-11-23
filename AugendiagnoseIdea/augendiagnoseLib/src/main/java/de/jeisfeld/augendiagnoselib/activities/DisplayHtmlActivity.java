@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -45,7 +47,7 @@ public class DisplayHtmlActivity extends Activity {
 	 * @param context  The context in which the activity is started.
 	 * @param resource The resource to be displayed.
 	 */
-	public static void startActivity(final Context context, final int resource) {
+	public static void startActivity(@NonNull final Context context, final int resource) {
 		Intent intent = new Intent(context, DisplayHtmlActivity.class);
 		intent.putExtra(STRING_EXTRA_RESOURCE, resource);
 		context.startActivity(intent);
@@ -56,13 +58,13 @@ public class DisplayHtmlActivity extends Activity {
 	 *
 	 * @param context The context in which the activity is started.
 	 */
-	public static void startActivity(final Context context) {
+	public static void startActivity(@NonNull final Context context) {
 		Intent intent = new Intent(context, DisplayHtmlActivity.class);
 		context.startActivity(intent);
 	}
 
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
@@ -138,7 +140,7 @@ public class DisplayHtmlActivity extends Activity {
 	 * Handle menu actions.
 	 */
 	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
+	public final boolean onOptionsItemSelected(@NonNull final MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == R.id.action_help) {
 			displayNavigation();

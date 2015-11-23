@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
@@ -134,11 +135,13 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * A {@link CameraCaptureSession } for camera preview.
 	 */
+	@Nullable
 	private CameraCaptureSession mCaptureSession;
 
 	/**
 	 * A reference to the opened {@link CameraDevice}.
 	 */
+	@Nullable
 	private CameraDevice mCameraDevice;
 
 	/**
@@ -149,6 +152,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The {@link android.util.Size} of camera preview.
 	 */
+	@Nullable
 	private Size mPreviewSize;
 
 	/**
@@ -184,16 +188,19 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
 	 */
+	@Nullable
 	private HandlerThread mBackgroundThread = null;
 
 	/**
 	 * A {@link Handler} for running tasks in the background.
 	 */
+	@Nullable
 	private Handler mBackgroundHandler;
 
 	/**
 	 * {@link CameraDevice.StateCallback} is called when {@link CameraDevice} changes its state.
 	 */
+	@Nullable
 	private final CameraDevice.StateCallback mStateCallback = new CameraDevice.StateCallback() {
 
 		@Override
@@ -225,6 +232,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * An {@link ImageReader} that handles still image capture.
 	 */
+	@Nullable
 	private ImageReader mImageReader;
 
 	/**
@@ -233,7 +241,7 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	private final ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
 		@Override
-		public void onImageAvailable(final ImageReader reader) {
+		public void onImageAvailable(@NonNull final ImageReader reader) {
 			Image image = reader.acquireNextImage();
 			ByteBuffer buffer = image.getPlanes()[0].getBuffer();
 			byte[] data = new byte[buffer.remaining()];
@@ -262,6 +270,7 @@ public class Camera2Handler implements CameraHandler {
 	 *
 	 * @see #mCaptureCallback
 	 */
+	@NonNull
 	private CameraState mState = CameraState.STATE_PREVIEW;
 
 	/**
@@ -272,9 +281,10 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
 	 */
+	@Nullable
 	private final CaptureCallback mCaptureCallback = new CaptureCallback() {
 
-		private void process(final CaptureResult result) {
+		private void process(@NonNull final CaptureResult result) {
 			switch (mState) {
 			case STATE_PREVIEW:
 				// We have nothing to do when the camera preview is working normally.
@@ -349,7 +359,8 @@ public class Camera2Handler implements CameraHandler {
 	 * @param aspectRatio The aspect ratio
 	 * @return The optimal {@code Size}, or an arbitrary one if none were big enough
 	 */
-	private static Size chooseOptimalPreviewSize(final Size[] choices, final int width, final int height, final Size aspectRatio) {
+	@Nullable
+	private static Size chooseOptimalPreviewSize(@NonNull final Size[] choices, final int width, final int height, @NonNull final Size aspectRatio) {
 		// Collect the supported resolutions that are at least as big as the preview Surface
 		List<Size> bigEnough = new ArrayList<>();
 		Size biggest = null;
@@ -722,7 +733,7 @@ public class Camera2Handler implements CameraHandler {
 	}
 
 	@Override
-	public final void setFlashlightMode(final FlashMode flashlightMode) {
+	public final void setFlashlightMode(@Nullable final FlashMode flashlightMode) {
 		if (flashlightMode == null) {
 			mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
 		}
@@ -755,7 +766,7 @@ public class Camera2Handler implements CameraHandler {
 	}
 
 	@Override
-	public final void setFocusMode(final FocusMode focusMode) {
+	public final void setFocusMode(@Nullable final FocusMode focusMode) {
 		if (focusMode == null) {
 			mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_AUTO;
 		}
@@ -877,7 +888,7 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	private static class CompareSizesBySmallestSide implements Comparator<Size> {
 		@Override
-		public int compare(final Size lhs, final Size rhs) {
+		public int compare(@NonNull final Size lhs, @NonNull final Size rhs) {
 			int leftSize = Math.min(lhs.getWidth(), lhs.getHeight());
 			int rightSize = Math.min(rhs.getWidth(), rhs.getHeight());
 

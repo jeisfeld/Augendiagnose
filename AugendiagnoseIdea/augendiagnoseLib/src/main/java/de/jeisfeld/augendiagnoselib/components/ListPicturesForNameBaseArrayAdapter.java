@@ -2,6 +2,8 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +46,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 * @param activity      The activity using the adapter.
 	 * @param eyePhotoPairs The array of eye photo pairs to be displayed.
 	 */
-	public ListPicturesForNameBaseArrayAdapter(final Activity activity, final EyePhotoPair[] eyePhotoPairs) {
+	public ListPicturesForNameBaseArrayAdapter(final Activity activity, @NonNull final EyePhotoPair[] eyePhotoPairs) {
 		super(activity, R.layout.text_view_initializing, eyePhotoPairs);
 		this.mActivity = activity;
 		this.mEyePhotoPairs = eyePhotoPairs;
@@ -79,8 +81,9 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	 * ImageSelectionAndDisplayHandler class
 	 */
 	// OVERRIDABLE
+	@Nullable
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(final int position, @Nullable final View convertView, final ViewGroup parent) {
 		View rowView;
 
 		// Reuse views if they are already created and in the cached range
@@ -177,6 +180,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			return (mStart <= n) && (n < mStart + mLength);
 		}
 
+		@NonNull
 		@Override
 		public final String toString() {
 			return "[" + mStart + "," + (mStart + mLength - 1) + "]";

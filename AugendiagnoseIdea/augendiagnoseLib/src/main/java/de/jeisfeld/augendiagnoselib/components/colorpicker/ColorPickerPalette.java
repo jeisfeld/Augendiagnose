@@ -2,6 +2,8 @@ package de.jeisfeld.augendiagnoselib.components.colorpicker;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +94,7 @@ public class ColorPickerPalette extends TableLayout {
 	 *
 	 * @return The row.
 	 */
+	@NonNull
 	private TableRow createTableRow() {
 		TableRow row = new TableRow(getContext());
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -106,7 +109,7 @@ public class ColorPickerPalette extends TableLayout {
 	 * @param colors        The colors to be added.
 	 * @param selectedColor The preselected color.
 	 */
-	public final void drawPalette(final int[] colors, final int selectedColor) {
+	public final void drawPalette(@Nullable final int[] colors, final int selectedColor) {
 		if (colors == null) {
 			return;
 		}
@@ -151,7 +154,7 @@ public class ColorPickerPalette extends TableLayout {
 	 * @param row    The row.
 	 * @param swatch The swatch to be added.
 	 */
-	private static void addSwatchToRow(final TableRow row, final View swatch) {
+	private static void addSwatchToRow(@NonNull final TableRow row, final View swatch) {
 		row.addView(swatch);
 	}
 
@@ -168,7 +171,7 @@ public class ColorPickerPalette extends TableLayout {
 	 */
 	private void setSwatchDescription(final int rowNumber, final int index, final int rowElements,
 									  final boolean selected,
-									  final View swatch) {
+									  @NonNull final View swatch) {
 		int accessibilityIndex;
 		if (rowNumber % 2 == 0) {
 			// We're in a regular-ordered row
@@ -195,6 +198,7 @@ public class ColorPickerPalette extends TableLayout {
 	 *
 	 * @return the view with the blank space.
 	 */
+	@NonNull
 	private ImageView createBlankSpace() {
 		ImageView view = new ImageView(getContext());
 		TableRow.LayoutParams params = new TableRow.LayoutParams(mSwatchLength, mSwatchLength);
@@ -210,6 +214,7 @@ public class ColorPickerPalette extends TableLayout {
 	 * @param selectedColor The selected color.
 	 * @return the created color swatch.
 	 */
+	@NonNull
 	private ColorPickerSwatch createColorSwatch(final int color, final int selectedColor) {
 		ColorPickerSwatch view = new ColorPickerSwatch(getContext(), color,
 				color == selectedColor, mOnColorSelectedListener);

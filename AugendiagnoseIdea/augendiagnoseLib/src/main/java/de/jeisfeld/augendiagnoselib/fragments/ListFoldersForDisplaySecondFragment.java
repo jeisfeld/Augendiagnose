@@ -1,5 +1,6 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,7 +23,7 @@ public class ListFoldersForDisplaySecondFragment extends ListFoldersBaseFragment
 	 */
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
-		public final void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+		public final void onItemClick(final AdapterView<?> parent, @NonNull final View view, final int position, final long id) {
 			ListFoldersForDisplaySecondFragment fragment = ListFoldersForDisplaySecondFragment.this;
 			ListPicturesForSecondNameActivity.startActivity(fragment.getActivity(),
 					fragment.mParentFolder.getAbsolutePath(), ((TextView) view).getText().toString());

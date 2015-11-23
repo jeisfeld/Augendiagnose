@@ -17,6 +17,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -80,6 +82,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * The parent output folder for images.
 	 */
+	@Nullable
 	private File mParentFolder;
 	/**
 	 * The currently selected date to be given to the pictures.
@@ -118,6 +121,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	/**
 	 * The currently chosen eye photos.
 	 */
+	@Nullable
 	private EyePhoto mPhotoRight, mPhotoLeft;
 
 	/**
@@ -129,7 +133,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param rightEyeLast    A flag indicating if the last picture is the right eye.
 	 * @param nextAction      The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(final Context context, final String inputFolderName,
+	public static final void startActivity(@NonNull final Context context, final String inputFolderName,
 										   final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
@@ -147,7 +151,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
 	 * @param nextAction   The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(final Context context, final String[] fileNames,
+	public static final void startActivity(@NonNull final Context context, final String[] fileNames,
 										   final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
@@ -160,7 +164,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Create the activity, build the view, fill all content and add listeners.
 	 */
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_organize_new_photos);
@@ -206,7 +210,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		mEditDate.setOnTouchListener(new View.OnTouchListener() {
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
-			public boolean onTouch(final View v, final MotionEvent event) {
+			public boolean onTouch(final View v, @NonNull final MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					openDateDialog(v);
 				}
@@ -342,7 +346,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			// Sort files by date
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
-				public int compare(final File f1, final File f2) {
+				public int compare(@NonNull final File f1, @NonNull final File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}
 			});
@@ -577,7 +581,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param targetPhotoLeft  The left eye photo.
 	 * @param name             The selected name.
 	 */
-	private void movePhotos(final EyePhoto targetPhotoRight, final EyePhoto targetPhotoLeft, final String name) {
+	private void movePhotos(@NonNull final EyePhoto targetPhotoRight, @NonNull final EyePhoto targetPhotoLeft, final String name) {
 		if (mInputFolder != null) {
 			// in case of input folder, move files
 			if (!mPhotoRight.moveTo(targetPhotoRight, true)) {
@@ -669,7 +673,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	}
 
 	@Override
-	protected final void onSaveInstanceState(final Bundle outState) {
+	protected final void onSaveInstanceState(@NonNull final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		if (mPhotoRight != null && mPhotoLeft != null) {
 			outState.putString("rightEyePhoto", mPhotoRight.getAbsolutePath());
@@ -713,6 +717,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Fragment for the date dialog.
 	 */
 	public static class DateDialogFragment extends DialogFragment {
+		@NonNull
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			int year = getArguments().getInt("Year");

@@ -3,6 +3,7 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForSecondNameFragment;
@@ -26,7 +27,7 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	 * @param parentFolder The parent folder of the application.
 	 * @param name         The name of the image folder to be shown.
 	 */
-	public static final void startActivity(final Activity activity, final String parentFolder, final String name) {
+	public static final void startActivity(@NonNull final Activity activity, final String parentFolder, final String name) {
 		Intent intent = new Intent(activity, ListPicturesForSecondNameActivity.class);
 		intent.putExtra(STRING_EXTRA_PARENTFOLDER, parentFolder);
 		intent.putExtra(STRING_EXTRA_NAME, name);
@@ -36,6 +37,7 @@ public class ListPicturesForSecondNameActivity extends ListPicturesForNameBaseAc
 	/*
 	 * Get the listFoldersFragment displayed in the activity.
 	 */
+	@NonNull
 	@Override
 	protected final ListPicturesForNameBaseFragment createFragment() {
 		return new ListPicturesForSecondNameFragment();

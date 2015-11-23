@@ -27,6 +27,8 @@ import android.os.ParcelFileDescriptor;
 import android.os.storage.StorageManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
@@ -88,7 +90,7 @@ public final class FileUtil {
 	 * @return true if the copying was successful.
 	 */
 	@SuppressWarnings("null")
-	public static boolean copyFile(final File source, final File target) {
+	public static boolean copyFile(@NonNull final File source, @NonNull final File target) {
 		FileInputStream inStream = null;
 		OutputStream outStream = null;
 		FileChannel inChannel = null;
@@ -172,7 +174,7 @@ public final class FileUtil {
 	 * @param file the file to be deleted.
 	 * @return True if successfully deleted.
 	 */
-	public static boolean deleteFile(final File file) {
+	public static boolean deleteFile(@NonNull final File file) {
 		// First try the normal deletion.
 		if (file.delete()) {
 			return true;
@@ -211,7 +213,7 @@ public final class FileUtil {
 	 * @param target The target file
 	 * @return true if the copying was successful.
 	 */
-	public static boolean moveFile(final File source, final File target) {
+	public static boolean moveFile(@NonNull final File source, @NonNull final File target) {
 		// First try the normal rename.
 		if (source.renameTo(target)) {
 			return true;
@@ -231,7 +233,7 @@ public final class FileUtil {
 	 * @param target The target folder.
 	 * @return true if the renaming was successful.
 	 */
-	public static boolean renameFolder(final File source, final File target) {
+	public static boolean renameFolder(@NonNull final File source, @NonNull final File target) {
 		// First try the normal rename.
 		if (source.renameTo(target)) {
 			return true;
@@ -283,7 +285,8 @@ public final class FileUtil {
 	 * @param file The base file for which to create a temp file.
 	 * @return The temp file.
 	 */
-	public static File getTempFile(final File file) {
+	@NonNull
+	public static File getTempFile(@NonNull final File file) {
 		File extDir = new File(Application.getAppContext().getExternalCacheDir(), "temp");
 		if (!extDir.exists()) {
 			//noinspection ResultOfMethodCallIgnored
@@ -318,7 +321,7 @@ public final class FileUtil {
 
 		File[] files = tempDir.listFiles(new FileFilter() {
 			@Override
-			public boolean accept(final File file) {
+			public boolean accept(@NonNull final File file) {
 				return file.isFile();
 			}
 		});
@@ -335,6 +338,7 @@ public final class FileUtil {
 	 *
 	 * @return The temp folder.
 	 */
+	@NonNull
 	public static File getTempCameraFolder() {
 		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
 		if (!result.exists()) {
@@ -350,7 +354,7 @@ public final class FileUtil {
 	 * @param file The folder to be created.
 	 * @return True if creation was successful.
 	 */
-	public static boolean mkdir(final File file) {
+	public static boolean mkdir(@NonNull final File file) {
 		if (file.exists()) {
 			// nothing to create.
 			return file.isDirectory();
@@ -410,7 +414,7 @@ public final class FileUtil {
 	 * @param file The folder name.
 	 * @return true if successful.
 	 */
-	public static boolean rmdir(final File file) {
+	public static boolean rmdir(@NonNull final File file) {
 		if (!file.exists()) {
 			return true;
 		}
@@ -455,7 +459,7 @@ public final class FileUtil {
 	 * @param folder the folder
 	 * @return true if successful.
 	 */
-	public static boolean deleteFilesInFolder(final File folder) {
+	public static boolean deleteFilesInFolder(@NonNull final File folder) {
 		boolean totalSuccess = true;
 
 		String[] children = folder.list();
@@ -481,7 +485,7 @@ public final class FileUtil {
 	 * @param file        The folder name.
 	 * @param postActions Commands to be executed after success.
 	 */
-	public static void rmdirAsynchronously(final Activity activity, final File file, final Runnable postActions) {
+	public static void rmdirAsynchronously(@NonNull final Activity activity, @NonNull final File file, final Runnable postActions) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -513,7 +517,7 @@ public final class FileUtil {
 	 * @param file The file
 	 * @return true if the file is writable.
 	 */
-	public static boolean isWritable(final File file) {
+	public static boolean isWritable(@NonNull final File file) {
 		boolean isExisting = file.exists();
 
 		try {
@@ -548,7 +552,7 @@ public final class FileUtil {
 	 * @param folder The directory
 	 * @return true if it is possible to write in this directory.
 	 */
-	public static boolean isWritableNormalOrSaf(final File folder) {
+	public static boolean isWritableNormalOrSaf(@NonNull final File folder) {
 		// Verify that this is a directory.
 		if (!folder.exists() || !folder.isDirectory()) {
 			return false;
@@ -589,6 +593,7 @@ public final class FileUtil {
 	 *
 	 * @return The SD card directory.
 	 */
+	@NonNull
 	public static String getSdCardPath() {
 		String sdCardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 
@@ -638,7 +643,7 @@ public final class FileUtil {
 	 * null is returned.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
-	public static String getExtSdCardFolder(final File file) {
+	public static String getExtSdCardFolder(@NonNull final File file) {
 		String[] extSdPaths = getExtSdCardPaths();
 		try {
 			for (String extSdPath : extSdPaths) {
@@ -660,7 +665,7 @@ public final class FileUtil {
 	 * @return true if on external sd card.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
-	public static boolean isOnExtSdCard(final File file) {
+	public static boolean isOnExtSdCard(@NonNull final File file) {
 		return getExtSdCardFolder(file) != null;
 	}
 
@@ -673,7 +678,7 @@ public final class FileUtil {
 	 * @param createDirectories flag indicating if intermediate path directories should be created if not existing.
 	 * @return The DocumentFile
 	 */
-	private static DocumentFile getDocumentFile(final File file, final boolean isDirectory,
+	private static DocumentFile getDocumentFile(@NonNull final File file, final boolean isDirectory,
 												final boolean createDirectories) {
 		Uri[] treeUris = PreferenceUtil.getTreeUris();
 		Uri treeUri = null;
@@ -749,7 +754,8 @@ public final class FileUtil {
 	 * @param treeUri The tree RI.
 	 * @return The path (without trailing file separator).
 	 */
-	private static String getFullPathFromTreeUri(final Uri treeUri) {
+	@Nullable
+	private static String getFullPathFromTreeUri(@Nullable final Uri treeUri) {
 		if (treeUri == null) {
 			return null;
 		}
@@ -878,7 +884,7 @@ public final class FileUtil {
 	 * @return the dummy file.
 	 * @throws IOException thrown if there are issues while copying.
 	 */
-	private static File copyDummyFile(final int resource, final String folderName, final String targetName)
+	private static File copyDummyFile(final int resource, final String folderName, @NonNull final String targetName)
 			throws IOException {
 		File externalFilesDir = Application.getAppContext().getExternalFilesDir(folderName);
 		if (externalFilesDir == null) {

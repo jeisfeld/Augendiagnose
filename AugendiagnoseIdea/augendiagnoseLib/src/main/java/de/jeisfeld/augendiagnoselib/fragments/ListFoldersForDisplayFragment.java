@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -48,7 +49,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	}
 
 	@Override
-	public final boolean onContextItemSelected(final MenuItem item) {
+	public final boolean onContextItemSelected(@NonNull final MenuItem item) {
 		if (item.getGroupId() == R.id.menugroup_name_list) {
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 			final CharSequence name = ((TextView) info.targetView).getText();
@@ -92,7 +93,7 @@ public class ListFoldersForDisplayFragment extends ListFoldersBaseFragment {
 	 */
 	private class ShowContentsOnClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+		public void onItemClick(final AdapterView<?> parent, @NonNull final View view, final int position, final long id) {
 			((ListFoldersForDisplayActivity) getActivity()).listPicturesForName(((TextView) view).getText().toString());
 		}
 	}

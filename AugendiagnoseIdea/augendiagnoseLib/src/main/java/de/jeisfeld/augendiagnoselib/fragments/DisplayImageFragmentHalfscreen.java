@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 
 	@Override
-	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	public final View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 								   final Bundle savedInstanceState) {
 		if (SystemUtil.isLandscape()) {
 			setLandscape(false);

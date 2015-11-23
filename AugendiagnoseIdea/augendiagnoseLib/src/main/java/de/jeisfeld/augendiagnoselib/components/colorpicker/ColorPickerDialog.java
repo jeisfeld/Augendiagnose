@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -56,6 +58,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * The list of displayed colors.
 	 */
+	@Nullable
 	private int[] mColors = null;
 
 	/**
@@ -93,6 +96,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	 * @param size          The size of the displayed swatches.
 	 * @return The dialog.
 	 */
+	@NonNull
 	public static ColorPickerDialog newInstance(final int titleResId, final int[] colors, final int selectedColor,
 												final int columns, final int size) {
 		ColorPickerDialog ret = new ColorPickerDialog();
@@ -135,7 +139,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	}
 
 	@Override
-	public final void onCreate(final Bundle savedInstanceState) {
+	public final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments() != null) {
@@ -223,6 +227,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 		}
 	}
 
+	@Nullable
 	public final int[] getColors() {
 		return mColors;
 	}
@@ -232,7 +237,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	}
 
 	@Override
-	public final void onSaveInstanceState(final Bundle outState) {
+	public final void onSaveInstanceState(@NonNull final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putIntArray(KEY_COLORS, mColors);
 		outState.putSerializable(KEY_SELECTED_COLOR, mSelectedColor);

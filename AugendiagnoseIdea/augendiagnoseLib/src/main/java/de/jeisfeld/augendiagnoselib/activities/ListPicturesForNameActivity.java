@@ -3,6 +3,8 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
@@ -24,7 +26,7 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	 * @param parentFolder The parent folder of the application.
 	 * @param name         The name of the image folder to be shown.
 	 */
-	public static final void startActivity(final Context context, final String parentFolder, final String name) {
+	public static final void startActivity(@NonNull final Context context, final String parentFolder, final String name) {
 		Intent intent = new Intent(context, ListPicturesForNameActivity.class);
 		intent.putExtra(STRING_EXTRA_PARENTFOLDER, parentFolder);
 		intent.putExtra(STRING_EXTRA_NAME, name);
@@ -34,13 +36,14 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 	/*
 	 * Get the listFoldersFragment displayed in the activity.
 	 */
+	@NonNull
 	@Override
 	protected final ListPicturesForNameBaseFragment createFragment() {
 		return new ListPicturesForNameFragment();
 	}
 
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Initialize the handler which manages the clicks

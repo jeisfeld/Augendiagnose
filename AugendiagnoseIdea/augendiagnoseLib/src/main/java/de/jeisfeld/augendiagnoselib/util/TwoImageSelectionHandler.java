@@ -1,6 +1,8 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -15,11 +17,13 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * The activity for selection.
 	 */
+	@Nullable
 	private SelectTwoPicturesActivity mActivity = null;
 
 	/**
 	 * A holder of the TwoImageSelectionHandler as singleton.
 	 */
+	@Nullable
 	private static volatile TwoImageSelectionHandler mSingleton;
 
 	/**
@@ -27,6 +31,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *
 	 * @return an instance of the handler.
 	 */
+	@Nullable
 	public static TwoImageSelectionHandler getInstance() {
 		if (mSingleton == null) {
 			mSingleton = new TwoImageSelectionHandler();
@@ -62,7 +67,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 *
 	 * @param view the EyeImageView.
 	 */
-	public void highlightIfSelected(final EyeImageView view) {
+	public void highlightIfSelected(@NonNull final EyeImageView view) {
 		if (getSelectedImage() != null && getSelectedImage().equals(view.getEyePhoto())) {
 			selectView(view);
 		}
@@ -74,7 +79,7 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 * @param view           The GridView to be prepared.
 	 * @param hasContextMenu Flag indicating if a context menu should be enabled.
 	 */
-	public void prepareViewForSelection(final EyeImageView view, final boolean hasContextMenu) {
+	public void prepareViewForSelection(@NonNull final EyeImageView view, final boolean hasContextMenu) {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -102,10 +107,11 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	 * @param image1 the first selected image.
 	 * @param image2 the second selected image.
 	 */
-	private void createResponse(final EyePhoto image1, final EyePhoto image2) {
+	private void createResponse(@NonNull final EyePhoto image1, @NonNull final EyePhoto image2) {
 		mActivity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());
 	}
 
+	@Nullable
 	@Override
 	protected Activity getActivity() {
 		return mActivity;

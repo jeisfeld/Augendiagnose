@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.webkit.WebView;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -57,7 +58,7 @@ public final class ReleaseNotesUtil {
 	 * @param toVersion   last version to which to show release notes
 	 * @return the release notes as HTML string.
 	 */
-	public static String getReleaseNotesHtml(final Context context, final boolean firstStart, final int fromVersion,
+	public static String getReleaseNotesHtml(@NonNull final Context context, final boolean firstStart, final int fromVersion,
 											 final int toVersion) {
 		StringBuffer message = new StringBuffer();
 		if (firstStart) {
@@ -97,7 +98,7 @@ public final class ReleaseNotesUtil {
 	 * @param fromVersion first version from which to show release notes
 	 * @param toVersion   last version to which to show release notes
 	 */
-	public static void displayReleaseNotes(final Activity activity, final boolean firstStart, final int fromVersion, final int toVersion) {
+	public static void displayReleaseNotes(@NonNull final Activity activity, final boolean firstStart, final int fromVersion, final int toVersion) {
 		String message = getReleaseNotesHtml(activity, firstStart, fromVersion, toVersion);
 		DisplayReleaseNotesFragment fragment = new DisplayReleaseNotesFragment();
 		Bundle bundle = new Bundle();
@@ -134,12 +135,12 @@ public final class ReleaseNotesUtil {
 					.setView(webView)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
+						public void onClick(@NonNull final DialogInterface dialog, final int id) {
 							dialog.dismiss();
 						}
 					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(final DialogInterface dialog, final int id) {
+				public void onClick(@NonNull final DialogInterface dialog, final int id) {
 					int version = Application.getVersion();
 					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_stored_version, Integer.toString(version));
 					dialog.dismiss();

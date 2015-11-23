@@ -1,5 +1,6 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -21,7 +22,7 @@ public final class Logger {
 	 *
 	 * @param output the content of th log entry.
 	 */
-	public static void log(final String output) {
+	public static void log(@Nullable final String output) {
 		if (output == null) {
 			Log.i(Application.TAG, "null");
 		}

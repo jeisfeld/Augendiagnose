@@ -1,6 +1,7 @@
 package com.android.vending.billing;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import de.jeisfeld.augendiagnoselib.R;
 
@@ -57,7 +58,7 @@ public class SkuDetails {
 		return mTitle;
 	}
 
-	public final String getDisplayTitle(final Context context) {
+	public final String getDisplayTitle(@NonNull final Context context) {
 		if (mSku.startsWith("android.test")) {
 			return mSku;
 		}
@@ -74,6 +75,7 @@ public class SkuDetails {
 		return mDescription;
 	}
 
+	@NonNull
 	@Override
 	public final String toString() {
 		return "SkuDetails:" + mJson;

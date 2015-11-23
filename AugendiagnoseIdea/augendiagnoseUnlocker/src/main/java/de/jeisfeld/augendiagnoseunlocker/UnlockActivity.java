@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 /**
  * Main activity of the application.
@@ -42,7 +43,7 @@ public class UnlockActivity extends Activity {
 	 * @param input The input string.
 	 * @return The hash value.
 	 */
-	private static String createHash(final String input) {
+	private static String createHash(@NonNull final String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			md.reset();

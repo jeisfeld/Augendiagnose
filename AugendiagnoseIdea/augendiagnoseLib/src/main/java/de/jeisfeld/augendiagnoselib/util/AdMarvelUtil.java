@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
@@ -112,7 +113,7 @@ public final class AdMarvelUtil {
 	 *
 	 * @param activity The triggering activity.
 	 */
-	private static void requestBannerAd(final AdMarvelActivity activity) {
+	private static void requestBannerAd(@NonNull final AdMarvelActivity activity) {
 		try {
 			Map<String, Object> targetParams = new HashMap<>();
 			targetParams.put("KEYWORDS", "HCP");
@@ -131,7 +132,7 @@ public final class AdMarvelUtil {
 	 *
 	 * @param activity The triggering activity.
 	 */
-	public static void requestBannerAdIfEligible(final AdMarvelActivity activity) {
+	public static void requestBannerAdIfEligible(@NonNull final AdMarvelActivity activity) {
 		if (AdMarvelUtil.isEligibleForAd()) {
 			AdMarvelView adMarvelView = activity.getAdMarvelView();
 			if (adMarvelView != null) {
@@ -182,7 +183,7 @@ public final class AdMarvelUtil {
 		}
 
 		@Override
-		public void onFailedToReceiveAd(final AdMarvelView arg0, final int arg1, final ErrorReason errorReason) {
+		public void onFailedToReceiveAd(final AdMarvelView arg0, final int arg1, @NonNull final ErrorReason errorReason) {
 			Log.w(Application.TAG, "Failed to receive ad: " + errorReason.toString());
 			AdMarvelView adMarvelView = mActivity.getAdMarvelView();
 			if (adMarvelView != null) {

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPDateTime;
@@ -74,7 +75,7 @@ public class XmpHandler {
 	 *
 	 * @param xmpString the XMP String.
 	 */
-	public XmpHandler(final String xmpString) {
+	public XmpHandler(@Nullable final String xmpString) {
 		prepareRegistry();
 
 		if (xmpString == null) {
@@ -185,6 +186,7 @@ public class XmpHandler {
 	 *
 	 * @return the image title.
 	 */
+	@Nullable
 	public final String getDcTitle() {
 		return getDcItem("title");
 	}
@@ -194,6 +196,7 @@ public class XmpHandler {
 	 *
 	 * @return the image description.
 	 */
+	@Nullable
 	public final String getDcDescription() {
 		return getDcItem("description");
 	}
@@ -203,6 +206,7 @@ public class XmpHandler {
 	 *
 	 * @return the image subject.
 	 */
+	@Nullable
 	public final String getDcSubject() {
 		return getDcItem("subject");
 	}
@@ -257,7 +261,7 @@ public class XmpHandler {
 	 * @param value the value of the entry.
 	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	public final void setJeItem(final String item, final String value) throws XMPException {
+	public final void setJeItem(final String item, @Nullable final String value) throws XMPException {
 		if (value != null) {
 			mXmpMeta.setProperty(NS_JE, item, value);
 		}
@@ -284,7 +288,7 @@ public class XmpHandler {
 	 * @param date the value of the entry.
 	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	public final void setJeDate(final String item, final Date date) throws XMPException {
+	public final void setJeDate(final String item, @Nullable final Date date) throws XMPException {
 		if (date != null) {
 			Calendar calendar = new GregorianCalendar();
 			calendar.setTime(date);
@@ -310,7 +314,7 @@ public class XmpHandler {
 	 * @param value the value of the entry.
 	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	private void setDcItem(final String item, final String value) throws XMPException {
+	private void setDcItem(final String item, @Nullable final String value) throws XMPException {
 		if (value != null) {
 			if (mXmpMeta.doesArrayItemExist(NS_DC, item, 1)) {
 				mXmpMeta.setArrayItem(NS_DC, item, 1, value);
@@ -357,7 +361,7 @@ public class XmpHandler {
 	 * @param userComment the user comment.
 	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	public final void setUserComment(final String userComment) throws XMPException {
+	public final void setUserComment(@Nullable final String userComment) throws XMPException {
 		if (userComment != null) {
 			if (mXmpMeta.doesArrayItemExist(NS_EXIF, USER_COMMENT, 1)) {
 				mXmpMeta.setArrayItem(NS_EXIF, USER_COMMENT, 1, userComment);
@@ -374,7 +378,7 @@ public class XmpHandler {
 	 * @param name the image person name.
 	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
-	public final void setMicrosoftPerson(final String name) throws XMPException {
+	public final void setMicrosoftPerson(@Nullable final String name) throws XMPException {
 		if (name != null) {
 			String path = "RegionInfo"
 					+ XMPPathFactory.composeArrayItemPath(XMPPathFactory.composeStructFieldPath(NS_MPRI, "Regions"), 1)

@@ -1,6 +1,7 @@
 package com.android.vending.billing;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 
 // This code was converted from code at http://iharder.sourceforge.net/base64/
 // Lots of extraneous features were removed.
@@ -242,7 +243,8 @@ public final class Base64 {
 	 * @return the encoded data.
 	 * @since 1.4
 	 */
-	public static String encode(final byte[] source) {
+	@NonNull
+	public static String encode(@NonNull final byte[] source) {
 		return encode(source, 0, source.length, ALPHABET, true);
 	}
 
@@ -253,7 +255,8 @@ public final class Base64 {
 	 * @param doPadding is {@code true} to pad result with '=' chars if it does not fall on 3 byte boundaries
 	 * @return the encoded byte array.
 	 */
-	public static String encodeWebSafe(final byte[] source, final boolean doPadding) {
+	@NonNull
+	public static String encodeWebSafe(@NonNull final byte[] source, final boolean doPadding) {
 		return encode(source, 0, source.length, WEBSAFE_ALPHABET, doPadding);
 	}
 
@@ -268,6 +271,7 @@ public final class Base64 {
 	 * @return the encoded byte array.
 	 * @since 1.4
 	 */
+	@NonNull
 	private static String encode(final byte[] source, final int off, final int len, final byte[] alphabet,
 								 final boolean doPadding) {
 		byte[] outBuff = encode(source, off, len, alphabet, Integer.MAX_VALUE);
@@ -295,6 +299,7 @@ public final class Base64 {
 	 * @param maxLineLength maximum length of one line.
 	 * @return the BASE64-encoded byte array
 	 */
+	@NonNull
 	@SuppressLint("Assert")
 	private static byte[] encode(final byte[] source, final int off, final int len, final byte[] alphabet,
 								 final int maxLineLength) {
@@ -408,7 +413,8 @@ public final class Base64 {
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 * @since 1.4
 	 */
-	public static byte[] decode(final String s) throws Base64DecoderException {
+	@NonNull
+	public static byte[] decode(@NonNull final String s) throws Base64DecoderException {
 		byte[] bytes = s.getBytes();
 		return decode(bytes, 0, bytes.length);
 	}
@@ -420,7 +426,8 @@ public final class Base64 {
 	 * @return the decoded data
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 */
-	public static byte[] decodeWebSafe(final String s) throws Base64DecoderException {
+	@NonNull
+	public static byte[] decodeWebSafe(@NonNull final String s) throws Base64DecoderException {
 		byte[] bytes = s.getBytes();
 		return decodeWebSafe(bytes, 0, bytes.length);
 	}
@@ -433,7 +440,8 @@ public final class Base64 {
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 * @since 1.3
 	 */
-	public static byte[] decode(final byte[] source) throws Base64DecoderException {
+	@NonNull
+	public static byte[] decode(@NonNull final byte[] source) throws Base64DecoderException {
 		return decode(source, 0, source.length);
 	}
 
@@ -445,7 +453,8 @@ public final class Base64 {
 	 * @return the decoded data
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 */
-	public static byte[] decodeWebSafe(final byte[] source)
+	@NonNull
+	public static byte[] decodeWebSafe(@NonNull final byte[] source)
 			throws Base64DecoderException {
 		return decodeWebSafe(source, 0, source.length);
 	}
@@ -460,6 +469,7 @@ public final class Base64 {
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 * @since 1.3
 	 */
+	@NonNull
 	private static byte[] decode(final byte[] source, final int off, final int len)
 			throws Base64DecoderException {
 		return decode(source, off, len, DECODABET);
@@ -475,6 +485,7 @@ public final class Base64 {
 	 * @return decoded data
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 */
+	@NonNull
 	private static byte[] decodeWebSafe(final byte[] source, final int off, final int len)
 			throws Base64DecoderException {
 		return decode(source, off, len, WEBSAFE_DECODABET);
@@ -490,6 +501,7 @@ public final class Base64 {
 	 * @return decoded data
 	 * @throws Base64DecoderException thrown if there is an exception while decoding.
 	 */
+	@NonNull
 	private static byte[] decode(final byte[] source, final int off, final int len, final byte[] decodabet)
 			throws Base64DecoderException {
 		int len34 = len * 3 / 4; // MAGIC_NUMBER

@@ -10,6 +10,8 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,10 +39,12 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	/**
 	 * The parent folder.
 	 */
+	@Nullable
 	private String mParentFolder;
 	/**
 	 * The name for which the eye photos should be displayed.
 	 */
+	@Nullable
 	private String mName;
 
 	/**
@@ -103,7 +107,8 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 * @param folder the folder where the photos are located.
 	 * @return The list of eye photo pairs.
 	 */
-	private EyePhotoPair[] createEyePhotoList(final File folder) {
+	@NonNull
+	private EyePhotoPair[] createEyePhotoList(@NonNull final File folder) {
 		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>();
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
@@ -137,7 +142,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
 		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<>(new Comparator<Date>() {
 			@Override
-			public int compare(final Date lhs, final Date rhs) {
+			public int compare(@NonNull final Date lhs, @NonNull final Date rhs) {
 				return rhs.compareTo(lhs);
 			}
 		});
@@ -167,10 +172,12 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 		return mEyePhotoPairs.length > 0;
 	}
 
+	@Nullable
 	public final String getParentFolder() {
 		return mParentFolder;
 	}
 
+	@Nullable
 	public final String getName() {
 		return mName;
 	}

@@ -11,6 +11,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
 
@@ -41,11 +43,13 @@ public final class EncryptionUtil {
 	/**
 	 * Special keys that get are set as valid.
 	 */
+	@NonNull
 	private static final List<String> SPECIAL_KEYS;
 
 	/**
 	 * The private key to be used for user key generation.
 	 */
+	@NonNull
 	private static final String KEY;
 
 	/**
@@ -85,7 +89,7 @@ public final class EncryptionUtil {
 	 *
 	 * @param name the user name for which key generation is to be tested.
 	 */
-	public static void test(final String name) {
+	public static void test(@NonNull final String name) {
 		String key = createUserKey(name);
 		Log.i(Application.TAG, "Key: " + key + ". Verified: " + validateUserKey(key));
 	}
@@ -96,7 +100,7 @@ public final class EncryptionUtil {
 	 * @param key the user key to be validated.
 	 * @return true if the user key is valid.
 	 */
-	public static boolean validateUserKey(final String key) {
+	public static boolean validateUserKey(@Nullable final String key) {
 		if (key == null || key.length() == 0 || !mIsInitialized) {
 			return false;
 		}
@@ -121,7 +125,8 @@ public final class EncryptionUtil {
 	 * @param input the user key without hash.
 	 * @return the user key including hash.
 	 */
-	private static String createUserKey(final String input) {
+	@NonNull
+	private static String createUserKey(@NonNull final String input) {
 		return input + "-" + createCryptoHash(input);
 	}
 
@@ -131,7 +136,8 @@ public final class EncryptionUtil {
 	 * @param input the input for creating the hash. (Will be username.)
 	 * @return the cryptographic hash.
 	 */
-	private static String createCryptoHash(final String input) {
+	@NonNull
+	private static String createCryptoHash(@NonNull final String input) {
 		try {
 			return convertBase64(createHash(encrypt(input))).substring(0, HASH_LENGTH);
 		}
@@ -171,7 +177,7 @@ public final class EncryptionUtil {
 	 *                                   total input length of the data processed by this cipher is not a multiple of block size; or if this
 	 *                                   encryption algorithm is unable to process the input data provided.
 	 */
-	private static byte[] encrypt(final String input) throws BadPaddingException, IllegalBlockSizeException {
+	private static byte[] encrypt(@NonNull final String input) throws BadPaddingException, IllegalBlockSizeException {
 		return mCipherEncrypt.doFinal(input.getBytes());
 	}
 
@@ -181,7 +187,7 @@ public final class EncryptionUtil {
 	 * @param input The input string.
 	 * @return The hash value.
 	 */
-	public static String createHash(final String input) {
+	public static String createHash(@NonNull final String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			md.reset();

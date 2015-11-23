@@ -18,6 +18,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -101,6 +103,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * An array of the available overlays.
 	 */
+	@NonNull
 	private Drawable[] mOverlayCache = new Drawable[OVERLAY_COUNT];
 
 	/**
@@ -131,6 +134,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * An array indicating which overlays are displayed.
 	 */
+	@Nullable
 	private boolean[] mShowOverlay = new boolean[OVERLAY_COUNT];
 
 	/**
@@ -141,6 +145,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The way in which pinching is done.
 	 */
+	@Nullable
 	private PinchMode mPinchMode = PinchMode.ALL;
 
 	/**
@@ -176,21 +181,25 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The partial bitmap with full resolution.
 	 */
+	@Nullable
 	private Bitmap mPartialBitmapFullResolution;
 
 	/**
 	 * The partial bitmap with full resolution, including brightness.
 	 */
+	@Nullable
 	private Bitmap mPartialBitmapFullResolutionWithBrightness;
 
 	/**
 	 * The full bitmap (full resolution).
 	 */
+	@Nullable
 	private Bitmap mBitmapFull = null;
 
 	/**
 	 * The metadata of the image.
 	 */
+	@Nullable
 	private JpegMetadata mMetadata;
 
 	/**
@@ -289,7 +298,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	@Override
-	public final void setImage(final String pathName, final Activity activity, final int cacheIndex) {
+	public final void setImage(@NonNull final String pathName, @NonNull final Activity activity, final int cacheIndex) {
 		mEyePhoto = new EyePhoto(pathName);
 
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
@@ -538,6 +547,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *
 	 * @return The current overlay indices.
 	 */
+	@NonNull
 	private List<Integer> getOverlayPositions() {
 		ArrayList<Integer> overlayPositions = new ArrayList<>();
 
@@ -790,7 +800,9 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param pupilOffsetY   The relative y offset of the pupil center
 	 * @return The modified drawable, with the intended color.
 	 */
-	private Drawable getModifiedDrawable(final Drawable sourceDrawable, final Integer color, final float origPupilSize, final Float destPupilSize,
+	@NonNull
+	private Drawable getModifiedDrawable(@NonNull final Drawable sourceDrawable, @Nullable final Integer color,
+										 final float origPupilSize, @Nullable final Float destPupilSize,
 										 final Float pupilOffsetX, final Float pupilOffsetY) {
 		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
 		Bitmap colouredBitmap = color == null ? bitmap : ImageUtil.changeBitmapColor(bitmap, color);
@@ -805,6 +817,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *
 	 * @return the pinch mode.
 	 */
+	@Nullable
 	private PinchMode determinePinchMode() {
 		if (mPinchMode == PinchMode.PUPIL || mPinchMode == PinchMode.PUPIL_CENTER) {
 			// do not update pupil pinch modes implicitly.
@@ -978,7 +991,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
 			justification = "Using floating point equality to see if value has changed")
 	@Override
-	protected final boolean handlePointerMove(final MotionEvent ev) {
+	protected final boolean handlePointerMove(@NonNull final MotionEvent ev) {
 		if (mPinchMode == PinchMode.ALL) {
 			cleanFullResolutionBitmaps(false);
 			return super.handlePointerMove(ev);
@@ -1124,7 +1137,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param brightness -1..1 - 0 is default
 	 * @return new bitmap
 	 */
-	private static Bitmap changeBitmapContrastBrightness(final Bitmap bmp, final float contrast, final float brightness) {
+	private static Bitmap changeBitmapContrastBrightness(@NonNull final Bitmap bmp, final float contrast, final float brightness) {
 		if (contrast == 1 && brightness == 0) {
 			return bmp;
 		}
@@ -1152,6 +1165,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *
 	 * @return the metadata of the image
 	 */
+	@Nullable
 	public final JpegMetadata getMetadata() {
 		return mMetadata;
 	}
@@ -1233,7 +1247,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * @param partialBitmap the partial bitmap before applying the overlay
 	 * @return the partial bitmap with overlay.
 	 */
-	public final Bitmap addOverlayToPartialBitmap(final Bitmap partialBitmap) {
+	public final Bitmap addOverlayToPartialBitmap(@NonNull final Bitmap partialBitmap) {
 		List<Integer> overlayPositions = getOverlayPositions();
 		if (overlayPositions.size() == 0) {
 			return partialBitmap;
@@ -1486,6 +1500,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/*
 	 * Save brightness, contrast and overlay position.
 	 */
+	@NonNull
 	@Override
 	protected final Parcelable onSaveInstanceState() {
 		Bundle bundle = new Bundle();
@@ -1545,7 +1560,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private class OverlayScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
-		public boolean onScale(final ScaleGestureDetector detector) {
+		public boolean onScale(@NonNull final ScaleGestureDetector detector) {
 			mOverlayScaleFactor *= detector.getScaleFactor();
 			// Don't let the object get too small or too large.
 			mOverlayScaleFactor =
@@ -1560,7 +1575,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private class PupilOverlayScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
-		public boolean onScale(final ScaleGestureDetector detector) {
+		public boolean onScale(@NonNull final ScaleGestureDetector detector) {
 			mPupilOverlayScaleFactor *= detector.getScaleFactor();
 			// Don't let the object get too small or too large.
 			mPupilOverlayScaleFactor =
@@ -1657,7 +1672,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		 * @param index The index of the view (required in case of multiple PinchImageViews to be retained).
 		 * @return the retainFragment.
 		 */
-		public static final RetainFragment findOrCreateRetainFragment(final FragmentManager fm, final int index) {
+		@NonNull
+		public static final RetainFragment findOrCreateRetainFragment(@NonNull final FragmentManager fm, final int index) {
 			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
 			if (fragment == null) {
 				fragment = new RetainFragment();

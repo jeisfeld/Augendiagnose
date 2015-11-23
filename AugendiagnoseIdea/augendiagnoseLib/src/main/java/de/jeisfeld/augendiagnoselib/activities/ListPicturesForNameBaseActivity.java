@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import de.jeisfeld.augendiagnoselib.R;
@@ -77,6 +78,7 @@ public abstract class ListPicturesForNameBaseActivity extends BaseActivity imple
 
 	// implementation of ListPicturesForNameFragmentHolder
 
+	@NonNull
 	@Override
 	public final ListPicturesForNameFragment getListPicturesForNameFragment() {
 		return (ListPicturesForNameFragment) mFragment;

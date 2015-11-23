@@ -7,6 +7,8 @@ import java.util.Comparator;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -72,11 +74,13 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * The organize activity which has triggered the selection. Temporary static storage.
 	 */
+	@Nullable
 	private static OrganizeNewPhotosActivity mStaticParentActivity;
 
 	/**
 	 * The organize activity which has triggered the selection.
 	 */
+	@Nullable
 	private OrganizeNewPhotosActivity mParentActivity;
 
 	/**
@@ -85,7 +89,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param activity   The activity starting this activity.
 	 * @param foldername The image folder.
 	 */
-	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String foldername) {
+	public static final void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String foldername) {
 		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
@@ -98,7 +102,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param activity  The activity starting this activity.
 	 * @param fileNames The list of image files.
 	 */
-	public static final void startActivity(final OrganizeNewPhotosActivity activity, final String[] fileNames) {
+	public static final void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String[] fileNames) {
 		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
@@ -112,7 +116,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param data       The activity response data.
 	 * @return The returned file names.
 	 */
-	public static final FilePair getResult(final int resultCode, final Intent data) {
+	public static final FilePair getResult(final int resultCode, @NonNull final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
 			return new FilePair(res.getString(STRING_RESULT_FILENAME1), res.getString(STRING_RESULT_FILENAME2));
@@ -161,6 +165,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 *
 	 * @return The list of eye photos.
 	 */
+	@NonNull
 	private EyePhoto[] getEyePhotos() {
 		File[] files;
 
@@ -172,7 +177,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 			}
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
-				public int compare(final File f1, final File f2) {
+				public int compare(@NonNull final File f1, @NonNull final File f2) {
 					return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
 				}
 			});
@@ -222,7 +227,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * Handle items in the context menu.
 	 */
 	@Override
-	public final boolean onContextItemSelected(final MenuItem item) {
+	public final boolean onContextItemSelected(@NonNull final MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == R.id.action_delete_selected_image) {
 			ConfirmDialogListener listenerDelete = new ConfirmDialogListener() {
@@ -251,8 +256,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				}
 			};
 			DialogUtil.displayConfirmationMessage(this, listenerDelete, R.string.button_delete,
-					R.string.message_dialog_confirm_delete_photo, mSelectedView
-							.getEyePhoto().getFilename());
+					R.string.message_dialog_confirm_delete_photo, mSelectedView.getEyePhoto().getFilename());
 			return true;
 		}
 		else if (itemId == R.id.action_delete_all_images) {
@@ -275,8 +279,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 						}
 						else {
 							DialogUtil.displayError(SelectTwoPicturesActivity.this,
-									R.string.message_dialog_failed_to_delete_all_files, false, mSelectedView
-											.getEyePhoto().getFilename());
+									R.string.message_dialog_failed_to_delete_all_files, false, mSelectedView.getEyePhoto().getFilename());
 						}
 					}
 				}
@@ -287,8 +290,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 				}
 			};
 			DialogUtil.displayConfirmationMessage(this, listenerDeleteAll, R.string.button_delete,
-					R.string.message_dialog_confirm_delete_all_photos, mSelectedView
-							.getEyePhoto().getFilename());
+					R.string.message_dialog_confirm_delete_all_photos, mSelectedView.getEyePhoto().getFilename());
 			return true;
 		}
 		else {
@@ -323,7 +325,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		 * @param name1 The first file.
 		 * @param name2 The second file.
 		 */
-		public FilePair(final String name1, final String name2) {
+		public FilePair(@NonNull final String name1, @NonNull final String name2) {
 			mFile1 = new File(name1);
 			mFile2 = new File(name2);
 		}
@@ -331,16 +333,20 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		/**
 		 * The first file stored in the container.
 		 */
+		@NonNull
 		private final File mFile1;
 		/**
 		 * The second file stored in the container.
 		 */
+		@NonNull
 		private final File mFile2;
 
+		@NonNull
 		public final File getFile1() {
 			return mFile1;
 		}
 
+		@NonNull
 		public final File getFile2() {
 			return mFile2;
 		}

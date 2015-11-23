@@ -2,6 +2,8 @@ package de.jeisfeld.augendiagnoselib.util.imagefile;
 
 import java.util.Date;
 
+import android.support.annotation.NonNull;
+
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 
 /**
@@ -34,7 +36,7 @@ public class EyePhotoPair {
 	 *
 	 * @param eyePhoto the photo to be stored.
 	 */
-	public final void setEyePhoto(final EyePhoto eyePhoto) {
+	public final void setEyePhoto(@NonNull final EyePhoto eyePhoto) {
 		switch (eyePhoto.getRightLeft()) {
 		case RIGHT:
 			setRightEye(eyePhoto);
@@ -90,7 +92,7 @@ public class EyePhotoPair {
 	 * @param targetFolder the target folder.
 	 * @return true if the move was successful on both eyes.
 	 */
-	public final boolean moveToFolder(final String targetFolder) {
+	public final boolean moveToFolder(@NonNull final String targetFolder) {
 		return mRightEye.moveToFolder(targetFolder) && mLeftEye.moveToFolder(targetFolder);
 	}
 

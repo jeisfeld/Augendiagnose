@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -76,7 +77,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	protected final void onDraw(final Canvas c) {
+	protected final void onDraw(@NonNull final Canvas c) {
 		c.rotate(ROTATION_ANGLE);
 		c.translate(-getHeight(), 0);
 
@@ -96,7 +97,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	public final boolean onTouchEvent(final MotionEvent event) {
+	public final boolean onTouchEvent(@NonNull final MotionEvent event) {
 		if (!isEnabled()) {
 			return false;
 		}

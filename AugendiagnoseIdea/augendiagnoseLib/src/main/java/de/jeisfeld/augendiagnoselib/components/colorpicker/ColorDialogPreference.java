@@ -4,6 +4,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.graphics.Color;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -61,7 +62,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	}
 
 	@Override
-	protected final void onPrepareDialogBuilder(final Builder builder) {
+	protected final void onPrepareDialogBuilder(@NonNull final Builder builder) {
 		super.onPrepareDialogBuilder(builder);
 		int storedColor = getSharedPreferences().getInt(getContext().getString(R.string.key_overlay_color), Color.RED);
 

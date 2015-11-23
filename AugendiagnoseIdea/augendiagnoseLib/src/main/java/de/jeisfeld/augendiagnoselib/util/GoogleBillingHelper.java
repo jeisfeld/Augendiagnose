@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.vending.billing.IabHelper;
@@ -51,6 +53,7 @@ public final class GoogleBillingHelper {
 	/**
 	 * An instance of GoogleBillingHelper.
 	 */
+	@Nullable
 	private static GoogleBillingHelper mInstance;
 
 	/**
@@ -119,7 +122,7 @@ public final class GoogleBillingHelper {
 		mIabHelper.enableDebugLogging(false, TAG);
 		mIabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			@Override
-			public void onIabSetupFinished(final IabResult result) {
+			public void onIabSetupFinished(@NonNull final IabResult result) {
 				if (result.isSuccess()) {
 					Log.d(TAG, "Finished IAB setup");
 					mIabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), mGotInventoryListener);
@@ -191,10 +194,11 @@ public final class GoogleBillingHelper {
 	/**
 	 * The onInventoryFinishedListener started after the inventory is loaded.
 	 */
+	@Nullable
 	private final IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
 			new IabHelper.QueryInventoryFinishedListener() {
 				@Override
-				public void onQueryInventoryFinished(final IabResult result, final Inventory inventory) {
+				public void onQueryInventoryFinished(@NonNull final IabResult result, @NonNull final Inventory inventory) {
 					Log.d(TAG, "Query inventory finished - " + inventory);
 
 					// Have we been disposed of in the meantime? If so, quit.
@@ -245,10 +249,11 @@ public final class GoogleBillingHelper {
 	/**
 	 * Callback for when a purchase is finished.
 	 */
+	@Nullable
 	private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
 			new IabHelper.OnIabPurchaseFinishedListener() {
 				@Override
-				public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
+				public void onIabPurchaseFinished(@NonNull final IabResult result, @NonNull final Purchase purchase) {
 					Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
 					if (result.isFailure()) {

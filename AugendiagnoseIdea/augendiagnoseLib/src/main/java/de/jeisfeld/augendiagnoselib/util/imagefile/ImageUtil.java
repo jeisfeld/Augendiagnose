@@ -18,6 +18,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -66,7 +68,8 @@ public final class ImageUtil {
 	 * @param path The file path of the image
 	 * @return the date stored in the EXIF data.
 	 */
-	public static Date getExifDate(final String path) {
+	@Nullable
+	public static Date getExifDate(@NonNull final String path) {
 		Date retrievedDate = null;
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -94,7 +97,7 @@ public final class ImageUtil {
 	 * @param path The file path of the image
 	 * @return the rotation stored in the exif data, mapped into degrees.
 	 */
-	private static int getExifRotation(final String path) {
+	private static int getExifRotation(@NonNull final String path) {
 		int rotation = 0;
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -132,7 +135,8 @@ public final class ImageUtil {
 	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized.
 	 * @return the bitmap.
 	 */
-	public static Bitmap getImageBitmap(final String path, final int maxSize) {
+	@Nullable
+	public static Bitmap getImageBitmap(@NonNull final String path, final int maxSize) {
 		Bitmap bitmap = null;
 
 		if (maxSize <= 0) {
@@ -203,7 +207,7 @@ public final class ImageUtil {
 	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized.
 	 * @return the bitmap.
 	 */
-	public static Bitmap getImageBitmap(final byte[] data, final int maxSize) {
+	public static Bitmap getImageBitmap(@NonNull final byte[] data, final int maxSize) {
 		Bitmap bitmap;
 
 		if (maxSize <= 0) {
@@ -246,7 +250,7 @@ public final class ImageUtil {
 	 * @param maxY       The maximum Y position to retrieve.
 	 * @return The bitmap.
 	 */
-	public static Bitmap getPartialBitmap(final Bitmap fullBitmap, final float minX, final float maxX,
+	public static Bitmap getPartialBitmap(@NonNull final Bitmap fullBitmap, final float minX, final float maxX,
 										  final float minY,
 										  final float maxY) {
 
@@ -278,7 +282,7 @@ public final class ImageUtil {
 	 * @param targetSize the target size of the bitmap
 	 * @return the sample size to be used.
 	 */
-	private static int getBitmapFactor(final byte[] data, final int targetSize) {
+	private static int getBitmapFactor(@NonNull final byte[] data, final int targetSize) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeByteArray(data, 0, data.length, options);
@@ -293,7 +297,7 @@ public final class ImageUtil {
 	 * @param angle  The rotation angle
 	 * @return the rotated bitmap.
 	 */
-	private static Bitmap rotateBitmap(final Bitmap source, final float angle) {
+	private static Bitmap rotateBitmap(@NonNull final Bitmap source, final float angle) {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
@@ -305,7 +309,8 @@ public final class ImageUtil {
 	 * @param uri The URI
 	 * @return the mime type.
 	 */
-	public static String getMimeType(final Uri uri) {
+	@Nullable
+	public static String getMimeType(@NonNull final Uri uri) {
 		ContentResolver contentResolver = Application.getAppContext().getContentResolver();
 		String mimeType = contentResolver.getType(uri);
 		if (mimeType == null) {
@@ -328,7 +333,7 @@ public final class ImageUtil {
 	 * @param strict if true, then the file content will be checked, otherwise the suffix is sufficient.
 	 * @return true if it is an image file.
 	 */
-	private static boolean isImage(final File file, final boolean strict) {
+	private static boolean isImage(@Nullable final File file, final boolean strict) {
 		if (file == null || !file.exists() || file.isDirectory()) {
 			return false;
 		}
@@ -354,7 +359,8 @@ public final class ImageUtil {
 	 * @param folderName The folder name.
 	 * @return The list of image files in this folder.
 	 */
-	public static ArrayList<String> getImagesInFolder(final String folderName) {
+	@NonNull
+	public static ArrayList<String> getImagesInFolder(@Nullable final String folderName) {
 		ArrayList<String> fileNames = new ArrayList<>();
 		if (folderName == null) {
 			return fileNames;
@@ -386,7 +392,7 @@ public final class ImageUtil {
 	 * @param color        The target color
 	 * @return the bitmap with the target color.
 	 */
-	public static Bitmap changeBitmapColor(final Bitmap sourceBitmap, final int color) {
+	public static Bitmap changeBitmapColor(@NonNull final Bitmap sourceBitmap, final int color) {
 		Bitmap ret = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
 
 		Paint p = new Paint();
@@ -408,8 +414,8 @@ public final class ImageUtil {
 	 * @param pupilOffsetY  The y offset of the pupil center, relative to the iris size
 	 * @return The deformed overlay bitmap.
 	 */
-	public static Bitmap deformOverlayByPupilSize(final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
-												  final Float pupilOffsetX, final Float pupilOffsetY) {
+	public static Bitmap deformOverlayByPupilSize(@NonNull final Bitmap sourceBitmap, final float origPupilSize, final float destPupilSize,
+												  @Nullable final Float pupilOffsetX, @Nullable final Float pupilOffsetY) {
 		if (origPupilSize == 0) {
 			// non-deformable overlay, such as pupil overlay.
 			return sourceBitmap;
@@ -496,7 +502,7 @@ public final class ImageUtil {
 	 */
 	public static class ImageFileFilter implements FileFilter {
 		@Override
-		public final boolean accept(final File file) {
+		public final boolean accept(@NonNull final File file) {
 			Uri uri = Uri.fromFile(file);
 			return file.exists() && file.isFile() && ImageUtil.getMimeType(uri).startsWith("image/");
 		}

@@ -3,6 +3,8 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import de.jeisfeld.augendiagnoselib.R;
@@ -64,7 +66,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	 * @param filename2       The filename of the second picture.
 	 * @param presetRightLeft Flag indicating if the images are flagged right/left independent of the metadata.
 	 */
-	public static void startActivity(final Context context, final String filename1, final String filename2,
+	public static void startActivity(@NonNull final Context context, final String filename1, final String filename2,
 									 final boolean presetRightLeft) {
 		Intent intent = new Intent(context, DisplayTwoActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE1, filename1);
@@ -77,7 +79,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	 * Build the screen on creation.
 	 */
 	@Override
-	public final void onCreate(final Bundle savedInstanceState) {
+	public final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		String file1 = getIntent().getStringExtra(STRING_EXTRA_FILE1);
@@ -153,12 +155,13 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 	 *
 	 * @return the fragment.
 	 */
+	@NonNull
 	private DisplayImageFragment createFragment() {
 		return new DisplayImageFragmentHalfscreen();
 	}
 
 	@Override
-	protected final void onSaveInstanceState(final Bundle outState) {
+	protected final void onSaveInstanceState(@NonNull final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("fragmentImage1Visibility", mViewFragmentImage1.getVisibility());
 		outState.putInt("fragmentImage2Visibility", mViewFragmentImage2.getVisibility());

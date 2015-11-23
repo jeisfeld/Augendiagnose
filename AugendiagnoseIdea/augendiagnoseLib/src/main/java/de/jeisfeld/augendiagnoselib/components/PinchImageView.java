@@ -11,6 +11,8 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -104,11 +106,13 @@ public class PinchImageView extends ImageView {
 	/**
 	 * An additional GestureDetector which may be applied.
 	 */
+	@Nullable
 	private GestureDetector mGestureDetector = null;
 
 	/**
 	 * The path name of the displayed image.
 	 */
+	@Nullable
 	protected String mPathName = null;
 
 	/**
@@ -119,6 +123,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * The displayed bitmap.
 	 */
+	@Nullable
 	protected Bitmap mBitmap;
 
 	/**
@@ -178,7 +183,7 @@ public class PinchImageView extends ImageView {
 	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	// OVERRIDABLE
-	public void setImage(final String pathName, final Activity activity, final int cacheIndex) {
+	public void setImage(@NonNull final String pathName, @NonNull final Activity activity, final int cacheIndex) {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
@@ -224,7 +229,7 @@ public class PinchImageView extends ImageView {
 	 * @param activity      The triggering activity (required for bitmap caching)
 	 * @param cacheIndex    A unique index of the view in the activity
 	 */
-	public final void setImage(final int imageResource, final Activity activity, final int cacheIndex) {
+	public final void setImage(final int imageResource, @NonNull final Activity activity, final int cacheIndex) {
 		// retrieve bitmap from cache if possible
 		final RetainFragment retainFragment = RetainFragment.findOrCreateRetainFragment(activity.getFragmentManager(),
 				cacheIndex);
@@ -266,10 +271,8 @@ public class PinchImageView extends ImageView {
 	 * Fill with an image from a bitmap object, making the image fit into the view.
 	 *
 	 * @param bitmap     The image resource id
-	 * @param activity   The triggering activity (required for bitmap caching)
-	 * @param cacheIndex A unique index of the view in the activity
 	 */
-	public final void setImage(final Bitmap bitmap, final Activity activity, final int cacheIndex) {
+	public final void setImage(final Bitmap bitmap) {
 		// do not use retainFragment in this case - only used on CameraActivity, which is landscape only.
 		mBitmap = bitmap;
 		super.setImageBitmap(mBitmap);
@@ -366,7 +369,7 @@ public class PinchImageView extends ImageView {
 	// OVERRIDABLE
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
-	public boolean onTouchEvent(final MotionEvent ev) {
+	public boolean onTouchEvent(@NonNull final MotionEvent ev) {
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
 
@@ -474,7 +477,7 @@ public class PinchImageView extends ImageView {
 	// OVERRIDABLE
 	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
 			justification = "Using floating point equality to see if value has changed")
-	protected boolean handlePointerMove(final MotionEvent ev) {
+	protected boolean handlePointerMove(@NonNull final MotionEvent ev) {
 		if (!mInitialized) {
 			return false;
 		}
@@ -533,6 +536,7 @@ public class PinchImageView extends ImageView {
 	 * same pathname.)
 	 */
 	// OVERRIDABLE
+	@NonNull
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		Bundle bundle = new Bundle();
@@ -569,7 +573,7 @@ public class PinchImageView extends ImageView {
 	 */
 	protected class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
-		public final boolean onScale(final ScaleGestureDetector detector) {
+		public final boolean onScale(@NonNull final ScaleGestureDetector detector) {
 			mScaleFactor *= detector.getScaleFactor();
 			// Don't let the object get too small or too large.
 			mScaleFactor = Math.max(MIN_SCALE_FACTOR, Math.min(mScaleFactor, MAX_SCALE_FACTOR));
@@ -589,8 +593,10 @@ public class PinchImageView extends ImageView {
 		/**
 		 * The bitmap to be stored.
 		 */
+		@Nullable
 		private Bitmap mRetainBitmap;
 
+		@Nullable
 		public final Bitmap getBitmap() {
 			return mRetainBitmap;
 		}
@@ -606,7 +612,8 @@ public class PinchImageView extends ImageView {
 		 * @param index The index of the view (required in case of multiple PinchImageViews to be retained).
 		 * @return the retainFragment.
 		 */
-		public static RetainFragment findOrCreateRetainFragment(final FragmentManager fm, final int index) {
+		@NonNull
+		public static RetainFragment findOrCreateRetainFragment(@NonNull final FragmentManager fm, final int index) {
 			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
 			if (fragment == null) {
 				fragment = new RetainFragment();

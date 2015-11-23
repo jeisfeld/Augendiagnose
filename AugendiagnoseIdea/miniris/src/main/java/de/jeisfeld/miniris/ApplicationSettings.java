@@ -2,6 +2,7 @@ package de.jeisfeld.miniris;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 
@@ -37,7 +38,7 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	}
 
 	@Override
-	public void startApplication(final Activity triggeringActivity) {
+	public void startApplication(@NonNull final Activity triggeringActivity) {
 		Intent intent = new Intent(triggeringActivity, ListFoldersForDisplayActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		triggeringActivity.startActivity(intent);

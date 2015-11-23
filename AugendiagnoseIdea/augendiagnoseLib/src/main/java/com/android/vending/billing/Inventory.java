@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.support.annotation.NonNull;
+
 /**
  * Represents a block of information about in-app items. An Inventory is returned by such methods as
  * {@link IabHelper#queryInventory}.
@@ -80,6 +82,7 @@ public class Inventory {
 	 *
 	 * @return A list of all owned product IDs.
 	 */
+	@NonNull
 	protected final List<String> getAllOwnedSkus() {
 		return new ArrayList<>(mPurchaseMap.keySet());
 	}
@@ -90,6 +93,7 @@ public class Inventory {
 	 * @param itemType The item type
 	 * @return The list of all owned product IDs of this type.
 	 */
+	@NonNull
 	protected final List<String> getAllOwnedSkus(final String itemType) {
 		List<String> result = new ArrayList<>();
 		for (Purchase p : mPurchaseMap.values()) {
@@ -105,15 +109,16 @@ public class Inventory {
 	 *
 	 * @return The list of all purchases.
 	 */
+	@NonNull
 	protected final List<Purchase> getAllPurchases() {
 		return new ArrayList<>(mPurchaseMap.values());
 	}
 
-	protected final void addSkuDetails(final SkuDetails d) {
+	protected final void addSkuDetails(@NonNull final SkuDetails d) {
 		mSkuMap.put(d.getSku(), d);
 	}
 
-	protected final void addPurchase(final Purchase p) {
+	protected final void addPurchase(@NonNull final Purchase p) {
 		mPurchaseMap.put(p.getSku(), p);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -38,6 +40,7 @@ public class EyePhoto {
 	/**
 	 * The name of the person.
 	 */
+	@Nullable
 	private String mPersonName;
 
 	/**
@@ -70,7 +73,7 @@ public class EyePhoto {
 	 *
 	 * @param filename the file name.
 	 */
-	public EyePhoto(final String filename) {
+	public EyePhoto(@NonNull final String filename) {
 		this(new File(filename));
 	}
 
@@ -79,7 +82,7 @@ public class EyePhoto {
 	 *
 	 * @param file the file.
 	 */
-	public EyePhoto(final File file) {
+	public EyePhoto(@NonNull final File file) {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
@@ -101,7 +104,7 @@ public class EyePhoto {
 	 * @param suffix    File suffix (".jpg")
 	 */
 	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
-					final String suffix) {
+					@NonNull final String suffix) {
 		setPath(path);
 		setPersonName(name);
 		setDate(date);
@@ -139,7 +142,7 @@ public class EyePhoto {
 	 *
 	 * @param filename the filename
 	 */
-	private void setFilename(final String filename) {
+	private void setFilename(@NonNull final String filename) {
 		this.mFilename = filename;
 		int suffixPosition = filename.lastIndexOf('.');
 		int rightLeftPosition = filename.lastIndexOf(' ', suffixPosition);
@@ -195,6 +198,7 @@ public class EyePhoto {
 	 *
 	 * @return the person name.
 	 */
+	@Nullable
 	public final String getPersonName() {
 		return mPersonName;
 	}
@@ -204,7 +208,7 @@ public class EyePhoto {
 	 *
 	 * @param name the person name
 	 */
-	private void setPersonName(final String name) {
+	private void setPersonName(@Nullable final String name) {
 		if (name == null) {
 			this.mPersonName = null;
 
@@ -272,7 +276,7 @@ public class EyePhoto {
 		return mSuffix;
 	}
 
-	private void setSuffix(final String suffix) {
+	private void setSuffix(@NonNull final String suffix) {
 		this.mSuffix = suffix.toLowerCase(Locale.getDefault());
 	}
 
@@ -290,6 +294,7 @@ public class EyePhoto {
 	 *
 	 * @return the file
 	 */
+	@NonNull
 	private File getFile() {
 		return new File(getPath(), getFilename());
 	}
@@ -319,7 +324,7 @@ public class EyePhoto {
 	 * @param allowOverwrite if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
-	public final boolean moveTo(final EyePhoto target, final boolean allowOverwrite) {
+	public final boolean moveTo(@NonNull final EyePhoto target, final boolean allowOverwrite) {
 		if (target.getFile().exists() && !allowOverwrite) {
 			return false;
 		}
@@ -333,7 +338,7 @@ public class EyePhoto {
 	 * @param folderName the target folder
 	 * @return true if the move was successful.
 	 */
-	public final boolean moveToFolder(final String folderName) {
+	public final boolean moveToFolder(@NonNull final String folderName) {
 		File folder = new File(folderName);
 		if (!folder.exists() || !folder.isDirectory()) {
 			// target folder does not exist
@@ -355,7 +360,7 @@ public class EyePhoto {
 	 * @param target the file information of the target file.
 	 * @return true if the copying was successful.
 	 */
-	public final boolean copyTo(final EyePhoto target) {
+	public final boolean copyTo(@NonNull final EyePhoto target) {
 		if (target.getFile().exists()) {
 			// do not allow overwriting
 			return false;
@@ -429,6 +434,7 @@ public class EyePhoto {
 	 *
 	 * @return a clone (recreation) of this object having the same absolute path.
 	 */
+	@NonNull
 	private EyePhoto cloneFromPath() {
 		return new EyePhoto(getAbsolutePath());
 	}
@@ -470,6 +476,7 @@ public class EyePhoto {
 	 *
 	 * @return the metadata.
 	 */
+	@Nullable
 	public final JpegMetadata getImageMetadata() {
 		return JpegSynchronizationUtil.getJpegMetadata(getAbsolutePath());
 	}
@@ -488,7 +495,7 @@ public class EyePhoto {
 	 *
 	 * @param metadata the metadata object to be enhanced by the default information.
 	 */
-	public final void updateMetadataWithDefaults(final JpegMetadata metadata) {
+	public final void updateMetadataWithDefaults(@NonNull final JpegMetadata metadata) {
 		metadata.setPerson(getPersonName());
 		metadata.setOrganizeDate(getDate());
 		metadata.setRightLeft(getRightLeft());
@@ -591,7 +598,8 @@ public class EyePhoto {
 		 * @param rightLeftString The String to be converted.
 		 * @return the converted RightString.
 		 */
-		public static final RightLeft fromString(final String rightLeftString) {
+		@NonNull
+		public static final RightLeft fromString(@Nullable final String rightLeftString) {
 			if (rightLeftString != null && rightLeftString.matches("[rRdD].*")) {
 				return RIGHT;
 			}

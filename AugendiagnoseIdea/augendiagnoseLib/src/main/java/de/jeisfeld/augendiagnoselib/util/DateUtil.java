@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.support.annotation.NonNull;
+
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**
@@ -29,7 +31,7 @@ public final class DateUtil {
 	 * @return the date object
 	 * @throws ParseException thrown if the date string cannot be parsed.
 	 */
-	public static Date parse(final String date, final String format) throws ParseException {
+	public static Date parse(final String date, @NonNull final String format) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
 		return dateFormat.parse(date);
 	}
@@ -41,7 +43,7 @@ public final class DateUtil {
 	 * @param format the date format
 	 * @return the formatted date
 	 */
-	public static String format(final Date date, final String format) {
+	public static String format(final Date date, @NonNull final String format) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
 		return dateFormat.format(date);
 	}
@@ -63,7 +65,7 @@ public final class DateUtil {
 	 * @param calendar the date as calendar object
 	 * @return the date formatted for display
 	 */
-	public static String getDisplayDate(final Calendar calendar) {
+	public static String getDisplayDate(@NonNull final Calendar calendar) {
 		DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(Application.getAppContext());
 		return dateFormat.format(calendar.getTime());
 	}

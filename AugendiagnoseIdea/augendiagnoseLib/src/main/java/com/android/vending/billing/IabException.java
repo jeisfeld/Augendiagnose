@@ -1,5 +1,7 @@
 package com.android.vending.billing;
 
+import android.support.annotation.NonNull;
+
 /**
  * Exception thrown when something went wrong with in-app billing. An IabException has an associated IabResult (an
  * error). To get the IAB result that caused this exception to be thrown, call {@link #getResult()}.
@@ -10,9 +12,10 @@ public class IabException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
+	@NonNull
 	private final IabResult mResult;
 
-	private IabException(final IabResult r) {
+	private IabException(@NonNull final IabResult r) {
 		this(r, null);
 	}
 
@@ -20,7 +23,7 @@ public class IabException extends Exception {
 		this(new IabResult(response, message));
 	}
 
-	private IabException(final IabResult r, final Exception cause) {
+	private IabException(@NonNull final IabResult r, final Exception cause) {
 		super(r.getMessage(), cause);
 		mResult = r;
 	}
@@ -36,6 +39,7 @@ public class IabException extends Exception {
 	 *
 	 * @return the IAP result.
 	 */
+	@NonNull
 	public final IabResult getResult() {
 		return mResult;
 	}

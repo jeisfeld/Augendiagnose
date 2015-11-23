@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import de.jeisfeld.augendiagnoselib.components.ListPicturesForSecondNameArrayAda
  */
 public class ListPicturesForSecondNameFragment extends ListPicturesForNameBaseFragment {
 	@Override
-	public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	public final View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 								   final Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list_pictures_for_second_name, container, false);
 	}

@@ -20,6 +20,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -81,20 +83,24 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * Field holding the value of the input folder preference, in order to detect a real change.
 	 */
+	@Nullable
 	private String mFolderInput;
 	/**
 	 * Field holding the value of the photo folder preference, in order to detect a real change.
 	 */
+	@Nullable
 	private String mFolderPhotos;
 
 	/**
 	 * The type of fragment to be shown.
 	 */
+	@Nullable
 	private String mType = null;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
 	 */
+	@Nullable
 	private File mCurrentFolder;
 
 	/**
@@ -306,7 +312,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 * @param buttonIndex The index of the button.
 	 * @param preference  The preference.
 	 */
-	private void updateOverlayPreferenceEntries(final int buttonIndex, final ListPreference preference) {
+	private void updateOverlayPreferenceEntries(final int buttonIndex, @NonNull final ListPreference preference) {
 		int highestOverlayButtonIndex = DisplayImageFragment.getHighestOverlayButtonIndex();
 		if (buttonIndex > highestOverlayButtonIndex + 1) {
 			preference.setEnabled(false);
@@ -362,7 +368,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 *
 	 * @param preference The preference to be bound.
 	 */
-	private void bindPreferenceSummaryToValue(final Preference preference) {
+	private void bindPreferenceSummaryToValue(@Nullable final Preference preference) {
 		if (preference != null) {
 			// Set the listener to watch for value changes.
 			preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
@@ -385,10 +391,11 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the change of preferences.
 	 */
+	@Nullable
 	private final OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
 			new OnPreferenceChangeListener() {
 				@Override
-				public boolean onPreferenceChange(final Preference preference, final Object value) {
+				public boolean onPreferenceChange(@NonNull final Preference preference, @NonNull final Object value) {
 					String stringValue = value.toString();
 
 					// For maxBitmapSize, inform PinchImageView
@@ -483,7 +490,7 @@ public class SettingsFragment extends PreferenceFragment {
 				 * @param value
 				 *            the new value of the preference.
 				 */
-				private void updateSummary(final Preference preference, final String value) {
+				private void updateSummary(@NonNull final Preference preference, final String value) {
 					if (preference.getClass().equals(ListPreference.class)) {
 						// For list preferences (except customized ones), look up the correct display value in the preference's 'entries' list.
 						ListPreference listPreference = (ListPreference) preference;
@@ -513,7 +520,7 @@ public class SettingsFragment extends PreferenceFragment {
 				 * @param preference
 				 *            The overlay preference.
 				 */
-				private void updateSummaryForOverlayPreference(final ListPreference preference) {
+				private void updateSummaryForOverlayPreference(@Nullable final ListPreference preference) {
 					if (preference != null && preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
 						Integer buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
 						if (buttonIndex == null) {
@@ -541,7 +548,7 @@ public class SettingsFragment extends PreferenceFragment {
 				 *
 				 * @return true if the check was successful or if SAF has been triggered.
 				 */
-				private boolean checkFolder(final File folder, final int code) {
+				private boolean checkFolder(@NonNull final File folder, final int code) {
 					if (SystemUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
 						if (!folder.exists() || !folder.isDirectory()) {
 							return false;
@@ -607,7 +614,8 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private final OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
-		public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts, final boolean isPremium) {
+		public void handleProducts(@NonNull final List<PurchasedSku> purchases,
+								   @NonNull final List<SkuDetails> availableProducts, final boolean isPremium) {
 			// List inventory items.
 			for (PurchasedSku purchase : purchases) {
 				Preference purchasePreference = new Preference(getActivity());
@@ -625,7 +633,7 @@ public class SettingsFragment extends PreferenceFragment {
 				skuPreference.setSummary(skuDetails.getDescription());
 				skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 					@Override
-					public boolean onPreferenceClick(final Preference preference) {
+					public boolean onPreferenceClick(@NonNull final Preference preference) {
 						String productId = preference.getKey().substring(SKU_KEY_PREFIX.length());
 						GoogleBillingHelper.launchPurchaseFlow(productId, mOnPurchaseSuccessListener);
 						return false;
@@ -668,7 +676,7 @@ public class SettingsFragment extends PreferenceFragment {
 	};
 
 	@Override
-	public final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	public final void onActivityResult(final int requestCode, final int resultCode, @NonNull final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (SystemUtil.isAndroid5()) {
@@ -687,7 +695,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 *                    "extras").
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void onActivityResultLollipop(final int requestCode, final int resultCode, final Intent data) {
+	private void onActivityResultLollipop(final int requestCode, final int resultCode, @NonNull final Intent data) {
 		int preferenceKeyUri;
 		int preferenceKeyFolder;
 		String oldFolder;

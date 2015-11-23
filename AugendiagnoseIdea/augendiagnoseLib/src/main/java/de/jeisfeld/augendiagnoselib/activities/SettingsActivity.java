@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -55,7 +56,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * @param context  The context in which the activity is started.
 	 * @param prefType The type of preferences to be displayed.
 	 */
-	public static final void startActivity(final Context context, final Integer prefType) {
+	public static final void startActivity(@NonNull final Context context, @Nullable final Integer prefType) {
 		Intent intent = new Intent(context, SettingsActivity.class);
 		if (prefType != null) {
 			intent.putExtra(STRING_EXTRA_PREF_TYPE, prefType);
@@ -64,7 +65,7 @@ public class SettingsActivity extends PreferenceActivity {
 	}
 
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
@@ -95,7 +96,7 @@ public class SettingsActivity extends PreferenceActivity {
 	}
 
 	@Override
-	public final void onBuildHeaders(final List<Header> target) {
+	public final void onBuildHeaders(@NonNull final List<Header> target) {
 		List<Header> baseHeaders = new ArrayList<>();
 
 		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
@@ -127,7 +128,7 @@ public class SettingsActivity extends PreferenceActivity {
 	}
 
 	@Override
-	protected final boolean isValidFragment(final String fragmentName) {
+	protected final boolean isValidFragment(@NonNull final String fragmentName) {
 		return fragmentName.startsWith("de.jeisfeld.augendiagnoselib.fragments");
 	}
 
@@ -138,7 +139,7 @@ public class SettingsActivity extends PreferenceActivity {
 	}
 
 	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
+	public final boolean onOptionsItemSelected(@NonNull final MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == R.id.action_help) {
 			DisplayHtmlActivity.startActivity(this, R.string.html_settings);
@@ -156,7 +157,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * @param context The Context in which the preferences should be set.
 	 */
 	@SuppressLint("SdCardPath")
-	public static final void setDefaultSharedPreferences(final Context context) {
+	public static final void setDefaultSharedPreferences(@NonNull final Context context) {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_input, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_display, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_storage, true);

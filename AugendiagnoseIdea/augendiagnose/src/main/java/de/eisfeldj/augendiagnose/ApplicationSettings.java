@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnose;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import de.eisfeldj.augendiagnose.activities.MainActivity;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -60,7 +61,7 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 	}
 
 	@Override
-	public void startApplication(final Activity triggeringActivity) {
+	public void startApplication(@NonNull final Activity triggeringActivity) {
 		Intent intent = new Intent(triggeringActivity, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		triggeringActivity.startActivity(intent);

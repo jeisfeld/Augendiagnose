@@ -22,6 +22,7 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -143,41 +144,49 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The temp file holding the right eye.
 	 */
+	@Nullable
 	private File mRightEyeFile = null;
 
 	/**
 	 * The temp file holding the next photo for the right eye.
 	 */
+	@Nullable
 	private File mNewRightEyeFile = null;
 
 	/**
 	 * The temp file holding the left eye.
 	 */
+	@Nullable
 	private File mLeftEyeFile = null;
 
 	/**
 	 * The temp file holding the next photo for the left eye.
 	 */
+	@Nullable
 	private File mNewLeftEyeFile = null;
 
 	/**
 	 * The folder where to store the photos.
 	 */
+	@Nullable
 	private File mPhotoFolder = null;
 
 	/**
 	 * The right eye file coming as input to the activity.
 	 */
+	@Nullable
 	private File mInputRightFile = null;
 
 	/**
 	 * The left eye file coming as input to the activity.
 	 */
+	@Nullable
 	private File mInputLeftFile = null;
 
 	/**
 	 * An orientation manager used to track the orientation of the image.
 	 */
+	@Nullable
 	private OrientationManager mOrientationManager = null;
 
 	/**
@@ -188,6 +197,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The handler operating the camera.
 	 */
+	@Nullable
 	private CameraHandler mCameraHandler;
 
 	/**
@@ -195,7 +205,7 @@ public class CameraActivity extends BaseActivity {
 	 *
 	 * @param activity The activity from which the activity is started.
 	 */
-	public static final void startActivity(final Activity activity) {
+	public static final void startActivity(@NonNull final Activity activity) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		activity.startActivity(intent);
 	}
@@ -206,7 +216,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param activity    The activity from which the activity is started.
 	 * @param photoFolder The folder where to store the photos.
 	 */
-	public static final void startActivity(final Activity activity, final String photoFolder) {
+	public static final void startActivity(@NonNull final Activity activity, final String photoFolder) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolder);
 		activity.startActivity(intent);
@@ -219,7 +229,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param photoRight The path of the right eye image
 	 * @param photoLeft  The path of the left eye image
 	 */
-	public static final void startActivity(final Activity activity, final String photoRight, final String photoLeft) {
+	public static final void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		intent.putExtra(STRING_EXTRA_PHOTO_RIGHT, photoRight);
 		intent.putExtra(STRING_EXTRA_PHOTO_LEFT, photoLeft);
@@ -650,7 +660,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param action    The new action.
 	 * @param rightLeft the next eye side.
 	 */
-	private void setAction(final Action action, final RightLeft rightLeft) {
+	private void setAction(@NonNull final Action action, final RightLeft rightLeft) {
 		mCurrentAction = action;
 		mCurrentRightLeft = rightLeft;
 
@@ -832,7 +842,7 @@ public class CameraActivity extends BaseActivity {
 	 *
 	 * @param data The data representing the bitmap.
 	 */
-	private void setThumbImage(final byte[] data) {
+	private void setThumbImage(@NonNull final byte[] data) {
 		ImageView imageView = (ImageView) findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
@@ -846,7 +856,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param file      The file to be put in the thumb.
 	 * @param rightLeft The side of the eye
 	 */
-	private void setThumbImage(final String file, final RightLeft rightLeft) {
+	private void setThumbImage(@Nullable final String file, final RightLeft rightLeft) {
 		ImageView imageView = (ImageView) findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		if (file != null) {
@@ -863,12 +873,12 @@ public class CameraActivity extends BaseActivity {
 	 *
 	 * @param data The data representing the image.
 	 */
-	private void setReviewImage(final byte[] data) {
+	private void setReviewImage(@NonNull final byte[] data) {
 		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
 
-		imageView.setImage(bitmap, this, 1);
+		imageView.setImage(bitmap);
 	}
 
 	/**
@@ -980,6 +990,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The callback called when pictures are taken.
 	 */
+	@Nullable
 	private final CameraCallback mOnPictureTakenHandler = new CameraCallback() {
 		@Override
 		public void onTakingPicture() {
@@ -992,7 +1003,7 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onPictureTaken(final byte[] data) {
+		public void onPictureTaken(@NonNull final byte[] data) {
 			short exifAngle = getExifAngle();
 
 			File imageFile = FileUtil.getTempJpegFile();
@@ -1045,7 +1056,7 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onCameraError(final String message, final Exception e) {
+		public void onCameraError(final String message, @Nullable final Exception e) {
 			String messageString = message;
 			if (e == null) {
 				Log.e(Application.TAG, message);
@@ -1202,7 +1213,7 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		@Override
-		protected void onPostExecute(final File imageFile) {
+		protected void onPostExecute(@NonNull final File imageFile) {
 			Log.d(Application.TAG, "Finished saving image " + imageFile.getName() + " - " + mRightLeft);
 		}
 	}

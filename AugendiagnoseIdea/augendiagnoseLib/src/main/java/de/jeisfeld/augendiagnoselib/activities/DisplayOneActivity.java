@@ -3,6 +3,8 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import de.jeisfeld.augendiagnoselib.R;
@@ -61,7 +63,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	 * @param context  The context in which the activity is started.
 	 * @param filename The filename of the picture.
 	 */
-	public static void startActivity(final Context context, final String filename) {
+	public static void startActivity(@NonNull final Context context, final String filename) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE, filename);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILENAME);
@@ -74,7 +76,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	 * @param context      The context in which the activity is started.
 	 * @param fileResource The resource id of the picture.
 	 */
-	public static void startActivity(final Context context, final int fileResource) {
+	public static void startActivity(@NonNull final Context context, final int fileResource) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILERESOURCE, fileResource);
 		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILERESOURCE);
@@ -85,7 +87,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	 * Build the screen on creation.
 	 */
 	@Override
-	protected final void onCreate(final Bundle savedInstanceState) {
+	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		int type = getIntent().getIntExtra(STRING_EXTRA_TYPE, -1);

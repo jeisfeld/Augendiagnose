@@ -8,6 +8,8 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,6 +31,7 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The camera used by the activity.
 	 */
+	@Nullable
 	private Camera mCamera;
 
 	/**
@@ -54,11 +57,13 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The current flashlight mode.
 	 */
+	@Nullable
 	private String mCurrentFlashlightMode = null;
 
 	/**
 	 * The current focus mode.
 	 */
+	@Nullable
 	private String mCurrentFocusMode = null;
 
 	/**
@@ -69,6 +74,7 @@ public class Camera1Handler implements CameraHandler {
 	/**
 	 * The surface of the preview.
 	 */
+	@Nullable
 	private SurfaceHolder mPreviewHolder = null;
 
 	/**
@@ -83,7 +89,7 @@ public class Camera1Handler implements CameraHandler {
 	 * @param preview        The view holding the preview.
 	 * @param cameraCallback The handler called when the picture is taken.
 	 */
-	public Camera1Handler(final FrameLayout previewFrame, final SurfaceView preview,
+	public Camera1Handler(final FrameLayout previewFrame, @NonNull final SurfaceView preview,
 						  final CameraCallback cameraCallback) {
 		this.mPreviewFrame = previewFrame;
 		this.mCameraCallback = cameraCallback;
@@ -94,7 +100,7 @@ public class Camera1Handler implements CameraHandler {
 	}
 
 	@Override
-	public final void setFlashlightMode(final FlashMode flashlightMode) {
+	public final void setFlashlightMode(@Nullable final FlashMode flashlightMode) {
 		if (flashlightMode == null) {
 			mCurrentFlashlightMode = null;
 			return;
@@ -119,7 +125,7 @@ public class Camera1Handler implements CameraHandler {
 	}
 
 	@Override
-	public final void setFocusMode(final FocusMode focusMode) {
+	public final void setFocusMode(@Nullable final FocusMode focusMode) {
 		if (focusMode == null) {
 			mCurrentFocusMode = null;
 			return;
@@ -286,6 +292,7 @@ public class Camera1Handler implements CameraHandler {
 	 *
 	 * @return the callback client.
 	 */
+	@NonNull
 	private SurfaceHolder.Callback getSurfaceCallback() {
 		return new SurfaceHolder.Callback() {
 			@Override
@@ -319,7 +326,7 @@ public class Camera1Handler implements CameraHandler {
 	 *
 	 * @param supportedFocusModes the supported focus modes.
 	 */
-	private void updateAvailableModes(final List<String> supportedFocusModes) {
+	private void updateAvailableModes(@NonNull final List<String> supportedFocusModes) {
 		List<FocusMode> focusModes = new ArrayList<>();
 		for (String focusMode : supportedFocusModes) {
 			if (Camera.Parameters.FOCUS_MODE_AUTO.equals(focusMode)) {
@@ -399,7 +406,8 @@ public class Camera1Handler implements CameraHandler {
 	 * @param parameters  The camera parameters.
 	 * @return The best preview size.
 	 */
-	private static Camera.Size getBestPreviewSize(final float aspectRatio, final Camera.Parameters parameters) {
+	@Nullable
+	private static Camera.Size getBestPreviewSize(final float aspectRatio, @NonNull final Camera.Parameters parameters) {
 		Camera.Size result = null;
 		float bestAspectRatioDifference = 0;
 
@@ -427,7 +435,8 @@ public class Camera1Handler implements CameraHandler {
 	 * @param parameters The camera parameters.
 	 * @return The biggest picture size.
 	 */
-	private static Camera.Size getBiggestPictureSize(final Camera.Parameters parameters) {
+	@Nullable
+	private static Camera.Size getBiggestPictureSize(@NonNull final Camera.Parameters parameters) {
 		Camera.Size result = null;
 
 		for (Camera.Size size : parameters.getSupportedPictureSizes()) {

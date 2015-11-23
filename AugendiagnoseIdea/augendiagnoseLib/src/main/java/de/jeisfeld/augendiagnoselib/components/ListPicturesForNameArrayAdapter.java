@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	}
 
 	@Override
-	protected final void prepareViewForSelection(final EyeImageView view) {
+	protected final void prepareViewForSelection(@NonNull final EyeImageView view) {
 		ImageSelectionAndDisplayHandler.getInstance().prepareViewForFirstSelection(view);
 	}
 

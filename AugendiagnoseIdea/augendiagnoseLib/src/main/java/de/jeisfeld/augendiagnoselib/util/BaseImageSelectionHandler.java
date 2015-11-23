@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
@@ -24,6 +25,7 @@ public abstract class BaseImageSelectionHandler {
 	 *
 	 * @return the activity
 	 */
+	@Nullable
 	protected abstract Activity getActivity();
 
 	/**

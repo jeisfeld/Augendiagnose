@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -22,7 +23,7 @@ public final class KeyboardUtil {
 	 * @param context  the context.
 	 * @param editText the EditText triggering the soft keyboard.
 	 */
-	public static void hideKeyboard(final Context context, final EditText editText) {
+	public static void hideKeyboard(@NonNull final Context context, @NonNull final EditText editText) {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 	}

@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewManager;
 
@@ -19,6 +20,7 @@ public abstract class AdMarvelActivity extends Activity {
 	/**
 	 * The view holding the ad.
 	 */
+	@Nullable
 	private AdMarvelView mAdMarvelView;
 
 	/**
@@ -106,6 +108,7 @@ public abstract class AdMarvelActivity extends Activity {
 	 *
 	 * @return The AdMarvelView.
 	 */
+	@Nullable
 	public final AdMarvelView getAdMarvelView() {
 		if (mAdMarvelView == null) {
 			mAdMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
