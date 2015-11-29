@@ -3,10 +3,19 @@
 	<target name="javadoc">
 		<javadoc access="private" author="true"
 			classpath="lib/commons-lang3-3.3.2.jar;lib/xmpcore.jar;lib/annotations.jar;C:\Transferrable\eclipse44\plugins\org.eclipse.fx.ide.css.jfx8_1.1.0.201411050807.jar"
-			destdir="doc" linksource="true" nodeprecated="false"
-			nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false"
+			destdir="doc"
+            encoding="UTF-8"
+			linksource="true"
+			nodeprecated="false"
+			nodeprecatedlist="false"
+			noindex="false"
+			nonavbar="false"
+			notree="false"
 			packagenames="de.eisfeldj.augendiagnosefx,de.eisfeldj.augendiagnosefx.fxelements,de.eisfeldj.augendiagnosefx.controller,de.eisfeldj.augendiagnosefx.tools,de.eisfeldj.augendiagnosefx.util.imagefile,de.eisfeldj.augendiagnosefx.util"
-			source="1.8" sourcepath="src;resources" splitindex="true" use="true"
+			source="1.8"
+			sourcepath="src;resources"
+			splitindex="true"
+			use="true"
 			version="true">
 			<link href="https://docs.oracle.com/javase/8/docs/api/" />
 			<link href="http://docs.oracle.com/javase/8/javafx/api/" />

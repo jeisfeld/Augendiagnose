@@ -3,11 +3,24 @@
 
     <target name="javadoc" >
 
+        <property
+            name="project.dir"
+            value="../AugendiagnoseIdea/augendiagnoseUnlocker" />
+
+        <property
+            name="sdk.dir"
+            value="C:/Transferrable/android-sdk" />
+
+        <property
+            name="lib.dir"
+            value="${project.dir}/libs" />
+
         <javadoc
             access="private"
             author="false"
-            classpath="bin/classes;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;../AugendiagnoseLib/libsExtra/annotations.jar"
+            classpath="bin/classes;${sdk.dir}/platforms/android-21/android.jar;${lib.dir}/annotations.jar;${lib.dir}/android-support-annotations.jar"
             destdir="doc"
+            encoding="UTF-8"
             linksource="true"
             nodeprecated="false"
             nodeprecatedlist="false"
@@ -16,14 +29,15 @@
             notree="false"
             packagenames="de.jeisfeld.augendiagnoseunlocker,de.jeisfeld.augendiagnose.activities"
             source="1.7"
-            sourcepath="src"
+            sourcepath="${project.dir}/src/main/java"
             splitindex="true"
             use="true"
             version="true" >
-            <link
+
+            <link
                 href="http://android-javadoc.localhost/reference/"
                 offline="true"
-                packagelistLoc="C:\Program Files (x86)\Android\android-sdk\docs\reference" />
+                packagelistLoc="${sdk.dir}/docs/reference" />
         </javadoc>
     </target>
 

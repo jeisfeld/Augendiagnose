@@ -301,7 +301,6 @@ public class XmpHandler {
 	 * Delete an entry from the custom namespace.
 	 *
 	 * @param item the name of the entry.
-	 * @throws XMPException thrown in case of issues with XMP handling.
 	 */
 	private void removeJeItem(final String item) {
 		mXmpMeta.deleteProperty(NS_JE, item);

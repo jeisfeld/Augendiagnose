@@ -3,11 +3,16 @@
 
     <target name="javadoc" >
 
+        <property name="project.dir" value="../AugendiagnoseIdea/augendiagnoseLib"/>
+        <property name="sdk.dir" value="C:/Transferrable/android-sdk"/>
+        <property name="lib.dir" value="${project.dir}/libs"/>
+        
         <javadoc
             access="private"
             author="false"
-            classpath="bin/classes;C:/Program Files (x86)/Android/android-sdk/platforms/android-21/android.jar;libs/android-support-v13.jar;libsExtra/xmpcore.jar;libsExtra/annotations.jar;libs/admarvel-android-sdk-core-adcolony.jar"
+            classpath="bin/classes;${sdk.dir}/platforms/android-21/android.jar;${lib.dir}/android-support-v13.jar;${lib.dir}/xmpcore.jar;${lib.dir}/annotations.jar;${lib.dir}/admarvel-android-sdk-core-adcolony.jar"
             destdir="doc"
+            encoding="UTF-8"
             linksource="true"
             nodeprecated="false"
             nodeprecatedlist="false"
@@ -16,7 +21,7 @@
             notree="false"
             packagenames="de.jeisfeld.augendiagnoselib.util.imagefile,de.jeisfeld.augendiagnoselib.activities,de.jeisfeld.augendiagnoselib.components.colorpicker,de.jeisfeld.augendiagnoselib.components,de.jeisfeld.augendiagnoselib.util,com.android.vending.billing,de.jeisfeld.augendiagnoselib.fragments,de.jeisfeld.augendiagnoselib"
             source="1.7"
-            sourcepath="src"
+            sourcepath="${project.dir}/src/main/java"
             splitindex="true"
             use="true"
             version="true" >
@@ -26,7 +31,7 @@
             <link
                 href="http://android-javadoc.localhost/reference/"
                 offline="true"
-                packagelistLoc="C:\Program Files (x86)\Android\android-sdk\docs\reference" />
+                packagelistLoc="${sdk.dir}/docs/reference" />
 
             <link href="file:/D:/Git/Augendiagnose/AugendiagnoseLib/doc/" />
         </javadoc>
