@@ -143,33 +143,25 @@ public final class FileUtil {
 		}
 		finally {
 			try {
-				if (inStream != null) {
-					inStream.close();
-				}
+				inStream.close();
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				if (outStream != null) {
-					outStream.close();
-				}
+				outStream.close();
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				if (inChannel != null) {
-					inChannel.close();
-				}
+				inChannel.close();
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				if (outChannel != null) {
-					outChannel.close();
-				}
+				outChannel.close();
 			}
 			catch (Exception e) {
 				// ignore exception
