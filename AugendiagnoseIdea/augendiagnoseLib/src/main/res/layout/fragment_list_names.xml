@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    android:gravity="center"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:baselineAligned="false"
+              android:descendantFocusability="beforeDescendants"
+              android:focusableInTouchMode="true"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <EditText
         android:id="@+id/searchName"
@@ -18,7 +18,7 @@
         android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin" />
+        android:paddingRight="@dimen/activity_horizontal_margin"/>
 
     <TextView
         android:id="@+id/textViewNoImages"
@@ -29,12 +29,12 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/message_dialog_no_organized_photos"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/listViewNames"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="6dp"/>
 
 </LinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/circlebutton_base"/>
     <item>
@@ -7,8 +7,8 @@
             android:innerRadius="@dimen/camerabutton_overlay_circle_radius"
             android:shape="ring"
             android:thickness="2dp"
-            android:useLevel="false" >
-            <solid android:color="#FF0000" />
+            android:useLevel="false">
+            <solid android:color="#FF0000"/>
         </shape>
     </item>
 

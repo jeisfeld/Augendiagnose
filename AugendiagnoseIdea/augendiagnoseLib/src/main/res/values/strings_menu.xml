@@ -18,7 +18,7 @@
     <string name="menu_change_name">Change name</string>
     <string name="menu_remove_overlay_button">Remove button</string>
     <string name="menu_add_overlay_button">Add button</string>
-    
+
     <!-- Entries related to buttons in the settings -->
 
     <string name="menu_hide_all_hints">Do not display hints</string>

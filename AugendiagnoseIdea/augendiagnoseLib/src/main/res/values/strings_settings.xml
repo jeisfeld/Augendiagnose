@@ -41,7 +41,7 @@
     <string name="pref_default_camera_screen_position" translatable="false">0</string>
     <string name="pref_title_overlay_button">Overlay button %1$s</string>
     <string name="pref_value_overlay_button_empty">(Unused)</string>
-    
+
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">

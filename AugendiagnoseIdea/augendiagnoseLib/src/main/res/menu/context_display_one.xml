@@ -1,4 +1,4 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_store_position"
@@ -7,7 +7,7 @@
         android:id="@+id/action_reset_position"
         android:title="@string/menu_reset_position"/>
 
-    <group android:id="@+id/group_store_reset" >
+    <group android:id="@+id/group_store_reset">
         <item
             android:id="@+id/action_store_brightness"
             android:title="@string/menu_store_brightness"/>

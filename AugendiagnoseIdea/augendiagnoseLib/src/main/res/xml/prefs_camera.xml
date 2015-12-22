@@ -1,11 +1,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="@string/key_dummy_screen_camera_settings"
-    android:title="@string/pref_screen_camera_settings" >
+                  android:key="@string/key_dummy_screen_camera_settings"
+                  android:title="@string/pref_screen_camera_settings">
 
     <CheckBoxPreference
         android:defaultValue="@string/pref_default_eye_sequence_value"
         android:key="@string/key_eye_sequence_choice"
-        android:title="@string/pref_title_eye_sequence_choice" />
+        android:title="@string/pref_title_eye_sequence_choice"/>
 
     <ListPreference
         android:entries="@array/pref_list_titles_camera_api_version"
@@ -13,12 +13,12 @@
         android:key="@string/key_camera_api_version"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_camera_api_version" />
+        android:title="@string/pref_title_camera_api_version"/>
 
     <CheckBoxPreference
         android:defaultValue="@string/pref_default_enable_flash"
         android:key="@string/key_enable_flash"
-        android:title="@string/pref_title_enable_flash" />
+        android:title="@string/pref_title_enable_flash"/>
 
     <ListPreference
         android:defaultValue="@string/pref_default_camera_screen_position"
@@ -27,6 +27,6 @@
         android:key="@string/key_camera_screen_position"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_camera_screen_position" />
+        android:title="@string/pref_title_camera_screen_position"/>
 
 </PreferenceScreen>

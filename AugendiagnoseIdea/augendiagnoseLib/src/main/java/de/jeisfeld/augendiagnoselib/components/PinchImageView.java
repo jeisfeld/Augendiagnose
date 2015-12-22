@@ -270,7 +270,7 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Fill with an image from a bitmap object, making the image fit into the view.
 	 *
-	 * @param bitmap     The image resource id
+	 * @param bitmap The image resource id
 	 */
 	public final void setImage(final Bitmap bitmap) {
 		// do not use retainFragment in this case - only used on CameraActivity, which is landscape only.

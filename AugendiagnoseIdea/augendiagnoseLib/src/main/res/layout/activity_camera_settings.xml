@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="left|bottom"
-    android:orientation="vertical">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="left|bottom"
+              android:orientation="vertical">
 
     <Button
         android:id="@+id/buttonCameraOverlayCircle"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"
         android:layout_marginTop="@dimen/camerabutton_distance"
-        android:background="@drawable/circlebutton_overlay_circle" />
+        android:background="@drawable/circlebutton_overlay_circle"/>
 
     <Button
         android:id="@+id/buttonCameraFlashlight"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"
         android:layout_marginTop="@dimen/camerabutton_distance"
-        android:background="@drawable/circlebutton_noflash" />
+        android:background="@drawable/circlebutton_noflash"/>
 
     <LinearLayout
         android:id="@+id/layoutCameraFocus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/camerabutton_distance"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonCameraFocus"
@@ -33,7 +33,7 @@
             android:background="@drawable/circlebutton_base"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="@dimen/camerabutton_text_size" />
+            android:textSize="@dimen/camerabutton_text_size"/>
 
         <SeekBar
             android:id="@+id/seekbarCameraFocus"
@@ -42,7 +42,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="@dimen/camerabutton_distance"
             android:background="#7F000000"
-            android:max="100" />
+            android:max="100"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/circlebutton_base"/>
     <item
@@ -7,6 +7,7 @@
         android:left="@dimen/camerabutton_padding"
         android:right="@dimen/camerabutton_padding"
         android:top="@dimen/camerabutton_padding">
-        <bitmap android:src="@drawable/ic_title_tipp" />
+        <bitmap android:src="@drawable/ic_title_tipp"/>
     </item>
-</layer-list>
+
+</layer-list>

@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".activities.EditCommentActivity" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context=".activities.EditCommentActivity">
 
     <LinearLayout
         android:id="@+id/buttonRow"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/buttonCancel"
@@ -19,7 +19,7 @@
             android:paddingLeft="0px"
             android:paddingRight="0px"
             android:text="@string/button_cancel"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"/>
 
         <Button
             android:id="@+id/buttonClear"
@@ -29,7 +29,7 @@
             android:paddingLeft="0px"
             android:paddingRight="0px"
             android:text="@string/button_clear"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"/>
 
         <Button
             android:id="@+id/buttonOk"
@@ -39,7 +39,7 @@
             android:paddingLeft="0px"
             android:paddingRight="0px"
             android:text="@string/button_ok"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"/>
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
         android:layout_alignParentTop="true"
         android:gravity="top"
         android:hint="@string/hint_edit_comment"
-        android:inputType="textMultiLine" >
+        android:inputType="textMultiLine">
     </EditText>
 
 </RelativeLayout>

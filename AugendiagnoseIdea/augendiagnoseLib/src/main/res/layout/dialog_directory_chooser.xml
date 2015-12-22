@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/textCurrentFolder"
@@ -14,12 +14,12 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/holo_orange_light" />
+        android:textColor="@android:color/holo_orange_light"/>
 
     <ListView
         android:id="@+id/listViewSubfolders"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="6dp"/>
 
 </LinearLayout>

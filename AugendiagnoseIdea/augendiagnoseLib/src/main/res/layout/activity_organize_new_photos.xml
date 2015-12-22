@@ -1,24 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.OrganizeNewPhotosActivity" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:descendantFocusability="beforeDescendants"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="0dp"
+              android:paddingRight="0dp"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context=".activities.OrganizeNewPhotosActivity">
 
-    <LinearLayout style="@style/Subactivity" >
+    <LinearLayout style="@style/Subactivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/section_select_name"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <de.jeisfeld.augendiagnoselib.components.InstantAutoCompleteTextView
             android:id="@+id/editName"
@@ -27,39 +27,39 @@
             android:ems="10"
             android:hint="@string/hint_insert_name"
             android:imeOptions="actionDone"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"/>
     </LinearLayout>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
-    <View style="@style/Divider" />
+    <View style="@style/Divider"/>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
-    <LinearLayout style="@style/Subactivity" >
+    <LinearLayout style="@style/Subactivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/section_select_date"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/editDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="date"/>
     </LinearLayout>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
-    <View style="@style/Divider" />
+    <View style="@style/Divider"/>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
-    <LinearLayout style="@style/Subactivity" >
+    <LinearLayout style="@style/Subactivity">
 
         <TextView
             android:id="@+id/textViewSelectPhotos"
@@ -68,21 +68,21 @@
             android:paddingBottom="6dp"
             android:text="@string/section_select_photos"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:onClick="displayNewImages"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageOrganizeRight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.43"
-                android:contentDescription="@string/content_description_right_eye" />
+                android:contentDescription="@string/content_description_right_eye"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -90,21 +90,21 @@
                 android:layout_weight="0.14"
                 android:gravity="center_horizontal"
                 android:text="@string/display_right_left"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <ImageView
                 android:id="@+id/imageOrganizeLeft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.43"
-                android:contentDescription="@string/content_description_left_eye" />
+                android:contentDescription="@string/content_description_left_eye"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|fill_horizontal"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonOrganizeSwitch"
@@ -113,7 +113,7 @@
                 android:layout_weight="0.5"
                 android:onClick="switchImages"
                 android:text="@string/button_switch"
-                tools:ignore="ButtonStyle" />
+                tools:ignore="ButtonStyle"/>
 
             <Button
                 android:id="@+id/buttonOrganizeOtherPictures"
@@ -121,22 +121,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="@string/button_other_pictures"
-                tools:ignore="ButtonStyle" />
+                tools:ignore="ButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
-    <View style="@style/Divider" />
+    <View style="@style/Divider"/>
 
-    <Space style="@style/Space" />
+    <Space style="@style/Space"/>
 
     <LinearLayout
         style="@style/Subactivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|fill_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonOrganizeCancel"
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/button_cancel"
-            tools:ignore="ButtonStyle,ButtonStyle" />
+            tools:ignore="ButtonStyle,ButtonStyle"/>
 
         <Button
             android:id="@+id/buttonOrganizeOk"
@@ -153,7 +153,7 @@
             android:layout_weight="0.5"
             android:onClick="onOkClick"
             android:text="@string/button_ok"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"/>
     </LinearLayout>
 
 </LinearLayout>

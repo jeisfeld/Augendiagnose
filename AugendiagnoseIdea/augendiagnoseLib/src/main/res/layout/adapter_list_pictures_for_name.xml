@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/list_picture_height"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    tools:context=".activities.ListPicturesForNameActivity" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/list_picture_height"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              tools:context=".activities.ListPicturesForNameActivity">
 
     <TextView
         android:id="@+id/textPictureDate"
@@ -14,20 +14,20 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <de.jeisfeld.augendiagnoselib.components.EyeImageView
         android:id="@+id/imageListRight"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="5dp" />
+        android:padding="5dp"/>
 
     <de.jeisfeld.augendiagnoselib.components.EyeImageView
         android:id="@+id/imageListLeft"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="5dp" />
+        android:padding="5dp"/>
 
 </LinearLayout>

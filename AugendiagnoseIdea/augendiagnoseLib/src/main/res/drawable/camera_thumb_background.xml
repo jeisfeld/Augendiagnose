@@ -1,12 +1,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" >
+       android:shape="rectangle">
 
-    <corners android:radius="5dp" />
+    <corners android:radius="5dp"/>
 
-    <solid android:color="@android:color/background_dark" />
+    <solid android:color="@android:color/background_dark"/>
 
     <stroke
         android:width="@dimen/camera_thumb_frame_boundary"
-        android:color="@android:color/white" />
+        android:color="@android:color/white"/>
 
 </shape>

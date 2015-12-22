@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
         <selector>
@@ -9,24 +9,24 @@
                 <shape
                     android:innerRadius="10dp"
                     android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#8F8F8F" />
+                    android:useLevel="false">
+                    <solid android:color="#8F8F8F"/>
 
                     <stroke
                         android:width="1dp"
-                        android:color="#6F6F6F" />
+                        android:color="#6F6F6F"/>
                 </shape>
             </item>
             <item>
                 <shape
                     android:innerRadius="10dp"
                     android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#BFBFBF" />
+                    android:useLevel="false">
+                    <solid android:color="#BFBFBF"/>
 
                     <stroke
                         android:width="1dp"
-                        android:color="#AFAFAF" />
+                        android:color="#AFAFAF"/>
                 </shape>
             </item>
         </selector>
@@ -36,7 +36,7 @@
         android:left="@dimen/camerabutton_padding"
         android:right="@dimen/camerabutton_padding"
         android:top="@dimen/camerabutton_padding_top">
-        <bitmap android:src="@drawable/ic_launcher" />
+        <bitmap android:src="@drawable/ic_launcher"/>
     </item>
 
 </layer-list>

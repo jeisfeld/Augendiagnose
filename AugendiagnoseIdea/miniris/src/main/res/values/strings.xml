@@ -9,7 +9,7 @@
     <string name="section_select_photos"></string>
     <string name="menu_move_to_input_folder">Assign different name</string>
     <string name="overlay_default_pupil_size" translatable="false">0.24</string>
-    
+
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_action_camera" translatable="false">

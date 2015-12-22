@@ -1,6 +1,6 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/menugroup_name_list" >
+    <group android:id="@+id/menugroup_name_list">
         <item
             android:id="@+id/action_change_name"
             android:orderInCategory="100"

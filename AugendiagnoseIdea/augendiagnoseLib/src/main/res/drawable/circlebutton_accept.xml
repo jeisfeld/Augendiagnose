@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
         <selector>
@@ -9,24 +9,24 @@
                 <shape
                     android:innerRadius="10dp"
                     android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#008F00" />
+                    android:useLevel="false">
+                    <solid android:color="#008F00"/>
 
                     <stroke
                         android:width="1dp"
-                        android:color="#004F00" />
+                        android:color="#004F00"/>
                 </shape>
             </item>
             <item>
                 <shape
                     android:innerRadius="10dp"
                     android:shape="oval"
-                    android:useLevel="false" >
-                    <solid android:color="#00CF00" />
+                    android:useLevel="false">
+                    <solid android:color="#00CF00"/>
 
                     <stroke
                         android:width="1dp"
-                        android:color="#008F00" />
+                        android:color="#008F00"/>
                 </shape>
             </item>
         </selector>
@@ -36,7 +36,7 @@
         android:left="0dp"
         android:right="0dp"
         android:top="0dp">
-        <bitmap android:src="@drawable/ic_btn_accept" />
+        <bitmap android:src="@drawable/ic_btn_accept"/>
     </item>
 
 </layer-list>

@@ -22,5 +22,5 @@
     <dimen name="camera_seekbar_size">360dp</dimen>
     <dimen name="camerabutton_overlay_circle_radius">21dp</dimen>
     <dimen name="camerabutton_text_size">16sp</dimen>
-    
+
 </resources>

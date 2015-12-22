@@ -3,11 +3,11 @@
 
     <issue
         id="IconColors"
-        severity="informational" />
+        severity="informational"/>
 
-    <issue id="InconsistentArrays" >
+    <issue id="InconsistentArrays">
 
-        <ignore regexp="res/values/strings.*\.xml" />
+        <ignore regexp="res/values/strings.*\.xml"/>
     </issue>
 
 </lint>

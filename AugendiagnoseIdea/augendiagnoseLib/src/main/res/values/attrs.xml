@@ -2,10 +2,10 @@
 <resources>
 
     <declare-styleable name="com.eisfeldj.augendiagnose">
-        <attr name="backgroundColor" format="string" />
-        <attr name="textFontColor" format="string" />
-        <attr name="textBackgroundColor" format="string" />
-        <attr name="textBorderColor" format="string" />
+        <attr name="backgroundColor" format="string"/>
+        <attr name="textFontColor" format="string"/>
+        <attr name="textBackgroundColor" format="string"/>
+        <attr name="textBorderColor" format="string"/>
     </declare-styleable>
 
 </resources>

@@ -1,12 +1,12 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item
-            android:id="@+id/action_delete_selected_image"
-            android:orderInCategory="100"
-            android:title="@string/menu_delete_selected_image"/>
-        <item
-            android:id="@+id/action_delete_all_images"
-            android:orderInCategory="100"
-            android:title="@string/menu_delete_all_images"/>
+    <item
+        android:id="@+id/action_delete_selected_image"
+        android:orderInCategory="100"
+        android:title="@string/menu_delete_selected_image"/>
+    <item
+        android:id="@+id/action_delete_all_images"
+        android:orderInCategory="100"
+        android:title="@string/menu_delete_all_images"/>
 
 </menu>
