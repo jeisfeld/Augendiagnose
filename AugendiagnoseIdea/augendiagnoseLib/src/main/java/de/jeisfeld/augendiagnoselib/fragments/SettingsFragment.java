@@ -81,6 +81,11 @@ public class SettingsFragment extends PreferenceFragment {
 	private static final String SKU_KEY_PREFIX = "sku_";
 
 	/**
+	 * A listener handling the change of preferences.
+	 */
+	private final CustomOnPreferenceChangeListener mOnPreferenceChangeListener = new CustomOnPreferenceChangeListener();
+
+	/**
 	 * Field holding the value of the input folder preference, in order to detect a real change.
 	 */
 	@Nullable
@@ -124,7 +129,7 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 
 		mType = getArguments().getString(STRING_PREF_TYPE);
-		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_input_settings))) {
+		if (mType != null && mType.equals(getActivity().getString(R.string.key_dummy_screen_input_settings))) {
 			addPreferencesFromResource(R.xml.prefs_input);
 
 			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
@@ -371,10 +376,10 @@ public class SettingsFragment extends PreferenceFragment {
 	private void bindPreferenceSummaryToValue(@Nullable final Preference preference) {
 		if (preference != null) {
 			// Set the listener to watch for value changes.
-			preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
+			preference.setOnPreferenceChangeListener(mOnPreferenceChangeListener);
 
-			// Trigger the listener immediately with the preference's current value.
-			mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
+			// Trigger the listener immediately to set the summary
+			mOnPreferenceChangeListener.setSummary(preference, PreferenceManager
 					.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
 		}
 	}
@@ -387,227 +392,6 @@ public class SettingsFragment extends PreferenceFragment {
 	private void bindPreferenceSummaryToValue(final int preferenceKey) {
 		bindPreferenceSummaryToValue(findPreference(getString(preferenceKey)));
 	}
-
-	/**
-	 * A listener handling the change of preferences.
-	 */
-	@Nullable
-	private final OnPreferenceChangeListener mBindPreferenceSummaryToValueListener =
-			new OnPreferenceChangeListener() {
-				@Override
-				public boolean onPreferenceChange(@NonNull final Preference preference, @NonNull final Object value) {
-					String stringValue = value.toString();
-
-					// For maxBitmapSize, inform PinchImageView
-					if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
-						PinchImageView.setMaxBitmapSize(Integer.parseInt(stringValue));
-					}
-
-					// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
-					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
-						if (!mFolderPhotos.equals(value)) {
-							mCurrentFolder = new File(stringValue);
-							if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS)) {
-								mFolderPhotos = mCurrentFolder.getAbsolutePath();
-							}
-							else {
-								// Do not accept change.
-								return false;
-							}
-						}
-					}
-					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
-						if (!mFolderInput.equals(value)) {
-							mCurrentFolder = new File(stringValue);
-							if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT)) {
-								mFolderInput = mCurrentFolder.getAbsolutePath();
-							}
-							else {
-								// Do not accept change.
-								return false;
-							}
-						}
-					}
-
-					// Apply change of language
-					else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
-						String oldLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
-						if (oldLanguageString == null || !oldLanguageString.equals(value)) {
-							Application.setLanguage();
-							PreferenceUtil.setSharedPreferenceString(R.string.key_language, (String) value);
-
-							// Workaround to get rid of all kinds of cashing
-							if (!JpegSynchronizationUtil.isSaving()) {
-								Application.startApplication(getActivity());
-								System.exit(0);
-							}
-
-						}
-					}
-
-					else if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
-						int overlayIndex = Integer.parseInt(stringValue);
-						Integer buttonPosition = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
-						if (buttonPosition == null) {
-							buttonPosition = 0;
-						}
-						Integer oldButtonPosition = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
-						int oldOverlayIndex =
-								PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonPosition, -1);
-
-						if (oldOverlayIndex != overlayIndex) {
-							if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-									&& overlayIndex >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
-								DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
-								return false;
-							}
-
-							if (oldButtonPosition != null && !oldButtonPosition.equals(buttonPosition)) {
-								// If the same overlay is already used, switch overlays
-								PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition,
-										oldOverlayIndex);
-
-								ListPreference oldButtonPreference = (ListPreference) findPreference(
-										PreferenceUtil.getIndexedPreferenceKey(R.string.key_indexed_overlaytype, oldButtonPosition));
-								updateSummaryForOverlayPreference(oldButtonPreference);
-							}
-
-							PreferenceUtil.setIndexedSharedPreferenceString(R.string.key_indexed_overlaytype, buttonPosition, stringValue);
-							updateOverlayPreferenceEntries();
-						}
-					}
-
-					updateSummary(preference, stringValue);
-
-					return true;
-				}
-
-				/**
-				 * Update the summary for a preference;
-				 *
-				 * @param preference
-				 *            The preference.
-				 * @param value
-				 *            the new value of the preference.
-				 */
-				private void updateSummary(@NonNull final Preference preference, final String value) {
-					if (preference.getClass().equals(ListPreference.class)) {
-						// For list preferences (except customized ones), look up the correct display value in the preference's 'entries' list.
-						ListPreference listPreference = (ListPreference) preference;
-						int index = listPreference.findIndexOfValue(value);
-
-						if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
-							updateSummaryForOverlayPreference(listPreference);
-						}
-						else if (index < 0) {
-							preference.setSummary(null);
-						}
-						else {
-							String entryValue = listPreference.getEntries()[index].toString();
-
-							preference.setSummary(entryValue);
-						}
-					}
-					else {
-						// For all other preferences, set the summary to the value's simple string representation.
-						preference.setSummary(value);
-					}
-				}
-
-				/**
-				 * Set the summary for an overlay preference.
-				 *
-				 * @param preference
-				 *            The overlay preference.
-				 */
-				private void updateSummaryForOverlayPreference(@Nullable final ListPreference preference) {
-					if (preference != null && preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
-						Integer buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
-						if (buttonIndex == null) {
-							buttonIndex = 0;
-						}
-						int overlayIndex = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonIndex, -1);
-						if (overlayIndex > 0) {
-							String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayIndex];
-							preference.setSummary(overlayName);
-						}
-						else {
-							preference.setSummary(R.string.pref_value_overlay_button_empty);
-						}
-					}
-				}
-
-				/**
-				 * Check the folder for writeability. If not, then on Android 5 retrieve Uri for extsdcard via Storage
-				 * Access Framework.
-				 *
-				 * @param folder
-				 *            The folder to be checked.
-				 * @param code
-				 *            The request code of the type of folder check.
-				 *
-				 * @return true if the check was successful or if SAF has been triggered.
-				 */
-				private boolean checkFolder(@NonNull final File folder, final int code) {
-					if (SystemUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
-						if (!folder.exists() || !folder.isDirectory()) {
-							return false;
-						}
-
-						// On Android 5, trigger storage access framework.
-						if (!FileUtil.isWritableNormalOrSaf(folder)) {
-							// Ensure via listener that storage access framework is called only after information
-							// message.
-							MessageDialogListener listener = new MessageDialogListener() {
-								/**
-								 * Default serial version id.
-								 */
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void onDialogClick(final DialogFragment dialog) {
-									triggerStorageAccessFramework(code);
-								}
-
-								@Override
-								public void onDialogCancel(final DialogFragment dialog) {
-									// do nothing.
-								}
-							};
-
-							DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard);
-							return false;
-						}
-						// Only accept after SAF stuff is done.
-						return true;
-					}
-					else if (SystemUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
-						// Assume that Kitkat workaround works
-						return true;
-					}
-					else if (FileUtil.isWritable(new File(folder, "DummyFile"))) {
-						return true;
-					}
-					else {
-						DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
-								mCurrentFolder);
-
-						mCurrentFolder = null;
-						return false;
-					}
-				}
-
-				/**
-				 * Trigger the storage access framework to access the base folder of the ext sd card.
-				 *
-				 * @param code The request code to be used.
-				 */
-				@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-				private void triggerStorageAccessFramework(final int code) {
-					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-					startActivityForResult(intent, code);
-				}
-			};
 
 	/**
 	 * A listener handling the response after reading the in-add purchase inventory.
@@ -761,8 +545,222 @@ public class SettingsFragment extends PreferenceFragment {
 	@Override
 	public final void onDestroy() {
 		super.onDestroy();
-		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
+		if (mType != null && mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
 			GoogleBillingHelper.dispose();
 		}
+	}
+
+	/**
+	 * A preference value change listener that updates the preference's summary to reflect its new value.
+	 */
+	private class CustomOnPreferenceChangeListener implements OnPreferenceChangeListener {
+		@Override
+		public boolean onPreferenceChange(@NonNull final Preference preference, @NonNull final Object value) {
+			String stringValue = value.toString();
+
+			// For maxBitmapSize, inform PinchImageView
+			if (preference.getKey().equals(preference.getContext().getString(R.string.key_max_bitmap_size))) {
+				PinchImageView.setMaxBitmapSize(Integer.parseInt(stringValue));
+			}
+
+			// For folder choices, if not writable on Android 5, then trigger Storage Access Framework.
+			else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_photos))) {
+				if (mFolderPhotos == null || !mFolderPhotos.equals(value)) {
+					mCurrentFolder = new File(stringValue);
+					if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_PHOTOS)) {
+						mFolderPhotos = mCurrentFolder.getAbsolutePath();
+					}
+					else {
+						// Do not accept change.
+						return false;
+					}
+				}
+			}
+			else if (preference.getKey().equals(preference.getContext().getString(R.string.key_folder_input))) {
+				if (mFolderInput == null || !mFolderInput.equals(value)) {
+					mCurrentFolder = new File(stringValue);
+					if (checkFolder(mCurrentFolder, REQUEST_CODE_STORAGE_ACCESS_INPUT)) {
+						mFolderInput = mCurrentFolder.getAbsolutePath();
+					}
+					else {
+						// Do not accept change.
+						return false;
+					}
+				}
+			}
+
+			// Apply change of language
+			else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
+				String oldLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
+				if (oldLanguageString == null || !oldLanguageString.equals(value)) {
+					Application.setLanguage();
+					PreferenceUtil.setSharedPreferenceString(R.string.key_language, stringValue);
+
+					// Workaround to get rid of all kinds of cashing
+					if (!JpegSynchronizationUtil.isSaving()) {
+						Application.startApplication(getActivity());
+						System.exit(0);
+					}
+
+				}
+			}
+
+			else if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+				int overlayIndex = Integer.parseInt(stringValue);
+				Integer buttonPosition = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+				if (buttonPosition == null) {
+					buttonPosition = 0;
+				}
+				Integer oldButtonPosition = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
+				int oldOverlayIndex =
+						PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonPosition, -1);
+
+				if (oldOverlayIndex != overlayIndex) {
+					if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
+							&& overlayIndex >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
+						DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
+						return false;
+					}
+
+					if (oldButtonPosition != null && !oldButtonPosition.equals(buttonPosition)) {
+						// If the same overlay is already used, switch overlays
+						PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition,
+								oldOverlayIndex);
+
+						ListPreference oldButtonPreference = (ListPreference) findPreference(
+								PreferenceUtil.getIndexedPreferenceKey(R.string.key_indexed_overlaytype, oldButtonPosition));
+						updateSummaryForOverlayPreference(oldButtonPreference);
+					}
+
+					PreferenceUtil.setIndexedSharedPreferenceString(R.string.key_indexed_overlaytype, buttonPosition, stringValue);
+					updateOverlayPreferenceEntries();
+				}
+			}
+
+			setSummary(preference, stringValue);
+
+			return true;
+		}
+
+		/**
+		 * Update the summary for a preference.
+		 *
+		 * @param preference The preference.
+		 * @param value      the new value of the preference.
+		 */
+		private void setSummary(@NonNull final Preference preference, final String value) {
+			if (preference.getClass().equals(ListPreference.class)) {
+				// For list preferences (except customized ones), look up the correct display value in the preference's 'entries' list.
+				ListPreference listPreference = (ListPreference) preference;
+				int index = listPreference.findIndexOfValue(value);
+
+				if (preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+					updateSummaryForOverlayPreference(listPreference);
+				}
+				else if (index < 0) {
+					preference.setSummary(null);
+				}
+				else {
+					String entryValue = listPreference.getEntries()[index].toString();
+
+					preference.setSummary(entryValue);
+				}
+			}
+			else {
+				// For all other preferences, set the summary to the value's simple string representation.
+				preference.setSummary(value);
+			}
+		}
+
+		/**
+		 * Set the summary for an overlay preference.
+		 *
+		 * @param preference The overlay preference.
+		 */
+		private void updateSummaryForOverlayPreference(@Nullable final ListPreference preference) {
+			if (preference != null && preference.getKey().startsWith(getString(R.string.key_indexed_overlaytype))) {
+				Integer buttonIndex = PreferenceUtil.getIndexFromPreferenceKey(preference.getKey());
+				if (buttonIndex == null) {
+					buttonIndex = 0;
+				}
+				int overlayIndex = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonIndex, -1);
+				if (overlayIndex > 0) {
+					String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayIndex];
+					preference.setSummary(overlayName);
+				}
+				else {
+					preference.setSummary(R.string.pref_value_overlay_button_empty);
+				}
+			}
+		}
+
+		/**
+		 * Check the folder for writeability. If not, then on Android 5 retrieve Uri for extsdcard via Storage
+		 * Access Framework.
+		 *
+		 * @param folder The folder to be checked.
+		 * @param code   The request code of the type of folder check.
+		 * @return true if the check was successful or if SAF has been triggered.
+		 */
+		private boolean checkFolder(@NonNull final File folder, final int code) {
+			if (SystemUtil.isAndroid5() && FileUtil.isOnExtSdCard(folder)) {
+				if (!folder.exists() || !folder.isDirectory()) {
+					return false;
+				}
+
+				// On Android 5, trigger storage access framework.
+				if (!FileUtil.isWritableNormalOrSaf(folder)) {
+					// Ensure via listener that storage access framework is called only after information
+					// message.
+					MessageDialogListener listener = new MessageDialogListener() {
+						/**
+						 * Default serial version id.
+						 */
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void onDialogClick(final DialogFragment dialog) {
+							triggerStorageAccessFramework(code);
+						}
+
+						@Override
+						public void onDialogCancel(final DialogFragment dialog) {
+							// do nothing.
+						}
+					};
+
+					DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard);
+					return false;
+				}
+				// Only accept after SAF stuff is done.
+				return true;
+			}
+			else if (SystemUtil.isKitkat() && FileUtil.isOnExtSdCard(folder)) {
+				// Assume that Kitkat workaround works
+				return true;
+			}
+			else if (FileUtil.isWritable(new File(folder, "DummyFile"))) {
+				return true;
+			}
+			else {
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
+						mCurrentFolder);
+
+				mCurrentFolder = null;
+				return false;
+			}
+		}
+
+		/**
+		 * Trigger the storage access framework to access the base folder of the ext sd card.
+		 *
+		 * @param code The request code to be used.
+		 */
+		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+		private void triggerStorageAccessFramework(final int code) {
+			Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+			startActivityForResult(intent, code);
+		}
+
 	}
 }

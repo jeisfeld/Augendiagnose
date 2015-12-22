@@ -117,7 +117,9 @@ public final class FileUtil {
 				else if (SystemUtil.isKitkat()) {
 					// Workaround for Kitkat ext SD card
 					Uri uri = MediaStoreUtil.getUriFromFile(target.getAbsolutePath());
-					outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
+					if (uri != null) {
+						outStream = Application.getAppContext().getContentResolver().openOutputStream(uri);
+					}
 				}
 				else {
 					return false;
@@ -141,25 +143,33 @@ public final class FileUtil {
 		}
 		finally {
 			try {
-				inStream.close();
+				if (inStream != null) {
+					inStream.close();
+				}
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				outStream.close();
+				if (outStream != null) {
+					outStream.close();
+				}
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				inChannel.close();
+				if (inChannel != null) {
+					inChannel.close();
+				}
 			}
 			catch (Exception e) {
 				// ignore exception
 			}
 			try {
-				outChannel.close();
+				if (outChannel != null) {
+					outChannel.close();
+				}
 			}
 			catch (Exception e) {
 				// ignore exception
@@ -374,10 +384,12 @@ public final class FileUtil {
 
 		// Try the Kitkat workaround.
 		if (SystemUtil.isKitkat()) {
-			ContentResolver resolver = Application.getAppContext().getContentResolver();
 			File tempFile = new File(file, "dummyImage.jpg");
 
 			File dummySong = copyDummyFiles();
+			if (dummySong == null) {
+				return false;
+			}
 			int albumId = MediaStoreUtil.getAlbumIdFromAudioFile(dummySong);
 			Uri albumArtUri = Uri.parse("content://media/external/audio/albumart/" + albumId);
 
@@ -385,6 +397,7 @@ public final class FileUtil {
 			contentValues.put(MediaStore.MediaColumns.DATA, tempFile.getAbsolutePath());
 			contentValues.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
 
+			ContentResolver resolver = Application.getAppContext().getContentResolver();
 			if (resolver.update(albumArtUri, contentValues, null, null) == 0) {
 				resolver.insert(Uri.parse("content://media/external/audio/albumart"), contentValues);
 			}
@@ -552,9 +565,9 @@ public final class FileUtil {
 	 * @param folder The directory
 	 * @return true if it is possible to write in this directory.
 	 */
-	public static boolean isWritableNormalOrSaf(@NonNull final File folder) {
+	public static boolean isWritableNormalOrSaf(@Nullable final File folder) {
 		// Verify that this is a directory.
-		if (!folder.exists() || !folder.isDirectory()) {
+		if (folder == null || !folder.exists() || !folder.isDirectory()) {
 			return false;
 		}
 
@@ -701,7 +714,7 @@ public final class FileUtil {
 
 		for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
 			String treeBase = getFullPathFromTreeUri(treeUris[i]);
-			if (fullPath.startsWith(treeBase)) {
+			if (treeBase != null && fullPath.startsWith(treeBase)) {
 				treeUri = treeUris[i];
 				baseFolder = treeBase;
 			}
