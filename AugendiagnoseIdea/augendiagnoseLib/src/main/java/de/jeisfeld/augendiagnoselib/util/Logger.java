@@ -30,4 +30,18 @@ public final class Logger {
 			Log.i(Application.TAG, output);
 		}
 	}
+
+	/**
+	 * Make a log entry, including the end of the stack trace.
+	 *
+	 * @param output The base log entry.
+	 * @param size   The number of stack trace elements.
+	 */
+	public static void logStack(final String output, final int size) {
+		log(output);
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		for (int i = 3; i < Math.min(stackTrace.length, 3 + size); i++) { // MAGIC_NUMBER
+			Log.i(Application.TAG, "[" + (i - 2) + "] " + stackTrace[i].toString());
+		}
+	}
 }
