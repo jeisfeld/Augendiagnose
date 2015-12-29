@@ -28,14 +28,15 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>
     <module name="LocalVariableName"/>
-    <module name="MemberName"/>
     <module name="MethodName"/>
     <module name="PackageName"/>
     <module name="ParameterName"/>
     <module name="StaticVariableName">
       <property name="format" value="^m[A-Z][a-zA-Z0-9]*$"/>
     </module>
-    <module name="TypeName"/>
+    <module name="TypeName">
+      <property name="tokens" value="CLASS_DEF,INTERFACE_DEF,ANNOTATION_DEF"/>
+    </module>
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
@@ -131,7 +132,9 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="NoMainMethodInAbstractClass"/>
     <module name="ForbidWildcardAsReturnType"/>
     <module name="InterfaceTypeParameterNameCheck"/>
-    <module name="EnumValueNameCheck"/>
+    <module name="EnumValueNameCheck">
+      <property name="objFormat" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+    </module>
     <module name="LineLengthExtended">
       <property name="max" value="150"/>
       <property name="tabWidth" value="4"/>
@@ -177,7 +180,6 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="MemberName">
       <property name="format" value="^m[A-Z][a-zA-Z0-9]*$"/>
     </module>
-    <module name="MemberName"/>
   </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
