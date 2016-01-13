@@ -720,16 +720,18 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		mLocked = false;
-		mPinchMode = PinchMode.ALL;
-		updatePinchMode();
 
 		for (int i = 0; i < OVERLAY_COUNT; i++) {
 			mShowOverlay[i] = false;
 		}
+		updatePinchMode();
+
 		if (mGuiElementUpdater != null) {
 			mGuiElementUpdater.setLockChecked(false);
 			mGuiElementUpdater.resetOverlays();
 		}
+
+		refresh();
 	}
 
 	/**
