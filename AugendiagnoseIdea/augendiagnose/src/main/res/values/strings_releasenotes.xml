@@ -96,6 +96,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.1.3</item>
         <item>1.1.4</item>
         <item>1.1.5</item>
+        <item>1.1.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -150,6 +151,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Made Jensen topography multilingual - now at position 3.\nAllow zooming while reviewing images from camera.\nBugfixes</item>
         <item>Added a guided mode to set iris and pupil position.\nAdded Rayid topography.\nUsers can now specify which overlays are associated with the overlay buttons.\nBugfixes.</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
