@@ -526,7 +526,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else {
 			setImageBitmap(mCanvasBitmap);
-			setMatrix();
+			super.setMatrix();
 			invalidate();
 		}
 
@@ -856,7 +856,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Set the contrast.
 	 *
-	 * @param contrast on a positive scale 0 to infinity, 1 is unchanged.
+	 * @param contrast on a scale from -1 to 1
 	 */
 	public final void setContrast(final float contrast) {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
@@ -1444,7 +1444,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		cleanFullResolutionBitmaps(false);
 
 		if (mNeedsBitmapRefresh) {
-			refresh();
+			refresh(HIGH);
 		}
 		else {
 			setImageBitmap(mCanvasBitmap);

@@ -402,7 +402,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
-				mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				if (fromUser) {
+					mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				}
 			}
 		});
 
@@ -410,7 +412,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
-				mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				if (fromUser) {
+					mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				}
 			}
 		});
 
