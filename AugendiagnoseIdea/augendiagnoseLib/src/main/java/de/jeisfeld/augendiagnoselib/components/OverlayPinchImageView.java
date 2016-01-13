@@ -369,12 +369,10 @@ public class OverlayPinchImageView extends PinchImageView {
 								mContrast = mMetadata.getContrast();
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
-									mGuiElementUpdater
-											.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
+									mGuiElementUpdater.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
 								}
 							}
-							if (mMetadata != null && mMetadata.getOverlayColor() != null
-									&& mGuiElementUpdater != null) {
+							if (mMetadata != null && mMetadata.getOverlayColor() != null && mGuiElementUpdater != null) {
 								mOverlayColor = mMetadata.getOverlayColor();
 								mGuiElementUpdater.updateOverlayColorButton(mOverlayColor);
 							}
@@ -382,8 +380,7 @@ public class OverlayPinchImageView extends PinchImageView {
 							mLastOverlayScaleFactor = mOverlayScaleFactor;
 							mLastPupilOverlayScaleFactor = mPupilOverlayScaleFactor;
 
-							mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(),
-									Bitmap.Config.ARGB_8888);
+							mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 							mCanvas = new Canvas(mCanvasBitmap);
 							doInitialScaling();
 							updatePinchMode();
@@ -521,6 +518,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 		layerDrawable.setBounds(0, 0, width, height);
 
+		mCanvas.drawColor(Color.BLACK);
 		layerDrawable.draw(mCanvas);
 
 		if (resolution == FULL_HIGH) {
@@ -779,8 +777,14 @@ public class OverlayPinchImageView extends PinchImageView {
 
 				Integer targetColor = overlayTypes[position] == 1 ? mOverlayColor : null;
 
-				overlayDrawable = getModifiedDrawable(drawable, targetColor, origPupilSize, mMetadata.getPupilSize(),
-						mMetadata.getPupilXOffset(), mMetadata.getPupilYOffset());
+				if (mMetadata == null) {
+					overlayDrawable = getModifiedDrawable(drawable, targetColor, origPupilSize, DEFAULT_PUPIL_SIZE, 0f, 0f);
+				}
+				else {
+					overlayDrawable = getModifiedDrawable(drawable, targetColor, origPupilSize, mMetadata.getPupilSize(),
+							mMetadata.getPupilXOffset(), mMetadata.getPupilYOffset());
+				}
+
 				mOverlayCache[position] = overlayDrawable;
 			}
 			overlaysLeft.recycle();

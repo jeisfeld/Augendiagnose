@@ -93,6 +93,19 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_jpeg">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Unterstützte Bildformate:</h2>
+	<p>Diese App speichert Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien.</p>
+	<p>Dies hat den Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren</p>
+	<p>Dies hat aber zur Folge, dass die App nur das JPG-Format voll unterstützt. Für andere Bildformate stehen die meisten Funktionen nicht zur Verfügung.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="message_tip_editcomment">
 <![CDATA[
 <!DOCTYPE html>

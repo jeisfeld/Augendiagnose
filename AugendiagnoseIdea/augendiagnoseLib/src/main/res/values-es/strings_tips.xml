@@ -92,6 +92,19 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_jpeg">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Formatos de imagen soportados:</h2>
+	<p>La aplicación graba información (como posición del iris o comentarios) directamente en los archivos de imagen JPG.</p>
+	<p>Esto tiene la ventaja de que toda la información es todavía disponible si copia las imágenes de un dispositivo a otro.</p>
+	<p>Sin embargo, esto tiene la consecuencia de que sólo el formato JPG es totalmente compatible con la aplicación. Para otros formatos de imagen, la mayoría de la funcionalidad de la aplicación no está disponible.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="message_tip_editcomment">
 <![CDATA[
 <!DOCTYPE html>

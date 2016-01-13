@@ -98,6 +98,20 @@
 </html>
 ]]>
     </string>
+	<string name="key_tip_jpeg" translatable="false">key_tip_jpeg</string>
+    <string name="message_tip_jpeg">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Supported image formats:</h2>
+	<p>This app stores information (like iris position or comments) directly in the JPG image files.</p>
+	<p> This has the advantage that all such information is still available if you copy the pictures from one device to another one.</p>
+	<p>However, this has the consequence that only the JPG format is fully supported by the app. For other image formats, most of the app functionality is not available.</p>
+</body>
+</html>
+]]>
+    </string>
     <string name="key_tip_editcomment" translatable="false">key_tip_editcomment</string>
     <string name="message_tip_editcomment">
 <![CDATA[

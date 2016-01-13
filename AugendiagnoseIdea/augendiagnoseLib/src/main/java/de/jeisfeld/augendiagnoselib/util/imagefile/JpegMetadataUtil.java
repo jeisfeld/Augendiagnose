@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.media.ExifInterface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPException;
@@ -168,7 +169,10 @@ public final class JpegMetadataUtil {
 	 * @param jpegImageFileName the file to be validated.
 	 * @throws IOException thrown if the file is no jpg.
 	 */
-	public static void checkJpeg(@NonNull final String jpegImageFileName) throws IOException {
+	public static void checkJpeg(@Nullable final String jpegImageFileName) throws IOException {
+		if (jpegImageFileName == null) {
+			throw new IOException("Error in checkJpeg - no image passed.");
+		}
 		File file = new File(jpegImageFileName);
 		String mimeType;
 		try {

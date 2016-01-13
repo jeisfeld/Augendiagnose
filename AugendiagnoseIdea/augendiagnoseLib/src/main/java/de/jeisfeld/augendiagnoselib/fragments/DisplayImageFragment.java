@@ -1,5 +1,7 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
+import java.io.IOException;
+
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.res.TypedArray;
@@ -50,6 +52,7 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
+import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -391,6 +394,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		// Initialize the onClick listeners for the buttons
 		setButtonListeners();
 
+		// Special handling for non-JPEG images
+		checkJpeg();
+
 		// Initialize the listeners for the seekbars (brightness and contrast)
 		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
 		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -484,9 +490,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mCommentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this,
-						mImageView.getMetadata().getComment());
-				DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
+				if (mImageView.getMetadata() != null) {
+					((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this, mImageView.getMetadata().getComment());
+					DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
+				}
 			}
 		});
 
@@ -558,6 +565,21 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 			});
 		}
+	}
+
+	/**
+	 * Check if the image is JPEG - otherwise disable some functionality.
+	 */
+	private void checkJpeg() {
+		try {
+			JpegMetadataUtil.checkJpeg(mFile);
+		}
+		catch (IOException e) {
+			mOverlayStatus = OverlayStatus.NON_JPEG;
+			showUtilities();
+			DialogUtil.displayTip(getActivity(), R.string.message_tip_jpeg, R.string.key_tip_jpeg);
+		}
+
 	}
 
 	/**
@@ -938,6 +960,14 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 				mGuidedTopoSetupButton.setVisibility(View.GONE);
 			}
+			else if (mOverlayStatus == OverlayStatus.NON_JPEG) {
+				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
+				mGuidedTopoSetupButton.setVisibility(View.GONE);
+				mCommentButton.setVisibility(View.GONE);
+				mSaveButton.setVisibility(View.GONE);
+				mLockButton.setVisibility(View.GONE);
+				mPupilButton.setVisibility(View.GONE);
+			}
 			else {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 				mGuidedTopoSetupButton.setVisibility(View.VISIBLE);
@@ -955,6 +985,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
 			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 			mGuidedTopoSetupButton.setVisibility(View.GONE);
+			if (mOverlayStatus == OverlayStatus.NON_JPEG) {
+				mCommentButton.setVisibility(View.GONE);
+				mSaveButton.setVisibility(View.GONE);
+			}
 		}
 		requestLayout();
 	}
@@ -1092,7 +1126,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mPupilButton.setEnabled(checked);
 
 		// Set overlay status according to the lock.
-		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL) {
+		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL && mOverlayStatus != OverlayStatus.NON_JPEG) {
 			if (mImageView.canHandleOverlays() || mRightLeft != null) {
 				if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) && !checked) {
 					mOverlayStatus = OverlayStatus.GUIDED;
@@ -1234,6 +1268,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		/**
 		 * Overlays can be used.
 		 */
-		ALLOWED
+		ALLOWED,
+		/**
+		 * Special handling for non-JPEG images.
+		 */
+		NON_JPEG
 	}
 }
