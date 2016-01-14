@@ -30,6 +30,7 @@ public final class PreferenceUtil {
 			R.string.key_tip_displaypictures,
 			R.string.key_tip_editcomment,
 			R.string.key_tip_firstuse,
+			R.string.key_tip_jpeg,
 			R.string.key_tip_organizephotos,
 			R.string.key_tip_overlay_buttons,
 			R.string.key_tip_overlay_guided,
