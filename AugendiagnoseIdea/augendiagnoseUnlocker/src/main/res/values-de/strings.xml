@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Iridology unlocker</string>
+    <string name="text_warning">Warnung</string>
+    <string name="text_message_missing_main_app">Dia App „Iridology Unlocker“ kann nicht alleine betrieben werden. Sie dient nur zur Freischaltung der Apps „Augendiagnose“ und „Miniris“. Bitte installieren Sie eine dieser Apps.</string>
+    <string name="button_install_eye_diagnosis">„Augendiagnose“ installieren</string>
+    <string name="button_install_miniris">„Miniris“ installieren</string>
+    <string name="text_thanks">Danke!</string>
+    <string name="text_message_unlimited_use">Danke für den Erwerb von „Iridology Unlocker“. Sie können nun die Apps „Augendiagnose“ und „Miniris“ auf diesem Gerät unbegrenzt nutzen.</string>
+    <string name="button_ok">OK</string>
+    <string name="title_dialog_error">Fehler</string>
+    <string name="message_dialog_failed_to_open_google_play">Google Play konnte nicht gestartet werden.</string>
+
+</resources>

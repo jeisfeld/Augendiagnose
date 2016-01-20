@@ -34,6 +34,12 @@ public class UnlockActivity extends Activity {
 		Intent responseIntent = new Intent();
 		responseIntent.putExtras(resultData);
 		setResult(RESULT_OK, responseIntent);
+
+		if (DisplayMessageActivity.isEnabled(this)) {
+			Intent messageIntent = new Intent(this, DisplayMessageActivity.class);
+			startActivity(messageIntent);
+		}
+
 		finish();
 	}
 

@@ -2,5 +2,14 @@
 <resources>
 
     <string name="app_name">Iridology unlocker</string>
+    <string name="text_warning">Warning</string>
+    <string name="text_message_missing_main_app">The app “Iridology Unlocker” cannot run standalone. It just serves as unlocking key for the apps “Eye Diagnosis” and “Miniris”. Please install one of these apps.</string>
+    <string name="button_install_eye_diagnosis">Install “Eye Diagnosis”</string>
+    <string name="button_install_miniris">Install “Miniris”</string>
+    <string name="text_thanks">Thank you!</string>
+    <string name="text_message_unlimited_use">Thanks for purchasing “Iridology Unlocker”. You have now unlimited use of the apps “Eye Diagnosis” and “Miniris” on this device.</string>
+    <string name="button_ok">OK</string>
+    <string name="title_dialog_error">Error</string>
+    <string name="message_dialog_failed_to_open_google_play">Failed to open Google Play.</string>
 
 </resources>
