@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
@@ -79,7 +78,7 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * The requestCode for starting the permisson request.
 	 */
-	public static final int REQUEST_CODE_PERMISSION = 5;
+	public static final int REQUEST_CODE_PERMISSION = 6;
 
 	/**
 	 * The resource key for the folder where to store the photos.
@@ -249,9 +248,7 @@ public class CameraActivity extends BaseActivity {
 		if (permission == PackageManager.PERMISSION_GRANTED) {
 			setupActivity();
 		}
-		else {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CODE_PERMISSION);
-		}
+		// BaseActivity will request for permission. If permission is granted, then onRequestPermissionsResult will setup the activity.
 	}
 
 	/**
@@ -406,7 +403,7 @@ public class CameraActivity extends BaseActivity {
 						// Analyze next required step
 						if (mCurrentRightLeft == RIGHT) {
 							if (mRightEyeFile != null && mRightEyeFile.exists()) {
-								//noinspection ResultOfMethodCallIgnored
+								// noinspection ResultOfMethodCallIgnored
 								mRightEyeFile.delete();
 							}
 							mRightEyeFile = mNewRightEyeFile;
@@ -422,7 +419,7 @@ public class CameraActivity extends BaseActivity {
 						}
 						else {
 							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
-								//noinspection ResultOfMethodCallIgnored
+								// noinspection ResultOfMethodCallIgnored
 								mLeftEyeFile.delete();
 							}
 							mLeftEyeFile = mNewLeftEyeFile;
@@ -451,7 +448,7 @@ public class CameraActivity extends BaseActivity {
 						else {
 							if (mCurrentRightLeft == RIGHT) {
 								if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
-									//noinspection ResultOfMethodCallIgnored
+									// noinspection ResultOfMethodCallIgnored
 									mNewRightEyeFile.delete();
 								}
 								mNewRightEyeFile = null;
@@ -464,7 +461,7 @@ public class CameraActivity extends BaseActivity {
 							}
 							else {
 								if (mNewLeftEyeFile != null && mNewLeftEyeFile.exists()) {
-									//noinspection ResultOfMethodCallIgnored
+									// noinspection ResultOfMethodCallIgnored
 									mNewLeftEyeFile.delete();
 								}
 								mNewLeftEyeFile = null;
@@ -806,7 +803,7 @@ public class CameraActivity extends BaseActivity {
 		File[] tempFiles = FileUtil.getTempCameraFiles();
 		for (File file : tempFiles) {
 			if (!file.equals(mRightEyeFile) & !file.equals(mLeftEyeFile)) {
-				//noinspection ResultOfMethodCallIgnored
+				// noinspection ResultOfMethodCallIgnored
 				file.delete();
 			}
 		}
@@ -1144,6 +1141,16 @@ public class CameraActivity extends BaseActivity {
 	private boolean isCamera2() {
 		int cameraApiVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_api_version, null);
 		return cameraApiVersion == 2;
+	}
+
+	@Override
+	protected final String[] getRequiredPermissions() {
+		return new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+	}
+
+	@Override
+	protected final int getPermissionInfoResource() {
+		return R.string.message_dialog_confirm_need_camera_permission;
 	}
 
 	@Override

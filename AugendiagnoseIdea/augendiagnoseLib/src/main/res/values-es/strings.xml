@@ -25,6 +25,7 @@
     <string name="button_switch">Cambiar</string>
     <string name="button_delete">Eliminar</string>
     <string name="button_move">Mover</string>
+    <string name="button_continue">Continuar</string>
     <string name="button_other_pictures">Otras Fotos</string>
     <string name="button_camera">Cámara</string>
     <string name="button_overwrite">Sobrescribir</string>

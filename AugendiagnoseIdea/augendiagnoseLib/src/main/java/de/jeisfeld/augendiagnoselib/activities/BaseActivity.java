@@ -2,13 +2,19 @@ package de.jeisfeld.augendiagnoselib.activities;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.Manifest;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +25,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
@@ -33,6 +40,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 * The request code for the unlocker app.
 	 */
 	private static final int REQUEST_CODE_UNLOCKER = 100;
+	/**
+	 * The request code used to query for permission.
+	 */
+	private static final int REQUEST_CODE_PERMISSION = 6;
 	/**
 	 * The resource key for the authorizaton with the unlocker app.
 	 */
@@ -64,7 +75,30 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
 
+		// Check permissions
+		final String[] missingPermissions = checkRequiredPermissions();
+
+		if (missingPermissions.length > 0) {
+			DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
+				/**
+				 * The serial version UID.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogPositiveClick(final DialogFragment dialog) {
+					ActivityCompat.requestPermissions(BaseActivity.this, missingPermissions, REQUEST_CODE_PERMISSION);
+				}
+
+				@Override
+				public void onDialogNegativeClick(final DialogFragment dialog) {
+					finish();
+				}
+			}, R.string.button_continue, getPermissionInfoResource());
+		}
+
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			// Check authorization.
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
 				mIsCreationFailed = true;
 
@@ -249,6 +283,52 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	/**
+	 * Get the array of required permissions.
+	 *
+	 * @return The array of required permissions.
+	 */
+	// OVERRIDABLE
+	protected String[] getRequiredPermissions() {
+		return new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+	}
+
+	/**
+	 * Get the message displayed when asking for permission.
+	 *
+	 * @return The resource id of the message.
+	 */
+	// OVERRIDABLE
+	protected int getPermissionInfoResource() {
+		return R.string.message_dialog_confirm_need_read_permission;
+	}
+
+	/**
+	 * Check which required permissions are missing.
+	 *
+	 * @return The list of missing required permissions.
+	 */
+	private String[] checkRequiredPermissions() {
+		List<String> missingPermissions = new ArrayList<>();
+		for (String permission : getRequiredPermissions()) {
+			if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+				missingPermissions.add(permission);
+			}
+		}
+		return missingPermissions.toArray(new String[missingPermissions.size()]);
+	}
+
+	// OVERRIDABLE
+	@Override
+	public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+		if (requestCode == REQUEST_CODE_PERMISSION) {
+			// If request is cancelled, the result arrays are empty.
+			if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+				finish();
+			}
 		}
 	}
 

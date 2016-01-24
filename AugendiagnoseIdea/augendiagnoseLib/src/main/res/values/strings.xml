@@ -4,7 +4,7 @@
     <!-- Application specific settings -->
 
     <string name="app_name">Eye Diagnosis</string>
-    <string name="class_application_settings" translatable="false"></string>
+    <string name="class_application_settings" translatable="false"/>
 
     <!-- Generic constants -->
 
@@ -31,6 +31,7 @@
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
     <string name="button_move">Move</string>
+    <string name="button_continue">Continue</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_camera">Camera</string>
     <string name="button_overwrite">Overwrite</string>
@@ -57,8 +58,8 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
-    <string-array name="activities_with_action_camera" translatable="false"></string-array>
-    <string-array name="activities_with_action_settings" translatable="false"></string-array>
+    <string-array name="activities_with_action_camera" translatable="false"/>
+    <string-array name="activities_with_action_settings" translatable="false"/>
     <string-array name="activities_with_home_enablement" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
@@ -67,11 +68,11 @@
         <item>de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.SettingsActivity</item>
     </string-array>
-    <string-array name="googlebilling_ids" translatable="false"></string-array>
-    <string-array name="googlebilling_premium_ids" translatable="false"></string-array>
-    <string-array name="googlebilling_subscription_ids" translatable="false"></string-array>
+    <string-array name="googlebilling_ids" translatable="false"/>
+    <string-array name="googlebilling_premium_ids" translatable="false"/>
+    <string-array name="googlebilling_subscription_ids" translatable="false"/>
 
-    <array name="hidden_camera_buttons" translatable="false"></array>
+    <array name="hidden_camera_buttons" translatable="false"/>
 
     <string name="help_overview_in_list_folders" translatable="false">false</string>
 

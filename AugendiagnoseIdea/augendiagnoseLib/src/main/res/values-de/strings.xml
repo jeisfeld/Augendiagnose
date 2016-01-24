@@ -25,6 +25,7 @@
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_move">Verschieben</string>
+    <string name="button_continue">Weiter</string>
     <string name="button_other_pictures">Andere Fotos</string>
     <string name="button_camera">Kamera</string>
     <string name="button_overwrite">Überschreiben</string>
