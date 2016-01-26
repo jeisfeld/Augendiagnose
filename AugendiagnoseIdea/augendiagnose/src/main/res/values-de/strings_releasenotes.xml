@@ -100,7 +100,7 @@ Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
         <item>Deutsche Version der Jensen-Topographie (Position 3).\nZoomen bei der Voransicht der Kamera-Bilder.\nFehlerkorrekturen</item>
         <item>Angeleiteter Modus zum Setzen von Iris- und Pupillenposition.\nRayid-Topographie.\nNutzer können nun festlegen, welche Overlays den Overlay-Buttons zugeordnet sind.\nFehlerkorrekturen.</item>
         <item>Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Fehlerkorrekturen. Probleme mit Dateizugriff für Android 6 behoben.</item>
     </string-array>
 
 </resources>

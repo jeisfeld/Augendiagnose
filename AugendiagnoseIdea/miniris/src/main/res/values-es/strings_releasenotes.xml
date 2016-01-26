@@ -32,7 +32,7 @@
         <item>Versión en español de la topografía di Jensen (Posición 3).\nPermitir el zoom mientras se revisan las imágenes de la cámara.\nCorrección de errores</item>
         <item>Añadido un modo guiado para configurar la posición de iris y pupila.\nTopografía di Rayid.\nAhora los usuarios pueden especificar qué superposiciones están asociados con los botones de superposición.\nCorrección de errores.</item>
         <item>Corrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Corrección de errores. Corregidos problemas con el acceso a archivos para Android 6.</item>
     </string-array>
 
 </resources>
