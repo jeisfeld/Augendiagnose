@@ -358,8 +358,14 @@ public class PinchImageView extends ImageView {
 	@Override
 	protected final void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (mIsBitmapSet && !mInitialized) {
-			doInitialScaling();
+		if (mIsBitmapSet) {
+			if (mInitialized) {
+				requestLayout();
+				invalidate();
+			}
+			else {
+				doInitialScaling();
+			}
 		}
 	}
 
@@ -370,12 +376,13 @@ public class PinchImageView extends ImageView {
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(@NonNull final MotionEvent ev) {
+		boolean isProcessed = false;
 		// Let the ScaleGestureDetector inspect all events.
 		mScaleDetector.onTouchEvent(ev);
 
 		// If available, do the same for the Gesture Detector.
 		if (mGestureDetector != null) {
-			mGestureDetector.onTouchEvent(ev);
+			isProcessed = mGestureDetector.onTouchEvent(ev);
 		}
 
 		final int action = ev.getActionMasked();
@@ -408,6 +415,9 @@ public class PinchImageView extends ImageView {
 
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:
+			if (!mHasMoved && !isProcessed) {
+				isProcessed = super.performClick();
+			}
 			mHasMoved = false;
 			mActivePointerId = INVALID_POINTER_ID;
 			mActivePointerId2 = INVALID_POINTER_ID;
@@ -437,7 +447,7 @@ public class PinchImageView extends ImageView {
 
 		}
 
-		return !isLongClickable() || super.onTouchEvent(ev);
+		return isProcessed || !isLongClickable() || super.onTouchEvent(ev);
 	}
 
 	/*
