@@ -104,18 +104,18 @@ public class VerticalSeekBar extends SeekBar {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStartTrackingTouch(this);
 			}
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
 			break;
 
 		case MotionEvent.ACTION_UP:
-			setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStopTrackingTouch(this);
 			}
@@ -132,6 +132,18 @@ public class VerticalSeekBar extends SeekBar {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Set the progress by the user. (Unfortunately, Seekbar.setProgress(int, boolean) is not accessible.)
+	 *
+	 * @param progress the progress.
+	 */
+	public final void setProgressByUser(final int progress) {
+		if (progress != getProgress() && mOnSeekBarChangeListener != null) {
+			mOnSeekBarChangeListener.onProgressChanged(this, progress, true);
+		}
+		setProgress(progress);
 	}
 
 	/*
