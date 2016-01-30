@@ -34,6 +34,7 @@
         <item>1.1.5</item>
         <item>1.1.6</item>
         <item>1.1.7</item>
+        <item>1.1.8</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -50,6 +51,7 @@
         <item>Added a guided mode to set iris and pupil position.\nAdded Rayid topography.\nUsers can now specify which overlays are associated with the overlay buttons.\nBugfixes.</item>
         <item>Bugfixes</item>
         <item>Bugfixes. Fixed issues on file access for Android 6.</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
