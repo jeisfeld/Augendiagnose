@@ -88,9 +88,9 @@ public class VerticalSeekBar extends SeekBar {
 	 * (non-Javadoc) ${see_to_overridden}
 	 */
 	@Override
-	public final void setOnSeekBarChangeListener(final OnSeekBarChangeListener l) {
-		mOnSeekBarChangeListener = l;
-		super.setOnSeekBarChangeListener(l);
+	public final void setOnSeekBarChangeListener(final OnSeekBarChangeListener listener) {
+		// Do not use super for the listener, as this would not set the fromUser flag properly
+		mOnSeekBarChangeListener = listener;
 	}
 
 	/*
@@ -104,18 +104,18 @@ public class VerticalSeekBar extends SeekBar {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStartTrackingTouch(this);
 			}
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
 			break;
 
 		case MotionEvent.ACTION_UP:
-			setProgressByUser(getMax() - (int) (getMax() * event.getY() / getHeight()));
+			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStopTrackingTouch(this);
 			}
@@ -135,15 +135,17 @@ public class VerticalSeekBar extends SeekBar {
 	}
 
 	/**
-	 * Set the progress by the user. (Unfortunately, Seekbar.setProgress(int, boolean) is not accessible.)
+	 * Set the progress by the user. (Unfortunately, Seekbar.setProgressInternally(int, boolean) is not accessible.)
 	 *
 	 * @param progress the progress.
+	 * @param fromUser flag indicating if the change was done by the user.
 	 */
-	public final void setProgressByUser(final int progress) {
+	public final void setProgressInternally(final int progress, final boolean fromUser) {
 		if (progress != getProgress() && mOnSeekBarChangeListener != null) {
-			mOnSeekBarChangeListener.onProgressChanged(this, progress, true);
+			mOnSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
 		}
-		setProgress(progress);
+		super.setProgress(progress);
+		onSizeChanged(getWidth(), getHeight(), 0, 0);
 	}
 
 	/*
@@ -151,7 +153,6 @@ public class VerticalSeekBar extends SeekBar {
 	 */
 	@Override
 	public final void setProgress(final int progress) {
-		super.setProgress(progress);
-		onSizeChanged(getWidth(), getHeight(), 0, 0);
+		setProgressInternally(progress, false);
 	}
 }
