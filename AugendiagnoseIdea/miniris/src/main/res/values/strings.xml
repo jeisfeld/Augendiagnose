@@ -12,6 +12,7 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
+    <string name="googlebilling_primary_id" translatable="false">standard_pack</string>
     <string-array name="activities_with_action_camera" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
     </string-array>

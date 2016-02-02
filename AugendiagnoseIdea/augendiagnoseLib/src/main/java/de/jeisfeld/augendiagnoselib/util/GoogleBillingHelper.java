@@ -45,6 +45,11 @@ public final class GoogleBillingHelper {
 	private static final String[] PREMIUM_IDS = Application.getAppContext().getResources().getStringArray(R.array.googlebilling_premium_ids);
 
 	/**
+	 * The primary product id used for one-click purchase.
+	 */
+	public static final String PRIMARY_ID = Application.getResourceString(R.string.googlebilling_primary_id);
+
+	/**
 	 * The product ids which are subscriptions.
 	 */
 	private static final String[] SUBSCRIPTION_IDS =
@@ -258,6 +263,9 @@ public final class GoogleBillingHelper {
 
 					if (result.isFailure()) {
 						Log.e(TAG, "Error purchasing: " + result);
+						if (mOnPurchaseSuccessListener != null) {
+							mOnPurchaseSuccessListener.handleFailure();
+						}
 						return;
 					}
 
@@ -297,5 +305,10 @@ public final class GoogleBillingHelper {
 		 * @param addedPremiumProduct Flag indicating if there was a premium upgrade.
 		 */
 		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
+
+		/**
+		 * Handler called after the failure of a purchase.
+		 */
+		void handleFailure();
 	}
 }

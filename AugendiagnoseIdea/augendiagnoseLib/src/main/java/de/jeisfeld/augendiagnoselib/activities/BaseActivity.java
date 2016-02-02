@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
 
@@ -26,9 +27,11 @@ import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 
@@ -201,6 +204,11 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			finish();
 			return true;
 		}
+		else if (itemId == R.id.action_purchase) {
+			DialogUtil.displayToast(this, R.string.message_dialog_triggering_purchase);
+			triggerDefaultPurchase();
+			return true;
+		}
 		else {
 			return super.onOptionsItemSelected(item);
 		}
@@ -266,6 +274,53 @@ public abstract class BaseActivity extends AdMarvelActivity {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
 			}
 		}
+	}
+
+	/**
+	 * Trigger the purchase of the default premium pack.
+	 */
+	private void triggerDefaultPurchase() {
+		// First dispose, in order to be sure to be able to instantiate the helper.
+		GoogleBillingHelper.dispose();
+		GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
+			@Override
+			public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts, final boolean isPremium) {
+				GoogleBillingHelper.launchPurchaseFlow(GoogleBillingHelper.PRIMARY_ID, new OnPurchaseSuccessListener() {
+					@Override
+					public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
+						if (addedPremiumProduct) {
+							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
+						}
+						GoogleBillingHelper.dispose();
+						int messageResource = addedPremiumProduct
+								? R.string.message_dialog_purchase_thanks_premium : R.string.message_dialog_purchase_thanks;
+
+						MessageDialogListener listener = new MessageDialogListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onDialogClick(final DialogFragment dialog) {
+								finish();
+								Application.startApplication(BaseActivity.this);
+							}
+
+							@Override
+							public void onDialogCancel(final DialogFragment dialog) {
+								finish();
+								Application.startApplication(BaseActivity.this);
+							}
+						};
+
+						DialogUtil.displayInfo(BaseActivity.this, listener, messageResource);
+					}
+
+					@Override
+					public void handleFailure() {
+						GoogleBillingHelper.dispose();
+					}
+				});
+			}
+		});
 	}
 
 	// OVERRIDABLE

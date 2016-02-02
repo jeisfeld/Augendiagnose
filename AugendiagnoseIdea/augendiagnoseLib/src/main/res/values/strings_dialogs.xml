@@ -49,6 +49,7 @@
     <string name="message_dialog_outofmemoryerror">The app has crashed due to lack of memory. If this happens repeatedly, then you should go to the settings, change the setting “Show image in full resolution” to the value “Load only on demand”, and reduce the value of “Max Bitmap size”.</string>
     <string name="message_dialog_hints_will_be_shown">From now on, the app will show hints in various situations (including the ones that you switched off earlier). You can switch them off individually.</string>
     <string name="message_dialog_no_hints_will_be_shown">From now on, the app will not show any of the currently existing hints. New hints of future versions will be shown.</string>
+    <string name="message_dialog_triggering_purchase">Triggering purchase on Google Play&#8230;</string>
     <string name="message_guide_resize_iris">Please resize the eye until the iris fills the circle. Then press “OK”.</string>
     <string name="message_guide_resize_pupil">Please resize the eye until the iris fills the circle. Then press “OK”.</string>
     <string name="imageinfo_line_filename">File name:</string>

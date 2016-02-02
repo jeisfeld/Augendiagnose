@@ -457,6 +457,11 @@ public class SettingsFragment extends PreferenceFragment {
 
 			DialogUtil.displayInfo(getActivity(), listener, messageResource);
 		}
+
+		@Override
+		public void handleFailure() {
+			// Do nothing.
+		}
 	};
 
 	@Override

@@ -49,6 +49,7 @@
     <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
     <string name="message_dialog_hints_will_be_shown">Die App wird nun alle Tipps erneut anzeigen. Sie können die Tipps dann einzeln ausschalten.</string>
     <string name="message_dialog_no_hints_will_be_shown">Die App wird keine der bestehenden Tipps anzeigen. Falls zukünftige App-Versionen neue Tipps enthalten, werden diese angezeigt.</string>
+    <string name="message_dialog_triggering_purchase">Starte Kauf bei Google Play&#8230;</string>
     <string name="message_guide_resize_iris">Bitte bewegen Sie das Auge, bis die Iris den Kreis ausfüllt. Dann drücken Sie „OK“.</string>
     <string name="message_guide_resize_pupil">Vergrößern Sie nun das Auge, bis die Pupille den Kreis ausfüllt. Dann drücken Sie „OK“.</string>
     <string name="imageinfo_line_filename">Dateiname:</string>

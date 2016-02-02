@@ -59,6 +59,7 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
+    <string name="googlebilling_primary_id" translatable="false"/>
     <string-array name="activities_with_action_camera" translatable="false"/>
     <string-array name="activities_with_action_purchase" translatable="false"/>
     <string-array name="activities_with_action_settings" translatable="false"/>
