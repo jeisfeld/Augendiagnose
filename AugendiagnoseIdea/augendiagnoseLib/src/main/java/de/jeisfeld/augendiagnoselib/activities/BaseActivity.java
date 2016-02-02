@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
 
-		// Check permissions
+		// Check permissions for Android 6
 		final String[] missingPermissions = checkRequiredPermissions();
 
 		if (missingPermissions.length > 0) {
@@ -132,6 +132,9 @@ public abstract class BaseActivity extends AdMarvelActivity {
 						public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
 												   final boolean isPremium) {
 							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
+							if (isPremium) {
+								invalidateOptionsMenu();
+							}
 							GoogleBillingHelper.dispose();
 						}
 					});
@@ -151,18 +154,24 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(@NonNull final Menu menu) {
-		String[] activitiesWithActionSettings = getResources().getStringArray(R.array.activities_with_action_settings);
-		boolean hasActionSettings = Arrays.asList(activitiesWithActionSettings).contains(getClass().getName());
-		String[] activitiesWithActionCamera = getResources().getStringArray(R.array.activities_with_action_camera);
-		boolean hasActionCamera = Arrays.asList(activitiesWithActionCamera).contains(getClass().getName());
-
 		getMenuInflater().inflate(R.menu.menu_default, menu);
 
+		String[] activitiesWithActionSettings = getResources().getStringArray(R.array.activities_with_action_settings);
+		boolean hasActionSettings = Arrays.asList(activitiesWithActionSettings).contains(getClass().getName());
 		if (hasActionSettings) {
 			menu.findItem(R.id.action_settings).setVisible(true);
 		}
+
+		String[] activitiesWithActionCamera = getResources().getStringArray(R.array.activities_with_action_camera);
+		boolean hasActionCamera = Arrays.asList(activitiesWithActionCamera).contains(getClass().getName());
 		if (hasActionCamera) {
 			menu.findItem(R.id.action_camera).setVisible(true);
+		}
+
+		String[] activitiesWithActionPurchase = getResources().getStringArray(R.array.activities_with_action_purchase);
+		boolean hasActionPurchase = Arrays.asList(activitiesWithActionPurchase).contains(getClass().getName());
+		if (hasActionPurchase && Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS) {
+			menu.findItem(R.id.action_purchase).setVisible(true);
 		}
 
 		if (getHelpResource() == 0 || getString(getHelpResource()).length() == 0) {

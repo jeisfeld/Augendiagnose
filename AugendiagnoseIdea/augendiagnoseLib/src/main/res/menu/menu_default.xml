@@ -4,8 +4,15 @@
         android:id="@+id/action_camera"
         android:icon="@drawable/ic_launcher"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/title_camera"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_purchase"
+        android:icon="@drawable/ic_action_dollar"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/title_purchase"
         android:visible="false"/>
     <item
         android:id="@+id/action_settings"

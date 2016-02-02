@@ -6,7 +6,7 @@
     <string name="title_activity_camera">Miniris Camera</string>
     <string name="title_activity_list_folders_for_display">Miniris Gallery</string>
     <string name="title_activity_organize_new_photos">Set Name and Date</string>
-    <string name="section_select_photos"></string>
+    <string name="section_select_photos"/>
     <string name="menu_move_to_input_folder">Assign different name</string>
     <string name="overlay_default_pupil_size" translatable="false">0.24</string>
 
@@ -15,10 +15,13 @@
     <string-array name="activities_with_action_camera" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
     </string-array>
+    <string-array name="activities_with_action_purchase" translatable="false">
+        <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
+    </string-array>
     <string-array name="activities_with_action_settings" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity</item>
     </string-array>
-    <string-array name="activities_with_home_enablement" translatable="false"></string-array>
+    <string-array name="activities_with_home_enablement" translatable="false"/>
     <string-array name="googlebilling_ids" translatable="false">
         <item>standard_pack</item>
         <item>monthly_pack</item>

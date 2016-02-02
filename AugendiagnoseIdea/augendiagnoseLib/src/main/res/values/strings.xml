@@ -18,6 +18,7 @@
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
     <string name="title_settings">Settings</string>
     <string name="title_camera">Camera</string>
+    <string name="title_purchase">Purchase</string>
     <string name="title_help">Help</string>
     <string name="section_select_photos">Select Photos</string>
     <string name="section_select_name">Select Name</string>
@@ -59,6 +60,7 @@
     <!-- Resources configuring behaviour of activities in the app -->
 
     <string-array name="activities_with_action_camera" translatable="false"/>
+    <string-array name="activities_with_action_purchase" translatable="false"/>
     <string-array name="activities_with_action_settings" translatable="false"/>
     <string-array name="activities_with_home_enablement" translatable="false">
         <item>de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity</item>
