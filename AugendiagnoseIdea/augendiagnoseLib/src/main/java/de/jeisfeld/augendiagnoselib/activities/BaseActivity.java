@@ -344,6 +344,8 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			}
 		}
 		else {
+			GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
+
 			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 			super.onActivityResult(requestCode, resultCode, data);
