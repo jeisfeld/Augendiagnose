@@ -394,6 +394,7 @@ public final class ImageUtil {
 		// OverlayPinghImageView.changeBitmapContrastBrightness
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+
 		gc.drawImage(baseImage, 0, 0, width, height);
 
 		if (contrast != 1 || brightness != 0) {
@@ -506,6 +507,33 @@ public final class ImageUtil {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
 					0, 0, 1, 0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
 		}
+	}
+
+	/**
+	 * Resize an image to the given size.
+	 *
+	 * @param baseImage The original image.
+	 * @param targetSize The target size.
+	 * @return the resized image.
+	 */
+	public static Image resizeImage(final Image baseImage, final int targetSize) {
+		if (baseImage == null || baseImage.getWidth() == 0 || baseImage.getHeight() == 0) {
+			return baseImage;
+		}
+		int targetWidth;
+		int targetHeight;
+		if (baseImage.getWidth() > baseImage.getHeight()) {
+			targetWidth = targetSize;
+			targetHeight = (int) (targetSize * baseImage.getHeight() / baseImage.getWidth());
+		}
+		else {
+			targetWidth = (int) (targetSize * baseImage.getWidth() / baseImage.getHeight());
+			targetHeight = targetSize;
+		}
+
+		Canvas canvas = new Canvas(targetWidth, targetHeight);
+		canvas.getGraphicsContext2D().drawImage(baseImage, 0, 0, targetWidth, targetHeight);
+		return canvas.snapshot(null, null);
 	}
 
 	/**
