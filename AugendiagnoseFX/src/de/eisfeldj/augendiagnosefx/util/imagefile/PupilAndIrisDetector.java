@@ -2,11 +2,10 @@ package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.eisfeldj.augendiagnosefx.util.Logger;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -23,7 +22,7 @@ public class PupilAndIrisDetector {
 	/**
 	 * The resolution of the image when searching for a point within the pupil.
 	 */
-	private static final int[] IRIS_SEARCH_RESOLUTIONS = {100, 300};
+	private static final int[] IRIS_SEARCH_RESOLUTIONS = {100};
 	/**
 	 * The size of the maximum change distance from one zone (pupil/iris/outer) to the next, relative to the image size.
 	 */
@@ -48,7 +47,6 @@ public class PupilAndIrisDetector {
 	 * The brightness of the pupil assumed when calculating the leaps.
 	 */
 	private static final double ASSUMED_PUPIL_BRIGHTNESS = 0.3;
-
 	/**
 	 * The minimum white quota expected outside the iris.
 	 */
@@ -65,6 +63,34 @@ public class PupilAndIrisDetector {
 	 * The maximum black quota expected outside the pupil.
 	 */
 	private static final double MAX_BLACK_QUOTA = 0.3;
+	/**
+	 * The vertical range where iris boundary points should be searched for.
+	 */
+	private static final double IRIS_BOUNDARY_SEARCH_RANGE = 0.7;
+	/**
+	 * The uncertainty of the positions of the iris boundary points.
+	 */
+	private static final double IRIS_BOUNDARY_UNCERTAINTY_FACTOR = 0.2;
+	/**
+	 * The minimum range considered when determining the iris boundary.
+	 */
+	private static final double IRIS_BOUNDARY_MIN_RANGE = 0.02;
+	/**
+	 * Factor by which the range is changed with each retry after a search failure.
+	 */
+	private static final double IRIS_BOUNDARY_RETRY_FACTOR = 0.7;
+	/**
+	 * The quota of points that are allowed to be too bright in the iris or too dark outside the iris.
+	 */
+	private static final double IRIS_BOUNDARY_WRONG_BRIGHTNESS_QUOTA = 0.2;
+	/**
+	 * The quota of points around the center considered for determining the vertical center.
+	 */
+	private static final double IRIS_BOUNDARY_POINTS_CONSIDERED_FOR_YCENTER = 0.3;
+	/**
+	 * The minimum number of boundary points needed to refine the iris position.
+	 */
+	private static final double IRIS_BOUNDARY_MIN_BOUNDARY_POINTS = 10;
 
 	/**
 	 * The image to be analyzed.
@@ -140,14 +166,15 @@ public class PupilAndIrisDetector {
 				break;
 			}
 		}
-		refineIrisPosition(IRIS_SEARCH_RESOLUTIONS[0], true);
-		for (int i = 1; i < IRIS_SEARCH_RESOLUTIONS.length; i++) {
-			int resolution = IRIS_SEARCH_RESOLUTIONS[i];
-			refineIrisPosition(resolution, false);
-			if (resolution >= image.getWidth() && resolution >= image.getHeight()) {
-				break;
-			}
-		}
+//		refineIrisPosition(IRIS_SEARCH_RESOLUTIONS[0], true);
+//		for (int i = 1; i < IRIS_SEARCH_RESOLUTIONS.length; i++) {
+//			int resolution = IRIS_SEARCH_RESOLUTIONS[i];
+//			refineIrisPosition(resolution, false);
+//			if (resolution >= image.getWidth() && resolution >= image.getHeight()) {
+//				break;
+//			}
+//		}
+		refineIrisPosition();
 	}
 
 	/**
@@ -169,15 +196,14 @@ public class PupilAndIrisDetector {
 		PupilCenterInfo bestPupilCenter = null;
 		for (PupilCenterInfo pupilCenterInfo : pupilCenterInfoList) {
 			pupilCenterInfo.calculateStatistics(0);
-//			if(pupilCenterInfo.mXCoord == 38 && pupilCenterInfo.mYCoord == 32) {
 			if (pupilCenterInfo.mLeapValue > maxLeapValue) {
 				maxLeapValue = pupilCenterInfo.mLeapValue;
 				bestPupilCenter = pupilCenterInfo;
 			}
 		}
 		if (bestPupilCenter != null) {
-			mPupilXCenter = bestPupilCenter.mXCoord / image.getWidth();
-			mPupilYCenter = bestPupilCenter.mYCoord / image.getHeight();
+			mPupilXCenter = bestPupilCenter.mXCenter / image.getWidth();
+			mPupilYCenter = bestPupilCenter.mYCenter / image.getHeight();
 			mPupilRadius = bestPupilCenter.mPupilRadius / Math.min(image.getWidth(), image.getHeight());
 			mIrisXCenter = mPupilXCenter;
 			mIrisYCenter = mPupilYCenter;
@@ -220,11 +246,11 @@ public class PupilAndIrisDetector {
 			}
 
 			isStable = bestPupilCenter == null
-					|| (bestPupilCenter.mXCoord == pupilXCenter && bestPupilCenter.mYCoord == pupilYCenter
+					|| (bestPupilCenter.mXCenter == pupilXCenter && bestPupilCenter.mYCenter == pupilYCenter
 							&& bestPupilCenter.mPupilRadius == pupilRadius);
 			if (bestPupilCenter != null) {
-				pupilXCenter = bestPupilCenter.mXCoord;
-				pupilYCenter = bestPupilCenter.mYCoord;
+				pupilXCenter = bestPupilCenter.mXCenter;
+				pupilYCenter = bestPupilCenter.mYCenter;
 				pupilRadius = bestPupilCenter.mPupilRadius;
 			}
 		}
@@ -251,7 +277,6 @@ public class PupilAndIrisDetector {
 		int irisRadius = (int) Math.round(mIrisRadius * Math.min(image.getWidth(), image.getHeight()));
 
 		boolean isStable = false;
-		Logger.log("Before: " + irisXCenter + "," + irisYCenter + "," + irisRadius);
 		for (int step = 0; step < stepCount && !isStable; step++) {
 			for (int x = irisXCenter - stepCount; x <= irisXCenter + stepCount; x++) {
 				for (int y = irisYCenter - stepSize; y <= irisYCenter + stepSize; y++) {
@@ -272,15 +297,14 @@ public class PupilAndIrisDetector {
 			}
 
 			isStable = bestIrisCenter == null
-					|| (bestIrisCenter.mXCoord == irisXCenter && bestIrisCenter.mYCoord == irisYCenter
+					|| (bestIrisCenter.mXCenter == irisXCenter && bestIrisCenter.mYCenter == irisYCenter
 							&& bestIrisCenter.mIrisRadius == irisRadius);
 			if (bestIrisCenter != null) {
-				irisXCenter = bestIrisCenter.mXCoord;
-				irisYCenter = bestIrisCenter.mYCoord;
+				irisXCenter = bestIrisCenter.mXCenter;
+				irisYCenter = bestIrisCenter.mYCenter;
 				irisRadius = bestIrisCenter.mIrisRadius;
 			}
 		}
-		Logger.log("After: " + irisXCenter + "," + irisYCenter + "," + irisRadius);
 
 		mIrisXCenter = irisXCenter / image.getWidth();
 		mIrisYCenter = irisYCenter / image.getHeight();
@@ -288,17 +312,67 @@ public class PupilAndIrisDetector {
 	}
 
 	/**
+	 * Refine the iris position based on the previously found position.
+	 */
+	private void refineIrisPosition() {
+		IrisBoundary irisBoundary = new IrisBoundary(mImage,
+				(int) (mImage.getWidth() * mIrisXCenter),
+				(int) (mImage.getHeight() * mIrisYCenter),
+				(int) (Math.min(mImage.getWidth(), mImage.getHeight()) * mIrisRadius));
+
+		irisBoundary.analyzeBoundary();
+
+		mIrisXCenter = irisBoundary.mXCenter / mImage.getWidth();
+		mIrisYCenter = irisBoundary.mYCenter / mImage.getHeight();
+		mIrisRadius = irisBoundary.mRadius / Math.min(mImage.getWidth(), mImage.getHeight());
+
+		mIrisBoundary = irisBoundary;
+	}
+
+	// TODO: remove later - this is only used to help displaying the points in the debug phase.
+	private IrisBoundary mIrisBoundary;
+
+	public List<Point> getIrisBoundaryPoints() {
+		List<Point> result = new ArrayList<>();
+		if(mIrisBoundary != null && mIrisBoundary.mLeftPoints != null) {
+			for (Integer y : mIrisBoundary.mLeftPoints.keySet()) {
+				result.add(new Point(mIrisBoundary.mLeftPoints.get(y), y));
+				result.add(new Point(mIrisBoundary.mRightPoints.get(y), y));
+			}
+		}
+		return result;
+	}
+
+	public static class Point {
+		public Point(final int x, final int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public int x;
+		public int y;
+	}
+
+	/**
 	 * The collected info about the circles around a potential pupil center.
 	 */
 	private static final class PupilCenterInfo {
 		/**
-		 * The x coordinate.
+		 * The x coordinate of the center.
 		 */
-		private int mXCoord;
+		private int mXCenter;
 		/**
-		 * The y coordinate.
+		 * The y coordinate of the center.
 		 */
-		private int mYCoord;
+		private int mYCenter;
+		/**
+		 * The calculated pupil radius for this center.
+		 */
+		private int mPupilRadius = 0;
+		/**
+		 * The calculated iris radius for this center.
+		 */
+		private int mIrisRadius = 0;
 		/**
 		 * The image.
 		 */
@@ -317,14 +391,6 @@ public class PupilAndIrisDetector {
 		 * The brightness leap value for this center.
 		 */
 		private double mLeapValue = Double.MIN_VALUE;
-		/**
-		 * The calculated pupil radius for this center.
-		 */
-		private int mPupilRadius = 0;
-		/**
-		 * The calculated iris radius for this center.
-		 */
-		private int mIrisRadius = 0;
 
 		/**
 		 * Create a PupilCenterInfo with certain coordinates.
@@ -335,8 +401,8 @@ public class PupilAndIrisDetector {
 		 * @param phase The phase in which the info is used.
 		 */
 		private PupilCenterInfo(final Image image, final int xCoord, final int yCoord, final Phase phase) {
-			mXCoord = xCoord;
-			mYCoord = yCoord;
+			mXCenter = xCoord;
+			mYCenter = yCoord;
 			mImage = image;
 			mPhase = phase;
 		}
@@ -349,14 +415,14 @@ public class PupilAndIrisDetector {
 		private void collectCircleInfo(final int maxRelevantRadius) {
 			PixelReader pixelReader = mImage.getPixelReader();
 			int maxPossibleRadius = (int) (Math.min(
-					Math.min(mImage.getWidth() - 1 - mXCoord, mXCoord),
-					Math.min(mImage.getHeight() - 1 - mYCoord, mYCoord)));
+					Math.min(mImage.getWidth() - 1 - mXCenter, mXCenter),
+					Math.min(mImage.getHeight() - 1 - mYCenter, mYCenter)));
 			int maxRadius = Math.min(maxRelevantRadius, maxPossibleRadius);
 			// For iris refinement, ignore points on top and bottom
 			long maxRadius2 = (maxRadius + 1) * (maxRadius + 1);
-			for (int x = mXCoord - maxRadius; x <= mXCoord + maxRadius; x++) {
-				for (int y = mYCoord - maxRadius; y <= mYCoord + maxRadius; y++) {
-					long d2 = (x - mXCoord) * (x - mXCoord) + (y - mYCoord) * (y - mYCoord);
+			for (int x = mXCenter - maxRadius; x <= mXCenter + maxRadius; x++) {
+				for (int y = mYCenter - maxRadius; y <= mYCenter + maxRadius; y++) {
+					long d2 = (x - mXCenter) * (x - mXCenter) + (y - mYCenter) * (y - mYCenter);
 					if (d2 <= maxRadius2) {
 						int d = (int) Math.round(Math.sqrt(d2));
 						double brightness = getBrightness(pixelReader.getColor(x, y));
@@ -416,7 +482,6 @@ public class PupilAndIrisDetector {
 			// Calculate the minimum of medians outside each circle.
 			double innerQuantileSum = 0;
 			double[] innerDarkness = new double[mCircleInfos.size()];
-			mLogInfo = new String[mCircleInfos.size()];
 
 			for (int i = minRadius; i <= maxRadius; i++) {
 				double currentQuantile = mCircleInfos.get(Integer.valueOf(i)).getQuantile(MIN_BLACK_QUOTA);
@@ -435,7 +500,6 @@ public class PupilAndIrisDetector {
 			if (mPhase == Phase.INITIAL || mPhase == Phase.PUPIL_REFINEMENT) {
 				// determine pupil leap
 				for (int i = minRadius; i <= maxRadius; i++) {
-					mLogInfo[i] = " ";
 					double pupilLeapValue = 0;
 					int maxLeapDistance = Math.min((int) Math.round(MAX_LEAP_WIDTH * resolution),
 							Math.min(i / 2, (mCircleInfos.size() - 1 - i) / 2));
@@ -446,7 +510,6 @@ public class PupilAndIrisDetector {
 								: (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MAX_BLACK_QUOTA, i + j, i + j + maxLeapDistance, false))
 										/ (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MIN_BLACK_QUOTA, i - j - Math.max(j, 2), i, true)) - 1;
 						if (diff > MIN_LEAP_DIFF) {
-							mLogInfo[i] += " | (" + j + "," + diff + ")";
 							// prefer big jumps in small radius difference.
 							double newLeapValue = diff / Math.pow(j, 0.8); // MAGIC_NUMBER
 							if (newLeapValue > pupilLeapValue) {
@@ -533,19 +596,6 @@ public class PupilAndIrisDetector {
 			}
 		}
 
-		private String[] mLogInfo;
-
-		private void logStatistics() {
-			Logger.log("P " + mXCoord + "," + mYCoord + " - " + mPupilRadius + "," + mIrisRadius);
-			for (int radius = 0; radius < mCircleInfos.size(); radius++) {
-				CircleInfo circleInfo = mCircleInfos.get(Integer.valueOf(radius));
-				Logger.log("R " + radius + ": " + circleInfo.getQuantile(MIN_BLACK_QUOTA) + "," + circleInfo.getQuantile(MAX_BLACK_QUOTA));
-				if (mLogInfo[radius] != null && mLogInfo[radius].length() > 2) {
-					Logger.log(mLogInfo[radius]);
-				}
-			}
-		}
-
 		/**
 		 * Get the minimum p-quantile for a certain set of radii.
 		 *
@@ -586,7 +636,7 @@ public class PupilAndIrisDetector {
 	}
 
 	/**
-	 * Bean for storing information about an image pixel.
+	 * Class for storing information about a circle of points.
 	 */
 	private static final class CircleInfo {
 		/**
@@ -641,4 +691,269 @@ public class PupilAndIrisDetector {
 			return mBrightnesses.get((int) (mBrightnesses.size() * p));
 		}
 	}
+
+	/**
+	 * Class for collecting information about the iris boundary.
+	 */
+	private static final class IrisBoundary {
+		/**
+		 * The image.
+		 */
+		private Image mImage;
+
+		/**
+		 * The x coordinate of the center.
+		 */
+		private int mXCenter;
+		/**
+		 * The y coordinate of the center.
+		 */
+		private int mYCenter;
+		/**
+		 * The iris radius.
+		 */
+		private int mRadius = 0;
+
+		/**
+		 * The points on the left side of the iris boundary (map from y to x coordinate).
+		 */
+		private Map<Integer, Integer> mLeftPoints = new HashMap<>();
+		/**
+		 * The points on the right side of the iris boundary (map from y to x coordinate).
+		 */
+		private Map<Integer, Integer> mRightPoints = new HashMap<>();
+
+		/**
+		 * Initialize the IrisBoundary.
+		 *
+		 * @param image The image.
+		 * @param xCenter the initial x coordinate of the center.
+		 * @param yCenter the initial y coordinate of the center.
+		 * @param radius the initial iris radius.
+		 */
+		private IrisBoundary(final Image image, final int xCenter, final int yCenter, final int radius) {
+			mImage = image;
+			mXCenter = xCenter;
+			mYCenter = yCenter;
+			mRadius = radius;
+		}
+
+		/**
+		 * Search points on the iris boundary.
+		 */
+		private void determineBoundaryPoints() {
+			PixelReader pixelReader = mImage.getPixelReader();
+
+			boolean found = true;
+			for (int yCoord = mYCenter; yCoord <= mYCenter + mRadius * IRIS_BOUNDARY_SEARCH_RANGE && yCoord < mImage.getHeight(); yCoord++) {
+				found = determineBoundaryPoints(pixelReader, yCoord);
+			}
+
+			found = true;
+			for (int yCoord = mYCenter - 1; yCoord >= mYCenter - mRadius * IRIS_BOUNDARY_SEARCH_RANGE && yCoord >= 0; yCoord--) {
+				found = determineBoundaryPoints(pixelReader, yCoord);
+			}
+		}
+
+		/**
+		 * Determine the boundary points for a certain y coordinate.
+		 *
+		 * @param pixelReader The pixel reader.
+		 * @param yCoord The y coordinate for which to find the boundary points.
+		 * @return true if a boundary point has been found.
+		 */
+		private boolean determineBoundaryPoints(final PixelReader pixelReader, final int yCoord) {
+			int xDistanceRange = (int) Math.round(IRIS_BOUNDARY_UNCERTAINTY_FACTOR * mRadius);
+			int xDistanceMinRange = (int) Math.round(IRIS_BOUNDARY_MIN_RANGE * mRadius);
+			boolean found = false;
+
+			while (!found && xDistanceRange >= xDistanceMinRange) {
+				found = determineBoundaryPoints(pixelReader, yCoord, xDistanceRange);
+				xDistanceRange *= IRIS_BOUNDARY_RETRY_FACTOR;
+			}
+			return found;
+		}
+
+		/**
+		 * Determine the boundary points for a certain y coordinate.
+		 *
+		 * @param pixelReader The pixel reader.
+		 * @param yCoord The y coordinate for which to find the boundary points.
+		 * @param xDistanceRange the horizontal range which is considered.
+		 * @return true if a boundary point has been found.
+		 */
+		private boolean determineBoundaryPoints(final PixelReader pixelReader, final int yCoord, final int xDistanceRange) {
+			int yDiff = yCoord - mYCenter;
+			if (Math.abs(yDiff) > IRIS_BOUNDARY_SEARCH_RANGE * mRadius) {
+				return false;
+			}
+
+			int expectedXDistance = (int) Math.round(Math.sqrt(mRadius * mRadius - yDiff * yDiff));
+
+			// Left side - calculate average brightness
+			double brightnessSum = 0;
+			int leftBoundary = Math.max(mXCenter - expectedXDistance - xDistanceRange, 0);
+			int rightBoundary = Math.min(mXCenter - expectedXDistance + xDistanceRange, (int) mImage.getWidth() - 1);
+			for (int x = leftBoundary; x <= rightBoundary; x++) {
+				brightnessSum += getBrightness(pixelReader.getColor(x, yCoord));
+			}
+			double avgBrightness = brightnessSum / (2 * xDistanceRange + 1);
+
+			// Left side - find transition from light to dark
+			int leftCounter = 0;
+			int rightCounter = 0;
+			while (leftBoundary < rightBoundary) {
+				if (rightCounter > leftCounter) {
+					if (getBrightness(pixelReader.getColor(leftBoundary++, yCoord)) < avgBrightness) {
+						leftCounter++;
+					}
+				}
+				else {
+					if (getBrightness(pixelReader.getColor(rightBoundary--, yCoord)) > avgBrightness) {
+						rightCounter++;
+					}
+				}
+			}
+			if (leftCounter > IRIS_BOUNDARY_WRONG_BRIGHTNESS_QUOTA * xDistanceRange) {
+				return false;
+			}
+
+			// Right side - calculate average brightness
+			double brightnessSum2 = 0;
+			int leftBoundary2 = Math.max(mXCenter + expectedXDistance - xDistanceRange, 0);
+			int rightBoundary2 = Math.min(mXCenter + expectedXDistance + xDistanceRange, (int) mImage.getWidth() - 1);
+			for (int x = leftBoundary2; x <= rightBoundary2; x++) {
+				brightnessSum2 += getBrightness(pixelReader.getColor(x, yCoord));
+			}
+			double avgBrightness2 = brightnessSum2 / (2 * xDistanceRange + 1);
+
+			// Right side - find transition from light to dark
+			int leftCounter2 = 0;
+			int rightCounter2 = 0;
+			while (leftBoundary2 < rightBoundary2) {
+				if (leftCounter2 > rightCounter2) {
+					if (getBrightness(pixelReader.getColor(rightBoundary2--, yCoord)) < avgBrightness2) {
+						rightCounter2++;
+					}
+				}
+				else {
+					if (getBrightness(pixelReader.getColor(leftBoundary2++, yCoord)) > avgBrightness2) {
+						leftCounter2++;
+					}
+				}
+			}
+			if (rightCounter2 > IRIS_BOUNDARY_WRONG_BRIGHTNESS_QUOTA * xDistanceRange) {
+				return false;
+			}
+
+			mLeftPoints.put(yCoord, rightBoundary);
+			mRightPoints.put(yCoord, leftBoundary2);
+			return true;
+		}
+
+		/**
+		 * Determine the iris center and radius from the iris boundary points.
+		 */
+		private void analyzeBoundary() {
+			determineBoundaryPoints();
+			if (mLeftPoints.size() > IRIS_BOUNDARY_MIN_BOUNDARY_POINTS) {
+				determineXCenter();
+				determineYCenter();
+				determineRadius();
+			}
+		}
+
+		/**
+		 * Determine the x center from the boundary points.
+		 */
+		private void determineXCenter() {
+			// Determine x center as median of the boundary mid points
+			List<Integer> xSumValues = new ArrayList<>();
+			for (Integer yCoord : mLeftPoints.keySet()) {
+				xSumValues.add(mLeftPoints.get(yCoord) + mRightPoints.get(yCoord));
+			}
+
+			xSumValues.sort(new Comparator<Integer>() {
+				@Override
+				public int compare(final Integer integer1, final Integer integer2) {
+					return Integer.compare(integer1, integer2);
+				}
+			});
+
+			mXCenter = xSumValues.get(xSumValues.size() / 2) / 2;
+		}
+
+		/**
+		 * Determine the y center from the boundary points, knowing the x center.
+		 */
+		private void determineYCenter() {
+			// Consider the sum of left and right distance.
+			Map<Integer, List<Integer>> distanceSums = new HashMap<>();
+			for (Integer y : mLeftPoints.keySet()) {
+				int sum = mRightPoints.get(y) - mLeftPoints.get(y);
+				List<Integer> listForSum = distanceSums.get(sum);
+				if (listForSum == null) {
+					listForSum = new ArrayList<>();
+					distanceSums.put(sum, listForSum);
+				}
+				listForSum.add(y);
+			}
+
+			// Sort distances in descending order
+			List<Integer> distances = new ArrayList<>(distanceSums.keySet());
+			distances.sort(new Comparator<Integer>() {
+				@Override
+				public int compare(final Integer integer1, final Integer integer2) {
+					return Integer.compare(integer2, integer1);
+				}
+			});
+
+			int count = 0;
+			int sum = 0;
+			int countUntil = (int) (IRIS_BOUNDARY_POINTS_CONSIDERED_FOR_YCENTER * mLeftPoints.size());
+			for (Integer distance : distances) {
+				for (int y : distanceSums.get(distance)) {
+					sum += y;
+					count++;
+				}
+				if (count >= countUntil) {
+					break;
+				}
+			}
+
+			mYCenter = sum / count;
+		}
+
+		/**
+		 * Determine the radius from boundary points, after center is known.
+		 */
+		private void determineRadius() {
+			double sum = 0;
+			for (Integer y : mLeftPoints.keySet()) {
+				int yDistance = y - mYCenter;
+				int xDistance = mLeftPoints.get(y) - mXCenter;
+				sum += Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+			}
+			for (Integer y : mRightPoints.keySet()) {
+				int yDistance = y - mYCenter;
+				int xDistance = mRightPoints.get(y) - mXCenter;
+				sum += Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+			}
+
+			mRadius = (int) Math.round(sum / (2 * mLeftPoints.size()));
+		}
+
+		/**
+		 * Get a brightness value from a color.
+		 *
+		 * @param color The color
+		 * @return The brightness value.
+		 */
+		private static double getBrightness(final Color color) {
+			// Blue seems to be particulary helpful in the separation.
+			return Math.min(Math.min(color.getRed(), color.getGreen()), color.getBlue()) + color.getBlue();
+		}
+
+	}
+
 }
