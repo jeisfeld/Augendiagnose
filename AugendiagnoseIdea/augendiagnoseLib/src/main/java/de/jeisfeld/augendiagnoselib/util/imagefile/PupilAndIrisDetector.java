@@ -1,15 +1,18 @@
-package de.eisfeldj.augendiagnosefx.util.imagefile;
+package de.jeisfeld.augendiagnoselib.util.imagefile;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.paint.Color;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.util.Log;
+
+import de.jeisfeld.augendiagnoselib.Application;
 
 /**
  * Class that serves to detect the pupil and iris within an eye photo.
@@ -89,9 +92,18 @@ public class PupilAndIrisDetector {
 	private static final float IRIS_BOUNDARY_MIN_BOUNDARY_POINTS = 10;
 
 	/**
+	 * The files which are currently processed by this class. The value is used for previous file names in case of renaming.
+	 */
+	private static final Map<String, Set<String>> FILES_IN_PROCESS = new HashMap<>();
+	/**
+	 * The files which are currently processed by this class. The value contains the current file name in case of renaming.
+	 */
+	private static final Map<String, String> FILES_IN_PROCESS2 = new HashMap<>();
+
+	/**
 	 * The image to be analyzed.
 	 */
-	private Image mImage;
+	private Bitmap mImage;
 
 	/**
 	 * The horizontal center of the pupil (in the interval [0,1]).
@@ -152,7 +164,7 @@ public class PupilAndIrisDetector {
 	 *
 	 * @param image The image to be analyzed.
 	 */
-	public PupilAndIrisDetector(final Image image) {
+	public PupilAndIrisDetector(final Bitmap image) {
 		mImage = image;
 		determineInitialParameterValues();
 		for (int i = 1; i < PUPIL_SEARCH_RESOLUTIONS.length; i++) {
@@ -166,30 +178,128 @@ public class PupilAndIrisDetector {
 	}
 
 	/**
+	 * Determine the iris position in an image path and store it in the metadata.
+	 *
+	 * @param imagePath The path of the image.
+	 */
+	public static final void determineAndStoreIrisPosition(final String imagePath) {
+		JpegMetadata origMetadata = JpegSynchronizationUtil.getJpegMetadata(imagePath);
+		if (origMetadata == null
+				|| origMetadata.hasOverlayPosition() && !origMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)) {
+			// Do not overwrite manually set overlay position.
+			return;
+		}
+
+		new Thread() {
+			@Override
+			public void run() {
+				synchronized (FILES_IN_PROCESS) {
+					if (FILES_IN_PROCESS2.keySet().contains(imagePath)) {
+						return;
+					}
+					else {
+						FILES_IN_PROCESS.put(imagePath, new HashSet<String>());
+						FILES_IN_PROCESS2.put(imagePath, imagePath);
+					}
+				}
+
+				try {
+					Log.v(Application.TAG, "Start finding iris for " + imagePath);
+					long timestamp = System.currentTimeMillis();
+					PupilAndIrisDetector detector = new PupilAndIrisDetector(ImageUtil.getImageBitmap(imagePath, 0));
+					Log.v(Application.TAG, "Finished finding iris for " + imagePath + ". Duration: "
+							+ ((System.currentTimeMillis() - timestamp) / 1000.0)); // MAGIC_NUMBER
+
+					// Retrieve image path - in case the file has moved.
+					String newImagePath = FILES_IN_PROCESS2.get(imagePath);
+
+					JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(newImagePath);
+					// re-check if position has been set manually.
+					if (metadata != null && (!metadata.hasOverlayPosition() || metadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY))) {
+						detector.updateMetadata(metadata);
+						JpegSynchronizationUtil.storeJpegMetadata(newImagePath, metadata);
+					}
+				}
+				catch (Throwable e) {
+					Log.e(Application.TAG, "Failed to find iris and pupil position for file " + imagePath, e);
+				}
+				finally {
+					synchronized (FILES_IN_PROCESS) {
+						String newImagePath = FILES_IN_PROCESS2.get(imagePath);
+						Set<String> oldPaths = FILES_IN_PROCESS.get(newImagePath);
+						if (oldPaths != null) {
+							for (String oldPath : oldPaths) {
+								FILES_IN_PROCESS2.remove(oldPath);
+							}
+						}
+						FILES_IN_PROCESS.remove(newImagePath);
+						FILES_IN_PROCESS2.remove(newImagePath);
+					}
+				}
+			}
+		}.start();
+	}
+
+	/**
+	 * Inform about the move of a file during determination of iris position, so that the result may be applied to the moved file.
+	 *
+	 * @param oldFileName The old file name.
+	 * @param newFileName the new file name.
+	 */
+	public static final void notifyFileRename(final String oldFileName, final String newFileName) {
+		if (!FILES_IN_PROCESS.containsKey(oldFileName)) {
+			return;
+		}
+
+		synchronized (FILES_IN_PROCESS) {
+			Set<String> oldPaths = FILES_IN_PROCESS.get(oldFileName);
+			if (oldPaths != null) {
+				for (String oldPath : oldPaths) {
+					FILES_IN_PROCESS2.put(oldPath, newFileName);
+				}
+				FILES_IN_PROCESS2.put(oldFileName, newFileName);
+				FILES_IN_PROCESS2.put(newFileName, newFileName);
+
+				oldPaths.add(oldFileName);
+				FILES_IN_PROCESS.remove(oldFileName);
+				FILES_IN_PROCESS.put(newFileName, oldPaths);
+			}
+		}
+	}
+
+	/**
 	 * Update the stored metadata with the iris and pupil position from the detector.
 	 *
 	 * @param metadata The metadata to be updated.
 	 */
 	public final void updateMetadata(final JpegMetadata metadata) {
-		metadata.setXCenter(mIrisXCenter);
-		metadata.setYCenter(mIrisYCenter);
-		metadata.setOverlayScaleFactor(mIrisRadius * 8 / 3); // MAGIC_NUMBER
+		if (mPupilRadius > 0 && mIrisRadius > mPupilRadius) {
+			metadata.setXCenter(mIrisXCenter);
+			metadata.setYCenter(mIrisYCenter);
+			metadata.setOverlayScaleFactor(mIrisRadius * 8 / 3); // MAGIC_NUMBER
 
-		metadata.setPupilXOffset((mPupilXCenter - mIrisXCenter) / (2 * mIrisRadius));
-		metadata.setPupilYOffset((mPupilYCenter - mIrisYCenter) / (2 * mIrisRadius));
-		metadata.setPupilSize(mPupilRadius / mIrisRadius);
+			metadata.setPupilXOffset((mPupilXCenter - mIrisXCenter) / (2 * mIrisRadius));
+			metadata.setPupilYOffset((mPupilYCenter - mIrisYCenter) / (2 * mIrisRadius));
+			metadata.setPupilSize(mPupilRadius / mIrisRadius);
+
+			metadata.addFlag(JpegMetadata.FLAG_OVERLAY_POSITION_DETERMINED_AUTOMATICALLY);
+			metadata.removeFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY);
+		}
 	}
 
 	/**
 	 * Find initial values of pupil center and pupil and iris radius.
 	 */
 	private void determineInitialParameterValues() {
-		Image image = ImageUtil.resizeImage(mImage, PUPIL_SEARCH_RESOLUTIONS[0], false);
+		Bitmap image = ImageUtil.resizeBitmap(mImage, PUPIL_SEARCH_RESOLUTIONS[0], false);
 		List<PupilCenterInfo> pupilCenterInfoList = new ArrayList<>();
 
-		for (int x = (int) image.getWidth() / 4; x < image.getWidth() * 3 / 4; x++) { // MAGIC_NUMBER
-			for (int y = (int) image.getHeight() / 4; y < image.getHeight() * 3 / 4; y++) { // MAGIC_NUMBER
-				PupilCenterInfo pupilCenterInfo = new PupilCenterInfo(image, x, y, PupilCenterInfo.Phase.INITIAL);
+		int[] pixels = new int[image.getWidth() * image.getHeight()];
+		image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+
+		for (int x = image.getWidth() / 4; x < image.getWidth() * 3 / 4; x++) { // MAGIC_NUMBER
+			for (int y = image.getHeight() / 4; y < image.getHeight() * 3 / 4; y++) { // MAGIC_NUMBER
+				PupilCenterInfo pupilCenterInfo = new PupilCenterInfo(image, pixels, x, y, PupilCenterInfo.Phase.INITIAL);
 				pupilCenterInfo.collectCircleInfo(Integer.MAX_VALUE);
 				pupilCenterInfoList.add(pupilCenterInfo);
 			}
@@ -205,12 +315,12 @@ public class PupilAndIrisDetector {
 			}
 		}
 		if (bestPupilCenter != null) {
-			mPupilXCenter = bestPupilCenter.mXCenter / (float) image.getWidth();
-			mPupilYCenter = bestPupilCenter.mYCenter / (float) image.getHeight();
-			mPupilRadius = bestPupilCenter.mPupilRadius / (float) Math.max(image.getWidth(), image.getHeight());
+			mPupilXCenter = (float) bestPupilCenter.mXCenter / image.getWidth();
+			mPupilYCenter = (float) bestPupilCenter.mYCenter / image.getHeight();
+			mPupilRadius = (float) bestPupilCenter.mPupilRadius / Math.max(image.getWidth(), image.getHeight());
 			mIrisXCenter = mPupilXCenter;
 			mIrisYCenter = mPupilYCenter;
-			mIrisRadius = bestPupilCenter.mIrisRadius / (float) Math.max(image.getWidth(), image.getHeight());
+			mIrisRadius = (float) bestPupilCenter.mIrisRadius / Math.max(image.getWidth(), image.getHeight());
 		}
 	}
 
@@ -220,19 +330,21 @@ public class PupilAndIrisDetector {
 	 * @param resolution The resolution.
 	 */
 	private void refinePupilPosition(final int resolution) {
-		Image image = ImageUtil.resizeImage(mImage, resolution, false);
+		Bitmap image = ImageUtil.resizeBitmap(mImage, resolution, false);
 		List<PupilCenterInfo> pupilCenterInfoList = new ArrayList<>();
 
-		int pupilXCenter = (int) Math.round(mPupilXCenter * image.getWidth());
-		int pupilYCenter = (int) Math.round(mPupilYCenter * image.getHeight());
-		int pupilRadius = (int) Math.round(mPupilRadius * Math.max(image.getWidth(), image.getHeight()));
+		int pupilXCenter = Math.round(mPupilXCenter * image.getWidth());
+		int pupilYCenter = Math.round(mPupilYCenter * image.getHeight());
+		int pupilRadius = Math.round(mPupilRadius * Math.max(image.getWidth(), image.getHeight()));
 
 		boolean isStable = false;
+		int[] pixels = new int[image.getWidth() * image.getHeight()];
+		image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
 
 		for (int step = 0; step < MAX_REFINEMENT_STEPS && !isStable; step++) {
 			for (int x = pupilXCenter - 1; x <= pupilXCenter + 1; x++) {
 				for (int y = pupilYCenter - 1; y <= pupilYCenter + 1; y++) {
-					PupilCenterInfo pupilCenterInfo = new PupilCenterInfo(image, x, y, PupilCenterInfo.Phase.PUPIL_REFINEMENT);
+					PupilCenterInfo pupilCenterInfo = new PupilCenterInfo(image, pixels, x, y, PupilCenterInfo.Phase.PUPIL_REFINEMENT);
 					pupilCenterInfo.collectCircleInfo((int) (pupilRadius + MAX_REFINEMENT_STEPS + MAX_LEAP_WIDTH * resolution));
 					pupilCenterInfoList.add(pupilCenterInfo);
 				}
@@ -250,7 +362,7 @@ public class PupilAndIrisDetector {
 
 			isStable = bestPupilCenter == null
 					|| (bestPupilCenter.mXCenter == pupilXCenter && bestPupilCenter.mYCenter == pupilYCenter
-							&& bestPupilCenter.mPupilRadius == pupilRadius);
+					&& bestPupilCenter.mPupilRadius == pupilRadius);
 			if (bestPupilCenter != null) {
 				pupilXCenter = bestPupilCenter.mXCenter;
 				pupilYCenter = bestPupilCenter.mYCenter;
@@ -258,9 +370,9 @@ public class PupilAndIrisDetector {
 			}
 		}
 
-		mPupilXCenter = pupilXCenter / (float) image.getWidth();
-		mPupilYCenter = pupilYCenter / (float) image.getHeight();
-		mPupilRadius = pupilRadius / (float) Math.max(image.getWidth(), image.getHeight());
+		mPupilXCenter = (float) pupilXCenter / image.getWidth();
+		mPupilYCenter = (float) pupilYCenter / image.getHeight();
+		mPupilRadius = (float) pupilRadius / Math.max(image.getWidth(), image.getHeight());
 	}
 
 	/**
@@ -274,9 +386,9 @@ public class PupilAndIrisDetector {
 
 		irisBoundary.analyzeBoundary();
 
-		mIrisXCenter = irisBoundary.mXCenter / (float) mImage.getWidth();
-		mIrisYCenter = irisBoundary.mYCenter / (float) mImage.getHeight();
-		mIrisRadius = irisBoundary.mRadius / (float) Math.max(mImage.getWidth(), mImage.getHeight());
+		mIrisXCenter = (float) irisBoundary.mXCenter / mImage.getWidth();
+		mIrisYCenter = (float) irisBoundary.mYCenter / mImage.getHeight();
+		mIrisRadius = (float) irisBoundary.mRadius / Math.max(mImage.getWidth(), mImage.getHeight());
 	}
 
 	/**
@@ -302,7 +414,11 @@ public class PupilAndIrisDetector {
 		/**
 		 * The image.
 		 */
-		private Image mImage;
+		private Bitmap mImage;
+		/**
+		 * The image pixels.
+		 */
+		private int[] mPixels;
 		/**
 		 * The phase in which the info is used.
 		 */
@@ -321,15 +437,17 @@ public class PupilAndIrisDetector {
 		/**
 		 * Create a PupilCenterInfo with certain coordinates.
 		 *
-		 * @param image the image.
+		 * @param image  the image.
+		 * @param pixels the image pixels.
 		 * @param xCoord The x coordinate.
 		 * @param yCoord The y coordinate.
-		 * @param phase The phase in which the info is used.
+		 * @param phase  The phase in which the info is used.
 		 */
-		private PupilCenterInfo(final Image image, final int xCoord, final int yCoord, final Phase phase) {
+		private PupilCenterInfo(final Bitmap image, final int[] pixels, final int xCoord, final int yCoord, final Phase phase) {
 			mXCenter = xCoord;
 			mYCenter = yCoord;
 			mImage = image;
+			mPixels = pixels;
 			mPhase = phase;
 		}
 
@@ -339,24 +457,23 @@ public class PupilAndIrisDetector {
 		 * @param maxRelevantRadius The maximal circle radius considered
 		 */
 		private void collectCircleInfo(final int maxRelevantRadius) {
-			PixelReader pixelReader = mImage.getPixelReader();
-			int maxPossibleRadius = (int) Math.min(
+			int width = mImage.getWidth();
+			int maxPossibleRadius = Math.min(
 					Math.min(mImage.getWidth() - 1 - mXCenter, mXCenter),
 					Math.min(mImage.getHeight() - 1 - mYCenter, mYCenter));
 			int maxRadius = Math.min(maxRelevantRadius, maxPossibleRadius);
-			// For iris refinement, ignore points on top and bottom
 			long maxRadius2 = (maxRadius + 1) * (maxRadius + 1);
 			for (int x = mXCenter - maxRadius; x <= mXCenter + maxRadius; x++) {
 				for (int y = mYCenter - maxRadius; y <= mYCenter + maxRadius; y++) {
 					long d2 = (x - mXCenter) * (x - mXCenter) + (y - mYCenter) * (y - mYCenter);
 					if (d2 <= maxRadius2) {
 						int d = (int) Math.round(Math.sqrt(d2));
-						float brightness = getBrightness(pixelReader.getColor(x, y));
+						int brightness = getBrightness(mPixels[y * width + x]);
+						// short brightness = getBrightness(mImage.getPixel(x, y));
 						addInfo(d, brightness);
 					}
 				}
 			}
-
 		}
 
 		/**
@@ -365,9 +482,9 @@ public class PupilAndIrisDetector {
 		 * @param color The color
 		 * @return The brightness value.
 		 */
-		private static float getBrightness(final Color color) {
-			float min = (float) Math.min(Math.min(color.getRed(), color.getGreen()), color.getBlue());
-			float sum = (float) (color.getRed() + color.getGreen() + color.getBlue());
+		private static int getBrightness(final int color) {
+			int min = Math.min(Math.min(Color.red(color), Color.green(color)), Color.blue(color));
+			int sum = Color.red(color) + Color.green(color) + Color.blue(color);
 			// Ensure that colors count more than dark grey, but white counts more then colors.
 			return sum - min;
 		}
@@ -375,10 +492,10 @@ public class PupilAndIrisDetector {
 		/**
 		 * Add pixel info for another pixel.
 		 *
-		 * @param distance The distance of the pixel.
+		 * @param distance   The distance of the pixel.
 		 * @param brightness The brightness of the pixel.
 		 */
-		private void addInfo(final int distance, final float brightness) {
+		private void addInfo(final int distance, final int brightness) {
 			CircleInfo circleInfo = mCircleInfos.get(distance);
 			if (circleInfo == null) {
 				circleInfo = new CircleInfo(distance);
@@ -398,7 +515,7 @@ public class PupilAndIrisDetector {
 				circleInfo.calculateStatistics();
 			}
 
-			int resolution = (int) Math.max(mImage.getWidth(), mImage.getHeight());
+			int resolution = Math.max(mImage.getWidth(), mImage.getHeight());
 			int maxRadius = mPhase == Phase.INITIAL
 					? mCircleInfos.size() - 1
 					: Math.min(mCircleInfos.size() - 1, baseRadius + MAX_REFINEMENT_STEPS + (int) (MAX_LEAP_WIDTH * resolution));
@@ -432,13 +549,13 @@ public class PupilAndIrisDetector {
 					for (int j = 1; j <= maxLeapDistance; j++) {
 						float diff = mPhase == Phase.INITIAL
 								? (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MAX_BLACK_QUOTA, i + j, i + j + maxLeapDistance, false))
-										/ (ASSUMED_PUPIL_BRIGHTNESS
-												+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - j - Math.min(maxLeapDistance, Math.max(j, 2)), i - j, true))
-										- 1
+								/ (ASSUMED_PUPIL_BRIGHTNESS
+								+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - j - Math.min(maxLeapDistance, Math.max(j, 2)), i - j, true))
+								- 1
 								: (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MAX_BLACK_QUOTA, i + j, i + j + maxLeapDistance, false))
-										/ (ASSUMED_PUPIL_BRIGHTNESS
-												+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - Math.min(maxLeapDistance, Math.max(j, 2)), i, true))
-										- 1;
+								/ (ASSUMED_PUPIL_BRIGHTNESS
+								+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - Math.min(maxLeapDistance, Math.max(j, 2)), i, true))
+								- 1;
 						if (diff > MIN_LEAP_DIFF) {
 							// prefer big jumps in small radius difference.
 							float newLeapValue = (float) (diff / Math.pow(j, 0.8)); // MAGIC_NUMBER
@@ -529,10 +646,10 @@ public class PupilAndIrisDetector {
 		/**
 		 * Get the minimum p-quantile for a certain set of radii.
 		 *
-		 * @param p The quantile parameter.
+		 * @param p          The quantile parameter.
 		 * @param fromRadius The start radius.
-		 * @param toRadius The end radius.
-		 * @param max if true, the maximum is returned, otherwise the minimum.
+		 * @param toRadius   The end radius.
+		 * @param max        if true, the maximum is returned, otherwise the minimum.
 		 * @return The minimum quantile.
 		 */
 		private float getMinMaxQuantile(final float p, final int fromRadius, final int toRadius, final boolean max) {
@@ -585,7 +702,7 @@ public class PupilAndIrisDetector {
 		/**
 		 * The brightnesses.
 		 */
-		private List<Float> mBrightnesses = new ArrayList<>();
+		private List<Integer> mBrightnesses = new ArrayList<>();
 		/**
 		 * The brightness leap at this radius used for pupil identification.
 		 */
@@ -600,7 +717,7 @@ public class PupilAndIrisDetector {
 		 *
 		 * @param brightness the brightness.
 		 */
-		private void addBrightness(final float brightness) {
+		private void addBrightness(final int brightness) {
 			mBrightnesses.add(brightness);
 		}
 
@@ -617,7 +734,7 @@ public class PupilAndIrisDetector {
 		 * @param p the quantile parameter.
 		 * @return the p-quantile of the brightnesses (not considering equality).
 		 */
-		private float getQuantile(final float p) {
+		private int getQuantile(final float p) {
 			return mBrightnesses.get((int) (mBrightnesses.size() * p));
 		}
 	}
@@ -629,7 +746,7 @@ public class PupilAndIrisDetector {
 		/**
 		 * The image.
 		 */
-		private Image mImage;
+		private Bitmap mImage;
 
 		/**
 		 * The x coordinate of the center.
@@ -656,12 +773,12 @@ public class PupilAndIrisDetector {
 		/**
 		 * Initialize the IrisBoundary.
 		 *
-		 * @param image The image.
+		 * @param image   The image.
 		 * @param xCenter the initial x coordinate of the center.
 		 * @param yCenter the initial y coordinate of the center.
-		 * @param radius the initial iris radius.
+		 * @param radius  the initial iris radius.
 		 */
-		private IrisBoundary(final Image image, final int xCenter, final int yCenter, final int radius) {
+		private IrisBoundary(final Bitmap image, final int xCenter, final int yCenter, final int radius) {
 			mImage = image;
 			mXCenter = xCenter;
 			mYCenter = yCenter;
@@ -672,31 +789,28 @@ public class PupilAndIrisDetector {
 		 * Search points on the iris boundary.
 		 */
 		private void determineBoundaryPoints() {
-			PixelReader pixelReader = mImage.getPixelReader();
-
 			for (int yCoord = mYCenter; yCoord <= mYCenter + mRadius * IRIS_BOUNDARY_SEARCH_RANGE && yCoord < mImage.getHeight(); yCoord++) {
-				determineBoundaryPoints(pixelReader, yCoord);
+				determineBoundaryPoints(yCoord);
 			}
 
 			for (int yCoord = mYCenter - 1; yCoord >= mYCenter - mRadius * IRIS_BOUNDARY_SEARCH_RANGE && yCoord >= 0; yCoord--) {
-				determineBoundaryPoints(pixelReader, yCoord);
+				determineBoundaryPoints(yCoord);
 			}
 		}
 
 		/**
 		 * Determine the boundary points for a certain y coordinate.
 		 *
-		 * @param pixelReader The pixel reader.
 		 * @param yCoord The y coordinate for which to find the boundary points.
 		 * @return true if a boundary point has been found.
 		 */
-		private boolean determineBoundaryPoints(final PixelReader pixelReader, final int yCoord) {
+		private boolean determineBoundaryPoints(final int yCoord) {
 			int xDistanceRange = Math.round(IRIS_BOUNDARY_UNCERTAINTY_FACTOR * mRadius);
 			int xDistanceMinRange = Math.round(IRIS_BOUNDARY_MIN_RANGE * mRadius);
 			boolean found = false;
 
 			while (!found && xDistanceRange >= xDistanceMinRange) {
-				found = determineBoundaryPoints(pixelReader, yCoord, xDistanceRange);
+				found = determineBoundaryPoints(yCoord, xDistanceRange);
 				xDistanceRange *= IRIS_BOUNDARY_RETRY_FACTOR;
 			}
 			return found;
@@ -705,12 +819,11 @@ public class PupilAndIrisDetector {
 		/**
 		 * Determine the boundary points for a certain y coordinate.
 		 *
-		 * @param pixelReader The pixel reader.
-		 * @param yCoord The y coordinate for which to find the boundary points.
+		 * @param yCoord         The y coordinate for which to find the boundary points.
 		 * @param xDistanceRange the horizontal range which is considered.
 		 * @return true if a boundary point has been found.
 		 */
-		private boolean determineBoundaryPoints(final PixelReader pixelReader, final int yCoord, final int xDistanceRange) {
+		private boolean determineBoundaryPoints(final int yCoord, final int xDistanceRange) {
 			int yDiff = yCoord - mYCenter;
 			if (Math.abs(yDiff) > IRIS_BOUNDARY_SEARCH_RANGE * mRadius) {
 				return false;
@@ -721,9 +834,9 @@ public class PupilAndIrisDetector {
 			// Left side - calculate average brightness
 			float brightnessSum = 0;
 			int leftBoundary = Math.max(mXCenter - expectedXDistance - xDistanceRange, 0);
-			int rightBoundary = Math.min(mXCenter - expectedXDistance + xDistanceRange, (int) mImage.getWidth() - 1);
+			int rightBoundary = Math.min(mXCenter - expectedXDistance + xDistanceRange, mImage.getWidth() - 1);
 			for (int x = leftBoundary; x <= rightBoundary; x++) {
-				brightnessSum += getBrightness(pixelReader.getColor(x, yCoord));
+				brightnessSum += getBrightness(mImage.getPixel(x, yCoord));
 			}
 			float avgBrightness = brightnessSum / (2 * xDistanceRange + 1);
 
@@ -732,12 +845,12 @@ public class PupilAndIrisDetector {
 			int rightCounter = 0;
 			while (leftBoundary < rightBoundary) {
 				if (rightCounter > leftCounter) {
-					if (getBrightness(pixelReader.getColor(leftBoundary++, yCoord)) < avgBrightness) {
+					if (getBrightness(mImage.getPixel(leftBoundary++, yCoord)) < avgBrightness) {
 						leftCounter++;
 					}
 				}
 				else {
-					if (getBrightness(pixelReader.getColor(rightBoundary--, yCoord)) > avgBrightness) {
+					if (getBrightness(mImage.getPixel(rightBoundary--, yCoord)) > avgBrightness) {
 						rightCounter++;
 					}
 				}
@@ -749,9 +862,9 @@ public class PupilAndIrisDetector {
 			// Right side - calculate average brightness
 			float brightnessSum2 = 0;
 			int leftBoundary2 = Math.max(mXCenter + expectedXDistance - xDistanceRange, 0);
-			int rightBoundary2 = Math.min(mXCenter + expectedXDistance + xDistanceRange, (int) mImage.getWidth() - 1);
+			int rightBoundary2 = Math.min(mXCenter + expectedXDistance + xDistanceRange, mImage.getWidth() - 1);
 			for (int x = leftBoundary2; x <= rightBoundary2; x++) {
-				brightnessSum2 += getBrightness(pixelReader.getColor(x, yCoord));
+				brightnessSum2 += getBrightness(mImage.getPixel(x, yCoord));
 			}
 			float avgBrightness2 = brightnessSum2 / (2 * xDistanceRange + 1);
 
@@ -760,12 +873,12 @@ public class PupilAndIrisDetector {
 			int rightCounter2 = 0;
 			while (leftBoundary2 < rightBoundary2) {
 				if (leftCounter2 > rightCounter2) {
-					if (getBrightness(pixelReader.getColor(rightBoundary2--, yCoord)) < avgBrightness2) {
+					if (getBrightness(mImage.getPixel(rightBoundary2--, yCoord)) < avgBrightness2) {
 						rightCounter2++;
 					}
 				}
 				else {
-					if (getBrightness(pixelReader.getColor(leftBoundary2++, yCoord)) > avgBrightness2) {
+					if (getBrightness(mImage.getPixel(leftBoundary2++, yCoord)) > avgBrightness2) {
 						leftCounter2++;
 					}
 				}
@@ -824,12 +937,8 @@ public class PupilAndIrisDetector {
 
 			// Sort distances in descending order
 			List<Integer> distances = new ArrayList<>(distanceSums.keySet());
-			distances.sort(new Comparator<Integer>() {
-				@Override
-				public int compare(final Integer integer1, final Integer integer2) {
-					return Integer.compare(integer2, integer1);
-				}
-			});
+			Collections.sort(distances);
+			Collections.reverse(distances);
 
 			int count = 0;
 			int sum = 0;
@@ -872,9 +981,9 @@ public class PupilAndIrisDetector {
 		 * @param color The color
 		 * @return The brightness value.
 		 */
-		private static float getBrightness(final Color color) {
+		private static int getBrightness(final int color) {
 			// Blue seems to be particulary helpful in the separation.
-			return (float) (Math.min(Math.min(color.getRed(), color.getGreen()), color.getBlue()) + color.getBlue());
+			return Math.min(Math.min(Color.red(color), Color.green(color)), Color.blue(color)) + Color.blue(color);
 		}
 
 	}

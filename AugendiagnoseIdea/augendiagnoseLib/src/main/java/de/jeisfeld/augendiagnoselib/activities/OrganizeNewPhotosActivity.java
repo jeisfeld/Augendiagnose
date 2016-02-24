@@ -50,6 +50,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 
 /**
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
@@ -432,6 +433,9 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
 			mEditDate.invalidate();
 		}
+
+		PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoRight.getAbsolutePath());
+		PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoLeft.getAbsolutePath());
 	}
 
 	/**

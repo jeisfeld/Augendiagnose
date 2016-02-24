@@ -62,6 +62,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CANCEL_AND_VIEW_IMAGES;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
@@ -412,6 +413,7 @@ public class CameraActivity extends BaseActivity {
 
 							if (mLeftEyeFile == null) {
 								setAction(TAKE_PHOTO, LEFT);
+								PupilAndIrisDetector.determineAndStoreIrisPosition(mRightEyeFile.getAbsolutePath());
 							}
 							else {
 								setAction(FINISH_CAMERA, null);
@@ -428,6 +430,7 @@ public class CameraActivity extends BaseActivity {
 
 							if (mRightEyeFile == null) {
 								setAction(TAKE_PHOTO, RIGHT);
+								PupilAndIrisDetector.determineAndStoreIrisPosition(mLeftEyeFile.getAbsolutePath());
 							}
 							else {
 								setAction(FINISH_CAMERA, null);

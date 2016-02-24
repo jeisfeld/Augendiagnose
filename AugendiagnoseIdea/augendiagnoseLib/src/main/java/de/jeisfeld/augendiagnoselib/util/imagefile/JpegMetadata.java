@@ -17,6 +17,10 @@ public final class JpegMetadata implements Parcelable {
 	 * Flag indicating that the overlay size has been set automatically by camera activity ant not by user.
 	 */
 	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 0b10;
+	/**
+	 * Flag indicating that the overlay size has been determined automatically by PupilAndIrisDetector.
+	 */
+	public static final int FLAG_OVERLAY_POSITION_DETERMINED_AUTOMATICALLY = 0b100;
 
 	// JAVADOC:OFF
 	private static final String LINE_BREAK = "\n";
@@ -454,28 +458,28 @@ public final class JpegMetadata implements Parcelable {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer();
-		str.append("Title: " + mTitle + LINE_BREAK);
-		str.append("Description: " + mDescription + LINE_BREAK);
-		str.append("Subject: " + mSubject + LINE_BREAK);
-		str.append("Comment: " + mComment + LINE_BREAK);
-		str.append("Person: " + mPerson + LINE_BREAK);
-		str.append("X-Center: " + mXCenter + LINE_BREAK);
-		str.append("Y-Center: " + mYCenter + LINE_BREAK);
-		str.append("OverlayScaleFactor: " + mOverlayScaleFactor + LINE_BREAK);
-		str.append("X-Position: " + mXPosition + LINE_BREAK);
-		str.append("Y-Position: " + mYPosition + LINE_BREAK);
-		str.append("ZoomFactor: " + mZoomFactor + LINE_BREAK);
-		str.append("OrganizeDate: " + mOrganizeDate + LINE_BREAK);
-		str.append("RightLeft: " + mRightLeft + LINE_BREAK);
-		str.append("Brightness: " + mBrightness + LINE_BREAK);
-		str.append("Contrast: " + mContrast + LINE_BREAK);
-		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
-		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
-		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);
-		str.append("Pupil-Y-Offset: " + mPupilYOffset + LINE_BREAK);
-		str.append("Flags: " + mFlags + LINE_BREAK);
-		str.append("Orientation: " + getOrientationString() + LINE_BREAK);
+		StringBuilder str = new StringBuilder();
+		str.append("Title: ").append(mTitle).append(LINE_BREAK);
+		str.append("Description: ").append(mDescription).append(LINE_BREAK);
+		str.append("Subject: ").append(mSubject).append(LINE_BREAK);
+		str.append("Comment: ").append(mComment).append(LINE_BREAK);
+		str.append("Person: ").append(mPerson).append(LINE_BREAK);
+		str.append("X-Center: ").append(mXCenter).append(LINE_BREAK);
+		str.append("Y-Center: ").append(mYCenter).append(LINE_BREAK);
+		str.append("OverlayScaleFactor: ").append(mOverlayScaleFactor).append(LINE_BREAK);
+		str.append("X-Position: ").append(mXPosition).append(LINE_BREAK);
+		str.append("Y-Position: ").append(mYPosition).append(LINE_BREAK);
+		str.append("ZoomFactor: ").append(mZoomFactor).append(LINE_BREAK);
+		str.append("OrganizeDate: ").append(mOrganizeDate).append(LINE_BREAK);
+		str.append("RightLeft: ").append(mRightLeft).append(LINE_BREAK);
+		str.append("Brightness: ").append(mBrightness).append(LINE_BREAK);
+		str.append("Contrast: ").append(mContrast).append(LINE_BREAK);
+		str.append("OverlayColor: ").append(getOverlayColorString()).append(LINE_BREAK);
+		str.append("Pupil-Size: ").append(mPupilSize).append(LINE_BREAK);
+		str.append("Pupil-X-Offset: ").append(mPupilXOffset).append(LINE_BREAK);
+		str.append("Pupil-Y-Offset: ").append(mPupilYOffset).append(LINE_BREAK);
+		str.append("Flags: ").append(mFlags).append(LINE_BREAK);
+		str.append("Orientation: ").append(getOrientationString()).append(LINE_BREAK);
 		return str.toString();
 	}
 

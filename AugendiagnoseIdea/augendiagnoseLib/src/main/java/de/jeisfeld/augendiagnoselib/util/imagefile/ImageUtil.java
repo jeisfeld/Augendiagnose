@@ -217,27 +217,39 @@ public final class ImageUtil {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = getBitmapFactor(data, maxSize);
 			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-
-			if (bitmap.getWidth() == 0 || bitmap.getHeight() == 0) {
-				return bitmap;
-			}
-
-			if (bitmap.getWidth() > maxSize || bitmap.getHeight() > maxSize) {
-				// Only if bitmap is bigger than maxSize, then resize it
-				if (bitmap.getWidth() > bitmap.getHeight()) {
-					int targetWidth = maxSize;
-					int targetHeight = bitmap.getHeight() * maxSize / bitmap.getWidth();
-					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-				}
-				else {
-					int targetWidth = bitmap.getWidth() * maxSize / bitmap.getHeight();
-					int targetHeight = maxSize;
-					bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-				}
-			}
+			bitmap = resizeBitmap(bitmap, maxSize, false);
 		}
 
 		return bitmap;
+	}
+
+	/**
+	 * Resize a bitmap to the given size.
+	 *
+	 * @param baseBitmap   The original bitmap.
+	 * @param targetSize   The target size.
+	 * @param allowGrowing flag indicating if the image is allowed to grow.
+	 * @return the resized image.
+	 */
+	public static Bitmap resizeBitmap(final Bitmap baseBitmap, final int targetSize, final boolean allowGrowing) {
+		if (baseBitmap.getWidth() == 0 || baseBitmap.getHeight() == 0) {
+			return baseBitmap;
+		}
+		else if (baseBitmap.getWidth() > targetSize || baseBitmap.getHeight() > targetSize || allowGrowing) {
+			if (baseBitmap.getWidth() > baseBitmap.getHeight()) {
+				int targetWidth = targetSize;
+				int targetHeight = baseBitmap.getHeight() * targetSize / baseBitmap.getWidth();
+				return Bitmap.createScaledBitmap(baseBitmap, targetWidth, targetHeight, false);
+			}
+			else {
+				int targetWidth = baseBitmap.getWidth() * targetSize / baseBitmap.getHeight();
+				int targetHeight = targetSize;
+				return Bitmap.createScaledBitmap(baseBitmap, targetWidth, targetHeight, false);
+			}
+		}
+		else {
+			return baseBitmap;
+		}
 	}
 
 	/**

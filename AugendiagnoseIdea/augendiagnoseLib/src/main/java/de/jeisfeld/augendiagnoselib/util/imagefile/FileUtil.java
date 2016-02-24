@@ -217,14 +217,19 @@ public final class FileUtil {
 	 */
 	public static boolean moveFile(@NonNull final File source, @NonNull final File target) {
 		// First try the normal rename.
-		if (source.renameTo(target)) {
-			return true;
+		boolean success = source.renameTo(target);
+
+		if (!success) {
+			success = copyFile(source, target);
+			if (success) {
+				success = deleteFile(source);
+			}
 		}
 
-		boolean success = copyFile(source, target);
 		if (success) {
-			success = deleteFile(source);
+			PupilAndIrisDetector.notifyFileRename(source.getAbsolutePath(), target.getAbsolutePath());
 		}
+
 		return success;
 	}
 

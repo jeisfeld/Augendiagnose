@@ -53,6 +53,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -598,6 +599,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		ImageView overlayView = (ImageView) getView().findViewById(R.id.circleOverlay);
 		TextView textViewGuide = (TextView) getView().findViewById(R.id.textViewGuide);
 
+		mImageView.updatePosition(mOverlayStatus, mOverlayStatus == OverlayStatus.GUIDE_IRIS
+				? (float) CIRCLE_RADIUS_IRIS / CIRCLE_BITMAP_SIZE
+				: (float) CIRCLE_RADIUS_PUPIL / CIRCLE_BITMAP_SIZE);
+
 		if (mOverlayStatus != OverlayStatus.GUIDE_IRIS && mOverlayStatus != OverlayStatus.GUIDE_PUPIL) {
 			overlayView.setVisibility(View.GONE);
 			textViewGuide.setVisibility(View.GONE);
@@ -1074,6 +1079,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			mImageView.setImage(mFile, getActivity(), mImageIndex);
+
+			PupilAndIrisDetector.determineAndStoreIrisPosition(mFile);
 		}
 
 		if (mImageView.getEyePhoto().getRightLeft() == null && mRightLeft != null) {
