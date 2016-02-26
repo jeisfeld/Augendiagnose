@@ -514,10 +514,14 @@ public final class ImageUtil {
 	 *
 	 * @param baseImage The original image.
 	 * @param targetSize The target size.
+	 * @param allowGrowing flag indicating if the image is allowed to grow.
 	 * @return the resized image.
 	 */
-	public static Image resizeImage(final Image baseImage, final int targetSize) {
+	public static Image resizeImage(final Image baseImage, final int targetSize, final boolean allowGrowing) {
 		if (baseImage == null || baseImage.getWidth() == 0 || baseImage.getHeight() == 0) {
+			return baseImage;
+		}
+		if (baseImage.getWidth() <= targetSize && baseImage.getHeight() <= targetSize && !allowGrowing) {
 			return baseImage;
 		}
 		int targetWidth;
