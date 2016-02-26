@@ -51,7 +51,7 @@
     <string name="message_dialog_no_hints_will_be_shown">From now on, the app will not show any of the currently existing hints. New hints of future versions will be shown.</string>
     <string name="message_dialog_triggering_purchase">Triggering purchase on Google Play&#8230;</string>
     <string name="message_guide_resize_iris">Please resize the eye until the iris fills the circle. Then press “OK”.</string>
-    <string name="message_guide_resize_pupil">Please resize the eye until the iris fills the circle. Then press “OK”.</string>
+    <string name="message_guide_resize_pupil">Please resize the eye until the pupil fills the circle. Then press “OK”.</string>
     <string name="imageinfo_line_filename">File name:</string>
     <string name="imageinfo_line_filedate">File date:</string>
     <string name="imageinfo_line_name">Name:</string>

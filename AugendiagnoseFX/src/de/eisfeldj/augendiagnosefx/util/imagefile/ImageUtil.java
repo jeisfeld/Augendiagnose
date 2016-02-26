@@ -462,6 +462,18 @@ public final class ImageUtil {
 					yPosition * height - overlaySize / 2, overlaySize, overlaySize);
 		}
 
+//		PupilAndIrisDetector detector = new PupilAndIrisDetector(baseImage);
+//		gc.setStroke(Color.RED);
+//		gc.setLineWidth(5); // MAGIC_NUMBER
+//		int irisRadius = (int) (detector.getIrisRadius() * Math.max(baseImage.getHeight(), baseImage.getWidth()));
+//		int irisXCenter = (int) (detector.getIrisXCenter() * baseImage.getWidth());
+//		int irisYCenter = (int) (detector.getIrisYCenter() * baseImage.getHeight());
+//		gc.strokeOval(irisXCenter - irisRadius, irisYCenter - irisRadius, 2 * irisRadius, 2 * irisRadius);
+//		int pupilRadius = (int) (detector.getPupilRadius() * Math.max(baseImage.getHeight(), baseImage.getWidth()));
+//		int pupilXCenter = (int) (detector.getPupilXCenter() * baseImage.getWidth());
+//		int pupilYCenter = (int) (detector.getPupilYCenter() * baseImage.getHeight());
+//		gc.strokeOval(pupilXCenter - pupilRadius, pupilYCenter - pupilRadius, 2 * pupilRadius, 2 * pupilRadius);
+
 		return canvas.snapshot(null, null);
 	}
 
