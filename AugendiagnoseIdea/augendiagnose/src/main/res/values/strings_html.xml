@@ -58,8 +58,13 @@
 		and a date and prepare them in this way for the app. Then the photos will be renamed and moved to the eye photo
 		folder.</p>
 
-	<p>As further alternative, you may take pictures directly from the app with the device camera. This will normally not
-		give photos in adequate quality, but it serves as an alternative to a professional camera.</p>
+	<p>
+		As further alternative, you may take pictures directly from the app with the device camera. This will normally not
+		give photos in adequate quality, but it serves as an alternative to a professional camera, in particular if you use a
+		macro lens such as the
+		<a href="https://sites.google.com/site/irisocamera/iriso-english" target="_blank">Miniris-2</a>
+		.
+	</p>
 
 	<p>As third alternative,</p>
 
@@ -222,6 +227,12 @@
 						functionality of the app.)</li>
 				</ul>
 			</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Automatic detection of iris</td>
+			<td width="70%" valign="top">Here you can select if the app should automatically try to find the position of iris and
+				pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of the
+				phone, and the result may be incorrect.</td>
 		</tr>
 	</table>
 

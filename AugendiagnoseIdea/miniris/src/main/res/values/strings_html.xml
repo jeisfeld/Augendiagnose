@@ -3,7 +3,7 @@
 
     <string name="html_navigation_overview">Overview</string>
     <string name="html_navigation_settings">Settings</string>
-    <string name="html_navigation_organize_photos"></string>
+	<string name="html_navigation_organize_photos"/>
     <string name="html_navigation_display_photos">Display Photos</string>
     <string name="html_navigation_release_notes">Release Notes</string>
     <string name="html_release_notes_base">
@@ -26,15 +26,19 @@
 	<h2>Miniris - Overview</h2>
 
 
-	<p>This App has the purpose to support the capturing and visualization of iris photographs on an Android device, in
-		order to do medical iris diagnosis. It is optimized for the use with the Miniris tool.</p>
+	<p>
+		This App has the purpose to support the capturing and visualization of iris photographs on an Android device, in order
+		to do medical iris diagnosis. It is optimized for the use with the
+		<a href="https://sites.google.com/site/irisocamera/iriso-english" target="_blank">Miniris-2 attachment</a>
+		.
+	</p>
 
 	<h3>Key Features</h3>
 
 	<p>The key features of the App are</p>
 
 	<ul>
-		<li>Capturing of iris photos using the phone camera (e.g. with the help of the Miniris tool).</li>
+		<li>Capturing of iris photos using the phone camera (e.g. with the help of the Miniris-2 attachment).</li>
 		<li>Organization of iris photos by name, date and side (right/left).</li>
 		<li>Display of two iris photos in parallel (with full support of individual resizing).</li>
 		<li>Change of brightness and contrast of the photo during display, overlay with an iris topography, and saving of
@@ -55,8 +59,8 @@
 			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
 		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
 			photo.</li>
-		<li>On the bottom left, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select the focus mode of the
-			camera. For closeups, the MACRO mode is normally a good choice.</li>
+		<li>On the bottom left, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select
+			the focus mode of the camera. For closeups, the MACRO mode is normally a good choice.</li>
 		<li>Above, there is a flashlight button. Here you can switch on the light of your device. As a flashlight in front of
 			your eye is dangerous, this is disabled by default, but you may enable it in the settings.</li>
 		<li>Above, there is a button with a circle. Here you can select how big the iris should be on the photo.</li>
@@ -185,6 +189,12 @@
 						functionality of the app.)</li>
 				</ul>
 			</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Automatic detection of iris</td>
+			<td width="70%" valign="top">Here you can select if the app should automatically try to find the position of iris and
+				pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of the
+				phone, and the result may be incorrect.</td>
 		</tr>
 	</table>
 

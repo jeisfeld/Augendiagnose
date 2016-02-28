@@ -11,9 +11,10 @@
 	
 	<h3>Erste Schritte:</h3>
 	<ol>
-	  <li>Machen Sie Fotos des rechten und linken Auges</li>
-	  <li>Weisen Sie den Fotos einen Namen (und ein Datum) zu</li>
-	  <li>Betrachten und analysieren Sie die Fotos</li>
+	  <li>Reinigen Sie das Objektiv und befestigen Sie das <a href="https://sites.google.com/site/irisocamera/iriso-english" target="_blank">Miniris-2</a> am Telefon.</li>
+	  <li>Machen Sie Fotos des rechten und linken Auges.</li>
+	  <li>Weisen Sie den Fotos einen Namen (und ein Datum) zu.</li>
+	  <li>Betrachten und analysieren Sie die Fotos.</li>
 	</ol>
 ]]>
     </string>
@@ -34,7 +35,7 @@
         <item>Fehlerkorrekturen</item>
         <item>Fehlerkorrekturen. Probleme mit Dateizugriff für Android 6 behoben.</item>
         <item>Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Automatische Erkennung von Iris- und Pupillenposition. Fehlerkorrekturen</item>
     </string-array>
 
 </resources>

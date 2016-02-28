@@ -11,9 +11,10 @@
 	
 	<h3>First steps:</h3>
 	<ol>
-	  <li>Take photos of right eye and left eye</li>
-	  <li>Assign a name (and date) to the photos</li>
-	  <li>View and analyze the photos</li>
+	  <li>Clean the lens and attach the <a href="https://sites.google.com/site/irisocamera/iriso-english" target="_blank">Miniris-2</a> to the phone.</li>
+	  <li>Take photos of right eye and left eye.</li>
+	  <li>Assign a name (and date) to the photos.</li>
+	  <li>View and analyze the photos.</li>
 	</ol>
 ]]>
     </string>
@@ -52,7 +53,7 @@
         <item>Bugfixes</item>
         <item>Bugfixes. Fixed issues on file access for Android 6.</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Automatic detection of iris and pupil position. Bugfixes</item>
     </string-array>
 
 </resources>

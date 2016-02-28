@@ -109,7 +109,7 @@ public class DisplayHtmlFragment extends Fragment {
 				if (url == null) {
 					return false;
 				}
-				else if (url.startsWith("http://")) {
+				else if (url.startsWith("http://") || url.startsWith("https://")) {
 					view.getContext().startActivity(
 							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 					return true;
