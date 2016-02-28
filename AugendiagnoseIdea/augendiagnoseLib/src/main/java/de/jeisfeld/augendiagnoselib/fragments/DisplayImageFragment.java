@@ -53,7 +53,6 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
-import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -1079,8 +1078,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 		else {
 			mImageView.setImage(mFile, getActivity(), mImageIndex);
-
-			PupilAndIrisDetector.determineAndStoreIrisPosition(mFile);
 		}
 
 		if (mImageView.getEyePhoto().getRightLeft() == null && mRightLeft != null) {

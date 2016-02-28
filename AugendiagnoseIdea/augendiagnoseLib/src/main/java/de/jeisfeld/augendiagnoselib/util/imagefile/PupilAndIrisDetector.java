@@ -12,6 +12,7 @@ import java.util.Set;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
+import android.util.SparseArray;
 
 import de.jeisfeld.augendiagnoselib.Application;
 
@@ -534,7 +535,7 @@ public class PupilAndIrisDetector {
 		/**
 		 * The information about the circles around this point.
 		 */
-		private Map<Integer, CircleInfo> mCircleInfos = new HashMap<>();
+		private SparseArray<CircleInfo> mCircleInfos = new SparseArray<>();
 
 		/**
 		 * The brightness leap value for this center.
@@ -618,8 +619,8 @@ public class PupilAndIrisDetector {
 		 */
 		private void calculateStatistics(final int baseRadius) {
 			// Base calculations for each circle.
-			for (CircleInfo circleInfo : mCircleInfos.values()) {
-				circleInfo.calculateStatistics();
+			for (int i = 0; i < mCircleInfos.size(); i++) {
+				mCircleInfos.valueAt(i).calculateStatistics();
 			}
 
 			int resolution = Math.max(mImage.getWidth(), mImage.getHeight());
@@ -634,7 +635,7 @@ public class PupilAndIrisDetector {
 			float[] innerDarkness = new float[mCircleInfos.size()];
 
 			for (int i = minRadius; i <= maxRadius; i++) {
-				float currentQuantile = mCircleInfos.get(Integer.valueOf(i)).getQuantile(MIN_BLACK_QUOTA);
+				float currentQuantile = mCircleInfos.get(i).getQuantile(MIN_BLACK_QUOTA);
 				innerQuantileSum += currentQuantile * i;
 				innerDarkness[i] = i == 0 ? 0 : 2 * innerQuantileSum / (i * (i + 1));
 			}
@@ -672,7 +673,7 @@ public class PupilAndIrisDetector {
 						}
 					}
 					if (pupilLeapValue > 0) {
-						CircleInfo circleInfo = mCircleInfos.get(Integer.valueOf(i));
+						CircleInfo circleInfo = mCircleInfos.get(i);
 						// prefer big, dark circles
 						circleInfo.mPupilLeapValue = (float) (Math.sqrt(i) * pupilLeapValue / innerDarkness[i]);
 						relevantPupilCircles.add(circleInfo);
@@ -689,10 +690,10 @@ public class PupilAndIrisDetector {
 							Math.min(i, mCircleInfos.size() - 1 - i));
 					for (int j = 1; j <= maxLeapDistance; j++) {
 						irisQuantileSum +=
-								(mCircleInfos.get(Integer.valueOf(i + j)).getQuantile(1 - MIN_WHITE_QUOTA)
-										- mCircleInfos.get(Integer.valueOf(i - j)).getQuantile(1 - MIN_WHITE_QUOTA)
-										+ mCircleInfos.get(Integer.valueOf(i + j)).getQuantile(1 - MIN_WHITE_QUOTA2)
-										- mCircleInfos.get(Integer.valueOf(i - j)).getQuantile(1 - MIN_WHITE_QUOTA2))
+								(mCircleInfos.get(i + j).getQuantile(1 - MIN_WHITE_QUOTA)
+										- mCircleInfos.get(i - j).getQuantile(1 - MIN_WHITE_QUOTA)
+										+ mCircleInfos.get(i + j).getQuantile(1 - MIN_WHITE_QUOTA2)
+										- mCircleInfos.get(i - j).getQuantile(1 - MIN_WHITE_QUOTA2))
 										/ (2 * Math.sqrt(j));
 						if (irisQuantileSum > 0) {
 							// prefer big jumps in small radius difference.
@@ -703,7 +704,7 @@ public class PupilAndIrisDetector {
 						}
 					}
 					if (irisLeapValue > 0) {
-						CircleInfo circleInfo = mCircleInfos.get(Integer.valueOf(i));
+						CircleInfo circleInfo = mCircleInfos.get(i);
 						// prefer big radius in order to prevent selection of small spots.
 						// prefer dark inner area
 						circleInfo.mIrisLeapValue = irisLeapValue;
@@ -762,7 +763,7 @@ public class PupilAndIrisDetector {
 		private float getMinMaxQuantile(final float p, final int fromRadius, final int toRadius, final boolean max) {
 			float result = max ? Float.MIN_VALUE : Float.MAX_VALUE;
 			for (int radius = fromRadius; radius <= toRadius; radius++) {
-				float newValue = mCircleInfos.get(Integer.valueOf(radius)).getQuantile(p);
+				float newValue = mCircleInfos.get(radius).getQuantile(p);
 				if ((!max && newValue < result) || (max && newValue > result)) {
 					result = newValue;
 				}
