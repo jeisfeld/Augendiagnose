@@ -15,6 +15,8 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
  * Class that serves to detect the pupil and iris within an eye photo.
@@ -291,6 +293,10 @@ public class PupilAndIrisDetector {
 	 * @param imagePath The path of the image.
 	 */
 	public static final void determineAndStoreIrisPosition(final String imagePath) {
+		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_automatic_iris_detection)) {
+			return;
+		}
+
 		JpegMetadata origMetadata = JpegSynchronizationUtil.getJpegMetadata(imagePath);
 		if (origMetadata == null
 				|| origMetadata.hasOverlayPosition() && !origMetadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)) {
@@ -470,7 +476,7 @@ public class PupilAndIrisDetector {
 
 			isStable = bestPupilCenter == null
 					|| (bestPupilCenter.mXCenter == pupilXCenter && bestPupilCenter.mYCenter == pupilYCenter
-							&& bestPupilCenter.mPupilRadius == pupilRadius);
+					&& bestPupilCenter.mPupilRadius == pupilRadius);
 			if (bestPupilCenter != null) {
 				pupilXCenter = bestPupilCenter.mXCenter;
 				pupilYCenter = bestPupilCenter.mYCenter;
@@ -545,11 +551,11 @@ public class PupilAndIrisDetector {
 		/**
 		 * Create a PupilCenterInfo with certain coordinates.
 		 *
-		 * @param image the image.
+		 * @param image  the image.
 		 * @param pixels the image pixels.
 		 * @param xCoord The x coordinate.
 		 * @param yCoord The y coordinate.
-		 * @param phase The phase in which the info is used.
+		 * @param phase  The phase in which the info is used.
 		 */
 		private PupilCenterInfo(final Bitmap image, final int[] pixels, final int xCoord, final int yCoord, final Phase phase) {
 			mXCenter = xCoord;
@@ -600,7 +606,7 @@ public class PupilAndIrisDetector {
 		/**
 		 * Add pixel info for another pixel.
 		 *
-		 * @param distance The distance of the pixel.
+		 * @param distance   The distance of the pixel.
 		 * @param brightness The brightness of the pixel.
 		 */
 		private void addInfo(final int distance, final int brightness) {
@@ -657,13 +663,13 @@ public class PupilAndIrisDetector {
 					for (int j = 1; j <= maxLeapDistance; j++) {
 						float diff = mPhase == Phase.INITIAL
 								? (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MAX_BLACK_QUOTA, i + j, i + j + maxLeapDistance, false))
-										/ (ASSUMED_PUPIL_BRIGHTNESS
-												+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - j - Math.min(maxLeapDistance, Math.max(j, 2)), i - j, true))
-										- 1
+								/ (ASSUMED_PUPIL_BRIGHTNESS
+								+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - j - Math.min(maxLeapDistance, Math.max(j, 2)), i - j, true))
+								- 1
 								: (ASSUMED_PUPIL_BRIGHTNESS + getMinMaxQuantile(MAX_BLACK_QUOTA, i + j, i + j + maxLeapDistance, false))
-										/ (ASSUMED_PUPIL_BRIGHTNESS
-												+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - Math.min(maxLeapDistance, Math.max(j, 2)), i, true))
-										- 1;
+								/ (ASSUMED_PUPIL_BRIGHTNESS
+								+ getMinMaxQuantile(MIN_BLACK_QUOTA, i - Math.min(maxLeapDistance, Math.max(j, 2)), i, true))
+								- 1;
 						if (diff > MIN_LEAP_DIFF) {
 							// prefer big jumps in small radius difference.
 							float newLeapValue = (float) (diff / Math.pow(j, 0.8)); // MAGIC_NUMBER
@@ -754,10 +760,10 @@ public class PupilAndIrisDetector {
 		/**
 		 * Get the minimum p-quantile for a certain set of radii.
 		 *
-		 * @param p The quantile parameter.
+		 * @param p          The quantile parameter.
 		 * @param fromRadius The start radius.
-		 * @param toRadius The end radius.
-		 * @param max if true, the maximum is returned, otherwise the minimum.
+		 * @param toRadius   The end radius.
+		 * @param max        if true, the maximum is returned, otherwise the minimum.
 		 * @return The minimum quantile.
 		 */
 		private float getMinMaxQuantile(final float p, final int fromRadius, final int toRadius, final boolean max) {
@@ -887,10 +893,10 @@ public class PupilAndIrisDetector {
 		/**
 		 * Initialize the IrisBoundary.
 		 *
-		 * @param image The image.
+		 * @param image   The image.
 		 * @param xCenter the initial x coordinate of the center.
 		 * @param yCenter the initial y coordinate of the center.
-		 * @param radius the initial iris radius.
+		 * @param radius  the initial iris radius.
 		 */
 		private IrisBoundary(final Bitmap image, final int xCenter, final int yCenter, final int radius) {
 			mImage = image;
@@ -933,7 +939,7 @@ public class PupilAndIrisDetector {
 		/**
 		 * Determine the boundary points for a certain y coordinate.
 		 *
-		 * @param yCoord The y coordinate for which to find the boundary points.
+		 * @param yCoord         The y coordinate for which to find the boundary points.
 		 * @param xDistanceRange the horizontal range which is considered.
 		 * @return true if a boundary point has been found.
 		 */

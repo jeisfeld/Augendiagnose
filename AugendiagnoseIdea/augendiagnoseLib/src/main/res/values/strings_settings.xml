@@ -28,6 +28,8 @@
     <string name="pref_default_guided_topo_setup" translatable="false">true</string>
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
+    <string name="pref_title_automatic_iris_detection">Automatic detection of iris</string>
+    <string name="pref_default_automatic_iris_detection" translatable="false">true</string>
     <string name="pref_title_full_resolution">Show image in full resolution</string>
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
@@ -140,6 +142,7 @@
     <string name="key_sort_by_last_name" translatable="false">sort_by_last_name</string>
     <string name="key_guided_topo_setup" translatable="false">guided_topo_setup</string>
     <string name="key_store_option" translatable="false">store_option</string>
+    <string name="key_automatic_iris_detection" translatable="false">automatic_iris_detection</string>
     <string name="key_full_resolution" translatable="false">full_resolution</string>
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>

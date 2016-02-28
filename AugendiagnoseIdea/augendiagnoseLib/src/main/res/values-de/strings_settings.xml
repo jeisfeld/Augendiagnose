@@ -21,6 +21,7 @@
     <string name="pref_title_sort_by_last_name">Sortieren nach Nachname</string>
     <string name="pref_title_guided_topo_setup">Angeleitete Einrichtung von Iris- und Pupillenposition</string>
     <string name="pref_title_store_options">Speichern von Daten in JPG-Dateien</string>
+    <string name="pref_title_automatic_iris_detection">Automatische Iris-Erkennung</string>
     <string name="pref_title_full_resolution">Anzeige in voller Auflösung</string>
     <string name="pref_title_overlay_color">Standardfarbe für Overlays</string>
     <string name="pref_title_language">Sprache</string>
