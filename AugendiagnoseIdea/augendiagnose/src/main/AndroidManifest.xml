@@ -3,8 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="de.eisfeldj.augendiagnose"
           android:installLocation="auto"
-          android:versionCode="56"
-          android:versionName="1.1.8">
+          android:versionCode="57"
+          android:versionName="1.1.9">
 
     <uses-sdk
         android:minSdkVersion="15"

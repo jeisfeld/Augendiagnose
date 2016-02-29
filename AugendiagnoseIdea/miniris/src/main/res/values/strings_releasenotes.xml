@@ -36,6 +36,7 @@
         <item>1.1.6</item>
         <item>1.1.7</item>
         <item>1.1.8</item>
+        <item>1.1.9</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -54,6 +55,7 @@
         <item>Bugfixes. Fixed issues on file access for Android 6.</item>
         <item>Bugfixes</item>
         <item>Automatic detection of iris and pupil position. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

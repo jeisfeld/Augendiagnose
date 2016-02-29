@@ -100,6 +100,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores. Corregidos problemas con el acceso a archivos para Android 6.</item>
         <item>Corrección de errores</item>
         <item>Detección automática de la posición del iris y de la pupila. Corrección de errores</item>
+        <item>Corrección de errores</item>
     </string-array>
 
 </resources>
