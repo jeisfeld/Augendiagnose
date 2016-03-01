@@ -29,7 +29,6 @@
     <string name="pref_title_store_options">Save additional data in jpeg</string>
     <string name="pref_default_store_options" translatable="false">2</string>
     <string name="pref_title_automatic_iris_detection">Automatic detection of iris</string>
-    <string name="pref_default_automatic_iris_detection" translatable="false">true</string>
     <string name="pref_title_full_resolution">Show image in full resolution</string>
     <string name="pref_title_overlay_color">Default overlay color</string>
     <string name="pref_title_language">Language</string>
@@ -183,6 +182,7 @@
     <string name="key_internal_camera_focal_distance_seekbar_progress" translatable="false">camera_focal_distance_seekbar_progress</string>
     <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
     <string name="key_internal_initialized_hints" translatable="false">initialized_hints</string>
+    <string name="key_internal_iris_detection_is_set" translatable="false">iris_detection_is_set</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
@@ -196,6 +196,8 @@
     <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
     <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
     <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
+    <string name="key_statistics_countirisdetectionsuccess" translatable="false">statistics_countirisdetectionsuccess</string>
+    <string name="key_statistics_countirisdetectionfailed" translatable="false">statistics_countirisdetectionfailed</string>
     <string name="key_admarvel_countclicks" translatable="false">admarvel_countclicks</string>
     <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
     <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>

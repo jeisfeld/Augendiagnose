@@ -333,9 +333,17 @@ public class PupilAndIrisDetector {
 						detector.updateMetadata(metadata);
 						JpegSynchronizationUtil.storeJpegMetadata(newImagePath, metadata);
 					}
+
+					PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionsuccess);
 				}
 				catch (Throwable e) {
 					Log.e(Application.TAG, "Failed to find iris and pupil position for file " + imagePath, e);
+					int errorCounter = PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionfailed);
+					int successCounter = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countirisdetectionsuccess, 0);
+					if (errorCounter > 2 && errorCounter > successCounter) {
+						// If Iris detection typically fails, then switch it off.
+						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_automatic_iris_detection, false);
+					}
 				}
 				finally {
 					synchronized (FILES_IN_PROCESS) {

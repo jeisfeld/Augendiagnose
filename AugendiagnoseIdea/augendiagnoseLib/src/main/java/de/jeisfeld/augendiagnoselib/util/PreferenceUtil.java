@@ -449,6 +449,18 @@ public final class PreferenceUtil {
 
 			setSharedPreferenceString(R.string.key_full_resolution, fullResolutionSetting);
 		}
+
+		// Automatic iris detection setting
+		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_iris_detection_is_set)) {
+			int memoryClass = SystemUtil.getLargeMemoryClass();
+			if (memoryClass >= 256) { // MAGIC_NUMBER
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_automatic_iris_detection, true);
+			}
+			else {
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_automatic_iris_detection, false);
+			}
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_iris_detection_is_set, true);
+		}
 	}
 
 	/**

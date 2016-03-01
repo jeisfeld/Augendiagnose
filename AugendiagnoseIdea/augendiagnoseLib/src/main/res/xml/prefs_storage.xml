@@ -36,7 +36,6 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_store_options"/>
     <CheckBoxPreference
-        android:defaultValue="@string/pref_default_automatic_iris_detection"
         android:key="@string/key_automatic_iris_detection"
         android:title="@string/pref_title_automatic_iris_detection"/>
 
