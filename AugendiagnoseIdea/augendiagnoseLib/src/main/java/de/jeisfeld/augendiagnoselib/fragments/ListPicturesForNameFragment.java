@@ -24,8 +24,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
-import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
 import de.jeisfeld.augendiagnoselib.components.ListPicturesForNameArrayAdapter;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -183,19 +181,10 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				// update list of images
 				updateEyePhotoPairs();
 
-				if (success) {
-					OrganizeNewPhotosActivity.startActivity(getActivity(),
-							PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input),
-							PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
-							NextAction.VIEW_IMAGES);
-				}
-				else {
+				if (!success) {
 					DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-							R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify
-									.getLeftEye().getPersonName(),
-							pairToModify
-									.getDateDisplayString(DATE_FORMAT));
-
+							R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify.getLeftEye().getPersonName(),
+							pairToModify.getDateDisplayString(DATE_FORMAT));
 				}
 				return true;
 			}

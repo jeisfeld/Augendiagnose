@@ -103,6 +103,10 @@ public class PupilAndIrisDetector {
 	 * The files which are currently processed by this class. The value contains the current file name in case of renaming.
 	 */
 	private static final Map<String, String> FILES_IN_PROCESS2 = new HashMap<>();
+	/**
+	 * The queue of iris detection threads.
+	 */
+	private static final List<Thread> THREAD_QUEUE = new ArrayList<>();
 
 	/**
 	 * The number of points on the boundaries of circles of sizes 0 - 2000.
@@ -304,37 +308,33 @@ public class PupilAndIrisDetector {
 			return;
 		}
 
-		new Thread() {
+		Thread workingThread = new Thread() {
 			@Override
 			public void run() {
-				synchronized (FILES_IN_PROCESS) {
-					if (FILES_IN_PROCESS2.keySet().contains(imagePath)) {
-						return;
-					}
-					else {
-						FILES_IN_PROCESS.put(imagePath, new HashSet<String>());
-						FILES_IN_PROCESS2.put(imagePath, imagePath);
-					}
-				}
-
 				try {
-					Log.v(Application.TAG, "Start finding iris for " + imagePath);
-					long timestamp = System.currentTimeMillis();
-					PupilAndIrisDetector detector = new PupilAndIrisDetector(ImageUtil.getImageBitmap(imagePath, 0));
-					Log.v(Application.TAG, "Finished finding iris for " + imagePath + ". Duration: "
-							+ ((System.currentTimeMillis() - timestamp) / 1000.0)); // MAGIC_NUMBER
-
 					// Retrieve image path - in case the file has moved.
 					String newImagePath = FILES_IN_PROCESS2.get(imagePath);
+					JpegMetadata origMetadata2 = JpegSynchronizationUtil.getJpegMetadata(newImagePath);
+					if (origMetadata2 != null
+							&& (!origMetadata2.hasOverlayPosition() || origMetadata2.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY))) {
+						Log.v(Application.TAG, "Start finding iris for " + newImagePath);
+						long timestamp = System.currentTimeMillis();
+						PupilAndIrisDetector detector = new PupilAndIrisDetector(ImageUtil.getImageBitmap(newImagePath, 0));
+						Log.v(Application.TAG, "Finished finding iris for " + newImagePath + ". Duration: "
+								+ ((System.currentTimeMillis() - timestamp) / 1000.0)); // MAGIC_NUMBER
 
-					JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(newImagePath);
-					// re-check if position has been set manually.
-					if (metadata != null && (!metadata.hasOverlayPosition() || metadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY))) {
-						detector.updateMetadata(metadata);
-						JpegSynchronizationUtil.storeJpegMetadata(newImagePath, metadata);
+						// Retrieve image path - in case the file has moved.
+						newImagePath = FILES_IN_PROCESS2.get(imagePath);
+						JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(newImagePath);
+						// re-check if position has been set manually.
+						if (metadata != null
+								&& (!metadata.hasOverlayPosition() || metadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY))) {
+							detector.updateMetadata(metadata);
+							JpegSynchronizationUtil.storeJpegMetadata(newImagePath, metadata);
+						}
+
+						PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionsuccess);
 					}
-
-					PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionsuccess);
 				}
 				catch (Throwable e) {
 					Log.e(Application.TAG, "Failed to find iris and pupil position for file " + imagePath, e);
@@ -357,9 +357,35 @@ public class PupilAndIrisDetector {
 						FILES_IN_PROCESS.remove(newImagePath);
 						FILES_IN_PROCESS2.remove(newImagePath);
 					}
+
+					synchronized (THREAD_QUEUE) {
+						THREAD_QUEUE.remove(Thread.currentThread());
+
+						if (THREAD_QUEUE.size() > 0) {
+							THREAD_QUEUE.get(0).start();
+						}
+					}
 				}
 			}
-		}.start();
+		};
+
+		synchronized (FILES_IN_PROCESS) {
+			if (FILES_IN_PROCESS2.keySet().contains(imagePath)) {
+				return;
+			}
+			else {
+				FILES_IN_PROCESS.put(imagePath, new HashSet<String>());
+				FILES_IN_PROCESS2.put(imagePath, imagePath);
+			}
+		}
+
+		synchronized (THREAD_QUEUE) {
+			THREAD_QUEUE.add(workingThread);
+
+			if (THREAD_QUEUE.size() == 1) {
+				workingThread.start();
+			}
+		}
 	}
 
 	/**
