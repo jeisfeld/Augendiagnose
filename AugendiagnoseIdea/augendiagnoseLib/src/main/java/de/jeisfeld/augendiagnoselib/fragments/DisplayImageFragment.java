@@ -116,7 +116,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The file path.
 	 */
-	@Nullable
 	private String mFile;
 
 	/**
@@ -127,7 +126,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Information if right or left image.
 	 */
-	@Nullable
 	private RightLeft mRightLeft;
 
 	/**
@@ -228,6 +226,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private SeekBar mSeekbarContrast;
 
 	/**
+	 * The saturation SeekBar.
+	 */
+	private SeekBar mSeekbarSaturation;
+
+	/**
+	 * The color remperature SeekBar.
+	 */
+	private SeekBar mSeekbarColorTemperature;
+
+	/**
 	 * A flag indicating which utilities (seekbars, buttons) should be displayed.
 	 */
 	private UtilitiyStatus mShowUtilities = UtilitiyStatus.SHOW_NOTHING;
@@ -240,7 +248,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * The status of the pupil button.
 	 */
-	@Nullable
 	private PupilButtonStatus mPupilButtonStatus;
 
 	static {
@@ -409,6 +416,26 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
+		mSeekbarSaturation = (SeekBar) getView().findViewById(R.id.seekBarSaturation);
+		mSeekbarSaturation.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
+				if (fromUser) {
+					mImageView.setSaturation(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				}
+			}
+		});
+
+		mSeekbarColorTemperature = (SeekBar) getView().findViewById(R.id.seekBarColorTemperature);
+		mSeekbarColorTemperature.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
+				if (fromUser) {
+					mImageView.setColorTemperature(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+				}
+			}
+		});
+
 		// The following also updates the selectColorButton
 		mImageView.setOverlayColor(mOverlayColor);
 
@@ -503,7 +530,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mToolsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				mShowUtilities = mShowUtilities.getNextStatus(alwaysShowOverlayBar());
+				mShowUtilities = mShowUtilities.getNextStatus(alwaysShowOverlayBar(), allowAllBars());
 				showUtilities();
 				updateDefaultShowUtilities(mShowUtilities);
 			}
@@ -569,6 +596,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	// OVERRIDABLE
 	protected boolean alwaysShowOverlayBar() {
+		return true;
+	}
+
+	/**
+	 * Method indicating if all bars may be shown at once.
+	 *
+	 * @return the indicator if all bars may be shown at once.
+	 */
+	// OVERRIDABLE
+	protected boolean allowAllBars() {
 		return true;
 	}
 
@@ -892,11 +929,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public boolean onMenuItemClick(@NonNull final MenuItem item) {
 				int itemId = item.getItemId();
-				if (itemId == R.id.action_store_brightness) {
+				if (itemId == R.id.action_store_color_settings) {
 					mImageView.storeBrightnessContrast(false);
 					return true;
 				}
-				else if (itemId == R.id.action_reset_brightness) {
+				else if (itemId == R.id.action_reset_color_settings) {
 					mImageView.storeBrightnessContrast(true);
 					return true;
 				}
@@ -930,8 +967,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
 			popup.getMenu().removeGroup(R.id.group_overlay);
 		}
-		if (mShowUtilities != UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST) {
-			popup.getMenu().removeGroup(R.id.group_brightness);
+		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING || mShowUtilities == UtilitiyStatus.ONLY_OVERLAY) {
+			popup.getMenu().removeGroup(R.id.group_color_settings);
 		}
 
 		popup.show();
@@ -969,9 +1006,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		fragmentView.findViewById(R.id.separatorTools).setVisibility(mShowUtilities == UtilitiyStatus.SHOW_NOTHING ? View.GONE : View.VISIBLE);
 
 		// Brightness/contrast seekbars
-		int brightnessContrastVisibility = mShowUtilities == UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST ? View.VISIBLE : View.GONE;
+		int brightnessContrastVisibility = mShowUtilities == UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST
+				|| mShowUtilities == UtilitiyStatus.SHOW_EVERYTHING ? View.VISIBLE : View.GONE;
 		fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(brightnessContrastVisibility);
 		fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(brightnessContrastVisibility);
+
+		// Saturation/color temperature seekbars
+		int saturationColorTemperatureVisibility = mShowUtilities == UtilitiyStatus.OVERLAY_SATURATION_COLOR_TEMPERATURE
+				|| mShowUtilities == UtilitiyStatus.SHOW_EVERYTHING ? View.VISIBLE : View.GONE;
+		fragmentView.findViewById(R.id.seekBarSaturationLayout).setVisibility(saturationColorTemperatureVisibility);
+		fragmentView.findViewById(R.id.seekBarColorTemperatureLayout).setVisibility(saturationColorTemperatureVisibility);
 
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
 			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
@@ -1018,7 +1062,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (level == null) {
 			// call this method only if no value is set
-			level = SystemUtil.isTablet() ? UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST : UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST;
+			level = UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST;
 		}
 
 		return level;
@@ -1137,6 +1181,18 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void updateSeekbarContrast(final float contrast) {
 		float progress = (contrast + 1) * mSeekbarContrast.getMax() / 2;
 		mSeekbarContrast.setProgress(Float.valueOf(progress).intValue());
+	}
+
+	@Override
+	public final void updateSeekbarSaturation(final float saturation) {
+		float progress = (saturation + 1) * mSeekbarSaturation.getMax() / 2;
+		mSeekbarSaturation.setProgress(Float.valueOf(progress).intValue());
+	}
+
+	@Override
+	public final void updateSeekbarColorTemperature(final float colorTemperature) {
+		float progress = (colorTemperature + 1) * mSeekbarColorTemperature.getMax() / 2;
+		mSeekbarColorTemperature.setProgress(Float.valueOf(progress).intValue());
 	}
 
 	@Override
@@ -1273,7 +1329,15 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		/**
 		 * Show the overlay pane and the brightness/contrast sliders.
 		 */
-		OVERLAY_BRIGHTNESS_CONTRAST(3, false);
+		OVERLAY_BRIGHTNESS_CONTRAST(3, true),
+		/**
+		 * Show the overlay pane and the saturation/color temparature sliders.
+		 */
+		SHOW_EVERYTHING(4, false),
+		/**
+		 * Show the overlay pane and the saturation/color temparature sliders.
+		 */
+		OVERLAY_SATURATION_COLOR_TEMPERATURE(5, false);
 
 		/**
 		 * The numeric value.
@@ -1324,15 +1388,20 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		 * The next status after pressing the "show utilities" button.
 		 *
 		 * @param alwaysShowOverlayBar Flag indicating if the overlay bar should always be shown.
+		 * @param allowAllBars         Flag indicating if all bars may be shown at once.
 		 * @return the next status.
 		 */
-		private UtilitiyStatus getNextStatus(final boolean alwaysShowOverlayBar) {
+		private UtilitiyStatus getNextStatus(final boolean alwaysShowOverlayBar, final boolean allowAllBars) {
 			switch (this) {
 			case SHOW_NOTHING:
 				return ONLY_OVERLAY;
 			case ONLY_OVERLAY:
 				return OVERLAY_BRIGHTNESS_CONTRAST;
 			case OVERLAY_BRIGHTNESS_CONTRAST:
+				return allowAllBars ? SHOW_EVERYTHING : OVERLAY_SATURATION_COLOR_TEMPERATURE;
+			case SHOW_EVERYTHING:
+				return OVERLAY_SATURATION_COLOR_TEMPERATURE;
+			case OVERLAY_SATURATION_COLOR_TEMPERATURE:
 			default:
 				return alwaysShowOverlayBar ? ONLY_OVERLAY : SHOW_NOTHING;
 			}

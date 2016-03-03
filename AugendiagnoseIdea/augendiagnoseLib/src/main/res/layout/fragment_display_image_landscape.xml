@@ -91,6 +91,48 @@
         style="@style/SeparatorBarVertical"/>
 
     <LinearLayout
+        android:id="@+id/seekBarColorTemperatureLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_color_temperature"
+            android:src="@drawable/ic_seek_color_temperature"/>
+
+        <de.jeisfeld.augendiagnoselib.components.VerticalSeekBar
+            android:id="@+id/seekBarColorTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:max="100"
+            android:progress="50"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/seekBarSaturationLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_saturation"
+            android:src="@drawable/ic_seek_saturation"/>
+
+        <de.jeisfeld.augendiagnoselib.components.VerticalSeekBar
+            android:id="@+id/seekBarSaturation"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:max="100"
+            android:progress="50"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/seekBarBrightnessLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

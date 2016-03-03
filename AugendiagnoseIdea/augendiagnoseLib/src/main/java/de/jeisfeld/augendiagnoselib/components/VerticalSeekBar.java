@@ -141,10 +141,12 @@ public class VerticalSeekBar extends SeekBar {
 	 * @param fromUser flag indicating if the change was done by the user.
 	 */
 	public final void setProgressInternally(final int progress, final boolean fromUser) {
-		if (progress != getProgress() && mOnSeekBarChangeListener != null) {
-			mOnSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
+		if (progress != getProgress()) {
+			super.setProgress(progress);
+			if (mOnSeekBarChangeListener != null) {
+				mOnSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
+			}
 		}
-		super.setProgress(progress);
 		onSizeChanged(getWidth(), getHeight(), 0, 0);
 	}
 

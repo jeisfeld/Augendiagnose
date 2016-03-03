@@ -97,6 +97,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static final float CONTRAST_LIMIT = 0.98f;
 
 	/**
+	 * The max size of a byte.
+	 */
+	private static final int BYTE = 255;
+
+	/**
 	 * The color of the one-colored overlays.
 	 */
 	private int mOverlayColor = Color.RED;
@@ -146,7 +151,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The way in which pinching is done.
 	 */
-	@Nullable
 	private PinchMode mPinchMode = PinchMode.ALL;
 
 	/**
@@ -175,6 +179,16 @@ public class OverlayPinchImageView extends PinchImageView {
 	private float mContrast = 1f;
 
 	/**
+	 * The saturation (1/3 to infinity) of the bitmap. Default: 1.
+	 */
+	private float mSaturation = 1f;
+
+	/**
+	 * The color temperature (-1 to 1) of the bitmap.
+	 */
+	private float mColorTemperature = 0f;
+
+	/**
 	 * A small version of the bitmap.
 	 */
 	private Bitmap mBitmapSmall;
@@ -182,25 +196,21 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * The partial bitmap with full resolution.
 	 */
-	@Nullable
 	private Bitmap mPartialBitmapFullResolution;
 
 	/**
 	 * The partial bitmap with full resolution, including brightness.
 	 */
-	@Nullable
 	private Bitmap mPartialBitmapFullResolutionWithBrightness;
 
 	/**
 	 * The full bitmap (full resolution).
 	 */
-	@Nullable
 	private Bitmap mBitmapFull = null;
 
 	/**
 	 * The metadata of the image.
 	 */
-	@Nullable
 	private JpegMetadata mMetadata;
 
 	/**
@@ -262,7 +272,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Standard constructor to be implemented for all views.
 	 *
 	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs The attributes of the XML tag that is inflating the view.
+	 * @param attrs   The attributes of the XML tag that is inflating the view.
 	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public OverlayPinchImageView(final Context context, final AttributeSet attrs) {
@@ -272,10 +282,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs The attributes of the XML tag that is inflating the view.
+	 * @param context  The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs    The attributes of the XML tag that is inflating the view.
 	 * @param defStyle An attribute in the current theme that contains a reference to a style resource that supplies default
-	 *            values for the view. Can be 0 to not look for defaults.
+	 *                 values for the view. Can be 0 to not look for defaults.
 	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public OverlayPinchImageView(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -294,8 +304,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Fill with an image, initializing from metadata.
 	 *
-	 * @param pathName The pathname of the image
-	 * @param activity The triggering activity (required for bitmap caching)
+	 * @param pathName   The pathname of the image
+	 * @param activity   The triggering activity (required for bitmap caching)
 	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	@Override
@@ -481,10 +491,10 @@ public class OverlayPinchImageView extends PinchImageView {
 		// Even in full resolution, first calculate high resolution image.
 		if (resolution == LOW) {
 			// for performance reasons, use only low resolution bitmap while pinching
-			modBitmap = changeBitmapContrastBrightness(mBitmapSmall, mContrast, mBrightness);
+			modBitmap = changeBitmapColors(mBitmapSmall, mContrast, mBrightness, mSaturation, mColorTemperature);
 		}
 		else {
-			modBitmap = changeBitmapContrastBrightness(mBitmap, mContrast, mBrightness);
+			modBitmap = changeBitmapColors(mBitmap, mContrast, mBrightness, mSaturation, mColorTemperature);
 		}
 
 		layers[0] = new BitmapDrawable(getResources(), modBitmap);
@@ -567,7 +577,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Get information if the view can handle overlays.
 	 *
 	 * @return true if the view can handle overlays. This is possible only if the right/left position of the eye photo
-	 *         is defined.
+	 * is defined.
 	 */
 	public final boolean canHandleOverlays() {
 		return mEyePhoto != null && mEyePhoto.getRightLeft() != null;
@@ -576,7 +586,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Trigger one overlay either for activation or for deactivation.
 	 *
-	 * @param position number of the overlay
+	 * @param position  number of the overlay
 	 * @param pinchMode the way in which pinching should be done. ALL indicates that the overlay should not be shown.
 	 */
 	public final void triggerOverlay(final int position, final PinchMode pinchMode) {
@@ -594,7 +604,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Switch the lock status of the overlays.
 	 *
-	 * @param lock the target lock status
+	 * @param lock  the target lock status
 	 * @param store a flag indicating if the lock status should be stored.
 	 */
 	public final void lockOverlay(final boolean lock, final boolean store) {
@@ -626,7 +636,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Change the positioning of the image dependent on the overlay setup phase.
 	 *
 	 * @param overlayStatus The overlay status.
-	 * @param circleRadius The relative circle radius (compared to min view dimension)
+	 * @param circleRadius  The relative circle radius (compared to min view dimension)
 	 */
 	public final void updatePosition(final OverlayStatus overlayStatus, final float circleRadius) {
 		switch (overlayStatus) {
@@ -855,17 +865,17 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Create a drawable from a black image drawable, having a changed colour.
 	 *
 	 * @param sourceDrawable The black image drawable
-	 * @param color The target color
-	 * @param origPupilSize The pupil size (relative to iris) in the original overlay bitmap.
-	 * @param destPupilSize The pupil size (relative to iris) in the target overlay bitmap.
-	 * @param pupilOffsetX The relative x offset of the pupil center
-	 * @param pupilOffsetY The relative y offset of the pupil center
+	 * @param color          The target color
+	 * @param origPupilSize  The pupil size (relative to iris) in the original overlay bitmap.
+	 * @param destPupilSize  The pupil size (relative to iris) in the target overlay bitmap.
+	 * @param pupilOffsetX   The relative x offset of the pupil center
+	 * @param pupilOffsetY   The relative y offset of the pupil center
 	 * @return The modified drawable, with the intended color.
 	 */
 	@NonNull
 	private Drawable getModifiedDrawable(@NonNull final Drawable sourceDrawable, @Nullable final Integer color,
-			final float origPupilSize, @Nullable final Float destPupilSize,
-			final Float pupilOffsetX, final Float pupilOffsetY) {
+										 final float origPupilSize, @Nullable final Float destPupilSize,
+										 final Float pupilOffsetX, final Float pupilOffsetY) {
 		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
 		Bitmap colouredBitmap = color == null ? bitmap : ImageUtil.changeBitmapColor(bitmap, color);
 
@@ -919,6 +929,30 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void setContrast(final float contrast) {
 		// input goes from -1 to 1. Output goes from 0 to infinity.
 		mContrast = seekbarContrastToStoredContrast(contrast);
+		mNeedsBitmapRefresh = true;
+		cleanFullResolutionBitmaps(true);
+		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
+	}
+
+	/**
+	 * Set the saturation.
+	 *
+	 * @param saturation the saturation on a scale from -1 to 1.
+	 */
+	public final void setSaturation(final float saturation) {
+		mSaturation = seekbarSaturationToStoredSaturation(saturation); // MAGIC_NUMBER
+		mNeedsBitmapRefresh = true;
+		cleanFullResolutionBitmaps(true);
+		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
+	}
+
+	/**
+	 * Set the color temperature.
+	 *
+	 * @param colorTemperature the color temperature on a scale from -1 to 1.
+	 */
+	public final void setColorTemperature(final float colorTemperature) {
+		mColorTemperature = colorTemperature;
 		mNeedsBitmapRefresh = true;
 		cleanFullResolutionBitmaps(true);
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
@@ -997,6 +1031,41 @@ public class OverlayPinchImageView extends PinchImageView {
 	private static float storedContrastToSeekbarContrast(final float storedContrast) {
 		float contrastImd = (1f - 2f / (storedContrast + 1f)) / CONTRAST_LIMIT;
 		return (float) Math.sin(Math.PI * contrastImd / 2);
+	}
+
+	/**
+	 * Convert saturation from (-1,1) scale to (1/3,infty) scale.
+	 *
+	 * @param seekbarSaturation the saturation on (-1,1) scale.
+	 * @return the saturation on (1/3,infty) scale.
+	 */
+	private static float seekbarSaturationToStoredSaturation(final float seekbarSaturation) {
+		return 4f / 3 / (1f - seekbarSaturation * CONTRAST_LIMIT) - 1f / 3; // MAGIC_NUMBER
+	}
+
+	/**
+	 * Convert saturation from (0,infty) scale to (-1,1) scale.
+	 *
+	 * @param storedSaturation the saturation on (0,infty) scale.
+	 * @return the saturation on (-1,1) scale.
+	 */
+	private static float storedSaturationToSeekbarSaturation(final float storedSaturation) {
+		return (1f - 4f / 3 / (storedSaturation + 1f / 3)) / CONTRAST_LIMIT; // MAGIC_NUMBER
+	}
+
+	/**
+	 * Convert a temperature into a color value representing the color of this temperature.
+	 *
+	 * @param temperature The temperature value (in the range -1..1).
+	 * @return The color value.
+	 */
+	public static int convertTemperatureToColor(final double temperature) {
+		if (temperature >= 0) {
+			return Color.rgb((int) (BYTE - 150 * temperature), (int) (BYTE - 105 * temperature), BYTE); // MAGIC_NUMBER
+		}
+		else {
+			return Color.rgb(BYTE, (int) (BYTE + 80 * temperature), (int) (BYTE + 145 * temperature)); // MAGIC_NUMBER
+		}
 	}
 
 	/**
@@ -1194,21 +1263,35 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Update contrast and brightness of a bitmap.
 	 *
-	 * @param bmp input bitmap
-	 * @param contrast 0..infinity - 1 is default
-	 * @param brightness -1..1 - 0 is default
+	 * @param bmp              input bitmap
+	 * @param contrast         0..infinity - 1 is default
+	 * @param brightness       -1..1 - 0 is default
+	 * @param saturation       1/3..infinity - 1 is default
+	 * @param colorTemperature -1..1 - 0 is default
 	 * @return new bitmap
 	 */
-	private static Bitmap changeBitmapContrastBrightness(@NonNull final Bitmap bmp, final float contrast, final float brightness) {
-		if (contrast == 1 && brightness == 0) {
+	private static Bitmap changeBitmapColors(@NonNull final Bitmap bmp, final float contrast, final float brightness,
+											 final float saturation, final float colorTemperature) {
+		if (contrast == 1 && brightness == 0 && saturation == 1 && colorTemperature == 0) {
 			return bmp;
 		}
 
-		float offset = 255f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER for 1 byte
+		// some baseCalculations for the mapping matrix
+		int temperatureColor = convertTemperatureToColor(colorTemperature);
+		float factorRed = (float) BYTE / Color.red(temperatureColor);
+		float factorGreen = (float) BYTE / Color.green(temperatureColor);
+		float factorBlue = (float) BYTE / Color.blue(temperatureColor);
+		float correctionFactor = (float) Math.pow(factorRed * factorGreen * factorBlue, -1f / 3); // MAGIC_NUMBER
+		factorRed *= correctionFactor * contrast;
+		factorGreen *= correctionFactor * contrast;
+		factorBlue *= correctionFactor * contrast;
+		float offset = BYTE / 2f * (1 - contrast + brightness * contrast + brightness);
+		float oppositeSaturation = (1 - saturation) / 2;
+
 		ColorMatrix cm = new ColorMatrix(new float[] { //
-				contrast, 0, 0, 0, offset, //
-				0, contrast, 0, 0, offset, //
-				0, 0, contrast, 0, offset, //
+				factorRed * saturation, factorGreen * oppositeSaturation, factorBlue * oppositeSaturation, 0, offset, //
+				factorRed * oppositeSaturation, factorGreen * saturation, factorBlue * oppositeSaturation, 0, offset, //
+				factorRed * oppositeSaturation, factorGreen * oppositeSaturation, factorBlue * saturation, 0, offset, //
 				0, 0, 0, 1, 0});
 
 		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
@@ -1397,7 +1480,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				if (mPartialBitmapFullResolutionWithBrightness == null) {
 					try {
 						mPartialBitmapFullResolutionWithBrightness =
-								changeBitmapContrastBrightness(mPartialBitmapFullResolution, mContrast, mBrightness);
+								changeBitmapColors(mPartialBitmapFullResolution, mContrast, mBrightness, mSaturation, mColorTemperature);
 					}
 					catch (OutOfMemoryError e) {
 						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap with brightness", e);
@@ -1578,6 +1661,8 @@ public class OverlayPinchImageView extends PinchImageView {
 		bundle.putSerializable("mPinchMode", mPinchMode);
 		bundle.putFloat("mBrightness", this.mBrightness);
 		bundle.putFloat("mContrast", this.mContrast);
+		bundle.putFloat("mSaturation", this.mSaturation);
+		bundle.putFloat("mColorTemperature", this.mColorTemperature);
 		bundle.putInt("mOverlayColor", mOverlayColor);
 		bundle.putParcelable("mMetadata", mMetadata);
 		return bundle;
@@ -1601,6 +1686,8 @@ public class OverlayPinchImageView extends PinchImageView {
 			this.mPinchMode = (PinchMode) bundle.getSerializable("mPinchMode");
 			this.mBrightness = bundle.getFloat("mBrightness");
 			this.mContrast = bundle.getFloat("mContrast");
+			this.mSaturation = bundle.getFloat("mSaturation");
+			this.mColorTemperature = bundle.getFloat("mColorTemperature");
 			this.mOverlayColor = bundle.getInt("mOverlayColor");
 			this.mMetadata = bundle.getParcelable("mMetadata");
 			enhancedState = bundle.getParcelable("instanceState");
@@ -1673,6 +1760,20 @@ public class OverlayPinchImageView extends PinchImageView {
 		void updateSeekbarContrast(float contrast);
 
 		/**
+		 * Update the saturation bar.
+		 *
+		 * @param saturation The saturation.
+		 */
+		void updateSeekbarSaturation(float saturation);
+
+		/**
+		 * Update the color temperature bar.
+		 *
+		 * @param colorTemperature The color temperature.
+		 */
+		void updateSeekbarColorTemperature(float colorTemperature);
+
+		/**
 		 * Update the overlay color button.
 		 *
 		 * @param color The color displayed in the button.
@@ -1730,7 +1831,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		/**
 		 * Get the retainFragment - search it by the index. If not found, create a new one.
 		 *
-		 * @param fm The fragment manager handling this fragment.
+		 * @param fm    The fragment manager handling this fragment.
 		 * @param index The index of the view (required in case of multiple PinchImageViews to be retained).
 		 * @return the retainFragment.
 		 */

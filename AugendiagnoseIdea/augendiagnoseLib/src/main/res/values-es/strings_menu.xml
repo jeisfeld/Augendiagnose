@@ -3,8 +3,8 @@
 
     <!-- Entries related to context menus -->
 
-    <string name="menu_store_brightness">Guardar brillo y contraste</string>
-    <string name="menu_reset_brightness">Restablecer brillo y contraste</string>
+    <string name="menu_store_color_settings">Guardar ajustes de color</string>
+    <string name="menu_reset_color_settings">Restablecer ajustes de color</string>
     <string name="menu_store_position">Guardar zoom y posición</string>
     <string name="menu_reset_position">Restablecer zoom y posición</string>
     <string name="menu_store_overlay_color">Guardar color de superposición</string>

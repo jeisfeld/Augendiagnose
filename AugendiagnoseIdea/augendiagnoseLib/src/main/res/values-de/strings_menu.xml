@@ -3,8 +3,8 @@
 
     <!-- Entries related to context menus -->
 
-    <string name="menu_store_brightness">Helligkeit/Kontrast speichern</string>
-    <string name="menu_reset_brightness">Helligkeit/Kontrast zurücksetzen</string>
+    <string name="menu_store_color_settings">Farbeinstellungen speichern</string>
+    <string name="menu_reset_color_settings">Farbeinstellungen zurücksetzen</string>
     <string name="menu_store_position">Zoom/Position speichern</string>
     <string name="menu_reset_position">Zoom/Position zurücksetzen</string>
     <string name="menu_store_overlay_color">Farbe der Overlays speichern</string>

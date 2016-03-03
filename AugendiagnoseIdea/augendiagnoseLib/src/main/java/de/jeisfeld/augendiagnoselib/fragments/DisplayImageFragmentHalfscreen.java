@@ -52,4 +52,10 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 	protected final boolean alwaysShowOverlayBar() {
 		return SystemUtil.isTablet() || getOverlayStatus() == OverlayStatus.GUIDE_IRIS || getOverlayStatus() == OverlayStatus.GUIDE_PUPIL;
 	}
+
+	@Override
+	protected boolean allowAllBars() {
+		return SystemUtil.isTablet();
+	}
+
 }

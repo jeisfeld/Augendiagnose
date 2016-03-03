@@ -7,13 +7,13 @@
         android:id="@+id/action_reset_position"
         android:title="@string/menu_reset_position"/>
 
-    <group android:id="@+id/group_brightness">
+    <group android:id="@+id/group_color_settings">
         <item
-            android:id="@+id/action_store_brightness"
-            android:title="@string/menu_store_brightness"/>
+            android:id="@+id/action_store_color_settings"
+            android:title="@string/menu_store_color_settings"/>
         <item
-            android:id="@+id/action_reset_brightness"
-            android:title="@string/menu_reset_brightness"/>
+            android:id="@+id/action_reset_color_settings"
+            android:title="@string/menu_reset_color_settings"/>
     </group>
     <group android:id="@+id/group_overlay">
         <item

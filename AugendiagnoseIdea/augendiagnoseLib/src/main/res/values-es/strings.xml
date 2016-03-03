@@ -19,6 +19,8 @@
     <string name="section_select_date">Seleccionar Fecha</string>
     <string name="text_brightness">Brillo</string>
     <string name="text_contrast">Contraste</string>
+    <string name="text_saturation">Saturación</string>
+    <string name="text_color_temperature">Temperatura de color</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_clear">Borrar</string>

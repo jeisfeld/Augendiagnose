@@ -3,8 +3,8 @@
 
     <!-- Entries related to context menus -->
 
-    <string name="menu_store_brightness">Store brightness/contrast</string>
-    <string name="menu_reset_brightness">Reset brightness/contrast</string>
+    <string name="menu_store_color_settings">Store color settings</string>
+    <string name="menu_reset_color_settings">Reset color settings</string>
     <string name="menu_store_position">Store zoom/position</string>
     <string name="menu_reset_position">Reset zoom/position</string>
     <string name="menu_store_overlay_color">Store color of overlays</string>

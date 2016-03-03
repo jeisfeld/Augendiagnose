@@ -25,6 +25,8 @@
     <string name="section_select_date">Select Date</string>
     <string name="text_brightness">Brightness</string>
     <string name="text_contrast">Contrast</string>
+    <string name="text_saturation">Saturation</string>
+    <string name="text_color_temperature">Color Temperature</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_clear">Clear</string>

@@ -19,6 +19,8 @@
     <string name="section_select_date">Datum wählen</string>
     <string name="text_brightness">Helligkeit</string>
     <string name="text_contrast">Kontrast</string>
+    <string name="text_saturation">Sättigung</string>
+    <string name="text_color_temperature">Farbtemperatur</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_clear">Löschen</string>

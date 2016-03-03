@@ -84,6 +84,48 @@
         style="@style/SeparatorBarHorizontal"/>
 
     <LinearLayout
+        android:id="@+id/seekBarColorTemperatureLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_color_temperature"
+            android:src="@drawable/ic_seek_color_temperature"/>
+
+        <SeekBar
+            android:id="@+id/seekBarColorTemperature"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:progress="50"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/seekBarSaturationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_saturation"
+            android:src="@drawable/ic_seek_saturation"/>
+
+        <SeekBar
+            android:id="@+id/seekBarSaturation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:progress="50"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/seekBarBrightnessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
