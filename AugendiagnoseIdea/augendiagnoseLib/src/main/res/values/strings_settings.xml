@@ -170,7 +170,8 @@
     <string name="key_internal_stored_version" translatable="false">stored_version</string>
     <string name="key_internal_last_name" translatable="false">last_name</string>
     <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
-    <string name="key_internal_show_utilities" translatable="false">show_utilities</string>
+    <string name="key_internal_show_utilities_fullscreen" translatable="false">show_utilities_fullscreen</string>
+    <string name="key_internal_show_utilities_halfscreen" translatable="false">show_utilities_halfscreen</string>
     <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
     <string name="key_internal_has_premium_pack" translatable="false">has_premium_pack</string>
     <string name="key_internal_has_unlocker_app" translatable="false">has_unlocker_app</string>

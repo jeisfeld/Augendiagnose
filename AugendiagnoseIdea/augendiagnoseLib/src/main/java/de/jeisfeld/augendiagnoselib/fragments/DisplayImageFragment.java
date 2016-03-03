@@ -1,6 +1,8 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
@@ -58,20 +60,6 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
  * Variant of DisplayOneFragment that includes overlay handling.
  */
 public class DisplayImageFragment extends Fragment implements GuiElementUpdater, OnColorSelectedListener {
-
-	/**
-	 * "Show utilities value" indicating that utilities should never be shown.
-	 */
-	protected static final int UTILITIES_DO_NOT_SHOW = 1;
-	/**
-	 * "Show utilities value" indicating that utilities should be shown only on fullscreen.
-	 */
-	private static final int UTILITIES_SHOW_FULLSCREEN = 2;
-	/**
-	 * "Show utilities value" indicating that utilities should always be shown.
-	 */
-	protected static final int UTILITIES_SHOW_ALWAYS = 3;
-
 	/**
 	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
 	 */
@@ -145,8 +133,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Flag indicating if overlays are allowed.
 	 */
-	@Nullable
 	private OverlayStatus mOverlayStatus;
+
+	protected final OverlayStatus getOverlayStatus() {
+		return mOverlayStatus;
+	}
 
 	/**
 	 * Flag holding information if fragment is shown in landscape mode.
@@ -237,9 +228,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private SeekBar mSeekbarContrast;
 
 	/**
-	 * A flag indicating if utilities (seekbars, buttons) should be displayed.
+	 * A flag indicating which utilities (seekbars, buttons) should be displayed.
 	 */
-	private boolean mShowUtilities = true;
+	private UtilitiyStatus mShowUtilities = UtilitiyStatus.SHOW_NOTHING;
 
 	/**
 	 * The overlay color.
@@ -372,7 +363,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mGuidedTopoSetupButton.setText(content);
 
 		if (savedInstanceState != null) {
-			mShowUtilities = savedInstanceState.getBoolean("showUtilities");
+			mShowUtilities = (UtilitiyStatus) savedInstanceState.getSerializable("showUtilities");
 			mOverlayColor = savedInstanceState.getInt("overlayColor", Color.RED);
 			mPupilButtonStatus = (PupilButtonStatus) savedInstanceState.getSerializable("pupilButtonStatus");
 			mLockButton.setChecked(savedInstanceState.getBoolean("lockButtonIsChecked"));
@@ -383,7 +374,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		}
 		else {
-			mShowUtilities = getDefaultShowUtilities();
+			mShowUtilities = getDefaultShowUtilitiesValue();
 			mOverlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 			mPupilButtonStatus = PupilButtonStatus.OFF;
 			mOverlayStatus = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) ? OverlayStatus.GUIDED : OverlayStatus.ALLOWED;
@@ -512,7 +503,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mToolsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				mShowUtilities = !mShowUtilities;
+				mShowUtilities = mShowUtilities.getNextStatus(alwaysShowOverlayBar());
 				showUtilities();
 				updateDefaultShowUtilities(mShowUtilities);
 			}
@@ -569,6 +560,16 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 			});
 		}
+	}
+
+	/**
+	 * Method indicating if the overlay bar should always be shown.
+	 *
+	 * @return the indicator if the overlay bar should always be shown.
+	 */
+	// OVERRIDABLE
+	protected boolean alwaysShowOverlayBar() {
+		return true;
 	}
 
 	/**
@@ -926,10 +927,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		});
 		popup.inflate(R.menu.context_display_one);
 
-		if (!mShowUtilities) {
-			// Hide store/reset actions when utilities are not shown
-			popup.getMenu().removeGroup(R.id.group_store_reset);
+		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
+			popup.getMenu().removeGroup(R.id.group_overlay);
 		}
+		if (mShowUtilities != UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST) {
+			popup.getMenu().removeGroup(R.id.group_brightness);
+		}
+
 		popup.show();
 	}
 
@@ -950,16 +954,34 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (fragmentView == null) {
 			return;
 		}
-		if (mShowUtilities) {
-			if (isLandscape()) {
-				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_right, 0);
+
+		// Icon
+		if (isLandscape()) {
+			mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+					mShowUtilities.mArrowUp ? R.drawable.ic_tools_left : R.drawable.ic_tools_right, 0);
+		}
+		else {
+			mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,
+					mShowUtilities.mArrowUp ? R.drawable.ic_tools_up : R.drawable.ic_tools_down);
+		}
+
+		// Separator bar
+		fragmentView.findViewById(R.id.separatorTools).setVisibility(mShowUtilities == UtilitiyStatus.SHOW_NOTHING ? View.GONE : View.VISIBLE);
+
+		// Brightness/contrast seekbars
+		int brightnessContrastVisibility = mShowUtilities == UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST ? View.VISIBLE : View.GONE;
+		fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(brightnessContrastVisibility);
+		fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(brightnessContrastVisibility);
+
+		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
+			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
+			mGuidedTopoSetupButton.setVisibility(View.GONE);
+			if (mOverlayStatus == OverlayStatus.NON_JPEG) {
+				mCommentButton.setVisibility(View.GONE);
+				mSaveButton.setVisibility(View.GONE);
 			}
-			else {
-				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_down);
-			}
-			fragmentView.findViewById(R.id.separatorTools).setVisibility(View.VISIBLE);
-			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.VISIBLE);
-			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.VISIBLE);
+		}
+		else {
 			if (mOverlayStatus == OverlayStatus.ALLOWED) {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
 				mGuidedTopoSetupButton.setVisibility(View.GONE);
@@ -981,61 +1003,22 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				mGuidedTopoSetupButton.setVisibility(View.VISIBLE);
 			}
 		}
-		else {
-			if (isLandscape()) {
-				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tools_left, 0);
-			}
-			else {
-				mToolsButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_tools_up);
-			}
-			fragmentView.findViewById(R.id.separatorTools).setVisibility(View.GONE);
-			fragmentView.findViewById(R.id.seekBarBrightnessLayout).setVisibility(View.GONE);
-			fragmentView.findViewById(R.id.seekBarContrastLayout).setVisibility(View.GONE);
-			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-			mGuidedTopoSetupButton.setVisibility(View.GONE);
-			if (mOverlayStatus == OverlayStatus.NON_JPEG) {
-				mCommentButton.setVisibility(View.GONE);
-				mSaveButton.setVisibility(View.GONE);
-			}
-		}
 		requestLayout();
 	}
 
 	/**
-	 * Get information if utilities should be shown according to default.
-	 *
-	 * @return true if utilities should be shown by default.
-	 */
-	private boolean getDefaultShowUtilities() {
-		int level = getDefaultShowUtilitiesValue();
-
-		return level >= getShowUtilitiesLimitLevel();
-	}
-
-	/**
-	 * Return the level from which on the utilities are shown. 1 means: don't show. 2 means: show only on full screen. 3
-	 * means: show always.
-	 *
-	 * @return The default limit level.
-	 */
-	// OVERRIDABLE
-	protected int getShowUtilitiesLimitLevel() {
-		return UTILITIES_SHOW_FULLSCREEN;
-	}
-
-	/**
-	 * Get the value indicating if utilities should be shown.
-	 *
-	 * <p>1 means: don't show. 2 means: show only on full screen. 3 means: show always.
+	 * Get the value indicating what utilities should be shown.
 	 *
 	 * @return The value indicating if utilities should be shown.
 	 */
-	private int getDefaultShowUtilitiesValue() {
-		int level = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_show_utilities, -1);
+	// OVERRIDABLE
+	protected UtilitiyStatus getDefaultShowUtilitiesValue() {
+		UtilitiyStatus level = UtilitiyStatus.fromResourceValue(
+				PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_show_utilities_fullscreen, -1));
 
-		if (level == -1) {
+		if (level == null) {
 			// call this method only if no value is set
-			level = SystemUtil.isTablet() ? UTILITIES_SHOW_ALWAYS : UTILITIES_SHOW_FULLSCREEN;
+			level = SystemUtil.isTablet() ? UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST : UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST;
 		}
 
 		return level;
@@ -1044,25 +1027,17 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Update default for showing utilities.
 	 *
-	 * @param show true means that utilities should be shown.
+	 * @param utilityStatus the new default value for showing utilities.
 	 */
-	private void updateDefaultShowUtilities(final boolean show) {
-		int level = getDefaultShowUtilitiesValue();
-
-		if (show && level < getShowUtilitiesLimitLevel()) {
-			level = getShowUtilitiesLimitLevel();
-		}
-		if (!show && level >= getShowUtilitiesLimitLevel()) {
-			level = getShowUtilitiesLimitLevel() - 1;
-		}
-
-		PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_show_utilities, level);
+	// OVERRIDABLE
+	protected void updateDefaultShowUtilities(final UtilitiyStatus utilityStatus) {
+		PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_show_utilities_fullscreen, utilityStatus.getNumericValue());
 	}
 
 	@Override
 	public final void onSaveInstanceState(@NonNull final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putBoolean("showUtilities", mShowUtilities);
+		outState.putSerializable("showUtilities", mShowUtilities);
 		outState.putInt("overlayColor", mOverlayColor);
 		outState.putBoolean("lockButtonIsChecked", mLockButton.isChecked());
 		outState.putSerializable("pupilButtonStatus", mPupilButtonStatus);
@@ -1281,5 +1256,87 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		 * Special handling for non-JPEG images.
 		 */
 		NON_JPEG
+	}
+
+	/**
+	 * The display status of utilities.
+	 */
+	public enum UtilitiyStatus {
+		/**
+		 * Show nothing.
+		 */
+		SHOW_NOTHING(1, true),
+		/**
+		 * Show only the overlay pane.
+		 */
+		ONLY_OVERLAY(2, true),
+		/**
+		 * Show the overlay pane and the brightness/contrast sliders.
+		 */
+		OVERLAY_BRIGHTNESS_CONTRAST(3, false);
+
+		/**
+		 * The numeric value.
+		 */
+		private final int mNumericValue;
+		/**
+		 * Flag indicating if the "up" or "down" arrow should be displayed on the "show utilities" button.
+		 */
+		private final boolean mArrowUp;
+
+		protected int getNumericValue() {
+			return mNumericValue;
+		}
+
+		/**
+		 * A map from the resourceValue to the color.
+		 */
+		private static final Map<Integer, UtilitiyStatus> UTILITY_STATUS_MAP = new HashMap<>();
+
+		static {
+			for (UtilitiyStatus utilityStatus : UtilitiyStatus.values()) {
+				UTILITY_STATUS_MAP.put(utilityStatus.mNumericValue, utilityStatus);
+			}
+		}
+
+		/**
+		 * Constructor giving the resourceValue and the color value.
+		 *
+		 * @param numericValue The numeric value.
+		 * @param arrowUp      Flag indicating if the "up" or "down" arrow should be displayed on the "show utilities" button.
+		 */
+		UtilitiyStatus(final int numericValue, final boolean arrowUp) {
+			mNumericValue = numericValue;
+			mArrowUp = arrowUp;
+		}
+
+		/**
+		 * Get the utility status from its numeric value.
+		 *
+		 * @param numericValue The resource value.
+		 * @return The corresponding UtilityStatus.
+		 */
+		protected static UtilitiyStatus fromResourceValue(final int numericValue) {
+			return UTILITY_STATUS_MAP.get(numericValue);
+		}
+
+		/**
+		 * The next status after pressing the "show utilities" button.
+		 *
+		 * @param alwaysShowOverlayBar Flag indicating if the overlay bar should always be shown.
+		 * @return the next status.
+		 */
+		private UtilitiyStatus getNextStatus(final boolean alwaysShowOverlayBar) {
+			switch (this) {
+			case SHOW_NOTHING:
+				return ONLY_OVERLAY;
+			case ONLY_OVERLAY:
+				return OVERLAY_BRIGHTNESS_CONTRAST;
+			case OVERLAY_BRIGHTNESS_CONTRAST:
+			default:
+				return alwaysShowOverlayBar ? ONLY_OVERLAY : SHOW_NOTHING;
+			}
+		}
+
 	}
 }
