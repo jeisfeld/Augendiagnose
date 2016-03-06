@@ -56,6 +56,10 @@ public final class JpegMetadata implements Parcelable {
 	@Nullable
 	private Float mContrast = null;
 	@Nullable
+	private Float mSaturation = null;
+	@Nullable
+	private Float mColorTemperature = null;
+	@Nullable
 	private Float mPupilSize = null;
 	@Nullable
 	private Float mPupilXOffset = null;
@@ -198,6 +202,24 @@ public final class JpegMetadata implements Parcelable {
 
 	public void setContrast(final Float contrast) {
 		this.mContrast = contrast;
+	}
+
+	@Nullable
+	public Float getSaturation() {
+		return mSaturation;
+	}
+
+	public void setSaturation(final Float saturation) {
+		this.mSaturation = saturation;
+	}
+
+	@Nullable
+	public Float getColorTemperature() {
+		return mColorTemperature;
+	}
+
+	public void setColorTemperature(final Float colorTemparature) {
+		this.mColorTemperature = colorTemparature;
 	}
 
 	@Nullable
@@ -381,6 +403,24 @@ public final class JpegMetadata implements Parcelable {
 		return mContrast == null ? null : mContrast.toString();
 	}
 
+	public void setSaturation(@Nullable final String value) {
+		mSaturation = value == null ? null : Float.parseFloat(value);
+	}
+
+	@Nullable
+	public String getSaturationString() {
+		return mSaturation == null ? null : mSaturation.toString();
+	}
+
+	public void setColorTemperature(@Nullable final String value) {
+		mColorTemperature = value == null ? null : Float.parseFloat(value);
+	}
+
+	@Nullable
+	public String getColorTemperatureString() {
+		return mColorTemperature == null ? null : mColorTemperature.toString();
+	}
+
 	public void setOverlayColor(@Nullable final String value) {
 		mOverlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
 	}
@@ -473,7 +513,11 @@ public final class JpegMetadata implements Parcelable {
 		str.append("OrganizeDate: ").append(mOrganizeDate).append(LINE_BREAK);
 		str.append("RightLeft: ").append(mRightLeft).append(LINE_BREAK);
 		str.append("Brightness: ").append(mBrightness).append(LINE_BREAK);
+		str.append("RightLeft: ").append(mRightLeft).append(LINE_BREAK);
+		str.append("Brightness: ").append(mBrightness).append(LINE_BREAK);
 		str.append("Contrast: ").append(mContrast).append(LINE_BREAK);
+		str.append("Saturation: ").append(mSaturation).append(LINE_BREAK);
+		str.append("ColorTemperature: ").append(mColorTemperature).append(LINE_BREAK);
 		str.append("OverlayColor: ").append(getOverlayColorString()).append(LINE_BREAK);
 		str.append("Pupil-Size: ").append(mPupilSize).append(LINE_BREAK);
 		str.append("Pupil-X-Offset: ").append(mPupilXOffset).append(LINE_BREAK);
@@ -503,6 +547,8 @@ public final class JpegMetadata implements Parcelable {
 		dest.writeString(getRightLeftString());
 		dest.writeString(getBrightnessString());
 		dest.writeString(getContrastString());
+		dest.writeString(getSaturationString());
+		dest.writeString(getColorTemperatureString());
 		dest.writeString(getOverlayColorString());
 		dest.writeString(getPupilSizeString());
 		dest.writeString(getPupilXOffsetString());
@@ -531,6 +577,8 @@ public final class JpegMetadata implements Parcelable {
 			metadata.setRightLeft(in.readString());
 			metadata.setBrightness(in.readString());
 			metadata.setContrast(in.readString());
+			metadata.setSaturation(in.readString());
+			metadata.setColorTemperature(in.readString());
 			metadata.setOverlayColor(in.readString());
 			metadata.setPupilSize(in.readString());
 			metadata.setPupilXOffset(in.readString());

@@ -52,6 +52,8 @@ public class XmpHandler {
 	public static final String ITEM_RIGHT_LEFT = "rightLeft";
 	public static final String ITEM_BRIGHTNESS = "brightness";
 	public static final String ITEM_CONTRAST = "contrast";
+	public static final String ITEM_SATURATION = "saturation";
+	public static final String ITEM_COLOR_TEMPERATURE = "colorTemperature";
 	public static final String ITEM_PUPIL_SIZE = "pupilSize";
 	public static final String ITEM_PUPIL_X_OFFSET = "pupilXOffset";
 	public static final String ITEM_PUPIL_Y_OFFSET = "pupilYOffset";

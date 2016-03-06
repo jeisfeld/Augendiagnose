@@ -221,6 +221,8 @@ public final class JpegMetadataUtil {
 		result.setRightLeft(parser.getJeItem(XmpHandler.ITEM_RIGHT_LEFT));
 		result.setBrightness(parser.getJeItem(XmpHandler.ITEM_BRIGHTNESS));
 		result.setContrast(parser.getJeItem(XmpHandler.ITEM_CONTRAST));
+		result.setSaturation(parser.getJeItem(XmpHandler.ITEM_SATURATION));
+		result.setColorTemperature(parser.getJeItem(XmpHandler.ITEM_COLOR_TEMPERATURE));
 		result.setOverlayColor(parser.getJeItem(XmpHandler.ITEM_OVERLAY_COLOR));
 		result.setPupilSize(parser.getJeItem(XmpHandler.ITEM_PUPIL_SIZE));
 		result.setPupilXOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET));
@@ -473,6 +475,8 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_RIGHT_LEFT, metadata.getRightLeftString());
 			parser.setJeItem(XmpHandler.ITEM_BRIGHTNESS, metadata.getBrightnessString());
 			parser.setJeItem(XmpHandler.ITEM_CONTRAST, metadata.getContrastString());
+			parser.setJeItem(XmpHandler.ITEM_SATURATION, metadata.getSaturationString());
+			parser.setJeItem(XmpHandler.ITEM_COLOR_TEMPERATURE, metadata.getColorTemperatureString());
 			parser.setJeItem(XmpHandler.ITEM_OVERLAY_COLOR, metadata.getOverlayColorString());
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_SIZE, metadata.getPupilSizeString());
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET, metadata.getPupilXOffsetString());

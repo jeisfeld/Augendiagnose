@@ -379,9 +379,13 @@ public class OverlayPinchImageView extends PinchImageView {
 							if (mMetadata != null && mMetadata.hasBrightnessContrast()) {
 								mBrightness = mMetadata.getBrightness();
 								mContrast = mMetadata.getContrast();
+								mSaturation = mMetadata.getSaturation() == null ? 1f : mMetadata.getSaturation();
+								mColorTemperature = mMetadata.getColorTemperature() == null ? 0f : mMetadata.getColorTemperature();
 								if (mGuiElementUpdater != null) {
 									mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
 									mGuiElementUpdater.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
+									mGuiElementUpdater.updateSeekbarSaturation(storedSaturationToSeekbarSaturation(mSaturation));
+									mGuiElementUpdater.updateSeekbarColorTemperature(mColorTemperature);
 								}
 							}
 							if (mMetadata != null && mMetadata.getOverlayColor() != null && mGuiElementUpdater != null) {
@@ -987,24 +991,32 @@ public class OverlayPinchImageView extends PinchImageView {
 	 *
 	 * @param delete delete brightness and contrast from metadata.
 	 */
-	public final void storeBrightnessContrast(final boolean delete) {
+	public final void storeColorSettings(final boolean delete) {
 		if (mInitialized && mMetadata != null) {
 			if (delete) {
 				mMetadata.setBrightness((Float) null);
 				mMetadata.setContrast((Float) null);
+				mMetadata.setSaturation((Float) null);
+				mMetadata.setColorTemperature((Float) null);
 				mNeedsBitmapRefresh = true;
 				cleanFullResolutionBitmaps(true);
 				mBrightness = 0;
 				mContrast = 1;
+				mSaturation = 1;
+				mColorTemperature = 0;
 				if (mGuiElementUpdater != null) {
 					mGuiElementUpdater.updateSeekbarBrightness(mBrightness);
 					mGuiElementUpdater.updateSeekbarContrast(storedContrastToSeekbarContrast(mContrast));
+					mGuiElementUpdater.updateSeekbarSaturation(storedSaturationToSeekbarSaturation(mSaturation));
+					mGuiElementUpdater.updateSeekbarColorTemperature(mColorTemperature);
 				}
 				refresh();
 			}
 			else {
 				mMetadata.setBrightness(mBrightness);
 				mMetadata.setContrast(mContrast);
+				mMetadata.setSaturation(mSaturation);
+				mMetadata.setColorTemperature(mColorTemperature);
 			}
 
 			mEyePhoto.storeImageMetadata(mMetadata);

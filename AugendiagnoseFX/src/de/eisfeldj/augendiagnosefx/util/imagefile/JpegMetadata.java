@@ -31,6 +31,8 @@ public final class JpegMetadata {
 	private RightLeft mRightLeft = null;
 	private Float mBrightness = null;
 	private Float mContrast = null;
+	private Float mSaturation = null;
+	private Float mColorTemperature = null;
 	private Float mPupilSize = null;
 	private Float mPupilXOffset = null;
 	private Float mPupilYOffset = null;
@@ -155,6 +157,22 @@ public final class JpegMetadata {
 
 	public void setContrast(final Float contrast) {
 		this.mContrast = contrast;
+	}
+
+	public Float getSaturation() {
+		return mSaturation;
+	}
+
+	public void setSaturation(final Float saturation) {
+		this.mSaturation = saturation;
+	}
+
+	public Float getColorTemperature() {
+		return mColorTemperature;
+	}
+
+	public void setColorTemperature(final Float colorTemparature) {
+		this.mColorTemperature = colorTemparature;
 	}
 
 	public Integer getOverlayColor() {
@@ -302,6 +320,22 @@ public final class JpegMetadata {
 		return mContrast == null ? null : mContrast.toString();
 	}
 
+	public void setSaturation(final String value) {
+		mSaturation = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getSaturationString() {
+		return mSaturation == null ? null : mSaturation.toString();
+	}
+
+	public void setColorTemperature(final String value) {
+		mColorTemperature = value == null ? null : Float.parseFloat(value);
+	}
+
+	public String getColorTemperatureString() {
+		return mColorTemperature == null ? null : mColorTemperature.toString();
+	}
+
 	public void setOverlayColor(final String value) {
 		mOverlayColor = value == null ? null : (int) Long.parseLong(value, 16); // MAGIC_NUMBER
 	}
@@ -385,6 +419,8 @@ public final class JpegMetadata {
 		str.append("RightLeft: " + mRightLeft + LINE_BREAK);
 		str.append("Brightness: " + mBrightness + LINE_BREAK);
 		str.append("Contrast: " + mContrast + LINE_BREAK);
+		str.append("Saturation: " + mSaturation + LINE_BREAK);
+		str.append("ColorTemperature: " + mColorTemperature + LINE_BREAK);
 		str.append("OverlayColor: " + getOverlayColorString() + LINE_BREAK);
 		str.append("Pupil-Size: " + mPupilSize + LINE_BREAK);
 		str.append("Pupil-X-Offset: " + mPupilXOffset + LINE_BREAK);

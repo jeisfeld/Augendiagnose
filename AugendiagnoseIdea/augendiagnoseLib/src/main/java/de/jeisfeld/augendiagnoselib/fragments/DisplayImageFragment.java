@@ -930,11 +930,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			public boolean onMenuItemClick(@NonNull final MenuItem item) {
 				int itemId = item.getItemId();
 				if (itemId == R.id.action_store_color_settings) {
-					mImageView.storeBrightnessContrast(false);
+					mImageView.storeColorSettings(false);
 					return true;
 				}
 				else if (itemId == R.id.action_reset_color_settings) {
-					mImageView.storeBrightnessContrast(true);
+					mImageView.storeColorSettings(true);
 					return true;
 				}
 				else if (itemId == R.id.action_store_position) {
