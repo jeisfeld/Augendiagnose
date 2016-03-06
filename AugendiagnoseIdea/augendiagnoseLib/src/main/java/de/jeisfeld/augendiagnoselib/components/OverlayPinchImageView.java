@@ -914,53 +914,30 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Set the brightness.
-	 *
-	 * @param brightness on a scale -1 to 1
-	 */
-	public final void setBrightness(final float brightness) {
-		mBrightness = brightness;
-		mNeedsBitmapRefresh = true;
-		cleanFullResolutionBitmaps(true);
-		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
-	}
-
-	/**
-	 * Set the contrast.
-	 *
-	 * @param contrast on a scale from -1 to 1
-	 */
-	public final void setContrast(final float contrast) {
-		// input goes from -1 to 1. Output goes from 0 to infinity.
-		mContrast = seekbarContrastToStoredContrast(contrast);
-		mNeedsBitmapRefresh = true;
-		cleanFullResolutionBitmaps(true);
-		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
-	}
-
-	/**
-	 * Set the saturation.
-	 *
+	 * Update color settings (brightness, contrast, saturation, colorTemperature) of the image.
+	 * @param brightness the brightness on a scale -1 to 1
+	 * @param contrast the contrast on a scale from -1 to 1
 	 * @param saturation the saturation on a scale from -1 to 1.
-	 */
-	public final void setSaturation(final float saturation) {
-		mSaturation = seekbarSaturationToStoredSaturation(saturation); // MAGIC_NUMBER
-		mNeedsBitmapRefresh = true;
-		cleanFullResolutionBitmaps(true);
-		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
-	}
-
-	/**
-	 * Set the color temperature.
-	 *
 	 * @param colorTemperature the color temperature on a scale from -1 to 1.
 	 */
-	public final void setColorTemperature(final float colorTemperature) {
-		mColorTemperature = colorTemperature;
+	public final void updateColorSettings(final Float brightness, final Float contrast, final Float saturation, final Float colorTemperature) {
+		if (brightness != null) {
+			mBrightness = brightness;
+		}
+		if (contrast != null) {
+			mContrast = seekbarContrastToStoredContrast(contrast);
+		}
+		if (saturation != null) {
+			mSaturation = seekbarSaturationToStoredSaturation(saturation); // MAGIC_NUMBER
+		}
+		if (colorTemperature != null) {
+			mColorTemperature = colorTemperature;
+		}
 		mNeedsBitmapRefresh = true;
 		cleanFullResolutionBitmaps(true);
 		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
 	}
+
 
 	/**
 	 * Set the overlay color.

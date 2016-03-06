@@ -90,6 +90,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iconColorTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_color_temperature"
@@ -111,6 +112,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iconSaturation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_saturation"
@@ -132,6 +134,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iconBrightness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_brightness"
@@ -153,6 +156,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iconContrast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_contrast"

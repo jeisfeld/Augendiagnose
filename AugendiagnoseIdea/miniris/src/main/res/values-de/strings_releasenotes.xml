@@ -36,7 +36,7 @@
         <item>Fehlerkorrekturen. Probleme mit Dateizugriff für Android 6 behoben.</item>
         <item>Fehlerkorrekturen</item>
         <item>Automatische Erkennung von Iris- und Pupillenposition. Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Änderung von Sättigung und Farbtemperatur. Fehlerkorrekturen</item>
     </string-array>
 
 </resources>

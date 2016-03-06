@@ -158,7 +158,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes. Fixed issues on file access for Android 6.</item>
         <item>Bugfixes</item>
         <item>Automatic detection of iris and pupil position. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled change of saturation and color temperature. Bugfixes</item>
     </string-array>
 
 </resources>

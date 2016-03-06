@@ -26,9 +26,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -395,13 +397,26 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		// Special handling for non-JPEG images
 		checkJpeg();
 
-		// Initialize the listeners for the seekbars (brightness and contrast)
+		configureSeekbars();
+
+		// The following also updates the selectColorButton
+		mImageView.setOverlayColor(mOverlayColor);
+
+		// Layout for pupil button
+		mPupilButton.setEnabled(mLockButton.isChecked());
+		setPupilButtonBitmap();
+	}
+
+	/**
+	 * Configure the seekbars for brightness, contrast, saturation and color temperature.
+	 */
+	private void configureSeekbars() {
 		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
 		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.setBrightness(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+					mImageView.updateColorSettings(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null, null);
 				}
 			}
 		});
@@ -411,7 +426,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.setContrast(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+					mImageView.updateColorSettings(null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null);
 				}
 			}
 		});
@@ -421,7 +436,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.setSaturation(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+					mImageView.updateColorSettings(null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null);
 				}
 			}
 		});
@@ -431,17 +446,57 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.setColorTemperature(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+					mImageView.updateColorSettings(null, null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
 				}
 			}
 		});
 
-		// The following also updates the selectColorButton
-		mImageView.setOverlayColor(mOverlayColor);
+		OnTouchListener onIconTouchListener1 = new OnTouchListener() {
+			@Override
+			public boolean onTouch(final View v, final MotionEvent event) {
+				if (mImageView == null) {
+					return false;
+				}
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					mImageView.updateColorSettings(0f, 0f, 0f, 0f);
+					return true;
+				case MotionEvent.ACTION_UP:
+					mImageView.updateColorSettings(((float) mSeekbarBrightness.getProgress()) / mSeekbarBrightness.getMax() * 2 - 1,
+							((float) mSeekbarContrast.getProgress()) / mSeekbarContrast.getMax() * 2 - 1,
+							((float) mSeekbarSaturation.getProgress()) / mSeekbarSaturation.getMax() * 2 - 1,
+							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1);
+					return true;
+				default:
+					return false;
+				}
+			}
+		};
+		getView().findViewById(R.id.iconBrightness).setOnTouchListener(onIconTouchListener1);
+		getView().findViewById(R.id.iconContrast).setOnTouchListener(onIconTouchListener1);
 
-		// Layout for pupil button
-		mPupilButton.setEnabled(mLockButton.isChecked());
-		setPupilButtonBitmap();
+		OnTouchListener onIconTouchListener2 = new OnTouchListener() {
+			@Override
+			public boolean onTouch(final View v, final MotionEvent event) {
+				if (mImageView == null) {
+					return false;
+				}
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					mImageView.updateColorSettings(null, null, 0f, 0f);
+					return true;
+				case MotionEvent.ACTION_UP:
+					mImageView.updateColorSettings(null, null,
+							((float) mSeekbarSaturation.getProgress()) / mSeekbarSaturation.getMax() * 2 - 1,
+							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1);
+					return true;
+				default:
+					return false;
+				}
+			}
+		};
+		getView().findViewById(R.id.iconSaturation).setOnTouchListener(onIconTouchListener2);
+		getView().findViewById(R.id.iconColorTemperature).setOnTouchListener(onIconTouchListener2);
 	}
 
 	/**
@@ -1062,7 +1117,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (level == null) {
 			// call this method only if no value is set
-			level = UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST;
+			level = UtilitiyStatus.SHOW_EVERYTHING;
 		}
 
 		return level;

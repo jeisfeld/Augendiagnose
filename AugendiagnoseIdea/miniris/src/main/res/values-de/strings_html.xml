@@ -306,7 +306,8 @@
 
 	<ul>
 		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
-			src="../drawable/ic_seek_contrast.png" /></li>
+			src="../drawable/ic_seek_contrast.png" />, und Verändern von Sättigung <img src="../drawable/ic_seek_saturation.png" />
+			und Farbtemperatur <img src="../drawable/ic_seek_color_temperature.png" /></li>
 
 		<li>
 			<p>

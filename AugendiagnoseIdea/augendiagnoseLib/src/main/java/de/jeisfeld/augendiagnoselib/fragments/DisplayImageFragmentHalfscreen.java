@@ -37,7 +37,7 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 
 		if (level == null) {
 			// call this method only if no value is set
-			level = SystemUtil.isTablet() ? UtilitiyStatus.OVERLAY_BRIGHTNESS_CONTRAST : UtilitiyStatus.SHOW_NOTHING;
+			level = SystemUtil.isTablet() ? UtilitiyStatus.SHOW_EVERYTHING : UtilitiyStatus.SHOW_NOTHING;
 		}
 
 		return level;
@@ -54,7 +54,7 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 	}
 
 	@Override
-	protected boolean allowAllBars() {
+	protected final boolean allowAllBars() {
 		return SystemUtil.isTablet();
 	}
 
