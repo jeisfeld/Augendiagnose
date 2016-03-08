@@ -204,6 +204,11 @@ public class OverlayPinchImageView extends PinchImageView {
 	private Bitmap mPartialBitmapFullResolutionWithBrightness;
 
 	/**
+	 * Flag indicating if currently the full resolution snapshot is displayed.
+	 */
+	private boolean mShowingFullResolution = false;
+
+	/**
 	 * The full bitmap (full resolution).
 	 */
 	private Bitmap mBitmapFull = null;
@@ -483,7 +488,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else if (resolution == HIGH || resolution == LOW) {
 			interruptFullResolutionThread();
-			cleanFullResolutionBitmaps(false);
 		}
 
 		// Determine overlays to be shown
@@ -534,7 +538,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 
 		layerDrawable.setBounds(0, 0, width, height);
-
 		mCanvas.drawColor(Color.BLACK);
 		layerDrawable.draw(mCanvas);
 
@@ -542,9 +545,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			showFullResolutionSnapshot(true);
 		}
 		else {
-			setImageBitmap(mCanvasBitmap);
-			super.setMatrix();
-			invalidate();
+			cleanFullResolutionBitmaps(false);
 		}
 
 		mNeedsBitmapRefresh = false;
@@ -658,7 +659,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			float bitmapPixelDiameter = mOverlayScaleFactor * OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO;
 			mScaleFactor = Math.min(getWidth(), getHeight()) * 2 * circleRadius / bitmapPixelDiameter;
 			mLastScaleFactor = mScaleFactor;
-			showNormalResolution();
+			interruptFullResolutionThread();
 			refresh();
 			break;
 		case GUIDE_PUPIL:
@@ -676,7 +677,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			float bitmapPixelDiameter2 = mPupilOverlayScaleFactor * overlaySizeOnBitmap;
 			mScaleFactor = Math.min(getWidth(), getHeight()) * 2 * circleRadius / bitmapPixelDiameter2;
 			mLastScaleFactor = mScaleFactor;
-			showNormalResolution();
+			interruptFullResolutionThread();
 			refresh();
 			break;
 		case ALLOWED:
@@ -915,12 +916,15 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	/**
 	 * Update color settings (brightness, contrast, saturation, colorTemperature) of the image.
-	 * @param brightness the brightness on a scale -1 to 1
-	 * @param contrast the contrast on a scale from -1 to 1
-	 * @param saturation the saturation on a scale from -1 to 1.
+	 *
+	 * @param brightness       the brightness on a scale -1 to 1
+	 * @param contrast         the contrast on a scale from -1 to 1
+	 * @param saturation       the saturation on a scale from -1 to 1.
 	 * @param colorTemperature the color temperature on a scale from -1 to 1.
+	 * @param fromSeekbar      flag indicating if the color change was triggered from a move on the seekbar.
 	 */
-	public final void updateColorSettings(final Float brightness, final Float contrast, final Float saturation, final Float colorTemperature) {
+	public final void updateColorSettings(final Float brightness, final Float contrast, final Float saturation, final Float colorTemperature,
+										  final boolean fromSeekbar) {
 		if (brightness != null) {
 			mBrightness = brightness;
 		}
@@ -935,7 +939,13 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		mNeedsBitmapRefresh = true;
 		cleanFullResolutionBitmaps(true);
-		refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
+
+		if (fromSeekbar) {
+			refresh(mPartialBitmapFullResolution == null ? LOW : FULL);
+		}
+		else {
+			refresh();
+		}
 	}
 
 
@@ -1239,9 +1249,7 @@ public class OverlayPinchImageView extends PinchImageView {
 
 	@Override
 	protected final void startPointerMove(final MotionEvent ev) {
-		if (mPinchMode == PinchMode.ALL) {
-			showNormalResolution();
-		}
+		showNormalResolution();
 	}
 
 	@Override
@@ -1495,7 +1503,8 @@ public class OverlayPinchImageView extends PinchImageView {
 						public void run() {
 							if (mPartialBitmapFullResolution != null) {
 								setImageBitmap(partialBitmapWithOverlay);
-								setImageMatrix(null);
+								mShowingFullResolution = true;
+								setMatrix();
 							}
 						}
 
@@ -1540,7 +1549,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Clean the cached full resolution bitmaps.
+	 * Clean the cached full resolution bitmaps. In case of full cleaning, a normal resolution snapshot is displayed.
 	 *
 	 * @param onlyBrightness Flag indicating if only the brightness/contrast bitmap is cleaned, but the position is kept.
 	 */
@@ -1548,6 +1557,11 @@ public class OverlayPinchImageView extends PinchImageView {
 		mPartialBitmapFullResolutionWithBrightness = null;
 		if (!onlyBrightness) {
 			mPartialBitmapFullResolution = null;
+			if (mShowingFullResolution) {
+				setImageBitmap(mCanvasBitmap);
+				mShowingFullResolution = false;
+				setMatrix();
+			}
 		}
 	}
 
@@ -1570,26 +1584,23 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Show normal resolution again after having the full resolution snapshot.
 	 */
 	public final void showNormalResolution() {
-		interruptFullResolutionThread();
-		cleanFullResolutionBitmaps(false);
-
 		if (mNeedsBitmapRefresh) {
 			refresh(HIGH);
 		}
 		else {
-			setImageBitmap(mCanvasBitmap);
-			setMatrix();
+			interruptFullResolutionThread();
 		}
 	}
 
 	@Override
 	protected final void setMatrix() {
-		if (mPartialBitmapFullResolution != null) {
+		if (mShowingFullResolution) {
 			setImageMatrix(null);
 		}
 		else {
 			super.setMatrix();
 		}
+		invalidate();
 	}
 
 	/**

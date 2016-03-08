@@ -416,7 +416,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.updateColorSettings(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null, null);
+					mImageView.updateColorSettings(((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null, null, true);
 				}
 			}
 		});
@@ -426,7 +426,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.updateColorSettings(null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null);
+					mImageView.updateColorSettings(null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, null, true);
 				}
 			}
 		});
@@ -436,7 +436,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.updateColorSettings(null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null);
+					mImageView.updateColorSettings(null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, null, true);
 				}
 			}
 		});
@@ -446,7 +446,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
 				if (fromUser) {
-					mImageView.updateColorSettings(null, null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1);
+					mImageView.updateColorSettings(null, null, null, ((float) seekBar.getProgress()) / seekBar.getMax() * 2 - 1, true);
 				}
 			}
 		});
@@ -459,13 +459,14 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					mImageView.updateColorSettings(0f, 0f, 0f, 0f);
+					mImageView.updateColorSettings(0f, 0f, 0f, 0f, false);
 					return true;
 				case MotionEvent.ACTION_UP:
 					mImageView.updateColorSettings(((float) mSeekbarBrightness.getProgress()) / mSeekbarBrightness.getMax() * 2 - 1,
 							((float) mSeekbarContrast.getProgress()) / mSeekbarContrast.getMax() * 2 - 1,
 							((float) mSeekbarSaturation.getProgress()) / mSeekbarSaturation.getMax() * 2 - 1,
-							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1);
+							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1,
+							false);
 					return true;
 				default:
 					return false;
@@ -483,12 +484,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					mImageView.updateColorSettings(null, null, 0f, 0f);
+					mImageView.updateColorSettings(null, null, 0f, 0f, false);
 					return true;
 				case MotionEvent.ACTION_UP:
 					mImageView.updateColorSettings(null, null,
 							((float) mSeekbarSaturation.getProgress()) / mSeekbarSaturation.getMax() * 2 - 1,
-							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1);
+							((float) mSeekbarColorTemperature.getProgress()) / mSeekbarColorTemperature.getMax() * 2 - 1,
+							false);
 					return true;
 				default:
 					return false;
