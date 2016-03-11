@@ -49,10 +49,10 @@ public final class ResourceConstants {
 	public static final String MENU_OVERLAY_PANE = "menu_overlay_pane";
 	public static final String MENU_PREFERENCES = "menu_preferences";
 	public static final String MENU_REMOVE_OVERLAY_BUTTON = "menu_remove_overlay_button";
-	public static final String MENU_RESET_BRIGHTNESS = "menu_reset_brightness";
+	public static final String MENU_RESET_COLOR_SETTINGS = "menu_reset_color_settings";
 	public static final String MENU_RESET_POSITION = "menu_reset_position";
 	public static final String MENU_SPLIT_WINDOW = "menu_split_window";
-	public static final String MENU_STORE_BRIGHTNESS = "menu_store_brightness";
+	public static final String MENU_STORE_COLOR_SETTINGS = "menu_store_color_settings";
 	public static final String MENU_STORE_POSITION = "menu_store_position";
 	public static final String MENU_UNINSTALL = "menu_uninstall";
 	public static final String MENU_VIEW = "menu_view";

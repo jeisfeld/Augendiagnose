@@ -52,12 +52,12 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			contextMenu : ContextMenu {
 				items : [
 					MenuItem {
-						text : rstring "menu_store_brightness",
-						onAction : controllermethod storeBrightnessContrast
+						text : rstring "menu_store_color_settings",
+						onAction : controllermethod storeColorSettings
 					},
 					MenuItem {
-						text : rstring "menu_reset_brightness",
-						onAction : controllermethod resetBrightnessContrast
+						text : rstring "menu_reset_color_settings",
+						onAction : controllermethod resetColorSettings
 					},
 					MenuItem {
 						text : rstring "menu_store_position",
@@ -203,17 +203,33 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					}
 				}
 			},
-			Slider id mSliderBrightness {
+			ImageView {
 				static columnIndex : 0,
-				static rowIndex : 1,
+				static rowIndex : 3,
+				static halignment : "CENTER",
+				image : Image {
+					url : location "img/color_temperature.png"
+				}
+			},
+			Slider id mSliderColorTemperature {
+				static columnIndex : 0,
+				static rowIndex : 4,
 				static halignment : "CENTER",
 				static vgrow : "SOMETIMES",
 				static hgrow : "SOMETIMES",
 				orientation : "VERTICAL"
 			},
-			Slider id mSliderContrast {
+			ImageView {
 				static columnIndex : 1,
-				static rowIndex : 1,
+				static rowIndex : 3,
+				static halignment : "CENTER",
+				image : Image {
+					url : location "img/saturation.png"
+				}
+			},
+			Slider id mSliderSaturation {
+				static columnIndex : 1,
+				static rowIndex : 4,
 				static halignment : "CENTER",
 				static vgrow : "SOMETIMES",
 				static hgrow : "SOMETIMES",
@@ -221,19 +237,35 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 			},
 			ImageView {
 				static columnIndex : 0,
-				static rowIndex : 2,
+				static rowIndex : 1,
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/brightness.png"
 				}
 			},
+			Slider id mSliderBrightness {
+				static columnIndex : 0,
+				static rowIndex : 2,
+				static halignment : "CENTER",
+				static vgrow : "SOMETIMES",
+				static hgrow : "SOMETIMES",
+				orientation : "VERTICAL"
+			},
 			ImageView {
 				static columnIndex : 1,
-				static rowIndex : 2,
+				static rowIndex : 1,
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/contrast.png"
 				}
+			},
+			Slider id mSliderContrast {
+				static columnIndex : 1,
+				static rowIndex : 2,
+				static halignment : "CENTER",
+				static vgrow : "SOMETIMES",
+				static hgrow : "SOMETIMES",
+				orientation : "VERTICAL"
 			}
 		},
 		GridPane id mCommentPane {

@@ -2,6 +2,7 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -35,6 +36,16 @@ public class OverlayImageView extends SizableImageView {
 	private float mContrast = 1;
 
 	/**
+	 * The current saturation of the image.
+	 */
+	private float mSaturation = 1;
+
+	/**
+	 * The current color temperature of the image.
+	 */
+	private float mColorTemperature = 0;
+
+	/**
 	 * The current resolution of the image - used to adapt zoomFactor if resolution changes.
 	 */
 	private Resolution mCurrentResolution = Resolution.NORMAL;
@@ -63,42 +74,54 @@ public class OverlayImageView extends SizableImageView {
 	}
 
 	/**
-	 * Change brightness and contrast.
-	 *
-	 * @param newBrightness
-	 *            The brightness
-	 * @param resolution
-	 *            Indicator of the resolution of the image.
-	 */
-	public final void setBrightness(final float newBrightness, final Resolution resolution) {
-		mBrightness = newBrightness;
-		redisplay(resolution);
-	}
-
-	/**
-	 * Change contrast.
-	 *
-	 * @param newContrast
-	 *            The contrast
-	 * @param resolution
-	 *            Indicator of the resolution of the image.
-	 */
-	public final void setContrast(final float newContrast, final Resolution resolution) {
-		mContrast = seekbarContrastToStoredContrast(newContrast);
-		redisplay(resolution);
-	}
-
-	/**
-	 * Initialize brightness and contrast before displaying the image.
+	 * Change color settings.
 	 *
 	 * @param newBrightness
 	 *            The brightness
 	 * @param newContrast
-	 *            The contrast
+	 *            The contrast from slider
+	 * @param newSaturation
+	 *            The saturation from slider
+	 * @param newColorTemperature
+	 *            The color temperature
+	 * @param resolution
+	 *            Indicator of the resolution of the image.
 	 */
-	public final void initializeBrightnessContrast(final float newBrightness, final float newContrast) {
+	public final void setColorSettings(final Float newBrightness, final Float newContrast,
+			final Float newSaturation, final Float newColorTemperature, final Resolution resolution) {
+		if (newBrightness != null) {
+			mBrightness = newBrightness;
+		}
+		if (newContrast != null) {
+			mContrast = seekbarContrastToStoredContrast(newContrast);
+		}
+		if (newSaturation != null) {
+			mSaturation = seekbarSaturationToStoredSaturation(newSaturation);
+		}
+		if (newColorTemperature != null) {
+			mColorTemperature = newColorTemperature;
+		}
+		redisplay(resolution);
+	}
+
+	/**
+	 * Initialize the color settings before displaying the image.
+	 *
+	 * @param newBrightness
+	 *            The brightness
+	 * @param newContrast
+	 *            The contrast from metadata
+	 * @param newSaturation
+	 *            The saturation from metadata
+	 * @param newColorTemperature
+	 *            The color temperature
+	 */
+	public final void initializeColorSettings(final float newBrightness, final float newContrast,
+			final float newSaturation, final float newColorTemperature) {
 		mBrightness = newBrightness;
 		mContrast = newContrast;
+		mSaturation = newSaturation;
+		mColorTemperature = newColorTemperature;
 	}
 
 	/**
@@ -108,8 +131,8 @@ public class OverlayImageView extends SizableImageView {
 	 *            Indicator of the resolution of the image.
 	 */
 	public final void redisplay(final Resolution resolution) {
-		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor, mBrightness, mContrast,
-				resolution);
+		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor,
+				mBrightness, mContrast, mSaturation, mColorTemperature, resolution);
 
 		if (resolution != mCurrentResolution) {
 			double imageRatio = newImage.getWidth() / mCurrentImageWidth;
@@ -132,8 +155,8 @@ public class OverlayImageView extends SizableImageView {
 	@Override
 	protected final void displayImage(final Image image) {
 		Image enhancedImage =
-				ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor, mBrightness, mContrast,
-						Resolution.NORMAL);
+				ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor,
+						mBrightness, mContrast, mSaturation, mColorTemperature, Resolution.NORMAL);
 		mCurrentResolution = Resolution.NORMAL;
 		mCurrentImageWidth = enhancedImage.getWidth();
 
@@ -163,4 +186,25 @@ public class OverlayImageView extends SizableImageView {
 		float contrastImd = (1f - 2f / (storedContrast + 1f)) / CONTRAST_LIMIT;
 		return (float) Math.sin(Math.PI * contrastImd / 2);
 	}
+
+	/**
+	 * Convert saturation from (-1,1) scale to (1/3,infty) scale.
+	 *
+	 * @param seekbarSaturation the saturation on (-1,1) scale.
+	 * @return the saturation on (1/3,infty) scale.
+	 */
+	public static float seekbarSaturationToStoredSaturation(final float seekbarSaturation) {
+		return 4f / 3 / (1f - seekbarSaturation * CONTRAST_LIMIT) - 1f / 3; // MAGIC_NUMBER
+	}
+
+	/**
+	 * Convert saturation from (0,infty) scale to (-1,1) scale.
+	 *
+	 * @param storedSaturation the saturation on (0,infty) scale.
+	 * @return the saturation on (-1,1) scale.
+	 */
+	public static float storedSaturationToSeekbarSaturation(final float storedSaturation) {
+		return (1f - 4f / 3 / (storedSaturation + 1f / 3)) / CONTRAST_LIMIT; // MAGIC_NUMBER
+	}
+
 }

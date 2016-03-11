@@ -34,8 +34,8 @@
 		<contextMenu>
 			<ContextMenu> 
 				<items>
-					<MenuItem text="%menu_store_brightness" onAction="#storeBrightnessContrast"/> 
-					<MenuItem text="%menu_reset_brightness" onAction="#resetBrightnessContrast"/> 
+					<MenuItem text="%menu_store_color_settings" onAction="#storeColorSettings"/> 
+					<MenuItem text="%menu_reset_color_settings" onAction="#resetColorSettings"/> 
 					<MenuItem text="%menu_store_position" onAction="#storeViewPosition"/> 
 					<MenuItem text="%menu_reset_position" onAction="#resetViewPosition"/> 
 					<MenuItem text="%menu_display_full" onAction="#displayInFullWindow"/> 
@@ -44,19 +44,31 @@
 		</contextMenu>
 	</OverlayImageView>
 	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
+			<image>
+				<Image url="@img/color_temperature.png"/> 
+			</image>
+		</ImageView>
+		<Slider fx:id="mSliderColorTemperature" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
+		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
+			<image>
+				<Image url="@img/saturation.png"/> 
+			</image>
+		</ImageView>
+		<Slider fx:id="mSliderSaturation" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/brightness.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderBrightness" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
-		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
+		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/contrast.png"/> 
 			</image>
 		</ImageView>
-		<Slider fx:id="mSliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
-		<HBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4"> 
+		<Slider fx:id="mSliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
+		<HBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="4"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
 			<ToggleButton fx:id="mBtnOverlayCircle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<graphic>

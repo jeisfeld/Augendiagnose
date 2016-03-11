@@ -151,6 +151,18 @@ public class DisplayImageController extends BaseController implements Initializa
 	private Slider mSliderContrast;
 
 	/**
+	 * The slider for saturation.
+	 */
+	@FXML
+	private Slider mSliderSaturation;
+
+	/**
+	 * The slider for color temperature.
+	 */
+	@FXML
+	private Slider mSliderColorTemperature;
+
+	/**
 	 * The Buttons for overlays.
 	 */
 	// JAVADOC:OFF
@@ -252,6 +264,12 @@ public class DisplayImageController extends BaseController implements Initializa
 		mSliderContrast.setMin(-1);
 		mSliderContrast.setValue(0);
 		mSliderContrast.setMax(1);
+		mSliderSaturation.setMin(-1);
+		mSliderSaturation.setValue(0);
+		mSliderSaturation.setMax(1);
+		mSliderColorTemperature.setMin(-1);
+		mSliderColorTemperature.setValue(0);
+		mSliderColorTemperature.setMax(1);
 
 		mOverlayButtons = new ToggleButton[] {mBtnOverlayCircle, mBtnOverlay1, mBtnOverlay2, mBtnOverlay3, mBtnOverlay4, mBtnOverlay5, mBtnOverlay6,
 				mBtnOverlay7, mBtnOverlay8};
@@ -404,14 +422,15 @@ public class DisplayImageController extends BaseController implements Initializa
 	}
 
 	/**
-	 * Initialize the sliders for contrast and brightness.
+	 * Initialize the sliders for contrast, brightness, saturation and color temperature.
 	 */
 	private void initializeSliders() {
+		// Initialize slider for brightness.
 		mSliderBrightness.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				mDisplayImageView.setBrightness(newValue.floatValue(), mCurrentResolution);
+				mDisplayImageView.setColorSettings(newValue.floatValue(), null, null, null, mCurrentResolution);
 			}
 		});
 		mSliderBrightness.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -427,12 +446,12 @@ public class DisplayImageController extends BaseController implements Initializa
 			}
 		});
 
-		// Inititlize slider for contrast.
+		// Inititalize slider for contrast.
 		mSliderContrast.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
 					final Number newValue) {
-				mDisplayImageView.setContrast(newValue.floatValue(), mCurrentResolution);
+				mDisplayImageView.setColorSettings(null, newValue.floatValue(), null, null, mCurrentResolution);
 			}
 		});
 		mSliderContrast.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -447,6 +466,49 @@ public class DisplayImageController extends BaseController implements Initializa
 				updateResolution(NORMAL);
 			}
 		});
+
+		// Initialize slider for saturation.
+		mSliderSaturation.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				mDisplayImageView.setColorSettings(null, null, newValue.floatValue(), null, mCurrentResolution);
+			}
+		});
+		mSliderSaturation.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				updateResolution(THUMB);
+			}
+		});
+		mSliderSaturation.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				updateResolution(NORMAL);
+			}
+		});
+
+		// Inititalize slider for color temperature.
+		mSliderColorTemperature.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
+					final Number newValue) {
+				mDisplayImageView.setColorSettings(null, null, null, newValue.floatValue(), mCurrentResolution);
+			}
+		});
+		mSliderColorTemperature.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				updateResolution(THUMB);
+			}
+		});
+		mSliderColorTemperature.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				updateResolution(NORMAL);
+			}
+		});
+
 	}
 
 	@Override
@@ -572,12 +634,14 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The action event.
 	 */
 	@FXML
-	public final void storeBrightnessContrast(final ActionEvent event) {
+	public final void storeColorSettings(final ActionEvent event) {
 		if (isInitialized()) {
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();
 			if (metadata != null) {
 				metadata.setBrightness((float) mSliderBrightness.getValue());
 				metadata.setContrast(OverlayImageView.seekbarContrastToStoredContrast((float) mSliderContrast.getValue()));
+				metadata.setSaturation(OverlayImageView.seekbarSaturationToStoredSaturation((float) mSliderSaturation.getValue()));
+				metadata.setColorTemperature((float) mSliderColorTemperature.getValue());
 
 				mEyePhoto.storeImageMetadata(metadata);
 			}
@@ -591,10 +655,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	 *            The action event.
 	 */
 	@FXML
-	public final void resetBrightnessContrast(final ActionEvent event) {
+	public final void resetColorSettings(final ActionEvent event) {
 		mSliderBrightness.setValue(0);
 		mSliderContrast.setValue(0);
-		storeBrightnessContrast(event);
+		mSliderSaturation.setValue(0);
+		mSliderColorTemperature.setValue(0);
+		storeColorSettings(event);
 	}
 
 	/**
@@ -679,7 +745,12 @@ public class DisplayImageController extends BaseController implements Initializa
 		if (metadata.hasBrightnessContrast()) {
 			mSliderBrightness.setValue(metadata.getBrightness());
 			mSliderContrast.setValue(OverlayImageView.storedContrastToSeekbarContrast(metadata.getContrast()));
-			mDisplayImageView.initializeBrightnessContrast(metadata.getBrightness(), metadata.getContrast());
+			mSliderSaturation.setValue(OverlayImageView.storedSaturationToSeekbarSaturation(
+					metadata.getSaturation() == null ? 1f : metadata.getSaturation()));
+			mSliderColorTemperature.setValue(metadata.getColorTemperature() == null ? 0f : metadata.getColorTemperature());
+
+			mDisplayImageView.initializeColorSettings(metadata.getBrightness(), metadata.getContrast(),
+					metadata.getSaturation(), metadata.getColorTemperature());
 		}
 		// Only now the listeners should be initialized, as image is not yet loaded and listeners should not
 		// react on initial slider setup.

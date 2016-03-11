@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.util.imagefile;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -18,6 +19,8 @@ import javafx.scene.effect.ColorInput;
 import javafx.scene.effect.DisplacementMap;
 import javafx.scene.effect.FloatMap;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelFormat;
+import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.paint.Color;
 
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
@@ -47,6 +50,15 @@ public final class ImageUtil {
 	 * The pupil sizes in the original overlay images.
 	 */
 	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f};
+
+	/**
+	 * The number four.
+	 */
+	private static final int FOUR = 4;
+	/**
+	 * The size of a byte.
+	 */
+	private static final int BYTE = 0xFF;
 
 	/**
 	 * A cache of one overlay - to prevent frequent recalculation while sliding brightness and contrast.
@@ -373,6 +385,10 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the imabe.
+	 * @param saturation
+	 *            The saturation of the image.
+	 * @param colorTemperature
+	 *            The color temperature of the imabe.
 	 * @param resolution
 	 *            Indicator of the resolution of the image.
 	 * @return The image with overlay.
@@ -381,13 +397,15 @@ public final class ImageUtil {
 			final Image baseImage, final Integer overlayType, final RightLeft side,
 			final Color color, final float xPosition, final float yPosition, final float scaleFactor,
 			final float pupilXOffset, final float pupilYOffset, final float pupilSize,
-			final float brightness, final float contrast, final Resolution resolution) {
-		if (brightness == 0 && contrast == 1 && overlayType == null) {
+			final float brightness, final float contrast,
+			final float saturation, final float colorTemperature, final Resolution resolution) {
+		boolean hasOriginalColors = brightness == 0 && contrast == 1 && saturation == 1 && colorTemperature == 0;
+		if (hasOriginalColors && overlayType == null) {
 			return baseImage;
 		}
 
-		double width = baseImage.getWidth();
-		double height = baseImage.getHeight();
+		int width = (int) baseImage.getWidth();
+		int height = (int) baseImage.getHeight();
 		double overlaySize = Math.max(width, height) * scaleFactor;
 
 		// logic of brightness and contrast does not work very well. Therefore, simulating logic from android
@@ -395,63 +413,37 @@ public final class ImageUtil {
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
-		gc.drawImage(baseImage, 0, 0, width, height);
+		if (hasOriginalColors) {
+			gc.drawImage(baseImage, 0, 0, width, height);
+		}
+		else {
+			Color temperatureColor = convertTemperatureToColor(colorTemperature);
+			float factorBlue = 1 / (float) temperatureColor.getBlue();
+			float factorGreen = 1 / (float) temperatureColor.getGreen();
+			float factorRed = 1 / (float) temperatureColor.getRed();
+			float correctionFactor = (float) Math.pow(factorRed * factorGreen * factorBlue, -1f / 3); // MAGIC_NUMBER
+			factorBlue *= correctionFactor * contrast;
+			factorGreen *= correctionFactor * contrast;
+			factorRed *= correctionFactor * contrast;
+			float offset = BYTE / 2f * (1 - contrast + brightness * contrast + brightness);
+			float oppositeSaturation = (1 - saturation) / 2;
 
-		if (contrast != 1 || brightness != 0) {
-			// The offset which needs to be added after multiplying by contrast.
-			float offset = 1f / 2 * (1 - contrast + brightness * contrast + brightness); // MAGIC_NUMBER
+			WritablePixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteBgraInstance();
+			byte[] buffer = new byte[FOUR * width * height];
 
-			// The following just wants to multiply by contrast, followed by addition of offset.
-			// We achieve this by overlaying grey rectangles with varying blend mode.
-			// Various cases to ensure that all intermediate values are in the range [0,1]
-			if (contrast <= 1) {
-				gc.setGlobalBlendMode(BlendMode.MULTIPLY);
-				gc.setFill(new Color(contrast, contrast, contrast, 1));
-				gc.fillRect(0, 0, width, height);
-				if (offset > 0) {
-					gc.setGlobalBlendMode(BlendMode.ADD);
-					gc.setFill(new Color(offset, offset, offset, 1));
-					gc.fillRect(0, 0, width, height);
-				}
-				else {
-					// Subtract is achieved by difference - add - difference.
-					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-					gc.setFill(Color.WHITE);
-					gc.fillRect(0, 0, width, height);
-					gc.setGlobalBlendMode(BlendMode.ADD);
-					gc.setFill(new Color(-offset, -offset, -offset, 1));
-					gc.fillRect(0, 0, width, height);
-					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-					gc.setFill(Color.WHITE);
-					gc.fillRect(0, 0, width, height);
-				}
+			baseImage.getPixelReader().getPixels(0, 0, width, height, pixelFormat, buffer, 0, FOUR * width);
+
+			for (int i = 0; i < buffer.length; i += FOUR) {
+				float blueIn = (buffer[i] & BYTE) * factorBlue;
+				float greenIn = (buffer[i + 1] & BYTE) * factorGreen;
+				float redIn = (buffer[i + 2] & BYTE) * factorRed;
+
+				buffer[i] = toColorByte(saturation * blueIn + oppositeSaturation * greenIn + oppositeSaturation * redIn + offset);
+				buffer[i + 1] = toColorByte(oppositeSaturation * blueIn + saturation * greenIn + oppositeSaturation * redIn + offset);
+				buffer[i + 2] = toColorByte(oppositeSaturation * blueIn + oppositeSaturation * greenIn + saturation * redIn + offset);
 			}
-			else {
-				float invContrast = 1 - (1 / contrast);
-				if (offset >= 0) {
-					gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
-					gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
-					gc.fillRect(0, 0, width, height);
-					gc.setGlobalBlendMode(BlendMode.ADD);
-					gc.setFill(new Color(offset, offset, offset, 1));
-					gc.fillRect(0, 0, width, height);
-				}
-				else {
-					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-					gc.setFill(Color.WHITE);
-					gc.fillRect(0, 0, width, height);
-					float delta = -offset / contrast;
-					gc.setGlobalBlendMode(BlendMode.ADD);
-					gc.setFill(new Color(delta, delta, delta, 1));
-					gc.fillRect(0, 0, width, height);
-					gc.setGlobalBlendMode(BlendMode.DIFFERENCE);
-					gc.setFill(Color.WHITE);
-					gc.fillRect(0, 0, width, height);
-					gc.setGlobalBlendMode(BlendMode.COLOR_DODGE);
-					gc.setFill(new Color(invContrast, invContrast, invContrast, 1));
-					gc.fillRect(0, 0, width, height);
-				}
-			}
+
+			gc.getPixelWriter().setPixels(0, 0, width, height, pixelFormat, buffer, 0, FOUR * width);
 		}
 
 		if (overlayType != null) {
@@ -478,6 +470,31 @@ public final class ImageUtil {
 	}
 
 	/**
+	 * Convert a number into a byte (ensuring the appropriate range).
+	 *
+	 * @param number The number.
+	 * @return The resulting byte.
+	 */
+	private static byte toColorByte(final float number) {
+		return (byte) Math.min(BYTE, Math.max(0, number));
+	}
+
+	/**
+	 * Convert a temperature into a color value representing the color of this temperature.
+	 *
+	 * @param temperature The temperature value (in the range -1..1).
+	 * @return The color value.
+	 */
+	private static Color convertTemperatureToColor(final double temperature) {
+		if (temperature >= 0) {
+			return Color.rgb((int) (BYTE - 150 * temperature), (int) (BYTE - 105 * temperature), BYTE); // MAGIC_NUMBER
+		}
+		else {
+			return Color.rgb(BYTE, (int) (BYTE + 80 * temperature), (int) (BYTE + 145 * temperature)); // MAGIC_NUMBER
+		}
+	}
+
+	/**
 	 * Get an eye photo image with a displayed overlay, positioned via the metadata.
 	 *
 	 * @param eyePhoto
@@ -490,12 +507,17 @@ public final class ImageUtil {
 	 *            The brightness of the image.
 	 * @param contrast
 	 *            The contrast of the image.
+	 * @param saturation
+	 *            The saturation of the image.
+	 * @param colorTemperature
+	 *            The color temperature of the image.
 	 * @param resolution
 	 *            Indicator of the resolution of the image.
 	 * @return The image with overlay.
 	 */
-	public static Image getImageForDisplay(final EyePhoto eyePhoto, final Integer overlayType,
-			final Color color, final float brightness, final float contrast, final Resolution resolution) {
+	public static Image getImageForDisplay(final EyePhoto eyePhoto, // SUPPRESS_CHECKSTYLE Too many parameters
+			final Integer overlayType, final Color color, final float brightness, final float contrast,
+			final float saturation, final float colorTemperature, final Resolution resolution) {
 		Image image = eyePhoto.getImage(resolution);
 		JpegMetadata metadata = eyePhoto.getImageMetadata();
 		if (resolution == Resolution.FULL) {
@@ -506,18 +528,18 @@ public final class ImageUtil {
 			if (metadata.getPupilSize() == null) {
 				return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
 						metadata.getXCenter(), metadata.getYCenter(), metadata.getOverlayScaleFactor(),
-						0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
+						0, 0, 0.25f, brightness, contrast, saturation, colorTemperature, resolution); // MAGIC_NUMBER
 			}
 			else {
 				return ImageUtil.getImageWithOverlay(image, overlayType, eyePhoto.getRightLeft(), color,
 						metadata.getXCenter(), metadata.getYCenter(), metadata.getOverlayScaleFactor(),
 						metadata.getPupilXOffset(), metadata.getPupilYOffset(), metadata.getPupilSize(),
-						brightness, contrast, resolution);
+						brightness, contrast, saturation, colorTemperature, resolution);
 			}
 		}
 		else {
 			return ImageUtil.getImageWithOverlay(image, null, eyePhoto.getRightLeft(), color,
-					0, 0, 1, 0, 0, 0.25f, brightness, contrast, resolution); // MAGIC_NUMBER
+					0, 0, 1, 0, 0, 0.25f, brightness, contrast, saturation, colorTemperature, resolution); // MAGIC_NUMBER
 		}
 	}
 
