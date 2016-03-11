@@ -12,7 +12,10 @@ import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -54,6 +57,11 @@ public final class ImageUtil {
 	 * The file endings considered as image files.
 	 */
 	private static final List<String> IMAGE_SUFFIXES = Arrays.asList("JPG", "JPEG", "PNG", "BMP", "TIF", "TIFF", "GIF");
+
+	/**
+	 * The max size of a byte.
+	 */
+	private static final int BYTE = 255;
 
 	/**
 	 * Hide default constructor.
@@ -313,6 +321,66 @@ public final class ImageUtil {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+	}
+
+	/**
+	 * Update contrast and brightness of a bitmap.
+	 *
+	 * @param bmp              input bitmap
+	 * @param contrast         0..infinity - 1 is default
+	 * @param brightness       -1..1 - 0 is default
+	 * @param saturation       1/3..infinity - 1 is default
+	 * @param colorTemperature -1..1 - 0 is default
+	 * @return new bitmap
+	 */
+	public static Bitmap changeBitmapColors(@NonNull final Bitmap bmp, final float contrast, final float brightness,
+											final float saturation, final float colorTemperature) {
+		if (contrast == 1 && brightness == 0 && saturation == 1 && colorTemperature == 0) {
+			return bmp;
+		}
+
+		// some baseCalculations for the mapping matrix
+		int temperatureColor = ImageUtil.convertTemperatureToColor(colorTemperature);
+		float factorRed = (float) BYTE / Color.red(temperatureColor);
+		float factorGreen = (float) BYTE / Color.green(temperatureColor);
+		float factorBlue = (float) BYTE / Color.blue(temperatureColor);
+		float correctionFactor = (float) Math.pow(factorRed * factorGreen * factorBlue, -1f / 3); // MAGIC_NUMBER
+		factorRed *= correctionFactor * contrast;
+		factorGreen *= correctionFactor * contrast;
+		factorBlue *= correctionFactor * contrast;
+		float offset = BYTE / 2f * (1 - contrast + brightness * contrast + brightness);
+		float oppositeSaturation = (1 - saturation) / 2;
+
+		ColorMatrix cm = new ColorMatrix(new float[] { //
+				factorRed * saturation, factorGreen * oppositeSaturation, factorBlue * oppositeSaturation, 0, offset, //
+				factorRed * oppositeSaturation, factorGreen * saturation, factorBlue * oppositeSaturation, 0, offset, //
+				factorRed * oppositeSaturation, factorGreen * oppositeSaturation, factorBlue * saturation, 0, offset, //
+				0, 0, 0, 1, 0});
+
+		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+
+		Canvas canvas = new Canvas(ret);
+
+		Paint paint = new Paint();
+		paint.setColorFilter(new ColorMatrixColorFilter(cm));
+		canvas.drawBitmap(bmp, 0, 0, paint);
+
+		return ret;
+	}
+
+	/**
+	 * Convert a temperature into a color value representing the color of this temperature.
+	 *
+	 * @param temperature The temperature value (in the range -1..1).
+	 * @return The color value.
+	 */
+	private static int convertTemperatureToColor(final double temperature) {
+		if (temperature >= 0) {
+			return Color.rgb((int) (BYTE - 150 * temperature), (int) (BYTE - 105 * temperature), BYTE); // MAGIC_NUMBER
+		}
+		else {
+			return Color.rgb(BYTE, (int) (BYTE + 80 * temperature), (int) (BYTE + 145 * temperature)); // MAGIC_NUMBER
+		}
 	}
 
 	/**

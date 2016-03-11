@@ -10,9 +10,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -95,11 +92,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * The limiting value of contrast (must ensure that offset is smaller than 2^15).
 	 */
 	private static final float CONTRAST_LIMIT = 0.98f;
-
-	/**
-	 * The max size of a byte.
-	 */
-	private static final int BYTE = 255;
 
 	/**
 	 * The color of the one-colored overlays.
@@ -499,10 +491,10 @@ public class OverlayPinchImageView extends PinchImageView {
 		// Even in full resolution, first calculate high resolution image.
 		if (resolution == LOW) {
 			// for performance reasons, use only low resolution bitmap while pinching
-			modBitmap = changeBitmapColors(mBitmapSmall, mContrast, mBrightness, mSaturation, mColorTemperature);
+			modBitmap = ImageUtil.changeBitmapColors(mBitmapSmall, mContrast, mBrightness, mSaturation, mColorTemperature);
 		}
 		else {
-			modBitmap = changeBitmapColors(mBitmap, mContrast, mBrightness, mSaturation, mColorTemperature);
+			modBitmap = ImageUtil.changeBitmapColors(mBitmap, mContrast, mBrightness, mSaturation, mColorTemperature);
 		}
 
 		layers[0] = new BitmapDrawable(getResources(), modBitmap);
@@ -948,7 +940,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 	}
 
-
 	/**
 	 * Set the overlay color.
 	 *
@@ -1050,21 +1041,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	 */
 	private static float storedSaturationToSeekbarSaturation(final float storedSaturation) {
 		return (1f - 4f / 3 / (storedSaturation + 1f / 3)) / CONTRAST_LIMIT; // MAGIC_NUMBER
-	}
-
-	/**
-	 * Convert a temperature into a color value representing the color of this temperature.
-	 *
-	 * @param temperature The temperature value (in the range -1..1).
-	 * @return The color value.
-	 */
-	public static int convertTemperatureToColor(final double temperature) {
-		if (temperature >= 0) {
-			return Color.rgb((int) (BYTE - 150 * temperature), (int) (BYTE - 105 * temperature), BYTE); // MAGIC_NUMBER
-		}
-		else {
-			return Color.rgb(BYTE, (int) (BYTE + 80 * temperature), (int) (BYTE + 145 * temperature)); // MAGIC_NUMBER
-		}
 	}
 
 	/**
@@ -1258,51 +1234,6 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
-	 * Update contrast and brightness of a bitmap.
-	 *
-	 * @param bmp              input bitmap
-	 * @param contrast         0..infinity - 1 is default
-	 * @param brightness       -1..1 - 0 is default
-	 * @param saturation       1/3..infinity - 1 is default
-	 * @param colorTemperature -1..1 - 0 is default
-	 * @return new bitmap
-	 */
-	private static Bitmap changeBitmapColors(@NonNull final Bitmap bmp, final float contrast, final float brightness,
-											 final float saturation, final float colorTemperature) {
-		if (contrast == 1 && brightness == 0 && saturation == 1 && colorTemperature == 0) {
-			return bmp;
-		}
-
-		// some baseCalculations for the mapping matrix
-		int temperatureColor = convertTemperatureToColor(colorTemperature);
-		float factorRed = (float) BYTE / Color.red(temperatureColor);
-		float factorGreen = (float) BYTE / Color.green(temperatureColor);
-		float factorBlue = (float) BYTE / Color.blue(temperatureColor);
-		float correctionFactor = (float) Math.pow(factorRed * factorGreen * factorBlue, -1f / 3); // MAGIC_NUMBER
-		factorRed *= correctionFactor * contrast;
-		factorGreen *= correctionFactor * contrast;
-		factorBlue *= correctionFactor * contrast;
-		float offset = BYTE / 2f * (1 - contrast + brightness * contrast + brightness);
-		float oppositeSaturation = (1 - saturation) / 2;
-
-		ColorMatrix cm = new ColorMatrix(new float[] { //
-				factorRed * saturation, factorGreen * oppositeSaturation, factorBlue * oppositeSaturation, 0, offset, //
-				factorRed * oppositeSaturation, factorGreen * saturation, factorBlue * oppositeSaturation, 0, offset, //
-				factorRed * oppositeSaturation, factorGreen * oppositeSaturation, factorBlue * saturation, 0, offset, //
-				0, 0, 0, 1, 0});
-
-		Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
-
-		Canvas canvas = new Canvas(ret);
-
-		Paint paint = new Paint();
-		paint.setColorFilter(new ColorMatrixColorFilter(cm));
-		canvas.drawBitmap(bmp, 0, 0, paint);
-
-		return ret;
-	}
-
-	/**
 	 * Retrieve the metadata of the image.
 	 *
 	 * @return the metadata of the image
@@ -1477,7 +1408,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				if (mPartialBitmapFullResolutionWithBrightness == null) {
 					try {
 						mPartialBitmapFullResolutionWithBrightness =
-								changeBitmapColors(mPartialBitmapFullResolution, mContrast, mBrightness, mSaturation, mColorTemperature);
+								ImageUtil.changeBitmapColors(mPartialBitmapFullResolution, mContrast, mBrightness, mSaturation, mColorTemperature);
 					}
 					catch (OutOfMemoryError e) {
 						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap with brightness", e);
