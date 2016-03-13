@@ -600,8 +600,18 @@ public class CameraActivity extends BaseActivity {
 			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
 		}
 		if (!mFocusModes.contains(storedFocusMode)) {
-			storedFocusMode = FocusMode.AUTO;
-			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, storedFocusMode.toString());
+			if (mFocusModes.contains(FocusMode.AUTO)) {
+				storedFocusMode = FocusMode.AUTO;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
+			}
+			else if (mFocusModes.size() > 0) {
+				storedFocusMode = mFocusModes.get(0);
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
+			}
+			else {
+				storedFocusMode = null;
+				PreferenceUtil.removeSharedPreference(R.string.key_internal_camera_focus_mode);
+			}
 		}
 
 		setFocusMode(storedFocusMode);
@@ -796,7 +806,13 @@ public class CameraActivity extends BaseActivity {
 		mCameraHandler.setFocusMode(mCurrentFocusMode);
 
 		Button buttonCameraFocus = (Button) findViewById(R.id.buttonCameraFocus);
-		buttonCameraFocus.setText(mCurrentFocusMode.toDisplayString());
+
+		if (mCurrentFocusMode == null) {
+			buttonCameraFocus.setVisibility(View.GONE);
+		}
+		else {
+			buttonCameraFocus.setText(mCurrentFocusMode.toDisplayString());
+		}
 	}
 
 	/**

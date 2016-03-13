@@ -768,7 +768,7 @@ public class Camera2Handler implements CameraHandler {
 	@Override
 	public final void setFocusMode(@Nullable final FocusMode focusMode) {
 		if (focusMode == null) {
-			mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_AUTO;
+			mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_OFF;
 		}
 		else {
 			switch (focusMode) {
