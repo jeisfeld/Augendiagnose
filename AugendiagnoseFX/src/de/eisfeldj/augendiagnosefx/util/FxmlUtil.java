@@ -5,6 +5,7 @@ import java.io.IOException;
 import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -87,7 +88,6 @@ public final class FxmlUtil {
 	public static BaseController displaySubpage(final String fxmlFile, final int paneIndex, final boolean isClosable) {
 		BaseController controller;
 		controller = (BaseController) getRootFromFxml(fxmlFile);
-		controller.setPaneIndex(paneIndex);
 		MainController.getInstance().addSubPage(controller, paneIndex, isClosable);
 
 		return controller;
@@ -103,16 +103,6 @@ public final class FxmlUtil {
 		if (node.getParent() != null && node.getParent() instanceof Pane) {
 			((Pane) node.getParent()).getChildren().remove(node);
 		}
-	}
-
-	/**
-	 * Utility method to remove a pane from the stack.
-	 *
-	 * @param controller
-	 *            The controller of the pane to be removed.
-	 */
-	public static void removeSubpage(final BaseController controller) {
-		MainController.getInstance().removeSubPage(controller);
 	}
 
 	/**

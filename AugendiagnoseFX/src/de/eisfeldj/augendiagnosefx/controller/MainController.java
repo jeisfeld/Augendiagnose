@@ -73,11 +73,6 @@ public class MainController extends BaseController implements Initializable {
 	private StackPane[] mBodies = new StackPane[0];
 
 	/**
-	 * Number of subpages that cannot be closed.
-	 */
-	private int mUnclosablePages = 0;
-
-	/**
 	 * The list of subpages.
 	 */
 	private List<BaseController> mSubPageRegistry = new ArrayList<>();
@@ -127,16 +122,42 @@ public class MainController extends BaseController implements Initializable {
 
 			mBody.getChildren().clear();
 			mBody.getChildren().add(splitPane);
-
 		}
 		else {
 			mBody.getChildren().clear();
 
-			// retain old left pane.
-			removeSubPage(mSubPageRegistry.get(1));
-			mBody.getChildren().addAll(mBodies[0].getChildren());
+			List<BaseController> controllers0 = new ArrayList<>();
+			List<BaseController> controllers1 = new ArrayList<>();
+			List<BaseController> controllers2 = new ArrayList<>();
+			for (int i = mSubPageRegistry.size() - 1; i >= 0; i--) {
+				BaseController controller = mSubPageRegistry.get(i);
+				if (controller.getPaneIndex() == 0) {
+					if (controller.isCloseable()) {
+						controllers1.add(controller);
+					}
+					else {
+						controllers0.add(controller);
+					}
+				}
+				else {
+					if (controller.isCloseable()) {
+						controllers2.add(controller);
+					}
+				}
+				removeSubpage(controller);
+			}
 
 			mBodies = new StackPane[] {mBody};
+
+			for (BaseController controller : controllers0) {
+				addSubPage(controller, 0, false);
+			}
+			for (BaseController controller : controllers1) {
+				addSubPage(controller, 0, true);
+			}
+			for (BaseController controller : controllers2) {
+				addSubPage(controller, 0, true);
+			}
 		}
 	}
 
@@ -183,20 +204,22 @@ public class MainController extends BaseController implements Initializable {
 	 *            The controller of the subpage.
 	 * @param paneIndex
 	 *            The pane where to add the subpage.
-	 * @param isClosable
+	 * @param isCloseable
 	 *            Indicator if this is a closable page.
 	 */
-	public final void addSubPage(final BaseController controller, final int paneIndex, final boolean isClosable) {
+	public final void addSubPage(final BaseController controller, final int paneIndex, final boolean isCloseable) {
 		mBodies[paneIndex].getChildren().add(controller.getRoot());
+		controller.setPaneIndex(paneIndex);
+		controller.setCloseable(isCloseable);
+
 		int position;
-		if (isClosable) {
+		if (isCloseable) {
 			position = mSubPageRegistry.size();
 			mSubPageRegistry.add(controller);
 		}
 		else {
-			position = mUnclosablePages;
+			position = unclosablePages();
 			mSubPageRegistry.add(position, controller);
-			mUnclosablePages++;
 		}
 
 		// Enable the close menu.
@@ -208,7 +231,7 @@ public class MainController extends BaseController implements Initializable {
 						@Override
 						public void onDialogPositiveClick() {
 							controller.setDirty(false);
-							FxmlUtil.removeSubpage(controller);
+							MainController.this.removeSubpage(controller);
 						}
 
 						@Override
@@ -220,7 +243,7 @@ public class MainController extends BaseController implements Initializable {
 							ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
 				}
 				else {
-					FxmlUtil.removeSubpage(controller);
+					MainController.this.removeSubpage(controller);
 				}
 			}
 		}, position);
@@ -232,12 +255,9 @@ public class MainController extends BaseController implements Initializable {
 	 * @param controller
 	 *            The controller of the subpage.
 	 */
-	public final void removeSubPage(final BaseController controller) {
+	private void removeSubpage(final BaseController controller) {
 		controller.close();
 		int index = mSubPageRegistry.indexOf(controller);
-		if (index >= 0 && index < mUnclosablePages) {
-			mUnclosablePages--;
-		}
 		mSubPageRegistry.remove(controller);
 		disableClose(index);
 
@@ -256,7 +276,6 @@ public class MainController extends BaseController implements Initializable {
 			controller.close();
 		}
 		mSubPageRegistry.clear();
-		mUnclosablePages = 0;
 		disableAllClose();
 	}
 
@@ -313,7 +332,22 @@ public class MainController extends BaseController implements Initializable {
 	 * @return true if there is a page that can be closed.
 	 */
 	public final boolean hasClosablePage() {
-		return mCloseHandlerList.size() > mUnclosablePages;
+		return mSubPageRegistry.size() > unclosablePages();
+	}
+
+	/**
+	 * Get the number of unclosable pages.
+	 *
+	 * @return the number of unclosable pages.
+	 */
+	private int unclosablePages() {
+		int counter = 0;
+		for (BaseController controller : mSubPageRegistry) {
+			if (!controller.isCloseable()) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	/**

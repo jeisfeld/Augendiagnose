@@ -33,6 +33,19 @@ public abstract class BaseController implements Controller {
 	}
 
 	/**
+	 * Flag indicating if this controller represents a subpage that may be closed.
+	 */
+	private boolean mIsCloseable = true;
+
+	public final boolean isCloseable() {
+		return mIsCloseable;
+	}
+
+	public final void setCloseable(final boolean isCloseable) {
+		this.mIsCloseable = isCloseable;
+	}
+
+	/**
 	 * Constructor of controllers. Adds the controller to the registry.
 	 */
 	public BaseController() {
