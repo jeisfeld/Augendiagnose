@@ -733,6 +733,40 @@ public class DisplayImageController extends BaseController implements Initializa
 	}
 
 	/**
+	 * Action method for displaying the original saturation and color temperature of the image.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void showOriginalSaturation(final MouseEvent event) {
+		mDisplayImageView.setColorSettings(null, null, 0f, 0f, mCurrentResolution);
+	}
+
+	/**
+	 * Action method for displaying the original colors of the image, disabling the slidebar values.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void showOriginalColors(final MouseEvent event) {
+		mDisplayImageView.setColorSettings(0f, 0f, 0f, 0f, mCurrentResolution);
+	}
+
+	/**
+	 * Action method for re-applying the slidebar settings of the image.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void showSlidebarColors(final MouseEvent event) {
+		mDisplayImageView.setColorSettings((float) mSliderBrightness.getValue(), (float) mSliderContrast.getValue(),
+				(float) mSliderSaturation.getValue(), (float) mSliderColorTemperature.getValue(), mCurrentResolution);
+	}
+
+	/**
 	 * Setter for the eye photo. Initializes the view.
 	 *
 	 * @param eyePhoto
@@ -838,4 +872,5 @@ public class DisplayImageController extends BaseController implements Initializa
 	private boolean isInitialized() {
 		return mIsInitialized && mDisplayImageView.isInitialized();
 	}
+
 }

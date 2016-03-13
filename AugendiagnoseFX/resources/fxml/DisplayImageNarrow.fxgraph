@@ -88,7 +88,10 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/color_temperature.png"
-				}
+				},
+				pickOnBounds : true,
+				onMousePressed : controllermethod showOriginalSaturation,
+				onMouseReleased : controllermethod showSlidebarColors
 			},
 			Slider id mSliderColorTemperature {
 				static columnIndex : 3,
@@ -104,7 +107,10 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/saturation.png"
-				}
+				},
+				pickOnBounds : true,
+				onMousePressed : controllermethod showOriginalSaturation,
+				onMouseReleased : controllermethod showSlidebarColors
 			},
 			Slider id mSliderSaturation {
 				static columnIndex : 3,
@@ -120,7 +126,10 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/brightness.png"
-				}
+				},
+				pickOnBounds : true,
+				onMousePressed : controllermethod showOriginalColors,
+				onMouseReleased : controllermethod showSlidebarColors
 			},
 			Slider id mSliderBrightness {
 				static columnIndex : 1,
@@ -136,7 +145,10 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static halignment : "CENTER",
 				image : Image {
 					url : location "img/contrast.png"
-				}
+				},
+				pickOnBounds : true,
+				onMousePressed : controllermethod showOriginalColors,
+				onMouseReleased : controllermethod showSlidebarColors
 			},
 			Slider id mSliderContrast {
 				static columnIndex : 1,

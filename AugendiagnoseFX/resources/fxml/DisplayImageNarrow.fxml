@@ -44,25 +44,25 @@
 		</contextMenu>
 	</OverlayImageView>
 	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
-		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
+		<ImageView pickOnBounds="true" onMousePressed="#showOriginalSaturation" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/color_temperature.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderColorTemperature" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
-		<ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
+		<ImageView pickOnBounds="true" onMousePressed="#showOriginalSaturation" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/saturation.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderSaturation" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
-		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
+		<ImageView pickOnBounds="true" onMousePressed="#showOriginalColors" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/brightness.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderBrightness" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
-		<ImageView GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
+		<ImageView pickOnBounds="true" onMousePressed="#showOriginalColors" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/contrast.png"/> 
 			</image>
