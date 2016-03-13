@@ -15,12 +15,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.util.Log;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
+import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -241,7 +243,7 @@ public final class DialogUtil {
 			Bundle bundle = new Bundle();
 			bundle.putString(PARAM_TITLE, activity.getString(titleResource));
 			bundle.putInt(PARAM_ICON, iconResource);
-			bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message));
+			bundle.putString(PARAM_MESSAGE, message);
 			bundle.putInt(PARAM_PREFERENCE_KEY, preferenceResource);
 
 			DisplayTipFragment fragment = new DisplayTipFragment();
@@ -283,7 +285,7 @@ public final class DialogUtil {
 	 * @param eyePhoto the photo for which the image should be displayed.
 	 */
 	public static void displayImageInfo(@NonNull final Activity activity, @NonNull final EyePhoto eyePhoto) {
-		StringBuffer message = new StringBuffer();
+		StringBuilder message = new StringBuilder();
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filename, eyePhoto.getFilename()));
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString()));
 
@@ -473,15 +475,22 @@ public final class DialogUtil {
 	public static class DisplayTipFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
+			String message = getArguments().getString(PARAM_MESSAGE);
 			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
+			WebView webView = new WebView(getActivity());
+			webView.setBackgroundColor(0x00000000);
+			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView, null);
+
+			message = ReleaseNotesUtil.HTML_PREFIX + message + ReleaseNotesUtil.HTML_POSTFIX;
+			webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", "");
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(title)
 					.setIcon(iconResource)
-					.setMessage(message)
+					.setView(webView)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(@NonNull final DialogInterface dialog, final int id) {

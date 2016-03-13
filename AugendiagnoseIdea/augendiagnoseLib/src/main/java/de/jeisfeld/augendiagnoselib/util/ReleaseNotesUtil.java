@@ -28,7 +28,7 @@ public final class ReleaseNotesUtil {
 	/**
 	 * The prefix to be put in front of the HTML.
 	 */
-	private static final String HTML_PREFIX =
+	protected static final String HTML_PREFIX =
 			"<html><head>"
 					+ "<style type=\"text/css\">"
 					+ "body{color: #ffffff;} "
@@ -40,7 +40,7 @@ public final class ReleaseNotesUtil {
 	/**
 	 * The postfix to be put at the end of the HTML.
 	 */
-	private static final String HTML_POSTFIX = "</body></html>";
+	protected static final String HTML_POSTFIX = "</body></html>";
 
 	/**
 	 * Hide default constructor.
@@ -60,7 +60,7 @@ public final class ReleaseNotesUtil {
 	 */
 	public static String getReleaseNotesHtml(@NonNull final Context context, final boolean firstStart, final int fromVersion,
 											 final int toVersion) {
-		StringBuffer message = new StringBuffer();
+		StringBuilder message = new StringBuilder();
 		if (firstStart) {
 			message.append(context.getString(R.string.releasenotes_first_usage));
 		}

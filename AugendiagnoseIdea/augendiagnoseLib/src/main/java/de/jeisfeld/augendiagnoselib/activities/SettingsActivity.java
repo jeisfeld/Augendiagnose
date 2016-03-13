@@ -202,6 +202,8 @@ public class SettingsActivity extends PreferenceActivity {
 		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_initialized_hints)) {
 			boolean showTips = Boolean.parseBoolean(context.getString(R.string.pref_default_show_tips));
 			PreferenceUtil.setAllHints(!showTips);
+			// always show tips for first use
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_firstuse, false);
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_initialized_hints, true);
 		}
 
