@@ -487,7 +487,6 @@ public class Camera2Handler implements CameraHandler {
 	 * @param height the height of the preview
 	 */
 	private void openCamera(final int width, final int height) {
-		mIsInPreview = true;
 		setUpCameraOutputs(width, height);
 		configureTransform(width, height);
 		CameraManager manager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
@@ -496,6 +495,7 @@ public class Camera2Handler implements CameraHandler {
 				throw new RuntimeException("Time out waiting to lock camera opening.");
 			}
 			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
+			mIsInPreview = true;
 		}
 		catch (CameraAccessException | IllegalArgumentException | SecurityException e) {
 			mCameraCallback.onCameraError("Failed to open camera", e);
