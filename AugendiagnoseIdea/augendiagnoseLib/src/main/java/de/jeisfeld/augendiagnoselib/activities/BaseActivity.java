@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -359,7 +360,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	// OVERRIDABLE
 	protected String[] getRequiredPermissions() {
-		return new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+		return new String[] {permission.READ_EXTERNAL_STORAGE, permission.WRITE_EXTERNAL_STORAGE};
 	}
 
 	/**

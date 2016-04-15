@@ -583,7 +583,13 @@ public final class FileUtil {
 		}
 
 		// Next check SAF writability.
-		DocumentFile document = getDocumentFile(file, false, false);
+		DocumentFile document = null;
+		try {
+			document = getDocumentFile(file, false, false);
+		}
+		catch (Exception e) {
+			return false;
+		}
 
 		if (document == null) {
 			return false;

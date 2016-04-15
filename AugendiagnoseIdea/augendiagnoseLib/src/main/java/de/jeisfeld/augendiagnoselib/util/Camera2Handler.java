@@ -291,7 +291,9 @@ public class Camera2Handler implements CameraHandler {
 				break;
 			case STATE_WAITING_LOCK:
 				Integer afState = result.get(CaptureResult.CONTROL_AF_STATE);
-				if (afState == null) {
+
+				if (afState == null || mCurrentFocusMode == CaptureRequest.CONTROL_AF_MODE_OFF) {
+					mState = CameraState.STATE_PICTURE_TAKEN;
 					captureStillPicture();
 				}
 				else if (CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED == afState
@@ -313,8 +315,12 @@ public class Camera2Handler implements CameraHandler {
 			case STATE_WAITING_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
 				Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
-				if (aeState == null
-						|| aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
+
+				if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
+					mState = CameraState.STATE_PICTURE_TAKEN;
+					captureStillPicture();
+				}
+				else if (aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
 						|| aeState == CaptureRequest.CONTROL_AE_STATE_FLASH_REQUIRED) {
 					mState = CameraState.STATE_WAITING_NON_PRECAPTURE;
 				}
@@ -322,6 +328,7 @@ public class Camera2Handler implements CameraHandler {
 			case STATE_WAITING_NON_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
 				Integer aeState2 = result.get(CaptureResult.CONTROL_AE_STATE);
+
 				if (aeState2 == null || aeState2 != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
 					mState = CameraState.STATE_PICTURE_TAKEN;
 					captureStillPicture();
