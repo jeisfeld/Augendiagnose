@@ -741,7 +741,7 @@ public class Camera2Handler implements CameraHandler {
 			switch (flashlightMode) {
 			case OFF:
 				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
-				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				break;
 			case ON:
 				mCurrentFlashMode = CaptureRequest.FLASH_MODE_SINGLE;
@@ -753,7 +753,7 @@ public class Camera2Handler implements CameraHandler {
 				break;
 			default:
 				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
-				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				break;
 			}
 		}
