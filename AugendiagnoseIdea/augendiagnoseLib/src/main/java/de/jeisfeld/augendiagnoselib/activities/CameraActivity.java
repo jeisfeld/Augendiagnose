@@ -571,12 +571,14 @@ public class CameraActivity extends BaseActivity {
 			flashlightButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					int flashlightModeIndex = mFlashlightModes.indexOf(mCurrentFlashlightMode);
-					flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.size();
-					FlashMode newFlashlightMode = mFlashlightModes.get(flashlightModeIndex);
-					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
+					if (mFlashlightModes.size() > 0) {
+						int flashlightModeIndex = mFlashlightModes.indexOf(mCurrentFlashlightMode);
+						flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.size();
+						FlashMode newFlashlightMode = mFlashlightModes.get(flashlightModeIndex);
+						PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
 
-					setFlashlightMode(newFlashlightMode);
+						setFlashlightMode(newFlashlightMode);
+					}
 				}
 			});
 		}
@@ -626,12 +628,14 @@ public class CameraActivity extends BaseActivity {
 		focusButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				int focusModeIndex = mFocusModes.indexOf(mCurrentFocusMode);
-				focusModeIndex = (focusModeIndex + 1) % mFocusModes.size();
-				FocusMode newFocusMode = mFocusModes.get(focusModeIndex);
-				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, newFocusMode.toString());
+				if (mFocusModes.size() > 0) {
+					int focusModeIndex = mFocusModes.indexOf(mCurrentFocusMode);
+					focusModeIndex = (focusModeIndex + 1) % mFocusModes.size();
+					FocusMode newFocusMode = mFocusModes.get(focusModeIndex);
+					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, newFocusMode.toString());
 
-				setFocusMode(newFocusMode);
+					setFocusMode(newFocusMode);
+				}
 			}
 		});
 
