@@ -657,11 +657,9 @@ public class CameraActivity extends BaseActivity {
 					Camera2Handler cameraHandler = (Camera2Handler) mCameraHandler;
 					PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, progress);
 
-					float focusBarEnd = 100.1f; // MAGIC_NUMBER
-					float focalDistance = focusBarEnd / (focusBarEnd - progress);
-					focalDistance = focalDistance * focalDistance;
+					float relativeProgress = (float) progress / seekBar.getMax();
 
-					cameraHandler.setRelativeFocalDistance(focalDistance);
+					cameraHandler.setRelativeFocalDistance(1 - relativeProgress);
 				}
 			}
 		});
