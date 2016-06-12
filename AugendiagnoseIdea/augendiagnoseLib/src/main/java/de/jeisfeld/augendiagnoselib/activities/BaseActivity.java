@@ -9,6 +9,7 @@ import java.util.List;
 import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -82,6 +83,9 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		final String[] missingPermissions = checkRequiredPermissions();
 
 		if (missingPermissions.length > 0) {
+			// prevent NonSerializableException when changing orientation while showing confirmation dialog
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
 			DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
 				/**
 				 * The serial version UID.
