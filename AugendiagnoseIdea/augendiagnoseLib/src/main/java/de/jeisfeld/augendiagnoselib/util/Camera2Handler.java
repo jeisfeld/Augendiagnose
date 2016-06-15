@@ -76,13 +76,13 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Constructor of the Camera1Handler.
 	 *
-	 * @param activity       The activity using the handler.
-	 * @param previewFrame   The FrameLayout holding the preview.
-	 * @param preview        The view holding the preview.
+	 * @param activity The activity using the handler.
+	 * @param previewFrame The FrameLayout holding the preview.
+	 * @param preview The view holding the preview.
 	 * @param cameraCallback The handler called when the picture is taken.
 	 */
 	public Camera2Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
-						  final CameraCallback cameraCallback) {
+			final CameraCallback cameraCallback) {
 		this.mActivity = activity;
 		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
@@ -341,15 +341,15 @@ public class Camera2Handler implements CameraHandler {
 
 		@Override
 		public void onCaptureProgressed(@NonNull final CameraCaptureSession session,
-										@NonNull final CaptureRequest request,
-										@NonNull final CaptureResult partialResult) {
+				@NonNull final CaptureRequest request,
+				@NonNull final CaptureResult partialResult) {
 			process(partialResult);
 		}
 
 		@Override
 		public void onCaptureCompleted(@NonNull final CameraCaptureSession session,
-									   @NonNull final CaptureRequest request,
-									   @NonNull final TotalCaptureResult result) {
+				@NonNull final CaptureRequest request,
+				@NonNull final TotalCaptureResult result) {
 			process(result);
 		}
 
@@ -360,9 +360,9 @@ public class Camera2Handler implements CameraHandler {
 	 * width and height are at least as large as the respective requested values, and whose aspect
 	 * ratio matches with the specified value.
 	 *
-	 * @param choices     The list of sizes that the camera supports for the intended output class
-	 * @param width       The minimum desired width
-	 * @param height      The minimum desired height
+	 * @param choices The list of sizes that the camera supports for the intended output class
+	 * @param width The minimum desired width
+	 * @param height The minimum desired height
 	 * @param aspectRatio The aspect ratio
 	 * @return The optimal {@code Size}, or an arbitrary one if none were big enough
 	 */
@@ -425,7 +425,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Sets up member variables related to camera.
 	 *
-	 * @param width  The width of available size for camera preview
+	 * @param width The width of available size for camera preview
 	 * @param height The height of available size for camera preview
 	 */
 	private void setUpCameraOutputs(final int width, final int height) {
@@ -479,7 +479,7 @@ public class Camera2Handler implements CameraHandler {
 				return;
 			}
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to access camera", e);
 		}
 		catch (NullPointerException e) {
@@ -490,7 +490,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Opens the camera specified by {@link Camera2Handler#mCameraId}.
 	 *
-	 * @param width  the width of the preview
+	 * @param width the width of the preview
 	 * @param height the height of the preview
 	 */
 	private void openCamera(final int width, final int height) {
@@ -504,7 +504,7 @@ public class Camera2Handler implements CameraHandler {
 			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
 			mIsInPreview = true;
 		}
-		catch (CameraAccessException | IllegalArgumentException | SecurityException e) {
+		catch (CameraAccessException | IllegalArgumentException | SecurityException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to open camera", e);
 		}
 		catch (InterruptedException e) {
@@ -582,7 +582,7 @@ public class Camera2Handler implements CameraHandler {
 						}
 					}, mBackgroundHandler);
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to create preview session", e);
 		}
 	}
@@ -592,7 +592,7 @@ public class Camera2Handler implements CameraHandler {
 	 * This method should be called after the camera preview size is determined in
 	 * setUpCameraOutputs and also the size of `mTextureView` is fixed.
 	 *
-	 * @param viewWidth  The width of `mTextureView`
+	 * @param viewWidth The width of `mTextureView`
 	 * @param viewHeight The height of `mTextureView`
 	 */
 	private void configureTransform(final int viewWidth, final int viewHeight) {
@@ -640,7 +640,7 @@ public class Camera2Handler implements CameraHandler {
 
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to lock focus", e);
 		}
 	}
@@ -658,7 +658,7 @@ public class Camera2Handler implements CameraHandler {
 			mState = CameraState.STATE_WAITING_PRECAPTURE;
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to run precapture sequence", e);
 		}
 	}
@@ -688,7 +688,7 @@ public class Camera2Handler implements CameraHandler {
 
 			mCameraCallback.onTakingPicture();
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to capture picture", e);
 		}
 	}
@@ -706,7 +706,7 @@ public class Camera2Handler implements CameraHandler {
 			mState = CameraState.STATE_PREVIEW;
 			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
-		catch (CameraAccessException e) {
+		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to unlock focus", e);
 		}
 	}
@@ -827,7 +827,7 @@ public class Camera2Handler implements CameraHandler {
 
 				doPreviewConfiguration();
 			}
-			catch (CameraAccessException e) {
+			catch (CameraAccessException | IllegalStateException e) {
 				mCameraCallback.onCameraError("Failed to reconfigure the camera", e);
 			}
 		}
@@ -853,7 +853,7 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}
-			catch (CameraAccessException e) {
+			catch (CameraAccessException | IllegalStateException e) {
 				mCameraCallback.onCameraError("Failed to do the preview configuration", e);
 			}
 		}
