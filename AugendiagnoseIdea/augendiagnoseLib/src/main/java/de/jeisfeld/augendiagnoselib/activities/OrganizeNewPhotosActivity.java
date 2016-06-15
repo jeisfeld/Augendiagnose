@@ -434,8 +434,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			mEditDate.invalidate();
 		}
 
-		PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoRight.getAbsolutePath());
-		PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoLeft.getAbsolutePath());
+		if(mInputFolder != null) {
+			PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoRight.getAbsolutePath());
+			PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoLeft.getAbsolutePath());
+		}
 	}
 
 	/**
@@ -576,6 +578,11 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		}
 
 		movePhotos(targetPhotoRight, targetPhotoLeft, name);
+
+		if(mInputFolder == null) {
+			PupilAndIrisDetector.determineAndStoreIrisPosition(targetPhotoRight.getAbsolutePath());
+			PupilAndIrisDetector.determineAndStoreIrisPosition(targetPhotoLeft.getAbsolutePath());
+		}
 	}
 
 	/**

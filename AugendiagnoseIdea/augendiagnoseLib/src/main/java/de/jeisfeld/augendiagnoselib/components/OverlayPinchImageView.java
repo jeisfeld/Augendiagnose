@@ -1149,9 +1149,9 @@ public class OverlayPinchImageView extends PinchImageView {
 					// When resizing, then position also changes
 					final float changeFactor = mPupilOverlayScaleFactor / mLastPupilOverlayScaleFactor;
 					final float pinchX =
-							(x0 - getWidth() / 2) / overlayAbsoluteSize + mPosX * mBitmap.getWidth() * mScaleFactor / overlayAbsoluteSize;
+							(x0 - (float) getWidth() / 2) / overlayAbsoluteSize + mPosX * mBitmap.getWidth() * mScaleFactor / overlayAbsoluteSize;
 					final float pinchY =
-							(y0 - getHeight() / 2) / overlayAbsoluteSize + mPosY * mBitmap.getHeight() * mScaleFactor / overlayAbsoluteSize;
+							(y0 - (float) getHeight() / 2) / overlayAbsoluteSize + mPosY * mBitmap.getHeight() * mScaleFactor / overlayAbsoluteSize;
 
 					mPupilOverlayX = pinchX + (mPupilOverlayX - pinchX) * changeFactor
 							+ mOverlayX * (changeFactor - 1) * mBitmap.getWidth() * mScaleFactor / overlayAbsoluteSize;
@@ -1258,10 +1258,10 @@ public class OverlayPinchImageView extends PinchImageView {
 			return null;
 		}
 
-		float leftX = mPosX * mBitmap.getWidth() - getWidth() / 2 / mScaleFactor;
-		float rightX = mPosX * mBitmap.getWidth() + getWidth() / 2 / mScaleFactor;
-		float upperY = mPosY * mBitmap.getHeight() - getHeight() / 2 / mScaleFactor;
-		float lowerY = mPosY * mBitmap.getHeight() + getHeight() / 2 / mScaleFactor;
+		float leftX = mPosX * mBitmap.getWidth() - (float) getWidth() / 2 / mScaleFactor;
+		float rightX = mPosX * mBitmap.getWidth() + (float) getWidth() / 2 / mScaleFactor;
+		float upperY = mPosY * mBitmap.getHeight() - (float) getHeight() / 2 / mScaleFactor;
+		float lowerY = mPosY * mBitmap.getHeight() + (float) getHeight() / 2 / mScaleFactor;
 
 		// The image part which needs to be displayed
 		float minX = Math.max(0, leftX / mBitmap.getWidth());
@@ -1352,24 +1352,24 @@ public class OverlayPinchImageView extends PinchImageView {
 						mOverlayY + mPupilOverlayY * mOverlayScaleFactor * OVERLAY_SIZE * OVERLAY_CIRCLE_RATIO / mBitmap.getHeight();
 				layerDrawable.setLayerInset(i,
 						(int) (((pupilAdjustedOverlayX - mPosX) * mBitmap.getWidth() - totalPupilOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getWidth() / 2),
+								+ (float) partialBitmap.getWidth() / 2),
 						(int) (((pupilAdjustedOverlayY - mPosY) * mBitmap.getHeight() - totalPupilOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getHeight() / 2),
+								+ (float) partialBitmap.getHeight() / 2),
 						(int) (((mPosX - pupilAdjustedOverlayX) * mBitmap.getWidth() - totalPupilOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getWidth() / 2),
+								+ (float) partialBitmap.getWidth() / 2),
 						(int) (((mPosY - pupilAdjustedOverlayY) * mBitmap.getHeight() - totalPupilOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getHeight() / 2));
+								+ (float) partialBitmap.getHeight() / 2));
 			}
 			else {
 				layerDrawable.setLayerInset(i,
 						(int) (((mOverlayX - mPosX) * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getWidth() / 2),
+								+ (float) partialBitmap.getWidth() / 2),
 						(int) (((mOverlayY - mPosY) * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getHeight() / 2),
+								+ (float) partialBitmap.getHeight() / 2),
 						(int) (((mPosX - mOverlayX) * mBitmap.getWidth() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getWidth() / 2),
+								+ (float) partialBitmap.getWidth() / 2),
 						(int) (((mPosY - mOverlayY) * mBitmap.getHeight() - OVERLAY_SIZE / 2 * mOverlayScaleFactor) * mScaleFactor
-								+ partialBitmap.getHeight() / 2));
+								+ (float) partialBitmap.getHeight() / 2));
 			}
 		}
 
