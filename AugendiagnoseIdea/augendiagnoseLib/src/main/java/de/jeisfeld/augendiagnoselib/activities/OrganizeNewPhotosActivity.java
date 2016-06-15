@@ -129,13 +129,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Static helper method to start the activity, passing the source folder, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
 	 *
-	 * @param context         The context in which the activity is started.
+	 * @param context The context in which the activity is started.
 	 * @param inputFolderName The folder containing the input files.
-	 * @param rightEyeLast    A flag indicating if the last picture is the right eye.
-	 * @param nextAction      The next action to be done after organizing a pair of images.
+	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
+	 * @param nextAction The next action to be done after organizing a pair of images.
 	 */
 	public static final void startActivity(@NonNull final Context context, final String inputFolderName,
-										   final boolean rightEyeLast, final NextAction nextAction) {
+			final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -147,13 +147,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Static helper method to start the activity, passing the list of files, the target folder, and a flag indicating
 	 * if the last picture is the right or the left eye.
 	 *
-	 * @param context      The context in which the activity is started.
-	 * @param fileNames    The list of files.
+	 * @param context The context in which the activity is started.
+	 * @param fileNames The list of files.
 	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
-	 * @param nextAction   The next action to be done after organizing a pair of images.
+	 * @param nextAction The next action to be done after organizing a pair of images.
 	 */
 	public static final void startActivity(@NonNull final Context context, final String[] fileNames,
-										   final boolean rightEyeLast, final NextAction nextAction) {
+			final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -434,7 +434,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			mEditDate.invalidate();
 		}
 
-		if(mInputFolder != null) {
+		if (mInputFolder != null) {
 			PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoRight.getAbsolutePath());
 			PupilAndIrisDetector.determineAndStoreIrisPosition(mPhotoLeft.getAbsolutePath());
 		}
@@ -444,7 +444,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Helper method to display an error message.
 	 *
 	 * @param resource The resource containing the error message.
-	 * @param args     The arguments of the error message.
+	 * @param args The arguments of the error message.
 	 */
 	private void displayError(final int resource, final Object... args) {
 		DialogUtil.displayError(this, resource, false, args);
@@ -579,7 +579,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 
 		movePhotos(targetPhotoRight, targetPhotoLeft, name);
 
-		if(mInputFolder == null) {
+		if (mInputFolder == null) {
 			PupilAndIrisDetector.determineAndStoreIrisPosition(targetPhotoRight.getAbsolutePath());
 			PupilAndIrisDetector.determineAndStoreIrisPosition(targetPhotoLeft.getAbsolutePath());
 		}
@@ -589,8 +589,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Move and rename the selected files.
 	 *
 	 * @param targetPhotoRight The right eye photo.
-	 * @param targetPhotoLeft  The left eye photo.
-	 * @param name             The selected name.
+	 * @param targetPhotoLeft The left eye photo.
+	 * @param name The selected name.
 	 */
 	private void movePhotos(@NonNull final EyePhoto targetPhotoRight, @NonNull final EyePhoto targetPhotoLeft, final String name) {
 		if (mInputFolder != null) {
@@ -697,8 +697,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * Set the displayed date.
 	 *
 	 * @param yearSelected The year.
-	 * @param monthOfYear  The month of the year.
-	 * @param dayOfMonth   The day of the month.
+	 * @param monthOfYear The month of the year.
+	 * @param dayOfMonth The day of the month.
 	 */
 	private void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
 		mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
@@ -738,7 +738,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 			DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 				@Override
 				public void onDateSet(final DatePicker view, final int yearSelected, final int monthOfYear,
-									  final int dayOfMonth) {
+						final int dayOfMonth) {
 					((OrganizeNewPhotosActivity) getActivity()).setDate(yearSelected, monthOfYear, dayOfMonth);
 				}
 			};
