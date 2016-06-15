@@ -103,6 +103,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.1.10</item>
         <item>1.1.11</item>
         <item>1.1.12</item>
+        <item>1.1.13</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -162,6 +163,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Automatic detection of iris and pupil position. Bugfixes</item>
         <item>Enabled change of saturation and color temperature. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
