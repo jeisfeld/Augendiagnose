@@ -37,7 +37,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
+		<nature>org.eclipse.andmore.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
