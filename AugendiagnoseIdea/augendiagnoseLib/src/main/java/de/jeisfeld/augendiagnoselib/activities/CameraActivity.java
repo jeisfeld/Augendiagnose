@@ -1074,7 +1074,7 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onCameraError(final String message, @Nullable final Exception e) {
+		public void onCameraError(final String message, @Nullable final Throwable e) {
 			String messageString = message;
 			if (e == null) {
 				Log.e(Application.TAG, message);
@@ -1268,7 +1268,7 @@ public class CameraActivity extends BaseActivity {
 		 * @param message The error message as String
 		 * @param e       The exception
 		 */
-		void onCameraError(final String message, final Exception e);
+		void onCameraError(final String message, final Throwable e);
 
 		/**
 		 * Give information which focus modes and flash modes are supported by the camera.

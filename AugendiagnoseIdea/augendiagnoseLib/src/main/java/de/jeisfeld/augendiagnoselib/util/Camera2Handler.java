@@ -504,7 +504,7 @@ public class Camera2Handler implements CameraHandler {
 			manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
 			mIsInPreview = true;
 		}
-		catch (CameraAccessException | IllegalArgumentException | SecurityException | IllegalStateException e) {
+		catch (CameraAccessException | IllegalArgumentException | SecurityException | IllegalStateException | AssertionError e) {
 			mCameraCallback.onCameraError("Failed to open camera", e);
 		}
 		catch (InterruptedException e) {
@@ -582,7 +582,7 @@ public class Camera2Handler implements CameraHandler {
 						}
 					}, mBackgroundHandler);
 		}
-		catch (CameraAccessException | IllegalStateException e) {
+		catch (CameraAccessException | IllegalStateException | AssertionError e) {
 			mCameraCallback.onCameraError("Failed to create preview session", e);
 		}
 	}
