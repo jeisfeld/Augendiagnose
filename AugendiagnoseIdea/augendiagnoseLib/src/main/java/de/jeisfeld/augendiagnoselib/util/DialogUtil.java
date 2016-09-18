@@ -59,6 +59,11 @@ public final class DialogUtil {
 	private static final String PARAM_PREFERENCE_KEY = "keyPrefTip";
 
 	/**
+	 * Instance state flag indicating if a dialog should not be recreated after orientation change.
+	 */
+	private static final String PREVENT_RECREATION = "preventRecreation";
+
+	/**
 	 * Hide default constructor.
 	 */
 	private DialogUtil() {
@@ -343,15 +348,14 @@ public final class DialogUtil {
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
-			mListener = (MessageDialogListener) getArguments().getSerializable(
-					PARAM_LISTENER);
+			mListener = (MessageDialogListener) getArguments().getSerializable(PARAM_LISTENER);
 			getArguments().putSerializable(PARAM_LISTENER, null);
 
 			// Listeners cannot retain functionality when automatically recreated.
 			// Therefore, dialogs with listeners must be re-created by the activity on orientation change.
 			boolean preventRecreation = false;
 			if (savedInstanceState != null) {
-				preventRecreation = savedInstanceState.getBoolean("preventRecreation");
+				preventRecreation = savedInstanceState.getBoolean(PREVENT_RECREATION);
 			}
 			if (preventRecreation) {
 				dismiss();
@@ -386,7 +390,7 @@ public final class DialogUtil {
 			if (mListener != null) {
 				// Typically cannot serialize the listener due to its reference to the activity.
 				mListener = null;
-				outState.putBoolean("preventRecreation", true);
+				outState.putBoolean(PREVENT_RECREATION, true);
 			}
 			super.onSaveInstanceState(outState);
 		}
@@ -416,12 +420,30 @@ public final class DialogUtil {
 	 * Fragment to display a confirmation message.
 	 */
 	public static class ConfirmDialogFragment extends DialogFragment {
+		/**
+		 * The listener called when the dialog is ended.
+		 */
+		@Nullable
+		private ConfirmDialogListener mListener = null;
+
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
-			final ConfirmDialogListener listener = (ConfirmDialogListener) getArguments().getSerializable(
-					PARAM_LISTENER);
+
+			mListener = (ConfirmDialogListener) getArguments().getSerializable(PARAM_LISTENER);
+			getArguments().putSerializable(PARAM_LISTENER, null);
+
+			// Listeners cannot retain functionality when automatically recreated.
+			// Therefore, dialogs with listeners must be re-created by the activity on orientation change.
+			boolean preventRecreation = false;
+			if (savedInstanceState != null) {
+				preventRecreation = savedInstanceState.getBoolean(PREVENT_RECREATION);
+			}
+			if (preventRecreation) {
+				mListener = null;
+				dismiss();
+			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_dialog_confirmation)
@@ -431,8 +453,8 @@ public final class DialogUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the positive button event back to the host activity
-							if (listener != null) {
-								listener.onDialogNegativeClick(ConfirmDialogFragment.this);
+							if (mListener != null) {
+								mListener.onDialogNegativeClick(ConfirmDialogFragment.this);
 							}
 						}
 					}) //
@@ -440,12 +462,30 @@ public final class DialogUtil {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the negative button event back to the host activity
-							if (listener != null) {
-								listener.onDialogPositiveClick(ConfirmDialogFragment.this);
+							if (mListener != null) {
+								mListener.onDialogPositiveClick(ConfirmDialogFragment.this);
 							}
 						}
 					});
 			return builder.create();
+		}
+
+		@Override
+		public final void onCancel(final DialogInterface dialog) {
+			super.onCancel(dialog);
+			if (mListener != null) {
+				mListener.onDialogNegativeClick(ConfirmDialogFragment.this);
+			}
+		}
+
+		@Override
+		public final void onSaveInstanceState(@NonNull final Bundle outState) {
+			if (mListener != null) {
+				// Typically cannot serialize the listener due to its reference to the activity.
+				mListener = null;
+				outState.putBoolean(PREVENT_RECREATION, true);
+			}
+			super.onSaveInstanceState(outState);
 		}
 
 		/**
