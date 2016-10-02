@@ -81,6 +81,7 @@ public class Application extends android.app.Application {
 		}
 
 		PreferenceUtil.incrementCounter(R.string.key_statistics_countstarts);
+		PreferenceUtil.sendStatistics();
 	}
 
 	/**

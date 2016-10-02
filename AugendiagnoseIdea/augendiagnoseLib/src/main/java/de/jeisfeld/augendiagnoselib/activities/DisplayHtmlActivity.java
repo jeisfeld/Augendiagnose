@@ -16,6 +16,8 @@ import de.jeisfeld.augendiagnoselib.fragments.DisplayHelpNavigationFragment;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Activity to display an HTML page. Used for display of help pages.
@@ -92,7 +94,14 @@ public class DisplayHtmlActivity extends Activity {
 
 		if (savedInstanceState == null) {
 			PreferenceUtil.incrementCounter(R.string.key_statistics_counthelp);
+			TrackingUtil.sendEvent(Category.EVENT_USER, "Display help", null);
 		}
+	}
+
+	@Override
+	protected final void onResume() {
+		super.onResume();
+		TrackingUtil.sendScreen(this);
 	}
 
 	/**

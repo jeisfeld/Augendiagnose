@@ -35,6 +35,7 @@ import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinished
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 
 /**
  * Base activity being the subclass of most application activities. Handles the help menu, and handles startup activities related to authorization.
@@ -154,6 +155,13 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		if (getActionBar() != null) {
 			getActionBar().setDisplayHomeAsUpEnabled(Arrays.asList(activitiesWithHomeEnablement).contains(getClass().getName()));
 		}
+	}
+
+	// OVERRIDABLE
+	@Override
+	protected void onResume() {
+		super.onResume();
+		TrackingUtil.sendScreen(this);
 	}
 
 	/*

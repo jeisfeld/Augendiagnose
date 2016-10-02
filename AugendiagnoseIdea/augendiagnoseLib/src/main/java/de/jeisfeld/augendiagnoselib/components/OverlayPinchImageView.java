@@ -26,6 +26,8 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment.OverlayStatus;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -628,6 +630,7 @@ public class OverlayPinchImageView extends PinchImageView {
 				mHasOverlayPosition = true;
 
 				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
+				TrackingUtil.sendEvent(Category.EVENT_USER, "Lock iris position", null);
 			}
 		}
 
@@ -1565,6 +1568,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			mEyePhoto.storeImageMetadata(mMetadata);
 
 			PreferenceUtil.incrementCounter(R.string.key_statistics_countcomment);
+			TrackingUtil.sendEvent(Category.EVENT_USER, "Edit comment", null);
 		}
 	}
 

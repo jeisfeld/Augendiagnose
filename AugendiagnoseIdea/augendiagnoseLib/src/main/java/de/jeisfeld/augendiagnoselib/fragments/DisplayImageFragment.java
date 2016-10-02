@@ -1,8 +1,6 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
@@ -22,6 +20,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,6 +54,8 @@ import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnC
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 
@@ -763,6 +764,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (overlayPosition >= 0 || !isChecked) {
 			mImageView.triggerOverlay(overlayPosition, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
+			if (isChecked) {
+				String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayPosition];
+				TrackingUtil.sendEvent(Category.EVENT_USER, "Display overlay", overlayName);
+			}
 		}
 
 		if (isChecked && !buttonGetsUnchecked) {
@@ -1412,7 +1417,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		/**
 		 * A map from the resourceValue to the color.
 		 */
-		private static final Map<Integer, UtilitiyStatus> UTILITY_STATUS_MAP = new HashMap<>();
+		private static final SparseArray<UtilitiyStatus> UTILITY_STATUS_MAP = new SparseArray<>();
 
 		static {
 			for (UtilitiyStatus utilityStatus : UtilitiyStatus.values()) {

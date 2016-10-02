@@ -17,6 +17,8 @@ import android.util.SparseArray;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Class that serves to detect the pupil and iris within an eye photo.
@@ -334,11 +336,13 @@ public class PupilAndIrisDetector {
 						}
 
 						PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionsuccess);
+						TrackingUtil.sendEvent(Category.EVENT_USER, "Iris detection", "Success");
 					}
 				}
 				catch (Throwable e) {
 					Log.e(Application.TAG, "Failed to find iris and pupil position for file " + imagePath, e);
 					int errorCounter = PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionfailed);
+					TrackingUtil.sendEvent(Category.EVENT_USER, "Iris detection", "Failed");
 					int successCounter = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countirisdetectionsuccess, 0);
 					if (errorCounter > 2 && errorCounter > successCounter) {
 						// If Iris detection typically fails, then switch it off.
@@ -420,7 +424,7 @@ public class PupilAndIrisDetector {
 	 *
 	 * @param metadata The metadata to be updated.
 	 */
-	public final void updateMetadata(final JpegMetadata metadata) {
+	private void updateMetadata(final JpegMetadata metadata) {
 		if (mPupilRadius > 0 && mIrisRadius > mPupilRadius) {
 			metadata.setXCenter(mIrisXCenter);
 			metadata.setYCenter(mIrisYCenter);

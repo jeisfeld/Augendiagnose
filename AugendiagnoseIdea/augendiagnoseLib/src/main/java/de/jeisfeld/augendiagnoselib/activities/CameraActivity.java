@@ -56,6 +56,8 @@ import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -392,6 +394,7 @@ public class CameraActivity extends BaseActivity {
 						// get an image from the camera
 						captureButton.setEnabled(false);
 						mCameraHandler.takePicture();
+						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Capture");
 					}
 				});
 
@@ -436,6 +439,7 @@ public class CameraActivity extends BaseActivity {
 								setAction(FINISH_CAMERA, null);
 							}
 						}
+						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Accept");
 					}
 				});
 
@@ -478,6 +482,7 @@ public class CameraActivity extends BaseActivity {
 
 							setAction(TAKE_PHOTO, mCurrentRightLeft);
 						}
+						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Decline");
 					}
 				});
 
@@ -1268,7 +1273,7 @@ public class CameraActivity extends BaseActivity {
 		 * @param message The error message as String
 		 * @param e       The exception
 		 */
-		void onCameraError(final String message, final Throwable e);
+		void onCameraError(String message, Throwable e);
 
 		/**
 		 * Give information which focus modes and flash modes are supported by the camera.

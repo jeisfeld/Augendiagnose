@@ -15,6 +15,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Utility class for handling the shared preferences.
@@ -509,7 +510,35 @@ public final class PreferenceUtil {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Send a statistics values to Google Analytics.
+	 *
+	 * @param label        The label.
+	 * @param preferenceId The preference id.
+	 */
+	private static void sendStatistics(final String label, final int preferenceId) {
+		TrackingUtil.sendEvent(Category.COUNTER_STATISTICS, "Statistics", label, (long) getSharedPreferenceInt(preferenceId, 0));
 
 	}
 
+	/**
+	 * Send all statistics values to Google Analytics.
+	 */
+	public static void sendStatistics() {
+		sendStatistics("App starts", R.string.key_statistics_countstarts);
+		sendStatistics("Edit comment", R.string.key_statistics_countcomment);
+		sendStatistics("Display images", R.string.key_statistics_countdisplay);
+		sendStatistics("Display help", R.string.key_statistics_counthelp);
+		sendStatistics("Iris detection failed", R.string.key_statistics_countirisdetectionfailed);
+		sendStatistics("Iris detection success", R.string.key_statistics_countirisdetectionsuccess);
+		sendStatistics("List Names", R.string.key_statistics_countlistnames);
+		sendStatistics("List Pictures", R.string.key_statistics_countlistpictures);
+		sendStatistics("Lock iris position", R.string.key_statistics_countlock);
+		sendStatistics("Organize end", R.string.key_statistics_countorganizeend);
+		sendStatistics("Organize start", R.string.key_statistics_countorganizestart);
+		sendStatistics("Total ", R.string.key_statistics_countsave);
+		sendStatistics("Total ", R.string.key_statistics_countsettings);
+	}
 }

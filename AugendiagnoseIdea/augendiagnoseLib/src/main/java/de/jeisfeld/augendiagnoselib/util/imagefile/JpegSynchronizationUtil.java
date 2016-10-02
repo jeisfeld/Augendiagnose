@@ -11,6 +11,8 @@ import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil.ExifStorageException;
 
 /**
@@ -137,6 +139,7 @@ public final class JpegSynchronizationUtil {
 		task.execute();
 
 		PreferenceUtil.incrementCounter(R.string.key_statistics_countsave);
+		TrackingUtil.sendEvent(Category.EVENT_USER, "Save image", null);
 	}
 
 	/**

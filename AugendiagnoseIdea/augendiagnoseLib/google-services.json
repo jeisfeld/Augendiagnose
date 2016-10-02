@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "60249634181",
+    "project_id": "augendiagnoselib"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60249634181:android:c4de80556dbcf72a",
+        "android_client_info": {
+          "package_name": "de.jeisfeld.augendiagnoselib"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUY4nuBq1y5PmrtQ6fvLGpYVfF-3_jf-c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-84935089-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
