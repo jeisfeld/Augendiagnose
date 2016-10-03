@@ -538,7 +538,7 @@ public final class PreferenceUtil {
 		sendStatistics("Lock iris position", R.string.key_statistics_countlock);
 		sendStatistics("Organize end", R.string.key_statistics_countorganizeend);
 		sendStatistics("Organize start", R.string.key_statistics_countorganizestart);
-		sendStatistics("Total ", R.string.key_statistics_countsave);
-		sendStatistics("Total ", R.string.key_statistics_countsettings);
+		sendStatistics("Save image", R.string.key_statistics_countsave);
+		sendStatistics("Open settings", R.string.key_statistics_countsettings);
 	}
 }

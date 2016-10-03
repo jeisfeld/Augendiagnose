@@ -324,7 +324,7 @@ public class PupilAndIrisDetector {
 						PupilAndIrisDetector detector = new PupilAndIrisDetector(ImageUtil.getImageBitmap(newImagePath, 0));
 						Log.v(Application.TAG, "Finished finding iris for " + newImagePath + ". Duration: "
 								+ ((System.currentTimeMillis() - timestamp) / 1000.0)); // MAGIC_NUMBER
-
+						TrackingUtil.sendTiming(Category.TIME_BACKGROUND, "Iris detection", null, System.currentTimeMillis() - timestamp);
 						// Retrieve image path - in case the file has moved.
 						newImagePath = FILES_IN_PROCESS2.get(imagePath);
 						JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(newImagePath);

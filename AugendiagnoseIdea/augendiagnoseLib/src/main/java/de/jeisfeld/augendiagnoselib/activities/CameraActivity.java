@@ -110,6 +110,11 @@ public class CameraActivity extends BaseActivity {
 	private static final int DEFAULT_CIRCLE_TYPE = 2;
 
 	/**
+	 * Activity String used for tracking.
+	 */
+	private static final String CAMERA = "Camera";
+
+	/**
 	 * The available focus modes.
 	 */
 	private static List<FocusMode> mFocusModes;
@@ -201,6 +206,11 @@ public class CameraActivity extends BaseActivity {
 	 */
 	@Nullable
 	private CameraHandler mCameraHandler;
+
+	/**
+	 * Timestamp for measuring the tracking duration.
+	 */
+	private long mTrackingTimestamp = 0;
 
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
@@ -366,6 +376,7 @@ public class CameraActivity extends BaseActivity {
 		if (mCameraHandler != null) {
 			mCameraHandler.startPreview();
 		}
+		mTrackingTimestamp = System.currentTimeMillis();
 	}
 
 	@Override
@@ -374,6 +385,7 @@ public class CameraActivity extends BaseActivity {
 			mCameraHandler.stopPreview();
 		}
 		super.onPause();
+		TrackingUtil.sendTiming(Category.TIME_USAGE, CAMERA, null, System.currentTimeMillis() - mTrackingTimestamp);
 	}
 
 	@Override
@@ -394,7 +406,7 @@ public class CameraActivity extends BaseActivity {
 						// get an image from the camera
 						captureButton.setEnabled(false);
 						mCameraHandler.takePicture();
-						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Capture");
+						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
 					}
 				});
 
@@ -439,7 +451,7 @@ public class CameraActivity extends BaseActivity {
 								setAction(FINISH_CAMERA, null);
 							}
 						}
-						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Accept");
+						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Accept");
 					}
 				});
 
@@ -482,7 +494,7 @@ public class CameraActivity extends BaseActivity {
 
 							setAction(TAKE_PHOTO, mCurrentRightLeft);
 						}
-						TrackingUtil.sendEvent(Category.EVENT_USER, "Camera", "Decline");
+						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
 					}
 				});
 
