@@ -194,6 +194,10 @@ public final class HtmlStringCreator {
 		if (htmlIndex >= 0) {
 			htmlContent = htmlContent.substring(htmlIndex);
 		}
+		else {
+			// no html content
+			htmlContent = "";
+		}
 
 		// from head, keep only the title
 		int headStartIndex = htmlContent.indexOf("<head>") + "<head>".length();
