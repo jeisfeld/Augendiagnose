@@ -177,10 +177,12 @@
     <string name="key_internal_has_unlocker_app" translatable="false">has_unlocker_app</string>
     <string name="key_internal_unlocker_app_retries" translatable="false">unlocker_app_retries</string>
     <string name="key_internal_counter_tempfiles" translatable="false">counter_tempfiles</string>
-    <string name="key_internal_camera_circle_type" translatable="false">camera_circle_type</string>
+    <string name="key_internal_camera_circle_size" translatable="false">camera_circle_size</string>
+    <string name="key_internal_camera_zoom_circle_seekbar_visibility" translatable="false">camera_zoom_circle_seekbar_visibility</string>
     <string name="key_internal_camera_flashlight_mode" translatable="false">camera_flashlight_mode</string>
     <string name="key_internal_camera_focus_mode" translatable="false">camera_focus_mode</string>
     <string name="key_internal_camera_focal_distance_seekbar_progress" translatable="false">camera_focal_distance_seekbar_progress</string>
+    <string name="key_internal_camera_zoom_seekbar_progress" translatable="false">camera_zoom_seekbar_progress</string>
     <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
     <string name="key_internal_initialized_hints" translatable="false">initialized_hints</string>
     <string name="key_internal_iris_detection_is_set" translatable="false">iris_detection_is_set</string>

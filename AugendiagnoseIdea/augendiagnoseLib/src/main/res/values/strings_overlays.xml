@@ -87,7 +87,7 @@
     </array>
 
     <string-array name="overlay_button_strings" translatable="false">
-        <item></item>
+        <item/>
         <item>\u2460</item>
         <item>\u2461</item>
         <item>\u2462</item>
@@ -98,19 +98,11 @@
         <item>\u2467</item>
         <item>\u2468</item>
         <item>\u2469</item>
-        <item></item>
+        <item/>
     </string-array>
 
     <!-- Other resources related to overlays -->
 
     <string name="overlay_default_pupil_size" translatable="false">0.3</string>
-
-    <integer-array name="camera_overlay_radii">
-        <item>0</item>
-        <item>320</item>
-        <item>384</item>
-        <item>448</item>
-        <item>496</item>
-    </integer-array>
 
 </resources>

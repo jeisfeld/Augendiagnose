@@ -6,7 +6,7 @@
         <shape
             android:innerRadius="@dimen/camerabutton_overlay_circle_radius"
             android:shape="ring"
-            android:thickness="2dp"
+            android:thickness="1dp"
             android:useLevel="false">
             <solid android:color="#FF0000"/>
         </shape>

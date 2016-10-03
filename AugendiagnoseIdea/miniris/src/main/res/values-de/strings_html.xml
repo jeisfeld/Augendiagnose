@@ -58,13 +58,13 @@
 		<li>In den oberen Ecken befindet sich die Anzeige des rechten und linken Augenfotos. Die rote Markierung zeigt an,
 			welches Auge als nächstes aufgenommen wird. Wenn Sie auf eine dieser Flächen drücken, können Sie die Seite wechseln.</li>
 		<li>Auf der Kameraanzeige befindet sich ein großer Kreis. Dieser Kreis zeigt an, wo Sie die Iris aufnehmen sollten.</li>
-		<li>Links unten befindet sich ein Knopf mit dem Text &bdquo;MACRO&ldquo; oder &bdquo;AUTO&ldquo;. Hier können Sie den
+		<li>Links unten befindet sich ein Knopf mit einem Kreis und der Aufschrift &bdquo;Zoom&ldquo;. Hier können Sie den
+			Kamera-Zoom einstellen und auswählen, wie groß die Iris auf dem Foto sein sollte.</li>
+		<li>Darüber befindet sich ein Knopf mit dem Text &bdquo;MACRO&ldquo; oder &bdquo;AUTO&ldquo;. Hier können Sie den
 			Fokus-Modus der Kamera einstellen. Für Nahaufnahmen ist der MACRO-Modus normalerweise eine gute Wahl.</li>
 		<li>Darüber befindet sich ein Blitz-Knopf. Hier können Sie das Licht Ihres Smartphones einschalten. Hier können Sie
 			auch den Kamera-Blitz einschalten. Da dieser für das Auge gefährlich ist, muss der Kamera-Blitz aber zunächst über
 			die Einstellungen freigeschaltet werden.</li>
-		<li>Darüber befindet sich ein Knopf mit einem Kreis. Hier können Sie auswählen, wie groß die Iris auf dem Foto sein
-			sollte.</li>
 	</ul>
 
 	<p>Nachdem Sie beide Augen aufgenommen haben, erscheint eine Seite, wo Sie beide Fotos noch einmal anschauen können und
@@ -259,6 +259,16 @@
     </string>
     <string name="html_organize_photos" formatted="false">
 <![CDATA[
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85093918-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
 ]]>
     </string>
     <string name="html_display_photos" formatted="false">

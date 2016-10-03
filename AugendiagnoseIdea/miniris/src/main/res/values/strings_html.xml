@@ -59,11 +59,12 @@
 			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
 		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
 			photo.</li>
-		<li>On the bottom left, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select
-			the focus mode of the camera. For closeups, the MACRO mode is normally a good choice.</li>
+		<li>On the bottom left, there is a button with a circle and the text &ldquo;zoom&rdquo;. Here you can set the camera
+			zoom, and select how big the iris should be on the photo.</li>
+		<li>Above, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select the focus
+			mode of the camera. For closeups, the MACRO mode is normally a good choice.</li>
 		<li>Above, there is a flashlight button. Here you can switch on the light of your device. As a flashlight in front of
 			your eye is dangerous, this is disabled by default, but you may enable it in the settings.</li>
-		<li>Above, there is a button with a circle. Here you can select how big the iris should be on the photo.</li>
 	</ul>
 
 	<p>After taking photos of both eyes, you are directed to a page where you can review the two photos, and where you have
@@ -252,6 +253,16 @@
     </string>
     <string name="html_organize_photos" formatted="false">
 <![CDATA[
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85093918-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
 ]]>
     </string>
     <string name="html_display_photos" formatted="false">

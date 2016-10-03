@@ -101,13 +101,17 @@ public class CameraActivity extends BaseActivity {
 	 */
 	private static final int CIRCLE_BITMAP_SIZE = OverlayPinchImageView.OVERLAY_SIZE;
 	/**
-	 * The array of possible radii of overlay circles.
+	 * The maximum circle size.
 	 */
-	private static final int[] CIRCLE_RADII = Application.getAppContext().getResources().getIntArray(R.array.camera_overlay_radii);
+	private static final int MAX_CIRCLE_RADIUS = 512;
+	/**
+	 * The minimum circle size.
+	 */
+	private static final int MIN_CIRCLE_RADIUS = 128;
 	/**
 	 * The default circle size.
 	 */
-	private static final int DEFAULT_CIRCLE_TYPE = 2;
+	private static final int DEFAULT_CIRCLE_RADIUS = 384;
 
 	/**
 	 * Activity String used for tracking.
@@ -122,6 +126,10 @@ public class CameraActivity extends BaseActivity {
 	 * The used flashlight modes.
 	 */
 	private static List<FlashMode> mFlashlightModes;
+	/**
+	 * A flag indicating if zoom is available.
+	 */
+	private static boolean mIsZoomAvailable = false;
 
 	/**
 	 * The current rightLeft in the activity.
@@ -274,7 +282,7 @@ public class CameraActivity extends BaseActivity {
 
 		configureMainButtons();
 		configureThumbButtons();
-		configureCircleButton();
+		configureZoomCircleButton();
 		configureFlashlightButton();
 		// Focus button is configured after callback from CameraHandler.
 
@@ -348,7 +356,7 @@ public class CameraActivity extends BaseActivity {
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
+		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
 		drawOverlayCircle(overlayCircleSize);
 
 		mOrientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
@@ -549,17 +557,72 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Configure the button for setting the overlay circle size.
 	 */
-	private void configureCircleButton() {
-		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraOverlayCircle);
+	private void configureZoomCircleButton() {
+		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraZoomOverlayCircle);
 		overlayCircleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				int currentCircleType = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE);
-				int nextCircleType = (currentCircleType + 1) % CIRCLE_RADII.length;
-				PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_circle_type, nextCircleType);
-				drawOverlayCircle(nextCircleType);
+				boolean isVisible = !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility, isVisible);
+				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+				if (mIsZoomAvailable) {
+					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+				}
 			}
 		});
+		boolean isVisible = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
+		findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+		if (mIsZoomAvailable) {
+			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+		}
+
+		SeekBar overlayCircleSeekbar = (SeekBar) findViewById(R.id.seekbarCameraOverlayCircle);
+		overlayCircleSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onStartTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+				int size = (int) ((float) progress / seekBar.getMax() * MAX_CIRCLE_RADIUS);
+				if (size < MIN_CIRCLE_RADIUS) {
+					size = 0;
+				}
+				if (fromUser) {
+					PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_circle_size, size);
+				}
+				drawOverlayCircle(size);
+			}
+		});
+		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
+		overlayCircleSeekbar.setProgress((int) ((float) overlayCircleSize / MAX_CIRCLE_RADIUS * overlayCircleSeekbar.getMax()));
+
+		SeekBar zoomSeekbar = (SeekBar) findViewById(R.id.seekbarCameraZoom);
+		zoomSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onStartTrackingTouch(final SeekBar seekBar) {
+				// do nothing.
+			}
+
+			@Override
+			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+				PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_zoom_seekbar_progress, progress);
+				float relativeProgress = (float) progress / seekBar.getMax();
+				mCameraHandler.setRelativeZoom(relativeProgress);
+			}
+		});
+		zoomSeekbar.setProgress(PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_zoom_seekbar_progress, 0));
 	}
 
 	/**
@@ -680,7 +743,7 @@ public class CameraActivity extends BaseActivity {
 				}
 			}
 		});
-		focusSeekbar.setProgress(PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, 1));
+		focusSeekbar.setProgress(PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, 0));
 	}
 
 	/**
@@ -699,9 +762,9 @@ public class CameraActivity extends BaseActivity {
 		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
 		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
 		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
-		Button buttonOverlayCircle = (Button) findViewById(R.id.buttonCameraOverlayCircle);
 		ImageView imageViewReview = (ImageView) findViewById(R.id.camera_review);
 		FrameLayout cameraPreviewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
+		LinearLayout cameraSettingsLayout = (LinearLayout) findViewById(R.id.cameraSettingsLayout);
 
 		switch (action) {
 		case TAKE_PHOTO:
@@ -714,7 +777,7 @@ public class CameraActivity extends BaseActivity {
 			if (buttonViewImages.isEnabled() && buttonDecline.getVisibility() == View.GONE) {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
-			buttonOverlayCircle.setEnabled(true);
+			cameraSettingsLayout.setVisibility(View.VISIBLE);
 			imageViewReview.setVisibility(View.GONE);
 			cameraPreviewFrame.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setEnabled(true);
@@ -735,7 +798,7 @@ public class CameraActivity extends BaseActivity {
 			buttonAccept.setVisibility(View.VISIBLE);
 			buttonDecline.setVisibility(View.VISIBLE);
 			buttonViewImages.setVisibility(View.INVISIBLE);
-			buttonOverlayCircle.setEnabled(false);
+			cameraSettingsLayout.setVisibility(View.INVISIBLE);
 			imageViewReview.setVisibility(View.VISIBLE);
 			cameraPreviewFrame.setVisibility(View.GONE);
 			cameraThumbLeft.setEnabled(false);
@@ -749,7 +812,7 @@ public class CameraActivity extends BaseActivity {
 			if (buttonViewImages.isEnabled()) {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
-			buttonOverlayCircle.setEnabled(true);
+			cameraSettingsLayout.setVisibility(View.VISIBLE);
 			imageViewReview.setVisibility(View.GONE);
 			cameraPreviewFrame.setVisibility(View.VISIBLE);
 			cameraThumbLeft.setEnabled(true);
@@ -952,13 +1015,12 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Draw the overlay circle.
 	 *
-	 * @param circleType the flag holding the circle type.
+	 * @param circleRadius The circle radius.
 	 */
-	private void drawOverlayCircle(final int circleType) {
+	private void drawOverlayCircle(final int circleRadius) {
 		Bitmap overlayBitmap = Bitmap.createBitmap(CIRCLE_BITMAP_SIZE, CIRCLE_BITMAP_SIZE, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(overlayBitmap);
 
-		int circleRadius = CIRCLE_RADII[circleType];
 		if (circleRadius > 0) {
 			Paint paint = new Paint();
 			paint.setAntiAlias(true);
@@ -972,7 +1034,6 @@ public class CameraActivity extends BaseActivity {
 
 		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
 		overlayView.setImageBitmap(overlayBitmap);
-
 	}
 
 	/**
@@ -1068,8 +1129,7 @@ public class CameraActivity extends BaseActivity {
 				metadata.setOrientation(exifAngle);
 			}
 
-			int overlayCircleRadius =
-					CIRCLE_RADII[PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_type, DEFAULT_CIRCLE_TYPE)];
+			int overlayCircleRadius = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
 			if (overlayCircleRadius > 0) {
 				metadata.setXCenter(0.5f); // MAGIC_NUMBER
 				metadata.setYCenter(0.5f); // MAGIC_NUMBER
@@ -1118,6 +1178,12 @@ public class CameraActivity extends BaseActivity {
 		public void updateAvailableModes(final List<FocusMode> focusModes) {
 			mFocusModes = focusModes;
 			configureFocusButton();
+		}
+
+		@Override
+		public void updateAvailableZoom(final boolean isZoomAvailable) {
+			mIsZoomAvailable = isZoomAvailable;
+			configureZoomCircleButton();
 		}
 
 	};
@@ -1293,6 +1359,13 @@ public class CameraActivity extends BaseActivity {
 		 * @param focusModes The supported focus modes.
 		 */
 		void updateAvailableModes(List<FocusMode> focusModes);
+
+		/**
+		 * Give information if zoom is available.
+		 *
+		 * @param isZoomAvailable true if zoom is available.
+		 */
+		void updateAvailableZoom(boolean isZoomAvailable);
 	}
 
 	/**

@@ -29,7 +29,7 @@
     <dimen name="camera_thumb_frame_boundary">4dp</dimen>
     <dimen name="camera_thumb_size">90dp</dimen>
     <dimen name="camera_seekbar_size">400dp</dimen>
-    <dimen name="camerabutton_overlay_circle_radius">14dp</dimen>
+    <dimen name="camerabutton_overlay_circle_radius">19dp</dimen>
     <dimen name="camerabutton_text_size">12sp</dimen>
 
 </resources>

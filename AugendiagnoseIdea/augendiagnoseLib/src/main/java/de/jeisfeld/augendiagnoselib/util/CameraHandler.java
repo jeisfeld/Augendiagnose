@@ -12,14 +12,21 @@ public interface CameraHandler {
 	 *
 	 * @param flashlightMode The new flashlight mode.
 	 */
-	void setFlashlightMode(final FlashMode flashlightMode);
+	void setFlashlightMode(FlashMode flashlightMode);
 
 	/**
 	 * Set the focus mode.
 	 *
 	 * @param focusMode The new focus mode.
 	 */
-	void setFocusMode(final FocusMode focusMode);
+	void setFocusMode(FocusMode focusMode);
+
+	/**
+	 * Update the relative zoom of the camera (relative to the maximal zoom).
+	 *
+	 * @param relativeZoom The new relative zoom.
+	 */
+	void setRelativeZoom(float relativeZoom);
 
 	/**
 	 * Start the camera preview. Should be idempotent.

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/cameraSettingsLayout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="left|bottom"
               android:orientation="vertical">
-
-    <Button
-        android:id="@+id/buttonCameraOverlayCircle"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
-        android:layout_marginTop="@dimen/camerabutton_distance"
-        android:background="@drawable/circlebutton_overlay_circle"/>
 
     <Button
         android:id="@+id/buttonCameraFlashlight"
@@ -45,4 +39,48 @@
             android:max="100"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutCameraZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/camerabutton_distance"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonCameraZoomOverlayCircle"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginTop="@dimen/camerabutton_distance"
+            android:background="@drawable/circlebutton_overlay_circle"
+            android:text="@string/button_zoom"
+            android:textSize="@dimen/camerabutton_text_size"/>
+
+        <LinearLayout
+            android:id="@+id/layoutCameryZoomSeekbars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+
+            <SeekBar
+                android:id="@+id/seekbarCameraOverlayCircle"
+                android:layout_width="@dimen/camera_seekbar_size"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/camerabutton_distance"
+                android:background="#7F000000"
+                android:max="100"/>
+
+            <SeekBar
+                android:id="@+id/seekbarCameraZoom"
+                android:layout_width="@dimen/camera_seekbar_size"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/camerabutton_distance"
+                android:background="#7F000000"
+                android:max="100"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 </LinearLayout>

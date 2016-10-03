@@ -83,6 +83,15 @@ public class Camera1Handler implements CameraHandler {
 	private final CameraCallback mCameraCallback;
 
 	/**
+	 * The current relative zoom.
+	 */
+	private float mCurrentRelativeZoom = 0;
+	/**
+	 * The maximal digital zoom.
+	 */
+	private float mMaxDigitalZoom = 1;
+
+	/**
 	 * Constructor of the Camera1Handler.
 	 *
 	 * @param previewFrame   The FrameLayout holding the preview.
@@ -149,6 +158,26 @@ public class Camera1Handler implements CameraHandler {
 		updateFocus();
 	}
 
+	@Override
+	public final void setRelativeZoom(final float relativeZoom) {
+		mCurrentRelativeZoom = relativeZoom;
+		updateZoom();
+	}
+
+	/**
+	 * Update the zoom.
+	 */
+	private void updateZoom() {
+		if (mCamera != null) {
+			Parameters parameters = mCamera.getParameters();
+			if (parameters.isZoomSupported()) {
+				int zoomFactor = (int) ((mMaxDigitalZoom + 0.99999) * mCurrentRelativeZoom); // MAGIC_NUMBER
+				parameters.setZoom(zoomFactor);
+			}
+			mCamera.setParameters(parameters);
+		}
+	}
+
 	/**
 	 * Update the flashlight.
 	 */
@@ -203,6 +232,9 @@ public class Camera1Handler implements CameraHandler {
 
 				updateAvailableModes(parameters.getSupportedFocusModes());
 
+				mCameraCallback.updateAvailableZoom(parameters.isZoomSupported());
+				mMaxDigitalZoom = parameters.getMaxZoom();
+
 				try {
 					parameters.setFocusMode(mCurrentFocusMode);
 				}
@@ -214,6 +246,9 @@ public class Camera1Handler implements CameraHandler {
 
 				if (mCurrentFlashlightMode != null) {
 					updateFlashlight();
+				}
+				if (parameters.isZoomSupported()) {
+					updateZoom();
 				}
 
 				// Resize frame to match aspect ratio

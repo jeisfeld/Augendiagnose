@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -76,13 +77,13 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Constructor of the Camera1Handler.
 	 *
-	 * @param activity The activity using the handler.
-	 * @param previewFrame The FrameLayout holding the preview.
-	 * @param preview The view holding the preview.
+	 * @param activity       The activity using the handler.
+	 * @param previewFrame   The FrameLayout holding the preview.
+	 * @param preview        The view holding the preview.
 	 * @param cameraCallback The handler called when the picture is taken.
 	 */
 	public Camera2Handler(final Activity activity, final FrameLayout previewFrame, final TextureView preview,
-			final CameraCallback cameraCallback) {
+						  final CameraCallback cameraCallback) {
 		this.mActivity = activity;
 		this.mPreviewFrame = previewFrame;
 		this.mTextureView = preview;
@@ -184,6 +185,21 @@ public class Camera2Handler implements CameraHandler {
 	 * The minimal focal distance.
 	 */
 	private float mMinimalFocalDistance = 0;
+
+	/**
+	 * The current relative zoom.
+	 */
+	private float mCurrentRelativeZoom = 0;
+
+	/**
+	 * The maximal digital zoom.
+	 */
+	private float mMaxDigitalZoom = 1;
+
+	/**
+	 * The size of the image array.
+	 */
+	private Rect mArraySize;
 
 	/**
 	 * An additional thread for running tasks that shouldn't block the UI.
@@ -341,15 +357,15 @@ public class Camera2Handler implements CameraHandler {
 
 		@Override
 		public void onCaptureProgressed(@NonNull final CameraCaptureSession session,
-				@NonNull final CaptureRequest request,
-				@NonNull final CaptureResult partialResult) {
+										@NonNull final CaptureRequest request,
+										@NonNull final CaptureResult partialResult) {
 			process(partialResult);
 		}
 
 		@Override
 		public void onCaptureCompleted(@NonNull final CameraCaptureSession session,
-				@NonNull final CaptureRequest request,
-				@NonNull final TotalCaptureResult result) {
+									   @NonNull final CaptureRequest request,
+									   @NonNull final TotalCaptureResult result) {
 			process(result);
 		}
 
@@ -360,9 +376,9 @@ public class Camera2Handler implements CameraHandler {
 	 * width and height are at least as large as the respective requested values, and whose aspect
 	 * ratio matches with the specified value.
 	 *
-	 * @param choices The list of sizes that the camera supports for the intended output class
-	 * @param width The minimum desired width
-	 * @param height The minimum desired height
+	 * @param choices     The list of sizes that the camera supports for the intended output class
+	 * @param width       The minimum desired width
+	 * @param height      The minimum desired height
 	 * @param aspectRatio The aspect ratio
 	 * @return The optimal {@code Size}, or an arbitrary one if none were big enough
 	 */
@@ -425,7 +441,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Sets up member variables related to camera.
 	 *
-	 * @param width The width of available size for camera preview
+	 * @param width  The width of available size for camera preview
 	 * @param height The height of available size for camera preview
 	 */
 	private void setUpCameraOutputs(final int width, final int height) {
@@ -490,7 +506,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Opens the camera specified by {@link Camera2Handler#mCameraId}.
 	 *
-	 * @param width the width of the preview
+	 * @param width  the width of the preview
 	 * @param height the height of the preview
 	 */
 	private void openCamera(final int width, final int height) {
@@ -592,7 +608,7 @@ public class Camera2Handler implements CameraHandler {
 	 * This method should be called after the camera preview size is determined in
 	 * setUpCameraOutputs and also the size of `mTextureView` is fixed.
 	 *
-	 * @param viewWidth The width of `mTextureView`
+	 * @param viewWidth  The width of `mTextureView`
 	 * @param viewHeight The height of `mTextureView`
 	 */
 	private void configureTransform(final int viewWidth, final int viewHeight) {
@@ -681,6 +697,7 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 			captureBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
 			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
+			captureBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
 
 			mCaptureSession.stopRepeating();
 			mState = CameraState.STATE_WAITING_UNLOCK;
@@ -814,6 +831,12 @@ public class Camera2Handler implements CameraHandler {
 		reconfigureCamera();
 	}
 
+	@Override
+	public final void setRelativeZoom(final float relativeZoom) {
+		mCurrentRelativeZoom = relativeZoom;
+		reconfigureCamera();
+	}
+
 	/**
 	 * Reconfigure the camera with new flash and focus settings.
 	 */
@@ -849,6 +872,7 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 
 				mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
+				mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
 
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
@@ -858,6 +882,22 @@ public class Camera2Handler implements CameraHandler {
 			}
 		}
 	}
+
+	/**
+	 * Get the cropping rectangle for zooming the camera image.
+	 *
+	 * @param relativeZoom The relative zoom factor.
+	 * @return The cropping rectangle.
+	 */
+	private Rect getCroppingRect(final float relativeZoom) {
+		double zoomFactor = (float) Math.pow(mMaxDigitalZoom, relativeZoom);
+		int targetWidth = (int) (mArraySize.width() / zoomFactor);
+		int targetHeight = (int) (mArraySize.height() / zoomFactor);
+		int horizontalBoundary = (mArraySize.width() - targetWidth) / 2;
+		int verticalBoundary = (mArraySize.height() - targetHeight) / 2;
+		return new Rect(horizontalBoundary, verticalBoundary, horizontalBoundary + targetWidth, verticalBoundary + targetHeight);
+	}
+
 
 	/**
 	 * Update the available focus modes.
@@ -887,6 +927,14 @@ public class Camera2Handler implements CameraHandler {
 			mMinimalFocalDistance = minFocalDistance;
 		}
 
+		Float maxDigitalZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+		Rect arraySize = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+		if (maxDigitalZoom != null && arraySize != null) {
+			mMaxDigitalZoom = maxDigitalZoom;
+			mArraySize = arraySize;
+			mCameraCallback.updateAvailableZoom(maxDigitalZoom > 1);
+		}
+
 		mCameraCallback.updateAvailableModes(focusModes);
 	}
 
@@ -914,7 +962,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Camera states.
 	 */
-	enum CameraState {
+	private enum CameraState {
 		/**
 		 * Camera state: Showing camera preview.
 		 */
