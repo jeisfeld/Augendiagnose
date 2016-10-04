@@ -187,6 +187,11 @@ public class Camera2Handler implements CameraHandler {
 	private float mMinimalFocalDistance = 0;
 
 	/**
+	 * The minimal focal length.
+	 */
+	private float mMinimalFocalLength = 0;
+
+	/**
 	 * The current relative zoom.
 	 */
 	private float mCurrentRelativeZoom = 0;
@@ -697,7 +702,14 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 			captureBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
 			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
+			captureBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
 			captureBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
+			if (mMinimalFocalLength > 0) {
+				captureBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMinimalFocalLength);
+			}
+
+			captureBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
+			captureBuilder.set(CaptureRequest.EDGE_MODE, CaptureRequest.EDGE_MODE_OFF);
 
 			mCaptureSession.stopRepeating();
 			mState = CameraState.STATE_WAITING_UNLOCK;
@@ -870,9 +882,14 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 				mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
-
 				mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
 				mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
+				if (mMinimalFocalLength > 0) {
+					mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMinimalFocalLength);
+				}
+
+				mPreviewRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
+				mPreviewRequestBuilder.set(CaptureRequest.EDGE_MODE, CaptureRequest.EDGE_MODE_OFF);
 
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
@@ -925,6 +942,17 @@ public class Camera2Handler implements CameraHandler {
 		Float minFocalDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
 		if (minFocalDistance != null) {
 			mMinimalFocalDistance = minFocalDistance;
+		}
+
+		float[] focalLengths = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
+		if (focalLengths != null && focalLengths.length > 0) {
+			float minFocalLength = Float.MAX_VALUE;
+			for (float focalLength : focalLengths) {
+				if (focalLength < minFocalLength) {
+					minFocalLength = focalLength;
+				}
+			}
+			mMinimalFocalLength = minFocalLength;
 		}
 
 		Float maxDigitalZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);

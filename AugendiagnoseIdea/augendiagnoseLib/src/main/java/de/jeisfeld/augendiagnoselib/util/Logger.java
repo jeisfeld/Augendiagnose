@@ -1,5 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.support.annotation.Nullable;
@@ -64,5 +66,71 @@ public final class Logger {
 		for (Object element : list) {
 			log("    [" + counter++ + "] " + element.toString());
 		}
+	}
+
+	/**
+	 * Make a log entry, including the contents of an Object array.
+	 *
+	 * @param output The base log entry.
+	 * @param array  The array to be output.
+	 */
+	public static void log(final String output, final Object[] array) {
+		log(output, Arrays.asList(array));
+	}
+
+	/**
+	 * Make a log entry, including the contents of an int array.
+	 *
+	 * @param output The base log entry.
+	 * @param array  The array to be output.
+	 */
+	public static void log(final String output, final int[] array) {
+		List<Integer> list = new ArrayList<>();
+		for (int element : array) {
+			list.add(element);
+		}
+		log(output, list);
+	}
+
+	/**
+	 * Make a log entry, including the contents of a long array.
+	 *
+	 * @param output The base log entry.
+	 * @param array  The array to be output.
+	 */
+	public static void log(final String output, final long[] array) {
+		List<Long> list = new ArrayList<>();
+		for (long element : array) {
+			list.add(element);
+		}
+		log(output, list);
+	}
+
+	/**
+	 * Make a log entry, including the contents of a float array.
+	 *
+	 * @param output The base log entry.
+	 * @param array  The array to be output.
+	 */
+	public static void log(final String output, final float[] array) {
+		List<Float> list = new ArrayList<>();
+		for (float element : array) {
+			list.add(element);
+		}
+		log(output, list);
+	}
+
+	/**
+	 * Make a log entry, including the contents of a double array.
+	 *
+	 * @param output The base log entry.
+	 * @param array  The array to be output.
+	 */
+	public static void log(final String output, final double[] array) {
+		List<Double> list = new ArrayList<>();
+		for (double element : array) {
+			list.add(element);
+		}
+		log(output, list);
 	}
 }
