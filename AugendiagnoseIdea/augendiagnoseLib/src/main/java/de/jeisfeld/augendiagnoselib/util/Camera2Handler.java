@@ -189,7 +189,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The minimal focal length.
 	 */
-	private float mMinimalFocalLength = 0;
+	private float mMaximalFocalLength = 0;
 
 	/**
 	 * The current relative zoom.
@@ -704,8 +704,8 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 			captureBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
 			captureBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
-			if (mMinimalFocalLength > 0) {
-				captureBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMinimalFocalLength);
+			if (mMaximalFocalLength > 0) {
+				captureBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMaximalFocalLength);
 			}
 
 			captureBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
@@ -884,8 +884,8 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 				mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
 				mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
-				if (mMinimalFocalLength > 0) {
-					mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMinimalFocalLength);
+				if (mMaximalFocalLength > 0) {
+					mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMaximalFocalLength);
 				}
 
 				mPreviewRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
@@ -946,13 +946,13 @@ public class Camera2Handler implements CameraHandler {
 
 		float[] focalLengths = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
 		if (focalLengths != null && focalLengths.length > 0) {
-			float minFocalLength = Float.MAX_VALUE;
+			float maxFocalLength = 0;
 			for (float focalLength : focalLengths) {
-				if (focalLength < minFocalLength) {
-					minFocalLength = focalLength;
+				if (focalLength > maxFocalLength) {
+					maxFocalLength = focalLength;
 				}
 			}
-			mMinimalFocalLength = minFocalLength;
+			mMaximalFocalLength = maxFocalLength;
 		}
 
 		Float maxDigitalZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
