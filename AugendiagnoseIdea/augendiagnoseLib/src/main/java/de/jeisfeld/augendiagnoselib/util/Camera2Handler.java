@@ -237,6 +237,7 @@ public class Camera2Handler implements CameraHandler {
 			mCameraOpenCloseLock.release();
 			cameraDevice.close();
 			mCameraDevice = null;
+			mCaptureSession = null;
 		}
 
 		@Override
@@ -244,6 +245,7 @@ public class Camera2Handler implements CameraHandler {
 			mCameraOpenCloseLock.release();
 			cameraDevice.close();
 			mCameraDevice = null;
+			mCaptureSession = null;
 
 			mCameraCallback.onCameraError("Error on camera: " + error, null);
 		}
@@ -690,7 +692,7 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	private void captureStillPicture() {
 		try {
-			if (null == mActivity || null == mCameraDevice) {
+			if (null == mActivity || null == mCameraDevice || null == mCaptureSession) {
 				return;
 			}
 			// This is the CaptureRequest.Builder that we use to take a picture.
@@ -793,11 +795,6 @@ public class Camera2Handler implements CameraHandler {
 				break;
 			}
 		}
-
-		if (mCameraDevice == null) {
-			return;
-		}
-
 		reconfigureCamera();
 	}
 
@@ -825,11 +822,6 @@ public class Camera2Handler implements CameraHandler {
 				break;
 			}
 		}
-
-		if (mCameraDevice == null) {
-			return;
-		}
-
 		reconfigureCamera();
 	}
 
@@ -853,7 +845,7 @@ public class Camera2Handler implements CameraHandler {
 	 * Reconfigure the camera with new flash and focus settings.
 	 */
 	private void reconfigureCamera() {
-		if (mCameraDevice != null) {
+		if (mCameraDevice != null && mCaptureSession != null) {
 			try {
 				mCaptureSession.stopRepeating();
 
@@ -872,7 +864,7 @@ public class Camera2Handler implements CameraHandler {
 	 * Do the setting of flash and focus settings.
 	 */
 	private void doPreviewConfiguration() {
-		if (mCameraDevice != null) {
+		if (mCameraDevice != null && mCaptureSession != null) {
 			mState = CameraState.STATE_PREVIEW;
 			try {
 				// Need to recreate the complete request from scratch - reuse will fail.
