@@ -646,7 +646,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	public final void updatePosition(final OverlayStatus overlayStatus, final float circleRadius) {
 		switch (overlayStatus) {
 		case GUIDE_IRIS:
-			if (!mMetadata.hasOverlayPosition()) {
+			if (mMetadata == null || !mMetadata.hasOverlayPosition()) {
 				return;
 			}
 			mOverlayX = mMetadata.getXCenter();
@@ -663,7 +663,7 @@ public class OverlayPinchImageView extends PinchImageView {
 			refresh();
 			break;
 		case GUIDE_PUPIL:
-			if (mMetadata.getPupilSize() == null || mMetadata.getPupilSize() == 0) {
+			if (mMetadata == null || mMetadata.getPupilSize() == null || mMetadata.getPupilSize() == 0) {
 				return;
 			}
 			mPupilOverlayX = mMetadata.getPupilXOffset();

@@ -842,7 +842,7 @@ public class CameraActivity extends BaseActivity {
 					MediaStoreUtil.addPictureToMediaStore(mInputRightFile.getAbsolutePath());
 				}
 			}
-			else if (mPhotoFolder != null && mPhotoFolder.isDirectory()) {
+			else if (mPhotoFolder != null && mPhotoFolder.isDirectory() && mLeftEyeFile != null && mRightEyeFile != null) {
 				FileUtil.moveFile(mLeftEyeFile, new File(mPhotoFolder, mLeftEyeFile.getName()));
 				FileUtil.moveFile(mRightEyeFile, new File(mPhotoFolder, mRightEyeFile.getName()));
 			}
