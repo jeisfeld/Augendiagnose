@@ -1151,7 +1151,7 @@ public class CameraActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onCameraError(final String message, @Nullable final Throwable e) {
+		public void onCameraError(final String message, final String shortMessage, @Nullable final Throwable e) {
 			String messageString = message;
 			if (e == null) {
 				Log.e(Application.TAG, message);
@@ -1171,6 +1171,10 @@ public class CameraActivity extends BaseActivity {
 			}
 			else {
 				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true, messageString);
+			}
+
+			if (e != null) {
+				TrackingUtil.sendException(shortMessage, e);
 			}
 		}
 
@@ -1349,9 +1353,10 @@ public class CameraActivity extends BaseActivity {
 		 * Callback called on fatal camera errors.
 		 *
 		 * @param message The error message as String
+		 * @param shortMessage a short form of the message (for analytics).
 		 * @param e       The exception
 		 */
-		void onCameraError(String message, Throwable e);
+		void onCameraError(String message, String shortMessage, Throwable e);
 
 		/**
 		 * Give information which focus modes and flash modes are supported by the camera.

@@ -247,7 +247,7 @@ public class Camera2Handler implements CameraHandler {
 			mCameraDevice = null;
 			mCaptureSession = null;
 
-			mCameraCallback.onCameraError("Error on camera: " + error, null);
+			mCameraCallback.onCameraError("Error on camera: " + error, "err1", null);
 		}
 
 	};
@@ -503,10 +503,10 @@ public class Camera2Handler implements CameraHandler {
 			}
 		}
 		catch (CameraAccessException | IllegalStateException e) {
-			mCameraCallback.onCameraError("Failed to access camera", e);
+			mCameraCallback.onCameraError("Failed to access camera", "acc1", e);
 		}
 		catch (NullPointerException e) {
-			mCameraCallback.onCameraError("Camera2 API does not seem to work", e);
+			mCameraCallback.onCameraError("Camera2 API does not seem to work", "acc2", e);
 		}
 	}
 
@@ -528,7 +528,7 @@ public class Camera2Handler implements CameraHandler {
 			mIsInPreview = true;
 		}
 		catch (CameraAccessException | IllegalArgumentException | SecurityException | IllegalStateException | AssertionError e) {
-			mCameraCallback.onCameraError("Failed to open camera", e);
+			mCameraCallback.onCameraError("Failed to open camera", "ope2", e);
 		}
 		catch (InterruptedException e) {
 			throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
@@ -599,14 +599,14 @@ public class Camera2Handler implements CameraHandler {
 							mActivity.runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									mCameraCallback.onCameraError("Failed to create capture session", null);
+									mCameraCallback.onCameraError("Failed to create capture session", "pre3", null);
 								}
 							});
 						}
 					}, mBackgroundHandler);
 		}
 		catch (CameraAccessException | IllegalStateException | AssertionError e) {
-			mCameraCallback.onCameraError("Failed to create preview session", e);
+			mCameraCallback.onCameraError("Failed to create preview session", "pre4", e);
 		}
 	}
 
@@ -664,7 +664,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException | IllegalStateException e) {
-			mCameraCallback.onCameraError("Failed to lock focus", e);
+			mCameraCallback.onCameraError("Failed to lock focus", "loc1", e);
 		}
 	}
 
@@ -682,7 +682,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException | IllegalStateException e) {
-			mCameraCallback.onCameraError("Failed to run precapture sequence", e);
+			mCameraCallback.onCameraError("Failed to run precapture sequence", "pre5", e);
 		}
 	}
 
@@ -720,7 +720,7 @@ public class Camera2Handler implements CameraHandler {
 			mCameraCallback.onTakingPicture();
 		}
 		catch (CameraAccessException | IllegalStateException e) {
-			mCameraCallback.onCameraError("Failed to capture picture", e);
+			mCameraCallback.onCameraError("Failed to capture picture", "cap1", e);
 		}
 	}
 
@@ -738,7 +738,7 @@ public class Camera2Handler implements CameraHandler {
 			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
 		catch (CameraAccessException | IllegalStateException e) {
-			mCameraCallback.onCameraError("Failed to unlock focus", e);
+			mCameraCallback.onCameraError("Failed to unlock focus", "unl1", e);
 		}
 	}
 
@@ -855,7 +855,7 @@ public class Camera2Handler implements CameraHandler {
 				doPreviewConfiguration();
 			}
 			catch (CameraAccessException | IllegalStateException e) {
-				mCameraCallback.onCameraError("Failed to reconfigure the camera", e);
+				mCameraCallback.onCameraError("Failed to reconfigure the camera", "rec1", e);
 			}
 		}
 	}
@@ -887,7 +887,7 @@ public class Camera2Handler implements CameraHandler {
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}
 			catch (CameraAccessException | IllegalStateException e) {
-				mCameraCallback.onCameraError("Failed to do the preview configuration", e);
+				mCameraCallback.onCameraError("Failed to do the preview configuration", "pre6", e);
 			}
 		}
 	}

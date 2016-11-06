@@ -2,8 +2,10 @@ package de.jeisfeld.augendiagnoselib.util;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders.EventBuilder;
+import com.google.android.gms.analytics.HitBuilders.ExceptionBuilder;
 import com.google.android.gms.analytics.HitBuilders.ScreenViewBuilder;
 import com.google.android.gms.analytics.HitBuilders.TimingBuilder;
+import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -102,6 +104,22 @@ public final class TrackingUtil {
 		}
 		timingBuilder.setValue(duration);
 		mTracker.send(timingBuilder.build());
+	}
+
+	/**
+	 * Send exception information.
+	 *
+	 * @param message A small message.
+	 * @param e       The exception.
+	 */
+	public static void sendException(final String message, final Throwable e) {
+		getDefaultTracker();
+		ExceptionBuilder exceptionBuilder = new ExceptionBuilder();
+		exceptionBuilder
+				.setDescription(new StandardExceptionParser(Application.getAppContext(), null)
+						.getDescription(message == null ? Thread.currentThread().getName() : message, e))
+				.setFatal(false);
+		mTracker.send(exceptionBuilder.build());
 	}
 
 	/**

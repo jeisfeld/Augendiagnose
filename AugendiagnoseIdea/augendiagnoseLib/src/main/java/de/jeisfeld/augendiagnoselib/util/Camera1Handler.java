@@ -211,7 +211,7 @@ public class Camera1Handler implements CameraHandler {
 				mCamera.setPreviewDisplay(mPreviewHolder);
 			}
 			catch (Exception e) {
-				mCameraCallback.onCameraError("Cannot set preview", e);
+				mCameraCallback.onCameraError("Cannot set preview", "pre1", e);
 				return;
 			}
 
@@ -221,12 +221,12 @@ public class Camera1Handler implements CameraHandler {
 				if (pictureSize == null) {
 					return;
 				}
-				Camera.Size previewSsize = getBestPreviewSize(((float) pictureSize.width) / pictureSize.height, parameters);
-				if (previewSsize == null) {
+				Camera.Size previewSize = getBestPreviewSize(((float) pictureSize.width) / pictureSize.height, parameters);
+				if (previewSize == null) {
 					return;
 				}
 
-				parameters.setPreviewSize(previewSsize.width, previewSsize.height);
+				parameters.setPreviewSize(previewSize.width, previewSize.height);
 				parameters.setPictureSize(pictureSize.width, pictureSize.height);
 				parameters.setPictureFormat(ImageFormat.JPEG);
 
@@ -285,7 +285,7 @@ public class Camera1Handler implements CameraHandler {
 			mCamera = getCameraInstance();
 
 			if (mCamera == null) {
-				mCameraCallback.onCameraError("Cannot open camera", null);
+				mCameraCallback.onCameraError("Cannot open camera", "ope1", null);
 				return;
 			}
 		}
@@ -339,7 +339,7 @@ public class Camera1Handler implements CameraHandler {
 					}
 				}
 				catch (Exception e) {
-					mCameraCallback.onCameraError("Failed to start preview", e);
+					mCameraCallback.onCameraError("Failed to start preview", "pre2", e);
 				}
 			}
 
