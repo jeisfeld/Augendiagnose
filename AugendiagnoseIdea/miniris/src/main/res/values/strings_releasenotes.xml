@@ -34,6 +34,7 @@
         <item>1.1.12</item>
         <item>1.1.13</item>
         <item>1.1.14</item>
+        <item>1.1.15</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -57,6 +58,7 @@
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled camera zoom. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
