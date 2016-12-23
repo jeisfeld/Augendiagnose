@@ -35,7 +35,7 @@ public final class VersioningUtil {
 	private static final String DOWNLOAD_BASE_URL = "http://augendiagnose.jeisfeld.de/bin/";
 
 	/**
-	 * The URL where to get the info about latest version.
+	 * The URL where to get the info about the latest version.
 	 */
 	private static final String CURRENT_VERSION_URL = DOWNLOAD_BASE_URL + "currentVersion.txt";
 
