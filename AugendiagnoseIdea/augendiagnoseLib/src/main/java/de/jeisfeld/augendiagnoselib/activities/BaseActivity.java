@@ -1,16 +1,11 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +17,12 @@ import android.view.MenuItem;
 import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -46,9 +47,13 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	private static final int REQUEST_CODE_UNLOCKER = 100;
 	/**
+	 * The request code for the rating on Google Play.
+	 */
+	private static final int REQUEST_CODE_RATING = 101;
+	/**
 	 * The request code used to query for permission.
 	 */
-	private static final int REQUEST_CODE_PERMISSION = 6;
+	protected static final int REQUEST_CODE_PERMISSION = 6;
 	/**
 	 * The resource key for the authorizaton with the unlocker app.
 	 */
@@ -185,8 +190,13 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 		String[] activitiesWithActionPurchase = getResources().getStringArray(R.array.activities_with_action_purchase);
 		boolean hasActionPurchase = Arrays.asList(activitiesWithActionPurchase).contains(getClass().getName());
-		if (hasActionPurchase && Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS) {
-			menu.findItem(R.id.action_purchase).setVisible(true);
+		if (hasActionPurchase) {
+			if (Application.getAuthorizationLevel() != AuthorizationLevel.FULL_ACCESS) {
+				menu.findItem(R.id.action_purchase).setVisible(true);
+			}
+			else if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_show_rating_icon)) {
+				menu.findItem(R.id.action_rating).setVisible(true);
+			}
 		}
 
 		if (getHelpResource() == 0 || getString(getHelpResource()).length() == 0) {
@@ -219,6 +229,10 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		else if (itemId == R.id.action_purchase) {
 			DialogUtil.displayToast(this, R.string.message_dialog_triggering_purchase);
 			triggerDefaultPurchase();
+			return true;
+		}
+		else if (itemId == R.id.action_rating) {
+			triggerRating();
 			return true;
 		}
 		else {
@@ -335,6 +349,51 @@ public abstract class BaseActivity extends AdMarvelActivity {
 		});
 	}
 
+	/**
+	 * Trigger the app rating on Google Play.
+	 */
+	private void triggerRating() {
+		DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
+			/**
+			 * The serial version UID.
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onDialogPositiveClick(final DialogFragment dialog) {
+				startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())), REQUEST_CODE_RATING);
+			}
+
+			@Override
+			public void onDialogNegativeClick(final DialogFragment dialog) {
+				queryRemoveRatingIcon();
+			}
+		}, R.string.button_rate, R.string.message_dialog_confirm_rate_app);
+	}
+
+	/**
+	 * Query if rating icon should be removed.
+	 */
+	private void queryRemoveRatingIcon() {
+		DialogUtil.displayConfirmationMessage(BaseActivity.this, new ConfirmDialogListener() {
+			/**
+			 * The serial version UID.
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onDialogPositiveClick(final DialogFragment dialog) {
+				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_show_rating_icon, false);
+				BaseActivity.this.invalidateOptionsMenu();
+			}
+
+			@Override
+			public void onDialogNegativeClick(final DialogFragment dialog) {
+				// do nothing
+			}
+		}, R.string.button_remove, R.string.message_dialog_confirm_rate_icon);
+	}
+
 	// OVERRIDABLE
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
@@ -355,6 +414,9 @@ public abstract class BaseActivity extends AdMarvelActivity {
 				checkPremiumPackAfterAuthorizationFailure();
 			}
 		}
+		else if (requestCode == REQUEST_CODE_RATING) {
+			queryRemoveRatingIcon();
+		}
 		else {
 			GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
 
@@ -371,7 +433,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 */
 	// OVERRIDABLE
 	protected String[] getRequiredPermissions() {
-		return new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+		return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 	}
 
 	/**

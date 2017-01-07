@@ -13,6 +13,7 @@
     <string name="title_settings">Ajustes</string>
     <string name="title_camera">Cámara</string>
     <string name="title_purchase">Comprar</string>
+    <string name="title_rating">Calificar</string>
     <string name="title_help">Ayuda</string>
     <string name="section_select_photos">Seleccionar Fotos</string>
     <string name="section_select_name">Seleccionar Nombre</string>
@@ -26,7 +27,8 @@
     <string name="button_clear">Borrar</string>
     <string name="button_select">Seleccionar</string>
     <string name="button_switch">Cambiar</string>
-    <string name="button_delete">Eliminar</string>
+    <string name="button_delete">Borrar</string>
+    <string name="button_remove">Eliminar</string>
     <string name="button_move">Mover</string>
     <string name="button_continue">Continuar</string>
     <string name="button_other_pictures">Otras Fotos</string>
@@ -36,6 +38,7 @@
     <string name="button_dont_show">No mostrar de nuevo</string>
     <string name="button_show_later">Mostrar de nuevo</string>
     <string name="button_purchased_item">%1$s (comprado)</string>
+    <string name="button_rate">Califica la aplicación</string>
     <string name="content_description_right_eye">Ojo derecho</string>
     <string name="content_description_left_eye">Ojo izquierdo</string>
     <string name="text_initializing">Inicializando&#8230;</string>

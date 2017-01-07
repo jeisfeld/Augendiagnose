@@ -42,6 +42,8 @@
     <string name="pref_default_camera_screen_position" translatable="false">0</string>
     <string name="pref_title_overlay_button">Overlay button %1$s</string>
     <string name="pref_value_overlay_button_empty">(Unused)</string>
+    <string name="pref_title_show_rating_icon">Display rating icon</string>
+    <string name="pref_default_show_rating_icon" translatable="false">true</string>
 
     <!-- Strings related to Setting arrays -->
 
@@ -131,83 +133,4 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
-    <!-- Strings for keys or stored preferences -->
-
-    <string name="key_folder_input" translatable="false">folder_input</string>
-    <string name="key_folder_photos" translatable="false">folder_photos</string>
-    <string name="key_max_bitmap_size" translatable="false">max_bitmap_size</string>
-    <string name="key_eye_sequence_choice" translatable="false">eye_sequence_choice</string>
-    <string name="key_sort_by_last_name" translatable="false">sort_by_last_name</string>
-    <string name="key_guided_topo_setup" translatable="false">guided_topo_setup</string>
-    <string name="key_store_option" translatable="false">store_option</string>
-    <string name="key_automatic_iris_detection" translatable="false">automatic_iris_detection</string>
-    <string name="key_full_resolution" translatable="false">full_resolution</string>
-    <string name="key_overlay_color" translatable="false">overlay_color</string>
-    <string name="key_language" translatable="false">language</string>
-    <string name="key_user_key" translatable="false">user_key</string>
-    <string name="key_enable_flash" translatable="false">enable_flash</string>
-    <string name="key_camera_api_version" translatable="false">camera_api_version</string>
-    <string name="key_camera_screen_position" translatable="false">camera_screen_position</string>
-
-    <!-- Dummy keys for preference screens -->
-
-    <string name="key_dummy_screen_input_settings" translatable="false">dummy_screen_input_settings</string>
-    <string name="key_dummy_screen_display_settings" translatable="false">dummy_screen_display_settings</string>
-    <string name="key_dummy_screen_storage_settings" translatable="false">dummy_screen_storage_settings</string>
-    <string name="key_dummy_screen_camera_settings" translatable="false">dummy_screen_camera_settings</string>
-    <string name="key_dummy_screen_overlay_settings" translatable="false">dummy_screen_overlay_settings</string>
-    <string name="key_dummy_screen_premium_settings" translatable="false">dummy_screen_premium_settings</string>
-    <string name="key_dummy_show_hints" translatable="false">dummy_show_hints</string>
-    <string name="key_dummy_hide_hints" translatable="false">dummy_hide_hints</string>
-    <string name="key_dummy_unlocker_app" translatable="false">dummy_unlocker_app</string>
-    <string name="key_dummy_contact_developer" translatable="false">dummy_contact_developer</string>
-
-    <!-- Internal preferences (not accessible via settings) -->
-
-    <string name="key_internal_uri_extsdcard_photos" translatable="false">uri_extsdcard</string>
-    <string name="key_internal_uri_extsdcard_input" translatable="false">uri_extsdcard_input</string>
-    <string name="key_internal_stored_version" translatable="false">stored_version</string>
-    <string name="key_internal_last_name" translatable="false">last_name</string>
-    <string name="key_internal_organized_new_photo" translatable="false">organized_new_photo</string>
-    <string name="key_internal_show_utilities_fullscreen" translatable="false">show_utilities_fullscreen</string>
-    <string name="key_internal_show_utilities_halfscreen" translatable="false">show_utilities_halfscreen</string>
-    <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
-    <string name="key_internal_has_premium_pack" translatable="false">has_premium_pack</string>
-    <string name="key_internal_has_unlocker_app" translatable="false">has_unlocker_app</string>
-    <string name="key_internal_unlocker_app_retries" translatable="false">unlocker_app_retries</string>
-    <string name="key_internal_counter_tempfiles" translatable="false">counter_tempfiles</string>
-    <string name="key_internal_camera_circle_size" translatable="false">camera_circle_size</string>
-    <string name="key_internal_camera_zoom_circle_seekbar_visibility" translatable="false">camera_zoom_circle_seekbar_visibility</string>
-    <string name="key_internal_camera_flashlight_mode" translatable="false">camera_flashlight_mode</string>
-    <string name="key_internal_camera_focus_mode" translatable="false">camera_focus_mode</string>
-    <string name="key_internal_camera_focal_distance_seekbar_progress" translatable="false">camera_focal_distance_seekbar_progress</string>
-    <string name="key_internal_camera_zoom_seekbar_progress" translatable="false">camera_zoom_seekbar_progress</string>
-    <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
-    <string name="key_internal_initialized_hints" translatable="false">initialized_hints</string>
-    <string name="key_internal_iris_detection_is_set" translatable="false">iris_detection_is_set</string>
-    <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
-    <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
-    <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
-    <string name="key_statistics_countorganizestart" translatable="false">statistics_countorganizestart</string>
-    <string name="key_statistics_countorganizeend" translatable="false">statistics_countorganizeend</string>
-    <string name="key_statistics_countlistnames" translatable="false">statistics_countlistnames</string>
-    <string name="key_statistics_countlistpictures" translatable="false">statistics_countlistpictures</string>
-    <string name="key_statistics_countdisplay" translatable="false">statistics_countdisplay</string>
-    <string name="key_statistics_countlock" translatable="false">statistics_countlock</string>
-    <string name="key_statistics_countcomment" translatable="false">statistics_countcomment</string>
-    <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
-    <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
-    <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
-    <string name="key_statistics_countirisdetectionsuccess" translatable="false">statistics_countirisdetectionsuccess</string>
-    <string name="key_statistics_countirisdetectionfailed" translatable="false">statistics_countirisdetectionfailed</string>
-    <string name="key_admarvel_countclicks" translatable="false">admarvel_countclicks</string>
-    <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
-    <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>
-    <string name="key_admarvel_iscurrentlyclicked" translatable="false">admarvel_iscurrentlyclicked</string>
-
-    <!-- Indexed keys -->
-
-    <string name="key_indexed_overlaytype" translatable="false">overlaytype</string>
-
 </resources>

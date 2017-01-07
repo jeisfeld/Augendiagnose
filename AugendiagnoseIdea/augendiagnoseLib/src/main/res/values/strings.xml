@@ -19,6 +19,7 @@
     <string name="title_settings">Settings</string>
     <string name="title_camera">Camera</string>
     <string name="title_purchase">Purchase</string>
+    <string name="title_rating">Rating</string>
     <string name="title_help">Help</string>
     <string name="section_select_photos">Select Photos</string>
     <string name="section_select_name">Select Name</string>
@@ -33,6 +34,7 @@
     <string name="button_select">Select</string>
     <string name="button_switch">Switch</string>
     <string name="button_delete">Delete</string>
+    <string name="button_remove">Remove</string>
     <string name="button_move">Move</string>
     <string name="button_continue">Continue</string>
     <string name="button_other_pictures">Other Pictures</string>
@@ -43,6 +45,7 @@
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
     <string name="button_purchased_item">%1$s (bought)</string>
+    <string name="button_rate">Rate the app</string>
     <string name="overlay_trial_count" translatable="false">3</string>
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>

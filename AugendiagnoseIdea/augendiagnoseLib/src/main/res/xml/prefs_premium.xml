@@ -7,9 +7,14 @@
         android:order="101"
         android:summary="@string/menu_detail_unlocker_app"
         android:title="@string/menu_title_unlocker_app"/>
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_show_rating_icon"
+        android:order="102"
+        android:key="@string/key_show_rating_icon"
+        android:title="@string/pref_title_show_rating_icon"/>
     <Preference
         android:key="@string/key_dummy_contact_developer"
-        android:order="102"
+        android:order="103"
         android:summary="@string/menu_detail_contact_developer"
         android:title="@string/menu_title_contact_developer"/>
 
@@ -17,7 +22,7 @@
         android:defaultValue=""
         android:inputType="textPassword"
         android:key="@string/key_user_key"
-        android:order="103"
+        android:order="104"
         android:title="@string/pref_title_user_key"/>
 
 </PreferenceScreen>

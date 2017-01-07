@@ -31,6 +31,7 @@
     <string name="pref_title_camera_screen_position">Posición de la pantalla de la cámara</string>
     <string name="pref_title_overlay_button">Botón de superposición %1$s</string>
     <string name="pref_value_overlay_button_empty">(No usado)</string>
+    <string name="pref_title_show_rating_icon">Mostrar icono de calificación</string>
 
     <!-- Strings related to Setting arrays -->
 

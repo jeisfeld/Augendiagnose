@@ -79,11 +79,6 @@ import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIG
  */
 public class CameraActivity extends BaseActivity {
 	/**
-	 * The requestCode for starting the permisson request.
-	 */
-	public static final int REQUEST_CODE_PERMISSION = 6;
-
-	/**
 	 * The resource key for the folder where to store the photos.
 	 */
 	private static final String STRING_EXTRA_PHOTOFOLDER = "de.jeisfeld.augendiagnoselib.PHOTOFOLDER";
@@ -225,7 +220,7 @@ public class CameraActivity extends BaseActivity {
 	 *
 	 * @param activity The activity from which the activity is started.
 	 */
-	public static final void startActivity(@NonNull final Activity activity) {
+	public static void startActivity(@NonNull final Activity activity) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		activity.startActivity(intent);
 	}
@@ -236,7 +231,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param activity    The activity from which the activity is started.
 	 * @param photoFolder The folder where to store the photos.
 	 */
-	public static final void startActivity(@NonNull final Activity activity, final String photoFolder) {
+	public static void startActivity(@NonNull final Activity activity, final String photoFolder) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolder);
 		activity.startActivity(intent);
@@ -249,7 +244,7 @@ public class CameraActivity extends BaseActivity {
 	 * @param photoRight The path of the right eye image
 	 * @param photoLeft  The path of the left eye image
 	 */
-	public static final void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
+	public static void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
 		intent.putExtra(STRING_EXTRA_PHOTO_RIGHT, photoRight);
 		intent.putExtra(STRING_EXTRA_PHOTO_LEFT, photoLeft);

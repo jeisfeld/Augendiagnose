@@ -13,6 +13,7 @@
     <string name="title_settings">Einstellungen</string>
     <string name="title_camera">Kamera</string>
     <string name="title_purchase">Kaufen</string>
+    <string name="title_rating">Bewerten</string>
     <string name="title_help">Hilfe</string>
     <string name="section_select_photos">Fotos wählen</string>
     <string name="section_select_name">Name wählen</string>
@@ -27,6 +28,7 @@
     <string name="button_select">Auswählen</string>
     <string name="button_switch">Tauschen</string>
     <string name="button_delete">Löschen</string>
+    <string name="button_remove">Entfernen</string>
     <string name="button_move">Verschieben</string>
     <string name="button_continue">Weiter</string>
     <string name="button_other_pictures">Andere Fotos</string>
@@ -36,6 +38,7 @@
     <string name="button_dont_show">Nicht mehr zeigen</string>
     <string name="button_show_later">Erneut zeigen</string>
     <string name="button_purchased_item">%1$s (gekauft)</string>
+    <string name="button_rate">App bewerten</string>
     <string name="content_description_right_eye">Rechtes Auge</string>
     <string name="content_description_left_eye">Linkes Auge</string>
     <string name="text_initializing">Ladevorgang&#8230;</string>

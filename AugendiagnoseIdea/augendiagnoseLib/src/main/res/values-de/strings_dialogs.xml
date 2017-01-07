@@ -46,6 +46,8 @@
     <string name="message_dialog_confirm_overwrite">Zum Namen „%1$s“ gibt es bereits Augenfotos vom %2$s. Wollen Sie diese überschreiben?\n\nAnsonsten wählen Sie bitte einen anderen Namen oder ein anderes Datum.</string>
     <string name="message_dialog_confirm_need_read_permission">Die App benötigt Zugriff auf den Speicher, um auf Ihre Bilder zugreifen zu können. Bitte erlauben Sie diesen Zugriff - andernfalls wird die App nicht funktionieren.</string>
     <string name="message_dialog_confirm_need_camera_permission">Bitte erlauben Sie den Zugriff auf die Kamera - andernfalls wird die App nicht funktionieren.</string>
+    <string name="message_dialog_confirm_rate_app">Wenn Ihnen die App gefällt, dann empfehlen Sie die App bitte weiter.\n\nWollen Sie eine Bewertung auf Google Play abgeben?</string>
+    <string name="message_dialog_confirm_rate_icon">Wollen Sie das Bewertungssymbol aus der App entfernen?</string>
     <string name="message_dialog_outofmemoryerror">Die App ist aufgrund Speichermangel abgestürzt. Falls dies wiederholt passiert, sollten Sie zu den Einstellungen gehen, den Wert „Anzeige in voller Auflösung“ auf „Nur auf Anfrage“ setzen, und den Wert von „Maximale Bitmap-Größe“ reduzieren.</string>
     <string name="message_dialog_hints_will_be_shown">Die App wird nun alle Tipps erneut anzeigen. Sie können die Tipps dann einzeln ausschalten.</string>
     <string name="message_dialog_no_hints_will_be_shown">Die App wird keine der bestehenden Tipps anzeigen. Falls zukünftige App-Versionen neue Tipps enthalten, werden diese angezeigt.</string>

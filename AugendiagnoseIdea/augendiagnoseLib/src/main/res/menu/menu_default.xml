@@ -15,6 +15,13 @@
         android:title="@string/title_purchase"
         android:visible="false"/>
     <item
+        android:id="@+id/action_rating"
+        android:icon="@drawable/ic_action_star"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/title_rating"
+        android:visible="false"/>
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
