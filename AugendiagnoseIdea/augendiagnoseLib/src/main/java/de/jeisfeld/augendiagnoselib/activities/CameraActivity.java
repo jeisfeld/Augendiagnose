@@ -1,11 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -41,6 +35,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
