@@ -36,8 +36,7 @@
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
-        <item>Eye-Fi-Mobi-Verzeichnis</item>
-        <item>Eye-Fi-Verzeichnis (alte App)</item>
+        <item>Eye-Fi-Verzeichnis</item>
         <item>Kamera-Verzeichnis</item>
         <item>Anderes Verzeichnis</item>
     </string-array>

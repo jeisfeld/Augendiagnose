@@ -42,6 +42,11 @@ public class DirectorySelectionPreference extends ListPreference {
 	private static final String CAMERA_FOLDER_PREFIX = "__folder_camera__";
 
 	/**
+	 * List tag to be replaced by the default eye-fi folder.
+	 */
+	private static final String EYEFI_FOLDER_PREFIX = "__folder_eyefi__";
+
+	/**
 	 * The selected index in the list.
 	 */
 	private int mSelectedIndex = -1;
@@ -96,7 +101,7 @@ public class DirectorySelectionPreference extends ListPreference {
 	 * @return The path with special folder tags replaced.
 	 */
 	@NonNull
-	public static final String replaceSpecialFolderTags(@NonNull final String path) {
+	public static String replaceSpecialFolderTags(@NonNull final String path) {
 		if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
 			return FileUtil.getSdCardPath() + path.substring(EXTERNAL_STORAGE_PREFIX.length());
 		}
@@ -105,6 +110,9 @@ public class DirectorySelectionPreference extends ListPreference {
 		}
 		else if (path.startsWith(CAMERA_FOLDER_PREFIX)) {
 			return FileUtil.getDefaultCameraFolder() + path.substring(CAMERA_FOLDER_PREFIX.length());
+		}
+		else if (path.startsWith(EYEFI_FOLDER_PREFIX)) {
+			return FileUtil.getDefaultEyeFiFolder() + path.substring(EYEFI_FOLDER_PREFIX.length());
 		}
 		else {
 			return path;

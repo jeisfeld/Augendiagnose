@@ -49,14 +49,12 @@
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
-        <item>Eye-Fi Mobi input folder</item>
-        <item>Eye-Fi input folder (old app)</item>
+        <item>Eye-Fi input folder</item>
         <item>Camera folder</item>
         <item>Custom folder</item>
     </string-array>
     <string-array name="pref_list_values_folder_input" translatable="false">
-        <item>__ext_storage__/Mobi</item>
-        <item>__ext_storage__/Eye-Fi</item>
+        <item>__folder_eyefi__</item>
         <item>__folder_camera__</item>
         <item>__custom__</item>
     </string-array>

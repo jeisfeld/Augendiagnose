@@ -1,20 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -31,6 +16,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -80,6 +80,18 @@ public final class FileUtil {
 			path = new File(path, "Camera/");
 		}
 		return path.getAbsolutePath();
+	}
+
+	/**
+	 * Determine the default output folder of the Eye-Fi app.
+	 *
+	 * @return the default Eye-Fi folder.
+	 */
+	public static String getDefaultEyeFiFolder() {
+		if (SystemUtil.isAppInstalled(Application.getResourceString(R.string.package_eyefi))) {
+			return getSdCardPath() + File.separator + "Eye-Fi";
+		}
+		return getSdCardPath() + File.separator + "Mobi";
 	}
 
 	/**
@@ -457,7 +469,7 @@ public final class FileUtil {
 
 			// Delete the created entry, such that content provider will delete the file.
 			resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
-					new String[] {file.getAbsolutePath()});
+					new String[]{file.getAbsolutePath()});
 		}
 
 		return !file.exists();
