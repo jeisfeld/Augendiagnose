@@ -37,6 +37,7 @@ import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessLi
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
+import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Base activity being the subclass of most application activities. Handles the help menu, and handles startup activities related to authorization.
@@ -353,6 +354,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 	 * Trigger the app rating on Google Play.
 	 */
 	private void triggerRating() {
+		TrackingUtil.sendEvent(Category.EVENT_USER, "Rating", "Pressed icon");
 		DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
 			/**
 			 * The serial version UID.
@@ -361,6 +363,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 
 			@Override
 			public void onDialogPositiveClick(final DialogFragment dialog) {
+				TrackingUtil.sendEvent(Category.EVENT_USER, "Rating", "Go to rating");
 				startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())), REQUEST_CODE_RATING);
 			}
 
