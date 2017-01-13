@@ -3,8 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="de.jeisfeld.miniris"
           android:installLocation="auto"
-          android:versionCode="24"
-          android:versionName="1.1.16">
+          android:versionCode="25"
+          android:versionName="1.1.17">
 
     <uses-sdk
         android:minSdkVersion="15"

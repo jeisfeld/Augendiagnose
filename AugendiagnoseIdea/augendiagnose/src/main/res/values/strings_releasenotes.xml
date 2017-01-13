@@ -107,6 +107,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.1.14</item>
         <item>1.1.15</item>
         <item>1.1.16</item>
+        <item>1.1.17</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -173,6 +174,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added rating icon. Bugfixes</item>
         <item>Linked to new Eye-Fi App. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
