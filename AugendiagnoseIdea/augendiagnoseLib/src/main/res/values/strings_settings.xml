@@ -18,6 +18,7 @@
     <string name="pref_title_folder_input">Input folder for new eye photos</string>
     <string name="pref_default_folder_input" translatable="false">__folder_camera__</string>
     <string name="pref_default_folder_input_eyefi" translatable="false">__ext_storage__/Eye-Fi</string>
+    <string name="pref_default_folder_input_mobi" translatable="false">__ext_storage__/Mobi</string>
     <string name="pref_dummy_folder_input" translatable="false">!!DUMMY!!</string>
     <string name="pref_title_max_bitmap_size">Max Bitmap size</string>
     <string name="pref_title_eye_sequence_choice">Last photo is right eye</string>
@@ -48,11 +49,13 @@
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
-        <item>Eye-Fi input folder</item>
+        <item>Eye-Fi Mobi input folder</item>
+        <item>Eye-Fi input folder (old app)</item>
         <item>Camera folder</item>
         <item>Custom folder</item>
     </string-array>
     <string-array name="pref_list_values_folder_input" translatable="false">
+        <item>__ext_storage__/Mobi</item>
         <item>__ext_storage__/Eye-Fi</item>
         <item>__folder_camera__</item>
         <item>__custom__</item>

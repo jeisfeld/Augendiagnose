@@ -36,7 +36,8 @@
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
-        <item>Carpeta Eye-Fi</item>
+        <item>Carpeta Eye-Fi Mobi</item>
+        <item>Carpeta Eye-Fi (aplicación antigua)</item>
         <item>Carpeta de la cámara</item>
         <item>Carpeta personalizada</item>
     </string-array>

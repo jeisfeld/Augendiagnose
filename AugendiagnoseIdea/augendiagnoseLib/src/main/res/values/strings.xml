@@ -5,6 +5,8 @@
 
     <string name="app_name">Eye Diagnosis</string>
     <string name="class_application_settings" translatable="false"/>
+    <string name="package_eyefi" translatable="false">fi.eye.android</string>
+    <string name="package_mobi" translatable="false">com.eyefi.android.mobi</string>
 
     <!-- Generic constants -->
 

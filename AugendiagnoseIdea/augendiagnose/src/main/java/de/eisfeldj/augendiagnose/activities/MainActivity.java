@@ -1,7 +1,5 @@
 package de.eisfeldj.augendiagnose.activities;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 
-		if (!SystemUtil.isAppInstalled("fi.eye.android")) {
+		if (!SystemUtil.isAppInstalled(getString(R.string.package_eyefi)) && !SystemUtil.isAppInstalled(getString(R.string.package_mobi))) {
 			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
 		}
@@ -102,12 +102,15 @@ public class MainActivity extends BaseActivity {
 	 * @param view the button to open the Eye-Fi app.
 	 */
 	public final void openEyeFiApp(final View view) {
-		if (SystemUtil.isAppInstalled("fi.eye.android")) {
-			startActivity(getPackageManager().getLaunchIntentForPackage("fi.eye.android"));
+		if (SystemUtil.isAppInstalled(getString(R.string.package_mobi))) {
+			startActivity(getPackageManager().getLaunchIntentForPackage(getString(R.string.package_mobi)));
+		}
+		else if (SystemUtil.isAppInstalled(getString(R.string.package_eyefi))) {
+			startActivity(getPackageManager().getLaunchIntentForPackage(getString(R.string.package_eyefi)));
 		}
 		else {
 			Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
-			googlePlayIntent.setData(Uri.parse("market://details?id=fi.eye.android"));
+			googlePlayIntent.setData(Uri.parse("market://details?id=" + getString(R.string.package_mobi)));
 			try {
 				startActivity(googlePlayIntent);
 			}

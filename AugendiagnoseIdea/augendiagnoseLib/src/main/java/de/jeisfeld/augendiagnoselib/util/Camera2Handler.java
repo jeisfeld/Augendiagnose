@@ -1,14 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -41,6 +32,15 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
@@ -886,7 +886,7 @@ public class Camera2Handler implements CameraHandler {
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 			}
-			catch (CameraAccessException | IllegalStateException e) {
+			catch (CameraAccessException | IllegalStateException | NullPointerException e) {
 				mCameraCallback.onCameraError("Failed to do the preview configuration", "pre6", e);
 			}
 		}

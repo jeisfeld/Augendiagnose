@@ -1,9 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -58,7 +58,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * @param context  The context in which the activity is started.
 	 * @param prefType The type of preferences to be displayed.
 	 */
-	public static final void startActivity(@NonNull final Context context, @Nullable final Integer prefType) {
+	public static void startActivity(@NonNull final Context context, @Nullable final Integer prefType) {
 		Intent intent = new Intent(context, SettingsActivity.class);
 		if (prefType != null) {
 			intent.putExtra(STRING_EXTRA_PREF_TYPE, prefType);
@@ -167,7 +167,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * @param context The Context in which the preferences should be set.
 	 */
 	@SuppressLint("SdCardPath")
-	public static final void setDefaultSharedPreferences(@NonNull final Context context) {
+	public static void setDefaultSharedPreferences(@NonNull final Context context) {
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_input, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_display, true);
 		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_storage, true);
@@ -177,7 +177,12 @@ public class SettingsActivity extends PreferenceActivity {
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_folder_input))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
-			if (SystemUtil.isAppInstalled("fi.eye.android")) {
+			if (SystemUtil.isAppInstalled(Application.getResourceString(R.string.package_mobi))) {
+				// If Eye-Fi (new) is available, use Eye-Fi default folder
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
+						context.getString(R.string.pref_default_folder_input_mobi));
+			}
+			else if (SystemUtil.isAppInstalled(Application.getResourceString(R.string.package_eyefi))) {
 				// If Eye-Fi is available, use Eye-Fi default folder
 				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
 						context.getString(R.string.pref_default_folder_input_eyefi));
