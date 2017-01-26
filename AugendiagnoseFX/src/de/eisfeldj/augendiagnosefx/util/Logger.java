@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import de.eisfeldj.augendiagnosefx.Application;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * Utility class for debugging.
@@ -64,8 +64,8 @@ public final class Logger {
 	 * @param output
 	 *            the content of the log entry.
 	 */
-	public static void log(final String output) {
-		info(output);
+	public static void log(final Object output) {
+		info(output.toString());
 	}
 
 	/**

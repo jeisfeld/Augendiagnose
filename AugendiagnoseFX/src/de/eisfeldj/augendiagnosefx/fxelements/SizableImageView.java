@@ -1,22 +1,32 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import java.util.List;
+
+import com.sun.javafx.scene.NodeEventDispatcher;
+
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
+
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventDispatchChain;
+import javafx.event.EventDispatcher;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.TouchEvent;
+import javafx.scene.input.TouchPoint;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
 
@@ -52,9 +62,24 @@ public class SizableImageView extends ScrollPane {
 	private final DoubleProperty mMouseYProperty = new SimpleDoubleProperty();
 
 	/**
+	 * The touch X position.
+	 */
+	private final DoubleProperty mTouchXProperty = new SimpleDoubleProperty();
+
+	/**
+	 * The touch Y position.
+	 */
+	private final DoubleProperty mTouchYProperty = new SimpleDoubleProperty();
+
+	/**
 	 * Flag indicating if the view is initialized (and image is loaded).
 	 */
 	private boolean mIsInitialized = false;
+
+	/**
+	 * The number of touch points on touch screen.
+	 */
+	private int mTouchCount = 0;
 
 	public final boolean isInitialized() {
 		return mIsInitialized;
@@ -103,6 +128,31 @@ public class SizableImageView extends ScrollPane {
 		setHbarPolicy(ScrollBarPolicy.NEVER);
 		setVbarPolicy(ScrollBarPolicy.NEVER);
 
+		final NodeEventDispatcher defaultEventDispatcher = (NodeEventDispatcher) getEventDispatcher();
+
+		setEventDispatcher(new EventDispatcher() {
+
+			@Override
+			public Event dispatchEvent(final Event event, final EventDispatchChain tail) {
+
+				if (event instanceof ScrollEvent) {
+					handleScrollEvent((ScrollEvent) event);
+					return event;
+				}
+				else if (event instanceof ZoomEvent) {
+					handleZoomEvent((ZoomEvent) event);
+					return event;
+				}
+				else if (event instanceof TouchEvent) {
+					handleTouchEvent((TouchEvent) event);
+					return event;
+				}
+				else {
+					return defaultEventDispatcher.dispatchEvent(event, tail);
+				}
+			}
+		});
+
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
@@ -110,67 +160,111 @@ public class SizableImageView extends ScrollPane {
 				mMouseYProperty.set(event.getY());
 			}
 		});
+	}
 
-		addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-			@Override
-			public void handle(final ScrollEvent event) {
-				// Original size of the image.
-				double sourceWidth = mZoomProperty.get() * mImageView.getImage().getWidth();
-				double sourceHeight = mZoomProperty.get() * mImageView.getImage().getHeight();
+	/**
+	 * Apply a zoom to the image.
+	 *
+	 * @param deltaZoomFactor
+	 *            the change of the zoom factor.
+	 */
+	private void zoomImage(final double deltaZoomFactor) {
+		double xCenter = mTouchCount > 1 ? mTouchXProperty.get() : mMouseXProperty.get();
+		double yCenter = mTouchCount > 1 ? mTouchYProperty.get() : mMouseYProperty.get();
 
-				multiplyZoomProperty(Math.pow(ZOOM_FACTOR, event.getDeltaY()));
+		// Original size of the image.
+		double sourceWidth = mZoomProperty.get() * mImageView.getImage().getWidth();
+		double sourceHeight = mZoomProperty.get() * mImageView.getImage().getHeight();
 
-				// Old values of the scrollbars.
-				double oldHvalue = getHvalue();
-				double oldVvalue = getVvalue();
+		multiplyZoomProperty(deltaZoomFactor);
 
-				// Image pixels outside the visible area which need to be scrolled.
-				double preScrollXFactor = Math.max(0, sourceWidth - getWidth());
-				double preScrollYFactor = Math.max(0, sourceHeight - getHeight());
+		// Old values of the scrollbars.
+		double oldHvalue = getHvalue();
+		double oldVvalue = getVvalue();
 
-				// Relative position of the mouse in the image.
-				double mouseXPosition = (mMouseXProperty.get() + preScrollXFactor * oldHvalue) / sourceWidth;
-				double mouseYPosition = (mMouseYProperty.get() + preScrollYFactor * oldVvalue) / sourceHeight;
+		// Image pixels outside the visible area which need to be scrolled.
+		double preScrollXFactor = Math.max(0, sourceWidth - getWidth());
+		double preScrollYFactor = Math.max(0, sourceHeight - getHeight());
 
-				// Target size of the image.
-				double targetWidth = mZoomProperty.get() * mImageView.getImage().getWidth();
-				double targetHeight = mZoomProperty.get() * mImageView.getImage().getHeight();
+		// Relative position of the mouse in the image.
+		double mouseXPosition = (xCenter + preScrollXFactor * oldHvalue) / sourceWidth;
+		double mouseYPosition = (yCenter + preScrollYFactor * oldVvalue) / sourceHeight;
 
-				// Image pixels outside the visible area which need to be scrolled.
-				double postScrollXFactor = Math.max(0, targetWidth - getWidth());
-				double postScrollYFactor = Math.max(0, targetHeight - getHeight());
+		// Target size of the image.
+		double targetWidth = mZoomProperty.get() * mImageView.getImage().getWidth();
+		double targetHeight = mZoomProperty.get() * mImageView.getImage().getHeight();
 
-				// Correction applied to compensate the vertical scrolling done by ScrollPane
-				double verticalCorrection = (postScrollYFactor / sourceHeight) * event.getDeltaY();
+		// Image pixels outside the visible area which need to be scrolled.
+		double postScrollXFactor = Math.max(0, targetWidth - getWidth());
+		double postScrollYFactor = Math.max(0, targetHeight - getHeight());
 
-				// New scrollbar positions keeping the mouse position.
-				double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
-						? ((mouseXPosition * targetWidth) - mMouseXProperty.get()) / postScrollXFactor
-						: oldHvalue;
-				double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
-						? ((mouseYPosition * targetHeight) - mMouseYProperty.get() + verticalCorrection)
-								/ postScrollYFactor
-						: oldVvalue;
+		// New scrollbar positions keeping the mouse position.
+		double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
+				? ((mouseXPosition * targetWidth) - xCenter) / postScrollXFactor : oldHvalue;
+		double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
+				? ((mouseYPosition * targetHeight) - yCenter) / postScrollYFactor : oldVvalue;
 
-				mImageView.setFitWidth(targetWidth);
-				mImageView.setFitHeight(targetHeight);
-				// Layout needs to be done now so that default scrollbar position is applied.
-				layout();
-				setHvalue(newHvalue);
-				setVvalue(newVvalue);
+		mImageView.setFitWidth(targetWidth);
+		mImageView.setFitHeight(targetHeight);
+		// Layout needs to be done now so that default scrollbar position is applied.
+		layout();
+		setHvalue(newHvalue);
+		setVvalue(newVvalue);
+	}
+
+	/**
+	 * Process a scroll event.
+	 *
+	 * @param event
+	 *            The scroll event.
+	 */
+	private void handleScrollEvent(final ScrollEvent event) {
+		if (mTouchCount > 0) {
+			// Do not handle scroll events on touch pad.
+			return;
+		}
+
+		zoomImage(Math.pow(ZOOM_FACTOR, event.getDeltaY()));
+	}
+
+	/**
+	 * Handle a zoom event.
+	 *
+	 * @param event
+	 *            The zoom event.
+	 */
+	private void handleZoomEvent(final ZoomEvent event) {
+		if (!Double.isNaN(event.getZoomFactor())) {
+			zoomImage(event.getZoomFactor());
+		}
+	}
+
+	/**
+	 * Handle a touch event.
+	 *
+	 * @param event
+	 *            The touch event.
+	 */
+	private void handleTouchEvent(final TouchEvent event) {
+		if (event.getEventType().equals(TouchEvent.TOUCH_PRESSED)) {
+			mTouchCount = event.getTouchCount();
+		}
+		else if (event.getEventType().equals(TouchEvent.TOUCH_RELEASED)) {
+			// getTouchCount gives the number of touch points before the release.
+			mTouchCount = event.getTouchCount() - 1;
+		}
+
+		if (mTouchCount > 1) {
+			List<TouchPoint> touchPoints = event.getTouchPoints();
+			double sumX = 0;
+			double sumY = 0;
+			for (TouchPoint point : touchPoints) {
+				sumX += point.getX();
+				sumY += point.getY();
 			}
-		});
-
-		addEventFilter(ZoomEvent.ANY, new EventHandler<ZoomEvent>() {
-			@Override
-			public void handle(final ZoomEvent event) {
-				multiplyZoomProperty(event.getZoomFactor());
-
-				ImageView image = (ImageView) getContent();
-				image.setFitWidth(mZoomProperty.get() * image.getImage().getWidth());
-				image.setFitHeight(mZoomProperty.get() * image.getImage().getHeight());
-			}
-		});
+			mTouchXProperty.set(sumX / touchPoints.size());
+			mTouchYProperty.set(sumY / touchPoints.size());
+		}
 	}
 
 	/**
@@ -196,10 +290,9 @@ public class SizableImageView extends ScrollPane {
 			return;
 		}
 		else {
-			ProgressDialog dialog =
-					DialogUtil
-							.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTO,
-									eyePhoto.getFilename());
+			ProgressDialog dialog = DialogUtil
+					.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_PHOTO,
+							eyePhoto.getFilename());
 
 			image.progressProperty().addListener(new ChangeListener<Number>() {
 				@Override
@@ -328,8 +421,8 @@ public class SizableImageView extends ScrollPane {
 				yCenter = metadata.getYCenter();
 			}
 
-			ScrollPosition scrollPosition =
-					convertMetadataPositionToScrollPosition(new MetadataPosition(xCenter, yCenter));
+			ScrollPosition scrollPosition = convertMetadataPositionToScrollPosition(
+					new MetadataPosition(xCenter, yCenter));
 
 			setHvalue(scrollPosition.mHValue);
 			setVvalue(scrollPosition.mVValue);
@@ -410,8 +503,8 @@ public class SizableImageView extends ScrollPane {
 	 * @return the position within the image
 	 */
 	public final MetadataPosition getPosition() {
-		MetadataPosition metadataPosition =
-				convertScrollPositionToMetadataPosition(new ScrollPosition(getHvalue(), getVvalue()));
+		MetadataPosition metadataPosition = convertScrollPositionToMetadataPosition(
+				new ScrollPosition(getHvalue(), getVvalue()));
 
 		metadataPosition.mZoom = (float) (mZoomProperty.get() / getDefaultScaleFactor());
 

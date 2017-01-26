@@ -2,7 +2,6 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
-
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -133,10 +132,8 @@ public class OverlayImageView extends SizableImageView {
 	public final void redisplay(final Resolution resolution) {
 		Image newImage = ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor,
 				mBrightness, mContrast, mSaturation, mColorTemperature, resolution);
-
 		if (resolution != mCurrentResolution) {
-			double imageRatio = newImage.getWidth() / mCurrentImageWidth;
-			multiplyZoomProperty(1 / imageRatio);
+			multiplyZoomProperty(mCurrentImageWidth / newImage.getWidth());
 			mCurrentImageWidth = newImage.getWidth();
 			mCurrentResolution = resolution;
 		}
@@ -154,9 +151,8 @@ public class OverlayImageView extends SizableImageView {
 	 */
 	@Override
 	protected final void displayImage(final Image image) {
-		Image enhancedImage =
-				ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor,
-						mBrightness, mContrast, mSaturation, mColorTemperature, Resolution.NORMAL);
+		Image enhancedImage = ImageUtil.getImageForDisplay(getEyePhoto(), mOverlayType, mOverlayColor,
+				mBrightness, mContrast, mSaturation, mColorTemperature, Resolution.NORMAL);
 		mCurrentResolution = Resolution.NORMAL;
 		mCurrentImageWidth = enhancedImage.getWidth();
 
@@ -190,7 +186,8 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * Convert saturation from (-1,1) scale to (1/3,infty) scale.
 	 *
-	 * @param seekbarSaturation the saturation on (-1,1) scale.
+	 * @param seekbarSaturation
+	 *            the saturation on (-1,1) scale.
 	 * @return the saturation on (1/3,infty) scale.
 	 */
 	public static float seekbarSaturationToStoredSaturation(final float seekbarSaturation) {
@@ -200,7 +197,8 @@ public class OverlayImageView extends SizableImageView {
 	/**
 	 * Convert saturation from (0,infty) scale to (-1,1) scale.
 	 *
-	 * @param storedSaturation the saturation on (0,infty) scale.
+	 * @param storedSaturation
+	 *            the saturation on (0,infty) scale.
 	 * @return the saturation on (-1,1) scale.
 	 */
 	public static float storedSaturationToSeekbarSaturation(final float storedSaturation) {
