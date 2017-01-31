@@ -726,7 +726,7 @@ public class DisplayImageController extends BaseController implements Initializa
 				metadata.setYPosition(position.mYCenter);
 				metadata.setZoomFactor(position.mZoom);
 
-				controller.setImage(metadata, mDisplayImageView.getImageView().getImage(), mEyePhoto);
+				controller.setImage(metadata, mDisplayImageView.getImageView().getImage());
 			}
 		}
 
@@ -889,23 +889,28 @@ public class DisplayImageController extends BaseController implements Initializa
 			enableOverlayButtons(metadata.hasOverlayPosition());
 		}
 
-		mDisplayImageView.setImage(metadata, controller.mDisplayImageView.getImageView().getImage(), mEyePhoto);
+		mDisplayImageView.cloneContents(controller.mDisplayImageView);
 
-		initializeSliders();
 		mSliderBrightness.setValue(controller.mSliderBrightness.getValue());
 		mSliderContrast.setValue(controller.mSliderContrast.getValue());
 		mSliderSaturation.setValue(controller.mSliderSaturation.getValue());
 		mSliderColorTemperature.setValue(controller.mSliderColorTemperature.getValue());
 
+		mColorPicker.setValue(controller.mColorPicker.getValue());
 		for (int i = 0; i < Math.min(mOverlayButtons.length, controller.mOverlayButtons.length); i++) {
 			mOverlayButtons[i].setSelected(controller.mOverlayButtons[i].isSelected());
 		}
+		mCurrentOverlayType = controller.mCurrentOverlayType;
+		mCurrentResolution = controller.mCurrentResolution;
+		updateResolution(THUMB);
 
 		mTxtImageComment.setText(controller.mTxtImageComment.getText());
 		mTxtImageComment.setEditable(controller.mTxtImageComment.isEditable());
 		mBtnEditComment.setSelected(controller.mBtnEditComment.isSelected());
+		mClarityButton.setSelected(controller.mClarityButton.isSelected());
 
-		showOverlay(controller.mCurrentOverlayType);
+		mDisplayImageView.setImage(metadata, controller.mDisplayImageView.getImageView().getImage());
+		initializeSliders();
 	}
 
 }

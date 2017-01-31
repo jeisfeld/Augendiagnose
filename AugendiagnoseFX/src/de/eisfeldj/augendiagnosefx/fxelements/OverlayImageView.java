@@ -1,6 +1,5 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
@@ -72,7 +71,7 @@ public class OverlayImageView extends SizableImageView {
 		mOverlayType = newOverlayType;
 		mOverlayColor = newOverlayColor;
 		mCurrentResolution = resolution;
-		redisplay(resolution);
+		redisplay(mCurrentResolution);
 	}
 
 	/**
@@ -163,12 +162,11 @@ public class OverlayImageView extends SizableImageView {
 	}
 
 	@Override
-	public final void setImage(final JpegMetadata metadata, final Image image, final EyePhoto eyePhoto) {
-		super.setImage(metadata, image, eyePhoto);
+	public final void setImage(final JpegMetadata metadata, final Image image) {
+		super.setImage(metadata, image);
 		mCurrentResolution = Resolution.NORMAL;
 		mCurrentImageWidth = image.getWidth();
 	}
-
 
 	/**
 	 * Convert contrast from (-1,1) scale to (0,infty) scale.
@@ -214,6 +212,22 @@ public class OverlayImageView extends SizableImageView {
 	 */
 	public static float storedSaturationToSeekbarSaturation(final float storedSaturation) {
 		return (1f - 4f / 3 / (storedSaturation + 1f / 3)) / CONTRAST_LIMIT; // MAGIC_NUMBER
+	}
+
+	/**
+	 * Clone the contents from another instance.
+	 *
+	 * @param view The other instance.
+	 */
+	public void cloneContents(final OverlayImageView view) {
+		super.cloneContents(view);
+		mOverlayType = view.mOverlayType;
+		mOverlayColor = view.mOverlayColor;
+		mCurrentResolution = view.mCurrentResolution;
+		mBrightness = view.mBrightness;
+		mContrast = view.mContrast;
+		mSaturation = view.mSaturation;
+		mColorTemperature = view.mColorTemperature;
 	}
 
 }

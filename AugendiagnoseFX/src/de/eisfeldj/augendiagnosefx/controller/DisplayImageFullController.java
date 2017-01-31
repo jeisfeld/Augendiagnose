@@ -1,7 +1,6 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView;
-import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
 
 import javafx.fxml.FXML;
@@ -30,11 +29,9 @@ public class DisplayImageFullController extends BaseController {
 	 *            The metadata used for scaling.
 	 * @param image
 	 *            the image to be displayed.
-	 * @param eyePhoto
-	 *            the eye photo to be displayed.
 	 */
-	public final void setImage(final JpegMetadata metadata, final Image image, final EyePhoto eyePhoto) {
-		mDisplayImageView.setImage(metadata, image, eyePhoto);
+	public final void setImage(final JpegMetadata metadata, final Image image) {
+		mDisplayImageView.setImage(metadata, image);
 	}
 
 }

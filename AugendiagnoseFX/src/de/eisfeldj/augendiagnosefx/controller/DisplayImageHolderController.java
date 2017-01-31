@@ -16,7 +16,7 @@ import javafx.scene.layout.StackPane;
 /**
  * A holder class for DisplayImageController - enables switching the instance keeping the mController.
  */
-public class DisplayImageControllerHolder extends BaseController implements Initializable {
+public class DisplayImageHolderController extends BaseController implements Initializable {
 	/**
 	 * The mController which is currently operated.
 	 */

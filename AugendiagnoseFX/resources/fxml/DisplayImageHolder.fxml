@@ -8,6 +8,6 @@
 <?scenebuilder-preview-i18n-resource ../bundles/Strings.properties?>
 <?scenebuilder-stylesheet ../css/application.css?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:id="mBody" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageControllerHolder">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:id="mBody" fx:controller="de.eisfeldj.augendiagnosefx.controller.DisplayImageHolderController">
 
 </StackPane>

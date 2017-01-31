@@ -352,13 +352,10 @@ public class SizableImageView extends ScrollPane {
 	 *            The metadata to be used for scaling.
 	 * @param image
 	 *            The pre-loaded image.
-	 * @param eyePhoto
-	 *            the eye photo to be displayed.
 	 */
 	// OVERRIDABLE
-	public void setImage(final JpegMetadata metadata, final Image image, final EyePhoto eyePhoto) {
+	public void setImage(final JpegMetadata metadata, final Image image) {
 		mImageView.setImage(image);
-		mEyePhoto = eyePhoto;
 
 		synchronized (mImageView) {
 			// Initialization after window is sized and image is loaded.
@@ -564,6 +561,15 @@ public class SizableImageView extends ScrollPane {
 				: IMAGE_CENTER;
 
 		return new MetadataPosition((float) xCenter, (float) yCenter);
+	}
+
+	/**
+	 * Clone the contents from another instance.
+	 *
+	 * @param view The other instance.
+	 */
+	public void cloneContents(final SizableImageView view) {
+		mEyePhoto = view.mEyePhoto;
 	}
 
 	/**
