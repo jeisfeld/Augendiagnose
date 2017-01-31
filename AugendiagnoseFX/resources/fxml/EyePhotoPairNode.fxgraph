@@ -11,7 +11,7 @@ import javafx.scene.text.Text
 
 dynamic component EyePhotoPairNode resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
 	GridPane {
-		hgap: 10,
+		hgap : 10,
 		columnConstraints : [
 			ColumnConstraints {
 				prefWidth : 70
@@ -23,7 +23,8 @@ dynamic component EyePhotoPairNode resourcefile "../bundles/Strings.properties" 
 
 		Label id mLabelDate {
 			static columnIndex : 0,
-			static rowIndex : 0
+			static rowIndex : 0,
+			prefHeight : 10000
 		},
 		GridPane {
 			static columnIndex : 1,

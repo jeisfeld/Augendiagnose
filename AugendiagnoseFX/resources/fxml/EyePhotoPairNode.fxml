@@ -13,7 +13,7 @@
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="GridPane" hgap="10">
 
-	<Label fx:id="mLabelDate" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+	<Label fx:id="mLabelDate" prefHeight="10000" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
 	<GridPane hgap="10" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
 		<ImageViewPane fx:id="mImageViewRight" prefWidth="0" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
 		<ImageViewPane fx:id="mImageViewLeft" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0"/> 
