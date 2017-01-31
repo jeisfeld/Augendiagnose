@@ -223,7 +223,6 @@ public class SizableImageView extends ScrollPane {
 			// Do not handle scroll events on touch pad.
 			return;
 		}
-
 		zoomImage(Math.pow(ZOOM_FACTOR, event.getDeltaY()));
 	}
 
@@ -353,9 +352,14 @@ public class SizableImageView extends ScrollPane {
 	 *            The metadata to be used for scaling.
 	 * @param image
 	 *            The pre-loaded image.
+	 * @param eyePhoto
+	 *            the eye photo to be displayed.
 	 */
-	public final void setImage(final JpegMetadata metadata, final Image image) {
+	// OVERRIDABLE
+	public void setImage(final JpegMetadata metadata, final Image image, final EyePhoto eyePhoto) {
 		mImageView.setImage(image);
+		mEyePhoto = eyePhoto;
+
 		synchronized (mImageView) {
 			// Initialization after window is sized and image is loaded.
 			if (getHeight() > 0 && !mIsInitialized) {
@@ -403,7 +407,6 @@ public class SizableImageView extends ScrollPane {
 		else {
 			mZoomProperty.set(getDefaultScaleFactor());
 		}
-
 		mImageView.setFitWidth(mZoomProperty.get() * mImageView.getImage().getWidth());
 		mImageView.setFitHeight(mZoomProperty.get() * mImageView.getImage().getHeight());
 		layout();

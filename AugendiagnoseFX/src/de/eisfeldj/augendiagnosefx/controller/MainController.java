@@ -99,11 +99,10 @@ public class MainController extends BaseController implements Initializable {
 	 *
 	 * @param initialFill
 	 *            The FXML file defining the initial content of the new pane.
-	 * @return the controller of the new pane.
 	 */
-	public final BaseController setSplitPane(final String initialFill) {
+	public final void setSplitPane(final String initialFill) {
 		if (mIsSplitPane) {
-			return null;
+			return;
 		}
 		mIsSplitPane = true;
 
@@ -122,12 +121,10 @@ public class MainController extends BaseController implements Initializable {
 		mBody.getChildren().clear();
 		mBody.getChildren().add(splitPane);
 
-		if (initialFill == null) {
-			return null;
+		if (initialFill != null) {
+			FxmlUtil.displaySubpage(initialFill, 1, false);
 		}
-		else {
-			return FxmlUtil.displaySubpage(initialFill, 1, false);
-		}
+		refreshSubPagesOnResize();
 	}
 
 	/**
@@ -172,6 +169,16 @@ public class MainController extends BaseController implements Initializable {
 		}
 		for (BaseController controller : controllers2) {
 			addSubPage(controller, 0, true);
+		}
+		refreshSubPagesOnResize();
+	}
+
+	/**
+	 * Refresh all subpages on resize.
+	 */
+	private void refreshSubPagesOnResize() {
+		for (BaseController controller : mSubPageRegistry) {
+			controller.refreshOnResize();
 		}
 	}
 

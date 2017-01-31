@@ -1,9 +1,8 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
-import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
-import de.eisfeldj.augendiagnosefx.controller.DisplayImageController;
+import de.eisfeldj.augendiagnosefx.controller.DisplayImageControllerHolder;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
@@ -103,12 +102,13 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				if (MainController.getInstance().isSplitPane()) {
 					return;
 				}
-				DisplayImageController controllerLeft =
-						(DisplayImageController) MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW);
-				controllerLeft.setEyePhoto(pair.getLeftEye());
-				DisplayImageController controllerRight =
-						(DisplayImageController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW, 0, true);
+				MainController.getInstance().setSplitPane(null);
+				DisplayImageControllerHolder controllerRight =
+						(DisplayImageControllerHolder) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_HOLDER, 0, true);
 				controllerRight.setEyePhoto(pair.getRightEye());
+				DisplayImageControllerHolder controllerLeft =
+						(DisplayImageControllerHolder) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_HOLDER, 1, false);
+				controllerLeft.setEyePhoto(pair.getLeftEye());
 			}
 		});
 	}
@@ -142,14 +142,8 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 					MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_PHOTOS);
 				}
 
-				String fxmlName =
-						!MainController.getInstance().isSplitPane()
-								&& Application.getScene().getWidth() > Application.getScene().getHeight()
-										? FxmlConstants.FXML_DISPLAY_IMAGE_WIDE
-										: FxmlConstants.FXML_DISPLAY_IMAGE_NARROW;
-				DisplayImageController controller =
-						(DisplayImageController) FxmlUtil.displaySubpage(fxmlName, mParentController.getPaneIndex(),
-								true);
+				DisplayImageControllerHolder controller = (DisplayImageControllerHolder) FxmlUtil
+						.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_HOLDER, mParentController.getPaneIndex(), true);
 				controller.setEyePhoto(eyePhoto);
 			}
 		});

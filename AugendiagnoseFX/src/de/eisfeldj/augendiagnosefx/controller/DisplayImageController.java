@@ -726,7 +726,7 @@ public class DisplayImageController extends BaseController implements Initializa
 				metadata.setYPosition(position.mYCenter);
 				metadata.setZoomFactor(position.mZoom);
 
-				controller.setImage(metadata, mDisplayImageView.getImageView().getImage());
+				controller.setImage(metadata, mDisplayImageView.getImageView().getImage(), mEyePhoto);
 			}
 		}
 
@@ -871,6 +871,41 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	private boolean isInitialized() {
 		return mIsInitialized && mDisplayImageView.isInitialized();
+	}
+
+	/**
+	 * Clone the contents from another instance.
+	 *
+	 * @param controller The other instance.
+	 */
+	protected void cloneContents(final DisplayImageController controller) {
+		this.mEyePhoto = controller.mEyePhoto;
+		JpegMetadata metadata = controller.mEyePhoto.getImageMetadata();
+		if (metadata != null) {
+			MetadataPosition position = controller.mDisplayImageView.getPosition();
+			metadata.setXPosition(position.mXCenter);
+			metadata.setYPosition(position.mYCenter);
+			metadata.setZoomFactor(position.mZoom);
+			enableOverlayButtons(metadata.hasOverlayPosition());
+		}
+
+		mDisplayImageView.setImage(metadata, controller.mDisplayImageView.getImageView().getImage(), mEyePhoto);
+
+		initializeSliders();
+		mSliderBrightness.setValue(controller.mSliderBrightness.getValue());
+		mSliderContrast.setValue(controller.mSliderContrast.getValue());
+		mSliderSaturation.setValue(controller.mSliderSaturation.getValue());
+		mSliderColorTemperature.setValue(controller.mSliderColorTemperature.getValue());
+
+		for (int i = 0; i < Math.min(mOverlayButtons.length, controller.mOverlayButtons.length); i++) {
+			mOverlayButtons[i].setSelected(controller.mOverlayButtons[i].isSelected());
+		}
+
+		mTxtImageComment.setText(controller.mTxtImageComment.getText());
+		mTxtImageComment.setEditable(controller.mTxtImageComment.isEditable());
+		mBtnEditComment.setSelected(controller.mBtnEditComment.isSelected());
+
+		showOverlay(controller.mCurrentOverlayType);
 	}
 
 }

@@ -1,7 +1,10 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
+import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+import de.eisfeldj.augendiagnosefx.util.imagefile.JpegMetadata;
+
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -158,6 +161,14 @@ public class OverlayImageView extends SizableImageView {
 
 		super.displayImage(enhancedImage);
 	}
+
+	@Override
+	public final void setImage(final JpegMetadata metadata, final Image image, final EyePhoto eyePhoto) {
+		super.setImage(metadata, image, eyePhoto);
+		mCurrentResolution = Resolution.NORMAL;
+		mCurrentImageWidth = image.getWidth();
+	}
+
 
 	/**
 	 * Convert contrast from (-1,1) scale to (0,infty) scale.

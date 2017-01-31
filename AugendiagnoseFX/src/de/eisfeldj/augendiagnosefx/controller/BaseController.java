@@ -62,6 +62,14 @@ public abstract class BaseController implements Controller {
 	}
 
 	/**
+	 * Refresh the controller on resize of the window.
+	 */
+	// OVERRIDABLE
+	public void refreshOnResize() {
+
+	}
+
+	/**
 	 * Get all controllers of a given type.
 	 *
 	 * @param <C>

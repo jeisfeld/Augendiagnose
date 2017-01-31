@@ -12,6 +12,7 @@ public final class FxmlConstants {
 	public static final String FXML_DISPLAY_IMAGE_FULL = "DisplayImageFull.fxml";
 	public static final String FXML_DISPLAY_IMAGE_NARROW = "DisplayImageNarrow.fxml";
 	public static final String FXML_DISPLAY_IMAGE_WIDE = "DisplayImageWide.fxml";
+	public static final String FXML_DISPLAY_IMAGE_HOLDER = "DisplayImageHolder.fxml";
 	public static final String FXML_DISPLAY_PHOTOS = "DisplayPhotos.fxml";
 	public static final String FXML_EYE_PHOTO_PAIR_NODE = "EyePhotoPairNode.fxml";
 	public static final String FXML_MAIN = "Main.fxml";
