@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
-import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
@@ -96,70 +95,83 @@ public class MainController extends BaseController implements Initializable {
 	}
 
 	/**
-	 * Set either single pane or split pane.
+	 * Set split pane.
 	 *
-	 * @param newIsSplitPane
-	 *            If true, then split pane is set, otherwise single pane is set.
+	 * @param initialFill
+	 *            The FXML file defining the initial content of the new pane.
+	 * @return the controller of the new pane.
 	 */
-	public final void setSplitPane(final boolean newIsSplitPane) {
-		if (newIsSplitPane == mIsSplitPane) {
-			return;
+	public final BaseController setSplitPane(final String initialFill) {
+		if (mIsSplitPane) {
+			return null;
 		}
-		mIsSplitPane = newIsSplitPane;
+		mIsSplitPane = true;
 
-		if (isSplitPane()) {
-			StackPane body1 = new StackPane();
-			StackPane body2 = new StackPane();
+		StackPane body1 = new StackPane();
+		StackPane body2 = new StackPane();
 
-			SplitPane splitPane = new SplitPane();
-			splitPane.setOrientation(Orientation.HORIZONTAL);
-			splitPane.getItems().add(body1);
-			splitPane.getItems().add(body2);
+		SplitPane splitPane = new SplitPane();
+		splitPane.setOrientation(Orientation.HORIZONTAL);
+		splitPane.getItems().add(body1);
+		splitPane.getItems().add(body2);
 
-			mBodies = new StackPane[] {body1, body2, mBody};
+		mBodies = new StackPane[] {body1, body2, mBody};
 
-			// retain old body as left pane.
-			body1.getChildren().addAll(mBody.getChildren());
-			FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 1, false);
+		// retain old body as left pane.
+		body1.getChildren().addAll(mBody.getChildren());
+		mBody.getChildren().clear();
+		mBody.getChildren().add(splitPane);
 
-			mBody.getChildren().clear();
-			mBody.getChildren().add(splitPane);
+		if (initialFill == null) {
+			return null;
 		}
 		else {
-			mBody.getChildren().clear();
+			return FxmlUtil.displaySubpage(initialFill, 1, false);
+		}
+	}
 
-			List<BaseController> controllers0 = new ArrayList<>();
-			List<BaseController> controllers1 = new ArrayList<>();
-			List<BaseController> controllers2 = new ArrayList<>();
-			for (int i = mSubPageRegistry.size() - 1; i >= 0; i--) {
-				BaseController controller = mSubPageRegistry.get(i);
-				if (controller.getPaneIndex() == 0) {
-					if (controller.isCloseable()) {
-						controllers1.add(controller);
-					}
-					else {
-						controllers0.add(controller);
-					}
+	/**
+	 * Set single pane.
+	 */
+	public final void setSinglePane() {
+		if (!mIsSplitPane) {
+			return;
+		}
+		mIsSplitPane = false;
+
+		mBody.getChildren().clear();
+
+		List<BaseController> controllers0 = new ArrayList<>();
+		List<BaseController> controllers1 = new ArrayList<>();
+		List<BaseController> controllers2 = new ArrayList<>();
+		for (int i = mSubPageRegistry.size() - 1; i >= 0; i--) {
+			BaseController controller = mSubPageRegistry.get(i);
+			if (controller.getPaneIndex() == 0) {
+				if (controller.isCloseable()) {
+					controllers1.add(controller);
 				}
 				else {
-					if (controller.isCloseable()) {
-						controllers2.add(controller);
-					}
+					controllers0.add(controller);
 				}
-				removeSubpage(controller);
 			}
+			else {
+				if (controller.isCloseable()) {
+					controllers2.add(controller);
+				}
+			}
+			removeSubpage(controller);
+		}
 
-			mBodies = new StackPane[] {mBody};
+		mBodies = new StackPane[] {mBody};
 
-			for (BaseController controller : controllers0) {
-				addSubPage(controller, 0, false);
-			}
-			for (BaseController controller : controllers1) {
-				addSubPage(controller, 0, true);
-			}
-			for (BaseController controller : controllers2) {
-				addSubPage(controller, 0, true);
-			}
+		for (BaseController controller : controllers0) {
+			addSubPage(controller, 0, false);
+		}
+		for (BaseController controller : controllers1) {
+			addSubPage(controller, 0, true);
+		}
+		for (BaseController controller : controllers2) {
+			addSubPage(controller, 0, true);
 		}
 	}
 
@@ -264,9 +276,8 @@ public class MainController extends BaseController implements Initializable {
 		disableClose(index);
 
 		if (MainController.getInstance().isSplitPane() && !hasClosablePage()) {
-			MainController.getInstance().setSplitPane(false);
+			MainController.getInstance().setSinglePane();
 		}
-
 	}
 
 	/**

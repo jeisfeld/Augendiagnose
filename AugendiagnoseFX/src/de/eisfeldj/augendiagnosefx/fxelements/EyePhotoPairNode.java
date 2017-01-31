@@ -103,13 +103,12 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				if (MainController.getInstance().isSplitPane()) {
 					return;
 				}
-				MainController.getInstance().setSplitPane(true);
+				DisplayImageController controllerLeft =
+						(DisplayImageController) MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW);
+				controllerLeft.setEyePhoto(pair.getLeftEye());
 				DisplayImageController controllerRight =
 						(DisplayImageController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW, 0, true);
 				controllerRight.setEyePhoto(pair.getRightEye());
-				DisplayImageController controllerLeft =
-						(DisplayImageController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW, 1, false);
-				controllerLeft.setEyePhoto(pair.getLeftEye());
 			}
 		});
 	}
@@ -140,7 +139,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 			public void handle(final MouseEvent event) {
 				if (PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SHOW_SPLIT_WINDOW)
 						&& !MainController.getInstance().isSplitPane()) {
-					MainController.getInstance().setSplitPane(true);
+					MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_PHOTOS);
 				}
 
 				String fxmlName =

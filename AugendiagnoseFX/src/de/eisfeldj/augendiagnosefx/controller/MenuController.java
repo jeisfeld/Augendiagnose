@@ -1,20 +1,18 @@
 package de.eisfeldj.augendiagnosefx.controller;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
+import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +21,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_OVERLAY_PANE;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 
 /**
  * BaseController class for the menu.
@@ -148,11 +150,7 @@ public class MenuController extends BaseController implements Initializable {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
 				@Override
 				public void onDialogPositiveClick() {
-					PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, mMenuSplitWindow.isSelected());
-
-					if (MainController.getInstance().hasClosablePage()) {
-						MainController.getInstance().setSplitPane(mMenuSplitWindow.isSelected());
-					}
+					doToggleSplitWindow(mMenuSplitWindow.isSelected());
 				}
 
 				@Override
@@ -165,9 +163,23 @@ public class MenuController extends BaseController implements Initializable {
 					ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
 		}
 		else {
-			PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, mMenuSplitWindow.isSelected());
-			if (MainController.getInstance().hasClosablePage()) {
-				MainController.getInstance().setSplitPane(mMenuSplitWindow.isSelected());
+			doToggleSplitWindow(mMenuSplitWindow.isSelected());
+		}
+	}
+
+	/**
+	 * Switch between single window and split window.
+	 *
+	 * @param split flag indicating if there should be split window.
+	 */
+	private void doToggleSplitWindow(final boolean split) {
+		PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, split);
+		if (MainController.getInstance().hasClosablePage()) {
+			if (split) {
+				MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_PHOTOS);
+			}
+			else {
+				MainController.getInstance().setSinglePane();
 			}
 		}
 	}
