@@ -94,7 +94,7 @@ public final class JpegSynchronizationUtil {
 		}
 
 		synchronized (JpegSynchronizationUtil.class) {
-			MainController.showSaveIcon();
+			MainController.setSaveIconVisibility(true);
 
 			if (mRunningSaveRequests.containsKey(pathname)) {
 				mQueuedSaveRequests.put(pathname, metadata);
@@ -133,7 +133,7 @@ public final class JpegSynchronizationUtil {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						MainController.hideSaveIcon();
+						MainController.setSaveIconVisibility(false);
 					}
 				});
 			}

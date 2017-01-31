@@ -4,8 +4,8 @@
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
 	-fx-alignment: center;
-    -fx-border-insets: 1px;
-    -fx-background-insets: 1px;
+    -fx-border-insets: 1.0px;
+    -fx-background-insets: 1.0px;
 }
 
 .button:pressed {
@@ -21,13 +21,32 @@
 	-fx-font-family: "Arial Narrow";
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#61A2B1, #2A5058);
-	-fx-padding: 6px;
-    -fx-border-insets: 1px;
-    -fx-background-insets: 1px;
+	-fx-padding: 6.0px;
+    -fx-border-insets: 1.0px;
+    -fx-background-insets: 1.0px;
 }
 
 .toggle-button:selected {
 	-fx-background-color: linear-gradient(#ffa265, #BF1600);
+}
+
+.pane-button {
+  -fx-background-image: url('../img/onepane.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-min-width: 24.0px;
+  -fx-max-width: 24.0mx;
+  -fx-min-height: 24.0px;
+  -fx-max-height: 24.0mx;
+  -fx-padding: 0.0px;
+    -fx-border-insets: 0.0px;
+    -fx-background-insets: 0.0px;
+}
+
+.pane-button:selected {
+  -fx-background-image: url('../img/twopane.png');
+  -fx-background-color: transparent;
 }
 
 .context-menu {

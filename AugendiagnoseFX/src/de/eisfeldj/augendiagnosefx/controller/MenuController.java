@@ -146,24 +146,27 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void toggleSplitWindow(final ActionEvent event) {
-		if (!mMenuSplitWindow.isSelected() && MainController.hasDirtyBaseController()) {
+		boolean splitWindow = PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW);
+		mMenuSplitWindow.setSelected(!splitWindow);
+
+		if (splitWindow && MainController.hasDirtyBaseController()) {
 			ConfirmDialogListener listener = new ConfirmDialogListener() {
 				@Override
 				public void onDialogPositiveClick() {
-					doToggleSplitWindow(mMenuSplitWindow.isSelected());
+					doToggleSplitWindow(false);
 				}
 
 				@Override
 				public void onDialogNegativeClick() {
 					// revert
-					mMenuSplitWindow.setSelected(!mMenuSplitWindow.isSelected());
+					mMenuSplitWindow.setSelected(true);
 				}
 			};
 			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
 					ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
 		}
 		else {
-			doToggleSplitWindow(mMenuSplitWindow.isSelected());
+			doToggleSplitWindow(!splitWindow);
 		}
 	}
 
@@ -174,6 +177,7 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	private void doToggleSplitWindow(final boolean split) {
 		PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, split);
+		MainController.getInstance().setPaneButtonStatus(split);
 		if (MainController.getInstance().hasClosablePage()) {
 			if (split) {
 				MainController.getInstance().setSplitPane(FxmlConstants.FXML_DISPLAY_PHOTOS);

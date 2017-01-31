@@ -9,6 +9,7 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
+import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 import javafx.event.ActionEvent;
@@ -20,10 +21,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 
 /**
  * The controller of the main window.
@@ -52,6 +56,12 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	@FXML
 	private HBox mMenuButtons;
+
+	/**
+	 * The onepane/twopane button in the menu bar.
+	 */
+	@FXML
+	private ToggleButton mPaneButton;
 
 	/**
 	 * The close button in the menu bar.
@@ -124,6 +134,7 @@ public class MainController extends BaseController implements Initializable {
 		if (initialFill != null) {
 			FxmlUtil.displaySubpage(initialFill, 1, false);
 		}
+
 		refreshSubPagesOnResize();
 	}
 
@@ -170,7 +181,19 @@ public class MainController extends BaseController implements Initializable {
 		for (BaseController controller : controllers2) {
 			addSubPage(controller, 0, true);
 		}
+
 		refreshSubPagesOnResize();
+	}
+
+	/**
+	 * Handler for pane button.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void toggleSplitWindow(final ActionEvent event) {
+		MenuController.getInstance().toggleSplitWindow(event);
 	}
 
 	/**
@@ -190,6 +213,8 @@ public class MainController extends BaseController implements Initializable {
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		mBodies = new StackPane[] {mBody};
+		mPaneButton.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW));
+
 	}
 
 	/**
@@ -318,6 +343,7 @@ public class MainController extends BaseController implements Initializable {
 
 			mCloseButton.setVisible(true);
 			mCloseButton.setOnAction(mCloseHandlerList.get(mCloseHandlerList.size() - 1));
+			mPaneButton.setVisible(true);
 		}
 	}
 
@@ -342,6 +368,7 @@ public class MainController extends BaseController implements Initializable {
 		else {
 			MenuController.getInstance().setMenuClose(false, null);
 			mCloseButton.setVisible(false);
+			mPaneButton.setVisible(false);
 		}
 	}
 
@@ -376,20 +403,16 @@ public class MainController extends BaseController implements Initializable {
 		mCloseHandlerList.clear();
 		MenuController.getInstance().setMenuClose(false, null);
 		mCloseButton.setVisible(false);
+		mPaneButton.setVisible(false);
 	}
 
 	/**
-	 * Show the save icon.
+	 * Set the save icon visibility.
+	 *
+	 * @param visible the target visibility
 	 */
-	public static void showSaveIcon() {
-		getInstance().mImageSave.setVisible(true);
-	}
-
-	/**
-	 * Hide the save icon.
-	 */
-	public static void hideSaveIcon() {
-		getInstance().mImageSave.setVisible(false);
+	public static void setSaveIconVisibility(final boolean visible) {
+		getInstance().mImageSave.setVisible(visible);
 	}
 
 	/**
@@ -404,6 +427,15 @@ public class MainController extends BaseController implements Initializable {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Set the status of the pane button.
+	 *
+	 * @param twopane true if it should display twopane icon.
+	 */
+	public void setPaneButtonStatus(final boolean twopane) {
+		mPaneButton.setSelected(twopane);
 	}
 
 }
