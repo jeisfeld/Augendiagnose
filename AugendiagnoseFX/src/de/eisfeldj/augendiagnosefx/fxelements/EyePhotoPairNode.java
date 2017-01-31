@@ -11,7 +11,9 @@ import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -94,6 +96,22 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 
 		mImageViewRight.setImageView(getImageView(pair.getRightEye()));
 		mImageViewLeft.setImageView(getImageView(pair.getLeftEye()));
+
+		mLabelDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent event) {
+				if (MainController.getInstance().isSplitPane()) {
+					return;
+				}
+				MainController.getInstance().setSplitPane(true);
+				DisplayImageController controllerRight =
+						(DisplayImageController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW, 0, true);
+				controllerRight.setEyePhoto(pair.getRightEye());
+				DisplayImageController controllerLeft =
+						(DisplayImageController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_NARROW, 1, false);
+				controllerLeft.setEyePhoto(pair.getLeftEye());
+			}
+		});
 	}
 
 	/**

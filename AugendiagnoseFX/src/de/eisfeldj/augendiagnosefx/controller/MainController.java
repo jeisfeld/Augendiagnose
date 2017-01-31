@@ -10,7 +10,6 @@ import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.Logger;
-import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
 import javafx.event.ActionEvent;
@@ -103,6 +102,9 @@ public class MainController extends BaseController implements Initializable {
 	 *            If true, then split pane is set, otherwise single pane is set.
 	 */
 	public final void setSplitPane(final boolean newIsSplitPane) {
+		if (newIsSplitPane == mIsSplitPane) {
+			return;
+		}
 		mIsSplitPane = newIsSplitPane;
 
 		if (isSplitPane()) {
@@ -261,8 +263,7 @@ public class MainController extends BaseController implements Initializable {
 		mSubPageRegistry.remove(controller);
 		disableClose(index);
 
-		if (PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SHOW_SPLIT_WINDOW)
-				&& MainController.getInstance().isSplitPane() && !hasClosablePage()) {
+		if (MainController.getInstance().isSplitPane() && !hasClosablePage()) {
 			MainController.getInstance().setSplitPane(false);
 		}
 
