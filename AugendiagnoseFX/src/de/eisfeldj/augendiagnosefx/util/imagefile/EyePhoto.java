@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +76,7 @@ public class EyePhoto {
 	/**
 	 * The list of eye photos having a cached image.
 	 */
-	private static List<EyePhoto> mCachedEyePhotos = new ArrayList<>();
+	private static List<WeakReference<EyePhoto>> mCachedEyePhotos = new ArrayList<>();
 
 	/**
 	 * Create the EyePhoto, giving a filename.
@@ -378,39 +379,6 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Calculate a bitmap of this photo and store it for later retrieval.
-	 *
-	 * @param resolution
-	 *            Indicator of the resolution in which the image should be returned.
-	 */
-	public final synchronized void precalculateImage(final Resolution resolution) {
-		if (mCachedThumbnail == null) {
-			mCachedThumbnail = ImageUtil.getImage(getFile(), Resolution.THUMB);
-		}
-		if (resolution == Resolution.NORMAL) {
-			if (mCachedImage == null) {
-				mCachedImage = ImageUtil.getImage(getFile(), Resolution.NORMAL);
-				synchronized (mCachedEyePhotos) {
-					mCachedEyePhotos.add(this);
-					if (mCachedEyePhotos.size() > MAX_IMAGE_CACHE) {
-						mCachedEyePhotos.get(0).mCachedImage = null;
-						mCachedEyePhotos.remove(0);
-					}
-				}
-			}
-			else {
-				synchronized (mCachedEyePhotos) {
-					int index = mCachedEyePhotos.indexOf(this);
-					if (index >= 0) {
-						mCachedEyePhotos.remove(index);
-						mCachedEyePhotos.add(this);
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Return an Image of this photo.
 	 *
 	 * @param resolution
@@ -418,13 +386,45 @@ public class EyePhoto {
 	 * @return the Image
 	 */
 	public final Image getImage(final Resolution resolution) {
-		precalculateImage(resolution);
-
 		switch (resolution) {
 		case THUMB:
+			if (mCachedThumbnail == null) {
+				mCachedThumbnail = ImageUtil.getImage(getFile(), Resolution.THUMB);
+			}
 			return mCachedThumbnail;
 		case NORMAL:
-			return mCachedImage;
+			Image result = mCachedImage;
+			if (result == null) {
+				result = ImageUtil.getImage(getFile(), Resolution.NORMAL);
+				synchronized (mCachedEyePhotos) {
+					mCachedImage = result;
+					mCachedEyePhotos.add(new WeakReference<>(this));
+					// Ensure that not too many images are cached
+					if (mCachedEyePhotos.size() > MAX_IMAGE_CACHE) {
+						EyePhoto firstInList = mCachedEyePhotos.get(0).get();
+						if (firstInList != null) {
+							firstInList.mCachedImage = null;
+						}
+						mCachedEyePhotos.remove(0);
+					}
+				}
+			}
+			else {
+				synchronized (mCachedEyePhotos) {
+					int index = -1;
+					for (int i = 0; i < mCachedEyePhotos.size(); i++) {
+						if (mCachedEyePhotos.get(i).get() == this) {
+							index = i;
+							break;
+						}
+					}
+					if (index >= 0) {
+						mCachedEyePhotos.remove(index);
+						mCachedEyePhotos.add(new WeakReference<>(this));
+					}
+				}
+			}
+			return result;
 		case FULL:
 			// Full size image is not cached.
 			return ImageUtil.getImage(getFile(), Resolution.FULL);
