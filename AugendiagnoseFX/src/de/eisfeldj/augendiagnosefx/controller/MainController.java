@@ -280,7 +280,7 @@ public class MainController extends BaseController implements Initializable {
 			mSubPageRegistry.add(controller);
 		}
 		else {
-			position = unclosablePages();
+			position = unclosablePagesCount();
 			mSubPageRegistry.add(position, controller);
 		}
 
@@ -394,7 +394,7 @@ public class MainController extends BaseController implements Initializable {
 	 * @return true if there is a page that can be closed.
 	 */
 	public final boolean hasClosablePage() {
-		return mSubPageRegistry.size() > unclosablePages();
+		return mSubPageRegistry.size() > unclosablePagesCount();
 	}
 
 	/**
@@ -402,7 +402,7 @@ public class MainController extends BaseController implements Initializable {
 	 *
 	 * @return the number of unclosable pages.
 	 */
-	private int unclosablePages() {
+	private int unclosablePagesCount() {
 		int counter = 0;
 		for (BaseController controller : mSubPageRegistry) {
 			if (!controller.isCloseable()) {

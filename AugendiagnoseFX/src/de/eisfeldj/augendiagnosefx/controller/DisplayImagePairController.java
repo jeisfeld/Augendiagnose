@@ -44,6 +44,13 @@ public class DisplayImagePairController extends BaseController implements Initia
 	public final void initialize(final URL location, final ResourceBundle resources) {
 	}
 
+	@Override
+	public final void close() {
+		mControllerRight.close();
+		mControllerLeft.close();
+		super.close();
+	}
+
 	/**
 	 * Setter for the eye photo pair. Initializes the view.
 	 *

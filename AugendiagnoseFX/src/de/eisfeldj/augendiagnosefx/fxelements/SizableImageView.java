@@ -277,7 +277,6 @@ public class SizableImageView extends ScrollPane {
 		this.mEyePhoto = eyePhoto;
 
 		Image image = eyePhoto.getImage(Resolution.NORMAL);
-
 		if (image.getProgress() == 1) {
 			// image is already loaded from the start.
 			Platform.runLater(new Runnable() {

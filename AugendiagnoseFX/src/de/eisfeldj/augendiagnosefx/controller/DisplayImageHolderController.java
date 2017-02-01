@@ -50,6 +50,12 @@ public class DisplayImageHolderController extends BaseController implements Init
 		mBody.getChildren().add(mController.getRoot());
 	}
 
+	@Override
+	public final void close() {
+		mController.close();
+		super.close();
+	}
+
 	/**
 	 * Checks if narrow display is required.
 	 *

@@ -27,7 +27,7 @@ public class EyePhoto {
 	/**
 	 * The maximum size of the image cache.
 	 */
-	private static final int MAX_IMAGE_CACHE = 3;
+	private static final int MAX_IMAGE_CACHE = 4;
 
 	/**
 	 * Indicator if the file has already a formatted name.
