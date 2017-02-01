@@ -1,7 +1,9 @@
 package de.eisfeldj.augendiagnosefx.util.imagefile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import de.eisfeldj.augendiagnosefx.util.DateUtil;
@@ -9,6 +11,7 @@ import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
+
 import javafx.scene.image.Image;
 
 /**
@@ -19,6 +22,10 @@ public class EyePhoto {
 	 * The date format used for the file name.
 	 */
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
+	/**
+	 * The maximum size of the image cache.
+	 */
+	private static final int MAX_IMAGE_CACHE = 3;
 
 	/**
 	 * Indicator if the file has already a formatted name.
@@ -64,6 +71,11 @@ public class EyePhoto {
 	 * A cache of the thumbnail.
 	 */
 	private Image mCachedThumbnail;
+
+	/**
+	 * The list of eye photos having a cached image.
+	 */
+	private static List<EyePhoto> mCachedEyePhotos = new ArrayList<>();
 
 	/**
 	 * Create the EyePhoto, giving a filename.
@@ -375,8 +387,26 @@ public class EyePhoto {
 		if (mCachedThumbnail == null) {
 			mCachedThumbnail = ImageUtil.getImage(getFile(), Resolution.THUMB);
 		}
-		if (mCachedImage == null && resolution == Resolution.NORMAL) {
-			mCachedImage = ImageUtil.getImage(getFile(), Resolution.NORMAL);
+		if (resolution == Resolution.NORMAL) {
+			if (mCachedImage == null) {
+				mCachedImage = ImageUtil.getImage(getFile(), Resolution.NORMAL);
+				synchronized (mCachedEyePhotos) {
+					mCachedEyePhotos.add(this);
+					if (mCachedEyePhotos.size() > MAX_IMAGE_CACHE) {
+						mCachedEyePhotos.get(0).mCachedImage = null;
+						mCachedEyePhotos.remove(0);
+					}
+				}
+			}
+			else {
+				synchronized (mCachedEyePhotos) {
+					int index = mCachedEyePhotos.indexOf(this);
+					if (index >= 0) {
+						mCachedEyePhotos.remove(index);
+						mCachedEyePhotos.add(this);
+					}
+				}
+			}
 		}
 	}
 
