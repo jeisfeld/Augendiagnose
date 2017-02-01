@@ -12,11 +12,13 @@ import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
@@ -126,14 +128,22 @@ public class MainController extends BaseController implements Initializable {
 
 		mBodies = new StackPane[] {body1, body2, mBody};
 
-		// retain old body as left pane.
-		body1.getChildren().addAll(mBody.getChildren());
-		mBody.getChildren().clear();
-		mBody.getChildren().add(splitPane);
-
 		if (initialFill != null) {
 			FxmlUtil.displaySubpage(initialFill, 1, false);
 		}
+
+		// put lowest two elements to left pane.
+		ObservableList<Node> children = mBody.getChildren();
+		if (children.size() > 0) {
+			body1.getChildren().addAll(children.subList(0, Math.min(2, children.size())));
+		}
+		// put other elements to right pane.
+		if (children.size() > 0) {
+			body2.getChildren().addAll(children);
+		}
+
+		children.clear();
+		children.add(splitPane);
 
 		refreshSubPagesOnResize();
 	}
@@ -149,36 +159,37 @@ public class MainController extends BaseController implements Initializable {
 
 		mBody.getChildren().clear();
 
-		List<BaseController> controllers0 = new ArrayList<>();
-		List<BaseController> controllers1 = new ArrayList<>();
-		List<BaseController> controllers2 = new ArrayList<>();
-		for (int i = mSubPageRegistry.size() - 1; i >= 0; i--) {
-			BaseController controller = mSubPageRegistry.get(i);
+		List<BaseController> controllersUncloseable = new ArrayList<>();
+		List<BaseController> controllersPane0 = new ArrayList<>();
+		List<BaseController> controllersPane1 = new ArrayList<>();
+		for (BaseController controller : mSubPageRegistry) {
 			if (controller.getPaneIndex() == 0) {
 				if (controller.isCloseable()) {
-					controllers1.add(controller);
+					controllersPane0.add(controller);
 				}
 				else {
-					controllers0.add(controller);
+					controllersUncloseable.add(controller);
 				}
 			}
 			else {
 				if (controller.isCloseable()) {
-					controllers2.add(controller);
+					controllersPane1.add(controller);
 				}
 			}
-			removeSubpage(controller);
+		}
+		for (int i = mSubPageRegistry.size() - 1; i >= 0; i--) {
+			removeSubpage(mSubPageRegistry.get(i));
 		}
 
 		mBodies = new StackPane[] {mBody};
 
-		for (BaseController controller : controllers0) {
+		for (BaseController controller : controllersUncloseable) {
 			addSubPage(controller, 0, false);
 		}
-		for (BaseController controller : controllers1) {
+		for (BaseController controller : controllersPane0) {
 			addSubPage(controller, 0, true);
 		}
-		for (BaseController controller : controllers2) {
+		for (BaseController controller : controllersPane1) {
 			addSubPage(controller, 0, true);
 		}
 
