@@ -908,6 +908,7 @@ public class DisplayImageController extends BaseController implements Initializa
 		mTxtImageComment.setEditable(controller.mTxtImageComment.isEditable());
 		mBtnEditComment.setSelected(controller.mBtnEditComment.isSelected());
 		mClarityButton.setSelected(controller.mClarityButton.isSelected());
+		setDirty(controller.isDirty());
 
 		mDisplayImageView.setImage(metadata, controller.mDisplayImageView.getImageView().getImage());
 		initializeSliders();

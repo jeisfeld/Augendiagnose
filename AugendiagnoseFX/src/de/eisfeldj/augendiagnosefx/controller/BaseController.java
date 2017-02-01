@@ -123,7 +123,8 @@ public abstract class BaseController implements Controller {
 	 *
 	 * @return true if the controller has data pending for save.
 	 */
-	public final boolean isDirty() {
+	// OVERRIDABLE
+	public boolean isDirty() {
 		return mIsDirty;
 	}
 

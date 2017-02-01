@@ -37,6 +37,12 @@ public class DisplayImageHolderController extends BaseController implements Init
 	}
 
 	@Override
+	public final boolean isDirty() {
+		return mController.isDirty();
+	}
+
+
+	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		mIsNarrow = requiresNarrow();
 		String fxmlFile = mIsNarrow ? FxmlConstants.FXML_DISPLAY_IMAGE_NARROW : FxmlConstants.FXML_DISPLAY_IMAGE_WIDE;

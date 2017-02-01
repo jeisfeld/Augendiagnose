@@ -160,6 +160,7 @@ public class MenuController extends BaseController implements Initializable {
 				public void onDialogNegativeClick() {
 					// revert
 					mMenuSplitWindow.setSelected(true);
+					MainController.getInstance().setPaneButtonStatus(true);
 				}
 			};
 			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
