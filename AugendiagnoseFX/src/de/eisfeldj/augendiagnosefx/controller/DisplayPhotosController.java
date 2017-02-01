@@ -303,7 +303,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		}
 
 		for (File f : files) {
-			EyePhoto eyePhoto = new EyePhoto(f);
+			EyePhoto eyePhoto = EyePhoto.fromFile(f);
 
 			if (eyePhoto.isFormatted()) {
 				Date date = eyePhoto.getDate();

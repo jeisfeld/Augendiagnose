@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,17 +77,14 @@ public class EyePhoto {
 	/**
 	 * The list of eye photos having a cached image.
 	 */
-	private static List<WeakReference<EyePhoto>> mCachedEyePhotos = new ArrayList<>();
+	private static final List<WeakReference<EyePhoto>> CACHED_EYE_PHOTOS = new ArrayList<>();
 
 	/**
-	 * Create the EyePhoto, giving a filename.
+	 * A map from path to EyePhoto objects - for reuse.
 	 *
-	 * @param filename
-	 *            the file name.
+	 * <p>Note: WeakHashMap cannot be used, as the garbage collection should be dependent on values, not on keys.
 	 */
-	public EyePhoto(final String filename) {
-		this(new File(filename));
-	}
+	private static final HashMap<String, WeakReference<EyePhoto>> EYE_PHOTO_MAP = new HashMap<>();
 
 	/**
 	 * Create the EyePhoto, giving a file resource.
@@ -107,27 +105,24 @@ public class EyePhoto {
 	}
 
 	/**
-	 * Create the EyePhoto, giving details.
+	 * Get an EyePhoto, giving a file resource (returning an existing instance if available).
 	 *
-	 * @param path
-	 *            The file path
-	 * @param name
-	 *            The person name
-	 * @param date
-	 *            The date
-	 * @param rightLeft
-	 *            right or left eye?
-	 * @param suffix
-	 *            File suffix (".jpg")
+	 * @param file The file.
+	 * @return The EyePhoto.
 	 */
-	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
-			final String suffix) {
-		setPath(path);
-		setPersonName(name);
-		setDate(date);
-		setRightLeft(rightLeft);
-		setSuffix(suffix);
-		mFormattedName = true;
+	public static EyePhoto fromFile(final File file) {
+		synchronized (EYE_PHOTO_MAP) {
+			EyePhoto eyePhoto = null;
+			WeakReference<EyePhoto> eyePhotoReference = EYE_PHOTO_MAP.get(file.getAbsolutePath());
+			if (eyePhotoReference != null) {
+				eyePhoto = eyePhotoReference.get();
+			}
+			if (eyePhoto == null) {
+				eyePhoto = new EyePhoto(file);
+				EYE_PHOTO_MAP.put(file.getAbsolutePath(), new WeakReference<>(eyePhoto));
+			}
+			return eyePhoto;
+		}
 	}
 
 	/**
@@ -396,31 +391,31 @@ public class EyePhoto {
 			Image result = mCachedImage;
 			if (result == null) {
 				result = ImageUtil.getImage(getFile(), Resolution.NORMAL);
-				synchronized (mCachedEyePhotos) {
+				synchronized (CACHED_EYE_PHOTOS) {
 					mCachedImage = result;
-					mCachedEyePhotos.add(new WeakReference<>(this));
+					CACHED_EYE_PHOTOS.add(new WeakReference<>(this));
 					// Ensure that not too many images are cached
-					if (mCachedEyePhotos.size() > MAX_IMAGE_CACHE) {
-						EyePhoto firstInList = mCachedEyePhotos.get(0).get();
+					if (CACHED_EYE_PHOTOS.size() > MAX_IMAGE_CACHE) {
+						EyePhoto firstInList = CACHED_EYE_PHOTOS.get(0).get();
 						if (firstInList != null) {
 							firstInList.mCachedImage = null;
 						}
-						mCachedEyePhotos.remove(0);
+						CACHED_EYE_PHOTOS.remove(0);
 					}
 				}
 			}
 			else {
-				synchronized (mCachedEyePhotos) {
+				synchronized (CACHED_EYE_PHOTOS) {
 					int index = -1;
-					for (int i = 0; i < mCachedEyePhotos.size(); i++) {
-						if (mCachedEyePhotos.get(i).get() == this) {
+					for (int i = 0; i < CACHED_EYE_PHOTOS.size(); i++) {
+						if (CACHED_EYE_PHOTOS.get(i).get() == this) {
 							index = i;
 							break;
 						}
 					}
 					if (index >= 0) {
-						mCachedEyePhotos.remove(index);
-						mCachedEyePhotos.add(new WeakReference<>(this));
+						CACHED_EYE_PHOTOS.remove(index);
+						CACHED_EYE_PHOTOS.add(new WeakReference<>(this));
 					}
 				}
 			}
@@ -493,7 +488,7 @@ public class EyePhoto {
 	 * @return a clone (recreation) of this object having the same absolute path.
 	 */
 	public final EyePhoto cloneFromPath() {
-		return new EyePhoto(getAbsolutePath());
+		return new EyePhoto(new File(getAbsolutePath()));
 	}
 
 	/**
