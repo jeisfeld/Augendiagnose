@@ -52,7 +52,7 @@ public class DisplayImageHolderController extends BaseController implements Init
 
 	@Override
 	public final void close() {
-		mController.close();
+		mController.removeFromRegistry();
 		super.close();
 	}
 

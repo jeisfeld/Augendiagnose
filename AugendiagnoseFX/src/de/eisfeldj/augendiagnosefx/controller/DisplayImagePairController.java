@@ -46,8 +46,8 @@ public class DisplayImagePairController extends BaseController implements Initia
 
 	@Override
 	public final void close() {
-		mControllerRight.close();
-		mControllerLeft.close();
+		mControllerRight.removeFromRegistry();
+		mControllerLeft.removeFromRegistry();
 		super.close();
 	}
 

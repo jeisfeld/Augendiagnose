@@ -62,6 +62,13 @@ public abstract class BaseController implements Controller {
 	}
 
 	/**
+	 * Remove the controller from the registry.
+	 */
+	protected void removeFromRegistry() {
+		mControllerRegistry.remove(this);
+	}
+
+	/**
 	 * Refresh the controller on resize of the window.
 	 */
 	// OVERRIDABLE
