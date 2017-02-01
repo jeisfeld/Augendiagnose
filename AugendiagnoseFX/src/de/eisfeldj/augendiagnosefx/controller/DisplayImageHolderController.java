@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
  */
 public class DisplayImageHolderController extends BaseController implements Initializable {
 	/**
-	 * The mController which is currently operated.
+	 * The controller which is currently operated.
 	 */
 	private DisplayImageController mController;
 	/**
@@ -60,6 +60,12 @@ public class DisplayImageHolderController extends BaseController implements Init
 				|| Application.getScene().getWidth() <= Application.getScene().getHeight();
 	}
 
+	/**
+	 * Setter for the eye photo. Initializes the view.
+	 *
+	 * @param eyePhoto
+	 *            The eye photo.
+	 */
 	public final void setEyePhoto(final EyePhoto eyePhoto) {
 		mController.setEyePhoto(eyePhoto);
 	}

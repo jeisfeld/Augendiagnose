@@ -715,8 +715,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	@FXML
 	public final void displayInFullWindow(final ActionEvent event) {
 		DisplayImageFullController controller =
-				(DisplayImageFullController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_FULL,
-						MainController.getInstance().isSplitPane() ? 2 : 0, true);
+				(DisplayImageFullController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_FULL, -1, true);
 
 		if (isInitialized()) {
 			JpegMetadata metadata = mEyePhoto.getImageMetadata();

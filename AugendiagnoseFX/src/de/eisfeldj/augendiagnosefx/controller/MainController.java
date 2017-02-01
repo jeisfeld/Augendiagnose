@@ -254,8 +254,13 @@ public class MainController extends BaseController implements Initializable {
 	 *            Indicator if this is a closable page.
 	 */
 	public final void addSubPage(final BaseController controller, final int paneIndex, final boolean isCloseable) {
-		mBodies[paneIndex].getChildren().add(controller.getRoot());
-		controller.setPaneIndex(paneIndex);
+		int effectivePaneIndex = paneIndex;
+		if (paneIndex == -1) {
+			effectivePaneIndex = isSplitPane() ? 2 : 0;
+		}
+
+		mBodies[effectivePaneIndex].getChildren().add(controller.getRoot());
+		controller.setPaneIndex(effectivePaneIndex);
 		controller.setCloseable(isCloseable);
 
 		int position;

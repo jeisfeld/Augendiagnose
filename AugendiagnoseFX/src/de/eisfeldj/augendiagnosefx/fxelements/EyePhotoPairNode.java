@@ -3,6 +3,7 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageHolderController;
+import de.eisfeldj.augendiagnosefx.controller.DisplayImagePairController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
@@ -102,13 +103,10 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				if (MainController.getInstance().isSplitPane()) {
 					return;
 				}
-				MainController.getInstance().setSplitPane(null);
-				DisplayImageHolderController controllerRight =
-						(DisplayImageHolderController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_HOLDER, 0, true);
-				controllerRight.setEyePhoto(pair.getRightEye());
-				DisplayImageHolderController controllerLeft =
-						(DisplayImageHolderController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_HOLDER, 1, false);
-				controllerLeft.setEyePhoto(pair.getLeftEye());
+
+				DisplayImagePairController controller =
+						(DisplayImagePairController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_PAIR, -1, true);
+				controller.setEyePhotos(pair);
 			}
 		});
 	}

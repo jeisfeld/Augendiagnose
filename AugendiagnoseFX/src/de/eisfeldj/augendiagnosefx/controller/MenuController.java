@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -146,38 +145,9 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void toggleSplitWindow(final ActionEvent event) {
-		boolean splitWindow = PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW);
-		mMenuSplitWindow.setSelected(!splitWindow);
-
-		if (splitWindow && MainController.hasDirtyBaseController()) {
-			ConfirmDialogListener listener = new ConfirmDialogListener() {
-				@Override
-				public void onDialogPositiveClick() {
-					doToggleSplitWindow(false);
-				}
-
-				@Override
-				public void onDialogNegativeClick() {
-					// revert
-					mMenuSplitWindow.setSelected(true);
-					MainController.getInstance().setPaneButtonStatus(true);
-				}
-			};
-			DialogUtil.displayConfirmationMessage(listener, ResourceConstants.BUTTON_OK,
-					ResourceConstants.MESSAGE_CONFIRM_EXIT_UNSAVED);
-		}
-		else {
-			doToggleSplitWindow(!splitWindow);
-		}
-	}
-
-	/**
-	 * Switch between single window and split window.
-	 *
-	 * @param split flag indicating if there should be split window.
-	 */
-	private void doToggleSplitWindow(final boolean split) {
+		boolean split = !PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW);
 		PreferenceUtil.setPreference(KEY_SHOW_SPLIT_WINDOW, split);
+		mMenuSplitWindow.setSelected(split);
 		MainController.getInstance().setPaneButtonStatus(split);
 		if (MainController.getInstance().hasClosablePage()) {
 			if (split) {

@@ -1,0 +1,11 @@
+package fxml
+
+import de.eisfeldj.augendiagnosefx.controller.DisplayImagePairController
+import javafx.scene.control.SplitPane
+
+component Main controlledby DisplayImagePairController resourcefile "../bundles/Strings.properties" styledwith
+"../css/application.css" {
+	SplitPane id mBody {
+		orientation : "HORIZONTAL"
+	}
+}
