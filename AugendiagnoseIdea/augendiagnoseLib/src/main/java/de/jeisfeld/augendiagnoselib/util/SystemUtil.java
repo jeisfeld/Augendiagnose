@@ -1,8 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.util.Arrays;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -18,8 +15,9 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import java.util.Locale;
+
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class for getting system information.
@@ -178,17 +176,6 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Retrieve the unique id of the hardware device. Requires android.permission.READ_PHONE_STATE.
-	 *
-	 * @return The device id.
-	 */
-	private static String getDeviceId() {
-		TelephonyManager tm =
-				(TelephonyManager) Application.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
-		return tm.getDeviceId();
-	}
-
-	/**
 	 * Get ISO 3166-1 alpha-2 country code for this device (or null if not available).
 	 *
 	 * @return country code or null
@@ -227,21 +214,5 @@ public final class SystemUtil {
 				(ActivityManager) Application.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
 
 		return manager.getLargeMemoryClass();
-	}
-
-	/**
-	 * Get information if this is one of JE's devices.
-	 *
-	 * @return true if one of JE's devices.
-	 */
-	public static boolean isJeDevice() {
-		String[] jeDevices = Application.getAppContext().getResources().getStringArray(R.array.private_je_devices);
-
-		try {
-			return Arrays.asList(jeDevices).contains(getDeviceId());
-		}
-		catch (SecurityException e) {
-			return false;
-		}
 	}
 }

@@ -1,13 +1,12 @@
 package de.jeisfeld.augendiagnoselib;
 
-import java.util.concurrent.TimeUnit;
-
 import android.app.Activity;
+
+import java.util.concurrent.TimeUnit;
 
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 
 /**
  * Utility interface for Settings which are application specific.
@@ -24,7 +23,7 @@ public abstract class ApplicationSettings {
 		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
 		boolean hasPremiumPack = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack);
 		boolean hasUnlockerApp = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app);
-		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || EncryptionUtil.validateUserKey(userKey) || SystemUtil.isJeDevice();
+		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || EncryptionUtil.validateUserKey(userKey);
 
 		if (isAuthorizedUser) {
 			return AuthorizationLevel.FULL_ACCESS;
@@ -40,5 +39,5 @@ public abstract class ApplicationSettings {
 	 *
 	 * @param triggeringActivity the triggering activity.
 	 */
-	public abstract void startApplication(final Activity triggeringActivity);
+	public abstract void startApplication(Activity triggeringActivity);
 }
