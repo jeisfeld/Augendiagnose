@@ -309,6 +309,8 @@ public class MainController extends BaseController implements Initializable {
 				}
 			}
 		}, position);
+
+		updatePaneButtonVisibility();
 	}
 
 	/**
@@ -322,6 +324,7 @@ public class MainController extends BaseController implements Initializable {
 		int index = mSubPageRegistry.indexOf(controller);
 		mSubPageRegistry.remove(controller);
 		disableClose(index);
+		updatePaneButtonVisibility();
 
 		if (MainController.getInstance().isSplitPane() && !hasClosablePage()) {
 			MainController.getInstance().setSinglePane();
@@ -337,6 +340,7 @@ public class MainController extends BaseController implements Initializable {
 		}
 		mSubPageRegistry.clear();
 		disableAllClose();
+		updatePaneButtonVisibility();
 	}
 
 	/**
@@ -359,7 +363,6 @@ public class MainController extends BaseController implements Initializable {
 
 			mCloseButton.setVisible(true);
 			mCloseButton.setOnAction(mCloseHandlerList.get(mCloseHandlerList.size() - 1));
-			mPaneButton.setVisible(true);
 		}
 	}
 
@@ -384,7 +387,6 @@ public class MainController extends BaseController implements Initializable {
 		else {
 			MenuController.getInstance().setMenuClose(false, null);
 			mCloseButton.setVisible(false);
-			mPaneButton.setVisible(false);
 		}
 	}
 
@@ -419,7 +421,6 @@ public class MainController extends BaseController implements Initializable {
 		mCloseHandlerList.clear();
 		MenuController.getInstance().setMenuClose(false, null);
 		mCloseButton.setVisible(false);
-		mPaneButton.setVisible(false);
 	}
 
 	/**
@@ -450,8 +451,19 @@ public class MainController extends BaseController implements Initializable {
 	 *
 	 * @param twopane true if it should display twopane icon.
 	 */
-	public void setPaneButtonStatus(final boolean twopane) {
+	protected void setPaneButtonStatus(final boolean twopane) {
 		mPaneButton.setSelected(twopane);
+	}
+
+	/**
+	 * Update the visibility of the pane button.
+	 */
+	private void updatePaneButtonVisibility() {
+		boolean enabled = BaseController.getControllers(DisplayImagePairController.class).size() == 0
+				&& BaseController.getControllers(DisplayImageFullController.class).size() == 0;
+
+		mPaneButton.setVisible(enabled);
+		MenuController.getInstance().setSplitWindowEnabled(enabled);
 	}
 
 }

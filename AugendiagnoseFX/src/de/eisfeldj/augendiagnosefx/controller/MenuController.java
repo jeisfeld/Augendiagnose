@@ -160,6 +160,15 @@ public class MenuController extends BaseController implements Initializable {
 	}
 
 	/**
+	 * Set the enablement of the splitWindow property.
+	 *
+	 * @param enabled the target status of the enablement.
+	 */
+	protected void setSplitWindowEnabled(final boolean enabled) {
+		mMenuSplitWindow.setDisable(!enabled);
+	}
+
+	/**
 	 * Handler for menu entry "Online Help".
 	 *
 	 * @param event

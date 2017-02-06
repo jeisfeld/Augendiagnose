@@ -21,7 +21,8 @@ import javafx.scene.layout.VBox
 
 component DisplayImage controlledby DisplayImageController resourcefile "../bundles/Strings.properties" styledwith
 "../css/application.css" {
-	define ToggleGroup id overlayGroup GridPane id mDisplayImage {
+	define ToggleGroup id overlayGroup // 
+	GridPane id mDisplayImage {
 		styleClass : "displayImage",
 		alignment : "CENTER",
 

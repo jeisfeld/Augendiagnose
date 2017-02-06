@@ -27,7 +27,7 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 					},
 					ToggleButton id mPaneButton {
 						styleClass : "pane-button",
-						visible : false,
+						visible : true,
 						onAction : controllermethod toggleSplitWindow
 					},
 					Button id mCloseButton {
