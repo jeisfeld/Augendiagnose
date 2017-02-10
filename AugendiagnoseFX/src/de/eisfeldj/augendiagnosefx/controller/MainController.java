@@ -29,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_COMMENT_PANE;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SHOW_SPLIT_WINDOW;
 
 /**
@@ -64,6 +65,12 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	@FXML
 	private ToggleButton mPaneButton;
+
+	/**
+	 * The comment button in the menu bar.
+	 */
+	@FXML
+	private ToggleButton mCommentButton;
 
 	/**
 	 * The close button in the menu bar.
@@ -185,12 +192,15 @@ public class MainController extends BaseController implements Initializable {
 
 		for (BaseController controller : controllersUncloseable) {
 			addSubPage(controller, 0, false);
+			controller.addToRegistry();
 		}
 		for (BaseController controller : controllersPane0) {
 			addSubPage(controller, 0, true);
+			controller.addToRegistry();
 		}
 		for (BaseController controller : controllersPane1) {
 			addSubPage(controller, 0, true);
+			controller.addToRegistry();
 		}
 
 		refreshSubPagesOnResize();
@@ -205,6 +215,17 @@ public class MainController extends BaseController implements Initializable {
 	@FXML
 	public final void toggleSplitWindow(final ActionEvent event) {
 		MenuController.getInstance().toggleSplitWindow(event);
+	}
+
+	/**
+	 * Handler for comment button.
+	 *
+	 * @param event
+	 *            The action event.
+	 */
+	@FXML
+	public final void toggleCommentPane(final ActionEvent event) {
+		MenuController.getInstance().toggleCommentPane(event);
 	}
 
 	/**
@@ -225,7 +246,7 @@ public class MainController extends BaseController implements Initializable {
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		mBodies = new StackPane[] {mBody};
 		mPaneButton.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_SPLIT_WINDOW));
-
+		mCommentButton.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE));
 	}
 
 	/**
@@ -453,6 +474,24 @@ public class MainController extends BaseController implements Initializable {
 	 */
 	protected void setPaneButtonStatus(final boolean twopane) {
 		mPaneButton.setSelected(twopane);
+	}
+
+	/**
+	 * Set the status of the comment button.
+	 *
+	 * @param commentPane true if it should display active comment pane icon.
+	 */
+	protected void setCommentButtonStatus(final boolean commentPane) {
+		mCommentButton.setSelected(commentPane);
+	}
+
+	/**
+	 * Set the visibility of the comment button.
+	 *
+	 * @param visible true if it should be visible.
+	 */
+	protected void setCommentButtonVisibility(final boolean visible) {
+		mCommentButton.setVisible(visible);
 	}
 
 	/**

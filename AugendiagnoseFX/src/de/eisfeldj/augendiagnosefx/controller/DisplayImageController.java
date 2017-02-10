@@ -247,7 +247,7 @@ public class DisplayImageController extends BaseController implements Initializa
 	@Override
 	public final void initialize(final URL location, final ResourceBundle resources) {
 		try {
-			MenuController.getInstance().getMenuCommentPane().setDisable(false);
+			MenuController.getInstance().setCommentPaneMenuEnablement(true);
 			MenuController.getInstance().getMenuOverlayPane().setDisable(false);
 		}
 		catch (RuntimeException e) {
@@ -509,15 +509,6 @@ public class DisplayImageController extends BaseController implements Initializa
 			}
 		});
 
-	}
-
-	@Override
-	public final void close() {
-		super.close();
-		if (getControllers(DisplayImageController.class).size() == 0) {
-			MenuController.getInstance().getMenuCommentPane().setDisable(true);
-			MenuController.getInstance().getMenuOverlayPane().setDisable(true);
-		}
 	}
 
 	@Override

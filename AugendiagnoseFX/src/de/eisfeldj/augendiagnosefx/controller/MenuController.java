@@ -57,10 +57,6 @@ public class MenuController extends BaseController implements Initializable {
 	@FXML
 	private CheckMenuItem mMenuCommentPane;
 
-	public final CheckMenuItem getMenuCommentPane() {
-		return mMenuCommentPane;
-	}
-
 	/**
 	 * The Menu entry "Split window".
 	 */
@@ -117,10 +113,23 @@ public class MenuController extends BaseController implements Initializable {
 	 */
 	@FXML
 	public final void toggleCommentPane(final ActionEvent event) {
-		PreferenceUtil.setPreference(KEY_SHOW_COMMENT_PANE, mMenuCommentPane.isSelected());
+		boolean showComment = !PreferenceUtil.getPreferenceBoolean(KEY_SHOW_COMMENT_PANE);
+		PreferenceUtil.setPreference(KEY_SHOW_COMMENT_PANE, showComment);
+		mMenuCommentPane.setSelected(showComment);
 		for (DisplayImageController controller : getControllers(DisplayImageController.class)) {
-			controller.showCommentPane(mMenuCommentPane.isSelected());
+			controller.showCommentPane(showComment);
 		}
+		MainController.getInstance().setCommentButtonStatus(showComment);
+	}
+
+	/**
+	 * Set the enablement of the comment pane menu entry.
+	 *
+	 * @param enabled the enablement status.
+	 */
+	public final void setCommentPaneMenuEnablement(final boolean enabled) {
+		mMenuCommentPane.setDisable(!enabled);
+		MainController.getInstance().setCommentButtonVisibility(enabled);
 	}
 
 	/**

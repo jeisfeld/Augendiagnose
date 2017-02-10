@@ -10,7 +10,8 @@ import javafx.scene.image.ImageView
 import javafx.scene.image.Image
 import javafx.scene.control.ToggleButton
 
-component Main controlledby MainController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
+component Main controlledby MainController resourcefile "../bundles/Strings.properties" styledwith
+"../css/application.css" {
 	VBox id mMainPane {
 		StackPane {
 			alignment : "CENTER_RIGHT",
@@ -25,8 +26,13 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 						},
 						visible : false
 					},
+					ToggleButton id mCommentButton {
+						styleClass : "menu-toggle-button, comment-button",
+						visible : false,
+						onAction : controllermethod toggleCommentPane
+					},
 					ToggleButton id mPaneButton {
-						styleClass : "pane-button",
+						styleClass : "menu-toggle-button, pane-button",
 						visible : true,
 						onAction : controllermethod toggleSplitWindow
 					},

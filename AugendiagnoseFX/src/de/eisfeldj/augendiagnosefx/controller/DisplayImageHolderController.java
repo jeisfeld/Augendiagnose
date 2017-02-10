@@ -54,6 +54,10 @@ public class DisplayImageHolderController extends BaseController implements Init
 	public final void close() {
 		mController.removeFromRegistry();
 		super.close();
+		if (getControllers(DisplayImageHolderController.class).size() == 0) {
+			MenuController.getInstance().setCommentPaneMenuEnablement(false);
+			MenuController.getInstance().getMenuOverlayPane().setDisable(true);
+		}
 	}
 
 	/**

@@ -53,6 +53,15 @@ public abstract class BaseController implements Controller {
 	}
 
 	/**
+	 * Add the controller to the registry, if not yet there.
+	 */
+	protected void addToRegistry() {
+		if (!mControllerRegistry.contains(this)) {
+			mControllerRegistry.add(this);
+		}
+	}
+
+	/**
 	 * Close a controller, removing it from the registry.
 	 */
 	// OVERRIDABLE

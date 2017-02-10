@@ -30,23 +30,37 @@
 	-fx-background-color: linear-gradient(#ffa265, #BF1600);
 }
 
-.pane-button {
-  -fx-background-image: url('../img/onepane.png');
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: center;
-  -fx-background-color: transparent;
-  -fx-min-width: 24.0px;
-  -fx-max-width: 24.0px;
-  -fx-min-height: 24.0px;
-  -fx-max-height: 24.0px;
-  -fx-padding: 0.0px;
+.menu-toggle-button {
+    -fx-min-width: 24.0px;
+    -fx-max-width: 24.0px;
+    -fx-min-height: 24.0px;
+    -fx-max-height: 24.0px;
+    -fx-padding: 0.0px;
     -fx-border-insets: 0.0px;
     -fx-background-insets: 0.0px;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+}
+
+.menu-toggle-button:selected {
+    -fx-background-color: transparent;
+}
+
+.pane-button {
+    -fx-background-image: url('../img/onepane.png');
 }
 
 .pane-button:selected {
-  -fx-background-image: url('../img/twopane.png');
-  -fx-background-color: transparent;
+    -fx-background-image: url('../img/twopane.png');
+}
+
+.comment-button {
+    -fx-background-image: url('../img/comment.png');
+}
+
+.comment-button:selected {
+    -fx-background-image: url('../img/comment_inv.png');
 }
 
 .context-menu {

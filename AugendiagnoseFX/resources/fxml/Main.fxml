@@ -25,7 +25,8 @@
 						<Image url="@img/save.png"/> 
 					</image>
 				</ImageView>
-				<ToggleButton fx:id="mPaneButton" styleClass="pane-button" visible="true" onAction="#toggleSplitWindow"/> 
+				<ToggleButton fx:id="mCommentButton" styleClass="menu-toggle-button, comment-button" visible="false" onAction="#toggleCommentPane"/> 
+				<ToggleButton fx:id="mPaneButton" styleClass="menu-toggle-button, pane-button" visible="true" onAction="#toggleSplitWindow"/> 
 				<Button fx:id="mCloseButton" styleClass="imageButton" visible="false"> 
 					<graphic>
 						<ImageView> 
