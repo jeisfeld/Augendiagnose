@@ -48,11 +48,11 @@
 }
 
 .pane-button {
-    -fx-background-image: url('../img/onepane.png');
+    -fx-background-image: url('../img/twopane.png');
 }
 
 .pane-button:selected {
-    -fx-background-image: url('../img/twopane.png');
+    -fx-background-image: url('../img/twopane_selected.png');
 }
 
 .comment-button {
@@ -60,7 +60,7 @@
 }
 
 .comment-button:selected {
-    -fx-background-image: url('../img/comment_inv.png');
+    -fx-background-image: url('../img/comment_selected.png');
 }
 
 .context-menu {
