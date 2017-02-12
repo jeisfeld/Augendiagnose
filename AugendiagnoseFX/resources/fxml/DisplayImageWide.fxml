@@ -29,7 +29,8 @@
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<OverlayImageView fx:id="mDisplayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"> 
+	<Label fx:id="mNameLabel" styleClass="labelTitle" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/> 
+	<OverlayImageView fx:id="mDisplayImageView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES"> 
 		<contextMenu>
 			<ContextMenu> 
 				<items>
@@ -42,7 +43,7 @@
 			</ContextMenu>
 		</contextMenu>
 	</OverlayImageView>
-	<GridPane fx:id="mOverlayPane" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
+	<GridPane fx:id="mOverlayPane" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="1"> 
 		<VBox visible="true" managed="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"> 
 			<Label styleClass="labelPanes" text="%label_overlays"/> 
 			<ToggleButton fx:id="mBtnOverlayCircle" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
@@ -132,7 +133,7 @@
 		</ImageView>
 		<Slider fx:id="mSliderContrast" orientation="VERTICAL" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 	</GridPane>
-	<GridPane fx:id="mCommentPane" visible="true" managed="true" GridPane.columnIndex="2" GridPane.rowIndex="0"> 
+	<GridPane fx:id="mCommentPane" visible="true" managed="true" GridPane.columnIndex="2" GridPane.rowIndex="1"> 
 		<Label styleClass="labelPanes" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
 		<TextArea fx:id="mTxtImageComment" promptText="%hint_edit_comment" editable="false" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES"/> 
 		<ToggleButton fx:id="mBtnEditComment" text="%button_edit_comment" selected="false" alignment="BOTTOM_CENTER" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
@@ -145,6 +146,7 @@
 		<ColumnConstraints fx:id="mCommentConstraints" hgrow="SOMETIMES" percentWidth="20"/> 
 	</columnConstraints>
 	<rowConstraints>
+		<RowConstraints vgrow="NEVER"/> 
 		<RowConstraints vgrow="SOMETIMES"/> 
 	</rowConstraints>
 </GridPane>

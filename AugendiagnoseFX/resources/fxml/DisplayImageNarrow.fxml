@@ -30,7 +30,8 @@
 		<ToggleGroup fx:id="overlayGroup"/> 
 	</fx:define>
 
-	<OverlayImageView fx:id="mDisplayImageView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"> 
+	<Label fx:id="mNameLabel" styleClass="labelTitle" GridPane.columnIndex="0" GridPane.rowIndex="0"/> 
+	<OverlayImageView fx:id="mDisplayImageView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"> 
 		<contextMenu>
 			<ContextMenu> 
 				<items>
@@ -43,7 +44,7 @@
 			</ContextMenu>
 		</contextMenu>
 	</OverlayImageView>
-	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1"> 
+	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
 		<ImageView pickOnBounds="true" onMousePressed="#showOriginalSaturation" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
 				<Image url="@img/color_temperature.png"/> 
@@ -136,8 +137,8 @@
 			<Insets bottom="5" top="5"/> 
 		</padding>
 	</GridPane>
-	<GridPane fx:id="mCommentPane" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
-		<Label styleClass="labelComment" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
+	<GridPane fx:id="mCommentPane" GridPane.columnIndex="0" GridPane.rowIndex="3"> 
+		<Label styleClass="labelPanes" text="%label_comment" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP"/> 
 		<TextArea fx:id="mTxtImageComment" promptText="%hint_edit_comment" editable="false" prefWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"/> 
 		<ToggleButton fx:id="mBtnEditComment" text="%button_edit_comment" selected="false" onAction="#btnEditCommentPressed" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM"/> 
 		<columnConstraints>
@@ -146,6 +147,7 @@
 		</columnConstraints>
 	</GridPane>
 	<rowConstraints>
+		<RowConstraints vgrow="NEVER"/> 
 		<RowConstraints vgrow="SOMETIMES"/> 
 		<RowConstraints fx:id="mCommentConstraints" vgrow="NEVER"/> 
 		<RowConstraints fx:id="mCommentConstraints" vgrow="SOMETIMES" percentHeight="20"/> 

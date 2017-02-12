@@ -106,6 +106,12 @@
 	-fx-padding: 5.0;
 }
 
+.labelTitle {
+	-fx-font-weight: bold;
+	-fx-font-size: 14.0;
+	-fx-padding: 2 0 0 5;
+}
+
 #dialogHeading {
 	-fx-font-size: 18.0;
 	-fx-font-weight: bold;

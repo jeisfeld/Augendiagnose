@@ -123,16 +123,6 @@ public class MenuController extends BaseController implements Initializable {
 	}
 
 	/**
-	 * Set the enablement of the comment pane menu entry.
-	 *
-	 * @param enabled the enablement status.
-	 */
-	public final void setCommentPaneMenuEnablement(final boolean enabled) {
-		mMenuCommentPane.setDisable(!enabled);
-		MainController.getInstance().setCommentButtonVisibility(enabled);
-	}
-
-	/**
 	 * Handler for menu entry "Overlay pane".
 	 *
 	 * @param event
@@ -169,15 +159,6 @@ public class MenuController extends BaseController implements Initializable {
 	}
 
 	/**
-	 * Set the enablement of the splitWindow property.
-	 *
-	 * @param enabled the target status of the enablement.
-	 */
-	protected void setSplitWindowEnabled(final boolean enabled) {
-		mMenuSplitWindow.setDisable(!enabled);
-	}
-
-	/**
 	 * Handler for menu entry "Online Help".
 	 *
 	 * @param event
@@ -210,6 +191,25 @@ public class MenuController extends BaseController implements Initializable {
 	public final void displayAboutMessage(final ActionEvent event) {
 		DialogUtil.displayInfo(ResourceConstants.MESSAGE_INFO_APP_ABOUT,
 				VersioningUtil.CURRENT_VERSION.getVersionString());
+	}
+
+	/**
+	 * Set the enablement of the comment pane menu entry.
+	 *
+	 * @param enabled the enablement status.
+	 */
+	public final void setCommentPaneMenuEnablement(final boolean enabled) {
+		mMenuCommentPane.setDisable(!enabled);
+		MainController.getInstance().setCommentButtonVisibility(enabled);
+	}
+
+	/**
+	 * Set the enablement of the splitWindow property.
+	 *
+	 * @param enabled the target status of the enablement.
+	 */
+	protected void setSplitWindowEnabled(final boolean enabled) {
+		mMenuSplitWindow.setDisable(!enabled);
 	}
 
 	/**

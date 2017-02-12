@@ -7,7 +7,8 @@ import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 
-component Menu controlledby MenuController resourcefile "../bundles/Strings.properties" styledwith "../css/application.css" {
+component Menu controlledby MenuController resourcefile "../bundles/Strings.properties" styledwith
+"../css/application.css" {
 	MenuBar id mMenuBar {
 		styleClass : "menu",
 		menus : [

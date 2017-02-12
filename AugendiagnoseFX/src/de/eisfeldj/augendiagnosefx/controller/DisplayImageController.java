@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import de.eisfeldj.augendiagnosefx.fxelements.OverlayImageView;
 import de.eisfeldj.augendiagnosefx.fxelements.SizableImageView.MetadataPosition;
+import de.eisfeldj.augendiagnosefx.util.DateUtil;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
@@ -24,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Slider;
@@ -105,6 +107,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	 */
 	@FXML
 	private ConstraintsBase mOverlayConstraints;
+
+	/**
+	 * The label showing the image name.
+	 */
+	@FXML
+	private Label mNameLabel;
 
 	/**
 	 * The text field for the image comment.
@@ -784,6 +792,8 @@ public class DisplayImageController extends BaseController implements Initializa
 
 		enableOverlayButtons(metadata.hasOverlayPosition());
 
+		mNameLabel.setText(eyePhoto.getPersonName() + " - " + DateUtil.format(eyePhoto.getDate()) + " - " + eyePhoto.getRightLeft().getTitleSuffix());
+
 		mTxtImageComment.setText(metadata.getComment());
 	}
 
@@ -896,6 +906,7 @@ public class DisplayImageController extends BaseController implements Initializa
 
 		mTxtImageComment.setText(controller.mTxtImageComment.getText());
 		mTxtImageComment.setEditable(controller.mTxtImageComment.isEditable());
+		mNameLabel.setText(controller.mNameLabel.getText());
 		mBtnEditComment.setSelected(controller.mBtnEditComment.isSelected());
 		mClarityButton.setSelected(controller.mClarityButton.isSelected());
 		setDirty(controller.isDirty());

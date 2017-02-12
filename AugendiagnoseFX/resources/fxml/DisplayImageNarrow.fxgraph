@@ -29,6 +29,9 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 
 		rowConstraints : [
 			RowConstraints {
+				vgrow : "NEVER"
+			},
+			RowConstraints {
 				vgrow : "SOMETIMES"
 			},
 			RowConstraints id mCommentConstraints {
@@ -44,9 +47,14 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				hgrow : "SOMETIMES"
 			}
 		],
-		OverlayImageView id mDisplayImageView {
+		Label id mNameLabel {
 			static columnIndex : 0,
 			static rowIndex : 0,
+			styleClass : "labelTitle"
+		},
+		OverlayImageView id mDisplayImageView {
+			static columnIndex : 0,
+			static rowIndex : 1,
 			static halignment : "CENTER",
 			static valignment : "CENTER",
 			contextMenu : ContextMenu {
@@ -76,7 +84,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 		},
 		GridPane id mOverlayPane {
 			static columnIndex : 0,
-			static rowIndex : 1,
+			static rowIndex : 2,
 			hgap : 5,
 			vgap : 5,
 			padding : Insets {
@@ -287,7 +295,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 		},
 		GridPane id mCommentPane {
 			static columnIndex : 0,
-			static rowIndex : 2,
+			static rowIndex : 3,
 			columnConstraints : [
 				ColumnConstraints {
 					hgrow : "NEVER"
@@ -297,7 +305,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				}
 			],
 			Label {
-				styleClass : "labelComment",
+				styleClass : "labelPanes",
 				text : rstring "label_comment",
 				static columnIndex : 0,
 				static rowIndex : 0,
