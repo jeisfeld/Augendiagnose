@@ -1,9 +1,5 @@
 package de.eisfeldj.augendiagnosefx;
 
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_MAXIMIZED;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_X;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
-
 import java.io.IOException;
 
 import de.eisfeldj.augendiagnosefx.controller.MainController;
@@ -17,15 +13,22 @@ import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
 import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegSynchronizationUtil;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_MAXIMIZED;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_X;
+import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
 
 /**
  * Application class for starting the application.
@@ -94,6 +97,7 @@ public class Application extends javafx.application.Application {
 
 		primaryStage.setScene(mScene);
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
+		primaryStage.getIcons().add(new Image("img/Augendiagnose.png"));
 		primaryStage.show();
 
 		FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);
