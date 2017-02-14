@@ -1,14 +1,14 @@
 package de.jeisfeld.augendiagnoselib.components;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
@@ -74,11 +74,12 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 			@Override
 			public void onClick(final View v) {
 				ImageSelectionAndDisplayHandler.getInstance().cleanSelectedViews();
-				DisplayTwoActivity
-						.startActivity(ListPicturesForNameArrayAdapter.this.mActivity, mEyePhotoPairs[position]
-								.getRightEye().getAbsolutePath(), mEyePhotoPairs[position].getLeftEye()
-								.getAbsolutePath(), true);
-
+				if (mEyePhotoPairs[position].isComplete()) {
+					DisplayTwoActivity
+							.startActivity(ListPicturesForNameArrayAdapter.this.mActivity, mEyePhotoPairs[position]
+									.getRightEye().getAbsolutePath(), mEyePhotoPairs[position].getLeftEye()
+									.getAbsolutePath(), true);
+				}
 			}
 		});
 

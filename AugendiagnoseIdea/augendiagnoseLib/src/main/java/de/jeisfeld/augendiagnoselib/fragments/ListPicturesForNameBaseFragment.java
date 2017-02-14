@@ -1,11 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.io.File;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
-
 import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
@@ -15,6 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
@@ -109,7 +109,12 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 */
 	@NonNull
 	private EyePhotoPair[] createEyePhotoList(@NonNull final File folder) {
-		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>();
+		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>(new Comparator<Date>() {
+			@Override
+			public int compare(@NonNull final Date lhs, @NonNull final Date rhs) {
+				return rhs.compareTo(lhs);
+			}
+		});
 
 		File[] files = folder.listFiles(new ImageUtil.ImageFileFilter());
 
@@ -139,21 +144,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			}
 		}
 
-		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<>(new Comparator<Date>() {
-			@Override
-			public int compare(@NonNull final Date lhs, @NonNull final Date rhs) {
-				return rhs.compareTo(lhs);
-			}
-		});
-
-		for (Date date : eyePhotoMap.keySet()) {
-			if (eyePhotoMap.get(date).isComplete()) {
-				eyePhotoMap2.put(date, eyePhotoMap.get(date));
-			}
-		}
-
-		return eyePhotoMap2.values().toArray(new EyePhotoPair[eyePhotoMap2.size()]);
+		return eyePhotoMap.values().toArray(new EyePhotoPair[eyePhotoMap.size()]);
 	}
 
 	/**

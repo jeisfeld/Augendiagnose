@@ -100,7 +100,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 
 		// Fill pictures in separate thread, for performance reasons
 		final EyeImageView imageListRight = (EyeImageView) rowView.findViewById(R.id.imageListRight);
-		if (!imageListRight.isInitialized()) {
+		if (!imageListRight.isInitialized() && mEyePhotoPairs[position].getRightEye() != null) {
 			// Prevent duplicate initialization in case of multiple parallel calls - will happen in dialog
 			imageListRight.setInitialized();
 			imageListRight.setEyePhoto(mActivity, mEyePhotoPairs[position].getRightEye(), new Runnable() {
@@ -111,7 +111,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			});
 		}
 		final EyeImageView imageListLeft = (EyeImageView) rowView.findViewById(R.id.imageListLeft);
-		if (!imageListLeft.isInitialized()) {
+		if (!imageListLeft.isInitialized() && mEyePhotoPairs[position].getLeftEye() != null) {
 			imageListLeft.setInitialized();
 			imageListLeft.setEyePhoto(mActivity, mEyePhotoPairs[position].getLeftEye(), new Runnable() {
 				@Override
@@ -150,7 +150,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 	/**
 	 * This is the range of positions for which the images are stored.
 	 */
-	public static class CacheRange {
+	private static final class CacheRange {
 		/**
 		 * Length of the cache.
 		 */
@@ -165,7 +165,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 *
 		 * @param length The length of the cache.
 		 */
-		public CacheRange(final int length) {
+		private CacheRange(final int length) {
 			this.mStart = 0;
 			this.mLength = length;
 		}
@@ -176,13 +176,13 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 * @param n The number to be checked.
 		 * @return True if the number is in the cache.
 		 */
-		public final boolean isInRange(final int n) {
+		private boolean isInRange(final int n) {
 			return (mStart <= n) && (n < mStart + mLength);
 		}
 
 		@NonNull
 		@Override
-		public final String toString() {
+		public String toString() {
 			return "[" + mStart + "," + (mStart + mLength - 1) + "]";
 		}
 
@@ -191,7 +191,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 		 *
 		 * @param n The number to be pushed.
 		 */
-		public final void putIntoRange(final int n) {
+		private void putIntoRange(final int n) {
 			if (n < mStart) {
 				mStart = n;
 			}

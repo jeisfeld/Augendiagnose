@@ -1,9 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -23,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -32,7 +32,6 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhotoPair;
-import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
 /**
  * Fragment to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -155,11 +154,8 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 						if (!success) {
 							DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify
-											.getLeftEye().getPersonName(),
-									pairToModify
-											.getDateDisplayString(DATE_FORMAT));
-
+									R.string.message_dialog_failed_to_delete_file_for_date, false, pairToModify.getPersonName(),
+									pairToModify.getDateDisplayString(DATE_FORMAT));
 						}
 					}
 
@@ -169,14 +165,13 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 					}
 				};
 				DialogUtil.displayConfirmationMessage(getActivity(), listenerDelete, R.string.button_delete,
-						R.string.message_dialog_confirm_delete_date, pairToModify.getLeftEye().getPersonName(),
+						R.string.message_dialog_confirm_delete_date, pairToModify.getPersonName(),
 						pairToModify.getDateDisplayString(DATE_FORMAT));
 				return true;
 			}
 			else if (itemId == R.id.action_move_to_input_folder) {
 				// delete old thumbnails, in so that other photos can get the same names
-				MediaStoreUtil.deleteThumbnail(pairToModify.getLeftEye().getAbsolutePath());
-				MediaStoreUtil.deleteThumbnail(pairToModify.getRightEye().getAbsolutePath());
+				pairToModify.deleteThumbnailsFromMediastore();
 
 				// delete images
 				boolean success = pairToModify.moveToFolder(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input));
@@ -193,7 +188,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 				}
 				else {
 					DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),
-							R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify.getLeftEye().getPersonName(),
+							R.string.message_dialog_failed_to_move_file_for_date, false, pairToModify.getPersonName(),
 							pairToModify.getDateDisplayString(DATE_FORMAT));
 
 				}
@@ -249,7 +244,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 							if (!success) {
 								DialogUtil.displayError(activity, R.string.message_dialog_failed_to_change_date, false,
-										pairToUpdate.getLeftEye().getPersonName(),
+										pairToUpdate.getPersonName(),
 										pairToUpdate.getDateDisplayString(DATE_FORMAT),
 										DateUtil.format(newDate, DATE_FORMAT));
 							}
@@ -277,7 +272,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 		 *
 		 * @param fragment the fragment.
 		 */
-		void setListPicturesForNameFragment(final ListPicturesForNameFragment fragment);
+		void setListPicturesForNameFragment(ListPicturesForNameFragment fragment);
 	}
 
 }
