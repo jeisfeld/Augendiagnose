@@ -8,7 +8,7 @@
     <string name="title_dialog_confirmation">Confirmation</string>
     <string name="title_dialog_select_folder">Select Folder</string>
     <string name="title_dialog_tip">Tip</string>
-    <string name="message_dialog_no_picture">Not enough pictures available (min. 2 required)</string>
+    <string name="message_dialog_no_picture">There are no pictures in the input folder</string>
     <string name="message_dialog_no_photos_for_name">No eye photos available</string>
     <string name="message_dialog_select_name">Please select a name</string>
     <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>

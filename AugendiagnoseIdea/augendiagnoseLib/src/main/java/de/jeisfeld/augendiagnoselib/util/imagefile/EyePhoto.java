@@ -1,13 +1,13 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.io.File;
-import java.util.Date;
-import java.util.Locale;
-
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Locale;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -324,8 +324,8 @@ public class EyePhoto {
 	 * @param allowOverwrite if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
-	public final boolean moveTo(@NonNull final EyePhoto target, final boolean allowOverwrite) {
-		if (target.getFile().exists() && !allowOverwrite) {
+	public final boolean moveTo(final EyePhoto target, final boolean allowOverwrite) {
+		if (target == null || (target.getFile().exists() && !allowOverwrite)) {
 			return false;
 		}
 
@@ -360,8 +360,8 @@ public class EyePhoto {
 	 * @param target the file information of the target file.
 	 * @return true if the copying was successful.
 	 */
-	public final boolean copyTo(@NonNull final EyePhoto target) {
-		if (target.getFile().exists()) {
+	public final boolean copyTo(final EyePhoto target) {
+		if (target == null || target.getFile().exists()) {
 			// do not allow overwriting
 			return false;
 		}
@@ -599,7 +599,7 @@ public class EyePhoto {
 		 * @return the converted RightString.
 		 */
 		@NonNull
-		public static final RightLeft fromString(@Nullable final String rightLeftString) {
+		public static RightLeft fromString(@Nullable final String rightLeftString) {
 			if (rightLeftString != null && rightLeftString.matches("[rRdD].*")) {
 				return RIGHT;
 			}

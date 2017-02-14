@@ -176,7 +176,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added rating icon. Bugfixes</item>
         <item>Linked to new Eye-Fi App. Bugfixes</item>
         <item>Added privacy policy</item>
-        <item>Bugfixes</item>
+        <item>Enabled handling of single eye photos. Bugfixes</item>
     </string-array>
 
 </resources>

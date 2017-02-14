@@ -1248,7 +1248,7 @@ public class CameraActivity extends BaseActivity {
 
 	@Override
 	protected final String[] getRequiredPermissions() {
-		return new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 	}
 
 	@Override
@@ -1347,9 +1347,9 @@ public class CameraActivity extends BaseActivity {
 		/**
 		 * Callback called on fatal camera errors.
 		 *
-		 * @param message The error message as String
+		 * @param message      The error message as String
 		 * @param shortMessage a short form of the message (for analytics).
-		 * @param e       The exception
+		 * @param e            The exception
 		 */
 		void onCameraError(String message, String shortMessage, Throwable e);
 

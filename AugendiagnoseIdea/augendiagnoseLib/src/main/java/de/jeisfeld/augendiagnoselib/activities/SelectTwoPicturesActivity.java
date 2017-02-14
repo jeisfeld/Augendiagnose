@@ -317,6 +317,9 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		if (selectedImages.size() >= 2) {
 			returnResult(selectedImages.get(0).getAbsolutePath(), selectedImages.get(1).getAbsolutePath());
 		}
+		else if (selectedImages.size() == 1) {
+			returnResult(selectedImages.get(0).getAbsolutePath(), null);
+		}
 		else {
 			returnResult(null, null);
 		}
@@ -348,28 +351,24 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		 * @param name1 The first file.
 		 * @param name2 The second file.
 		 */
-		private FilePair(@NonNull final String name1, @NonNull final String name2) {
-			mFile1 = new File(name1);
-			mFile2 = new File(name2);
+		private FilePair(final String name1, final String name2) {
+			mFile1 = name1 == null ? null : new File(name1);
+			mFile2 = name2 == null ? null : new File(name2);
 		}
 
 		/**
 		 * The first file stored in the container.
 		 */
-		@NonNull
 		private final File mFile1;
 		/**
 		 * The second file stored in the container.
 		 */
-		@NonNull
 		private final File mFile2;
 
-		@NonNull
 		public File getFile1() {
 			return mFile1;
 		}
 
-		@NonNull
 		public File getFile2() {
 			return mFile2;
 		}

@@ -23,7 +23,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 /**
  * Class that serves to detect the pupil and iris within an eye photo.
  */
-public class PupilAndIrisDetector {
+public final class PupilAndIrisDetector {
 	/**
 	 * The resolution of the image when searching for a point within the pupil.
 	 */
@@ -226,7 +226,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilXCenter = 0;
 
-	public final float getPupilXCenter() {
+	public float getPupilXCenter() {
 		return mPupilXCenter;
 	}
 
@@ -235,7 +235,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilYCenter = 0;
 
-	public final float getPupilYCenter() {
+	public float getPupilYCenter() {
 		return mPupilYCenter;
 	}
 
@@ -244,7 +244,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilRadius = 0;
 
-	public final float getPupilRadius() {
+	public float getPupilRadius() {
 		return mPupilRadius;
 	}
 
@@ -253,7 +253,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisXCenter = 0;
 
-	public final float getIrisXCenter() {
+	public float getIrisXCenter() {
 		return mIrisXCenter;
 	}
 
@@ -262,7 +262,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisYCenter = 0;
 
-	public final float getIrisYCenter() {
+	public float getIrisYCenter() {
 		return mIrisYCenter;
 	}
 
@@ -271,7 +271,7 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisRadius = 0;
 
-	public final float getIrisRadius() {
+	public float getIrisRadius() {
 		return mIrisRadius;
 	}
 
@@ -280,7 +280,7 @@ public class PupilAndIrisDetector {
 	 *
 	 * @param image The image to be analyzed.
 	 */
-	public PupilAndIrisDetector(final Bitmap image) {
+	private PupilAndIrisDetector(final Bitmap image) {
 		mImage = image;
 		determineInitialParameterValues();
 		for (int i = 1; i < PUPIL_SEARCH_RESOLUTIONS.length; i++) {
@@ -294,11 +294,22 @@ public class PupilAndIrisDetector {
 	}
 
 	/**
+	 * Determine the iris position of an eye photo and store it in the metadata.
+	 *
+	 * @param eyePhoto The image.
+	 */
+	public static void determineAndStoreIrisPosition(final EyePhoto eyePhoto) {
+		if (eyePhoto != null) {
+			determineAndStoreIrisPosition(eyePhoto.getAbsolutePath());
+		}
+	}
+
+	/**
 	 * Determine the iris position in an image path and store it in the metadata.
 	 *
 	 * @param imagePath The path of the image.
 	 */
-	public static final void determineAndStoreIrisPosition(final String imagePath) {
+	public static void determineAndStoreIrisPosition(final String imagePath) {
 		if (!PreferenceUtil.getSharedPreferenceBoolean(R.string.key_automatic_iris_detection)) {
 			return;
 		}
@@ -398,7 +409,7 @@ public class PupilAndIrisDetector {
 	 * @param oldFileName The old file name.
 	 * @param newFileName the new file name.
 	 */
-	public static final void notifyFileRename(final String oldFileName, final String newFileName) {
+	public static void notifyFileRename(final String oldFileName, final String newFileName) {
 		if (!FILES_IN_PROCESS.containsKey(oldFileName)) {
 			return;
 		}
