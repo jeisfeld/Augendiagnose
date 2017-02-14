@@ -1,15 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -33,6 +23,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -262,7 +262,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		Button buttonOtherPictures = (Button) findViewById(R.id.buttonOrganizeOtherPictures);
 		Button buttonCancel = (Button) findViewById(R.id.buttonOrganizeCancel);
 
-		if (mTotalImageCount == 2 && mInputFolder != null && mPhotoRight != null && mPhotoLeft != null) {
+		if (getResources().getBoolean(R.bool.flag_overwrite_by_camera_from_organize)) {
 			buttonOtherPictures.setText(getString(R.string.button_camera));
 			buttonOtherPictures.setOnClickListener(new OnClickListener() {
 				@Override

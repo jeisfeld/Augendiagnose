@@ -7,6 +7,8 @@
     <string name="class_application_settings" translatable="false"/>
     <string name="package_eyefi" translatable="false">fi.eye.android</string>
     <string name="package_mobi" translatable="false">com.eyefi.android.mobi</string>
+    <bool name="flag_go_to_organize_after_move_to_input">false</bool>
+    <bool name="flag_overwrite_by_camera_from_organize">false</bool>
 
     <!-- Generic constants -->
 

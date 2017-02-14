@@ -15,7 +15,6 @@
     <string name="menu_delete_all_images">Delete all images</string>
     <string name="menu_change_date">Change date</string>
     <string name="menu_move_to_input_folder">Move to input folder</string>
-    <bool name="flag_go_to_organize_after_move_to_input">false</bool>
     <string name="menu_change_name">Change name</string>
     <string name="menu_remove_overlay_button">Remove button</string>
     <string name="menu_add_overlay_button">Add button</string>

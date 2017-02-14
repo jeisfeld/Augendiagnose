@@ -1121,8 +1121,8 @@ public class CameraActivity extends BaseActivity {
 				metadata.setRightLeft(mCurrentRightLeft);
 				metadata.setComment("");
 				metadata.setOrganizeDate(new Date());
-				metadata.setOrientation(exifAngle);
 			}
+			metadata.setOrientation(exifAngle);
 
 			int overlayCircleRadius = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
 			if (overlayCircleRadius > 0) {
