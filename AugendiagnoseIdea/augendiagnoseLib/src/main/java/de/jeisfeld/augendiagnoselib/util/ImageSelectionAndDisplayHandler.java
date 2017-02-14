@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import java.util.List;
+
 import de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
@@ -12,6 +14,7 @@ import de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
+import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 
 /**
  * A class handling the selection of up to two pictures for display, and the display of these pictures.
@@ -193,5 +196,20 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 	@Override
 	protected Activity getActivity() {
 		return mActivity;
+	}
+
+	/**
+	 * Get the first selected eye photo, if existing.
+	 *
+	 * @return The selected eye photo.
+	 */
+	private EyePhoto getSelectedImage() {
+		List<EyePhoto> selectedImages = getSelectedImages();
+		if (selectedImages.size() == 0) {
+			return null;
+		}
+		else {
+			return selectedImages.get(0);
+		}
 	}
 }

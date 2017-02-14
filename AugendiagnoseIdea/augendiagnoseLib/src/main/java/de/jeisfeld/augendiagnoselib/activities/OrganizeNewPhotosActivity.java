@@ -1,15 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -33,6 +23,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -136,8 +136,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
 	 * @param nextAction The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(@NonNull final Context context, final String inputFolderName,
-			final boolean rightEyeLast, final NextAction nextAction) {
+	public static void startActivity(@NonNull final Context context, final String inputFolderName,
+									 final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_INPUTFOLDER, inputFolderName);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -154,8 +154,8 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * @param rightEyeLast A flag indicating if the last picture is the right eye.
 	 * @param nextAction The next action to be done after organizing a pair of images.
 	 */
-	public static final void startActivity(@NonNull final Context context, final String[] fileNames,
-			final boolean rightEyeLast, final NextAction nextAction) {
+	public static void startActivity(@NonNull final Context context, final String[] fileNames,
+									 final boolean rightEyeLast, final NextAction nextAction) {
 		Intent intent = new Intent(context, OrganizeNewPhotosActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		intent.putExtra(STRING_EXTRA_RIGHTEYELAST, rightEyeLast);
@@ -657,13 +657,13 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		switch (requestCode) {
 		case SelectTwoPicturesActivity.REQUEST_CODE:
 			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
-			if (filePair != null) {
+			if (filePair == null) {
+				setPicturesAndValues(true);
+			}
+			else {
 				mPhotoRight = new EyePhoto(filePair.getFile1());
 				mPhotoLeft = new EyePhoto(filePair.getFile2());
 				updateImages(true);
-			}
-			else {
-				setPicturesAndValues(true);
 			}
 			break;
 		default:

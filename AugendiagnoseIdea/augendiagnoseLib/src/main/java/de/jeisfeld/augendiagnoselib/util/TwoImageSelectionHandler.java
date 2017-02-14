@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 
 import de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
-import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 
 /**
  * A class handling the selection two pictures, returning the pictures.
@@ -63,17 +62,6 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	}
 
 	/**
-	 * Highlight an EyeImageView if it is selected.
-	 *
-	 * @param view the EyeImageView.
-	 */
-	public void highlightIfSelected(@NonNull final EyeImageView view) {
-		if (getSelectedImage() != null && getSelectedImage().equals(view.getEyePhoto())) {
-			selectView(view);
-		}
-	}
-
-	/**
 	 * Prepare a GridView for selection of the pictures.
 	 *
 	 * @param view           The GridView to be prepared.
@@ -83,15 +71,14 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				if (getSelectedImage() == null) {
-					selectView(view);
-				}
-				else if (getSelectedImage().equals(view.getEyePhoto())) {
-					cleanSelectedViews();
+				if (getSelectedImages().contains(view.getEyePhoto())) {
+					deselectView(view);
 				}
 				else {
-					createResponse(getSelectedImage(), view.getEyePhoto());
-					cleanSelectedViews();
+					if (getSelectedImages().size() >= 2) {
+						cleanSelectedViews();
+					}
+					selectView(view);
 				}
 			}
 		});
@@ -99,16 +86,6 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 		if (hasContextMenu) {
 			view.setOnCreateContextMenuListener(getActivity());
 		}
-	}
-
-	/**
-	 * Return the paths of the two selected files to the parent activity.
-	 *
-	 * @param image1 the first selected image.
-	 * @param image2 the second selected image.
-	 */
-	private void createResponse(@NonNull final EyePhoto image1, @NonNull final EyePhoto image2) {
-		mActivity.returnResult(image1.getAbsolutePath(), image2.getAbsolutePath());
 	}
 
 	@Nullable

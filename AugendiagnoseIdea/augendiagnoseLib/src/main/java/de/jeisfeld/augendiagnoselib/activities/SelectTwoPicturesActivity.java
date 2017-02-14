@@ -1,9 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Comparator;
-
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
@@ -89,7 +90,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param activity   The activity starting this activity.
 	 * @param foldername The image folder.
 	 */
-	public static final void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String foldername) {
+	public static void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String foldername) {
 		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
@@ -102,7 +103,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param activity  The activity starting this activity.
 	 * @param fileNames The list of image files.
 	 */
-	public static final void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String[] fileNames) {
+	public static void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String[] fileNames) {
 		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
@@ -116,7 +117,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param data       The activity response data.
 	 * @return The returned file names.
 	 */
-	public static final FilePair getResult(final int resultCode, @NonNull final Intent data) {
+	public static FilePair getResult(final int resultCode, @NonNull final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
 			return new FilePair(res.getString(STRING_RESULT_FILENAME1), res.getString(STRING_RESULT_FILENAME2));
@@ -207,8 +208,15 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		resultData.putCharSequence(STRING_RESULT_FILENAME1, filename1);
 		resultData.putCharSequence(STRING_RESULT_FILENAME2, filename2);
 		Intent intent = new Intent();
-		intent.putExtras(resultData);
-		setResult(RESULT_OK, intent);
+
+		if (filename1 == null && filename2 == null) {
+			setResult(RESULT_CANCELED, intent);
+		}
+		else {
+			intent.putExtras(resultData);
+			setResult(RESULT_OK, intent);
+		}
+
 		finish();
 	}
 
@@ -300,6 +308,21 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	}
 
 	/**
+	 * onClick action for Button "Ok".
+	 *
+	 * @param view The view triggering the onClick action.
+	 */
+	public final void onOkClick(final View view) {
+		List<EyePhoto> selectedImages = TwoImageSelectionHandler.getInstance().getSelectedImages();
+		if (selectedImages.size() >= 2) {
+			returnResult(selectedImages.get(0).getAbsolutePath(), selectedImages.get(1).getAbsolutePath());
+		}
+		else {
+			returnResult(null, null);
+		}
+	}
+
+	/**
 	 * Update the list of eye photo pairs.
 	 */
 	private void updateEyePhotoList() {
@@ -318,14 +341,14 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	/**
 	 * Container for two files.
 	 */
-	public static class FilePair {
+	public static final class FilePair {
 		/**
 		 * Constructor to create a pair of files.
 		 *
 		 * @param name1 The first file.
 		 * @param name2 The second file.
 		 */
-		public FilePair(@NonNull final String name1, @NonNull final String name2) {
+		private FilePair(@NonNull final String name1, @NonNull final String name2) {
 			mFile1 = new File(name1);
 			mFile2 = new File(name2);
 		}
@@ -342,12 +365,12 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		private final File mFile2;
 
 		@NonNull
-		public final File getFile1() {
+		public File getFile1() {
 			return mFile1;
 		}
 
 		@NonNull
-		public final File getFile2() {
+		public File getFile2() {
 			return mFile2;
 		}
 	}

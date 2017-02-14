@@ -53,9 +53,8 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 	 * Fill the display of the view (date and pictures) Details on selection are handled within the
 	 * TwoImageSelectionHandler class.
 	 */
-	@Nullable
 	@Override
-	public final View getView(final int position, @Nullable final View convertView, final ViewGroup parent) {
+	public final View getView(final int position, @Nullable final View convertView, @NonNull final ViewGroup parent) {
 		final EyeImageView eyeImageView;
 		if (convertView != null && convertView instanceof EyeImageView) {
 			eyeImageView = (EyeImageView) convertView;
@@ -78,5 +77,4 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 
 		return eyeImageView;
 	}
-
 }

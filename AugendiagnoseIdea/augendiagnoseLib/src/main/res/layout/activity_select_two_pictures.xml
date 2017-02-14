@@ -1,20 +1,33 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
-              tools:context=".SelectTwoPicturesActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                tools:context=".activities.SelectTwoPicturesActivity">
+
+    <Button
+        android:id="@+id/buttonSelectTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:onClick="onOkClick"
+        android:text="@string/button_ok"
+        tools:ignore="ButtonStyle"/>
 
     <GridView
         android:id="@+id/gridViewSelectTwoPictures"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/buttonSelectTwo"
+        android:layout_alignParentTop="true"
         android:columnWidth="@dimen/grid_pictures_size"
         android:gravity="center"
         android:horizontalSpacing="0dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp">
-    </GridView>
+        android:verticalSpacing="0dp"/>
 
-</LinearLayout>
+</RelativeLayout>

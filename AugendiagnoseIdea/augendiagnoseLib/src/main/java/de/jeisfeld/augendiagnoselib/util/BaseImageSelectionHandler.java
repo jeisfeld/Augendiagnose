@@ -1,11 +1,11 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
@@ -68,6 +68,50 @@ public abstract class BaseImageSelectionHandler {
 	}
 
 	/**
+	 * Deselect a specific view.
+	 *
+	 * @param view the view to be deselected.
+	 */
+	protected void deselectView(final EyeImageView view) {
+		if (getSelectedImages().contains(view.getEyePhoto())) {
+			highlightSelectedViews(false);
+			deselectEyePhoto(view.getEyePhoto());
+			highlightSelectedViews(true);
+		}
+	}
+
+	/**
+	 * Remove the selections for an eye photo.
+	 *
+	 * @param eyePhoto The eye photo.
+	 */
+	private void deselectEyePhoto(final EyePhoto eyePhoto) {
+		if (getSelectedImages().contains(eyePhoto)) {
+			List<EyeImageView> newSelectedViews = new ArrayList<>();
+			for (EyeImageView selectedView : mSelectedViews) {
+				if (!selectedView.getEyePhoto().equals(eyePhoto)) {
+					newSelectedViews.add(selectedView);
+				}
+			}
+			cleanSelectedViews();
+			for (EyeImageView selectedView : newSelectedViews) {
+				selectView(selectedView);
+			}
+		}
+	}
+
+	/**
+	 * Highlight an EyeImageView if it is selected.
+	 *
+	 * @param view the EyeImageView.
+	 */
+	public void highlightIfSelected(final EyeImageView view) {
+		if (getSelectedImages().contains(view.getEyePhoto())) {
+			selectView(view);
+		}
+	}
+
+	/**
 	 * Get information if any view is selected.
 	 *
 	 * @return true if a view is selected.
@@ -87,17 +131,18 @@ public abstract class BaseImageSelectionHandler {
 	}
 
 	/**
-	 * Get a selected eye photo, if existing.
+	 * Get the selected eye photos.
 	 *
-	 * @return The selected eye photo.
+	 * @return The selected eye photos.
 	 */
-	protected final EyePhoto getSelectedImage() {
-		if (hasSelectedView()) {
-			return mSelectedViews.get(0).getEyePhoto();
+	public final List<EyePhoto> getSelectedImages() {
+		List<EyePhoto> selectedPhotos = new ArrayList<>();
+		for (EyeImageView eyeImageView : mSelectedViews) {
+			if (!selectedPhotos.contains(eyeImageView.getEyePhoto())) {
+				selectedPhotos.add(eyeImageView.getEyePhoto());
+			}
 		}
-		else {
-			return null;
-		}
+		return selectedPhotos;
 	}
 
 }
