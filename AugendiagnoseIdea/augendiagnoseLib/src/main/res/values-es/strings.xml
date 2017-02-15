@@ -31,6 +31,7 @@
     <string name="button_remove">Eliminar</string>
     <string name="button_move">Mover</string>
     <string name="button_continue">Continuar</string>
+    <string name="button_preview">Previsión</string>
     <string name="button_other_pictures">Otras Fotos</string>
     <string name="button_camera">Cámara</string>
     <string name="button_zoom">zoom</string>

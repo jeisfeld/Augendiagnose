@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,12 +12,6 @@ import de.jeisfeld.augendiagnoselib.components.EyeImageView;
  * A class handling the selection two pictures, returning the pictures.
  */
 public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
-	/**
-	 * The activity for selection.
-	 */
-	@Nullable
-	private SelectTwoPicturesActivity mActivity = null;
-
 	/**
 	 * A holder of the TwoImageSelectionHandler as singleton.
 	 */
@@ -46,15 +39,6 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	}
 
 	/**
-	 * Set the activity for first selection.
-	 *
-	 * @param activity The activity.
-	 */
-	public void setActivity(final SelectTwoPicturesActivity activity) {
-		this.mActivity = activity;
-	}
-
-	/**
 	 * Clean all references.
 	 */
 	public static void clean() {
@@ -64,33 +48,32 @@ public final class TwoImageSelectionHandler extends BaseImageSelectionHandler {
 	/**
 	 * Prepare a GridView for selection of the pictures.
 	 *
+	 * @param activity       The Activity using the handler.
 	 * @param view           The GridView to be prepared.
 	 * @param hasContextMenu Flag indicating if a context menu should be enabled.
 	 */
-	public void prepareViewForSelection(@NonNull final EyeImageView view, final boolean hasContextMenu) {
+	public void prepareViewForSelection(final SelectTwoPicturesActivity activity, @NonNull final EyeImageView view, final boolean hasContextMenu) {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				if (getSelectedImages().contains(view.getEyePhoto())) {
 					deselectView(view);
+					if (getSelectedImages().size() == 0) {
+						activity.displayButtons(false);
+					}
 				}
 				else {
 					if (getSelectedImages().size() >= 2) {
 						cleanSelectedViews();
 					}
 					selectView(view);
+					activity.displayButtons(true);
 				}
 			}
 		});
 
 		if (hasContextMenu) {
-			view.setOnCreateContextMenuListener(getActivity());
+			view.setOnCreateContextMenuListener(activity);
 		}
-	}
-
-	@Nullable
-	@Override
-	protected Activity getActivity() {
-		return mActivity;
 	}
 }

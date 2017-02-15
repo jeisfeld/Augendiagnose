@@ -5,23 +5,39 @@
                 android:orientation="vertical"
                 tools:context=".activities.SelectTwoPicturesActivity">
 
-    <Button
-        android:id="@+id/buttonSelectTwo"
+    <LinearLayout
+        android:id="@+id/layoutSelectTwoButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:onClick="onOkClick"
-        android:text="@string/button_ok"
-        tools:ignore="ButtonStyle"/>
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="onPreviewClick"
+            android:text="@string/button_preview"
+            tools:ignore="ButtonStyle"/>
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="onSelectClick"
+            android:text="@string/button_select"
+            tools:ignore="ButtonStyle"/>
+    </LinearLayout>
 
     <GridView
         android:id="@+id/gridViewSelectTwoPictures"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/buttonSelectTwo"
+        android:layout_above="@id/layoutSelectTwoButtons"
         android:layout_alignParentTop="true"
         android:columnWidth="@dimen/grid_pictures_size"
         android:gravity="center"

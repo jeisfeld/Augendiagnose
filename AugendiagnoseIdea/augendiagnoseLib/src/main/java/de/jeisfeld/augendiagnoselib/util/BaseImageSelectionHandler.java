@@ -1,12 +1,11 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import android.app.Activity;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 
@@ -21,14 +20,6 @@ public abstract class BaseImageSelectionHandler {
 	private final List<EyeImageView> mSelectedViews = new ArrayList<>();
 
 	/**
-	 * Get the activity holding the images.
-	 *
-	 * @return the activity
-	 */
-	@Nullable
-	protected abstract Activity getActivity();
-
-	/**
 	 * Change highlight setting of the selected views.
 	 *
 	 * @param highlight indicator if the views should be highlighted
@@ -37,10 +28,10 @@ public abstract class BaseImageSelectionHandler {
 	private void highlightSelectedViews(final boolean highlight) {
 		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.holo_orange_light));
+				view.setBackgroundColor(Application.getAppContext().getResources().getColor(android.R.color.holo_orange_light));
 			}
 			else {
-				view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.transparent));
+				view.setBackgroundColor(Application.getAppContext().getResources().getColor(android.R.color.transparent));
 			}
 		}
 	}

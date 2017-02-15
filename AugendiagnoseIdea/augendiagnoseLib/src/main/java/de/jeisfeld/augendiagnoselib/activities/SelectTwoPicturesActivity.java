@@ -145,8 +145,7 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		mGridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
 		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 
-		// Prepare the handler class
-		TwoImageSelectionHandler.getInstance().setActivity(this);
+		displayButtons(TwoImageSelectionHandler.getInstance().getSelectedImages().size() > 0);
 	}
 
 	@Override
@@ -311,11 +310,26 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	}
 
 	/**
-	 * onClick action for Button "Ok".
+	 * onClick action for Button "Preview".
 	 *
 	 * @param view The view triggering the onClick action.
 	 */
-	public final void onOkClick(final View view) {
+	public final void onPreviewClick(final View view) {
+		List<EyePhoto> selectedImages = TwoImageSelectionHandler.getInstance().getSelectedImages();
+		if (selectedImages.size() >= 2) {
+			DisplayTwoActivity.startActivity(this, selectedImages.get(0).getAbsolutePath(), selectedImages.get(1).getAbsolutePath(), false);
+		}
+		else if (selectedImages.size() == 1) {
+			DisplayOneActivity.startActivity(this, selectedImages.get(0).getAbsolutePath());
+		}
+	}
+
+	/**
+	 * onClick action for Button "Apply Selection".
+	 *
+	 * @param view The view triggering the onClick action.
+	 */
+	public final void onSelectClick(final View view) {
 		List<EyePhoto> selectedImages = TwoImageSelectionHandler.getInstance().getSelectedImages();
 		if (selectedImages.size() >= 2) {
 			returnResult(selectedImages.get(0).getAbsolutePath(), selectedImages.get(1).getAbsolutePath());
@@ -326,6 +340,15 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 		else {
 			returnResult(null, null);
 		}
+	}
+
+	/**
+	 * Display or hide the activity buttons.
+	 *
+	 * @param display true will display teh buttons, false will hide them.
+	 */
+	public final void displayButtons(final boolean display) {
+		findViewById(R.id.layoutSelectTwoButtons).setVisibility(display ? View.VISIBLE : View.GONE);
 	}
 
 	/**

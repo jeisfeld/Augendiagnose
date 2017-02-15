@@ -192,12 +192,6 @@ public final class ImageSelectionAndDisplayHandler extends BaseImageSelectionHan
 		}
 	}
 
-	@Nullable
-	@Override
-	protected Activity getActivity() {
-		return mActivity;
-	}
-
 	/**
 	 * Get the first selected eye photo, if existing.
 	 *

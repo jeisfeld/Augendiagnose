@@ -72,8 +72,7 @@ public class SelectTwoPicturesArrayAdapter extends ArrayAdapter<EyePhoto> {
 			}
 		});
 
-		TwoImageSelectionHandler.getInstance().prepareViewForSelection(eyeImageView,
-				mActivity.isStartedWithInputFolder());
+		TwoImageSelectionHandler.getInstance().prepareViewForSelection(mActivity, eyeImageView, mActivity.isStartedWithInputFolder());
 
 		return eyeImageView;
 	}
