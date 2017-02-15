@@ -289,7 +289,12 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 * @return The list of eye photo pairs.
 	 */
 	private EyePhotoPair[] createEyePhotoList(final File folder) {
-		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>();
+		Map<Date, EyePhotoPair> eyePhotoMap = new TreeMap<>(new Comparator<Date>() {
+			@Override
+			public int compare(final Date lhs, final Date rhs) {
+				return rhs.compareTo(lhs);
+			}
+		});
 
 		File[] files = folder.listFiles(new FilenameFilter() {
 			@Override
@@ -324,21 +329,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 
 		}
 
-		// Remove incomplete pairs - need duplication to avoid ConcurrentModificationException
-		Map<Date, EyePhotoPair> eyePhotoMap2 = new TreeMap<>(new Comparator<Date>() {
-			@Override
-			public int compare(final Date lhs, final Date rhs) {
-				return rhs.compareTo(lhs);
-			}
-		});
-
-		for (Date date : eyePhotoMap.keySet()) {
-			if (eyePhotoMap.get(date).isComplete()) {
-				eyePhotoMap2.put(date, eyePhotoMap.get(date));
-			}
-		}
-
-		return eyePhotoMap2.values().toArray(new EyePhotoPair[eyePhotoMap2.size()]);
+		return eyePhotoMap.values().toArray(new EyePhotoPair[eyePhotoMap.size()]);
 	}
 
 }

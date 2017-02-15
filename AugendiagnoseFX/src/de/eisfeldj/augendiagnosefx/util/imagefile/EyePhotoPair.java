@@ -54,7 +54,16 @@ public class EyePhotoPair {
 	 * @return the date of the right photo.
 	 */
 	public final Date getDate() {
-		return mRightEye.getDate();
+		return mRightEye == null ? mLeftEye.getDate() : mRightEye.getDate();
+	}
+
+	/**
+	 * Returns the person name of the right photo. (Assumption: both should have the same date.)
+	 *
+	 * @return the person name of the right photo.
+	 */
+	public final String getPersonName() {
+		return mRightEye == null ? mLeftEye.getPersonName() : mRightEye.getPersonName();
 	}
 
 	/**
@@ -81,7 +90,8 @@ public class EyePhotoPair {
 	 * @return true if the deletion was successful on both eyes.
 	 */
 	public final boolean delete() {
-		return mRightEye.delete() && mLeftEye.delete();
+		return (mRightEye == null || mRightEye.delete())
+				&& (mLeftEye == null || mLeftEye.delete());
 	}
 
 	/**
@@ -92,7 +102,8 @@ public class EyePhotoPair {
 	 * @return true if the move was successful on both eyes.
 	 */
 	public final boolean moveToFolder(final String targetFolder) {
-		return mRightEye.moveToFolder(targetFolder) && mLeftEye.moveToFolder(targetFolder);
+		return (mRightEye == null || mRightEye.moveToFolder(targetFolder))
+				&& (mLeftEye == null || mLeftEye.moveToFolder(targetFolder));
 	}
 
 	/**
@@ -103,7 +114,8 @@ public class EyePhotoPair {
 	 * @return true if the change operation was successful on both eyes.
 	 */
 	public final boolean changeDate(final Date newDate) {
-		return mRightEye.changeDate(newDate) && mLeftEye.changeDate(newDate);
+		return (mRightEye == null || mRightEye.changeDate(newDate))
+				&& (mLeftEye == null || mLeftEye.changeDate(newDate));
 	}
 
 }

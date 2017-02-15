@@ -94,8 +94,12 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 
 		mLabelDate.setText(pair.getDateDisplayString());
 
-		mImageViewRight.setImageView(getImageView(pair.getRightEye()));
-		mImageViewLeft.setImageView(getImageView(pair.getLeftEye()));
+		if (pair.getRightEye() != null) {
+			mImageViewRight.setImageView(getImageView(pair.getRightEye()));
+		}
+		if (pair.getLeftEye() != null) {
+			mImageViewLeft.setImageView(getImageView(pair.getLeftEye()));
+		}
 
 		mLabelDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -104,9 +108,11 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 					return;
 				}
 
-				DisplayImagePairController controller =
-						(DisplayImagePairController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_PAIR, -1, true);
-				controller.setEyePhotos(pair);
+				if (pair.isComplete()) {
+					DisplayImagePairController controller =
+							(DisplayImagePairController) FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_IMAGE_PAIR, -1, true);
+					controller.setEyePhotos(pair);
+				}
 			}
 		});
 	}
