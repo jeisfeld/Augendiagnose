@@ -4,7 +4,7 @@
           package="de.eisfeldj.augendiagnose"
           android:installLocation="auto"
           android:versionCode="66"
-          android:versionName="1.1.18">
+          android:versionName="1.2">
 
     <uses-sdk
         android:minSdkVersion="15"
