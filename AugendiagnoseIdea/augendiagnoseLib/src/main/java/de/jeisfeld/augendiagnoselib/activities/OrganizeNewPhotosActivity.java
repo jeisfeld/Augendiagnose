@@ -287,8 +287,12 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 						@Override
 						public void onDialogPositiveClick(final DialogFragment dialog) {
 							// delete images
-							mPhotoLeft.delete();
-							mPhotoRight.delete();
+							if (mPhotoLeft != null) {
+								mPhotoLeft.delete();
+							}
+							if (mPhotoRight != null) {
+								mPhotoRight.delete();
+							}
 							finish();
 						}
 

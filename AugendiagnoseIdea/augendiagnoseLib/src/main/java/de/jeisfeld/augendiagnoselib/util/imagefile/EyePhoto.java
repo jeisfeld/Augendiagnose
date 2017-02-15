@@ -5,7 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.apache.commons.imaging.ImageReadException;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
@@ -154,16 +157,27 @@ public class EyePhoto {
 			setRightLeft(RightLeft.fromString(filename.substring(rightLeftPosition + 1, suffixPosition)));
 			setSuffix(filename.substring(suffixPosition + 1));
 
-			if (!mFormattedName) {
-				setDate(ImageUtil.getExifDate(getAbsolutePath()));
-			}
 		}
 		else {
 			if (suffixPosition > 0) {
 				setSuffix(filename.substring(suffixPosition + 1));
 			}
 			setDate(ImageUtil.getExifDate(getAbsolutePath()));
-			mFormattedName = false;
+		}
+
+		if (!mFormattedName) {
+			try {
+				JpegMetadata metadata = JpegMetadataUtil.getMetadata(getAbsolutePath());
+				setDate(metadata.getOrganizeDate());
+				setRightLeft(metadata.getRightLeft());
+			}
+			catch (ImageReadException | IOException e) {
+				// ignore
+			}
+
+			if (getDate() == null) {
+				setDate(ImageUtil.getExifDate(getAbsolutePath()));
+			}
 		}
 	}
 

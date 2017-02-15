@@ -58,6 +58,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
+import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -218,22 +219,14 @@ public class CameraActivity extends BaseActivity {
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
-	 * @param activity The activity from which the activity is started.
-	 */
-	public static void startActivity(@NonNull final Activity activity) {
-		Intent intent = new Intent(activity, CameraActivity.class);
-		activity.startActivity(intent);
-	}
-
-	/**
-	 * Static helper method to start the activity for taking two photos to the input folder.
-	 *
 	 * @param activity    The activity from which the activity is started.
 	 * @param photoFolder The folder where to store the photos.
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoFolder) {
 		Intent intent = new Intent(activity, CameraActivity.class);
-		intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolder);
+		if (photoFolder != null) {
+			intent.putExtra(STRING_EXTRA_PHOTOFOLDER, photoFolder);
+		}
 		activity.startActivity(intent);
 	}
 
@@ -246,8 +239,12 @@ public class CameraActivity extends BaseActivity {
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
-		intent.putExtra(STRING_EXTRA_PHOTO_RIGHT, photoRight);
-		intent.putExtra(STRING_EXTRA_PHOTO_LEFT, photoLeft);
+		if (photoRight != null) {
+			intent.putExtra(STRING_EXTRA_PHOTO_RIGHT, photoRight);
+		}
+		if (photoLeft != null) {
+			intent.putExtra(STRING_EXTRA_PHOTO_LEFT, photoLeft);
+		}
 		activity.startActivity(intent);
 	}
 
@@ -305,39 +302,55 @@ public class CameraActivity extends BaseActivity {
 		String inputLeftFileName = getIntent().getStringExtra(STRING_EXTRA_PHOTO_LEFT);
 
 		// Handle the different scenarios based on input and based on existing temp files.
-		if (inputLeftFileName != null && inputRightFileName != null) {
-			mInputLeftFile = new File(inputLeftFileName);
-			mInputRightFile = new File(inputRightFileName);
+		if (inputLeftFileName != null || inputRightFileName != null) {
+			if (inputRightFileName != null) {
+				mInputRightFile = new File(inputRightFileName);
+			}
+			if (inputLeftFileName != null) {
+				mInputLeftFile = new File(inputLeftFileName);
+			}
 
 			// Triggered by OrganizeNewPhotosActivity to update photos.
-			mPhotoFolder = mInputRightFile.getParentFile();
+			mPhotoFolder = mInputRightFile == null ? mInputLeftFile.getParentFile() : mInputRightFile.getParentFile();
 			if (FileUtil.getTempCameraFolder().equals(mPhotoFolder)) {
 				mPhotoFolder = null;
 			}
 			mLeftEyeFile = mInputLeftFile;
+			if (mLeftEyeFile != null) {
+				setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
+			}
 			mRightEyeFile = mInputRightFile;
-			setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
-			setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
+			if (mRightEyeFile != null) {
+				setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
+			}
 
-			setAction(RE_TAKE_PHOTO, null);
+			if (mLeftEyeFile != null && mRightEyeFile != null) {
+				setAction(RE_TAKE_PHOTO, null);
+			}
+			else if (mLeftEyeFile == null) {
+				setAction(TAKE_PHOTO, LEFT);
+			}
+			else {
+				setAction(TAKE_PHOTO, RIGHT);
+			}
 		}
 		else {
-			boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 			File[] existingFiles = getTempCameraFiles();
 
 			if (existingFiles == null || existingFiles.length == 0 || mPhotoFolder != null) {
 				// This is the standard scenario.
-				setAction(Action.TAKE_PHOTO, leftEyeFirst ? LEFT : RIGHT);
+				boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+				setAction(TAKE_PHOTO, leftEyeFirst ? LEFT : RIGHT);
 			}
 			else if (existingFiles.length == 1) {
 				// one file already there. Assume that this is already taken and we only have to take the other one
-				if (leftEyeFirst) {
+				if (mLeftEyeFile != null) {
 					setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
-					setAction(Action.TAKE_PHOTO, RIGHT);
+					setAction(TAKE_PHOTO, RIGHT);
 				}
 				else {
 					setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
-					setAction(Action.TAKE_PHOTO, LEFT);
+					setAction(TAKE_PHOTO, LEFT);
 				}
 			}
 			else {
@@ -463,11 +476,7 @@ public class CameraActivity extends BaseActivity {
 				new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
-						if (mInputRightFile != null && mInputLeftFile != null && mCurrentAction != CHECK_PHOTO) {
-							// in case of re-take, this button serves to cancel the whole re-take.
-							setAction(FINISH_CAMERA, null);
-						}
-						else {
+						if (mCurrentAction == CHECK_PHOTO) {
 							if (mCurrentRightLeft == RIGHT) {
 								if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
 									// noinspection ResultOfMethodCallIgnored
@@ -496,6 +505,10 @@ public class CameraActivity extends BaseActivity {
 							}
 
 							setAction(TAKE_PHOTO, mCurrentRightLeft);
+						}
+						else {
+							// in case of re-take, this button serves to cancel the whole re-take.
+							setAction(FINISH_CAMERA, null);
 						}
 						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
 					}
@@ -768,7 +781,7 @@ public class CameraActivity extends BaseActivity {
 			buttonCapture.setVisibility(View.VISIBLE);
 			buttonCapture.setEnabled(true);
 			buttonAccept.setVisibility(View.GONE);
-			buttonDecline.setVisibility(mInputLeftFile != null && mInputRightFile != null ? View.VISIBLE : View.GONE);
+			buttonDecline.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? View.GONE : View.VISIBLE);
 			if (buttonViewImages.isEnabled() && buttonDecline.getVisibility() == View.GONE) {
 				buttonViewImages.setVisibility(View.VISIBLE);
 			}
@@ -821,25 +834,31 @@ public class CameraActivity extends BaseActivity {
 			cleanupTempFolder();
 
 			// move files to their target position
-			if (mInputLeftFile != null && mInputRightFile != null) {
-				if (!mInputLeftFile.equals(mLeftEyeFile)) {
-					FileUtil.moveFile(mLeftEyeFile, mInputLeftFile);
+			if (mInputLeftFile != null || mInputRightFile != null) {
+				if (mLeftEyeFile != null && !mLeftEyeFile.equals(mInputLeftFile)) {
+					File newLeftFile = mInputLeftFile == null ? new File(mInputRightFile.getParentFile(), mLeftEyeFile.getName()) : mInputLeftFile;
+					FileUtil.moveFile(mLeftEyeFile, newLeftFile);
 					// prevent cleanup
-					mLeftEyeFile = mInputLeftFile;
-					MediaStoreUtil.deleteThumbnail(mInputLeftFile.getAbsolutePath());
-					MediaStoreUtil.addPictureToMediaStore(mInputLeftFile.getAbsolutePath());
+					mLeftEyeFile = newLeftFile;
+					MediaStoreUtil.deleteThumbnail(newLeftFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(newLeftFile.getAbsolutePath());
 				}
-				if (!mInputRightFile.equals(mRightEyeFile)) {
-					FileUtil.moveFile(mRightEyeFile, mInputRightFile);
+				if (mRightEyeFile != null && !mRightEyeFile.equals(mInputRightFile)) {
+					File newRightFile = mInputRightFile == null ? new File(mInputLeftFile.getParentFile(), mRightEyeFile.getName()) : mInputRightFile;
+					FileUtil.moveFile(mRightEyeFile, newRightFile);
 					// prevent cleanup
-					mRightEyeFile = mInputRightFile;
-					MediaStoreUtil.deleteThumbnail(mInputRightFile.getAbsolutePath());
-					MediaStoreUtil.addPictureToMediaStore(mInputRightFile.getAbsolutePath());
+					mRightEyeFile = newRightFile;
+					MediaStoreUtil.deleteThumbnail(newRightFile.getAbsolutePath());
+					MediaStoreUtil.addPictureToMediaStore(newRightFile.getAbsolutePath());
 				}
 			}
-			else if (mPhotoFolder != null && mPhotoFolder.isDirectory() && mLeftEyeFile != null && mRightEyeFile != null) {
-				FileUtil.moveFile(mLeftEyeFile, new File(mPhotoFolder, mLeftEyeFile.getName()));
-				FileUtil.moveFile(mRightEyeFile, new File(mPhotoFolder, mRightEyeFile.getName()));
+			else if (mPhotoFolder != null && mPhotoFolder.isDirectory()) {
+				if (mLeftEyeFile != null) {
+					FileUtil.moveFile(mLeftEyeFile, new File(mPhotoFolder, mLeftEyeFile.getName()));
+				}
+				if (mRightEyeFile != null) {
+					FileUtil.moveFile(mRightEyeFile, new File(mPhotoFolder, mRightEyeFile.getName()));
+				}
 			}
 
 			File organizeFolder = mPhotoFolder == null ? FileUtil.getTempCameraFolder() : mPhotoFolder;
@@ -913,9 +932,11 @@ public class CameraActivity extends BaseActivity {
 	private File[] getTempCameraFiles() {
 		File[] existingFiles = FileUtil.getTempCameraFiles();
 		boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
+		RightLeft rightLeft = existingFiles.length == 0 ? null : new EyePhoto(existingFiles[0]).getRightLeft();
+		boolean firstFileIsLeftEye = rightLeft == LEFT || rightLeft == null && leftEyeFirst;
 
 		if (existingFiles.length == 1) {
-			if (leftEyeFirst) {
+			if (firstFileIsLeftEye) {
 				mLeftEyeFile = existingFiles[0];
 			}
 			else {
@@ -923,8 +944,8 @@ public class CameraActivity extends BaseActivity {
 			}
 		}
 		else if (existingFiles.length >= 2) {
-			mRightEyeFile = leftEyeFirst ? existingFiles[1] : existingFiles[0];
-			mLeftEyeFile = leftEyeFirst ? existingFiles[0] : existingFiles[1];
+			mRightEyeFile = firstFileIsLeftEye ? existingFiles[1] : existingFiles[0];
+			mLeftEyeFile = firstFileIsLeftEye ? existingFiles[0] : existingFiles[1];
 		}
 
 		return existingFiles;

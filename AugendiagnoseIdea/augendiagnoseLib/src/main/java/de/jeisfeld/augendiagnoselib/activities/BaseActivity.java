@@ -223,7 +223,7 @@ public abstract class BaseActivity extends AdMarvelActivity {
 			return true;
 		}
 		else if (itemId == R.id.action_camera) {
-			CameraActivity.startActivity(this);
+			CameraActivity.startActivity(this, null);
 			finish();
 			return true;
 		}
