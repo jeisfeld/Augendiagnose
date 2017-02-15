@@ -100,11 +100,12 @@ public class EyePhotoPair {
 	 * Move the eye photo pair to a different folder.
 	 *
 	 * @param targetFolder the target folder.
+	 * @param createUnique if true, then a unique target file name is created if a file with the same name exists in the target folder.
 	 * @return true if the move was successful on both eyes.
 	 */
-	public final boolean moveToFolder(@NonNull final String targetFolder) {
-		return (mRightEye == null || mRightEye.moveToFolder(targetFolder))
-				&& (mLeftEye == null || mLeftEye.moveToFolder(targetFolder));
+	public final boolean moveToFolder(@NonNull final String targetFolder, final boolean createUnique) {
+		return (mRightEye == null || mRightEye.moveToFolder(targetFolder, createUnique))
+				&& (mLeftEye == null || mLeftEye.moveToFolder(targetFolder, createUnique));
 	}
 
 	/**

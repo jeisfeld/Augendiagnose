@@ -9,6 +9,7 @@ import org.apache.commons.imaging.ImageReadException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -90,9 +91,10 @@ public class EyePhoto {
 		setFilename(file.getName());
 
 		if (mFilename != null && !mFilename.equals(getFilename())) {
-			boolean success = FileUtil.moveFile(new File(getPath(), mFilename), new File(getPath(), getFilename()));
+			File targetFile = getNonExistingEyePhoto().getFile();
+			boolean success = FileUtil.moveFile(file, targetFile);
 			if (!success) {
-				Log.w(Application.TAG, "Failed to rename file" + mFilename + " to " + getFilename());
+				Log.w(Application.TAG, "Failed to rename file" + file.getName() + " to " + targetFile.getAbsolutePath());
 			}
 		}
 	}
@@ -349,24 +351,66 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target folder.
 	 *
-	 * @param folderName the target folder
+	 * @param folderName   the target folder
+	 * @param createUnique if true, then a unique target file name is created if a file with the same name exists in the target folder.
 	 * @return true if the move was successful.
 	 */
-	public final boolean moveToFolder(@NonNull final String folderName) {
+	public final boolean moveToFolder(@NonNull final String folderName, final boolean createUnique) {
 		File folder = new File(folderName);
 		if (!folder.exists() || !folder.isDirectory()) {
 			// target folder does not exist
 			return false;
 		}
+		EyePhoto newPhoto = new EyePhoto(new File(folder, getFilename()));
 
-		File targetFile = new File(folder, getFilename());
-		if (targetFile.exists()) {
-			// do not overwrite
+		if (newPhoto.exists() && !createUnique) {
 			return false;
 		}
 
-		return FileUtil.moveFile(getFile(), targetFile);
+		return FileUtil.moveFile(getFile(), newPhoto.getNonExistingEyePhoto().getFile());
 	}
+
+	/**
+	 * Create a non-existing File object in the same folder.
+	 *
+	 * @return a non-existing File object in the same folder.
+	 */
+	private EyePhoto getNonExistingEyePhoto() {
+		if (!exists()) {
+			return this;
+		}
+		if (!new File(getPath()).isDirectory()) {
+			return null;
+		}
+
+		if (mFormattedName) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(getDate());
+			EyePhoto eyePhoto;
+
+			do {
+				calendar.add(Calendar.DATE, 1);
+				eyePhoto = new EyePhoto(getPath(), getPersonName(), calendar.getTime(), getRightLeft(), getSuffix());
+			}
+			while (eyePhoto.exists());
+			return eyePhoto;
+		}
+		else {
+			String fileNameBase = mFilename;
+			String fileNameSuffix = "";
+			int suffixIndex = mFilename.lastIndexOf('.');
+			if (suffixIndex >= 0) {
+				fileNameBase = mFilename.substring(0, suffixIndex) + "-";
+				fileNameSuffix = mFilename.substring(suffixIndex);
+			}
+			int i = 0;
+			while (new File(getPath(), fileNameBase + i + fileNameSuffix).exists()) {
+				i++;
+			}
+			return new EyePhoto(new File(getPath(), fileNameBase + i + fileNameSuffix).getAbsolutePath());
+		}
+	}
+
 
 	/**
 	 * Copy the eye photo to a target path and target personName (given via EyePhoto object).
