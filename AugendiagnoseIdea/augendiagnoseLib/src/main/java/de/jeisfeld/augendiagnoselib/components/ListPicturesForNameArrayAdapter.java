@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
 import de.jeisfeld.augendiagnoselib.util.ImageSelectionAndDisplayHandler;
@@ -79,6 +80,14 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 							.startActivity(ListPicturesForNameArrayAdapter.this.mActivity, mEyePhotoPairs[position]
 									.getRightEye().getAbsolutePath(), mEyePhotoPairs[position].getLeftEye()
 									.getAbsolutePath(), true);
+				}
+				else if (mEyePhotoPairs[position].getRightEye() != null) {
+					DisplayOneActivity.startActivity(ListPicturesForNameArrayAdapter.this.mActivity,
+							mEyePhotoPairs[position].getRightEye().getAbsolutePath());
+				}
+				else if (mEyePhotoPairs[position].getLeftEye() != null) {
+					DisplayOneActivity.startActivity(ListPicturesForNameArrayAdapter.this.mActivity,
+							mEyePhotoPairs[position].getLeftEye().getAbsolutePath());
 				}
 			}
 		});
