@@ -125,6 +125,14 @@
         android:visibility="gone"/>
 
     <Button
+        android:id="@+id/buttonCameraReturn"
+        android:layout_width="@dimen/camerabutton_size"
+        android:layout_height="@dimen/camerabutton_size"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/circlebutton_return"
+        android:visibility="gone"/>
+
+    <Button
         android:id="@+id/buttonCameraTrigger"
         android:layout_width="@dimen/camerabutton_size"
         android:layout_height="@dimen/camerabutton_size"

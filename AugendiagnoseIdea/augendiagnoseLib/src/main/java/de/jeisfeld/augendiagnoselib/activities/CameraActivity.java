@@ -67,6 +67,9 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.JpegSynchronizationUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CANCEL_AND_VIEW_IMAGES;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.CHECK_PHOTO;
 import static de.jeisfeld.augendiagnoselib.activities.CameraActivity.Action.FINISH_CAMERA;
@@ -506,11 +509,16 @@ public class CameraActivity extends BaseActivity {
 
 							setAction(TAKE_PHOTO, mCurrentRightLeft);
 						}
-						else {
-							// in case of re-take, this button serves to cancel the whole re-take.
-							setAction(FINISH_CAMERA, null);
-						}
 						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
+					}
+				});
+
+		Button returnButton = (Button) findViewById(R.id.buttonCameraReturn);
+		returnButton.setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(final View v) {
+						setAction(FINISH_CAMERA, null);
 					}
 				});
 
@@ -531,7 +539,7 @@ public class CameraActivity extends BaseActivity {
 			if (id != 0) {
 				View view = findViewById(id);
 				if (view != null) {
-					view.setVisibility(View.GONE);
+					view.setVisibility(GONE);
 					view.setEnabled(false);
 				}
 			}
@@ -572,16 +580,16 @@ public class CameraActivity extends BaseActivity {
 			public void onClick(final View v) {
 				boolean isVisible = !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility, isVisible);
-				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : GONE);
 				if (mIsZoomAvailable) {
-					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : GONE);
 				}
 			}
 		});
 		boolean isVisible = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
-		findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+		findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : GONE);
 		if (mIsZoomAvailable) {
-			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : GONE);
 		}
 
 		SeekBar overlayCircleSeekbar = (SeekBar) findViewById(R.id.seekbarCameraOverlayCircle);
@@ -672,7 +680,7 @@ public class CameraActivity extends BaseActivity {
 		}
 		else {
 			setFlashlightMode(null);
-			flashlightButton.setVisibility(View.GONE);
+			flashlightButton.setVisibility(GONE);
 		}
 	}
 
@@ -709,7 +717,7 @@ public class CameraActivity extends BaseActivity {
 		Button focusButton = (Button) findViewById(R.id.buttonCameraFocus);
 
 		if (mFocusModes.size() < 2) {
-			focusButton.setVisibility(View.GONE);
+			focusButton.setVisibility(GONE);
 			return;
 		}
 
@@ -769,6 +777,7 @@ public class CameraActivity extends BaseActivity {
 		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
 		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
 		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
+		Button buttonReturn = (Button) findViewById(R.id.buttonCameraReturn);
 		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
 		ImageView imageViewReview = (ImageView) findViewById(R.id.camera_review);
 		FrameLayout cameraPreviewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
@@ -778,16 +787,17 @@ public class CameraActivity extends BaseActivity {
 		case TAKE_PHOTO:
 			updateFlashlight();
 			mCameraHandler.startPreview();
-			buttonCapture.setVisibility(View.VISIBLE);
+			buttonCapture.setVisibility(VISIBLE);
 			buttonCapture.setEnabled(true);
-			buttonAccept.setVisibility(View.GONE);
-			buttonDecline.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? View.GONE : View.VISIBLE);
-			if (buttonViewImages.isEnabled() && buttonDecline.getVisibility() == View.GONE) {
-				buttonViewImages.setVisibility(View.VISIBLE);
+			buttonAccept.setVisibility(GONE);
+			buttonDecline.setVisibility(GONE);
+			buttonReturn.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? GONE : VISIBLE);
+			if (buttonViewImages.isEnabled() && buttonReturn.getVisibility() == GONE) {
+				buttonViewImages.setVisibility(VISIBLE);
 			}
-			cameraSettingsLayout.setVisibility(View.VISIBLE);
-			imageViewReview.setVisibility(View.GONE);
-			cameraPreviewFrame.setVisibility(View.VISIBLE);
+			cameraSettingsLayout.setVisibility(VISIBLE);
+			imageViewReview.setVisibility(GONE);
+			cameraPreviewFrame.setVisibility(VISIBLE);
 			cameraThumbLeft.setEnabled(true);
 			cameraThumbRight.setEnabled(true);
 
@@ -802,27 +812,27 @@ public class CameraActivity extends BaseActivity {
 
 			break;
 		case CHECK_PHOTO:
-			buttonCapture.setVisibility(View.GONE);
-			buttonAccept.setVisibility(View.VISIBLE);
-			buttonDecline.setVisibility(View.VISIBLE);
-			buttonViewImages.setVisibility(View.INVISIBLE);
-			cameraSettingsLayout.setVisibility(View.INVISIBLE);
-			imageViewReview.setVisibility(View.VISIBLE);
-			cameraPreviewFrame.setVisibility(View.GONE);
+			buttonCapture.setVisibility(GONE);
+			buttonAccept.setVisibility(VISIBLE);
+			buttonDecline.setVisibility(VISIBLE);
+			buttonReturn.setVisibility(GONE);
+			buttonViewImages.setVisibility(INVISIBLE);
+			cameraSettingsLayout.setVisibility(INVISIBLE);
+			imageViewReview.setVisibility(VISIBLE);
+			cameraPreviewFrame.setVisibility(GONE);
 			cameraThumbLeft.setEnabled(false);
 			cameraThumbRight.setEnabled(false);
 			updateFlashlight();
 			break;
 		case RE_TAKE_PHOTO:
-			buttonCapture.setVisibility(View.GONE);
-			buttonAccept.setVisibility(View.GONE);
-			buttonDecline.setVisibility(View.VISIBLE);
-			if (buttonViewImages.isEnabled()) {
-				buttonViewImages.setVisibility(View.VISIBLE);
-			}
-			cameraSettingsLayout.setVisibility(View.VISIBLE);
-			imageViewReview.setVisibility(View.GONE);
-			cameraPreviewFrame.setVisibility(View.VISIBLE);
+			buttonCapture.setVisibility(GONE);
+			buttonAccept.setVisibility(GONE);
+			buttonDecline.setVisibility(VISIBLE);
+			buttonReturn.setVisibility(VISIBLE);
+			buttonViewImages.setVisibility(GONE);
+			cameraSettingsLayout.setVisibility(VISIBLE);
+			imageViewReview.setVisibility(GONE);
+			cameraPreviewFrame.setVisibility(VISIBLE);
 			cameraThumbLeft.setEnabled(true);
 			cameraThumbRight.setEnabled(true);
 			cameraThumbLeft.setBackgroundResource(R.drawable.camera_thumb_background);
@@ -897,14 +907,14 @@ public class CameraActivity extends BaseActivity {
 		mCurrentFocusMode = focusMode;
 
 		SeekBar seekbarCameraFocus = (SeekBar) findViewById(R.id.seekbarCameraFocus);
-		seekbarCameraFocus.setVisibility(mCurrentFocusMode == FocusMode.MANUAL ? View.VISIBLE : View.GONE);
+		seekbarCameraFocus.setVisibility(mCurrentFocusMode == FocusMode.MANUAL ? VISIBLE : GONE);
 
 		mCameraHandler.setFocusMode(mCurrentFocusMode);
 
 		Button buttonCameraFocus = (Button) findViewById(R.id.buttonCameraFocus);
 
 		if (mCurrentFocusMode == null) {
-			buttonCameraFocus.setVisibility(View.GONE);
+			buttonCameraFocus.setVisibility(GONE);
 		}
 		else {
 			buttonCameraFocus.setText(mCurrentFocusMode.toDisplayString());
@@ -1017,14 +1027,14 @@ public class CameraActivity extends BaseActivity {
 
 			@Override
 			public void onAnimationEnd(final Animation animation) {
-				flashView.setVisibility(View.GONE);
+				flashView.setVisibility(GONE);
 			}
 		});
 
 		AnimationSet animation = new AnimationSet(false);
 		animation.addAnimation(fadeOut);
 
-		flashView.setVisibility(View.VISIBLE);
+		flashView.setVisibility(VISIBLE);
 		flashView.startAnimation(animation);
 	}
 
@@ -1247,13 +1257,13 @@ public class CameraActivity extends BaseActivity {
 		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
 		if (isCamera2()) {
 			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
-			camera1View.setVisibility(View.GONE);
-			camera2View.setVisibility(View.VISIBLE);
+			camera1View.setVisibility(GONE);
+			camera2View.setVisibility(VISIBLE);
 		}
 		else {
 			mCameraHandler = new Camera1Handler((FrameLayout) findViewById(R.id.camera_preview_frame), camera1View, mOnPictureTakenHandler);
-			camera1View.setVisibility(View.VISIBLE);
-			camera2View.setVisibility(View.GONE);
+			camera1View.setVisibility(VISIBLE);
+			camera2View.setVisibility(GONE);
 		}
 	}
 
