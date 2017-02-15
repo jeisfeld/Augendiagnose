@@ -72,7 +72,7 @@ public abstract class BaseImageSelectionHandler {
 	 *
 	 * @param view the view to be deselected.
 	 */
-	protected void deselectView(final EyeImageView view) {
+	public void deselectView(final EyeImageView view) {
 		if (getSelectedImages().contains(view.getEyePhoto())) {
 			highlightSelectedViews(false);
 			deselectEyePhoto(view.getEyePhoto());

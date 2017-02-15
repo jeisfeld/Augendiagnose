@@ -77,6 +77,10 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	 * The resource key for the next action to be done after organizing a pair of images.
 	 */
 	private static final String STRING_EXTRA_NEXTACTION = "de.jeisfeld.augendiagnoselib.NEXTACTION";
+	/**
+	 * Result code passed to indicate that the activity should be finished.
+	 */
+	public static final int RESULT_FINISH = 2;
 
 	/**
 	 * The input folder for images.
@@ -182,7 +186,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		mNextAction = (NextAction) getIntent().getSerializableExtra(STRING_EXTRA_NEXTACTION);
 		mFileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
-		if (savedInstanceState != null && savedInstanceState.getString("totalImageCount") != null) {
+		if (savedInstanceState != null) {
 			mTotalImageCount = savedInstanceState.getInt("totalImageCount");
 			String rightEyePath = savedInstanceState.getString("rightEyePhoto");
 			mPhotoRight = rightEyePath == null ? null : new EyePhoto(rightEyePath);
@@ -704,13 +708,18 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		switch (requestCode) {
 		case SelectTwoPicturesActivity.REQUEST_CODE:
-			SelectTwoPicturesActivity.FilePair filePair = SelectTwoPicturesActivity.getResult(resultCode, data);
-			if (filePair == null) {
+			if (resultCode == RESULT_FINISH) {
+				finish();
+				return;
+			}
+			String fileName1 = SelectTwoPicturesActivity.getResultFile1(resultCode, data);
+			String fileName2 = SelectTwoPicturesActivity.getResultFile2(resultCode, data);
+			if (fileName1 == null && fileName2 == null) {
 				setPicturesAndValues(true);
 			}
 			else {
-				mPhotoRight = filePair.getFile1() == null ? null : new EyePhoto(filePair.getFile1());
-				mPhotoLeft = filePair.getFile2() == null ? null : new EyePhoto(filePair.getFile2());
+				mPhotoRight = fileName1 == null ? null : new EyePhoto(fileName1);
+				mPhotoLeft = fileName2 == null ? null : new EyePhoto(fileName2);
 				updateImages(true);
 			}
 			break;

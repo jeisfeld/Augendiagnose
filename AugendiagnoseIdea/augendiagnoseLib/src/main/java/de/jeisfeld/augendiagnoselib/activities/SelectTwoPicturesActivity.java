@@ -4,7 +4,6 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -73,25 +72,12 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	private EyeImageView mSelectedView;
 
 	/**
-	 * The organize activity which has triggered the selection. Temporary static storage.
-	 */
-	@Nullable
-	private static OrganizeNewPhotosActivity mStaticParentActivity;
-
-	/**
-	 * The organize activity which has triggered the selection.
-	 */
-	@Nullable
-	private OrganizeNewPhotosActivity mParentActivity;
-
-	/**
 	 * Static helper method to start the activity, passing the path of the folder.
 	 *
 	 * @param activity   The activity starting this activity.
 	 * @param foldername The image folder.
 	 */
 	public static void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String foldername) {
-		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FOLDER, foldername);
 		activity.startActivityForResult(intent, REQUEST_CODE);
@@ -104,23 +90,39 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 * @param fileNames The list of image files.
 	 */
 	public static void startActivity(@NonNull final OrganizeNewPhotosActivity activity, final String[] fileNames) {
-		mStaticParentActivity = activity;
 		Intent intent = new Intent(activity, SelectTwoPicturesActivity.class);
 		intent.putExtra(STRING_EXTRA_FILENAMES, fileNames);
 		activity.startActivityForResult(intent, REQUEST_CODE);
 	}
 
 	/**
-	 * Static helper method to extract the selected filenames from the activity response.
+	 * Static helper method to extract the first selected filename from the activity response.
 	 *
 	 * @param resultCode The result code indicating if the response was successful.
 	 * @param data       The activity response data.
-	 * @return The returned file names.
+	 * @return The returned file name.
 	 */
-	public static FilePair getResult(final int resultCode, @NonNull final Intent data) {
+	public static String getResultFile1(final int resultCode, @NonNull final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle res = data.getExtras();
-			return new FilePair(res.getString(STRING_RESULT_FILENAME1), res.getString(STRING_RESULT_FILENAME2));
+			return res.getString(STRING_RESULT_FILENAME1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Static helper method to extract the second selected filename from the activity response.
+	 *
+	 * @param resultCode The result code indicating if the response was successful.
+	 * @param data       The activity response data.
+	 * @return The returned file name.
+	 */
+	public static String getResultFile2(final int resultCode, @NonNull final Intent data) {
+		if (resultCode == RESULT_OK) {
+			Bundle res = data.getExtras();
+			return res.getString(STRING_RESULT_FILENAME2);
 		}
 		else {
 			return null;
@@ -130,9 +132,6 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		mParentActivity = mStaticParentActivity;
-		mStaticParentActivity = null;
 
 		setContentView(R.layout.activity_select_two_pictures);
 
@@ -153,7 +152,6 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	@Override
 	protected final void onDestroy() {
 		super.onDestroy();
-		mParentActivity = null;
 	}
 
 	@Override
@@ -250,7 +248,12 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 					boolean success = mSelectedView.getEyePhoto().delete();
 					updateEyePhotoList();
 
-					if (!success) {
+					if (success) {
+						if (TwoImageSelectionHandler.getInstance().getSelectedImages().contains(mSelectedView.getEyePhoto())) {
+							TwoImageSelectionHandler.getInstance().deselectView(mSelectedView);
+						}
+					}
+					else {
 						DialogUtil.displayError(SelectTwoPicturesActivity.this,
 								R.string.message_dialog_failed_to_delete_file, false, mSelectedView
 										.getEyePhoto().getFilename());
@@ -282,8 +285,8 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 						updateEyePhotoList();
 
 						if (success) {
+							setResult(OrganizeNewPhotosActivity.RESULT_FINISH);
 							finish();
-							mParentActivity.finish();
 						}
 						else {
 							DialogUtil.displayError(SelectTwoPicturesActivity.this,
@@ -339,38 +342,5 @@ public class SelectTwoPicturesActivity extends BaseActivity {
 	 */
 	public final boolean isStartedWithInputFolder() {
 		return mFolder != null;
-	}
-
-	/**
-	 * Container for two files.
-	 */
-	public static final class FilePair {
-		/**
-		 * Constructor to create a pair of files.
-		 *
-		 * @param name1 The first file.
-		 * @param name2 The second file.
-		 */
-		private FilePair(final String name1, final String name2) {
-			mFile1 = name1 == null ? null : new File(name1);
-			mFile2 = name2 == null ? null : new File(name2);
-		}
-
-		/**
-		 * The first file stored in the container.
-		 */
-		private final File mFile1;
-		/**
-		 * The second file stored in the container.
-		 */
-		private final File mFile2;
-
-		public File getFile1() {
-			return mFile1;
-		}
-
-		public File getFile2() {
-			return mFile2;
-		}
 	}
 }
