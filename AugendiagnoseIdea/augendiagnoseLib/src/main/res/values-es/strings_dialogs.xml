@@ -11,6 +11,7 @@
     <string name="message_dialog_no_picture">No hay fotos en la carpeta de entrada</string>
     <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles</string>
     <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
+    <string name="message_dialog_organized_photos">Se han organizado las fotos seleccionadas. Hay más fotos que se pueden organizar.</string>
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">No se puede escribir en la carpeta %1$s. Por favor, asegúrese de conceder derechos de acceso a la tarjeta SD completa.</string>

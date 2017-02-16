@@ -90,11 +90,11 @@ public class EyePhoto {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
-		if (mFilename != null && !mFilename.equals(getFilename())) {
-			File targetFile = getNonExistingEyePhoto().getFile();
-			boolean success = FileUtil.moveFile(file, targetFile);
+		// Auto-correct file name if safely possible
+		if (mFilename != null && !mFilename.equals(getFilename()) && !getFile().exists()) {
+			boolean success = FileUtil.moveFile(file, getFile());
 			if (!success) {
-				Log.w(Application.TAG, "Failed to rename file" + file.getName() + " to " + targetFile.getAbsolutePath());
+				Log.w(Application.TAG, "Failed to rename file" + file.getName() + " to " + getAbsolutePath());
 			}
 		}
 	}

@@ -96,7 +96,8 @@ public class EyePhoto {
 		setPath(file.getParent());
 		setFilename(file.getName());
 
-		if (mFilename != null && !mFilename.equals(getFilename())) {
+		// Auto-correct file name if safely possible
+		if (mFilename != null && !mFilename.equals(getFilename()) && !getFile().exists()) {
 			boolean success = new File(getPath(), mFilename).renameTo(new File(getPath(), getFilename()));
 			if (!success) {
 				Logger.warning("Failed to rename file" + mFilename + " to " + getFilename());

@@ -11,6 +11,7 @@
     <string name="message_dialog_no_picture">Es sind keine Fotos zum Einordnen vorhanden</string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos vorhanden</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
+    <string name="message_dialog_organized_photos">Die ausgewählten Fotos wurden eingeordnet. Es gibt noch weiter Fotos, die eingeordnet werden können.</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">Verzeichnis %1$s ist nicht schreibbar. Bitte stellen Sie sicher, dass Sie Schreibrechte für die ganze SD-Karte erteilen.</string>

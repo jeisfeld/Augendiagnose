@@ -691,6 +691,7 @@ public class OrganizeNewPhotosActivity extends BaseActivity {
 		switch (mNextAction) {
 		case NEXT_IMAGES:
 			setPicturesAndValues(true);
+			DialogUtil.displayToast(this, R.string.message_dialog_organized_photos);
 			break;
 		case VIEW_IMAGES:
 			ListFoldersForDisplayActivity.startActivity(this);
