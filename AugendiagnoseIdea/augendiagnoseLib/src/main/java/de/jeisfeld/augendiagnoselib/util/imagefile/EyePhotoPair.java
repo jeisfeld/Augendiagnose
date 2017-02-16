@@ -109,6 +109,17 @@ public class EyePhotoPair {
 	}
 
 	/**
+	 * Check if the date of the eye photos is changeable to the given date.
+	 *
+	 * @param newDate the new date.
+	 * @return true if the change operation was successful on both eyes.
+	 */
+	public final boolean isDateChangeable(final Date newDate) {
+		return (mRightEye == null || mRightEye.isDateChangeable(newDate))
+				&& (mLeftEye == null || mLeftEye.isDateChangeable(newDate));
+	}
+
+	/**
 	 * Change the date of the eye photo pair.
 	 *
 	 * @param newDate the new date.

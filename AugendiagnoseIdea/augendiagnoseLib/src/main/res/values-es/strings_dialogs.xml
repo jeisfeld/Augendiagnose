@@ -15,6 +15,7 @@
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente.</string>
     <string name="message_dialog_cannot_write_to_folder_saf">No se puede escribir en la carpeta %1$s. Por favor, asegúrese de conceder derechos de acceso a la tarjeta SD completa.</string>
+    <string name="message_dialog_cannot_change_date">La fecha de las fotos de %1$s de %2$s no se puede cambiar a %3$s, ya que ya hay fotos para esta fecha</string>
     <string name="message_dialog_no_organized_photos">No hay fotos disponibles para la visualización. Por favor, tome primero un par de fotos oculares y asigne nombre y fecha.</string>
     <string name="message_dialog_file_does_not_exist">El archivo %1$s no existe.</string>
     <string name="message_dialog_failed_to_move_file">Error al mover el archivo %1$s a %2$s</string>

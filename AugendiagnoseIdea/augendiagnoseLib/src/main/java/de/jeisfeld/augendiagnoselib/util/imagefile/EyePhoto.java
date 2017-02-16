@@ -454,6 +454,20 @@ public class EyePhoto {
 		return success;
 	}
 
+
+	/**
+	 * Check if the date of the eye photo is changeable to the given date.
+	 *
+	 * @param newDate The new date.
+	 * @return true if it is changeable
+	 */
+	public final boolean isDateChangeable(final Date newDate) {
+		EyePhoto target = cloneFromPath();
+		target.setDate(newDate);
+		return !target.exists();
+	}
+
+
 	/**
 	 * Change the date renaming the file (keeping the path).
 	 *

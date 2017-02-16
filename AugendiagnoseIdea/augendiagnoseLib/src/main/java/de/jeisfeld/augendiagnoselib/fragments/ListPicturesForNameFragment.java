@@ -239,6 +239,15 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 
 							fragment.mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
 							Date newDate = new Date(fragment.mPictureDate.getTimeInMillis());
+
+							if (!pairToUpdate.isDateChangeable(newDate)) {
+								DialogUtil.displayError(activity, R.string.message_dialog_cannot_change_date, false,
+										pairToUpdate.getPersonName(),
+										pairToUpdate.getDateDisplayString(DATE_FORMAT),
+										DateUtil.format(newDate, DATE_FORMAT));
+								return;
+							}
+
 							boolean success = pairToUpdate.changeDate(newDate);
 							fragment.updateEyePhotoPairs();
 
