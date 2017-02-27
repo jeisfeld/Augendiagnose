@@ -1,8 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -16,11 +13,13 @@ import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -236,13 +235,14 @@ public class Camera1Handler implements CameraHandler {
 				mMaxDigitalZoom = parameters.getMaxZoom();
 
 				try {
-					parameters.setFocusMode(mCurrentFocusMode);
+					parameters.setFocusMode(mCurrentFocusMode == null ? Camera.Parameters.FOCUS_MODE_AUTO : mCurrentFocusMode);
+					mCamera.setParameters(parameters);
 				}
 				catch (Exception e) {
 					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+					mCamera.setParameters(parameters);
 				}
 
-				mCamera.setParameters(parameters);
 
 				if (mCurrentFlashlightMode != null) {
 					updateFlashlight();
