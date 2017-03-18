@@ -10,6 +10,8 @@
     <string name="menu_store_overlay_color">Store color of overlays</string>
     <string name="menu_reset_overlay_color">Reset color of overlays</string>
     <string name="menu_delete_overlay_position">Reset overlay position</string>
+    <string name="menu_share_this_image">Share this image</string>
+    <string name="menu_share_both_images">Share both images</string>
     <string name="menu_delete_images">Delete images</string>
     <string name="menu_delete_selected_image">Delete selected image</string>
     <string name="menu_delete_all_images">Delete all images</string>

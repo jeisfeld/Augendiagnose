@@ -222,4 +222,18 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		mFragmentImage2.requestLayout();
 	}
 
+	/**
+	 * Retrieve the other fragment (from one of the fragments).
+	 *
+	 * @param fragment The querying fragment.
+	 * @return The other fragment.
+	 */
+	public DisplayImageFragment getOtherFragment(final DisplayImageFragment fragment) {
+		if (fragment == mFragmentImage1) {
+			return mFragmentImage2;
+		}
+		else {
+			return mFragmentImage1;
+		}
+	}
 }

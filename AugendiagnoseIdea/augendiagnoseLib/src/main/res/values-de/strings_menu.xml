@@ -10,6 +10,8 @@
     <string name="menu_store_overlay_color">Farbe der Overlays speichern</string>
     <string name="menu_reset_overlay_color">Farbe der Overlays zurücksetzen</string>
     <string name="menu_delete_overlay_position">Overlay-Position zurücksetzen</string>
+    <string name="menu_share_this_image">Dieses Bild teilen</string>
+    <string name="menu_share_both_images">Beide Bilder teilen</string>
     <string name="menu_delete_images">Fotos löschen</string>
     <string name="menu_delete_selected_image">Ausgewähltes Foto löschen</string>
     <string name="menu_delete_all_images">Alle Fotos löschen</string>

@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -47,6 +48,7 @@ import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayImageActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity;
+import de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.GuiElementUpdater;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView.PinchMode;
@@ -58,6 +60,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
+import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
@@ -606,11 +609,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mShareButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				Intent intent = new Intent(Intent.ACTION_SEND);
-				Uri uri = MediaStoreUtil.getUriFromFile(mImageView.getEyePhoto().getAbsolutePath());
-				intent.putExtra(Intent.EXTRA_STREAM, uri);
-				intent.setType("image/*");
-				startActivity(intent);
+				showShareMenu(v);
 			}
 		});
 
@@ -1061,7 +1060,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				}
 			}
 		});
-		popup.inflate(R.menu.context_display_one);
+		popup.inflate(R.menu.menu_image_save);
 
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
 			popup.getMenu().removeGroup(R.id.group_overlay);
@@ -1072,6 +1071,68 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		popup.show();
 	}
+
+	/**
+	 * Create the popup menu for sharing the image.
+	 *
+	 * @param view The view opening the menu.
+	 */
+	private void showShareMenu(final View view) {
+		if (!(getActivity() instanceof DisplayTwoActivity)) {
+			// If only one image is displayed, no popup is required.
+			shareImage();
+			return;
+		}
+
+		PopupMenu popup = new PopupMenu(getActivity(), view);
+		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(@NonNull final MenuItem item) {
+				int itemId = item.getItemId();
+				if (itemId == R.id.action_share_this_image) {
+					shareImage();
+					return true;
+				}
+				else if (itemId == R.id.action_share_both_images) {
+					DisplayImageFragment otherFragment = ((DisplayTwoActivity) getActivity()).getOtherFragment(DisplayImageFragment.this);
+					Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+					ArrayList<Uri> uris = new ArrayList<>();
+					uris.add(MediaStoreUtil.getUriFromFile(getEyePhoto().getAbsolutePath()));
+					uris.add(MediaStoreUtil.getUriFromFile(otherFragment.getEyePhoto().getAbsolutePath()));
+					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+					intent.setType("image/*");
+					startActivity(intent);
+					return true;
+				}
+				else {
+					return true;
+				}
+			}
+		});
+		popup.inflate(R.menu.menu_image_share);
+		popup.show();
+	}
+
+	/**
+	 * Share the image in this view.
+	 */
+	private void shareImage() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		Uri uri = MediaStoreUtil.getUriFromFile(getEyePhoto().getAbsolutePath());
+		intent.putExtra(Intent.EXTRA_STREAM, uri);
+		intent.setType("image/*");
+		startActivity(intent);
+	}
+
+	/**
+	 * Get the displayed EyePhoto.
+	 *
+	 * @return The displayed EyePhoto.
+	 */
+	protected EyePhoto getEyePhoto() {
+		return mImageView.getEyePhoto();
+	}
+
 
 	/**
 	 * Store the comment in the image.

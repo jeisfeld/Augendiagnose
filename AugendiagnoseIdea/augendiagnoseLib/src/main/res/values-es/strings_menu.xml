@@ -10,6 +10,8 @@
     <string name="menu_store_overlay_color">Guardar color de superposición</string>
     <string name="menu_reset_overlay_color">Restablecer color de superposición</string>
     <string name="menu_delete_overlay_position">Eliminar posición de superposición</string>
+    <string name="menu_share_this_image">Compartir esta imagen</string>
+    <string name="menu_share_both_images">Compartir ambas imágenes</string>
     <string name="menu_delete_images">Eliminar fotos</string>
     <string name="menu_delete_selected_image">Eliminar foto seleccionada</string>
     <string name="menu_delete_all_images">Eliminar todas las fotos</string>

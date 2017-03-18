@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_share_this_image"
+        android:title="@string/menu_share_this_image"/>
+    <item
+        android:id="@+id/action_share_both_images"
+        android:title="@string/menu_share_both_images"/>
+
+</menu>
