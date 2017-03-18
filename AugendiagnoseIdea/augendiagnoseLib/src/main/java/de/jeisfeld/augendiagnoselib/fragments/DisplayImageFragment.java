@@ -60,10 +60,8 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
-import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
-import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -1078,50 +1076,53 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @param view The view opening the menu.
 	 */
 	private void showShareMenu(final View view) {
-		if (!(getActivity() instanceof DisplayTwoActivity)) {
-			// If only one image is displayed, no popup is required.
-			shareImage();
-			return;
+		final DisplayImageFragment otherFragment;
+		if (getActivity() instanceof DisplayTwoActivity) {
+			otherFragment = ((DisplayTwoActivity) getActivity()).getOtherFragment(DisplayImageFragment.this);
+		}
+		else {
+			otherFragment = null;
 		}
 
 		PopupMenu popup = new PopupMenu(getActivity(), view);
+
 		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(@NonNull final MenuItem item) {
 				int itemId = item.getItemId();
-				if (itemId == R.id.action_share_this_image) {
-					shareImage();
-					return true;
-				}
-				else if (itemId == R.id.action_share_both_images) {
-					DisplayImageFragment otherFragment = ((DisplayTwoActivity) getActivity()).getOtherFragment(DisplayImageFragment.this);
+
+				boolean currentView = itemId == R.id.action_share_this_image_view || itemId == R.id.action_share_both_image_views;
+				boolean bothImages = itemId == R.id.action_share_both_images || itemId == R.id.action_share_both_image_views;
+
+				if (bothImages && otherFragment != null) {
 					Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 					ArrayList<Uri> uris = new ArrayList<>();
-					uris.add(MediaStoreUtil.getUriFromFile(getEyePhoto().getAbsolutePath()));
-					uris.add(MediaStoreUtil.getUriFromFile(otherFragment.getEyePhoto().getAbsolutePath()));
+					uris.add(mImageView.getBitmapUri(currentView, "image"));
+					uris.add(otherFragment.getImageView().getBitmapUri(currentView, "image2"));
 					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 					intent.setType("image/*");
 					startActivity(intent);
 					return true;
 				}
 				else {
+					Intent intent = new Intent(Intent.ACTION_SEND);
+					Uri uri = mImageView.getBitmapUri(currentView, "image");
+					intent.putExtra(Intent.EXTRA_STREAM, uri);
+					intent.setType("image/*");
+					startActivity(intent);
 					return true;
 				}
 			}
 		});
-		popup.inflate(R.menu.menu_image_share);
-		popup.show();
-	}
 
-	/**
-	 * Share the image in this view.
-	 */
-	private void shareImage() {
-		Intent intent = new Intent(Intent.ACTION_SEND);
-		Uri uri = MediaStoreUtil.getUriFromFile(getEyePhoto().getAbsolutePath());
-		intent.putExtra(Intent.EXTRA_STREAM, uri);
-		intent.setType("image/*");
-		startActivity(intent);
+		popup.inflate(R.menu.menu_image_share);
+
+		if (otherFragment == null) {
+			popup.getMenu().removeItem(R.id.action_share_both_images);
+			popup.getMenu().removeItem(R.id.action_share_both_image_views);
+		}
+
+		popup.show();
 	}
 
 	/**
@@ -1129,10 +1130,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 *
 	 * @return The displayed EyePhoto.
 	 */
-	protected EyePhoto getEyePhoto() {
-		return mImageView.getEyePhoto();
+	protected OverlayPinchImageView getImageView() {
+		return mImageView;
 	}
-
 
 	/**
 	 * Store the comment in the image.

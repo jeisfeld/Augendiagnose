@@ -1,8 +1,5 @@
 package de.jeisfeld.augendiagnoselib.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -13,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -21,6 +19,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -271,7 +272,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Standard constructor to be implemented for all views.
 	 *
 	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs The attributes of the XML tag that is inflating the view.
+	 * @param attrs   The attributes of the XML tag that is inflating the view.
 	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public OverlayPinchImageView(final Context context, final AttributeSet attrs) {
@@ -281,10 +282,10 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs The attributes of the XML tag that is inflating the view.
+	 * @param context  The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs    The attributes of the XML tag that is inflating the view.
 	 * @param defStyle An attribute in the current theme that contains a reference to a style resource that supplies default
-	 *            values for the view. Can be 0 to not look for defaults.
+	 *                 values for the view. Can be 0 to not look for defaults.
 	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public OverlayPinchImageView(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -303,8 +304,8 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Fill with an image, initializing from metadata.
 	 *
-	 * @param pathName The pathname of the image
-	 * @param activity The triggering activity (required for bitmap caching)
+	 * @param pathName   The pathname of the image
+	 * @param activity   The triggering activity (required for bitmap caching)
 	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	@Override
@@ -581,7 +582,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Get information if the view can handle overlays.
 	 *
 	 * @return true if the view can handle overlays. This is possible only if the right/left position of the eye photo
-	 *         is defined.
+	 * is defined.
 	 */
 	public final boolean canHandleOverlays() {
 		return mEyePhoto != null && mEyePhoto.getRightLeft() != null;
@@ -590,7 +591,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Trigger one overlay either for activation or for deactivation.
 	 *
-	 * @param position number of the overlay
+	 * @param position  number of the overlay
 	 * @param pinchMode the way in which pinching should be done. ALL indicates that the overlay should not be shown.
 	 */
 	public final void triggerOverlay(final int position, final PinchMode pinchMode) {
@@ -608,7 +609,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Switch the lock status of the overlays.
 	 *
-	 * @param lock the target lock status
+	 * @param lock  the target lock status
 	 * @param store a flag indicating if the lock status should be stored.
 	 */
 	public final void lockOverlay(final boolean lock, final boolean store) {
@@ -641,7 +642,7 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Change the positioning of the image dependent on the overlay setup phase.
 	 *
 	 * @param overlayStatus The overlay status.
-	 * @param circleRadius The relative circle radius (compared to min view dimension)
+	 * @param circleRadius  The relative circle radius (compared to min view dimension)
 	 */
 	public final void updatePosition(final OverlayStatus overlayStatus, final float circleRadius) {
 		switch (overlayStatus) {
@@ -870,17 +871,17 @@ public class OverlayPinchImageView extends PinchImageView {
 	 * Create a drawable from a black image drawable, having a changed colour.
 	 *
 	 * @param sourceDrawable The black image drawable
-	 * @param color The target color
-	 * @param origPupilSize The pupil size (relative to iris) in the original overlay bitmap.
-	 * @param destPupilSize The pupil size (relative to iris) in the target overlay bitmap.
-	 * @param pupilOffsetX The relative x offset of the pupil center
-	 * @param pupilOffsetY The relative y offset of the pupil center
+	 * @param color          The target color
+	 * @param origPupilSize  The pupil size (relative to iris) in the original overlay bitmap.
+	 * @param destPupilSize  The pupil size (relative to iris) in the target overlay bitmap.
+	 * @param pupilOffsetX   The relative x offset of the pupil center
+	 * @param pupilOffsetY   The relative y offset of the pupil center
 	 * @return The modified drawable, with the intended color.
 	 */
 	@NonNull
 	private Drawable getModifiedDrawable(@NonNull final Drawable sourceDrawable, @Nullable final Integer color,
-			final float origPupilSize, @Nullable final Float destPupilSize,
-			final Float pupilOffsetX, final Float pupilOffsetY) {
+										 final float origPupilSize, @Nullable final Float destPupilSize,
+										 final Float pupilOffsetX, final Float pupilOffsetY) {
 		Bitmap bitmap = ((BitmapDrawable) sourceDrawable).getBitmap();
 		Bitmap colouredBitmap = color == null ? bitmap : ImageUtil.changeBitmapColor(bitmap, color);
 
@@ -917,14 +918,14 @@ public class OverlayPinchImageView extends PinchImageView {
 	/**
 	 * Update color settings (brightness, contrast, saturation, colorTemperature) of the image.
 	 *
-	 * @param brightness the brightness on a scale -1 to 1
-	 * @param contrast the contrast on a scale from -1 to 1
-	 * @param saturation the saturation on a scale from -1 to 1.
+	 * @param brightness       the brightness on a scale -1 to 1
+	 * @param contrast         the contrast on a scale from -1 to 1
+	 * @param saturation       the saturation on a scale from -1 to 1.
 	 * @param colorTemperature the color temperature on a scale from -1 to 1.
-	 * @param fromSeekbar flag indicating if the color change was triggered from a move on the seekbar.
+	 * @param fromSeekbar      flag indicating if the color change was triggered from a move on the seekbar.
 	 */
 	public final void updateColorSettings(final Float brightness, final Float contrast, final Float saturation, final Float colorTemperature,
-			final boolean fromSeekbar) {
+										  final boolean fromSeekbar) {
 		if (brightness != null) {
 			mBrightness = brightness;
 		}
@@ -1399,36 +1400,7 @@ public class OverlayPinchImageView extends PinchImageView {
 		Thread fullResolutionThread = new Thread() {
 			@Override
 			public void run() {
-				if (mPartialBitmapFullResolution == null) {
-					try {
-						mPartialBitmapFullResolution = createFullResolutionBitmap();
-					}
-					catch (OutOfMemoryError e) {
-						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap", e);
-						mPartialBitmapFullResolution = null;
-					}
-
-					if (mPartialBitmapFullResolution == null) {
-						return;
-					}
-				}
-
-				if (mPartialBitmapFullResolutionWithBrightness == null) {
-					try {
-						mPartialBitmapFullResolutionWithBrightness =
-								ImageUtil.changeBitmapColors(mPartialBitmapFullResolution, mContrast, mBrightness, mSaturation, mColorTemperature);
-					}
-					catch (OutOfMemoryError e) {
-						Log.e(Application.TAG, "Out of memory while creating full resolution bitmap with brightness", e);
-						mPartialBitmapFullResolutionWithBrightness = null;
-					}
-
-					if (mPartialBitmapFullResolutionWithBrightness == null) {
-						return;
-					}
-				}
-
-				final Bitmap partialBitmapWithOverlay = addOverlayToPartialBitmap(mPartialBitmapFullResolutionWithBrightness);
+				final Bitmap partialBitmapWithOverlay = getFullResolutionBitmapWithOverlay();
 
 				if (isInterrupted()) {
 					// Do not display the result if the thread has been interrupted.
@@ -1488,6 +1460,44 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Create the full resolution bitmap including the overlay.
+	 *
+	 * @return The bitmap.
+	 */
+	private Bitmap getFullResolutionBitmapWithOverlay() {
+		if (mPartialBitmapFullResolution == null) {
+			try {
+				mPartialBitmapFullResolution = createFullResolutionBitmap();
+			}
+			catch (OutOfMemoryError e) {
+				Log.e(Application.TAG, "Out of memory while creating full resolution bitmap", e);
+				mPartialBitmapFullResolution = null;
+			}
+
+			if (mPartialBitmapFullResolution == null) {
+				return null;
+			}
+		}
+
+		if (mPartialBitmapFullResolutionWithBrightness == null) {
+			try {
+				mPartialBitmapFullResolutionWithBrightness =
+						ImageUtil.changeBitmapColors(mPartialBitmapFullResolution, mContrast, mBrightness, mSaturation, mColorTemperature);
+			}
+			catch (OutOfMemoryError e) {
+				Log.e(Application.TAG, "Out of memory while creating full resolution bitmap with brightness", e);
+				mPartialBitmapFullResolutionWithBrightness = null;
+			}
+
+			if (mPartialBitmapFullResolutionWithBrightness == null) {
+				return null;
+			}
+		}
+
+		return addOverlayToPartialBitmap(mPartialBitmapFullResolutionWithBrightness);
+	}
+
+	/**
 	 * Clean the cached full resolution bitmaps. In case of full cleaning, a normal resolution snapshot is displayed.
 	 *
 	 * @param onlyBrightness Flag indicating if only the brightness/contrast bitmap is cleaned, but the position is kept.
@@ -1528,6 +1538,22 @@ public class OverlayPinchImageView extends PinchImageView {
 		}
 		else {
 			interruptFullResolutionThread();
+		}
+	}
+
+	/**
+	 * Get the URL of the image for sharing.
+	 *
+	 * @param currentView  If true, the current view will be considered, otherwise the full bitmap.
+	 * @param tempFileName The name of the temporary file (required in case of currentView=true)
+	 * @return The URL.
+	 */
+	public Uri getBitmapUri(final boolean currentView, final String tempFileName) {
+		if (currentView) {
+			return ImageUtil.getUriForFullResolutionBitmap(getFullResolutionBitmapWithOverlay(), tempFileName);
+		}
+		else {
+			return MediaStoreUtil.getUriFromFile(getEyePhoto().getAbsolutePath());
 		}
 	}
 
@@ -1771,12 +1797,12 @@ public class OverlayPinchImageView extends PinchImageView {
 		/**
 		 * Get the retainFragment - search it by the index. If not found, create a new one.
 		 *
-		 * @param fm The fragment manager handling this fragment.
+		 * @param fm    The fragment manager handling this fragment.
 		 * @param index The index of the view (required in case of multiple PinchImageViews to be retained).
 		 * @return the retainFragment.
 		 */
 		@NonNull
-		public static final RetainFragment findOrCreateRetainFragment(@NonNull final FragmentManager fm, final int index) {
+		public static RetainFragment findOrCreateRetainFragment(@NonNull final FragmentManager fm, final int index) {
 			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
 			if (fragment == null) {
 				fragment = new RetainFragment();

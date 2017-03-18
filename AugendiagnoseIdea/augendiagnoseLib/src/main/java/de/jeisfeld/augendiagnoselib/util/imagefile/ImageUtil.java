@@ -1,15 +1,8 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,8 +16,19 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -57,6 +61,11 @@ public final class ImageUtil {
 	 * The file endings considered as image files.
 	 */
 	private static final List<String> IMAGE_SUFFIXES = Arrays.asList("JPG", "JPEG", "PNG", "BMP", "TIF", "TIFF", "GIF");
+
+	/**
+	 * The precision for saving jpeg of views.
+	 */
+	private static final int JPEG_PRECISION = 95;
 
 	/**
 	 * The max size of a byte.
@@ -351,7 +360,7 @@ public final class ImageUtil {
 		float offset = BYTE / 2f * (1 - contrast + brightness * contrast + brightness);
 		float oppositeSaturation = (1 - saturation) / 2;
 
-		ColorMatrix cm = new ColorMatrix(new float[] { //
+		ColorMatrix cm = new ColorMatrix(new float[]{ //
 				factorRed * saturation, factorGreen * oppositeSaturation, factorBlue * oppositeSaturation, 0, offset, //
 				factorRed * oppositeSaturation, factorGreen * saturation, factorBlue * oppositeSaturation, 0, offset, //
 				factorRed * oppositeSaturation, factorGreen * oppositeSaturation, factorBlue * saturation, 0, offset, //
@@ -575,6 +584,30 @@ public final class ImageUtil {
 	 */
 	private static Bitmap getDummyBitmap() {
 		return BitmapFactory.decodeResource(Application.getAppContext().getResources(), R.drawable.cannot_read_image);
+	}
+
+	/**
+	 * Store a bitmap in a temporary file and return the URL.
+	 *
+	 * @param bitmap       the bitmap
+	 * @param tempFileName The name of the temporary file.
+	 * @return The URL.
+	 */
+	public static Uri getUriForFullResolutionBitmap(final Bitmap bitmap, final String tempFileName) {
+		try {
+			File cachePath = new File(Application.getAppContext().getCacheDir(), "images");
+			cachePath.mkdirs();
+			File imageFile = new File(cachePath, tempFileName + ".jpg");
+			FileOutputStream stream = new FileOutputStream(imageFile);
+			bitmap.compress(CompressFormat.JPEG, JPEG_PRECISION, stream);
+			stream.close();
+
+			return FileProvider.getUriForFile(Application.getAppContext(), "de.jeisfeld.augendiagnoselib.fileprovider", imageFile);
+		}
+		catch (IOException e) {
+			Log.e(Application.TAG, "Failed to store bitmap", e);
+			return null;
+		}
 	}
 
 	/**

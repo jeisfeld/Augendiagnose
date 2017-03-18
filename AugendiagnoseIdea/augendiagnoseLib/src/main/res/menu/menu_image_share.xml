@@ -4,7 +4,13 @@
         android:id="@+id/action_share_this_image"
         android:title="@string/menu_share_this_image"/>
     <item
+        android:id="@+id/action_share_this_image_view"
+        android:title="@string/menu_share_this_image_view"/>
+    <item
         android:id="@+id/action_share_both_images"
         android:title="@string/menu_share_both_images"/>
+    <item
+        android:id="@+id/action_share_both_image_views"
+        android:title="@string/menu_share_both_image_views"/>
 
 </menu>
