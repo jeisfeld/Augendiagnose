@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    tools:context=".activities.DisplayOneActivityOverlay">
+    tools:context=".activities.DisplayOneActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,6 +33,11 @@
             android:id="@+id/buttonComment"
             style="@style/ActionBarButtonLandscape"
             android:drawableRight="@drawable/ic_comment"/>
+
+        <Button
+            android:id="@+id/buttonShare"
+            style="@style/ActionBarButtonLandscape"
+            android:drawableRight="@drawable/ic_action_share"/>
 
         <Button
             android:id="@+id/buttonSave"

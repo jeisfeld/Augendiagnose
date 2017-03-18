@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".activities.DisplayOneActivityOverlay">
+    tools:context=".activities.DisplayOneActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,6 +33,11 @@
             android:id="@+id/buttonComment"
             style="@style/ActionBarButtonPortrait"
             android:drawableBottom="@drawable/ic_comment"/>
+
+        <Button
+            android:id="@+id/buttonShare"
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_action_share"/>
 
         <Button
             android:id="@+id/buttonSave"
@@ -186,7 +191,6 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/togglebutton_fullsize"
         android:orientation="horizontal"
-        android:visibility="invisible">
         android:visibility="gone">
 
         <ToggleButton

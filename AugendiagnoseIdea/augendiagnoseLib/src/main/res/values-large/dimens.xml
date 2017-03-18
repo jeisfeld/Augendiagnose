@@ -10,6 +10,9 @@
     <dimen name="togglebutton_fullsize">56dp</dimen>
     <dimen name="guide_text_size">20sp</dimen>
 
+    <!-- Action bar simulation -->
+    <dimen name="actionbar_buttonwidth">48dip</dimen>
+
     <!-- Camera settings -->
     <dimen name="camerabutton_size">84dp</dimen>
     <dimen name="camerabutton_padding">15dp</dimen>

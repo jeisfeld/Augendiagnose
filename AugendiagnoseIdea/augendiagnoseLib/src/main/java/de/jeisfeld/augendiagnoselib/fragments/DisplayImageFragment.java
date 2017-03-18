@@ -1,15 +1,15 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.io.IOException;
-
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,6 +39,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.io.IOException;
+
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -58,6 +60,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -182,6 +185,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The button for saving image metadata.
 	 */
 	private Button mSaveButton;
+
+	/**
+	 * The button for sharing the image.
+	 */
+	private Button mShareButton;
 
 	/**
 	 * The button for showing or hiding the tools.
@@ -374,6 +382,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mInfoButton = (Button) getView().findViewById(R.id.buttonInfo);
 		mCommentButton = (Button) getView().findViewById(R.id.buttonComment);
 		mSaveButton = (Button) getView().findViewById(R.id.buttonSave);
+		mShareButton = (Button) getView().findViewById(R.id.buttonShare);
 		mToolsButton = (Button) getView().findViewById(R.id.buttonTools);
 		mHelpButton = (Button) getView().findViewById(R.id.buttonHelp);
 		mGuidedTopoSetupButton = (Button) getView().findViewById(R.id.buttonGuidedTopoSetup);
@@ -591,6 +600,17 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 					((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this, mImageView.getMetadata().getComment());
 					DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
 				}
+			}
+		});
+
+		mShareButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				Uri uri = MediaStoreUtil.getUriFromFile(mImageView.getEyePhoto().getAbsolutePath());
+				intent.putExtra(Intent.EXTRA_STREAM, uri);
+				intent.setType("image/*");
+				startActivity(intent);
 			}
 		});
 
@@ -1348,7 +1368,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	/**
 	 * Status of the button to move the pupil.
 	 */
-	public enum PupilButtonStatus {
+	private enum PupilButtonStatus {
 		/**
 		 * Button is off.
 		 */

@@ -17,7 +17,7 @@
     <!-- Action bar simulation -->
     <dimen name="actionbar_colorstrip">2dp</dimen>
     <dimen name="actionbar_height">32dip</dimen>
-    <dimen name="actionbar_buttonwidth">48dip</dimen>
+    <dimen name="actionbar_buttonwidth">44dip</dimen>
 
     <!-- Camera settings -->
     <dimen name="camerabutton_size">56dp</dimen>
