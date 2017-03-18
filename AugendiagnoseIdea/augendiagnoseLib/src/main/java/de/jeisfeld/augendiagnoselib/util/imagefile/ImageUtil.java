@@ -602,7 +602,7 @@ public final class ImageUtil {
 			bitmap.compress(CompressFormat.JPEG, JPEG_PRECISION, stream);
 			stream.close();
 
-			return FileProvider.getUriForFile(Application.getAppContext(), "de.jeisfeld.augendiagnoselib.fileprovider", imageFile);
+			return FileProvider.getUriForFile(Application.getAppContext(), Application.getAppContext().getPackageName() + ".fileprovider", imageFile);
 		}
 		catch (IOException e) {
 			Log.e(Application.TAG, "Failed to store bitmap", e);

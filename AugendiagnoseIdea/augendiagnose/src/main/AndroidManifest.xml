@@ -169,6 +169,16 @@
             android:name="com.admarvel.android.ads.AdMarvelLocalFileContentProvider"
             android:authorities="de.jeisfeld.augendiagnoselib.AdMarvelLocalFileContentProvider"
             android:exported="false"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="de.eisfeldj.augendiagnose.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>
     </application>
 
 </manifest>
