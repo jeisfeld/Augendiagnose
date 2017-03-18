@@ -346,6 +346,10 @@
 			en la barra de acciones)
 		</li>
 
+		<li>Compartir la foto (por medio del botón &laquo;compartir&raquo; <img src="../drawable/ic_action_share.png" /> en la
+			barra de acciones)
+		</li>
+
 		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; <img
 			src="../drawable/ic_comment.png" /> en la barra de acciones)
 		</li>

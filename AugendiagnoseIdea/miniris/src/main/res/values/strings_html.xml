@@ -339,6 +339,9 @@
 			bar)
 		</li>
 
+		<li>Share the image (via &ldquo;share&rdquo; <img src="../drawable/ic_action_share.png" /> button on action bar)
+		</li>
+
 		<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button on
 			action bar)
 		</li>

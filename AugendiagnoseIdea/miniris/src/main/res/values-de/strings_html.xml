@@ -348,6 +348,10 @@
 			im Action-Menü)
 		</li>
 
+		<li>Teilen des Fotos (über den &bdquo;Teilen&ldquo;-Button <img src="../drawable/ic_action_share.png" /> im
+			Action-Menü)
+		</li>
+
 		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img src="../drawable/ic_comment.png" />
 			im Action-Menü)
 		</li>
