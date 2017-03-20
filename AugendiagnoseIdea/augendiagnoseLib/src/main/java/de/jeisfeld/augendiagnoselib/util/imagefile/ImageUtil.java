@@ -594,6 +594,9 @@ public final class ImageUtil {
 	 * @return The URL.
 	 */
 	public static Uri getUriForFullResolutionBitmap(final Bitmap bitmap, final String tempFileName) {
+		if (bitmap == null) {
+			return null;
+		}
 		try {
 			File cachePath = new File(Application.getAppContext().getCacheDir(), "images");
 			cachePath.mkdirs();
