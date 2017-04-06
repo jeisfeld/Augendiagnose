@@ -40,7 +40,7 @@
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>
-    <string name="message_dialog_confirm_delete_folder">Do you really want to delete the %1$s with all photos?</string>
+    <string name="message_dialog_confirm_delete_folder">Do you really want to delete %1$s with all photos?</string>
     <string name="message_dialog_confirm_delete_photo">Do you really want to delete the photo %1$s?</string>
     <string name="message_dialog_confirm_delete_two_photos">Do you really want to delete the two photos?</string>
     <string name="message_dialog_confirm_delete_all_photos">Do you really want to delete all photos from the input folder?</string>

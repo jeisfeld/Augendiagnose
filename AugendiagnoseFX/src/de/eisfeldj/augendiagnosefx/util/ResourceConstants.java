@@ -62,6 +62,7 @@ public final class ResourceConstants {
 	public static final String MESSAGE_CONFIRM_EXIT_UNSAVED = "message_confirm_exit_unsaved";
 	public static final String MESSAGE_CONFIRM_NEW_VERSION = "message_confirm_new_version";
 	public static final String MESSAGE_DIALOG_CONFIRM_DELETE_DATE = "message_dialog_confirm_delete_date";
+	public static final String MESSAGE_DIALOG_CONFIRM_DELETE_FOLDER = "message_dialog_confirm_delete_folder";
 	public static final String MESSAGE_ERROR_COULD_NOT_OPEN_LOG_FILE = "message_error_could_not_open_log_file";
 	public static final String MESSAGE_ERROR_FAILED_TO_STORE_METADATA = "message_error_failed_to_store_metadata";
 	public static final String MESSAGE_ERROR_UNKNOWN_ERROR = "message_error_unknown_error";

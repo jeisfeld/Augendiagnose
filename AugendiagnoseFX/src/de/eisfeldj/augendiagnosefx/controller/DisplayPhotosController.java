@@ -18,10 +18,12 @@ import java.util.TreeMap;
 
 import de.eisfeldj.augendiagnosefx.fxelements.EyePhotoPairNode;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 import de.eisfeldj.augendiagnosefx.util.Logger;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
 import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 
@@ -30,12 +32,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -95,6 +102,9 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		mListNames.setItems(FXCollections.observableList(valuesNames));
 
 		String lastName = PreferenceUtil.getPreferenceString(KEY_LAST_NAME);
+		if (lastName == null && valuesNames.size() > 0) {
+			lastName = valuesNames.get(0);
+		}
 		if (lastName != null && valuesNames.contains(lastName)) {
 			if (loadPhotos) {
 				showPicturesForName(lastName);
@@ -119,10 +129,15 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	@FXML
 	private void handleNameClick(final MouseEvent event) {
 		String name = mListNames.getSelectionModel().getSelectedItem();
-		if (name != null && !name.equals(mPreviousName)) {
-			showPicturesForName(name);
+		if (event.getButton() == MouseButton.SECONDARY) {
+			createContextMenu(name).show(getRoot(), event.getScreenX(), event.getScreenY());
 		}
-		PreferenceUtil.setPreference(KEY_LAST_NAME, name);
+		else {
+			if (name != null && !name.equals(mPreviousName)) {
+				showPicturesForName(name);
+			}
+			PreferenceUtil.setPreference(KEY_LAST_NAME, name);
+		}
 	}
 
 	/**
@@ -140,6 +155,53 @@ public class DisplayPhotosController extends BaseController implements Initializ
 				initializeNames(mSearchField.getText(), false);
 			}
 		});
+	}
+
+	/**
+	 * Create the context menu when clicking on a name.
+	 *
+	 * @param name The name.
+	 * @return The context menu.
+	 */
+	private ContextMenu createContextMenu(final String name) {
+		ContextMenu menu = new ContextMenu();
+
+		MenuItem menuItemRemove = new MenuItem();
+		menuItemRemove.setText(ResourceUtil.getString(ResourceConstants.MENU_DELETE_IMAGES));
+
+		menuItemRemove.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				DialogUtil.displayConfirmationMessage(new ConfirmDialogListener() {
+
+					@Override
+					public void onDialogPositiveClick() {
+						File folder = new File(new File(PreferenceUtil.getPreferenceString(KEY_FOLDER_PHOTOS)), name);
+						File[] children = folder.listFiles();
+						if (children != null) {
+							for (File child : children) {
+								child.delete();
+							}
+						}
+						folder.delete();
+
+						if (name.equals(PreferenceUtil.getPreferenceString(KEY_LAST_NAME))) {
+							PreferenceUtil.removePreference(KEY_LAST_NAME);
+						}
+						initializeNames("", true);
+					}
+
+					@Override
+					public void onDialogNegativeClick() {
+						// do nothing
+					}
+				}, ResourceConstants.BUTTON_DELETE,
+						ResourceConstants.MESSAGE_DIALOG_CONFIRM_DELETE_FOLDER, name);
+			}
+		});
+		menu.getItems().add(menuItemRemove);
+
+		return menu;
 	}
 
 	/**

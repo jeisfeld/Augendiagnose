@@ -320,4 +320,13 @@ public final class PreferenceUtil {
 		}
 	}
 
+	/**
+	 * Remove a preference with a certain key.
+	 *
+	 * @param key The key.
+	 */
+	public static void removePreference(final String key) {
+		mPrefs.remove(key);
+	}
+
 }
