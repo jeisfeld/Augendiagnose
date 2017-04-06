@@ -16,6 +16,7 @@ public final class ResourceConstants {
 	public static final String APP_NAME = "app_name";
 	public static final String BUTTON_BACK = "button_back";
 	public static final String BUTTON_CANCEL = "button_cancel";
+	public static final String BUTTON_DELETE = "button_delete";
 	public static final String BUTTON_DOWNLOAD = "button_download";
 	public static final String BUTTON_EDIT_COMMENT = "button_edit_comment";
 	public static final String BUTTON_OK = "button_ok";
@@ -41,6 +42,7 @@ public final class ResourceConstants {
 	public static final String MENU_CHECK_UPDATES = "menu_check_updates";
 	public static final String MENU_CLOSE = "menu_close";
 	public static final String MENU_COMMENT_PANE = "menu_comment_pane";
+	public static final String MENU_DELETE_IMAGES = "menu_delete_images";
 	public static final String MENU_DISPLAY_FULL = "menu_display_full";
 	public static final String MENU_EXIT = "menu_exit";
 	public static final String MENU_FILE = "menu_file";
@@ -59,6 +61,7 @@ public final class ResourceConstants {
 	public static final String MENU_WINDOW = "menu_window";
 	public static final String MESSAGE_CONFIRM_EXIT_UNSAVED = "message_confirm_exit_unsaved";
 	public static final String MESSAGE_CONFIRM_NEW_VERSION = "message_confirm_new_version";
+	public static final String MESSAGE_DIALOG_CONFIRM_DELETE_DATE = "message_dialog_confirm_delete_date";
 	public static final String MESSAGE_ERROR_COULD_NOT_OPEN_LOG_FILE = "message_error_could_not_open_log_file";
 	public static final String MESSAGE_ERROR_FAILED_TO_STORE_METADATA = "message_error_failed_to_store_metadata";
 	public static final String MESSAGE_ERROR_UNKNOWN_ERROR = "message_error_unknown_error";

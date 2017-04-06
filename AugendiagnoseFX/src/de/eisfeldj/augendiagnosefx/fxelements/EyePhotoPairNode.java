@@ -1,13 +1,17 @@
 package de.eisfeldj.augendiagnosefx.fxelements;
 
-import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImageHolderController;
 import de.eisfeldj.augendiagnosefx.controller.DisplayImagePairController;
+import de.eisfeldj.augendiagnosefx.controller.DisplayPhotosController;
 import de.eisfeldj.augendiagnosefx.controller.MainController;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil;
+import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.FxmlConstants;
 import de.eisfeldj.augendiagnosefx.util.FxmlUtil;
 import de.eisfeldj.augendiagnosefx.util.PreferenceUtil;
+import de.eisfeldj.augendiagnosefx.util.ResourceConstants;
+import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
@@ -19,12 +23,16 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
@@ -35,7 +43,7 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	/**
 	 * The parent controller.
 	 */
-	private BaseController mParentController;
+	private DisplayPhotosController mParentController;
 
 	/**
 	 * Height of the left image.
@@ -45,6 +53,11 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * Height of the right image.
 	 */
 	private double mHeightRight = 0;
+
+	/**
+	 * The eye photo pair.
+	 */
+	private EyePhotoPair mPair;
 
 	/**
 	 * The label for the date.
@@ -87,8 +100,9 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 *            The parent controller.
 	 */
 	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
-	public EyePhotoPairNode(final EyePhotoPair pair, final BaseController initialParentController) {
+	public EyePhotoPairNode(final EyePhotoPair pair, final DisplayPhotosController initialParentController) {
 		mParentController = initialParentController;
+		mPair = pair;
 
 		FxmlUtil.loadFromFxml(this, FxmlConstants.FXML_EYE_PHOTO_PAIR_NODE);
 
@@ -104,6 +118,9 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 		mLabelDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
+				if (event.getButton() != MouseButton.PRIMARY) {
+					return;
+				}
 				if (MainController.getInstance().isSplitPane()) {
 					return;
 				}
@@ -115,6 +132,43 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 				}
 			}
 		});
+
+		mLabelDate.setContextMenu(createDateContextMenu());
+	}
+
+	/**
+	 * Create the context menu for the date.
+	 *
+	 * @return the context menu.
+	 */
+	private ContextMenu createDateContextMenu() {
+		ContextMenu menu = new ContextMenu();
+
+		MenuItem menuItemRemove = new MenuItem();
+		menuItemRemove.setText(ResourceUtil.getString(ResourceConstants.MENU_DELETE_IMAGES));
+
+		menuItemRemove.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				DialogUtil.displayConfirmationMessage(new ConfirmDialogListener() {
+
+					@Override
+					public void onDialogPositiveClick() {
+						mParentController.removeItem(EyePhotoPairNode.this);
+						mPair.delete();
+					}
+
+					@Override
+					public void onDialogNegativeClick() {
+						// do nothing
+					}
+				}, ResourceConstants.BUTTON_DELETE,
+						ResourceConstants.MESSAGE_DIALOG_CONFIRM_DELETE_DATE, mPair.getPersonName(), mLabelDate.getText());
+			}
+		});
+		menu.getItems().add(menuItemRemove);
+
+		return menu;
 	}
 
 	/**

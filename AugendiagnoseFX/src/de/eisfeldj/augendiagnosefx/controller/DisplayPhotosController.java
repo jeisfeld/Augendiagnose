@@ -192,6 +192,15 @@ public class DisplayPhotosController extends BaseController implements Initializ
 		});
 	}
 
+	/**
+	 * Remove the item for one date from the list.
+	 *
+	 * @param node The row to be removed.
+	 */
+	public void removeItem(final EyePhotoPairNode node) {
+		mListPhotos.getItems().remove(node);
+	}
+
 	// METHODS CLONED FROM ANDROID
 
 	/**

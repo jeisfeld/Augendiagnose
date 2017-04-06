@@ -33,21 +33,24 @@ public final class StringConverter {
 	 */
 	private static final File[] XML_FILES_GLOBAL = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings.xml"),
 			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_menu.xml"),
-			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_settings.xml")};
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_settings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values/strings_dialogs.xml")};
 
 	/**
 	 * The German String file.
 	 */
 	private static final File[] XML_FILES_DE = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings.xml"),
 			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_menu.xml"),
-			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_settings.xml")};
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_settings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-de/strings_dialogs.xml")};
 
 	/**
 	 * The Spanish String file.
 	 */
 	private static final File[] XML_FILES_ES = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings.xml"),
 			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_menu.xml"),
-			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_settings.xml")};
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_settings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_dialogs.xml")};
 
 	/**
 	 * The global Properties file.
