@@ -1,13 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -24,6 +16,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.text.CollationKey;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -45,11 +48,6 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * The resource key of the parent folder.
 	 */
 	protected static final String STRING_FOLDER = "de.jeisfeld.augendiagnoselib.FOLDER";
-
-	/**
-	 * The list of folder names which should be shown on top of the list.
-	 */
-	protected static final String[] FOLDERS_TOP = {"TOPOGRAPH", "TOPOGRAF", "IRIDOLOG"};
 
 	/**
 	 * The maximum allowed number of names in the trial version.
@@ -149,9 +147,6 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 */
 	private void createList() {
 		List<String> folderNames = getFolderNames(mParentFolder);
-		if (folderNames == null) {
-			folderNames = new ArrayList<>();
-		}
 
 		if (mDirectoryListAdapter == null) {
 			// fill initial adapter
@@ -179,7 +174,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 * @return The list of subfolders.
 	 */
 	@NonNull
-	public static final List<String> getFolderNames(@NonNull final File parentFolder) {
+	public static List<String> getFolderNames(@NonNull final File parentFolder) {
 		File[] folders = parentFolder.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(@NonNull final File pathname) {
@@ -187,17 +182,24 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 			}
 		});
 
+		List<String> folderNames = new ArrayList<>();
 		if (folders == null) {
-			return new ArrayList<>();
+			return folderNames;
+		}
+
+		Collator collator = Collator.getInstance();
+		final Map<File, CollationKey> collationMap = new HashMap<>();
+		for (File folder : folders) {
+			collationMap.put(folder, collator.getCollationKey(getFilenameForSorting(folder)));
 		}
 
 		Arrays.sort(folders, new Comparator<File>() {
 			@Override
-			public int compare(@NonNull final File f1, @NonNull final File f2) {
-				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
+			public int compare(final File f1, final File f2) {
+				return collationMap.get(f1).compareTo(collationMap.get(f2));
 			}
 		});
-		List<String> folderNames = new ArrayList<>();
+
 		for (File f : folders) {
 			folderNames.add(f.getName());
 		}
@@ -219,7 +221,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 	 */
 	@NonNull
 	private static String getFilenameForSorting(@NonNull final File f) {
-		String name = f.getName().toUpperCase(Locale.getDefault());
+		String name = f.getName();
 
 		boolean sortByLastName = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_sort_by_last_name);
 		if (sortByLastName) {
@@ -231,14 +233,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 			}
 		}
 
-		if (name.indexOf(' ') < 0) {
-			for (String folder : FOLDERS_TOP) {
-				if (name.contains(folder)) {
-					return "1" + name;
-				}
-			}
-		}
-		return "2" + name;
+		return name;
 	}
 
 	/**

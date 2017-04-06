@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.net.URL;
+import java.text.CollationKey;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -45,11 +47,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_NAME;
  * BaseController for the "Display Photos" page.
  */
 public class DisplayPhotosController extends BaseController implements Initializable {
-	/**
-	 * The list of folder names which should be shown on top of the list.
-	 */
-	protected static final String[] FOLDERS_TOP = {"TOPOGRAPH", "TOPOGRAF", "IRIDOLOG"};
-
 	/**
 	 * The previous selected name.
 	 */
@@ -219,10 +216,16 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			return folderNames;
 		}
 
+		Collator collator = Collator.getInstance();
+		final Map<File, CollationKey> collationMap = new HashMap<>();
+		for (File folder : folders) {
+			collationMap.put(folder, collator.getCollationKey(getFilenameForSorting(folder)));
+		}
+
 		Arrays.sort(folders, new Comparator<File>() {
 			@Override
 			public int compare(final File f1, final File f2) {
-				return getFilenameForSorting(f1).compareTo(getFilenameForSorting(f2));
+				return collationMap.get(f1).compareTo(collationMap.get(f2));
 			}
 		});
 		for (File f : folders) {
@@ -259,7 +262,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 	 * @return The name for Sorting
 	 */
 	private static String getFilenameForSorting(final File f) {
-		String name = f.getName().toUpperCase(Locale.getDefault());
+		String name = f.getName();
 
 		boolean sortByLastName = PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_SORT_BY_LAST_NAME);
 		if (sortByLastName) {
@@ -271,14 +274,7 @@ public class DisplayPhotosController extends BaseController implements Initializ
 			}
 		}
 
-		if (name.indexOf(' ') < 0) {
-			for (int i = 0; i < FOLDERS_TOP.length; i++) {
-				if (name.contains(FOLDERS_TOP[i])) {
-					return "1" + name;
-				}
-			}
-		}
-		return "2" + name;
+		return name;
 	}
 
 	/**
