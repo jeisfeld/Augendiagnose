@@ -11,11 +11,11 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import de.eisfeldj.augendiagnose.R;
-import de.jeisfeld.augendiagnoselib.activities.BaseActivity;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
+import de.jeisfeld.augendiagnoselib.activities.StandardActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
@@ -25,7 +25,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 /**
  * Main activity of the application.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends StandardActivity {
 
 	@Override
 	protected final void onCreate(@Nullable final Bundle savedInstanceState) {

@@ -12,7 +12,7 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
  * Base activity to display the list of subfolders of a folder Abstract class - child classes determine the detailed
  * actions. The folders should contain eye photos (following the name policy).
  */
-public abstract class ListFoldersBaseActivity extends BaseActivity {
+public abstract class ListFoldersBaseActivity extends StandardActivity {
 	/**
 	 * The parent folder.
 	 */

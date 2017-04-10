@@ -1,9 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.io.File;
-import java.util.List;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -12,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -22,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -32,6 +30,9 @@ import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
 import com.immersion.hapticmediasdk.utils.Log;
+
+import java.io.File;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -483,7 +484,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 * @param data        An Intent, which can return result data to the caller (various data can be attached to Intent
 	 *                    "extras").
 	 */
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 	private void onActivityResultLollipop(final int requestCode, final int resultCode, @NonNull final Intent data) {
 		int preferenceKeyUri;
 		int preferenceKeyFolder;
@@ -724,6 +725,7 @@ public class SettingsFragment extends PreferenceFragment {
 						private static final long serialVersionUID = 1L;
 
 						@Override
+						@RequiresApi(api = VERSION_CODES.LOLLIPOP)
 						public void onDialogClick(final DialogFragment dialog) {
 							triggerStorageAccessFramework(code);
 						}
@@ -761,7 +763,7 @@ public class SettingsFragment extends PreferenceFragment {
 		 *
 		 * @param code The request code to be used.
 		 */
-		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+		@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 		private void triggerStorageAccessFramework(final int code) {
 			Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 			startActivityForResult(intent, code);

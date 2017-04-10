@@ -13,7 +13,7 @@ import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment.ListPi
  * Base activity to display the pictures in an eye photo folder (in pairs) Abstract class - child classes determine the
  * detailed actions.
  */
-public abstract class ListPicturesForNameBaseActivity extends BaseActivity implements
+public abstract class ListPicturesForNameBaseActivity extends StandardActivity implements
 		ListPicturesForNameFragmentHolder {
 	/**
 	 * The resource key for the name of the folder/person to be displayed.

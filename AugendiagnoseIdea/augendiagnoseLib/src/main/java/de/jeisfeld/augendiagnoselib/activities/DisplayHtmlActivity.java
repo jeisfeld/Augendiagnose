@@ -1,8 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.util.Arrays;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Arrays;
 
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHelpNavigationFragment;
@@ -22,7 +21,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 /**
  * Activity to display an HTML page. Used for display of help pages.
  */
-public class DisplayHtmlActivity extends Activity {
+public class DisplayHtmlActivity extends BaseActivity {
 
 	/**
 	 * The resource key for the resource to be displayed.

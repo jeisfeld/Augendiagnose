@@ -29,7 +29,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 /**
  * Activity to select a pair of eye photos from a folder and return the paths to the parent activity.
  */
-public class SelectTwoPicturesActivity extends BaseActivity {
+public class SelectTwoPicturesActivity extends StandardActivity {
 	/**
 	 * The requestCode with which this activity is started.
 	 */

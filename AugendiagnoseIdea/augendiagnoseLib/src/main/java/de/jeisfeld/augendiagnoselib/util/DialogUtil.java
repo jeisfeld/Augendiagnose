@@ -1,8 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.io.Serializable;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,13 +7,19 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
@@ -265,7 +268,6 @@ public final class DialogUtil {
 	 * @param value    The value of the parameter.
 	 * @return The formatted line.
 	 */
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private static String formatImageInfoLine(@NonNull final Activity activity, final int resource, @NonNull final String value) {
 		StringBuilder line = new StringBuilder("<b>");
 		line.append(activity.getString(resource));
@@ -309,7 +311,7 @@ public final class DialogUtil {
 		}
 
 		Bundle bundle = new Bundle();
-		bundle.putCharSequence(PARAM_MESSAGE, Html.fromHtml(message.toString()));
+		bundle.putCharSequence(PARAM_MESSAGE, fromHtml(message.toString()));
 		bundle.putString(PARAM_TITLE, activity.getString(R.string.title_dialog_image_info));
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
 		DialogFragment fragment = new DisplayMessageDialogFragment();
@@ -330,6 +332,43 @@ public final class DialogUtil {
 
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_outofmemoryerror, false);
 		}
+	}
+
+	/**
+	 * Convert a html String into a text.
+	 *
+	 * @param html The html
+	 * @return the text
+	 */
+	public static Spanned fromHtml(final String html) {
+		if (VERSION.SDK_INT >= VERSION_CODES.N) {
+			return fromHtml24(html);
+		}
+		else {
+			return fromHtml23(html);
+		}
+	}
+
+	/**
+	 * Convert a html String into a text (Android version below N).
+	 *
+	 * @param html The html
+	 * @return the text
+	 */
+	@SuppressWarnings("deprecation")
+	private static Spanned fromHtml23(final String html) {
+		return Html.fromHtml(html);
+	}
+
+	/**
+	 * Convert a html String into a text (Android version N or higher).
+	 *
+	 * @param html The html
+	 * @return the text
+	 */
+	@RequiresApi(api = VERSION_CODES.N)
+	private static Spanned fromHtml24(final String html) {
+		return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
 	}
 
 	/**
@@ -405,14 +444,14 @@ public final class DialogUtil {
 			 *
 			 * @param dialog the confirmation dialog fragment.
 			 */
-			void onDialogClick(final DialogFragment dialog);
+			void onDialogClick(DialogFragment dialog);
 
 			/**
 			 * Callback method for cancellation of the dialog.
 			 *
 			 * @param dialog the confirmation dialog fragment.
 			 */
-			void onDialogCancel(final DialogFragment dialog);
+			void onDialogCancel(DialogFragment dialog);
 		}
 	}
 
@@ -498,14 +537,14 @@ public final class DialogUtil {
 			 *
 			 * @param dialog the confirmation dialog fragment.
 			 */
-			void onDialogPositiveClick(final DialogFragment dialog);
+			void onDialogPositiveClick(DialogFragment dialog);
 
 			/**
 			 * Callback method for negative click from the confirmation dialog.
 			 *
 			 * @param dialog the confirmation dialog fragment.
 			 */
-			void onDialogNegativeClick(final DialogFragment dialog);
+			void onDialogNegativeClick(DialogFragment dialog);
 		}
 	}
 

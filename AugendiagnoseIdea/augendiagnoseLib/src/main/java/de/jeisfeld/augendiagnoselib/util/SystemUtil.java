@@ -8,8 +8,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -198,10 +201,35 @@ public final class SystemUtil {
 		}
 
 		if (locale == null || locale.length() != 2) {
-			locale = context.getResources().getConfiguration().locale.getCountry();
+			if (VERSION.SDK_INT >= VERSION_CODES.N) {
+				locale = getDefaultLocale24().getCountry();
+			}
+			else {
+				locale = getDefaultLocale23().getCountry();
+			}
 		}
 
 		return locale;
+	}
+
+	/**
+	 * Get the default locale for Android version below N.
+	 *
+	 * @return The default locale.
+	 */
+	@SuppressWarnings("deprecation")
+	private static Locale getDefaultLocale23() {
+		return Application.getAppContext().getResources().getConfiguration().locale;
+	}
+
+	/**
+	 * Get the default locale for Android version above N.
+	 *
+	 * @return The default locale.
+	 */
+	@RequiresApi(api = VERSION_CODES.N)
+	private static Locale getDefaultLocale24() {
+		return Application.getAppContext().getResources().getConfiguration().getLocales().get(0);
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +17,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
  *
  * @author Joerg
  */
-public abstract class DisplayImageActivity extends Activity implements ContextMenuReferenceHolder,
+public abstract class DisplayImageActivity extends BaseActivity implements ContextMenuReferenceHolder,
 		ActivityWithExplicitLayoutTrigger {
 	/**
 	 * The fragment tag for the edit fragment.

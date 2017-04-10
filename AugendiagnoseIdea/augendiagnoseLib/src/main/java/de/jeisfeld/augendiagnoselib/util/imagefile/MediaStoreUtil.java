@@ -1,7 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.io.File;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -9,10 +7,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.annotation.NonNull;
+
+import java.io.File;
 
 import de.jeisfeld.augendiagnoselib.Application;
 
@@ -74,8 +76,8 @@ public final class MediaStoreUtil {
 
 		try {
 			Cursor imagecursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					new String[] {MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + " = ?",
-					new String[] {path}, MediaStore.Images.Media.DATE_ADDED + " desc");
+					new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + " = ?",
+					new String[]{path}, MediaStore.Images.Media.DATE_ADDED + " desc");
 			if (imagecursor == null) {
 				throw new ImageNotFoundException();
 			}
@@ -106,8 +108,8 @@ public final class MediaStoreUtil {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
 		Cursor filecursor = resolver.query(MediaStore.Files.getContentUri("external"),
-				new String[] {BaseColumns._ID}, MediaColumns.DATA + " = ?",
-				new String[] {path}, MediaColumns.DATE_ADDED + " desc");
+				new String[]{BaseColumns._ID}, MediaColumns.DATA + " = ?",
+				new String[]{path}, MediaColumns.DATE_ADDED + " desc");
 		if (filecursor == null) {
 			return null;
 		}
@@ -138,14 +140,13 @@ public final class MediaStoreUtil {
 	public static int getAlbumIdFromAudioFile(@NonNull final File file) {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 		Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				new String[] {MediaStore.Audio.AlbumColumns.ALBUM_ID},
+				new String[]{MediaStore.Audio.AlbumColumns.ALBUM_ID},
 				MediaStore.MediaColumns.DATA + "=?",
-				new String[] {file.getAbsolutePath()}, null);
+				new String[]{file.getAbsolutePath()}, null);
 		if (cursor == null || !cursor.moveToFirst()) {
 			// Entry not available - create entry.
 			if (cursor != null) {
 				cursor.close();
-				cursor = null;
 			}
 			ContentValues values = new ContentValues();
 			values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
@@ -156,9 +157,9 @@ public final class MediaStoreUtil {
 			resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
 		}
 		cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				new String[] {MediaStore.Audio.AlbumColumns.ALBUM_ID},
+				new String[]{MediaStore.Audio.AlbumColumns.ALBUM_ID},
 				MediaStore.MediaColumns.DATA + "=?",
-				new String[] {file.getAbsolutePath()}, null);
+				new String[]{file.getAbsolutePath()}, null);
 		if (cursor == null) {
 			return 0;
 		}
@@ -199,13 +200,24 @@ public final class MediaStoreUtil {
 
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = MINI_THUMB_SIZE / maxSize;
-			options.inDither = true;
+			setDither(options);
 			return MediaStore.Images.Thumbnails.getThumbnail(resolver, imageId, MediaStore.Images.Thumbnails.MINI_KIND,
 					options);
 
 		}
 		catch (ImageNotFoundException e) {
 			return null;
+		}
+	}
+
+	/**
+	 * Set the BitmapFactory to dither = true. (Deprecated since Android N.)
+	 * @param options The BitmapFactory options.
+	 */
+	@SuppressWarnings("deprecation")
+	private static void setDither(final BitmapFactory.Options options) {
+		if (Build.VERSION.SDK_INT <= VERSION_CODES.M) {
+			options.inDither = true;
 		}
 	}
 
@@ -233,7 +245,7 @@ public final class MediaStoreUtil {
 		try {
 			int imageId = getImageId(path);
 			resolver.delete(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
-					MediaStore.Images.Thumbnails.IMAGE_ID + " = ?", new String[] {"" + imageId});
+					MediaStore.Images.Thumbnails.IMAGE_ID + " = ?", new String[]{"" + imageId});
 		}
 		catch (ImageNotFoundException e) {
 			// ignore

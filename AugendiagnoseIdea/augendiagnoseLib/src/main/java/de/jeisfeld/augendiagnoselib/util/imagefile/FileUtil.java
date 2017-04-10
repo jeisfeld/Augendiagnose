@@ -1,12 +1,12 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.storage.StorageManager;
@@ -14,6 +14,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
@@ -574,6 +575,7 @@ public final class FileUtil {
 	 * @param folder The directory
 	 * @return true if it is possible to write in this directory.
 	 */
+	@RequiresApi(api = VERSION_CODES.LOLLIPOP)
 	public static boolean isWritableNormalOrSaf(@Nullable final File folder) {
 		// Verify that this is a directory.
 		if (folder == null || !folder.exists() || !folder.isDirectory()) {
@@ -595,7 +597,7 @@ public final class FileUtil {
 		}
 
 		// Next check SAF writability.
-		DocumentFile document = null;
+		DocumentFile document;
 		try {
 			document = getDocumentFile(file, false, false);
 		}
@@ -639,7 +641,7 @@ public final class FileUtil {
 	 *
 	 * @return A list of external SD card paths.
 	 */
-	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	private static String[] getExtSdCardPaths() {
 		List<String> paths = new ArrayList<>();
 		for (File file : Application.getAppContext().getExternalFilesDirs("external")) {
@@ -670,7 +672,7 @@ public final class FileUtil {
 	 * @return The main folder of the external SD card containing this file, if the file is on an SD card. Otherwise,
 	 * null is returned.
 	 */
-	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	public static String getExtSdCardFolder(@NonNull final File file) {
 		String[] extSdPaths = getExtSdCardPaths();
 		try {
@@ -692,7 +694,7 @@ public final class FileUtil {
 	 * @param file The file.
 	 * @return true if on external sd card.
 	 */
-	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	public static boolean isOnExtSdCard(@NonNull final File file) {
 		return getExtSdCardFolder(file) != null;
 	}
@@ -706,6 +708,7 @@ public final class FileUtil {
 	 * @param createDirectories flag indicating if intermediate path directories should be created if not existing.
 	 * @return The DocumentFile
 	 */
+	@RequiresApi(api = VERSION_CODES.LOLLIPOP)
 	private static DocumentFile getDocumentFile(@NonNull final File file, final boolean isDirectory,
 												final boolean createDirectories) {
 		Uri[] treeUris = PreferenceUtil.getTreeUris();
@@ -782,6 +785,7 @@ public final class FileUtil {
 	 * @param treeUri The tree RI.
 	 * @return The path (without trailing file separator).
 	 */
+	@RequiresApi(api = VERSION_CODES.LOLLIPOP)
 	@Nullable
 	private static String getFullPathFromTreeUri(@Nullable final Uri treeUri) {
 		if (treeUri == null) {
@@ -869,7 +873,7 @@ public final class FileUtil {
 	 * @param treeUri The tree URI.
 	 * @return The volume ID.
 	 */
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 	private static String getVolumeIdFromTreeUri(final Uri treeUri) {
 		final String docId = DocumentsContract.getTreeDocumentId(treeUri);
 		final String[] split = docId.split(":");
@@ -888,7 +892,7 @@ public final class FileUtil {
 	 * @param treeUri The tree URI.
 	 * @return the document path.
 	 */
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 	private static String getDocumentPathFromTreeUri(final Uri treeUri) {
 		final String docId = DocumentsContract.getTreeDocumentId(treeUri);
 		final String[] split = docId.split(":");

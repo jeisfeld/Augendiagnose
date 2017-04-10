@@ -60,7 +60,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
  *
  * <p>The activity can be started either with a folder name, or with an array of file names.
  */
-public class OrganizeNewPhotosActivity extends BaseActivity {
+public class OrganizeNewPhotosActivity extends StandardActivity {
 	/**
 	 * The resource key for the input folder.
 	 */

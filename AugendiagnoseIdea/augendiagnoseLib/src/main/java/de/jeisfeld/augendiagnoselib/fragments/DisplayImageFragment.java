@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -14,7 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Html;
+import android.support.annotation.RequiresApi;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -831,7 +830,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (position == getHighestOverlayButtonIndex()) {
 			if (position > 1) {
-				MenuItem menuItemRemove = menu.add(Html.fromHtml("<b>" + getString(R.string.menu_remove_overlay_button) + "</b>"));
+				MenuItem menuItemRemove = menu.add(DialogUtil.fromHtml("<b>" + getString(R.string.menu_remove_overlay_button) + "</b>"));
 				menuItemRemove.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
@@ -845,7 +844,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 
 			if (position < OVERLAY_BUTTON_COUNT - 1) {
-				MenuItem menuItemAdd = menu.add(Html.fromHtml("<b>" + getString(R.string.menu_add_overlay_button) + "</b>"));
+				MenuItem menuItemAdd = menu.add(DialogUtil.fromHtml("<b>" + getString(R.string.menu_add_overlay_button) + "</b>"));
 				menuItemAdd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
@@ -915,9 +914,9 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @return The popup menu.
 	 */
 	@NonNull
-	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	private PopupMenu getPopupMenuKitkat(final View anchorView) {
-		return new PopupMenu(getActivity(), anchorView, Gravity.RIGHT);
+		return new PopupMenu(getActivity(), anchorView, Gravity.END);
 	}
 
 	/**

@@ -14,6 +14,8 @@ import android.graphics.Paint.Style;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.os.AsyncTask;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -81,7 +83,7 @@ import static de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft.RIG
 /**
  * An activity to take pictures with the camera.
  */
-public class CameraActivity extends BaseActivity {
+public class CameraActivity extends StandardActivity {
 	/**
 	 * The resource key for the folder where to store the photos.
 	 */
@@ -264,7 +266,7 @@ public class CameraActivity extends BaseActivity {
 		if (permission == PackageManager.PERMISSION_GRANTED) {
 			setupActivity();
 		}
-		// BaseActivity will request for permission. If permission is granted, then onRequestPermissionsResult will setup the activity.
+		// StandardActivity will request for permission. If permission is granted, then onRequestPermissionsResult will setup the activity.
 	}
 
 	/**
@@ -749,7 +751,7 @@ public class CameraActivity extends BaseActivity {
 
 			@Override
 			public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-				if (isCamera2()) {
+				if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && isCamera2()) {
 					Camera2Handler cameraHandler = (Camera2Handler) mCameraHandler;
 					PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, progress);
 
@@ -1255,7 +1257,7 @@ public class CameraActivity extends BaseActivity {
 	private void setCameraHandler() {
 		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
 		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
-		if (isCamera2()) {
+		if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && isCamera2()) {
 			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
 			camera1View.setVisibility(GONE);
 			camera2View.setVisibility(VISIBLE);

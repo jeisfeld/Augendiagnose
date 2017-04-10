@@ -1,6 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.ImageFormat;
@@ -26,6 +25,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
@@ -50,7 +50,7 @@ import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
 /**
  * A handler to take pictures with the camera via the new Camera interface.
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @SuppressWarnings("static-access")
 public class Camera2Handler implements CameraHandler {
 

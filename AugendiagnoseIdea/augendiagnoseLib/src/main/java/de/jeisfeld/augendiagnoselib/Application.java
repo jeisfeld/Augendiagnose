@@ -1,21 +1,22 @@
 package de.jeisfeld.augendiagnoselib;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
+
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.Locale;
 
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -25,24 +26,22 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 		justification = "Intentionally using same name as superclass")
 public class Application extends android.app.Application {
 	/**
-	 * An instance of this application.
+	 * The private constants of this app.
 	 */
-	private static Application mApplication;
+	private static ApplicationSettings mApplicationSettings;
+	/**
+	 * An instance of the application context.
+	 */
+	private static Context mContext;
 
 	/**
 	 * The default tag for logging.
 	 */
 	public static final String TAG = "Augendiagnose.JE";
 
-	/**
-	 * The private constants of this app.
-	 */
-	@Nullable
-	private ApplicationSettings mApplicationSettings = null;
-
 	@Nullable
 	private static ApplicationSettings getApplicationSettings() {
-		return mApplication.mApplicationSettings;
+		return mApplicationSettings;
 	}
 
 	// OVERRIDABLE
@@ -51,7 +50,7 @@ public class Application extends android.app.Application {
 			justification = "Make some context visible statically (no matter which one)")
 	public void onCreate() {
 		super.onCreate();
-		Application.mApplication = this;
+		Application.mContext = this.getApplicationContext();
 
 		SettingsActivity.setDefaultSharedPreferences(getApplicationContext());
 
@@ -60,7 +59,7 @@ public class Application extends android.app.Application {
 
 		// Initialize special classes
 		try {
-			mApplicationSettings =
+			Application.mApplicationSettings =
 					(ApplicationSettings) Class.forName(getResourceString(R.string.class_application_settings))
 							.getDeclaredMethod("getInstance", new Class<?>[0])
 							.invoke(null);
@@ -113,7 +112,7 @@ public class Application extends android.app.Application {
 	 * @return The (statically stored) application context
 	 */
 	public static Context getAppContext() {
-		return Application.mApplication.getApplicationContext();
+		return Application.mContext;
 	}
 
 	/**
@@ -212,11 +211,37 @@ public class Application extends android.app.Application {
 	 * @param locale The locale to be set.
 	 */
 	private static void setLocale(final Locale locale) {
+		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
+			setLocale17(locale);
+		}
+		else {
+			setLocale16(locale);
+		}
+	}
+
+	/**
+	 * Set the locale for Android version below Jelly Bean.
+	 *
+	 * @param locale The locale to be set.
+	 */
+	@RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR1)
+	private static void setLocale17(final Locale locale) {
+		Configuration conf = getAppContext().getResources().getConfiguration();
+		conf.setLocale(locale);
+		Application.mContext = getAppContext().createConfigurationContext(conf);
+	}
+
+	/**
+	 * Set the locale for Android version above Jelly Bean.
+	 *
+	 * @param locale The locale to be set.
+	 */
+	@SuppressWarnings("deprecation")
+	private static void setLocale16(final Locale locale) {
 		Resources res = getAppContext().getResources();
-		DisplayMetrics dm = res.getDisplayMetrics();
 		Configuration conf = res.getConfiguration();
 		conf.locale = locale;
-		res.updateConfiguration(conf, dm);
+		res.updateConfiguration(conf, res.getDisplayMetrics());
 	}
 
 	/**
