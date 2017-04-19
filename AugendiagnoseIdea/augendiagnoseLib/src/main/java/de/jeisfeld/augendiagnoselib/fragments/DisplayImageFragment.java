@@ -339,8 +339,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	// OVERRIDABLE
 	@Nullable
 	@Override
-	public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
-							 final Bundle savedInstanceState) {
+	public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (SystemUtil.isLandscape()) {
 			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);

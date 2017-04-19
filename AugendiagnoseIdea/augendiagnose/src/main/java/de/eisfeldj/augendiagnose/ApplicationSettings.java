@@ -6,10 +6,8 @@ import android.support.annotation.NonNull;
 
 import de.eisfeldj.augendiagnose.activities.MainActivity;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
-import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.AdMarvelUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

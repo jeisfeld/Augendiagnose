@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/layout_main_margin"
+              android:baselineAligned="false"
+              android:orientation="horizontal"
+              android:padding="0dip"
+              tools:context=".activities.MainActivity">
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/mainButtonTakePictures"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="0dip"
+            android:layout_weight="1"
+            android:onClick="takePicturesActivity"
+            android:text="@string/button_take_pictures"
+            tools:ignore="NestedWeights"/>
+
+        <Button
+            android:id="@+id/mainButtonOpenEyeFiApp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="0dip"
+            android:layout_weight="1"
+            android:onClick="openEyeFiApp"
+            android:text="@string/button_open_eyefi_app"
+            tools:ignore="NestedWeights"/>
+
+        <Button
+            android:id="@+id/mainButtonOrganizeNewPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="0dip"
+            android:layout_weight="1"
+            android:onClick="organizeNewFoldersActivity"
+            android:text="@string/button_organize_new_photos"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/mainButtonListFolders"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="0dip"
+            android:layout_weight="1"
+            android:onClick="listFoldersForDisplayActivity"
+            android:text="@string/button_display_pictures"
+            tools:ignore="NestedWeights"/>
+
+        <com.admarvel.android.ads.AdMarvelView
+            android:id="@+id/admarvel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dip"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="buttons_main_margin">6dp</dimen>
+    <dimen name="layout_main_margin">6dp</dimen>
+
+</resources>
