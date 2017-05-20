@@ -1,22 +1,11 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
 import android.media.ExifInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPException;
-
-import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -36,6 +25,17 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
  * Helper clase to retrieve and save metadata in a JPEG file.
@@ -400,19 +400,23 @@ public final class JpegMetadataUtil {
 				rootDirectory.add(TiffTagConstants.TIFF_TAG_ORIENTATION, metadata.getOrientation());
 			}
 
-			try {
-				os = new FileOutputStream(tempFile);
-				os = new BufferedOutputStream(os);
-				new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+			int retryCount = 0;
+			do {
+				try {
+					os = new FileOutputStream(tempFile);
+					os = new BufferedOutputStream(os);
+					new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
+				}
+				catch (Exception e) {
+					Log.w(Application.TAG, "Error storing EXIF data lossless - try lossy approach");
+					os = new FileOutputStream(tempFile);
+					os = new BufferedOutputStream(os);
+					new ExifRewriter().updateExifMetadataLossy(jpegImageFile, os, outputSet);
+				}
+				IoUtils.closeQuietly(true, os);
+				retryCount++;
 			}
-			catch (Exception e) {
-				Log.w(Application.TAG, "Error storing EXIF data lossless - try lossy approach");
-				os = new FileOutputStream(tempFile);
-				os = new BufferedOutputStream(os);
-				new ExifRewriter().updateExifMetadataLossy(jpegImageFile, os, outputSet);
-			}
-
-			IoUtils.closeQuietly(true, os);
+			while (tempFile.length() == 0 && retryCount < 2);
 
 			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFile.getAbsolutePath() + " to "
@@ -483,12 +487,17 @@ public final class JpegMetadataUtil {
 			parser.setJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET, metadata.getPupilYOffsetString());
 			parser.setJeInt(XmpHandler.ITEM_FLAGS, metadata.getFlags());
 
-			os = new FileOutputStream(tempFile);
-			os = new BufferedOutputStream(os);
+			int retryCount = 0;
+			do {
+				os = new FileOutputStream(tempFile);
+				os = new BufferedOutputStream(os);
 
-			new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
+				new JpegXmpRewriter().updateXmpXml(jpegImageFile, os, parser.getXmpString());
 
-			IoUtils.closeQuietly(true, os);
+				IoUtils.closeQuietly(true, os);
+				retryCount++;
+			}
+			while (tempFile.length() == 0 && retryCount < 2);
 
 			if (!FileUtil.moveFile(tempFile, jpegImageFile)) {
 				throw new IOException("Failed to rename file " + tempFile.getAbsolutePath() + " to "

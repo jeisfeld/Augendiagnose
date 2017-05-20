@@ -234,6 +234,12 @@ public final class FileUtil {
 
 		if (!success) {
 			success = copyFile(source, target);
+
+			if (success && target.length() < source.length()) {
+				Log.w(Application.TAG, "Lengh reduced from " + source.length() + " to " + target.length()
+						+ " while copying file " + source.getName() + ". Trying once more.");
+				success = copyFile(source, target);
+			}
 			if (success) {
 				success = deleteFile(source);
 			}
@@ -309,7 +315,7 @@ public final class FileUtil {
 	public static File getTempFile(@NonNull final File file) {
 		File extDir = new File(Application.getAppContext().getExternalCacheDir(), "temp");
 		if (!extDir.exists()) {
-			//noinspection ResultOfMethodCallIgnored
+			// noinspection ResultOfMethodCallIgnored
 			extDir.mkdirs();
 		}
 		return new File(extDir, file.getName());
@@ -362,7 +368,7 @@ public final class FileUtil {
 	public static File getTempCameraFolder() {
 		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
 		if (!result.exists()) {
-			//noinspection ResultOfMethodCallIgnored
+			// noinspection ResultOfMethodCallIgnored
 			result.mkdirs();
 		}
 		return result;
@@ -559,7 +565,7 @@ public final class FileUtil {
 
 		// Ensure that file is not created during this process.
 		if (!isExisting) {
-			//noinspection ResultOfMethodCallIgnored
+			// noinspection ResultOfMethodCallIgnored
 			file.delete();
 		}
 
