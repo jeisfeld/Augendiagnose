@@ -40,6 +40,7 @@
         <item>1.2</item>
         <item>1.2.1</item>
         <item>1.2.2</item>
+        <item>1.2.3</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -69,6 +70,7 @@
         <item>Added privacy policy</item>
         <item>Enabled capturing of single eye photos. Bugfixes</item>
         <item>Enabled sharing of eye photos. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 

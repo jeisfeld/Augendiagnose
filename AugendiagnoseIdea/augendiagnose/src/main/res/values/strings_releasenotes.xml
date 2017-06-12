@@ -111,6 +111,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.2</item>
         <item>1.2.1</item>
         <item>1.2.2</item>
+        <item>1.2.3</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -180,6 +181,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Added privacy policy</item>
         <item>Enabled handling of single eye photos. Bugfixes</item>
         <item>Enabled sharing of eye photos. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
