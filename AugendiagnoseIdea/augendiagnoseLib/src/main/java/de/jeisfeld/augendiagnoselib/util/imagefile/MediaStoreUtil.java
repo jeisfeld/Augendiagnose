@@ -201,8 +201,12 @@ public final class MediaStoreUtil {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = MINI_THUMB_SIZE / maxSize;
 			setDither(options);
-			return MediaStore.Images.Thumbnails.getThumbnail(resolver, imageId, MediaStore.Images.Thumbnails.MINI_KIND,
-					options);
+			try {
+				return MediaStore.Images.Thumbnails.getThumbnail(resolver, imageId, MediaStore.Images.Thumbnails.MINI_KIND, options);
+			}
+			catch (Exception e) {
+				return null;
+			}
 
 		}
 		catch (ImageNotFoundException e) {

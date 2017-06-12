@@ -94,7 +94,15 @@ public final class DialogUtil {
 		}
 		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		try {
+			fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		}
+		catch (IllegalStateException e) {
+			displayToast(activity, resource, args);
+			if (listener != null) {
+				listener.onDialogClick(fragment);
+			}
+		}
 	}
 
 	/**
@@ -119,7 +127,15 @@ public final class DialogUtil {
 
 		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		try {
+			fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		}
+		catch (IllegalStateException e) {
+			displayToast(activity, resource, args);
+			if (listener != null) {
+				listener.onDialogClick(fragment);
+			}
+		}
 	}
 
 	/**

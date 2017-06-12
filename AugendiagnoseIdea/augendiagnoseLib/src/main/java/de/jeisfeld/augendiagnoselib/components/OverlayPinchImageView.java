@@ -1806,7 +1806,12 @@ public class OverlayPinchImageView extends PinchImageView {
 			RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG + index);
 			if (fragment == null) {
 				fragment = new RetainFragment();
-				fm.beginTransaction().add(fragment, TAG + index).commit();
+				try {
+					fm.beginTransaction().add(fragment, TAG + index).commit();
+				}
+				catch (IllegalStateException e) {
+					TrackingUtil.sendException("opv1", e);
+				}
 			}
 			return fragment;
 		}
