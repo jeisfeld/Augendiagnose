@@ -1404,7 +1404,12 @@ public class OverlayPinchImageView extends PinchImageView {
 
 				if (isInterrupted()) {
 					// Do not display the result if the thread has been interrupted.
-					cleanFullResolutionBitmaps(false);
+					post(new Runnable() {
+						@Override
+						public void run() {
+							cleanFullResolutionBitmaps(false);
+						}
+					});
 				}
 				else {
 					// Make a straight display of this bitmap without any matrix transformation.
