@@ -6,5 +6,6 @@
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
     <filter-data value="gen"/>
+    <filter-data value="genref"/>
   </filter>
 </fileset-config>

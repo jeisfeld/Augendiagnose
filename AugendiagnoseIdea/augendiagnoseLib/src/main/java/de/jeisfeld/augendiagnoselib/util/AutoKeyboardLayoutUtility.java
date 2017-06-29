@@ -156,6 +156,6 @@ public final class AutoKeyboardLayoutUtility {
 		 *
 		 * @param visible true if the keyboard is added, false if the keyboard is removed.
 		 */
-		void onKeyboardChanged(final boolean visible);
+		void onKeyboardChanged(boolean visible);
 	}
 }

@@ -1,14 +1,5 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Stack;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,6 +24,15 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Stack;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -309,7 +309,7 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 		 *
 		 * @param chosenDir The selected folder.
 		 */
-		void onChosenDir(final String chosenDir);
+		void onChosenDir(String chosenDir);
 
 		/**
 		 * Called when the dialog is cancelled.
