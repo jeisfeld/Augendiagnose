@@ -197,5 +197,30 @@
 </html>
 ]]>
     </string>
-
+    <string name="key_tip_external_flash" translatable="false">key_tip_external_flash</string>
+    <string name="message_tip_external_flash">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Usage of external flash:</h2>
+	<p>Please ensure that you use external flash mode only if your external LED flash is connected to your headphone jack.</p>
+	<p>To trigger the external LED flash, the media volume must be set to the maximum value.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="key_tip_external_flash_pref" translatable="false">key_tip_external_flash_pref</string>
+    <string name="message_tip_external_flash_pref">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Usage of external flash:</h2>
+	<p>Whenever you use the headphone jack with the camera, you will be asked for usage of external LED flash.</p>
+	<p>You may disable this in the camera settings.</p>
+</body>
+</html>
+]]>
+    </string>
 </resources>

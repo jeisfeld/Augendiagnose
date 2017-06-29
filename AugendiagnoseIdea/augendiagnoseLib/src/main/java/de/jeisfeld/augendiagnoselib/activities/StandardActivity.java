@@ -85,6 +85,7 @@ public abstract class StandardActivity extends AdMarvelActivity {
 		super.onCreate(savedInstanceState);
 		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
+		test();
 
 		// Check permissions for Android 6
 		final String[] missingPermissions = checkRequiredPermissions();
@@ -122,7 +123,7 @@ public abstract class StandardActivity extends AdMarvelActivity {
 			}
 			else {
 				if (savedInstanceState == null) {
-					test();
+					testOnce();
 
 					// Initial tip is triggered first, so that it is hidden behind release notes.
 					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
@@ -485,6 +486,13 @@ public abstract class StandardActivity extends AdMarvelActivity {
 	/**
 	 * Utility method - here it is possible to place code to be tested on startup.
 	 */
+	private void testOnce() {
+	}
+
+	/**
+	 * Utility method - here it is possible to place code to be tested on each activity start.
+	 */
 	private void test() {
 	}
+
 }

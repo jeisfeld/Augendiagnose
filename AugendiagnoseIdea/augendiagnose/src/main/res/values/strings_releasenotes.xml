@@ -182,7 +182,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled handling of single eye photos. Bugfixes</item>
         <item>Enabled sharing of eye photos. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled use of external LED flash. Bugfixes</item>
     </string-array>
 
 </resources>

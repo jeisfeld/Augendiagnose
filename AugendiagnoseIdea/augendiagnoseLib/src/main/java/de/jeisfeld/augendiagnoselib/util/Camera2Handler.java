@@ -53,6 +53,10 @@ import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @SuppressWarnings("static-access")
 public class Camera2Handler implements CameraHandler {
+	/**
+	 * The duration of the external flash in milliseconds.
+	 */
+	private static final long EXTERNAL_FLASH_DURATION = 1500;
 
 	/**
 	 * The activity using the handler.
@@ -172,6 +176,21 @@ public class Camera2Handler implements CameraHandler {
 	private int mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
 
 	/**
+	 * Flag indicating if external flash should be used.
+	 */
+	private boolean mUseExternalFlash = false;
+
+	/**
+	 * The timestamp when the external flash was started.
+	 */
+	private long mExternalFlashTimestamp = 0;
+
+	/**
+	 * The handler of the external flash signal.
+	 */
+	private AudioUtil.Beep mExternalFlashBeep = null;
+
+	/**
 	 * The focus mode for the preview.
 	 */
 	private int mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE;
@@ -275,6 +294,8 @@ public class Camera2Handler implements CameraHandler {
 
 			// Keep track that use of Camera2 API was once successful.
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera2_successful, true);
+
+			unlockFocus();
 		}
 	};
 
@@ -316,32 +337,33 @@ public class Camera2Handler implements CameraHandler {
 				Integer afState = result.get(CaptureResult.CONTROL_AF_STATE);
 
 				if (afState == null || mCurrentFocusMode == CaptureRequest.CONTROL_AF_MODE_OFF) {
-					mState = CameraState.STATE_PICTURE_TAKEN;
-					captureStillPicture();
+					captureStillPictureIfExternalFlashReady();
 				}
 				else if (CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED == afState
 						|| CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED == afState) {
 					// CONTROL_AE_STATE can be null on some devices
 					Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
 					if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
-						mState = CameraState.STATE_PICTURE_TAKEN;
-						captureStillPicture();
+						captureStillPictureIfExternalFlashReady();
 					}
 					else {
 						runPrecaptureSequence();
 					}
 				}
 				break;
-			case STATE_WAITING_UNLOCK:
-				unlockFocus();
+			case STATE_TAKING_PICTURE_END:
+				if (mUseExternalFlash && mExternalFlashBeep != null) {
+					mExternalFlashBeep.stop();
+				}
+				mCameraCallback.onTakingPicture();
+				mState = CameraState.STATE_PICTURE_TAKEN;
 				break;
 			case STATE_WAITING_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
 				Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
 
 				if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
-					mState = CameraState.STATE_PICTURE_TAKEN;
-					captureStillPicture();
+					captureStillPictureIfExternalFlashReady();
 				}
 				else if (aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
 						|| aeState == CaptureRequest.CONTROL_AE_STATE_FLASH_REQUIRED) {
@@ -353,8 +375,7 @@ public class Camera2Handler implements CameraHandler {
 				Integer aeState2 = result.get(CaptureResult.CONTROL_AE_STATE);
 
 				if (aeState2 == null || aeState2 != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
-					mState = CameraState.STATE_PICTURE_TAKEN;
-					captureStillPicture();
+					captureStillPictureIfExternalFlashReady();
 				}
 				break;
 			default:
@@ -377,6 +398,16 @@ public class Camera2Handler implements CameraHandler {
 		}
 
 	};
+
+	/**
+	 * Capture the image unless external flash needs more time.
+	 */
+	private void captureStillPictureIfExternalFlashReady() {
+		if (!mUseExternalFlash || System.currentTimeMillis() > mExternalFlashTimestamp + EXTERNAL_FLASH_DURATION) {
+			captureStillPicture();
+		}
+	}
+
 
 	/**
 	 * Given {@code choices} of {@code Size}s supported by a camera, chooses the smallest one whose
@@ -648,6 +679,11 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	@Override
 	public final void takePicture() {
+		if (mUseExternalFlash && mExternalFlashBeep != null) {
+			mExternalFlashTimestamp = System.currentTimeMillis();
+			mExternalFlashBeep.start();
+		}
+
 		lockFocus();
 	}
 
@@ -658,7 +694,7 @@ public class Camera2Handler implements CameraHandler {
 		try {
 			// This is how to tell the camera to lock focus.
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
-			// Tell #mCaptureCallback to wait for the lock.
+			// Tell mCaptureCallback to wait for the lock.
 			mState = CameraState.STATE_WAITING_LOCK;
 
 			mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
@@ -691,6 +727,7 @@ public class Camera2Handler implements CameraHandler {
 	 * {@link #mCaptureCallback} from both {@link #lockFocus()}.
 	 */
 	private void captureStillPicture() {
+		mState = CameraState.STATE_TAKING_PICTURE_START;
 		try {
 			if (null == mActivity || null == mCameraDevice || null == mCaptureSession) {
 				return;
@@ -714,10 +751,8 @@ public class Camera2Handler implements CameraHandler {
 			captureBuilder.set(CaptureRequest.EDGE_MODE, CaptureRequest.EDGE_MODE_OFF);
 
 			mCaptureSession.stopRepeating();
-			mState = CameraState.STATE_WAITING_UNLOCK;
+			mState = CameraState.STATE_TAKING_PICTURE_END;
 			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
-
-			mCameraCallback.onTakingPicture();
 		}
 		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to capture picture", "cap1", e);
@@ -778,8 +813,14 @@ public class Camera2Handler implements CameraHandler {
 		else {
 			switch (flashlightMode) {
 			case OFF:
-				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
-				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
+			case EXT:
+				if (SystemUtil.hasFlashlight()) {
+					mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
+					mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
+				}
+				else {
+					mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+				}
 				break;
 			case ON:
 				mCurrentFlashMode = CaptureRequest.FLASH_MODE_SINGLE;
@@ -793,6 +834,11 @@ public class Camera2Handler implements CameraHandler {
 				mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
 				mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				break;
+			}
+
+			mUseExternalFlash = flashlightMode == FlashMode.EXT;
+			if (mUseExternalFlash && mExternalFlashBeep == null) {
+				mExternalFlashBeep = new AudioUtil.Beep();
 			}
 		}
 		reconfigureCamera();
@@ -994,11 +1040,6 @@ public class Camera2Handler implements CameraHandler {
 		STATE_WAITING_LOCK,
 
 		/**
-		 * Camera state: Waiting for the focus to be locked.
-		 */
-		STATE_WAITING_UNLOCK,
-
-		/**
 		 * Camera state: Waiting for the exposure to be precapture state.
 		 */
 		STATE_WAITING_PRECAPTURE,
@@ -1007,6 +1048,16 @@ public class Camera2Handler implements CameraHandler {
 		 * Camera state: Waiting for the exposure state to be something other than precapture.
 		 */
 		STATE_WAITING_NON_PRECAPTURE,
+
+		/**
+		 * Camera state: Started taking picture.
+		 */
+		STATE_TAKING_PICTURE_START,
+
+		/**
+		 * Camera state: Finished taking picture.
+		 */
+		STATE_TAKING_PICTURE_END,
 
 		/**
 		 * Camera state: Picture was taken.

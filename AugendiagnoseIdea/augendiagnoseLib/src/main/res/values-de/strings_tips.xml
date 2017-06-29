@@ -185,5 +185,29 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_external_flash">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Benutzung des externen Blitzes:</h2>
+	<p>Bitte stellen Sie sicher, dass Sie den externen Blitzmodus nur verwenden, wenn Ihr externer LED-Blitz an die Kopfhörerbuchse angeschlossen ist.</p>
+	<p>Um den externen LED-Blitz auszulösen, muss das Medienvolumen auf den Maximalwert eingestellt sein.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_external_flash_pref">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Benutzung des externen Blitzes:</h2>
+	<p>Jedes Mal, wenn Sie die Kopfhörerbuchse mit der Kamera verwenden, werden Sie gefragt, ob Sie einen externen LED-Blitz verwenden wollen.</p>
+	<p>Sie können dies in den Kameraeinstellungen deaktivieren.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>

@@ -269,6 +269,11 @@
 				peligroso para usar el flash cerca del ojo.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Activar flash LED externo</td>
+			<td width="70%" valign="top">Aquí puede establecer si el uso de un &laquo;Flash & Fill-in Light&raquo; enchufado a la
+				toma de auriculares debe ser habilitado.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Posición de la pantalla de la cámara</td>
 			<td width="70%" valign="top">Si la cinta Miniris oculta algunos botones de la pantalla de la cámara, entonces usted
 				puede utilizar este ajuste para desplazar la pantalla de la cámara hacia la derecha o izquierda.</td>

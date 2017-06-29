@@ -50,6 +50,7 @@
     <string name="message_dialog_confirm_need_camera_permission">Please provide access to the camera - otherwise the app will not work.</string>
     <string name="message_dialog_confirm_rate_app">If you like the app, then please recommend it.\n\nWould you like to rate it on Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">Do you want to remove the rating icon from the app?</string>
+    <string name="message_dialog_confirm_external_flash">Do you want to use an external LED flash connected to the headphone jack?</string>
     <string name="message_dialog_outofmemoryerror">The app has crashed due to lack of memory. If this happens repeatedly, then you should go to the settings, change the setting “Show image in full resolution” to the value “Load only on demand”, and reduce the value of “Max Bitmap size”.</string>
     <string name="message_dialog_hints_will_be_shown">From now on, the app will show hints in various situations (including the ones that you switched off earlier). You can switch them off individually.</string>
     <string name="message_dialog_no_hints_will_be_shown">From now on, the app will not show any of the currently existing hints. New hints of future versions will be shown.</string>

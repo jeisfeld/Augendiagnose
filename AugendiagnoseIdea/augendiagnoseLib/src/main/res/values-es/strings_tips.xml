@@ -184,5 +184,29 @@
 </html>
 ]]>
     </string>
+    <string name="message_tip_external_flash">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Uso de flash externo:</h2>
+	<p>Asegúrese de utilizar el modo de flash externo sólo si su flash LED externo está conectado a la toma de los auriculares.</p>
+	<p>Para activar el flash LED externo, el volumen de medios debe estar ajustado al valor máximo.</p>
+</body>
+</html>
+]]>
+    </string>
+    <string name="message_tip_external_flash_pref">
+<![CDATA[
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Uso de flash externo:</h2>
+	<p>Siempre que utilice la toma de auriculares con la cámara, se le pedirá el uso de flash LED externo.</p>
+	<p>Es posible desactivar esto en los ajustes de la cámara.</p>
+</body>
+</html>
+]]>
+    </string>
 
 </resources>

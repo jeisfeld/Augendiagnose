@@ -50,6 +50,7 @@
     <string name="message_dialog_confirm_need_camera_permission">Por favor, proporcionar acceso a la cámara - de lo contrario la aplicación no funcionará.</string>
     <string name="message_dialog_confirm_rate_app">Si le gusta la aplicación, por favor, lo recomiendo. ¿Le gustaría calificarla en Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">¿Desea eliminar el icono de calificación de la aplicación?</string>
+    <string name="message_dialog_confirm_external_flash">¿Desea utilizar un flash LED externo conectado a la toma de auriculares?</string>
     <string name="message_dialog_outofmemoryerror">La aplicación se ha bloqueado debido a la falta de memoria. Si esto ocurre repetidamente, entonces usted debe ir a los ajustes, cambiar la opción «Mostrar imagen en alta resolución» en el valor «Cargar sólo si se solicita» ", y reducir el valor de «Tamaño máximo de mapas de bits».</string>
     <string name="message_dialog_hints_will_be_shown">A partir de ahora, la aplicación mostrará consejos en diversas situaciones (incluyendo los que usted apaga antes). Puede apagarlas individualmente.</string>
     <string name="message_dialog_no_hints_will_be_shown">A partir de ahora, la aplicación no mostrará ninguna de los consejos existentes en la actualidad. Si las futuras versiones de la aplicación tienen nuevos consejos, éstos se muestran.</string>

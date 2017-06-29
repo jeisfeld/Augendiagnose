@@ -5,6 +5,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -27,6 +28,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @SuppressWarnings("deprecation")
 public class Camera1Handler implements CameraHandler {
+	/**
+	 * The duration of the external flash in milliseconds.
+	 */
+	private static final long EXTERNAL_FLASH_DURATION = 1500;
+
 	/**
 	 * The camera used by the activity.
 	 */
@@ -58,6 +64,16 @@ public class Camera1Handler implements CameraHandler {
 	 */
 	@Nullable
 	private String mCurrentFlashlightMode = null;
+
+	/**
+	 * Flag indicating if external flash should be used.
+	 */
+	private boolean mUseExternalFlash = false;
+
+	/**
+	 * The handler of the external flash signal.
+	 */
+	private AudioUtil.Beep mExternalFlashBeep = null;
 
 	/**
 	 * The current focus mode.
@@ -116,7 +132,13 @@ public class Camera1Handler implements CameraHandler {
 
 		switch (flashlightMode) {
 		case OFF:
-			mCurrentFlashlightMode = Parameters.FLASH_MODE_OFF;
+		case EXT:
+			if (SystemUtil.hasFlashlight()) {
+				mCurrentFlashlightMode = Parameters.FLASH_MODE_OFF;
+			}
+			else {
+				mCurrentFlashlightMode = null;
+			}
 			break;
 		case ON:
 			mCurrentFlashlightMode = Parameters.FLASH_MODE_ON;
@@ -125,8 +147,13 @@ public class Camera1Handler implements CameraHandler {
 			mCurrentFlashlightMode = Parameters.FLASH_MODE_TORCH;
 			break;
 		default:
-			mCurrentFlashlightMode = null;
+			mCurrentFlashlightMode = Parameters.FLASH_MODE_OFF;
 			break;
+		}
+
+		mUseExternalFlash = flashlightMode == FlashMode.EXT;
+		if (mUseExternalFlash && mExternalFlashBeep == null) {
+			mExternalFlashBeep = new AudioUtil.Beep();
 		}
 
 		updateFlashlight();
@@ -181,7 +208,7 @@ public class Camera1Handler implements CameraHandler {
 	 * Update the flashlight.
 	 */
 	private void updateFlashlight() {
-		if (mCamera != null) {
+		if (mCamera != null && SystemUtil.hasFlashlight()) {
 			Parameters parameters = mCamera.getParameters();
 			if (parameters.getSupportedFlashModes().contains(mCurrentFlashlightMode)) {
 				parameters.setFlashMode(mCurrentFlashlightMode);
@@ -318,8 +345,17 @@ public class Camera1Handler implements CameraHandler {
 
 	@Override
 	public final void takePicture() {
-		mCamera.takePicture(null, null, mPhotoCallback);
-		mCameraCallback.onTakingPicture();
+		if (mUseExternalFlash && mExternalFlashBeep != null) {
+			mExternalFlashBeep.start();
+			try {
+				Thread.sleep(EXTERNAL_FLASH_DURATION);
+			}
+			catch (InterruptedException e) {
+				// do nothing.
+			}
+		}
+
+		mCamera.takePicture(mShutterCallback, null, mPhotoCallback);
 	}
 
 	/**
@@ -387,6 +423,19 @@ public class Camera1Handler implements CameraHandler {
 		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
 			mIsInPreview = false;
 			mCameraCallback.onPictureTaken(data);
+		}
+	};
+
+	/**
+	 * The callback called when pictures are taken.
+	 */
+	private final ShutterCallback mShutterCallback = new ShutterCallback() {
+		@Override
+		public void onShutter() {
+			if (mUseExternalFlash && mExternalFlashBeep != null) {
+				mExternalFlashBeep.stop();
+			}
+			mCameraCallback.onTakingPicture();
 		}
 	};
 

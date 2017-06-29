@@ -245,8 +245,8 @@
 		<tr>
 			<td width="30%" valign="top">Automatic detection of iris</td>
 			<td width="70%" valign="top">Here you can select if the app should automatically try to find the position of iris and
-				pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of the
-				phone, and the result may be incorrect.</td>
+				pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of
+				the phone, and the result may be incorrect.</td>
 		</tr>
 	</table>
 
@@ -263,6 +263,11 @@
 			<td width="30%" valign="top">Enable flash</td>
 			<td width="70%" valign="top">Here you may enable the flashlight functionality. By default, this is disabled, as it is
 				dangerous to use the flashlight close to the eye.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Enable external LED flash</td>
+			<td width="70%" valign="top">Here you can set whether the use of a &ldquo;Flash & Fill-in Light&rdquo; plugged in
+				the headphone jack should be supported.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Camera screen position</td>

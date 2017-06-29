@@ -64,7 +64,8 @@
 			Fokus-Modus der Kamera einstellen. Für Nahaufnahmen ist der MACRO-Modus normalerweise eine gute Wahl.</li>
 		<li>Darüber befindet sich ein Blitz-Knopf. Hier können Sie das Licht Ihres Smartphones einschalten. Hier können Sie
 			auch den Kamera-Blitz einschalten. Da dieser für das Auge gefährlich ist, muss der Kamera-Blitz aber zunächst über
-			die Einstellungen freigeschaltet werden.</li>
+			die Einstellungen freigeschaltet werden. Sie können auch ein &bdquo;Flash & Fill-in Light&ldquo; verwenden, das in
+			die Kopfhörerbuchse eingesteckt wird.</li>
 	</ul>
 
 	<p>Nachdem Sie beide Augen aufgenommen haben, erscheint eine Seite, wo Sie beide Fotos noch einmal anschauen können und
@@ -103,7 +104,8 @@
 	<p>
 		Die App verwendet auch Google Analytics, um statistische Informationen über App-Fehler und App-Nutzung zu sammeln.
 		Dies dient dazu, Informationen für weitere Verbesserungen der App zu erhalten. Siehe die
-		<a href="https://support.google.com/analytics/answer/6004245?hl=de" target="_blank">Google Analytics-Datenschutzbestimmungen</a>
+		<a href="https://support.google.com/analytics/answer/6004245?hl=de" target="_blank">Google
+			Analytics-Datenschutzbestimmungen</a>
 		für mehr Details.
 	</p>
 </body>
@@ -235,6 +237,11 @@
 			<td width="30%" valign="top">Blitzlicht erlauben</td>
 			<td width="70%" valign="top">Hier können Sie die Verwendung des Blitzlichtes erlauben. In der Voreinstellung ist dies
 				nicht erlaubt, da das Blitzlicht direkt vor dem Auge gefährlich ist.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Externen LED-Blitz unterstützen</td>
+			<td width="70%" valign="top">Hier können Sie einstellen, ob die Verwendung eines &bdquo;Flash & Fill-in Light&ldquo;,
+				das in die Kopfhörerbuchse eingesteckt wird, unterstützt werden soll.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Kamera-Bildschirmposition</td>

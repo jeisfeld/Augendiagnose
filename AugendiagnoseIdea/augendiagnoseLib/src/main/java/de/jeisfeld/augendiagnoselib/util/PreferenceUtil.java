@@ -1,15 +1,15 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -35,7 +35,10 @@ public final class PreferenceUtil {
 			R.string.key_tip_organizephotos,
 			R.string.key_tip_overlay_buttons,
 			R.string.key_tip_overlay_guided,
-			R.string.key_tip_saveview};
+			R.string.key_tip_saveview,
+			R.string.key_tip_external_flash,
+			R.string.key_tip_external_flash_pref
+	};
 
 	/**
 	 * Hide default constructor.

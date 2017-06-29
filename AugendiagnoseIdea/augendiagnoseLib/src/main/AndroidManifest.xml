@@ -95,6 +95,14 @@
             tools:ignore="UnusedAttribute">
         </activity>
 
+        <receiver
+            android:name="de.jeisfeld.augendiagnoselib.components.HeadsetPlugReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.HEADSET_PLUG"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
             android:value="600dp"/>

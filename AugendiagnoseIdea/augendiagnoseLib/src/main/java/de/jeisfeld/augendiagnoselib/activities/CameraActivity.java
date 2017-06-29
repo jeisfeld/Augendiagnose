@@ -1,7 +1,9 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -40,19 +42,22 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
+import de.jeisfeld.augendiagnoselib.components.HeadsetPlugReceiver;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
+import de.jeisfeld.augendiagnoselib.util.AudioUtil;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.Camera2Handler;
 import de.jeisfeld.augendiagnoselib.util.CameraHandler;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
@@ -220,6 +225,11 @@ public class CameraActivity extends StandardActivity {
 	 * Timestamp for measuring the tracking duration.
 	 */
 	private long mTrackingTimestamp = 0;
+
+	/**
+	 * The receiver handling headset plugin.
+	 */
+	private HeadsetPlugReceiver mHeadsetPlugReceiver = null;
 
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
@@ -398,10 +408,17 @@ public class CameraActivity extends StandardActivity {
 			mCameraHandler.startPreview();
 		}
 		mTrackingTimestamp = System.currentTimeMillis();
+
+		registerHeadsetReceiver();
 	}
 
 	@Override
 	public final void onPause() {
+		if (mHeadsetPlugReceiver != null) {
+			mHeadsetPlugReceiver.unregister(this);
+			mHeadsetPlugReceiver = null;
+		}
+
 		if (mCameraHandler != null) {
 			mCameraHandler.stopPreview();
 		}
@@ -648,8 +665,9 @@ public class CameraActivity extends StandardActivity {
 	 */
 	private void configureFlashlightButton() {
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		if (SystemUtil.hasFlashlight()) {
-			determineAvailableFlashlightModes();
+		determineAvailableFlashlightModes();
+
+		if (mFlashlightModes.size() > 1) {
 			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
 			FlashMode storedFlashlightMode;
 			try {
@@ -665,6 +683,7 @@ public class CameraActivity extends StandardActivity {
 			}
 
 			setFlashlightMode(storedFlashlightMode);
+			flashlightButton.setVisibility(VISIBLE);
 
 			flashlightButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -681,7 +700,8 @@ public class CameraActivity extends StandardActivity {
 			});
 		}
 		else {
-			setFlashlightMode(null);
+			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, FlashMode.OFF.toString());
+			setFlashlightMode(FlashMode.OFF);
 			flashlightButton.setVisibility(GONE);
 		}
 	}
@@ -762,6 +782,40 @@ public class CameraActivity extends StandardActivity {
 			}
 		});
 		focusSeekbar.setProgress(PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_focal_distance_seekbar_progress, 0));
+	}
+
+	/**
+	 * Register the receiver waiting for headset plugged.
+	 */
+	private void registerHeadsetReceiver() {
+		boolean enableExternalFlash = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash_ext);
+		if (enableExternalFlash) {
+			mHeadsetPlugReceiver = new HeadsetPlugReceiver();
+			mHeadsetPlugReceiver.register(this, new HeadsetPlugReceiver.HeadsetPlugHandler() {
+				@Override
+				public void handleHeadsetPlug(final boolean plugged) {
+					configureFlashlightButton();
+					if (plugged && mCurrentFlashlightMode != FlashMode.EXT) {
+						DialogUtil.displayConfirmationMessage(CameraActivity.this, new ConfirmDialogListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onDialogPositiveClick(final DialogFragment dialog) {
+								PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, FlashMode.EXT.toString());
+								setFlashlightMode(FlashMode.EXT);
+								DialogUtil.displayTip(CameraActivity.this, R.string.message_tip_external_flash, R.string.key_tip_external_flash);
+							}
+
+							@Override
+							public void onDialogNegativeClick(final DialogFragment dialog) {
+								DialogUtil.displayTip(CameraActivity.this,
+										R.string.message_tip_external_flash_pref, R.string.key_tip_external_flash_pref);
+							}
+						}, R.string.button_external_flash, R.string.message_dialog_confirm_external_flash);
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -1078,6 +1132,9 @@ public class CameraActivity extends StandardActivity {
 		else if (FlashMode.TORCH.equals(mCurrentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_torch);
 		}
+		else if (FlashMode.EXT.equals(mCurrentFlashlightMode)) {
+			flashlightButton.setBackgroundResource(R.drawable.circlebutton_flash_ext);
+		}
 		if (mCurrentFlashlightMode != null) {
 			if (mCurrentAction != Action.TAKE_PHOTO && mCurrentFlashlightMode == FlashMode.TORCH) {
 				mCameraHandler.setFlashlightMode(FlashMode.OFF);
@@ -1242,13 +1299,22 @@ public class CameraActivity extends StandardActivity {
 	 */
 	private void determineAvailableFlashlightModes() {
 		boolean enableFlashlight = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash);
+		boolean enableExternalFlash = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash_ext);
+		List<FlashMode> flashlightModes = new ArrayList<>();
 
-		if (enableFlashlight) {
-			mFlashlightModes = Arrays.asList(FlashMode.OFF, FlashMode.ON, FlashMode.TORCH);
+		flashlightModes.add(FlashMode.OFF);
+		if (enableExternalFlash && AudioUtil.isHeadphonePlugged()) {
+			flashlightModes.add(FlashMode.EXT);
 		}
-		else {
-			mFlashlightModes = Arrays.asList(FlashMode.OFF, FlashMode.TORCH);
+
+		if (SystemUtil.hasFlashlight()) {
+			if (enableFlashlight) {
+				flashlightModes.add(FlashMode.ON);
+			}
+			flashlightModes.add(FlashMode.TORCH);
 		}
+
+		mFlashlightModes = flashlightModes;
 	}
 
 	/**
@@ -1279,6 +1345,7 @@ public class CameraActivity extends StandardActivity {
 		return cameraApiVersion == 2;
 	}
 
+	@SuppressLint("InlinedApi")
 	@Override
 	protected final String[] getRequiredPermissions() {
 		return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
@@ -1442,7 +1509,11 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * The flash is permanently on.
 		 */
-		TORCH
+		TORCH,
+		/**
+		 * The external flash is used.
+		 */
+		EXT
 	}
 
 	/**
