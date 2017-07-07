@@ -64,8 +64,8 @@ public final class AudioUtil {
 	public static AudioTrack generateHighFreqTone(final int durationMs) {
 		int count = (int) (BITRATE * 2.0 * (durationMs / MILLIS_IN_SECOND)) & ~1;
 		short[] samples = new short[count];
-		for (int i = 0; i < count; i += 2) {
-			short sample = TONE_MAP[(i / 2) % 4]; // MAGIC_NUMBER
+		for (int i = 0; i < count; i += 2) { // MAGIC_NUMBER
+			short sample = TONE_MAP[(i / 4) % 4]; // MAGIC_NUMBER
 			samples[i] = sample;
 			samples[i + 1] = sample;
 		}

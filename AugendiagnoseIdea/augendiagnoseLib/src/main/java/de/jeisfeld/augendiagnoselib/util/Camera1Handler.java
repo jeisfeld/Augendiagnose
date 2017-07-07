@@ -355,7 +355,7 @@ public class Camera1Handler implements CameraHandler {
 			}
 		}
 
-		mCamera.takePicture(mShutterCallback, null, mPhotoCallback);
+		mCamera.takePicture(mShutterCallback, mRawCallback, mPhotoCallback);
 	}
 
 	/**
@@ -432,10 +432,19 @@ public class Camera1Handler implements CameraHandler {
 	private final ShutterCallback mShutterCallback = new ShutterCallback() {
 		@Override
 		public void onShutter() {
+			mCameraCallback.onTakingPicture();
+		}
+	};
+
+	/**
+	 * The callback called when pictures are taken.
+	 */
+	private final PictureCallback mRawCallback = new PictureCallback() {
+		@Override
+		public void onPictureTaken(final byte[] data, final Camera photoCamera) {
 			if (mUseExternalFlash && mExternalFlashBeep != null) {
 				mExternalFlashBeep.stop();
 			}
-			mCameraCallback.onTakingPicture();
 		}
 	};
 

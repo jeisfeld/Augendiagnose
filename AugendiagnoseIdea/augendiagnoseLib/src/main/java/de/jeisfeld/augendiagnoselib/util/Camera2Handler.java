@@ -284,6 +284,10 @@ public class Camera2Handler implements CameraHandler {
 	private final ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
 		@Override
 		public void onImageAvailable(@NonNull final ImageReader reader) {
+			if (mUseExternalFlash && mExternalFlashBeep != null) {
+				mExternalFlashBeep.stop();
+			}
+
 			Image image = reader.acquireNextImage();
 			ByteBuffer buffer = image.getPlanes()[0].getBuffer();
 			byte[] data = new byte[buffer.remaining()];
@@ -352,9 +356,6 @@ public class Camera2Handler implements CameraHandler {
 				}
 				break;
 			case STATE_TAKING_PICTURE_END:
-				if (mUseExternalFlash && mExternalFlashBeep != null) {
-					mExternalFlashBeep.stop();
-				}
 				mCameraCallback.onTakingPicture();
 				mState = CameraState.STATE_PICTURE_TAKEN;
 				break;

@@ -218,6 +218,9 @@ public class SettingsActivity extends BasePreferenceActivity {
 			PreferenceUtil.setAllHints(!showTips);
 			// always show tips for first use
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_firstuse, false);
+			// always show hint on max volume for external LED
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_external_flash, false);
+
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_initialized_hints, true);
 		}
 
