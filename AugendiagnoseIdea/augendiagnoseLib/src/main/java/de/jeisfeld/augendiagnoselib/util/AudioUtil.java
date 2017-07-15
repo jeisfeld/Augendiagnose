@@ -26,6 +26,8 @@ public final class AudioUtil {
 	 */
 	private static final Short[] TONE_MAP = {(short) 0, Short.MAX_VALUE, (short) 0, Short.MIN_VALUE};
 
+	private static final Short[] TONE_MAP_2 = {Short.MAX_VALUE, Short.MIN_VALUE};
+
 	/**
 	 * Hide default constructor.
 	 */
@@ -40,11 +42,33 @@ public final class AudioUtil {
 	 * @param durationMs The duration in milliseconds
 	 * @return An AudioTrack with the corresponding sine wave.
 	 */
-	public static AudioTrack generateTone(final double freqHz, final int durationMs) {
+	public static AudioTrack generateToneSine(final double freqHz, final int durationMs) {
 		int count = (int) (BITRATE * 2.0 * (durationMs / MILLIS_IN_SECOND)) & ~1;
 		short[] samples = new short[count];
 		for (int i = 0; i < count; i += 2) {
 			short sample = (short) (Math.sin(2 * Math.PI * i / (BITRATE / freqHz)) * 0x7FFF); // MAGIC_NUMBER
+			samples[i] = sample;
+			samples[i + 1] = sample;
+		}
+		AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, (int) BITRATE,
+				AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
+				count * (Short.SIZE / 8), AudioTrack.MODE_STATIC); // MAGIC_NUMBER
+		track.write(samples, 0, count);
+		return track;
+	}
+
+	/**
+	 * Create a sin wave of certain frequency and duration.
+	 *
+	 * @param freqHz     The frequency in Hertz
+	 * @param durationMs The duration in milliseconds
+	 * @return An AudioTrack with the corresponding sine wave.
+	 */
+	public static AudioTrack generateTonePulse(final double freqHz, final int durationMs) {
+		int count = (int) (BITRATE * 2.0 * (durationMs / MILLIS_IN_SECOND)) & ~1;
+		short[] samples = new short[count];
+		for (int i = 0; i < count; i += 2) {
+			short sample = TONE_MAP_2[(int) (2 * i / (BITRATE / freqHz)) % 2];
 			samples[i] = sample;
 			samples[i + 1] = sample;
 		}
@@ -101,7 +125,11 @@ public final class AudioUtil {
 		/**
 		 * The mAudioTrack holding the beep.
 		 */
-		private AudioTrack mAudioTrack = generateHighFreqTone(TONE_LENGTH);
+		private AudioTrack mAudioTrack = generateTone();
+
+		private AudioTrack generateTone() {
+			return generateTonePulse(25, TONE_LENGTH);
+		}
 
 		/**
 		 * Start playing the beep.
@@ -116,7 +144,7 @@ public final class AudioUtil {
 		public final void stop() {
 			// method AudioTrack.stop() does not work reliably on all devices.
 			mAudioTrack.release();
-			mAudioTrack = generateHighFreqTone(TONE_LENGTH);
+			mAudioTrack = generateTone();
 		}
 
 		@Override
