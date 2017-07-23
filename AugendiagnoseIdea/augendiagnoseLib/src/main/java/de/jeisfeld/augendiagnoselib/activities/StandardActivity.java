@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -141,19 +142,22 @@ public abstract class StandardActivity extends AdMarvelActivity {
 					checkUnlockerApp();
 
 					// Check in-app purchases
-					GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
-
-						@Override
-						public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-												   final boolean isPremium) {
-							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
-							if (isPremium) {
-								invalidateOptionsMenu();
+					try {
+						GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
+							@Override
+							public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
+													   final boolean isPremium) {
+								PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
+								if (isPremium) {
+									invalidateOptionsMenu();
+								}
+								GoogleBillingHelper.dispose();
 							}
-							GoogleBillingHelper.dispose();
-						}
-					});
-
+						});
+					}
+					catch (Exception e) {
+						Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
+					}
 				}
 			}
 		}
@@ -230,7 +234,20 @@ public abstract class StandardActivity extends AdMarvelActivity {
 		}
 		else if (itemId == R.id.action_purchase) {
 			DialogUtil.displayToast(this, R.string.message_dialog_triggering_purchase);
-			triggerDefaultPurchase();
+			try {
+				triggerDefaultPurchase();
+			}
+			catch (Exception e) {
+				Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
+				Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
+				googlePlayIntent.setData(Uri.parse("market://details?id=de.jeisfeld.augendiagnoseunlocker"));
+				try {
+					startActivity(googlePlayIntent);
+				}
+				catch (Exception e1) {
+					DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_google_play, false);
+				}
+			}
 			return true;
 		}
 		else if (itemId == R.id.action_rating) {

@@ -237,7 +237,12 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Initialize Google Billing (after having permission).
 	 */
 	public final void initializeGoogleBilling() {
-		GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+		try {
+			GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+		}
+		catch (Exception e) {
+			android.util.Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
+		}
 	}
 
 	/**
