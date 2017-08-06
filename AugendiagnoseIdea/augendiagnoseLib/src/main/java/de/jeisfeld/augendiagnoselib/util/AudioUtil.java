@@ -26,6 +26,9 @@ public final class AudioUtil {
 	 */
 	private static final Short[] TONE_MAP = {(short) 0, Short.MAX_VALUE, (short) 0, Short.MIN_VALUE};
 
+	/**
+	 * A map used for generation of simplified high frequency sine wave.
+	 */
 	private static final Short[] TONE_MAP_2 = {Short.MAX_VALUE, Short.MIN_VALUE};
 
 	/**
@@ -128,7 +131,7 @@ public final class AudioUtil {
 		private AudioTrack mAudioTrack = generateTone();
 
 		private AudioTrack generateTone() {
-			return generateTonePulse(25, TONE_LENGTH);
+			return generateTonePulse(25, TONE_LENGTH); // MAGIC_NUMBER
 		}
 
 		/**

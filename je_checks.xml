@@ -103,37 +103,13 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="AbbreviationAsWordInName">
       <property name="allowedAbbreviationLength" value="1"/>
     </module>
-    <module name="AvoidHidingCauseException"/>
-    <module name="ConfusingConditionCheck"/>
-    <module name="EmptyPublicCtorInClassCheck"/>
-    <module name="ForbidThrowAnonymousExceptionsCheck"/>
-    <module name="MapIterationInForEachLoop"/>
-    <module name="MultipleStringLiteralsExtended">
-      <property name="allowedDuplicates" value="3"/>
-      <property name="highlightAllDuplicates" value="true"/>
-    </module>
-    <module name="MultipleStringLiteralsExtended">
-      <property name="severity" value="info"/>
-      <property name="allowedDuplicates" value="2"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="info"/>
-    </module>
     <module name="NoNullForCollectionReturnCheck">
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
-    <module name="OverridableMethodInConstructor"/>
-    <module name="EitherLogOrThrowCheck"/>
-    <module name="UnnecessaryParenthesesExtended"/>
-    <module name="UselessSingleCatchCheck"/>
-    <module name="UselessSuperCtorCallCheck"/>
-    <module name="TernaryPerExpressionCount"/>
-    <module name="NestedSwitchCheck"/>
-    <module name="AvoidConditionInversionCheck"/>
-    <module name="NoMainMethodInAbstractClass"/>
-    <module name="ForbidWildcardAsReturnType"/>
-    <module name="InterfaceTypeParameterNameCheck"/>
-    <module name="EnumValueName">
-      <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+    <module name="InterfaceTypeParameterNameCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="EmptyCatchBlock"/>
     <module name="CovariantEquals"/>
@@ -175,6 +151,81 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="UncommentedMain"/>
     <module name="MemberName">
       <property name="format" value="^m[A-Z][a-zA-Z0-9]*$"/>
+    </module>
+    <module name="AvoidHidingCauseExceptionCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="EnumValueNameCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="MultipleStringLiteralsExtendedCheck">
+      <property name="severity" value="ignore"/>
+      <property name="allowedDuplicates" value="2"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="info"/>
+    </module>
+    <module name="MultipleStringLiteralsExtendedCheck">
+      <property name="severity" value="ignore"/>
+      <property name="allowedDuplicates" value="3"/>
+      <property name="highlightAllDuplicates" value="true"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="ConfusingConditionCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="EmptyPublicCtorInClassCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="ForbidThrowAnonymousExceptionsCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="MapIterationInForEachLoopCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="OverridableMethodInConstructorCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="EitherLogOrThrowCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="UnnecessaryParenthesesExtendedCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="UselessSingleCatchCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="UselessSuperCtorCallCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="TernaryPerExpressionCountCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="NestedSwitchCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="AvoidConditionInversionCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="NoMainMethodInAbstractClassCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="ForbidWildcardAsReturnTypeCheck">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
   </module>
   <module name="JavadocPackage"/>
