@@ -773,7 +773,7 @@ public class Camera2Handler implements CameraHandler {
 			mState = CameraState.STATE_PREVIEW;
 			mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 		}
-		catch (CameraAccessException | IllegalStateException e) {
+		catch (CameraAccessException | IllegalStateException | NullPointerException e) {
 			mCameraCallback.onCameraError("Failed to unlock focus", "unl1", e);
 		}
 	}

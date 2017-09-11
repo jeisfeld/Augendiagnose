@@ -794,7 +794,13 @@ public class CameraActivity extends StandardActivity {
 			mHeadsetPlugReceiver.register(this, new HeadsetPlugReceiver.HeadsetPlugHandler() {
 				@Override
 				public void handleHeadsetPlug(final boolean plugged) {
-					configureFlashlightButton();
+					try {
+						configureFlashlightButton();
+					}
+					catch (Exception e) {
+						TrackingUtil.sendException("hea1", e);
+						return;
+					}
 					if (plugged && mCurrentFlashlightMode != FlashMode.EXT) {
 						DialogUtil.displayConfirmationMessage(CameraActivity.this, new ConfirmDialogListener() {
 							private static final long serialVersionUID = 1L;
