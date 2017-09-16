@@ -234,7 +234,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
-	 * @param activity    The activity from which the activity is started.
+	 * @param activity The activity from which the activity is started.
 	 * @param photoFolder The folder where to store the photos.
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoFolder) {
@@ -248,9 +248,9 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Static helper method to start the activity for re-checking two images.
 	 *
-	 * @param activity   The activity from which the activity is started.
+	 * @param activity The activity from which the activity is started.
 	 * @param photoRight The path of the right eye image
-	 * @param photoLeft  The path of the left eye image
+	 * @param photoLeft The path of the left eye image
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
@@ -290,7 +290,7 @@ public class CameraActivity extends StandardActivity {
 		configureMainButtons();
 		configureThumbButtons();
 		configureZoomCircleButton();
-		configureFlashlightButton();
+		configureFlashlightButton(null);
 		// Focus button is configured after callback from CameraHandler.
 
 		int screenAppearance =
@@ -662,10 +662,12 @@ public class CameraActivity extends StandardActivity {
 
 	/**
 	 * Configure the button for setting flashlight.
+	 *
+	 * @param flashModes The list of available flash modes.
 	 */
-	private void configureFlashlightButton() {
+	private void configureFlashlightButton(final List<FlashMode> flashModes) {
 		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
-		determineAvailableFlashlightModes();
+		determineAvailableFlashlightModes(flashModes);
 
 		if (mFlashlightModes.size() > 1) {
 			String storedFlashlightString = PreferenceUtil.getSharedPreferenceString(R.string.key_internal_camera_flashlight_mode);
@@ -799,7 +801,7 @@ public class CameraActivity extends StandardActivity {
 				@Override
 				public void handleHeadsetPlug(final boolean plugged) {
 					try {
-						configureFlashlightButton();
+						configureFlashlightButton(mFlashlightModes);
 					}
 					catch (Exception e) {
 						TrackingUtil.sendException("hea1", e);
@@ -831,7 +833,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Change to the given action.
 	 *
-	 * @param action    The new action.
+	 * @param action The new action.
 	 * @param rightLeft the next eye side.
 	 */
 	private void setAction(@NonNull final Action action, final RightLeft rightLeft) {
@@ -1043,7 +1045,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Set the thumb image from a file.
 	 *
-	 * @param file      The file to be put in the thumb.
+	 * @param file The file to be put in the thumb.
 	 * @param rightLeft The side of the eye
 	 */
 	private void setThumbImage(@Nullable final String file, final RightLeft rightLeft) {
@@ -1274,9 +1276,14 @@ public class CameraActivity extends StandardActivity {
 		}
 
 		@Override
-		public void updateAvailableModes(final List<FocusMode> focusModes) {
+		public void updateAvailableFocusModes(final List<FocusMode> focusModes) {
 			mFocusModes = focusModes;
 			configureFocusButton();
+		}
+
+		@Override
+		public void updateAvailableFlashModes(final List<FlashMode> flashModes) {
+			configureFlashlightButton(flashModes);
 		}
 
 		@Override
@@ -1306,8 +1313,10 @@ public class CameraActivity extends StandardActivity {
 
 	/**
 	 * Get the list of available flashlight modes.
+	 *
+	 * @param flashModes The list of available flash modes.
 	 */
-	private void determineAvailableFlashlightModes() {
+	private void determineAvailableFlashlightModes(final List<FlashMode> flashModes) {
 		boolean enableFlashlight = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash);
 		boolean enableExternalFlash = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash_ext);
 		List<FlashMode> flashlightModes = new ArrayList<>();
@@ -1317,11 +1326,21 @@ public class CameraActivity extends StandardActivity {
 			flashlightModes.add(FlashMode.EXT);
 		}
 
-		if (SystemUtil.hasFlashlight()) {
-			if (enableFlashlight) {
+		if (flashModes == null) {
+			if (SystemUtil.hasFlashlight()) {
+				if (enableFlashlight) {
+					flashlightModes.add(FlashMode.ON);
+				}
+				flashlightModes.add(FlashMode.TORCH);
+			}
+		}
+		else {
+			if (flashModes.contains(FlashMode.ON) && enableFlashlight) {
 				flashlightModes.add(FlashMode.ON);
 			}
-			flashlightModes.add(FlashMode.TORCH);
+			if (flashModes.contains(FlashMode.TORCH)) {
+				flashlightModes.add(FlashMode.TORCH);
+			}
 		}
 
 		mFlashlightModes = flashlightModes;
@@ -1401,9 +1420,9 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * Constructor, passing the data to be saved.
 		 *
-		 * @param data      The data to be saved.
+		 * @param data The data to be saved.
 		 * @param rightLeft The side of the eye to be saved.
-		 * @param metadata  Metadata to be stored in the photo.
+		 * @param metadata Metadata to be stored in the photo.
 		 */
 		private SavePhotoTask(final byte[] data, final RightLeft rightLeft, final JpegMetadata metadata) {
 			this.mImageData = data;
@@ -1457,18 +1476,25 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * Callback called on fatal camera errors.
 		 *
-		 * @param message      The error message as String
+		 * @param message The error message as String
 		 * @param shortMessage a short form of the message (for analytics).
-		 * @param e            The exception
+		 * @param e The exception
 		 */
 		void onCameraError(String message, String shortMessage, Throwable e);
 
 		/**
-		 * Give information which focus modes and flash modes are supported by the camera.
+		 * Give information which focus modes are supported by the camera.
 		 *
 		 * @param focusModes The supported focus modes.
 		 */
-		void updateAvailableModes(List<FocusMode> focusModes);
+		void updateAvailableFocusModes(List<FocusMode> focusModes);
+
+		/**
+		 * Give information which flash modes are supported by the camera.
+		 *
+		 * @param flashModes The supported flash modes.
+		 */
+		void updateAvailableFlashModes(List<FlashMode> flashModes);
 
 		/**
 		 * Give information if zoom is available.

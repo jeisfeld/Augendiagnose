@@ -524,7 +524,8 @@ public class Camera2Handler implements CameraHandler {
 				mCameraId = cameraId;
 				mCameraCharacteristics = cameraCharacteristics;
 
-				updateAvailableModes();
+				updateAvailableFocusModes();
+				updateAvailableFlashModes();
 
 				boolean useFrontCamera = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_use_front_camera);
 				Integer preferredFacing = useFrontCamera ? CameraCharacteristics.LENS_FACING_FRONT : CameraCharacteristics.LENS_FACING_BACK;
@@ -959,7 +960,7 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * Update the available focus modes.
 	 */
-	private void updateAvailableModes() {
+	private void updateAvailableFocusModes() {
 		List<FocusMode> focusModes = new ArrayList<>();
 		int[] availableFocusModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
 
@@ -1007,7 +1008,23 @@ public class Camera2Handler implements CameraHandler {
 			mCameraCallback.updateAvailableZoom(maxDigitalZoom > 1);
 		}
 
-		mCameraCallback.updateAvailableModes(focusModes);
+		mCameraCallback.updateAvailableFocusModes(focusModes);
+	}
+
+	/**
+	 * Update the available flash modes.
+	 */
+	private void updateAvailableFlashModes() {
+		List<FlashMode> flashModes = new ArrayList<>();
+		flashModes.add(FlashMode.OFF);
+
+		boolean isFlashAvailable = mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+		if (isFlashAvailable) {
+			flashModes.add(FlashMode.TORCH);
+			flashModes.add(FlashMode.ON);
+		}
+
+		mCameraCallback.updateAvailableFlashModes(flashModes);
 	}
 
 	/**

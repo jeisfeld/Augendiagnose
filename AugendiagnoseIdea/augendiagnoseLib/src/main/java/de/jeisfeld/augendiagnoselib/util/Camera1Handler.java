@@ -22,7 +22,6 @@ import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -261,7 +260,8 @@ public class Camera1Handler implements CameraHandler {
 				parameters.setPictureSize(pictureSize.width, pictureSize.height);
 				parameters.setPictureFormat(ImageFormat.JPEG);
 
-				updateAvailableModes(parameters.getSupportedFocusModes());
+				updateAvailableFocusModes(parameters.getSupportedFocusModes());
+				updateAvailableFlashModes(parameters.getSupportedFlashModes());
 
 				mCameraCallback.updateAvailableZoom(parameters.isZoomSupported());
 				mMaxDigitalZoom = parameters.getMaxZoom();
@@ -410,7 +410,7 @@ public class Camera1Handler implements CameraHandler {
 	 *
 	 * @param supportedFocusModes the supported focus modes.
 	 */
-	private void updateAvailableModes(@NonNull final List<String> supportedFocusModes) {
+	private void updateAvailableFocusModes(@NonNull final List<String> supportedFocusModes) {
 		List<FocusMode> focusModes = new ArrayList<>();
 		for (String focusMode : supportedFocusModes) {
 			if (Camera.Parameters.FOCUS_MODE_AUTO.equals(focusMode)) {
@@ -427,7 +427,31 @@ public class Camera1Handler implements CameraHandler {
 			}
 		}
 
-		mCameraCallback.updateAvailableModes(focusModes);
+		mCameraCallback.updateAvailableFocusModes(focusModes);
+	}
+
+	/**
+	 * Update the available flash modes.
+	 *
+	 * @param supportedFlashModes the supported flash modes.
+	 */
+	private void updateAvailableFlashModes(final List<String> supportedFlashModes) {
+		List<FlashMode> flashModes = new ArrayList<>();
+		if (supportedFlashModes != null) {
+			for (String flashMode : supportedFlashModes) {
+				if (Parameters.FLASH_MODE_ON.equals(flashMode)) {
+					flashModes.add(FlashMode.ON);
+				}
+				else if (Parameters.FLASH_MODE_OFF.equals(flashMode)) {
+					flashModes.add(FlashMode.OFF);
+				}
+				else if (Parameters.FLASH_MODE_TORCH.equals(flashMode)) {
+					flashModes.add(FlashMode.TORCH);
+				}
+			}
+		}
+
+		mCameraCallback.updateAvailableFlashModes(flashModes);
 	}
 
 	/**
