@@ -41,6 +41,7 @@ import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference.OnDialogClosedListener;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
+import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
@@ -195,6 +196,9 @@ public class SettingsFragment extends PreferenceFragment {
 			}
 			if (!SystemUtil.hasFlashlight()) {
 				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_enable_flash)));
+			}
+			if (!Camera1Handler.hasFrontCamera()) {
+				getPreferenceScreen().removePreference(findPreference(getString(R.string.key_use_front_camera)));
 			}
 		}
 		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_overlay_settings))) {

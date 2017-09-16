@@ -25,6 +25,11 @@
         android:key="@string/key_enable_flash_ext"
         android:title="@string/pref_title_enable_flash_ext"/>
 
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_default_use_front_camera"
+        android:key="@string/key_use_front_camera"
+        android:title="@string/pref_title_use_front_camera"/>
+
     <ListPreference
         android:defaultValue="@string/pref_default_camera_screen_position"
         android:entries="@array/pref_list_titles_camera_screen_position"

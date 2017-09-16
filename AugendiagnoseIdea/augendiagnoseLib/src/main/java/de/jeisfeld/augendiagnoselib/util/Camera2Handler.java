@@ -489,12 +489,6 @@ public class Camera2Handler implements CameraHandler {
 			for (String cameraId : manager.getCameraIdList()) {
 				CameraCharacteristics cameraCharacteristics = manager.getCameraCharacteristics(cameraId);
 
-				// We don't use a front facing camera in this sample.
-				Integer facing = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING);
-				if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
-					continue;
-				}
-
 				StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 				if (map == null) {
 					continue;
@@ -529,9 +523,15 @@ public class Camera2Handler implements CameraHandler {
 
 				mCameraId = cameraId;
 				mCameraCharacteristics = cameraCharacteristics;
+
 				updateAvailableModes();
 
-				return;
+				boolean useFrontCamera = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_use_front_camera);
+				Integer preferredFacing = useFrontCamera ? CameraCharacteristics.LENS_FACING_FRONT : CameraCharacteristics.LENS_FACING_BACK;
+				Integer facing = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING);
+				if (preferredFacing.equals(facing)) {
+					return;
+				}
 			}
 		}
 		catch (CameraAccessException | IllegalStateException e) {
@@ -862,6 +862,7 @@ public class Camera2Handler implements CameraHandler {
 				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_MACRO;
 				break;
 			case MANUAL:
+			case FIXED:
 				mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_OFF;
 				break;
 			default:
@@ -961,10 +962,19 @@ public class Camera2Handler implements CameraHandler {
 	private void updateAvailableModes() {
 		List<FocusMode> focusModes = new ArrayList<>();
 		int[] availableFocusModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+
+		Float minFocalDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
+		if (minFocalDistance != null) {
+			mMinimalFocalDistance = minFocalDistance;
+		}
+
 		for (int focusMode : availableFocusModes != null ? availableFocusModes : new int[0]) {
 			if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_OFF) {
-				if (SystemUtil.hasManualSensor()) {
+				if (SystemUtil.hasManualSensor() && minFocalDistance != null && minFocalDistance != 0) {
 					focusModes.add(FocusMode.MANUAL);
+				}
+				else {
+					focusModes.add(FocusMode.FIXED);
 				}
 			}
 			else if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_MACRO) {
@@ -976,11 +986,6 @@ public class Camera2Handler implements CameraHandler {
 			else if (focusMode == CameraCharacteristics.CONTROL_AF_MODE_AUTO) {
 				focusModes.add(FocusMode.AUTO);
 			}
-		}
-
-		Float minFocalDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
-		if (minFocalDistance != null) {
-			mMinimalFocalDistance = minFocalDistance;
 		}
 
 		float[] focalLengths = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);

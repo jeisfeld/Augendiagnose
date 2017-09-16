@@ -15,6 +15,7 @@
     <string name="key_user_key" translatable="false">user_key</string>
     <string name="key_enable_flash" translatable="false">enable_flash</string>
     <string name="key_enable_flash_ext" translatable="false">enable_flash_ext</string>
+    <string name="key_use_front_camera" translatable="false">use_front_camera</string>
     <string name="key_camera_api_version" translatable="false">camera_api_version</string>
     <string name="key_camera_screen_position" translatable="false">camera_screen_position</string>
     <string name="key_show_rating_icon" translatable="false">show_rating_icon</string>

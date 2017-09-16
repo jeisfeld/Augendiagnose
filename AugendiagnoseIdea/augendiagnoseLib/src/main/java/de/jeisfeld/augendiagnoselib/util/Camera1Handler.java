@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.CameraCallback;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FlashMode;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity.FocusMode;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -176,6 +178,9 @@ public class Camera1Handler implements CameraHandler {
 		case CONTINUOUS:
 			mCurrentFocusMode = Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
 			break;
+		case FIXED:
+			mCurrentFocusMode = Parameters.FOCUS_MODE_FIXED;
+			break;
 		default:
 			mCurrentFocusMode = null;
 			break;
@@ -266,7 +271,15 @@ public class Camera1Handler implements CameraHandler {
 					mCamera.setParameters(parameters);
 				}
 				catch (Exception e) {
-					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+					if (parameters.getSupportedFocusModes().contains(Parameters.FOCUS_MODE_AUTO)) {
+						parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+					}
+					else if (parameters.getSupportedFocusModes().contains(Parameters.FOCUS_MODE_FIXED)) {
+						parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
+					}
+					else {
+						parameters.setFocusMode(parameters.getSupportedFocusModes().get(0));
+					}
 					mCamera.setParameters(parameters);
 				}
 
@@ -409,6 +422,9 @@ public class Camera1Handler implements CameraHandler {
 			else if (Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE.equals(focusMode)) {
 				focusModes.add(FocusMode.CONTINUOUS);
 			}
+			else if (Parameters.FOCUS_MODE_FIXED.equals(focusMode)) {
+				focusModes.add(FocusMode.FIXED);
+			}
 		}
 
 		mCameraCallback.updateAvailableModes(focusModes);
@@ -454,7 +470,7 @@ public class Camera1Handler implements CameraHandler {
 	 * @return The camera instance.
 	 */
 	private static Camera getCameraInstance() {
-		int cameraId = findBackFacingCamera();
+		int cameraId = findCamera(PreferenceUtil.getSharedPreferenceBoolean(R.string.key_use_front_camera));
 		if (cameraId < 0) {
 			return null;
 		}
@@ -469,12 +485,14 @@ public class Camera1Handler implements CameraHandler {
 	}
 
 	/**
-	 * Find the id of a front facing camera.
+	 * Find the id of a camera.
 	 *
+	 * @param frontFacing if true, a front facing camera is searched, otherwise a back facing camera.
 	 * @return The camera id.
 	 */
-	private static int findBackFacingCamera() {
+	private static int findCamera(final boolean frontFacing) {
 		int numberOfCameras = Camera.getNumberOfCameras();
+		int preferredFacing = frontFacing ? CameraInfo.CAMERA_FACING_FRONT : CameraInfo.CAMERA_FACING_BACK;
 
 		if (numberOfCameras == 0) {
 			return -1;
@@ -483,13 +501,22 @@ public class Camera1Handler implements CameraHandler {
 		for (int cameraId = 0; cameraId < numberOfCameras; cameraId++) {
 			CameraInfo info = new CameraInfo();
 			Camera.getCameraInfo(cameraId, info);
-			if (info.facing == CameraInfo.CAMERA_FACING_BACK) {
+			if (info.facing == preferredFacing) {
 				return cameraId;
 			}
 		}
 
-		// no back facing camera found.
+		// no back camera found.
 		return 0;
+	}
+
+	/**
+	 * Check if the device has a front camera.
+	 *
+	 * @return true if the device has a front camera.
+	 */
+	public static boolean hasFrontCamera() {
+		return findCamera(true) != 0;
 	}
 
 	/**

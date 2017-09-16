@@ -28,6 +28,7 @@
     <string name="pref_title_user_key">Clave de usuario</string>
     <string name="pref_title_enable_flash">Activar el flash</string>
     <string name="pref_title_enable_flash_ext">Activar flash LED externo</string>
+    <string name="pref_title_use_front_camera">Utilizar la cámara frontal</string>
     <string name="pref_title_camera_api_version">Compatibilidad de la cámara</string>
     <string name="pref_title_camera_screen_position">Posición de la pantalla de la cámara</string>
     <string name="pref_title_overlay_button">Botón de superposición %1$s</string>

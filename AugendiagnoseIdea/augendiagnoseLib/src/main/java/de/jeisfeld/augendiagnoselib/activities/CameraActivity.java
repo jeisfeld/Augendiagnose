@@ -724,6 +724,10 @@ public class CameraActivity extends StandardActivity {
 				storedFocusMode = FocusMode.AUTO;
 				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
 			}
+			else if (mFocusModes.contains(FocusMode.FIXED)) {
+				storedFocusMode = FocusMode.FIXED;
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
+			}
 			else if (mFocusModes.size() > 0) {
 				storedFocusMode = mFocusModes.get(0);
 				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
@@ -1541,7 +1545,11 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * Manual focus.
 		 */
-		MANUAL;
+		MANUAL,
+		/**
+		 * Fixed focus.
+		 */
+		FIXED;
 
 		/**
 		 * Convert into a display string, to be used in the GUI.
