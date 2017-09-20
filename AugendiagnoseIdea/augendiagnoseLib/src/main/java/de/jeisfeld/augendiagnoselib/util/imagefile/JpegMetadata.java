@@ -1,11 +1,11 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.util.Date;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.util.Date;
 
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 
@@ -14,7 +14,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
  */
 public final class JpegMetadata implements Parcelable {
 	/**
-	 * Flag indicating that the overlay size has been set automatically by camera activity ant not by user.
+	 * Flag indicating that the overlay size has been set automatically by camera activity and not by user.
 	 */
 	public static final int FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY = 0b10;
 	/**
@@ -458,7 +458,7 @@ public final class JpegMetadata implements Parcelable {
 	}
 
 	private void setOrientation(@Nullable final String value) {
-		mOrientation = value == null ? null : (short) Short.parseShort(value);
+		mOrientation = value == null ? null : Short.parseShort(value);
 	}
 
 	@Nullable

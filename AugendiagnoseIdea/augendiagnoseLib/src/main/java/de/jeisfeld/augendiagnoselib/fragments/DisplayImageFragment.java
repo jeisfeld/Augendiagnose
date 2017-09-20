@@ -60,6 +60,7 @@ import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
+import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 
 /**
@@ -1061,6 +1062,24 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
 			popup.getMenu().removeGroup(R.id.group_overlay);
 		}
+		else {
+			try {
+				JpegMetadata metadata = mImageView.getEyePhoto().getImageMetadata();
+
+				if (!metadata.hasOverlayPosition()) {
+					popup.getMenu().removeGroup(R.id.group_overlay);
+				}
+				else if (metadata.hasFlag(JpegMetadata.FLAG_OVERLAY_SET_BY_CAMERA_ACTIVITY)
+						|| metadata.hasFlag(JpegMetadata.FLAG_OVERLAY_POSITION_DETERMINED_AUTOMATICALLY)) {
+					popup.getMenu().removeItem(R.id.action_store_overlay_color);
+					popup.getMenu().removeItem(R.id.action_reset_overlay_color);
+				}
+			}
+			catch (NullPointerException e) {
+				// ignore
+			}
+		}
+
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING || mShowUtilities == UtilitiyStatus.ONLY_OVERLAY) {
 			popup.getMenu().removeGroup(R.id.group_color_settings);
 		}
