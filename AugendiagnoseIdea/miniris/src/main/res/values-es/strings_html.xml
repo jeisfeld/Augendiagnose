@@ -329,6 +329,9 @@
 			src="../drawable/ic_seek_saturation.png" /> y temperatura de color <img
 			src="../drawable/ic_seek_color_temperature.png" /></li>
 
+		<li>Rotación de la foto (botón <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+		</li>
+
 		<li>
 			<p>
 				Visualización de una topografía de iris como superposición (botón círculo <img src="../drawable/ic_btn_wheel.png"

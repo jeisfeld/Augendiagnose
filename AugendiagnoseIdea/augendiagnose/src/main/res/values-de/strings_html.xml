@@ -332,9 +332,9 @@
 
 	<p>Mit dem Button &bdquo;Tauschen&ldquo; können Sie die beiden Fotos tauschen.</p>
 
-	<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie ein oder zwei andere Fotos aus dem Eingangsverzeichnis auswählen, indem
-		sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen, indem Sie durch
-		einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
+	<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie ein oder zwei andere Fotos aus dem Eingangsverzeichnis
+		auswählen, indem sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen,
+		indem Sie durch einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
 
 	<p>Unter &bdquo;Name wählen&ldquo; können Sie den Namen der Person festlegen, zu der die Augen gehören. Hier können Sie
 		entweder einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.</p>
@@ -346,6 +346,9 @@
 	<p>Mit dem Button &bdquo;Anwenden&ldquo; können Sie das gewählte Paar Augenfotos in das Augenfoto-Verzeichnis
 		verschieben. Die Fotos werden zur angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem Programm
 		anschließend zur Verfügung.</p>
+
+	<p>Durch das Antippen des Fotopaares können Sie die beiden Fotos im Detail ansehen. (Siehe auch: &bdquo;Betrachten der
+		Fotos&ldquo;)</p>
 </body>
 </html>
 ]]>
@@ -397,6 +400,9 @@
 		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
 			src="../drawable/ic_seek_contrast.png" />, und Verändern von Sättigung <img src="../drawable/ic_seek_saturation.png" />
 			und Farbtemperatur <img src="../drawable/ic_seek_color_temperature.png" /></li>
+
+		<li>Rotation des Fotos (Button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+		</li>
 
 		<li>
 			<p>

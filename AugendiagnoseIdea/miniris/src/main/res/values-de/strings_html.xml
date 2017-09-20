@@ -331,6 +331,9 @@
 			src="../drawable/ic_seek_contrast.png" />, und Verändern von Sättigung <img src="../drawable/ic_seek_saturation.png" />
 			und Farbtemperatur <img src="../drawable/ic_seek_color_temperature.png" /></li>
 
+		<li>Rotation des Fotos (Button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+		</li>
+
 		<li>
 			<p>
 				Anzeige von Iristopographien als Overlay (Kreis-Button <img src="../drawable/ic_btn_wheel.png" class="frameless" />

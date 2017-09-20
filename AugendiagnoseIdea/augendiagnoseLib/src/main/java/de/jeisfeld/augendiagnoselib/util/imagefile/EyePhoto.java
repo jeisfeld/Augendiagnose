@@ -524,6 +524,14 @@ public class EyePhoto {
 	}
 
 	/**
+	 * Clean the cached bitmap.
+	 */
+	public final synchronized void cleanCache() {
+		mCachedBitmap = null;
+		mCachedSize = 0;
+	}
+
+	/**
 	 * Return a bitmap of this photo.
 	 *
 	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized

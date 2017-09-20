@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_rotate_right"
+        android:title="@string/menu_rotate_right"/>
+    <item
+        android:id="@+id/action_rotate_left"
+        android:title="@string/menu_rotate_left"/>
+    <item
+        android:id="@+id/action_rotate_180"
+        android:title="@string/menu_rotate_180"/>
+
+</menu>

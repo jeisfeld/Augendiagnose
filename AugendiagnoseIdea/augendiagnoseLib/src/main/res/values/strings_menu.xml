@@ -22,6 +22,9 @@
     <string name="menu_change_name">Change name</string>
     <string name="menu_remove_overlay_button">Remove button</string>
     <string name="menu_add_overlay_button">Add button</string>
+    <string name="menu_rotate_right">Rotate 90° right</string>
+    <string name="menu_rotate_left">Rotate 90° left</string>
+    <string name="menu_rotate_180">Rotate 180°</string>
 
     <!-- Entries related to buttons in the settings -->
 

@@ -766,6 +766,49 @@ public class OverlayPinchImageView extends PinchImageView {
 	}
 
 	/**
+	 * Rotate the image.
+	 *
+	 * @param rotationAngle The EXIF style rotation angle.
+	 */
+	public final void rotateImage(final short rotationAngle) {
+		if (!mInitialized || mMetadata == null) {
+			return;
+		}
+
+		short newOrientation = ImageUtil.getRotatedExifAngle(mMetadata.getOrientation(), rotationAngle);
+		mMetadata.setOrientation(newOrientation);
+
+		// Reset overlay position
+		mMetadata.setXCenter((Float) null);
+		mMetadata.setYCenter((Float) null);
+		mMetadata.setOverlayScaleFactor((Float) null);
+		mMetadata.setPupilSize((Float) null);
+		mMetadata.setPupilXOffset((Float) null);
+		mMetadata.setPupilYOffset((Float) null);
+		mHasOverlayPosition = false;
+
+		mEyePhoto.storeImageMetadata(mMetadata);
+
+		// Reload bitmaps
+		mEyePhoto.cleanCache();
+		mBitmap = ImageUtil.rotateBitmap(mBitmap, rotationAngle);
+		mBitmapSmall = ImageUtil.rotateBitmap(mBitmapSmall, rotationAngle);
+		if (mBitmapFull != null) {
+			mBitmapFull = ImageUtil.rotateBitmap(mBitmapFull, rotationAngle);
+		}
+		mRetainFragment.setBitmap(mBitmap);
+		mRetainFragment.setBitmapSmall(mBitmapSmall);
+		mCanvasBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		mCanvas = new Canvas(mCanvasBitmap);
+
+		cleanFullResolutionBitmaps(false);
+		doInitialScaling();
+		updatePinchMode();
+		refresh(HIGH);
+		showFullResolutionSnapshot(true);
+	}
+
+	/**
 	 * Reset the overlay position.
 	 *
 	 * @param store flag indicating if the overlay position should be stored.

@@ -228,6 +228,7 @@ public final class JpegMetadataUtil {
 		result.setPupilXOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_X_OFFSET));
 		result.setPupilYOffset(parser.getJeItem(XmpHandler.ITEM_PUPIL_Y_OFFSET));
 		result.setFlags(parser.getJeInt(XmpHandler.ITEM_FLAGS));
+		result.setOrientation((short) getExifOrientation(imageFile));
 
 		// For standard fields, use custom data only if there is no other data.
 		if (result.getDescription() == null) {

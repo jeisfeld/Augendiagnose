@@ -22,6 +22,9 @@
     <string name="menu_change_name">Cambiar nombre</string>
     <string name="menu_remove_overlay_button">Quitar el botón</string>
     <string name="menu_add_overlay_button">Añadir botón</string>
+    <string name="menu_rotate_right">Girar 90° a la derecha</string>
+    <string name="menu_rotate_left">Girar 90° a la izquierda</string>
+    <string name="menu_rotate_180">Girar 180°</string>
 
     <!-- Entries related to buttons in the settings -->
 

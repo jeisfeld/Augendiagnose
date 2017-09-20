@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -223,6 +224,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private Button mSelectColorButton;
 
 	/**
+	 * The button for the rotation of the eye photo.
+	 */
+	private Button mRotateImageButton;
+
+	/**
 	 * The button for the guided setup of iris and pupil position.
 	 */
 	private Button mGuidedTopoSetupButton;
@@ -386,6 +392,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mToolsButton = (Button) getView().findViewById(R.id.buttonTools);
 		mHelpButton = (Button) getView().findViewById(R.id.buttonHelp);
 		mGuidedTopoSetupButton = (Button) getView().findViewById(R.id.buttonGuidedTopoSetup);
+		mRotateImageButton = (Button) getView().findViewById(R.id.buttonRotateImage);
 
 		// Layout for circle button
 		ImageSpan imageSpan = new ImageSpan(getActivity(), R.drawable.ic_btn_wheel);
@@ -397,6 +404,12 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		// Layout for guided topo setup button
 		mGuidedTopoSetupButton.setText(content);
+
+		// Layout for rotate image button
+		ImageSpan imageSpan2 = new ImageSpan(getActivity(), R.drawable.ic_btn_rotate);
+		SpannableString content2 = new SpannableString("X");
+		content2.setSpan(imageSpan2, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mRotateImageButton.setText(content2);
 
 		if (savedInstanceState != null) {
 			mShowUtilities = (UtilitiyStatus) savedInstanceState.getSerializable("showUtilities");
@@ -532,6 +545,15 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Initialize the on-click actions for the buttons.
 	 */
 	private void setButtonListeners() {
+		setOverlayButtonListeners();
+		setToolbarButtonListeners();
+		setGuidedTopoButtonListeners();
+	}
+
+	/**
+	 * Initialize the on-click actions for the overlay buttons.
+	 */
+	private void setOverlayButtonListeners() {
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			final int index = i;
 			mToggleOverlayButtons[i].setOnClickListener(new OnClickListener() {
@@ -573,6 +595,70 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
+
+		mPupilButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				onTogglePupilClicked();
+			}
+		});
+	}
+
+	/**
+	 * Initialize the on-click actions for the guided topo and rotate buttons.
+	 */
+	private void setGuidedTopoButtonListeners() {
+		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup)) {
+			mGuidedTopoSetupButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					switch (mOverlayStatus) {
+					case GUIDED:
+						DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_guided, R.string.key_tip_overlay_guided);
+						mOverlayStatus = OverlayStatus.GUIDE_IRIS;
+						mImageView.setVisibility(View.INVISIBLE);
+						mRotateImageButton.setVisibility(View.GONE);
+						drawOverlayCircle();
+						requestLayout();
+						break;
+					case GUIDE_IRIS:
+						mImageView.setOverlayPosition((float) CIRCLE_RADIUS_IRIS / CIRCLE_BITMAP_SIZE);
+						mImageView.lockOverlay(true, true);
+						mOverlayStatus = OverlayStatus.GUIDE_PUPIL;
+						drawOverlayCircle();
+						break;
+					case GUIDE_PUPIL:
+						mImageView.setPupilPosition((float) CIRCLE_RADIUS_PUPIL / CIRCLE_BITMAP_SIZE);
+						mImageView.storePupilPosition();
+						mOverlayStatus = OverlayStatus.ALLOWED;
+						setLockChecked(true);
+						drawOverlayCircle();
+						mImageView.post(new Runnable() {
+							@Override
+							public void run() {
+								mImageView.redoInitialScaling();
+							}
+						});
+						break;
+					default:
+						break;
+					}
+				}
+			});
+
+			mRotateImageButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					showRotateMenu(v);
+				}
+			});
+		}
+	}
+
+	/**
+	 * Initialize the on-click actions for the toolbar buttons.
+	 */
+	private void setToolbarButtonListeners() {
 		if (!hasAutoFullResolution()) {
 			mClarityButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -633,52 +719,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				DisplayHtmlActivity.startActivity(getActivity(), R.string.html_display_photos);
 			}
 		});
-
-		mPupilButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				onTogglePupilClicked();
-			}
-		});
-
-		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup)) {
-			mGuidedTopoSetupButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					switch (mOverlayStatus) {
-					case GUIDED:
-						DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_guided, R.string.key_tip_overlay_guided);
-						mOverlayStatus = OverlayStatus.GUIDE_IRIS;
-						mImageView.setVisibility(View.INVISIBLE);
-						drawOverlayCircle();
-						requestLayout();
-						break;
-					case GUIDE_IRIS:
-						mImageView.setOverlayPosition((float) CIRCLE_RADIUS_IRIS / CIRCLE_BITMAP_SIZE);
-						mImageView.lockOverlay(true, true);
-						mOverlayStatus = OverlayStatus.GUIDE_PUPIL;
-						drawOverlayCircle();
-						break;
-					case GUIDE_PUPIL:
-						mImageView.setPupilPosition((float) CIRCLE_RADIUS_PUPIL / CIRCLE_BITMAP_SIZE);
-						mImageView.storePupilPosition();
-						mOverlayStatus = OverlayStatus.ALLOWED;
-						setLockChecked(true);
-						drawOverlayCircle();
-						mImageView.post(new Runnable() {
-							@Override
-							public void run() {
-								mImageView.redoInitialScaling();
-							}
-						});
-						break;
-					default:
-						break;
-					}
-				}
-			});
-		}
 	}
+
 
 	/**
 	 * Method indicating if the overlay bar should always be shown.
@@ -1088,6 +1130,39 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	}
 
 	/**
+	 * Create the popup menu for rotating the image.
+	 *
+	 * @param view The view opening the menu.
+	 */
+	private void showRotateMenu(final View view) {
+		PopupMenu popup = new PopupMenu(getActivity(), view);
+		popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(@NonNull final MenuItem item) {
+				int itemId = item.getItemId();
+				if (itemId == R.id.action_rotate_right) {
+					mImageView.rotateImage((short) ExifInterface.ORIENTATION_ROTATE_90);
+					return true;
+				}
+				else if (itemId == R.id.action_rotate_left) {
+					mImageView.rotateImage((short) ExifInterface.ORIENTATION_ROTATE_270);
+					return true;
+				}
+				else if (itemId == R.id.action_rotate_180) {
+					mImageView.rotateImage((short) ExifInterface.ORIENTATION_ROTATE_180);
+					return true;
+				}
+				else {
+					return true;
+				}
+			}
+		});
+		popup.inflate(R.menu.menu_image_rotate);
+
+		popup.show();
+	}
+
+	/**
 	 * Create the popup menu for sharing the image.
 	 *
 	 * @param view The view opening the menu.
@@ -1196,7 +1271,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		if (mShowUtilities == UtilitiyStatus.SHOW_NOTHING) {
 			fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-			mGuidedTopoSetupButton.setVisibility(View.GONE);
+			fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.GONE);
 			if (mOverlayStatus == OverlayStatus.NON_JPEG) {
 				mCommentButton.setVisibility(View.GONE);
 				mSaveButton.setVisibility(View.GONE);
@@ -1205,15 +1280,15 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		else {
 			if (mOverlayStatus == OverlayStatus.ALLOWED) {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
-				mGuidedTopoSetupButton.setVisibility(View.GONE);
+				fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.GONE);
 			}
 			else if (mOverlayStatus == OverlayStatus.FORBIDDEN) {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-				mGuidedTopoSetupButton.setVisibility(View.GONE);
+				fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.GONE);
 			}
 			else if (mOverlayStatus == OverlayStatus.NON_JPEG) {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.VISIBLE);
-				mGuidedTopoSetupButton.setVisibility(View.GONE);
+				fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.GONE);
 				mCommentButton.setVisibility(View.GONE);
 				mSaveButton.setVisibility(View.GONE);
 				mLockButton.setVisibility(View.GONE);
@@ -1221,7 +1296,13 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 			else {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
-				mGuidedTopoSetupButton.setVisibility(View.VISIBLE);
+				fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.VISIBLE);
+				if (mOverlayStatus == OverlayStatus.GUIDED && mType == TYPE_FILENAME) {
+					mRotateImageButton.setVisibility(View.VISIBLE);
+				}
+				else {
+					mRotateImageButton.setVisibility(View.GONE);
+				}
 			}
 		}
 		requestLayout();
@@ -1335,6 +1416,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_guided_topo_setup) && !checked) {
 					mOverlayStatus = OverlayStatus.GUIDED;
 					mGuidedTopoSetupButton.setEnabled(true);
+					mRotateImageButton.setEnabled(true);
 				}
 				else {
 					mOverlayStatus = OverlayStatus.ALLOWED;

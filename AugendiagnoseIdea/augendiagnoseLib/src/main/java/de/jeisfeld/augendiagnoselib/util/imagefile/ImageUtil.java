@@ -109,13 +109,12 @@ public final class ImageUtil {
 	}
 
 	/**
-	 * Retrieve the rotation angle from the Exif data of an image.
+	 * Retrieve the image orientation from the Exif data of an image.
 	 *
 	 * @param path The file path of the image
-	 * @return the rotation stored in the exif data, mapped into degrees.
+	 * @return the orientation stored in the exif data.
 	 */
-	private static int getExifRotation(@NonNull final String path) {
-		int rotation = 0;
+	private static int getExifOrientation(@NonNull final String path) {
 		try {
 			ExifInterface exif = new ExifInterface(path);
 			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
@@ -125,31 +124,91 @@ public final class ImageUtil {
 				orientation = JpegMetadataUtil.getExifOrientation(new File(path));
 			}
 
-			switch (orientation) {
-			case ExifInterface.ORIENTATION_ROTATE_270:
-				rotation = ROTATION_270;
-				break;
-			case ExifInterface.ORIENTATION_ROTATE_180:
-				rotation = ROTATION_180;
-				break;
-			case ExifInterface.ORIENTATION_ROTATE_90:
-				rotation = ROTATION_90;
-				break;
-			default:
-				break;
-			}
+			return orientation;
 		}
 		catch (Exception e) {
 			Log.w(Application.TAG, "Exception when getting EXIF rotation");
+			return ExifInterface.ORIENTATION_NORMAL;
 		}
-		return rotation;
+	}
+
+	/**
+	 * Convert the orientation as stored in EXIF metadata into degrees.
+	 *
+	 * @param exifOrientation The orientation as stored in the exif data.
+	 * @return the rotation in degrees.
+	 */
+	private static int convertExifOrientationToRotation(final int exifOrientation) {
+		switch (exifOrientation) {
+		case ExifInterface.ORIENTATION_ROTATE_270:
+			return ROTATION_270;
+		case ExifInterface.ORIENTATION_ROTATE_180:
+			return ROTATION_180;
+		case ExifInterface.ORIENTATION_ROTATE_90:
+			return ROTATION_90;
+		default:
+			return 0;
+		}
+	}
+
+	/**
+	 * Get the EXIF angle after rotating the image.
+	 *
+	 * @param originalAngle The original EXIF angle
+	 * @param rotationAngle The EXIF style rotation angle
+	 * @return the EXIF angle after rotation
+	 */
+	public static short getRotatedExifAngle(final Short originalAngle, final short rotationAngle) {
+		if (originalAngle == null) {
+			return rotationAngle;
+		}
+
+		switch (originalAngle) {
+		case ExifInterface.ORIENTATION_NORMAL:
+			return rotationAngle;
+		case ExifInterface.ORIENTATION_ROTATE_90:
+			switch (rotationAngle) {
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				return ExifInterface.ORIENTATION_ROTATE_180;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				return ExifInterface.ORIENTATION_ROTATE_270;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				return ExifInterface.ORIENTATION_NORMAL;
+			default:
+				return originalAngle;
+			}
+		case ExifInterface.ORIENTATION_ROTATE_180:
+			switch (rotationAngle) {
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				return ExifInterface.ORIENTATION_ROTATE_270;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				return ExifInterface.ORIENTATION_NORMAL;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				return ExifInterface.ORIENTATION_ROTATE_90;
+			default:
+				return originalAngle;
+			}
+		case ExifInterface.ORIENTATION_ROTATE_270:
+			switch (rotationAngle) {
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				return ExifInterface.ORIENTATION_NORMAL;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				return ExifInterface.ORIENTATION_ROTATE_90;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				return ExifInterface.ORIENTATION_ROTATE_180;
+			default:
+				return originalAngle;
+			}
+		default:
+			return originalAngle;
+		}
 	}
 
 	/**
 	 * Return a bitmap of this photo.
 	 *
-	 * @param path    The file path of the image.
-	 * @param maxSize The maximum size of this bitmap. If bigger, it will be resized.
+	 * @param path        The file path of the image.
+	 * @param maxSize     The maximum size of this bitmap. If bigger, it will be resized.
 	 * @return the bitmap.
 	 */
 	@Nullable
@@ -209,10 +268,7 @@ public final class ImageUtil {
 
 		}
 
-		int rotation = getExifRotation(path);
-		if (rotation != 0) {
-			bitmap = rotateBitmap(bitmap, rotation);
-		}
+		bitmap = rotateBitmap(bitmap, (short) getExifOrientation(path));
 
 		return bitmap;
 	}
@@ -323,10 +379,15 @@ public final class ImageUtil {
 	 * Rotate a bitmap.
 	 *
 	 * @param source The original bitmap
-	 * @param angle  The rotation angle
+	 * @param orientation  The EXIF orientation
 	 * @return the rotated bitmap.
 	 */
-	private static Bitmap rotateBitmap(@NonNull final Bitmap source, final float angle) {
+	public static Bitmap rotateBitmap(@NonNull final Bitmap source, final short orientation) {
+		int angle = convertExifOrientationToRotation(orientation);
+		if (angle == 0) {
+			return source;
+		}
+
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
