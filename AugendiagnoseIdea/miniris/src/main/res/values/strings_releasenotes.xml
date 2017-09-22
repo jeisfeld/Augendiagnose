@@ -75,7 +75,7 @@
         <item>Bugfixes</item>
         <item>Enabled use of external LED flash. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Enabled use of front camera. Rotation of images. Bugfixes</item>
+        <item>Enabled use of front camera. Rotation of images</item>
     </string-array>
 
 </resources>

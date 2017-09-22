@@ -186,7 +186,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Enabled use of external LED flash. Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Enabled use of front camera. Rotation of images. Bugfixes</item>
+        <item>Enabled use of front camera. Rotation of images</item>
     </string-array>
 
 </resources>

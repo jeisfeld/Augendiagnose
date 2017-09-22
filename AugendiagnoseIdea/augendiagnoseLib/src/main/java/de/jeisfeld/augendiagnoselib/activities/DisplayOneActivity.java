@@ -21,26 +21,9 @@ import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
  */
 public class DisplayOneActivity extends DisplayImageActivity {
 	/**
-	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
-	 */
-	private static final String STRING_EXTRA_TYPE = "de.jeisfeld.augendiagnoselib.TYPE";
-	/**
 	 * The resource key for the file path.
 	 */
 	private static final String STRING_EXTRA_FILE = "de.jeisfeld.augendiagnoselib.FILE";
-	/**
-	 * The resource key for the file resource.
-	 */
-	private static final String STRING_EXTRA_FILERESOURCE = "de.jeisfeld.augendiagnoselib.FILERESOURCE";
-
-	/**
-	 * Type value set if the activity shows an image by filename.
-	 */
-	private static final int TYPE_FILENAME = 1;
-	/**
-	 * Type value set if the activity shows an image by resource id.
-	 */
-	private static final int TYPE_FILERESOURCE = 2;
 
 	/**
 	 * The fragment tag.
@@ -66,20 +49,6 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	public static void startActivity(@NonNull final Context context, final String filename) {
 		Intent intent = new Intent(context, DisplayOneActivity.class);
 		intent.putExtra(STRING_EXTRA_FILE, filename);
-		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILENAME);
-		context.startActivity(intent);
-	}
-
-	/**
-	 * Static helper method to start the activity, passing the path of the picture.
-	 *
-	 * @param context      The context in which the activity is started.
-	 * @param fileResource The resource id of the picture.
-	 */
-	public static void startActivity(@NonNull final Context context, final int fileResource) {
-		Intent intent = new Intent(context, DisplayOneActivity.class);
-		intent.putExtra(STRING_EXTRA_FILERESOURCE, fileResource);
-		intent.putExtra(STRING_EXTRA_TYPE, TYPE_FILERESOURCE);
 		context.startActivity(intent);
 	}
 
@@ -90,9 +59,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		int type = getIntent().getIntExtra(STRING_EXTRA_TYPE, -1);
 		String file = getIntent().getStringExtra(STRING_EXTRA_FILE);
-		int fileResource = getIntent().getIntExtra(STRING_EXTRA_FILERESOURCE, -1);
 
 		setContentView(R.layout.activity_display_one);
 
@@ -100,12 +67,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		if (mFragmentImage == null) {
 			mFragmentImage = new DisplayImageFragment();
-			if (type == TYPE_FILENAME) {
-				mFragmentImage.setParameters(file, 1, null);
-			}
-			else {
-				mFragmentImage.setParameters(fileResource, 1);
-			}
+			mFragmentImage.setParameters(file, 1, null);
 
 			getFragmentManager().beginTransaction().add(R.id.fragment_image, mFragmentImage, FRAGMENT_TAG).commit();
 			getFragmentManager().executePendingTransactions();

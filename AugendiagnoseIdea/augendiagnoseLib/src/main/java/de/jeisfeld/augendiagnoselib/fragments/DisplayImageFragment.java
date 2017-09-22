@@ -69,17 +69,9 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
  */
 public class DisplayImageFragment extends Fragment implements GuiElementUpdater, OnColorSelectedListener {
 	/**
-	 * The resource key for the image type (TYPE_FILENAME or TYPE_FILERESOURCE).
-	 */
-	private static final String STRING_TYPE = "de.jeisfeld.augendiagnoselib.TYPE";
-	/**
 	 * The resource key for the file path.
 	 */
 	private static final String STRING_FILE = "de.jeisfeld.augendiagnoselib.FILE";
-	/**
-	 * The resource key for the file resource.
-	 */
-	private static final String STRING_FILERESOURCE = "de.jeisfeld.augendiagnoselib.FILERESOURCE";
 	/**
 	 * The resource kay for the image index (in case of multiple images).
 	 */
@@ -88,15 +80,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The resource kay for the rightleft information (if not contained in the image).
 	 */
 	private static final String STRING_RIGHTLEFT = "de.jeisfeld.augendiagnoselib.RIGHTLEFT";
-
-	/**
-	 * Type value set if the fragment shows an image by filename.
-	 */
-	private static final int TYPE_FILENAME = 1;
-	/**
-	 * Type value set if the fragment shows an image by resource id.
-	 */
-	private static final int TYPE_FILERESOURCE = 2;
 
 	/**
 	 * The size of the circle overlay bitmap.
@@ -110,16 +93,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The radius of the pupil circle displayed.
 	 */
 	private static final int CIRCLE_RADIUS_PUPIL = 384;
-
-	/**
-	 * Type (TYPE_FILENAME or TYPE_FILERESOURCE).
-	 */
-	private int mType;
-
-	/**
-	 * The file resource id.
-	 */
-	private int mFileResource;
 
 	/**
 	 * The file path.
@@ -290,26 +263,10 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 									@Nullable final RightLeft initialRightLeft) {
 		Bundle args = new Bundle();
 		args.putString(STRING_FILE, initialFile);
-		args.putInt(STRING_TYPE, TYPE_FILENAME);
 		args.putInt(STRING_IMAGEINDEX, initialImageIndex);
 		if (initialRightLeft != null) {
 			args.putSerializable(STRING_RIGHTLEFT, initialRightLeft);
 		}
-
-		setArguments(args);
-	}
-
-	/**
-	 * Initialize the fragment with the file resource.
-	 *
-	 * @param initialFileResource The file resource.
-	 * @param initialImageIndex   The index of the view (required if there are multiple such fragments)
-	 */
-	public final void setParameters(final int initialFileResource, final int initialImageIndex) {
-		Bundle args = new Bundle();
-		args.putInt(STRING_FILERESOURCE, initialFileResource);
-		args.putInt(STRING_TYPE, TYPE_FILERESOURCE);
-		args.putInt(STRING_IMAGEINDEX, initialImageIndex);
 
 		setArguments(args);
 	}
@@ -321,9 +278,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mType = getArguments().getInt(STRING_TYPE, -1);
 		mFile = getArguments().getString(STRING_FILE);
-		mFileResource = getArguments().getInt(STRING_FILERESOURCE, -1);
 		mImageIndex = getArguments().getInt(STRING_IMAGEINDEX, 0);
 		mRightLeft = (RightLeft) getArguments().getSerializable(STRING_RIGHTLEFT);
 	}
@@ -1297,7 +1252,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			else {
 				fragmentView.findViewById(R.id.buttonOverlayLayout).setVisibility(View.GONE);
 				fragmentView.findViewById(R.id.buttonGuidedTopoLayout).setVisibility(View.VISIBLE);
-				if (mOverlayStatus == OverlayStatus.GUIDED && mType == TYPE_FILENAME) {
+				if (mOverlayStatus == OverlayStatus.GUIDED) {
 					mRotateImageButton.setVisibility(View.VISIBLE);
 				}
 				else {
@@ -1350,12 +1305,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Initialize images - to be called after the views have restored instance state.
 	 */
 	public final void initializeImages() {
-		if (mType == TYPE_FILERESOURCE) {
-			mImageView.setImage(mFileResource, getActivity(), mImageIndex);
-		}
-		else {
-			mImageView.setImage(mFile, getActivity(), mImageIndex);
-		}
+		mImageView.setImage(mFile, getActivity(), mImageIndex);
 
 		if (mImageView.getEyePhoto().getRightLeft() == null && mRightLeft != null) {
 			mImageView.getEyePhoto().setRightLeft(mRightLeft);
