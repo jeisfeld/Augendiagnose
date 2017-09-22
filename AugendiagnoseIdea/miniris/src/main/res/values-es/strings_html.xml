@@ -241,6 +241,11 @@
 				toma de auriculares debe ser habilitado.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Utilizar la cámara frontal</td>
+			<td width="70%" valign="top">Aquí puede especificar utilizar la cámara frontal para tomar fotografías. De forma
+				predeterminada, se utiliza la cámara trasera.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Posición de la pantalla de la cámara</td>
 			<td width="70%" valign="top">Si la cinta Miniris oculta algunos botones de la pantalla de la cámara, entonces usted
 				puede utilizar este ajuste para desplazar la pantalla de la cámara hacia la derecha o izquierda.</td>

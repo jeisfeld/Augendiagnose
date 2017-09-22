@@ -266,8 +266,13 @@
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Enable external LED flash</td>
-			<td width="70%" valign="top">Here you can set whether the use of a &ldquo;Flash & Fill-in Light&rdquo; plugged in
-				the headphone jack should be supported.</td>
+			<td width="70%" valign="top">Here you can set whether the use of a &ldquo;Flash & Fill-in Light&rdquo; plugged in the
+				headphone jack should be supported.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Use front camera</td>
+			<td width="70%" valign="top">Here you can specify to use the front camera for taking pictures. By default, the rear
+				camera is used.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Camera screen position</td>
