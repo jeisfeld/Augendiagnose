@@ -43,6 +43,7 @@
         <item>1.2.3</item>
         <item>1.2.4</item>
         <item>1.2.5</item>
+        <item>1.2.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -76,6 +77,7 @@
         <item>Enabled use of external LED flash. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled use of front camera. Rotation of images</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

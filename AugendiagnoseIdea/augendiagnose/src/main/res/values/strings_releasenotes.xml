@@ -114,6 +114,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.2.3</item>
         <item>1.2.4</item>
         <item>1.2.5</item>
+        <item>1.2.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -187,6 +188,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled use of external LED flash. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled use of front camera. Rotation of images</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
