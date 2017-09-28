@@ -214,10 +214,10 @@ public class Camera1Handler implements CameraHandler {
 	private void updateFlashlight() {
 		if (mCamera != null && SystemUtil.hasFlashlight()) {
 			Parameters parameters = mCamera.getParameters();
-			if (parameters.getSupportedFlashModes().contains(mCurrentFlashlightMode)) {
+			if (parameters.getSupportedFlashModes() != null && parameters.getSupportedFlashModes().contains(mCurrentFlashlightMode)) {
 				parameters.setFlashMode(mCurrentFlashlightMode);
+				mCamera.setParameters(parameters);
 			}
-			mCamera.setParameters(parameters);
 		}
 	}
 
@@ -591,7 +591,7 @@ public class Camera1Handler implements CameraHandler {
 				int resultSize = Math.min(result.width, result.height);
 				int newSize = Math.min(size.width, size.height);
 
-				if (newSize > resultSize || (newSize == resultSize && size.width > size.height)) {
+				if (newSize > resultSize || (newSize == resultSize && size.width > result.width)) {
 					result = size;
 				}
 			}

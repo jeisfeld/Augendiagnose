@@ -498,6 +498,7 @@ public class Camera2Handler implements CameraHandler {
 				Size largest = Collections.max(
 						Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
 						new CompareSizesBySmallestSide());
+
 				mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(), ImageFormat.JPEG, /* maxImages */2);
 				mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
@@ -1028,7 +1029,7 @@ public class Camera2Handler implements CameraHandler {
 	}
 
 	/**
-	 * Compares two {@code Size}s based on their areas.
+	 * Compares two {@code Size}s based on their smallest side.
 	 */
 	private static class CompareSizesBySmallestSide implements Comparator<Size> {
 		@Override
@@ -1043,8 +1044,8 @@ public class Camera2Handler implements CameraHandler {
 				return -1;
 			}
 
-			// prefer landscape
-			return Integer.signum(lhs.getWidth() - lhs.getHeight());
+			// for equal min side, prefer widest
+			return Integer.signum(lhs.getWidth() - rhs.getWidth());
 		}
 	}
 
