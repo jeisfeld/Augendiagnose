@@ -191,11 +191,18 @@ public final class EncryptionUtil {
 	 *             thrown if there are issues with text input.
 	 */
 	public static void main(final String[] args) throws IOException {
+
 		System.out.print("Enter name: "); // SYSTEMOUT
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input = br.readLine();
-		System.out.println("User key: " + createUserKey(input)); // SYSTEMOUT
+
+		if (validateUserKey(input)) {
+			System.out.println("\"" + input + "\" is a valid user key"); // SYSTEMOUT
+		}
+		else {
+			System.out.println("User key: " + createUserKey(input)); // SYSTEMOUT
+		}
 
 		/*
 		 * Used keys:
