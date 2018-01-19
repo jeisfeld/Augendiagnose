@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="AugendiagnoseFX" default="do-deploy" basedir="."
 	xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
