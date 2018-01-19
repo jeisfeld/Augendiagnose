@@ -7,7 +7,7 @@
 	<classpathentry kind="lib" path="lib/xmpcore.jar"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_112/jre/lib/jce.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_112/jre/lib/jfxswt.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_162/jre/lib/jce.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_162/jre/lib/jfxswt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
