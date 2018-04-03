@@ -211,10 +211,7 @@ public class Application extends android.app.Application {
 	 * @param locale The locale to be set.
 	 */
 	private static void setLocale(final Locale locale) {
-		if (VERSION.SDK_INT >= VERSION_CODES.N) {
-			setLocale24(locale);
-		}
-		else if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
+		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
 			setLocale17(locale);
 		}
 		else {
@@ -223,25 +220,11 @@ public class Application extends android.app.Application {
 	}
 
 	/**
-	 * Set the locale for Android version above Nougat.
-	 *
-	 * @param locale The locale to be set.
-	 */
-	@RequiresApi(api = VERSION_CODES.N)
-	private static void setLocale24(final Locale locale) {
-		Resources res = getAppContext().getResources();
-		Configuration conf = res.getConfiguration();
-		conf.setLocale(locale);
-		getAppContext().createConfigurationContext(conf);
-	}
-
-	/**
 	 * Set the locale for Android version between Jelly Bean and Nougat.
 	 *
 	 * @param locale The locale to be set.
 	 */
 	@RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR1)
-	@SuppressWarnings("deprecation")
 	private static void setLocale17(final Locale locale) {
 		Resources res = getAppContext().getResources();
 		Configuration conf = res.getConfiguration();
