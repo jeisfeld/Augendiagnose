@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -22,11 +22,11 @@ android {
 }
 
 dependencies {
-    compile files('libs/admarvel-android-sdk-core-adcolony.jar')
-    compile files('libs/annotations.jar')
-    compile files('libs/xmpcore.jar')
-    compile 'com.android.support:support-v13:25.3.1'
-    compile 'com.google.android.gms:play-services-analytics:10.2.1'
+    api files('libs/admarvel-android-sdk-core-adcolony.jar')
+    api files('libs/annotations.jar')
+    api files('libs/xmpcore.jar')
+    implementation 'com.android.support:support-v13:26.1.0'
+    implementation 'com.google.android.gms:play-services-analytics:12.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
