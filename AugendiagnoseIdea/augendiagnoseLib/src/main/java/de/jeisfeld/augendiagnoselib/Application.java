@@ -220,7 +220,7 @@ public class Application extends android.app.Application {
 	}
 
 	/**
-	 * Set the locale for Android version between Jelly Bean and Nougat.
+	 * Set the locale for Android version above Jelly Bean.
 	 *
 	 * @param locale The locale to be set.
 	 */
