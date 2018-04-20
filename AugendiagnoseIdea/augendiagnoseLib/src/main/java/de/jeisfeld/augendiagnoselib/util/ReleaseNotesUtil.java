@@ -12,9 +12,7 @@ import android.webkit.WebView;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment;
-import de.jeisfeld.augendiagnoselib.fragments.DisplayHtmlFragment.WebViewLinkCallback;
 
 /**
  * Helper class to show standard dialogs.
@@ -117,14 +115,7 @@ public final class ReleaseNotesUtil {
 
 			WebView webView = new WebView(getActivity());
 			webView.setBackgroundColor(0x00000000);
-			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView, new WebViewLinkCallback() {
-				@Override
-				public void handleLinkAction(final String linkAction) {
-					if ("selectInputFolder".equals(linkAction)) {
-						SettingsActivity.startActivity(getActivity(), R.string.key_folder_input);
-					}
-				}
-			});
+			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
 
 			html = HTML_PREFIX + html + HTML_POSTFIX;
 			webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");

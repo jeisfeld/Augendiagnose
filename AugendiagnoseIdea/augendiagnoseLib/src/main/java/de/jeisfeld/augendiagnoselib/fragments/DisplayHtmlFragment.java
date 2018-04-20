@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 
 /**
@@ -79,7 +80,7 @@ public class DisplayHtmlFragment extends Fragment {
 		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
 
-		setOpenLinksInExternalBrowser(webView, null);
+		setOpenLinksInExternalBrowser(webView);
 
 		String html = getString(mResource);
 		if (mResource == R.string.html_release_notes_base) {
@@ -100,9 +101,8 @@ public class DisplayHtmlFragment extends Fragment {
 	 * Enable a WebView to open links in the external browser.
 	 *
 	 * @param webView  The webView.
-	 * @param callback A callback that can be used to trigger application code from links.
 	 */
-	public static void setOpenLinksInExternalBrowser(@NonNull final WebView webView, @Nullable final WebViewLinkCallback callback) {
+	public static void setOpenLinksInExternalBrowser(@NonNull final WebView webView) {
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(@NonNull final WebView view, @Nullable final String url) {
@@ -114,9 +114,11 @@ public class DisplayHtmlFragment extends Fragment {
 							new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 					return true;
 				}
-				else if (url.startsWith("appcode://") && callback != null) {
+				else if (url.startsWith("appcode://")) {
 					String action = url.substring("appcode://".length());
-					callback.handleLinkAction(action);
+					if ("selectInputFolder".equals(action)) {
+						SettingsActivity.startActivity(webView.getContext(), R.string.key_folder_input);
+					}
 					return true;
 				}
 				else {
@@ -124,18 +126,6 @@ public class DisplayHtmlFragment extends Fragment {
 				}
 			}
 		});
-	}
-
-	/**
-	 * Callback that allows to trigger code from links in WebView.
-	 */
-	public interface WebViewLinkCallback {
-		/**
-		 * Callback handler for a WebView link action.
-		 *
-		 * @param linkAction The action in the link.
-		 */
-		void handleLinkAction(String linkAction);
 	}
 
 }

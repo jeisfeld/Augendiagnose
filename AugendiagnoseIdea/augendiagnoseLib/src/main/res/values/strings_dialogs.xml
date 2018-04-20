@@ -8,7 +8,7 @@
     <string name="title_dialog_confirmation">Confirmation</string>
     <string name="title_dialog_select_folder">Select Folder</string>
     <string name="title_dialog_tip">Tip</string>
-    <string name="message_dialog_no_picture">There are no pictures in the input folder</string>
+    <string name="message_dialog_no_picture"><![CDATA[[HTML]There are no pictures in the input folder.<br><br>You may need to <a href="appcode://selectInputFolder">change the input folder</a> and restart this action.]]></string>
     <string name="message_dialog_no_photos_for_name">No eye photos available</string>
     <string name="message_dialog_select_name">Please select a name</string>
     <string name="message_dialog_organized_photos">The selected photos have been organized. There are more photos that may be organized.</string>

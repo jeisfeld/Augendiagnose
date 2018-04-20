@@ -39,11 +39,11 @@
 
     <string-array name="pref_list_titles_folder_input">
         <item>Carpeta Eye-Fi</item>
-        <item>Carpeta de la cámara</item>
+        <item>Carpeta de cámara estándar</item>
         <item>Carpeta personalizada</item>
     </string-array>
     <string-array name="pref_list_titles_folder_photos">
-        <item>Carpeta predeterminada</item>
+        <item>Carpeta estándar</item>
         <item>Carpeta personalizada</item>
     </string-array>
     <string-array name="pref_list_values_folder_photos">

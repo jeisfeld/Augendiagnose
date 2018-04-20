@@ -38,13 +38,13 @@
     <!-- Strings related to Setting arrays -->
 
     <string-array name="pref_list_titles_folder_input">
-        <item>Eye-Fi-Verzeichnis</item>
-        <item>Kamera-Verzeichnis</item>
-        <item>Anderes Verzeichnis</item>
+        <item>Eye-Fi-Ordner</item>
+        <item>Standard-Kamera-Ordner</item>
+        <item>Anderer Ordner</item>
     </string-array>
     <string-array name="pref_list_titles_folder_photos">
-        <item>Standardverzeichnis</item>
-        <item>Anderes Verzeichnis</item>
+        <item>Standard-Ordner</item>
+        <item>Anderer Ordner</item>
     </string-array>
     <string-array name="pref_list_values_folder_photos">
         <item>__ext_storage__/Augenfotos</item>

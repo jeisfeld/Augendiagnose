@@ -8,7 +8,7 @@
     <string name="title_dialog_confirmation">Confirmación</string>
     <string name="title_dialog_select_folder">Seleccionar carpeta</string>
     <string name="title_dialog_tip">Consejo</string>
-    <string name="message_dialog_no_picture">No hay fotos en la carpeta de entrada</string>
+    <string name="message_dialog_no_picture"><![CDATA[[HTML]No hay fotos en la carpeta de entrada.<br><br>Es posible que necesite <a href="appcode://selectInputFolder">personalizar la carpeta de entrada</a> y reiniciar esta acción.]]></string>
     <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles</string>
     <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
     <string name="message_dialog_organized_photos">Se han organizado las fotos seleccionadas. Hay más fotos que se pueden organizar.</string>

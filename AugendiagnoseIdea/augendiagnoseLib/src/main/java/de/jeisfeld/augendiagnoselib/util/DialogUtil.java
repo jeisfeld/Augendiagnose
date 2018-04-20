@@ -67,6 +67,11 @@ public final class DialogUtil {
 	private static final String PREVENT_RECREATION = "preventRecreation";
 
 	/**
+	 * Prefix used to indicate that an error message is in HTML format.
+	 */
+	private static final String PREFIX_HTML = "[HTML]";
+
+	/**
 	 * Hide default constructor.
 	 */
 	private DialogUtil() {
@@ -399,7 +404,7 @@ public final class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
-			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE); // STORE_PROPERTY
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
 
@@ -417,9 +422,22 @@ public final class DialogUtil {
 			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			if (message.toString().startsWith(PREFIX_HTML)) {
+				WebView webView = new WebView(getActivity());
+				webView.setBackgroundColor(0x00000000);
+				DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
+
+				message = ReleaseNotesUtil.HTML_PREFIX + message.toString().substring(PREFIX_HTML.length()) + ReleaseNotesUtil.HTML_POSTFIX;
+				webView.loadDataWithBaseURL("file:///android_res/drawable/", message.toString(), "text/html", "utf-8", "");
+				builder.setView(webView);
+			}
+			else {
+				builder.setMessage(message);
+			}
+
 			builder.setTitle(title)
 					.setIcon(iconResource)
-					.setMessage(message)
 					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(@NonNull final DialogInterface dialog, final int id) {
@@ -444,7 +462,6 @@ public final class DialogUtil {
 		public final void onSaveInstanceState(@NonNull final Bundle outState) {
 			if (mListener != null) {
 				// Typically cannot serialize the listener due to its reference to the activity.
-				mListener = null;
 				outState.putBoolean(PREVENT_RECREATION, true);
 			}
 			super.onSaveInstanceState(outState);
@@ -577,7 +594,7 @@ public final class DialogUtil {
 
 			WebView webView = new WebView(getActivity());
 			webView.setBackgroundColor(0x00000000);
-			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView, null);
+			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
 
 			message = ReleaseNotesUtil.HTML_PREFIX + message + ReleaseNotesUtil.HTML_POSTFIX;
 			webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", "");

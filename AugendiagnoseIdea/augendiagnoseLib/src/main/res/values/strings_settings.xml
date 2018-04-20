@@ -54,7 +54,7 @@
 
     <string-array name="pref_list_titles_folder_input">
         <item>Eye-Fi input folder</item>
-        <item>Camera folder</item>
+        <item>Default Camera folder</item>
         <item>Custom folder</item>
     </string-array>
     <string-array name="pref_list_values_folder_input" translatable="false">
