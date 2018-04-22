@@ -7,7 +7,6 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -589,18 +588,11 @@ public class CameraActivity extends StandardActivity {
 		});
 
 		// Hide application specific buttons
-		TypedArray hiddenButtons = getResources().obtainTypedArray(R.array.hidden_camera_buttons);
-		for (int i = 0; i < hiddenButtons.length(); i++) {
-			int id = hiddenButtons.getResourceId(i, 0);
-			if (id != 0) {
-				View view = findViewById(id);
-				if (view != null) {
-					view.setVisibility(GONE);
-					view.setEnabled(false);
-				}
-			}
+		if (getResources().getBoolean(R.bool.hide_button_view_images)) {
+			View view = findViewById(R.id.buttonCameraViewImages);
+			view.setVisibility(GONE);
+			view.setEnabled(false);
 		}
-		hiddenButtons.recycle();
 	}
 
 	/**

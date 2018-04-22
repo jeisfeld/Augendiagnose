@@ -7,6 +7,7 @@
     <string name="button_display_pictures">Display Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>
     <string name="button_take_pictures">Take pictures</string>
+    <bool name="hide_button_view_images">true</bool>
 
     <!-- Resources configuring behaviour of activities in the app -->
 
@@ -28,9 +29,5 @@
     <string-array name="googlebilling_subscription_ids" translatable="false">
         <item>donation_monthly_small</item>
     </string-array>
-
-    <array name="hidden_camera_buttons" translatable="false">
-        <item>@id/buttonCameraViewImages</item>
-    </array>
 
 </resources>

@@ -9,6 +9,7 @@
     <string name="package_mobi" translatable="false">com.eyefi.android.mobi</string>
     <bool name="flag_go_to_organize_after_move_to_input">false</bool>
     <bool name="flag_overwrite_by_camera_from_organize">false</bool>
+    <bool name="hide_button_view_images">false</bool>
 
     <!-- Generic constants -->
 
@@ -87,8 +88,6 @@
     <string-array name="googlebilling_ids" translatable="false"/>
     <string-array name="googlebilling_premium_ids" translatable="false"/>
     <string-array name="googlebilling_subscription_ids" translatable="false"/>
-
-    <array name="hidden_camera_buttons" translatable="false"/>
 
     <string name="help_overview_in_list_folders" translatable="false">false</string>
 
