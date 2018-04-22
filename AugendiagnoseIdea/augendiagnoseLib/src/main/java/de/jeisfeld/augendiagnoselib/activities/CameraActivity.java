@@ -15,13 +15,17 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.SurfaceView;
@@ -101,6 +105,10 @@ public class CameraActivity extends StandardActivity {
 	 * The resource key for the file to be re-taken.
 	 */
 	private static final String STRING_EXTRA_PHOTO_LEFT = "de.jeisfeld.augendiagnoselib.PHOTO_LEFT";
+	/**
+	 * The request code for calling external camera app.
+	 */
+	private static final int REQUEST_CODE_CAMERA_APP = 6;
 
 	/**
 	 * The size of the circle overlay bitmap.
@@ -187,6 +195,12 @@ public class CameraActivity extends StandardActivity {
 	private File mNewLeftEyeFile = null;
 
 	/**
+	 * The temp file holding the photo taken with external camera.
+	 */
+	@Nullable
+	private File mNewExternalFile = null;
+
+	/**
 	 * The folder where to store the photos.
 	 */
 	@Nullable
@@ -234,7 +248,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Static helper method to start the activity for taking two photos to the input folder.
 	 *
-	 * @param activity The activity from which the activity is started.
+	 * @param activity    The activity from which the activity is started.
 	 * @param photoFolder The folder where to store the photos.
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoFolder) {
@@ -248,9 +262,9 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Static helper method to start the activity for re-checking two images.
 	 *
-	 * @param activity The activity from which the activity is started.
+	 * @param activity   The activity from which the activity is started.
 	 * @param photoRight The path of the right eye image
-	 * @param photoLeft The path of the left eye image
+	 * @param photoLeft  The path of the left eye image
 	 */
 	public static void startActivity(@NonNull final Activity activity, final String photoRight, final String photoLeft) {
 		Intent intent = new Intent(activity, CameraActivity.class);
@@ -551,6 +565,29 @@ public class CameraActivity extends StandardActivity {
 					}
 				});
 
+		// Add a listener to the external camera button
+		Button externalCameraButton = (Button) findViewById(R.id.buttonCameraExternal);
+		externalCameraButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				mNewExternalFile = FileUtil.getTempJpegFile();
+
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mNewExternalFile));
+				}
+				else {
+					Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
+							getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
+					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+				}
+				takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+				if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+					startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
+				}
+			}
+		});
+
 		// Hide application specific buttons
 		TypedArray hiddenButtons = getResources().obtainTypedArray(R.array.hidden_camera_buttons);
 		for (int i = 0; i < hiddenButtons.length(); i++) {
@@ -833,7 +870,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Change to the given action.
 	 *
-	 * @param action The new action.
+	 * @param action    The new action.
 	 * @param rightLeft the next eye side.
 	 */
 	private void setAction(@NonNull final Action action, final RightLeft rightLeft) {
@@ -862,7 +899,7 @@ public class CameraActivity extends StandardActivity {
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? GONE : VISIBLE);
-			buttonViewImages.setVisibility(buttonViewImages.isEnabled() && buttonReturn.getVisibility() == GONE ? VISIBLE : INVISIBLE);
+			buttonViewImages.setVisibility(buttonViewImages.isEnabled() && buttonReturn.getVisibility() == GONE ? VISIBLE : GONE);
 			cameraSettingsLayout.setVisibility(VISIBLE);
 			imageViewReview.setVisibility(GONE);
 			cameraPreviewFrame.setVisibility(VISIBLE);
@@ -885,7 +922,7 @@ public class CameraActivity extends StandardActivity {
 			buttonAccept.setVisibility(VISIBLE);
 			buttonDecline.setVisibility(VISIBLE);
 			buttonReturn.setVisibility(GONE);
-			buttonViewImages.setVisibility(INVISIBLE);
+			buttonViewImages.setVisibility(GONE);
 			cameraSettingsLayout.setVisibility(INVISIBLE);
 			imageViewReview.setVisibility(VISIBLE);
 			cameraPreviewFrame.setVisibility(GONE);
@@ -899,7 +936,7 @@ public class CameraActivity extends StandardActivity {
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(VISIBLE);
-			buttonViewImages.setVisibility(INVISIBLE);
+			buttonViewImages.setVisibility(GONE);
 			cameraSettingsLayout.setVisibility(VISIBLE);
 			imageViewReview.setVisibility(GONE);
 			cameraPreviewFrame.setVisibility(VISIBLE);
@@ -1047,7 +1084,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Set the thumb image from a file.
 	 *
-	 * @param file The file to be put in the thumb.
+	 * @param file      The file to be put in the thumb.
 	 * @param rightLeft The side of the eye
 	 */
 	private void setThumbImage(@Nullable final String file, final RightLeft rightLeft) {
@@ -1071,6 +1108,19 @@ public class CameraActivity extends StandardActivity {
 		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
+
+		imageView.setImage(bitmap);
+	}
+
+	/**
+	 * Show the captured image for preview as fixed image.
+	 *
+	 * @param file the image file
+	 */
+	private void setReviewImage(@NonNull final File file) {
+		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
+
+		Bitmap bitmap = ImageUtil.getImageBitmap(file.getAbsolutePath(), findViewById(R.id.camera_preview_frame).getWidth());
 
 		imageView.setImage(bitmap);
 	}
@@ -1400,6 +1450,35 @@ public class CameraActivity extends StandardActivity {
 		}
 	}
 
+	@Override
+	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		if (requestCode == REQUEST_CODE_CAMERA_APP) {
+			if (resultCode == RESULT_OK) {
+				JpegMetadata metadata = new JpegMetadata();
+				metadata.setRightLeft(mCurrentRightLeft);
+				metadata.setComment("");
+				metadata.setOrganizeDate(new Date());
+				JpegSynchronizationUtil.storeJpegMetadata(mNewExternalFile.getAbsolutePath(), metadata);
+
+				if (mCurrentRightLeft == RIGHT) {
+					mNewRightEyeFile = mNewExternalFile;
+				}
+				else {
+					mNewLeftEyeFile = mNewExternalFile;
+				}
+
+				setThumbImage(mNewExternalFile.getAbsolutePath(), mCurrentRightLeft);
+				setReviewImage(mNewExternalFile);
+				setAction(CHECK_PHOTO, mCurrentRightLeft);
+
+			}
+			else {
+				Log.w(Application.TAG, "Did not successfully capture picture");
+				finish();
+			}
+		}
+	}
+
 	/**
 	 * The task responsible for saving the picture.
 	 */
@@ -1422,9 +1501,9 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * Constructor, passing the data to be saved.
 		 *
-		 * @param data The data to be saved.
+		 * @param data      The data to be saved.
 		 * @param rightLeft The side of the eye to be saved.
-		 * @param metadata Metadata to be stored in the photo.
+		 * @param metadata  Metadata to be stored in the photo.
 		 */
 		private SavePhotoTask(final byte[] data, final RightLeft rightLeft, final JpegMetadata metadata) {
 			this.mImageData = data;
@@ -1478,9 +1557,9 @@ public class CameraActivity extends StandardActivity {
 		/**
 		 * Callback called on fatal camera errors.
 		 *
-		 * @param message The error message as String
+		 * @param message      The error message as String
 		 * @param shortMessage a short form of the message (for analytics).
-		 * @param e The exception
+		 * @param e            The exception
 		 */
 		void onCameraError(String message, String shortMessage, Throwable e);
 

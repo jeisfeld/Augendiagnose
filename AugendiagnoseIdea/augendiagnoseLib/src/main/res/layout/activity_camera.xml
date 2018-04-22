@@ -118,29 +118,33 @@
             android:textAlignment="center"
             android:textSize="@dimen/camerabutton_text_size"/>
 
-        <Button
-            android:id="@+id/buttonCameraViewImages"
+        <FrameLayout
             android:layout_width="@dimen/camerabutton_size"
-            android:layout_height="@dimen/camerabutton_size"
-            android:layout_gravity="bottom|right"
-            android:background="@drawable/circlebutton_view_images"/>
+            android:layout_height="@dimen/camerabutton_size">
 
-        <Button
-            android:id="@+id/buttonCameraDecline"
-            android:layout_width="@dimen/camerabutton_size"
-            android:layout_height="@dimen/camerabutton_size"
-            android:layout_gravity="bottom|right"
-            android:background="@drawable/circlebutton_decline"
-            android:visibility="gone"/>
+            <Button
+                android:id="@+id/buttonCameraViewImages"
+                android:layout_width="@dimen/camerabutton_size"
+                android:layout_height="@dimen/camerabutton_size"
+                android:layout_gravity="center"
+                android:background="@drawable/circlebutton_view_images"/>
 
-        <Button
-            android:id="@+id/buttonCameraReturn"
-            android:layout_width="@dimen/camerabutton_size"
-            android:layout_height="@dimen/camerabutton_size"
-            android:layout_gravity="bottom|right"
-            android:background="@drawable/circlebutton_return"
-            android:visibility="gone"/>
+            <Button
+                android:id="@+id/buttonCameraDecline"
+                android:layout_width="@dimen/camerabutton_size"
+                android:layout_height="@dimen/camerabutton_size"
+                android:layout_gravity="bottom|right"
+                android:background="@drawable/circlebutton_decline"
+                android:visibility="gone"/>
 
+            <Button
+                android:id="@+id/buttonCameraReturn"
+                android:layout_width="@dimen/camerabutton_size"
+                android:layout_height="@dimen/camerabutton_size"
+                android:layout_gravity="bottom|right"
+                android:background="@drawable/circlebutton_return"
+                android:visibility="gone"/>
+        </FrameLayout>
     </LinearLayout>
 
 
