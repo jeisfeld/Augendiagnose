@@ -843,6 +843,7 @@ public class CameraActivity extends StandardActivity {
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
 		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
+		Button buttonCameraApp = (Button) findViewById(R.id.buttonCameraExternal);
 		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
 		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
 		Button buttonReturn = (Button) findViewById(R.id.buttonCameraReturn);
@@ -857,12 +858,11 @@ public class CameraActivity extends StandardActivity {
 			mCameraHandler.startPreview();
 			buttonCapture.setVisibility(VISIBLE);
 			buttonCapture.setEnabled(true);
+			buttonCameraApp.setVisibility(VISIBLE);
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? GONE : VISIBLE);
-			if (buttonViewImages.isEnabled() && buttonReturn.getVisibility() == GONE) {
-				buttonViewImages.setVisibility(VISIBLE);
-			}
+			buttonViewImages.setVisibility(buttonViewImages.isEnabled() && buttonReturn.getVisibility() == GONE ? VISIBLE : INVISIBLE);
 			cameraSettingsLayout.setVisibility(VISIBLE);
 			imageViewReview.setVisibility(GONE);
 			cameraPreviewFrame.setVisibility(VISIBLE);
@@ -881,6 +881,7 @@ public class CameraActivity extends StandardActivity {
 			break;
 		case CHECK_PHOTO:
 			buttonCapture.setVisibility(GONE);
+			buttonCameraApp.setVisibility(GONE);
 			buttonAccept.setVisibility(VISIBLE);
 			buttonDecline.setVisibility(VISIBLE);
 			buttonReturn.setVisibility(GONE);
@@ -894,10 +895,11 @@ public class CameraActivity extends StandardActivity {
 			break;
 		case RE_TAKE_PHOTO:
 			buttonCapture.setVisibility(GONE);
+			buttonCameraApp.setVisibility(GONE);
 			buttonAccept.setVisibility(GONE);
-			buttonDecline.setVisibility(VISIBLE);
+			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(VISIBLE);
-			buttonViewImages.setVisibility(GONE);
+			buttonViewImages.setVisibility(INVISIBLE);
 			cameraSettingsLayout.setVisibility(VISIBLE);
 			imageViewReview.setVisibility(GONE);
 			cameraPreviewFrame.setVisibility(VISIBLE);

@@ -101,12 +101,48 @@
             android:src="@drawable/icon_eye_left"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonCameraViewImages"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
-        android:layout_gravity="bottom|right"
-        android:background="@drawable/circlebutton_view_images"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/buttonCameraExternal"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginBottom="@dimen/camerabutton_distance"
+            android:background="@drawable/circlebutton_base"
+            android:gravity="center"
+            android:text="@string/button_external_camera"
+            android:textAlignment="center"
+            android:textSize="@dimen/camerabutton_text_size"/>
+
+        <Button
+            android:id="@+id/buttonCameraViewImages"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/circlebutton_view_images"/>
+
+        <Button
+            android:id="@+id/buttonCameraDecline"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/circlebutton_decline"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/buttonCameraReturn"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/circlebutton_return"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/buttonCameraAccept"
@@ -114,22 +150,6 @@
         android:layout_height="@dimen/camerabutton_size"
         android:layout_gravity="center_vertical|right"
         android:background="@drawable/circlebutton_accept"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/buttonCameraDecline"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
-        android:layout_gravity="bottom|right"
-        android:background="@drawable/circlebutton_decline"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/buttonCameraReturn"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
-        android:layout_gravity="bottom|right"
-        android:background="@drawable/circlebutton_return"
         android:visibility="gone"/>
 
     <Button

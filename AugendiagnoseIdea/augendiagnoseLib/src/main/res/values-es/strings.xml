@@ -41,6 +41,7 @@
     <string name="button_purchased_item">%1$s (comprado)</string>
     <string name="button_rate">Califica la aplicación</string>
     <string name="button_external_flash">Flash externo</string>
+    <string name="button_external_camera">Apl. de\nCámara</string>
     <string name="content_description_right_eye">Ojo derecho</string>
     <string name="content_description_left_eye">Ojo izquierdo</string>
     <string name="text_initializing">Inicializando&#8230;</string>
