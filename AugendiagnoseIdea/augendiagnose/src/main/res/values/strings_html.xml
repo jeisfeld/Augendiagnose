@@ -277,6 +277,11 @@
 				camera is used.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Show link to Camera App</td>
+			<td width="70%" valign="top">Here you can specify if the button for taking photos with the system camera app should
+				be displayed.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Camera screen position</td>
 			<td width="70%" valign="top">If the Miniris ribbon hides some buttons on the camera screen, then you can use this
 				setting to shift the camera screen to the right or left.</td>

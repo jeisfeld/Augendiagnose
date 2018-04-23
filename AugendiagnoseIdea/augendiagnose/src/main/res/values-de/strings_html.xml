@@ -286,6 +286,11 @@
 				wollen. Normalerweise wird die hintere Kamera verwendet.</td>
 		</tr>
 		<tr>
+			<td width="30%" valign="top">Link zur Kamera-App anzeigen</td>
+			<td width="70%" valign="top">Hier können Sie festlegen, ob der Knopf zum Aufnehmen von Fotos mit der Systemkamera-App
+				angezeigt werden soll.</td>
+		</tr>
+		<tr>
 			<td width="30%" valign="top">Kamera-Bildschirmposition</td>
 			<td width="70%" valign="top">Wenn das Miniris-Band Knöpfe auf dem Kamera-Bildschirm verbirgt, dann können Sie diese
 				Einstellung verwenden, um den Kamera-Bildschirm nach rechts oder links zu verschieben.</td>

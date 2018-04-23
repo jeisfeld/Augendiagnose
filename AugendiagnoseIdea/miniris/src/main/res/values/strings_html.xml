@@ -57,6 +57,8 @@
 	<ul>
 		<li>On the right hand side in the middle there is the button for capturing the photo. After capturing a photo, you can
 			decide if you want to keep the photo or if you want to dismiss it and try again.</li>
+		<li>Below there is a button that allows taking the photo with the system camera app. This may be of use in case of
+			devices with special camera features, such as dual lens.</li>
 		<li>In the corners on top of the screen there is the display of the right and left eye photo. The red marking
 			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
 		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
@@ -244,6 +246,11 @@
 			<td width="30%" valign="top">Use front camera</td>
 			<td width="70%" valign="top">Here you can specify to use the front camera for taking pictures. By default, the rear
 				camera is used.</td>
+		</tr>
+		<tr>
+			<td width="30%" valign="top">Show link to Camera App</td>
+			<td width="70%" valign="top">Here you can specify if the button for taking photos with the system camera app should
+				be displayed.</td>
 		</tr>
 		<tr>
 			<td width="30%" valign="top">Camera screen position</td>
