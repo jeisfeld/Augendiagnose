@@ -45,7 +45,7 @@
         <item>Activado el uso de la cámara frontal. Rotación de imágenes</item>
         <item>Corrección de errores</item>
         <item>Corrección de errores</item>
-        <item>Corrección de errores</item>
+        <item>Habilita el uso de la aplicación de cámara del sistema. (Se puede desactivar en la configuración de la cámara). Corrección de errores</item>
     </string-array>
 
 </resources>

@@ -81,7 +81,7 @@
         <item>Enabled use of front camera. Rotation of images</item>
         <item>Bugfixes</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
     </string-array>
 
 </resources>
