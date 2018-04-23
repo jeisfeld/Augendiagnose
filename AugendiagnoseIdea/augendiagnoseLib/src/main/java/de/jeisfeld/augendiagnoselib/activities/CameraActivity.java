@@ -301,6 +301,7 @@ public class CameraActivity extends StandardActivity {
 		setCameraHandler();
 
 		configureMainButtons();
+		configureExternalCameraButton();
 		configureThumbButtons();
 		configureZoomCircleButton();
 		configureFlashlightButton(null);
@@ -554,44 +555,51 @@ public class CameraActivity extends StandardActivity {
 					}
 				});
 
-		// Add a listener to the view image button
+
 		Button viewImagesButton = (Button) findViewById(R.id.buttonCameraViewImages);
-		viewImagesButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						setAction(CANCEL_AND_VIEW_IMAGES, null);
-					}
-				});
-
-		// Add a listener to the external camera button
-		Button externalCameraButton = (Button) findViewById(R.id.buttonCameraExternal);
-		externalCameraButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				mNewExternalFile = FileUtil.getTempJpegFile();
-
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mNewExternalFile));
-				}
-				else {
-					Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
-							getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
-					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-				}
-				takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-				if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
-					startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
-				}
-			}
-		});
-
-		// Hide application specific buttons
 		if (getResources().getBoolean(R.bool.hide_button_view_images)) {
-			View view = findViewById(R.id.buttonCameraViewImages);
-			view.setVisibility(GONE);
-			view.setEnabled(false);
+			// Hide application specific button "view images" if applicable
+			viewImagesButton.setVisibility(GONE);
+			viewImagesButton.setEnabled(false);
+		}
+		else {
+			// Add a listener to the view image button
+			viewImagesButton.setOnClickListener(
+					new OnClickListener() {
+						@Override
+						public void onClick(final View v) {
+							setAction(CANCEL_AND_VIEW_IMAGES, null);
+						}
+					});
+		}
+	}
+
+	/**
+	 * Configure the button for calling external camera app.
+	 */
+	private void configureExternalCameraButton() {
+		Button externalCameraButton = (Button) findViewById(R.id.buttonCameraExternal);
+		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera)) {
+			externalCameraButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					mNewExternalFile = FileUtil.getTempJpegFile();
+
+					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+						takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mNewExternalFile));
+					}
+					else {
+						Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
+								getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
+						takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+					}
+					takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+					if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+						startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
+					}
+				}
+			});
 		}
 	}
 
@@ -887,7 +895,7 @@ public class CameraActivity extends StandardActivity {
 			mCameraHandler.startPreview();
 			buttonCapture.setVisibility(VISIBLE);
 			buttonCapture.setEnabled(true);
-			buttonCameraApp.setVisibility(VISIBLE);
+			buttonCameraApp.setVisibility(PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera) ? VISIBLE : GONE);
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? GONE : VISIBLE);

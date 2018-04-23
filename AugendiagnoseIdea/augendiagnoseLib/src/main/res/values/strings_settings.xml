@@ -42,6 +42,8 @@
     <string name="pref_default_enable_flash_ext" translatable="false">true</string>
     <string name="pref_title_use_front_camera">Use front camera</string>
     <string name="pref_default_use_front_camera" translatable="false">false</string>
+    <string name="pref_title_enable_external_camera">Show link to Camera App</string>
+    <string name="pref_default_enable_external_camera" translatable="false">true</string>
     <string name="pref_title_camera_api_version">Camera compatibility</string>
     <string name="pref_title_camera_screen_position">Camera screen position</string>
     <string name="pref_default_camera_screen_position" translatable="false">0</string>
