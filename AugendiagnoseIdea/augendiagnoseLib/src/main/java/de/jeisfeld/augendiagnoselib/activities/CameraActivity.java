@@ -595,7 +595,11 @@ public class CameraActivity extends StandardActivity {
 						takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 					}
 					takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-					if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+					if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) == null) {
+						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_enable_external_camera, false);
+						findViewById(R.id.buttonCameraExternal).setVisibility(GONE);
+					}
+					else {
 						startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
 					}
 				}
