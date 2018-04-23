@@ -46,6 +46,7 @@
         <item>1.2.6</item>
         <item>1.2.7</item>
         <item>1.2.8</item>
+        <item>1.2.9</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -82,6 +83,7 @@
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
