@@ -194,7 +194,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled picking photos from the gallery.</item>
     </string-array>
 
 </resources>

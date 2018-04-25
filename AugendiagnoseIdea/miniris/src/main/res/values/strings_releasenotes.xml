@@ -83,7 +83,7 @@
         <item>Bugfixes</item>
         <item>Bugfixes</item>
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled picking photos from the gallery.</item>
     </string-array>
 
 </resources>
