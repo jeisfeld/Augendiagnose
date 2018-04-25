@@ -118,6 +118,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.2.7</item>
         <item>1.2.8</item>
         <item>1.2.9</item>
+        <item>1.2.10</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -195,6 +196,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
         <item>Enabled picking photos from the gallery.</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
