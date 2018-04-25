@@ -3,7 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="de.jeisfeld.miniris"
           android:installLocation="auto"
-          android:versionCode="34"
+          android:versionCode="35"
           android:versionName="1.2.9">
 
     <uses-feature
