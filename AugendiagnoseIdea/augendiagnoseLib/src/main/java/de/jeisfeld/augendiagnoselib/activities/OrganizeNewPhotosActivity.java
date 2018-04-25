@@ -57,7 +57,7 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.PupilAndIrisDetector;
 /**
  * Activity to display a pair of new eye photos, choose a name and a date for them, and shift them into the
  * application's eye photo folder (with renaming).
- *
+ * <p>
  * <p>The activity can be started either with a folder name, or with an array of file names.
  */
 public class OrganizeNewPhotosActivity extends StandardActivity {
@@ -358,12 +358,7 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 			files = mInputFolder.listFiles(new ImageUtil.ImageFileFilter());
 
 			if (files == null) {
-				if (update) {
-					finish();
-				}
-				else {
-					DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
-				}
+				handleNoImages(update);
 				return;
 			}
 
@@ -428,16 +423,37 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 			updateImages(true);
 		}
 		else {
-			if (update) {
-				finish();
-			}
-			else {
-				// Error message if there are less than two files
-				DialogUtil.displayError(this, R.string.message_dialog_no_picture, true);
-			}
+			handleNoImages(update);
 		}
 
 		mTotalImageCount = files.length;
+	}
+
+	/**
+	 * Handle the scenario of no images available.
+	 *
+	 * @param update Value true means that values are not initially filled, but updated after organizing an eye photo pair.
+	 */
+	private void handleNoImages(boolean update) {
+		if (update) {
+			finish();
+		}
+		else {
+			// Error message if there are less than two files
+			DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
+				@Override
+				public void onDialogPositiveClick(DialogFragment dialog) {
+					if (mInputFolder != null) {
+						SelectTwoPicturesActivity.startActivity(OrganizeNewPhotosActivity.this, mInputFolder.getAbsolutePath());
+					}
+				}
+
+				@Override
+				public void onDialogNegativeClick(DialogFragment dialog) {
+					finish();
+				}
+			}, R.string.button_import, R.string.message_dialog_no_picture);
+		}
 	}
 
 	/**

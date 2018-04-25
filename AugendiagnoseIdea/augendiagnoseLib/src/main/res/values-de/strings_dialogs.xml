@@ -8,8 +8,9 @@
     <string name="title_dialog_confirmation">Bestätigung</string>
     <string name="title_dialog_select_folder">Verzeichnis auswählen</string>
     <string name="title_dialog_tip">Tipp</string>
-    <string name="message_dialog_no_picture"><![CDATA[[HTML]Es sind keine Fotos zum Einordnen vorhanden.<br><br>Möglicherweise müssen Sie das <a href="appcode://selectInputFolder">Eingangsverzeichnis anpassen</a> und diese Aktion neu starten.]]></string>
+    <string name="message_dialog_no_picture"><![CDATA[[HTML]Es sind keine Fotos im Eingangsverzeichnis vorhanden.<br><br>Möglicherweise müssen Sie das <a href="appcode://selectInputFolder">Eingangsverzeichnis anpassen</a> und diese Aktion neu starten.<br><br>Alternativ können Sie jetzt Fotos aus der Galerie importieren.]]></string>
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos vorhanden</string>
+    <string name="message_dialog_no_photos_in_input_folder">Keine Augenfotos im Eingangsverzeichnis. Sie können Fotos aus der Galerie importieren.</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
     <string name="message_dialog_organized_photos">Die ausgewählten Fotos wurden eingeordnet. Es gibt noch weitere Fotos, die eingeordnet werden können.</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>

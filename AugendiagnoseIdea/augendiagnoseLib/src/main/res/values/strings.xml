@@ -45,6 +45,7 @@
     <string name="button_preview">Preview</string>
     <string name="button_other_pictures">Other Pictures</string>
     <string name="button_import_from_gallery">Import image from gallery</string>
+    <string name="button_import">Import</string>
     <string name="button_camera">Camera</string>
     <string name="button_zoom">zoom</string>
     <string name="button_overwrite">Overwrite</string>

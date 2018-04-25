@@ -43,6 +43,18 @@
             tools:ignore="ButtonStyle"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewNoImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="6dp"
+        android:text="@string/message_dialog_no_photos_in_input_folder"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"/>
+
     <GridView
         android:id="@+id/gridViewSelectTwoPictures"
         android:layout_width="match_parent"

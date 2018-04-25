@@ -149,6 +149,7 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 		// Prepare the view
 		mGridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
 		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		updateEyePhotoList();
 
 		displayButtons(TwoImageSelectionHandler.getInstance().getSelectedImages().size() > 0);
 	}
@@ -348,7 +349,7 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 	}
 
 	/**
-	 * onClick action for Button "Import from Gallery"
+	 * onClick action for Button "Import from Gallery".
 	 *
 	 * @param view The view triggering the onClick action.
 	 */
@@ -376,7 +377,10 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 	 * Update the list of eye photo pairs.
 	 */
 	private void updateEyePhotoList() {
-		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
+		EyePhoto[] eyePhotos = getEyePhotos();
+		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, eyePhotos));
+
+		findViewById(R.id.textViewNoImages).setVisibility(eyePhotos.length == 0 ? View.VISIBLE : View.GONE);
 	}
 
 	/**

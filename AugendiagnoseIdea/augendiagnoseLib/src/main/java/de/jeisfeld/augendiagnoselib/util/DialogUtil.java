@@ -518,9 +518,22 @@ public final class DialogUtil {
 			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			if (message.toString().startsWith(PREFIX_HTML)) {
+				WebView webView = new WebView(getActivity());
+				webView.setBackgroundColor(0x00000000);
+				DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
+
+				message = ReleaseNotesUtil.HTML_PREFIX + message.toString().substring(PREFIX_HTML.length()) + ReleaseNotesUtil.HTML_POSTFIX;
+				webView.loadDataWithBaseURL("file:///android_res/drawable/", message.toString(), "text/html", "utf-8", "");
+				builder.setView(webView);
+			}
+			else {
+				builder.setMessage(message);
+			}
+
 			builder.setTitle(R.string.title_dialog_confirmation)
 					.setIcon(R.drawable.ic_title_warning)
-					.setMessage(message)
 					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
