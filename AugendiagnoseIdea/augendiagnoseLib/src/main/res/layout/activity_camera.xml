@@ -112,15 +112,15 @@
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
             android:layout_marginBottom="@dimen/camerabutton_distance"
-            android:background="@drawable/circlebutton_base"
+            android:background="@drawable/circlebutton_camera_system"
             android:gravity="center"
-            android:text="@string/button_external_camera"
             android:textAlignment="center"
             android:textSize="@dimen/camerabutton_text_size"/>
 
         <FrameLayout
             android:layout_width="@dimen/camerabutton_size"
-            android:layout_height="@dimen/camerabutton_size">
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginBottom="@dimen/camerabutton_distance">
 
             <Button
                 android:id="@+id/buttonCameraViewImages"
@@ -150,16 +150,16 @@
 
     <Button
         android:id="@+id/buttonCameraAccept"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
+        android:layout_width="@dimen/camerabutton_main_size"
+        android:layout_height="@dimen/camerabutton_main_size"
         android:layout_gravity="center_vertical|right"
         android:background="@drawable/circlebutton_accept"
         android:visibility="gone"/>
 
     <Button
         android:id="@+id/buttonCameraTrigger"
-        android:layout_width="@dimen/camerabutton_size"
-        android:layout_height="@dimen/camerabutton_size"
+        android:layout_width="@dimen/camerabutton_main_size"
+        android:layout_height="@dimen/camerabutton_main_size"
         android:layout_gravity="center_vertical|right"
         android:background="@drawable/circlebutton_trigger"/>
 

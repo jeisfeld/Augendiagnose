@@ -640,16 +640,16 @@ public class CameraActivity extends StandardActivity {
 			public void onClick(final View v) {
 				boolean isVisible = !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility, isVisible);
-				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : GONE);
+				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 				if (mIsZoomAvailable) {
-					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : GONE);
+					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 				}
 			}
 		});
 		boolean isVisible = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
-		findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : GONE);
+		findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 		if (mIsZoomAvailable) {
-			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : GONE);
+			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 		}
 
 		SeekBar overlayCircleSeekbar = (SeekBar) findViewById(R.id.seekbarCameraOverlayCircle);

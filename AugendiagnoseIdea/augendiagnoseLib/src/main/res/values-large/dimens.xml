@@ -14,7 +14,8 @@
     <dimen name="actionbar_buttonwidth">48dip</dimen>
 
     <!-- Camera settings -->
-    <dimen name="camerabutton_size">84dp</dimen>
+    <dimen name="camerabutton_main_size">100dp</dimen>
+    <dimen name="camerabutton_size">80dp</dimen>
     <dimen name="camerabutton_padding">15dp</dimen>
     <dimen name="camerabutton_padding_bottom">15dp</dimen>
     <dimen name="camerabutton_padding_top">15dp</dimen>

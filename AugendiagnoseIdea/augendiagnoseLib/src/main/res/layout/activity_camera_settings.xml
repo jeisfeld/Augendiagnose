@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/cameraSettingsLayout"
-              xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/cameraSettingsLayout"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="left|bottom"
@@ -17,6 +17,7 @@
         android:id="@+id/layoutCameraFocus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginTop="@dimen/camerabutton_distance"
         android:orientation="horizontal">
 
@@ -33,7 +34,7 @@
             android:id="@+id/seekbarCameraFocus"
             android:layout_width="@dimen/camera_seekbar_size"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/camerabutton_distance"
             android:background="#7F000000"
             android:max="100"/>
@@ -43,7 +44,7 @@
         android:id="@+id/layoutCameraZoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/camerabutton_distance"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
         <Button
@@ -51,6 +52,7 @@
             android:layout_width="@dimen/camerabutton_size"
             android:layout_height="@dimen/camerabutton_size"
             android:layout_marginTop="@dimen/camerabutton_distance"
+            android:layout_marginBottom="@dimen/camerabutton_distance"
             android:background="@drawable/circlebutton_overlay_circle"
             android:text="@string/button_zoom"
             android:textSize="@dimen/camerabutton_text_size"/>
@@ -59,14 +61,13 @@
             android:id="@+id/layoutCameryZoomSeekbars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
             <SeekBar
                 android:id="@+id/seekbarCameraOverlayCircle"
                 android:layout_width="@dimen/camera_seekbar_size"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/camerabutton_distance"
                 android:background="#7F000000"
                 android:max="100"/>
@@ -75,7 +76,6 @@
                 android:id="@+id/seekbarCameraZoom"
                 android:layout_width="@dimen/camera_seekbar_size"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/camerabutton_distance"
                 android:background="#7F000000"
                 android:max="100"/>
