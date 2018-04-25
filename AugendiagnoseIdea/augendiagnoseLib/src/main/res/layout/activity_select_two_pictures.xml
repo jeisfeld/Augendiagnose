@@ -13,21 +13,31 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonImportFromGallery"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
+            android:onClick="onImportFromGalleryClick"
+            android:text="@string/button_import_from_gallery"
+            tools:ignore="ButtonStyle"/>
+
+        <Button
+            android:id="@+id/buttonPreview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="onPreviewClick"
             android:text="@string/button_preview"
             tools:ignore="ButtonStyle"/>
 
         <Button
+            android:id="@+id/buttonSelect"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:onClick="onSelectClick"
             android:text="@string/button_select"
             tools:ignore="ButtonStyle"/>

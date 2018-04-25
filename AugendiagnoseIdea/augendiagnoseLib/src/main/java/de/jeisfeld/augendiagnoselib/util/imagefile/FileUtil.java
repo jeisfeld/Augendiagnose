@@ -338,6 +338,23 @@ public final class FileUtil {
 	}
 
 	/**
+	 * Insert a number into a file name.
+	 *
+	 * @param fileName The original file name.
+	 * @param number   The number to be inserted.
+	 * @return The file name with inserted number.
+	 */
+	public static String insertNumber(final String fileName, final int number) {
+		int dotIndex = fileName.lastIndexOf('.');
+		if (dotIndex < 0) {
+			return fileName + "_" + number;
+		}
+		String prefix = fileName.substring(0, dotIndex);
+		String suffix = fileName.substring(dotIndex);
+		return prefix + "_" + number + suffix;
+	}
+
+	/**
 	 * Get all temp files.
 	 *
 	 * @return The list of existing temp files.

@@ -25,6 +25,7 @@ import de.jeisfeld.augendiagnoselib.util.TwoImageSelectionHandler;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
+import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
 
 /**
  * Activity to select a pair of eye photos from a folder and return the paths to the parent activity.
@@ -34,6 +35,10 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 	 * The requestCode with which this activity is started.
 	 */
 	public static final int REQUEST_CODE = 2;
+	/**
+	 * The requestCode used when calling the gallery for importing an image.
+	 */
+	public static final int REQUEST_CODE_GALLERY = 7;
 
 	/**
 	 * The resource key for the folder name.
@@ -343,12 +348,28 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 	}
 
 	/**
+	 * onClick action for Button "Import from Gallery"
+	 *
+	 * @param view The view triggering the onClick action.
+	 */
+	public final void onImportFromGalleryClick(final View view) {
+		Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		intent.setType("image/*");
+		startActivityForResult(intent, REQUEST_CODE_GALLERY);
+	}
+
+
+	/**
 	 * Display or hide the activity buttons.
 	 *
-	 * @param display true will display teh buttons, false will hide them.
+	 * @param imagesSelected flag indicating if images are selected.
+	 *                       true will display the buttons for finishing the activity,
+	 *                       false will hide them and display the "import from gallery" button.
 	 */
-	public final void displayButtons(final boolean display) {
-		findViewById(R.id.layoutSelectTwoButtons).setVisibility(display ? View.VISIBLE : View.GONE);
+	public final void displayButtons(final boolean imagesSelected) {
+		findViewById(R.id.buttonPreview).setVisibility(imagesSelected ? View.VISIBLE : View.GONE);
+		findViewById(R.id.buttonSelect).setVisibility(imagesSelected ? View.VISIBLE : View.GONE);
+		findViewById(R.id.buttonImportFromGallery).setVisibility(imagesSelected ? View.GONE : View.VISIBLE);
 	}
 
 	/**
@@ -365,5 +386,41 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 	 */
 	public final boolean isStartedWithInputFolder() {
 		return mFolder != null;
+	}
+
+	/*
+	 * Handle the result of the "import from gallery" action
+	 */
+	@Override
+	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		switch (requestCode) {
+		case REQUEST_CODE_GALLERY:
+			if (resultCode == RESULT_OK) {
+				String fileName = MediaStoreUtil.getRealPathFromUri(data.getData());
+
+				if (isStartedWithInputFolder()) {
+					String baseName = new File(fileName).getName();
+					File newFile = new File(mFolder, baseName);
+					if (newFile.exists()) {
+						int index = 1;
+						do {
+							newFile = new File(mFolder, FileUtil.insertNumber(baseName, index));
+						}
+						while (newFile.exists());
+					}
+					FileUtil.copyFile(new File(fileName), newFile);
+				}
+				else {
+					String[] extendedFileNames = new String[mFileNames.length + 1];
+					System.arraycopy(mFileNames, 0, extendedFileNames, 1, mFileNames.length);
+					extendedFileNames[0] = fileName;
+					mFileNames = extendedFileNames;
+				}
+				updateEyePhotoList();
+			}
+			break;
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
 }

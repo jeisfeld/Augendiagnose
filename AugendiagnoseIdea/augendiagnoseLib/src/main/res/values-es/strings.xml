@@ -33,6 +33,7 @@
     <string name="button_continue">Continuar</string>
     <string name="button_preview">Previsión</string>
     <string name="button_other_pictures">Otras Fotos</string>
+    <string name="button_import_from_gallery">Importar imagen de la galería</string>
     <string name="button_camera">Cámara</string>
     <string name="button_zoom">zoom</string>
     <string name="button_overwrite">Sobrescribir</string>
