@@ -168,12 +168,12 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The autoexposure mode.
 	 */
-	private int mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+	private int mCurrentAutoExposureMode = CameraCharacteristics.CONTROL_AE_MODE_OFF;
 
 	/**
 	 * The flash mode.
 	 */
-	private int mCurrentFlashMode = CaptureRequest.FLASH_MODE_OFF;
+	private int mCurrentFlashMode = CameraCharacteristics.FLASH_MODE_OFF;
 
 	/**
 	 * Flag indicating if external flash should be used.
@@ -193,7 +193,22 @@ public class Camera2Handler implements CameraHandler {
 	/**
 	 * The focus mode for the preview.
 	 */
-	private int mCurrentFocusMode = CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE;
+	private int mCurrentFocusMode = CameraCharacteristics.CONTROL_AF_MODE_CONTINUOUS_PICTURE;
+
+	/**
+	 * The Edge Mode to be used.
+	 */
+	private int mEdgeMode = CameraCharacteristics.EDGE_MODE_OFF;
+
+	/**
+	 * The Optical Stabilization Mode to be used.
+	 */
+	private int mOpticalStabilizationMode = CameraCharacteristics.LENS_OPTICAL_STABILIZATION_MODE_OFF;
+
+	/**
+	 * The Noise Reduction Mode to be used.
+	 */
+	private int mNoiseReductionMode = CameraCharacteristics.NOISE_REDUCTION_MODE_OFF;
 
 	/**
 	 * The current focal distance (in case of manual focus).
@@ -298,8 +313,6 @@ public class Camera2Handler implements CameraHandler {
 
 			// Keep track that use of Camera2 API was once successful.
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera2_successful, true);
-
-			unlockFocus();
 		}
 	};
 
@@ -333,20 +346,19 @@ public class Camera2Handler implements CameraHandler {
 	private final CaptureCallback mCaptureCallback = new CaptureCallback() {
 
 		private void process(@NonNull final CaptureResult result) {
+			Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
+			Integer afState = result.get(CaptureResult.CONTROL_AF_STATE);
 			switch (mState) {
 			case STATE_PREVIEW:
 				// We have nothing to do when the camera preview is working normally.
 				break;
 			case STATE_WAITING_LOCK:
-				Integer afState = result.get(CaptureResult.CONTROL_AF_STATE);
-
 				if (afState == null || mCurrentFocusMode == CaptureRequest.CONTROL_AF_MODE_OFF) {
 					captureStillPictureIfExternalFlashReady();
 				}
-				else if (CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED == afState
-						|| CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED == afState) {
+				else if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED
+						|| afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
 					// CONTROL_AE_STATE can be null on some devices
-					Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
 					if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
 						captureStillPictureIfExternalFlashReady();
 					}
@@ -354,28 +366,24 @@ public class Camera2Handler implements CameraHandler {
 						runPrecaptureSequence();
 					}
 				}
-				break;
-			case STATE_TAKING_PICTURE_END:
-				mCameraCallback.onTakingPicture();
-				mState = CameraState.STATE_PICTURE_TAKEN;
+				else if (afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_FOCUSED
+						&& aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
+					captureStillPictureIfExternalFlashReady();
+				}
 				break;
 			case STATE_WAITING_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
-				Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
-
-				if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
-					captureStillPictureIfExternalFlashReady();
-				}
-				else if (aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
+				if (aeState == null || aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE
 						|| aeState == CaptureRequest.CONTROL_AE_STATE_FLASH_REQUIRED) {
 					mState = CameraState.STATE_WAITING_NON_PRECAPTURE;
+				}
+				else if (aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
+					captureStillPictureIfExternalFlashReady();
 				}
 				break;
 			case STATE_WAITING_NON_PRECAPTURE:
 				// CONTROL_AE_STATE can be null on some devices
-				Integer aeState2 = result.get(CaptureResult.CONTROL_AE_STATE);
-
-				if (aeState2 == null || aeState2 != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
+				if (aeState == null || aeState != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
 					captureStillPictureIfExternalFlashReady();
 				}
 				break;
@@ -426,12 +434,11 @@ public class Camera2Handler implements CameraHandler {
 		// Collect the supported resolutions that are at least as big as the preview Surface
 		List<Size> bigEnough = new ArrayList<>();
 		Size biggest = null;
-
 		int w = aspectRatio.getWidth();
 		int h = aspectRatio.getHeight();
 		for (Size option : choices) {
 			if (option.getHeight() * w == option.getWidth() * h) {
-				if (option.getHeight() >= height && option.getWidth() >= width) {
+				if (option.getHeight() >= height || option.getWidth() >= width) {
 					bigEnough.add(option);
 				}
 				if (biggest == null || option.getHeight() > biggest.getHeight()) {
@@ -527,6 +534,7 @@ public class Camera2Handler implements CameraHandler {
 
 				updateAvailableFocusModes();
 				updateAvailableFlashModes();
+				updateAvailableOtherModes();
 
 				boolean useFrontCamera = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_use_front_camera);
 				Integer preferredFacing = useFrontCamera ? CameraCharacteristics.LENS_FACING_FRONT : CameraCharacteristics.LENS_FACING_BACK;
@@ -730,7 +738,7 @@ public class Camera2Handler implements CameraHandler {
 	 * {@link #mCaptureCallback} from both {@link #lockFocus()}.
 	 */
 	private void captureStillPicture() {
-		mState = CameraState.STATE_TAKING_PICTURE_START;
+		mState = CameraState.STATE_TAKING_PICTURE;
 		try {
 			if (null == mActivity || null == mCameraDevice || null == mCaptureSession) {
 				return;
@@ -750,12 +758,21 @@ public class Camera2Handler implements CameraHandler {
 				captureBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMaximalFocalLength);
 			}
 
-			captureBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
-			captureBuilder.set(CaptureRequest.EDGE_MODE, CaptureRequest.EDGE_MODE_OFF);
+			captureBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, mNoiseReductionMode);
+			captureBuilder.set(CaptureRequest.EDGE_MODE, mEdgeMode);
+			captureBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, mOpticalStabilizationMode);
 
 			mCaptureSession.stopRepeating();
-			mState = CameraState.STATE_TAKING_PICTURE_END;
-			mCaptureSession.capture(captureBuilder.build(), mCaptureCallback, mBackgroundHandler);
+			mCameraCallback.onTakingPicture();
+
+			mCaptureSession.capture(captureBuilder.build(), new CaptureCallback() {
+				@Override
+				public void onCaptureCompleted(@NonNull final CameraCaptureSession session, @NonNull final CaptureRequest request,
+											   @NonNull final TotalCaptureResult result) {
+					mState = CameraState.STATE_PICTURE_TAKEN;
+					unlockFocus();
+				}
+			}, null);
 		}
 		catch (CameraAccessException | IllegalStateException e) {
 			mCameraCallback.onCameraError("Failed to capture picture", "cap1", e);
@@ -930,8 +947,9 @@ public class Camera2Handler implements CameraHandler {
 					mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCAL_LENGTH, mMaximalFocalLength);
 				}
 
-				mPreviewRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, CaptureRequest.NOISE_REDUCTION_MODE_OFF);
-				mPreviewRequestBuilder.set(CaptureRequest.EDGE_MODE, CaptureRequest.EDGE_MODE_OFF);
+				mPreviewRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE, mNoiseReductionMode);
+				mPreviewRequestBuilder.set(CaptureRequest.EDGE_MODE, mEdgeMode);
+				mPreviewRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, mOpticalStabilizationMode);
 
 				mPreviewRequest = mPreviewRequestBuilder.build();
 				mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
@@ -1029,6 +1047,30 @@ public class Camera2Handler implements CameraHandler {
 	}
 
 	/**
+	 * Update the optical stabilization mode.
+	 */
+	private void updateAvailableOtherModes() {
+		int[] availableStabilizationModes = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION);
+		for (int mode : availableStabilizationModes) {
+			if (mode == CameraCharacteristics.LENS_OPTICAL_STABILIZATION_MODE_ON) {
+				mOpticalStabilizationMode = mode;
+			}
+		}
+		int[] availableNoiseReductionModes = mCameraCharacteristics.get(CameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES);
+		for (int mode : availableNoiseReductionModes) {
+			if (mode == CameraCharacteristics.NOISE_REDUCTION_MODE_FAST) {
+				mNoiseReductionMode = mode;
+			}
+		}
+		int[] availableEdgeModes = mCameraCharacteristics.get(CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES);
+		for (int mode : availableEdgeModes) {
+			if (mode == CameraCharacteristics.EDGE_MODE_FAST) {
+				mEdgeMode = mode;
+			}
+		}
+	}
+
+	/**
 	 * Compares two {@code Size}s based on their smallest side.
 	 */
 	private static class CompareSizesBySmallestSide implements Comparator<Size> {
@@ -1074,14 +1116,9 @@ public class Camera2Handler implements CameraHandler {
 		STATE_WAITING_NON_PRECAPTURE,
 
 		/**
-		 * Camera state: Started taking picture.
+		 * Camera state: Taking picture.
 		 */
-		STATE_TAKING_PICTURE_START,
-
-		/**
-		 * Camera state: Finished taking picture.
-		 */
-		STATE_TAKING_PICTURE_END,
+		STATE_TAKING_PICTURE,
 
 		/**
 		 * Camera state: Picture was taken.
