@@ -75,12 +75,12 @@ public class MainActivity extends StandardActivity {
 		}
 
 		if (!SystemUtil.isAppInstalled(getString(R.string.package_eyefi)) && !SystemUtil.isAppInstalled(getString(R.string.package_mobi))) {
-			Button buttonEyeFi = (Button) findViewById(R.id.mainButtonOpenEyeFiApp);
+			Button buttonEyeFi = findViewById(R.id.mainButtonOpenEyeFiApp);
 			buttonEyeFi.setVisibility(View.GONE);
 		}
 
 		if (!SystemUtil.hasCamera()) {
-			Button buttonTakePhotos = (Button) findViewById(R.id.mainButtonTakePictures);
+			Button buttonTakePhotos = findViewById(R.id.mainButtonTakePictures);
 			buttonTakePhotos.setVisibility(View.GONE);
 		}
 

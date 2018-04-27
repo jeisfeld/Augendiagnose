@@ -128,10 +128,10 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 				LayoutInflater.from(context).inflate(R.layout.dialog_directory_chooser, new LinearLayout(context));
 		dialogBuilder.setView(layout);
 
-		mCurrentFolderView = (TextView) layout.findViewById(R.id.textCurrentFolder);
+		mCurrentFolderView = layout.findViewById(R.id.textCurrentFolder);
 		mCurrentFolderView.setText(dir);
 
-		ListView listView = (ListView) layout.findViewById(R.id.listViewSubfolders);
+		ListView listView = layout.findViewById(R.id.listViewSubfolders);
 		mListAdapter = createListAdapter(mSubdirs);
 		listView.setAdapter(mListAdapter);
 

@@ -194,11 +194,11 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 			mPhotoLeft = leftEyePath == null ? null : new EyePhoto(leftEyePath);
 		}
 
-		mImageRight = (ImageView) findViewById(R.id.imageOrganizeRight);
-		mImageLeft = (ImageView) findViewById(R.id.imageOrganizeLeft);
+		mImageRight = findViewById(R.id.imageOrganizeRight);
+		mImageLeft = findViewById(R.id.imageOrganizeLeft);
 
 		// when editing the "name" field, show suggestions
-		mEditName = (InstantAutoCompleteTextView) findViewById(R.id.editName);
+		mEditName = findViewById(R.id.editName);
 		mEditName.setAdapter(new ArrayAdapter<>(this, R.layout.adapter_list_names, ListFoldersBaseFragment
 				.getFolderNames(mParentFolder)));
 		// Ensure that Keyboard "ok" click already triggers next step.
@@ -214,7 +214,7 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 		});
 
 		// when touching the "date" field, open a dialog.
-		mEditDate = (EditText) findViewById(R.id.editDate);
+		mEditDate = findViewById(R.id.editDate);
 		mEditDate.setInputType(InputType.TYPE_NULL);
 		mEditDate.setOnTouchListener(new View.OnTouchListener() {
 			@SuppressLint("ClickableViewAccessibility")
@@ -263,8 +263,8 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 	 */
 	private void configureButtons() {
 		// Set on-click action for selecting other pictures and for cancelling activity.
-		Button buttonOtherPictures = (Button) findViewById(R.id.buttonOrganizeOtherPictures);
-		Button buttonCancel = (Button) findViewById(R.id.buttonOrganizeCancel);
+		Button buttonOtherPictures = findViewById(R.id.buttonOrganizeOtherPictures);
+		Button buttonCancel = findViewById(R.id.buttonOrganizeCancel);
 
 		if (getResources().getBoolean(R.bool.flag_overwrite_by_camera_from_organize)) {
 			buttonOtherPictures.setText(getString(R.string.button_camera));

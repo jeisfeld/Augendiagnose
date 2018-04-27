@@ -95,11 +95,11 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 			mCacheRange.putIntoRange(position);
 		}
 
-		final TextView textView = (TextView) rowView.findViewById(R.id.textPictureDate);
+		final TextView textView = rowView.findViewById(R.id.textPictureDate);
 		textView.setText(mEyePhotoPairs[position].getDateDisplayString("dd.MM.yyyy"));
 
 		// Fill pictures in separate thread, for performance reasons
-		final EyeImageView imageListRight = (EyeImageView) rowView.findViewById(R.id.imageListRight);
+		final EyeImageView imageListRight = rowView.findViewById(R.id.imageListRight);
 		if (!imageListRight.isInitialized() && mEyePhotoPairs[position].getRightEye() != null) {
 			// Prevent duplicate initialization in case of multiple parallel calls - will happen in dialog
 			imageListRight.setInitialized();
@@ -110,7 +110,7 @@ public abstract class ListPicturesForNameBaseArrayAdapter extends ArrayAdapter<E
 				}
 			});
 		}
-		final EyeImageView imageListLeft = (EyeImageView) rowView.findViewById(R.id.imageListLeft);
+		final EyeImageView imageListLeft = rowView.findViewById(R.id.imageListLeft);
 		if (!imageListLeft.isInitialized() && mEyePhotoPairs[position].getLeftEye() != null) {
 			imageListLeft.setInitialized();
 			imageListLeft.setEyePhoto(mActivity, mEyePhotoPairs[position].getLeftEye(), new Runnable() {

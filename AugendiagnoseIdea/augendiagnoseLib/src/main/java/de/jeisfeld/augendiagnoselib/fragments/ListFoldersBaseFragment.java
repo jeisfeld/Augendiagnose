@@ -113,10 +113,10 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 			return;
 		}
 
-		mListView = (ListView) getView().findViewById(R.id.listViewNames);
+		mListView = getView().findViewById(R.id.listViewNames);
 		createList();
 
-		EditText editTextSearch = (EditText) getView().findViewById(R.id.searchName);
+		EditText editTextSearch = getView().findViewById(R.id.searchName);
 		editTextSearch.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(@NonNull final CharSequence s, final int start, final int before, final int count) {
@@ -350,7 +350,7 @@ public abstract class ListFoldersBaseFragment extends Fragment {
 			// This is a workaround - better solution might be a layout.
 			// If the EditText is always recreated, then the content will be lost on orientation change.
 			EditText input0;
-			input0 = (EditText) getActivity().findViewById(R.id.editName);
+			input0 = getActivity().findViewById(R.id.editName);
 			if (input0 == null) {
 				input0 = new EditText(getActivity());
 				input0.setText(inputText);

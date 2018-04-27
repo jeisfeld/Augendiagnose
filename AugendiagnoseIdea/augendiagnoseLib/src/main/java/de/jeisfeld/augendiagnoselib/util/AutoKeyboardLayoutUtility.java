@@ -76,7 +76,7 @@ public final class AutoKeyboardLayoutUtility {
 	 * @param activity the activity which uses the workaround.
 	 */
 	private AutoKeyboardLayoutUtility(@NonNull final Activity activity) {
-		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
+		FrameLayout content = activity.findViewById(android.R.id.content);
 		mChildOfContent = content.getChildAt(0);
 		mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			@Override

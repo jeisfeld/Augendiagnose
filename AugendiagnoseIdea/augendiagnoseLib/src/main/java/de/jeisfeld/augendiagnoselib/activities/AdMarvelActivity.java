@@ -110,7 +110,7 @@ public abstract class AdMarvelActivity extends BaseActivity {
 	@Nullable
 	public final AdMarvelView getAdMarvelView() {
 		if (mAdMarvelView == null) {
-			mAdMarvelView = (AdMarvelView) findViewById(R.id.admarvel);
+			mAdMarvelView = findViewById(R.id.admarvel);
 		}
 		return mAdMarvelView;
 	}

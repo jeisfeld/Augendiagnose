@@ -77,7 +77,7 @@ public class DisplayHtmlFragment extends Fragment {
 			return;
 		}
 
-		WebView webView = (WebView) getView().findViewById(R.id.webViewDisplayHtml);
+		WebView webView = getView().findViewById(R.id.webViewDisplayHtml);
 		webView.setBackgroundColor(0x00000000);
 
 		setOpenLinksInExternalBrowser(webView);

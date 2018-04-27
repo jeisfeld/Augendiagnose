@@ -89,12 +89,12 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			return;
 		}
 
-		TextView headerNameView = (TextView) getView().findViewById(R.id.textTitleName);
+		TextView headerNameView = getView().findViewById(R.id.textTitleName);
 		headerNameView.setText(mName);
 
 		createAndStoreEyePhotoList();
 
-		mListView = (ListView) getView().findViewById(R.id.listViewForName);
+		mListView = getView().findViewById(R.id.listViewForName);
 
 		// prevent highlighting
 		mListView.setCacheColorHint(Color.TRANSPARENT);

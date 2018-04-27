@@ -322,32 +322,32 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			return;
 		}
 
-		mImageView = (OverlayPinchImageView) getView().findViewById(R.id.mainImage);
+		mImageView = getView().findViewById(R.id.mainImage);
 		mImageView.setGuiElementUpdater(this);
 		mImageView.allowFullResolution(hasAutoFullResolution());
 
-		mLockButton = (ToggleButton) getView().findViewById(R.id.toggleButtonLink);
+		mLockButton = getView().findViewById(R.id.toggleButtonLink);
 
 		TypedArray overlayButtonResources = getResources().obtainTypedArray(R.array.overlay_buttons);
 		mToggleOverlayButtons = new ToggleButton[OVERLAY_BUTTON_COUNT];
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
-			mToggleOverlayButtons[i] = (ToggleButton) getView().findViewById(overlayButtonResources.getResourceId(i, -1));
+			mToggleOverlayButtons[i] = getView().findViewById(overlayButtonResources.getResourceId(i, -1));
 			mToggleOverlayButtons[i].setVisibility(View.VISIBLE);
 		}
 		overlayButtonResources.recycle();
 
-		mPupilButton = (ToggleButton) getView().findViewById(R.id.toggleButtonPupil);
-		mSelectColorButton = (Button) getView().findViewById(R.id.buttonSelectColor);
+		mPupilButton = getView().findViewById(R.id.toggleButtonPupil);
+		mSelectColorButton = getView().findViewById(R.id.buttonSelectColor);
 
-		mClarityButton = (Button) getView().findViewById(R.id.buttonClarity);
-		mInfoButton = (Button) getView().findViewById(R.id.buttonInfo);
-		mCommentButton = (Button) getView().findViewById(R.id.buttonComment);
-		mSaveButton = (Button) getView().findViewById(R.id.buttonSave);
-		mShareButton = (Button) getView().findViewById(R.id.buttonShare);
-		mToolsButton = (Button) getView().findViewById(R.id.buttonTools);
-		mHelpButton = (Button) getView().findViewById(R.id.buttonHelp);
-		mGuidedTopoSetupButton = (Button) getView().findViewById(R.id.buttonGuidedTopoSetup);
-		mRotateImageButton = (Button) getView().findViewById(R.id.buttonRotateImage);
+		mClarityButton = getView().findViewById(R.id.buttonClarity);
+		mInfoButton = getView().findViewById(R.id.buttonInfo);
+		mCommentButton = getView().findViewById(R.id.buttonComment);
+		mSaveButton = getView().findViewById(R.id.buttonSave);
+		mShareButton = getView().findViewById(R.id.buttonShare);
+		mToolsButton = getView().findViewById(R.id.buttonTools);
+		mHelpButton = getView().findViewById(R.id.buttonHelp);
+		mGuidedTopoSetupButton = getView().findViewById(R.id.buttonGuidedTopoSetup);
+		mRotateImageButton = getView().findViewById(R.id.buttonRotateImage);
 
 		// Layout for circle button
 		ImageSpan imageSpan = new ImageSpan(getActivity(), R.drawable.ic_btn_wheel);
@@ -406,7 +406,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * Configure the seekbars for brightness, contrast, saturation and color temperature.
 	 */
 	private void configureSeekbars() {
-		mSeekbarBrightness = (SeekBar) getView().findViewById(R.id.seekBarBrightness);
+		mSeekbarBrightness = getView().findViewById(R.id.seekBarBrightness);
 		mSeekbarBrightness.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
@@ -416,7 +416,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		mSeekbarContrast = (SeekBar) getView().findViewById(R.id.seekBarContrast);
+		mSeekbarContrast = getView().findViewById(R.id.seekBarContrast);
 		mSeekbarContrast.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
@@ -426,7 +426,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		mSeekbarSaturation = (SeekBar) getView().findViewById(R.id.seekBarSaturation);
+		mSeekbarSaturation = getView().findViewById(R.id.seekBarSaturation);
 		mSeekbarSaturation.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
@@ -436,7 +436,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			}
 		});
 
-		mSeekbarColorTemperature = (SeekBar) getView().findViewById(R.id.seekBarColorTemperature);
+		mSeekbarColorTemperature = getView().findViewById(R.id.seekBarColorTemperature);
 		mSeekbarColorTemperature.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
@@ -721,8 +721,8 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 
 		mGuidedTopoSetupButton.setEnabled(true);
-		ImageView overlayView = (ImageView) getView().findViewById(R.id.circleOverlay);
-		TextView textViewGuide = (TextView) getView().findViewById(R.id.textViewGuide);
+		ImageView overlayView = getView().findViewById(R.id.circleOverlay);
+		TextView textViewGuide = getView().findViewById(R.id.textViewGuide);
 
 		mImageView.updatePosition(mOverlayStatus, mOverlayStatus == OverlayStatus.GUIDE_IRIS
 				? (float) CIRCLE_RADIUS_IRIS / CIRCLE_BITMAP_SIZE

@@ -76,7 +76,7 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 			return;
 		}
 
-		mButtonAdditionalPictures = (Button) getView().findViewById(R.id.buttonSelectAdditionalPicture);
+		mButtonAdditionalPictures = getView().findViewById(R.id.buttonSelectAdditionalPicture);
 
 		mAdapter = new ListPicturesForNameArrayAdapter(getActivity(), this, getEyePhotoPairs());
 		getListView().setAdapter(mAdapter);

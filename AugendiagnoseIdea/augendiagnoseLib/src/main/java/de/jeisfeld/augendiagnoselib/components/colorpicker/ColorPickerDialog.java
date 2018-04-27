@@ -160,7 +160,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 
 		View view =
 				LayoutInflater.from(getActivity()).inflate(R.layout.color_picker_dialog, new LinearLayout(activity));
-		mPalette = (ColorPickerPalette) view.findViewById(R.id.color_picker);
+		mPalette = view.findViewById(R.id.color_picker);
 		mPalette.init(mSize, mColumns, this);
 
 		if (mColors != null) {

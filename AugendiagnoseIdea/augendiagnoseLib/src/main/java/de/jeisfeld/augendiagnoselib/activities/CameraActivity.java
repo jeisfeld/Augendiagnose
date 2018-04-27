@@ -311,7 +311,7 @@ public class CameraActivity extends StandardActivity {
 		final int screenAppearance =
 				PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_screen_position, R.string.pref_default_camera_screen_position);
 		if (screenAppearance > 0) {
-			FrameLayout cameraOverallFrame = (FrameLayout) findViewById(R.id.camera_overall_frame);
+			FrameLayout cameraOverallFrame = findViewById(R.id.camera_overall_frame);
 			int offset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 8, getResources().getDisplayMetrics()); // MAGIC_NUMBER
 			if (screenAppearance == 1) {
 				// value 1: left offset
@@ -461,7 +461,7 @@ public class CameraActivity extends StandardActivity {
 	 */
 	private void configureMainButtons() {
 		// Add a listener to the capture button
-		final Button captureButton = (Button) findViewById(R.id.buttonCameraTrigger);
+		final Button captureButton = findViewById(R.id.buttonCameraTrigger);
 		captureButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -474,7 +474,7 @@ public class CameraActivity extends StandardActivity {
 				});
 
 		// Add listeners to the accept/decline button
-		Button acceptButton = (Button) findViewById(R.id.buttonCameraAccept);
+		Button acceptButton = findViewById(R.id.buttonCameraAccept);
 		acceptButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -518,7 +518,7 @@ public class CameraActivity extends StandardActivity {
 					}
 				});
 
-		Button declineButton = (Button) findViewById(R.id.buttonCameraDecline);
+		Button declineButton = findViewById(R.id.buttonCameraDecline);
 		declineButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -557,7 +557,7 @@ public class CameraActivity extends StandardActivity {
 					}
 				});
 
-		Button returnButton = (Button) findViewById(R.id.buttonCameraReturn);
+		Button returnButton = findViewById(R.id.buttonCameraReturn);
 		returnButton.setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -567,7 +567,7 @@ public class CameraActivity extends StandardActivity {
 				});
 
 
-		Button viewImagesButton = (Button) findViewById(R.id.buttonCameraViewImages);
+		Button viewImagesButton = findViewById(R.id.buttonCameraViewImages);
 		if (getResources().getBoolean(R.bool.hide_button_view_images)) {
 			// Hide application specific button "view images" if applicable
 			viewImagesButton.setVisibility(GONE);
@@ -589,7 +589,7 @@ public class CameraActivity extends StandardActivity {
 	 * Configure the button for calling external camera app.
 	 */
 	private void configureExternalCameraButton() {
-		Button externalCameraButton = (Button) findViewById(R.id.buttonCameraExternal);
+		Button externalCameraButton = findViewById(R.id.buttonCameraExternal);
 		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera)) {
 			externalCameraButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -623,7 +623,7 @@ public class CameraActivity extends StandardActivity {
 	 */
 	private void configureThumbButtons() {
 
-		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
+		LinearLayout cameraThumbRight = findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -631,7 +631,7 @@ public class CameraActivity extends StandardActivity {
 			}
 		});
 
-		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
+		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
 		cameraThumbLeft.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -645,7 +645,7 @@ public class CameraActivity extends StandardActivity {
 	 * Configure the button for setting the overlay circle size.
 	 */
 	private void configureZoomCircleButton() {
-		Button overlayCircleButton = (Button) findViewById(R.id.buttonCameraZoomOverlayCircle);
+		Button overlayCircleButton = findViewById(R.id.buttonCameraZoomOverlayCircle);
 		overlayCircleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -663,7 +663,7 @@ public class CameraActivity extends StandardActivity {
 			findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 		}
 
-		SeekBar overlayCircleSeekbar = (SeekBar) findViewById(R.id.seekbarCameraOverlayCircle);
+		SeekBar overlayCircleSeekbar = findViewById(R.id.seekbarCameraOverlayCircle);
 		overlayCircleSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(final SeekBar seekBar) {
@@ -690,7 +690,7 @@ public class CameraActivity extends StandardActivity {
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
 		overlayCircleSeekbar.setProgress((int) ((float) overlayCircleSize / MAX_CIRCLE_RADIUS * overlayCircleSeekbar.getMax()));
 
-		SeekBar zoomSeekbar = (SeekBar) findViewById(R.id.seekbarCameraZoom);
+		SeekBar zoomSeekbar = findViewById(R.id.seekbarCameraZoom);
 		zoomSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(final SeekBar seekBar) {
@@ -718,7 +718,7 @@ public class CameraActivity extends StandardActivity {
 	 * @param flashModes The list of available flash modes.
 	 */
 	private void configureFlashlightButton(final List<FlashMode> flashModes) {
-		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
+		Button flashlightButton = findViewById(R.id.buttonCameraFlashlight);
 		determineAvailableFlashlightModes(flashModes);
 
 		if (mFlashlightModes.size() > 1) {
@@ -794,7 +794,7 @@ public class CameraActivity extends StandardActivity {
 
 		setFocusMode(storedFocusMode);
 
-		Button focusButton = (Button) findViewById(R.id.buttonCameraFocus);
+		Button focusButton = findViewById(R.id.buttonCameraFocus);
 
 		if (mFocusModes.size() < 2) {
 			focusButton.setVisibility(GONE);
@@ -815,7 +815,7 @@ public class CameraActivity extends StandardActivity {
 			}
 		});
 
-		SeekBar focusSeekbar = (SeekBar) findViewById(R.id.seekbarCameraFocus);
+		SeekBar focusSeekbar = findViewById(R.id.seekbarCameraFocus);
 		focusSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(final SeekBar seekBar) {
@@ -892,17 +892,17 @@ public class CameraActivity extends StandardActivity {
 		mCurrentAction = action;
 		mCurrentRightLeft = rightLeft;
 
-		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
-		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
-		Button buttonCapture = (Button) findViewById(R.id.buttonCameraTrigger);
-		Button buttonCameraApp = (Button) findViewById(R.id.buttonCameraExternal);
-		Button buttonAccept = (Button) findViewById(R.id.buttonCameraAccept);
-		Button buttonDecline = (Button) findViewById(R.id.buttonCameraDecline);
-		Button buttonReturn = (Button) findViewById(R.id.buttonCameraReturn);
-		Button buttonViewImages = (Button) findViewById(R.id.buttonCameraViewImages);
-		ImageView imageViewReview = (ImageView) findViewById(R.id.camera_review);
-		FrameLayout cameraPreviewFrame = (FrameLayout) findViewById(R.id.camera_preview_frame);
-		LinearLayout cameraSettingsLayout = (LinearLayout) findViewById(R.id.cameraSettingsLayout);
+		LinearLayout cameraThumbRight = findViewById(R.id.camera_thumb_layout_right);
+		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
+		Button buttonCapture = findViewById(R.id.buttonCameraTrigger);
+		Button buttonCameraApp = findViewById(R.id.buttonCameraExternal);
+		Button buttonAccept = findViewById(R.id.buttonCameraAccept);
+		Button buttonDecline = findViewById(R.id.buttonCameraDecline);
+		Button buttonReturn = findViewById(R.id.buttonCameraReturn);
+		Button buttonViewImages = findViewById(R.id.buttonCameraViewImages);
+		ImageView imageViewReview = findViewById(R.id.camera_review);
+		FrameLayout cameraPreviewFrame = findViewById(R.id.camera_preview_frame);
+		LinearLayout cameraSettingsLayout = findViewById(R.id.cameraSettingsLayout);
 
 		switch (action) {
 		case TAKE_PHOTO:
@@ -1028,12 +1028,12 @@ public class CameraActivity extends StandardActivity {
 	private void setFocusMode(final FocusMode focusMode) {
 		mCurrentFocusMode = focusMode;
 
-		SeekBar seekbarCameraFocus = (SeekBar) findViewById(R.id.seekbarCameraFocus);
+		SeekBar seekbarCameraFocus = findViewById(R.id.seekbarCameraFocus);
 		seekbarCameraFocus.setVisibility(mCurrentFocusMode == FocusMode.MANUAL ? VISIBLE : GONE);
 
 		mCameraHandler.setFocusMode(mCurrentFocusMode);
 
-		Button buttonCameraFocus = (Button) findViewById(R.id.buttonCameraFocus);
+		Button buttonCameraFocus = findViewById(R.id.buttonCameraFocus);
 
 		if (mCurrentFocusMode == null) {
 			buttonCameraFocus.setVisibility(GONE);
@@ -1089,7 +1089,7 @@ public class CameraActivity extends StandardActivity {
 	 * @param data The data representing the bitmap.
 	 */
 	private void setThumbImage(@NonNull final byte[] data) {
-		ImageView imageView = (ImageView) findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
+		ImageView imageView = findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
 		if (mCurrentScreenOrientation == ScreenOrientation.REVERSED_LANDSCAPE) {
@@ -1106,7 +1106,7 @@ public class CameraActivity extends StandardActivity {
 	 * @param rightLeft The side of the eye
 	 */
 	private void setThumbImage(@Nullable final String file, final RightLeft rightLeft) {
-		ImageView imageView = (ImageView) findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
+		ImageView imageView = findViewById(rightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		if (file != null) {
 			Bitmap bitmap = ImageUtil.getImageBitmap(file, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
@@ -1123,12 +1123,13 @@ public class CameraActivity extends StandardActivity {
 	 * @param data The data representing the image.
 	 */
 	private void setReviewImage(@NonNull final byte[] data) {
-		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
+		PinchImageView imageView = findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
 		if (mCurrentScreenOrientation == ScreenOrientation.REVERSED_LANDSCAPE) {
 			bitmap = ImageUtil.rotateBitmap(bitmap, ExifInterface.ORIENTATION_ROTATE_180);
 		}
+
 
 		imageView.setImage(bitmap);
 	}
@@ -1139,7 +1140,7 @@ public class CameraActivity extends StandardActivity {
 	 * @param file the image file
 	 */
 	private void setReviewImage(@NonNull final File file) {
-		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
+		PinchImageView imageView = findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(file.getAbsolutePath(), findViewById(R.id.camera_preview_frame).getWidth());
 
@@ -1199,7 +1200,7 @@ public class CameraActivity extends StandardActivity {
 			canvas.drawCircle(CIRCLE_BITMAP_SIZE / 2, CIRCLE_BITMAP_SIZE / 2, circleRadius, paint);
 		}
 
-		ImageView overlayView = (ImageView) findViewById(R.id.camera_overlay);
+		ImageView overlayView = findViewById(R.id.camera_overlay);
 		overlayView.setImageBitmap(overlayBitmap);
 	}
 
@@ -1207,7 +1208,7 @@ public class CameraActivity extends StandardActivity {
 	 * Update the flashlight button and set the flashlight mode.
 	 */
 	private void updateFlashlight() {
-		Button flashlightButton = (Button) findViewById(R.id.buttonCameraFlashlight);
+		Button flashlightButton = findViewById(R.id.buttonCameraFlashlight);
 		if (FlashMode.OFF.equals(mCurrentFlashlightMode)) {
 			flashlightButton.setBackgroundResource(R.drawable.circlebutton_noflash);
 		}
@@ -1419,8 +1420,8 @@ public class CameraActivity extends StandardActivity {
 	 * Set the camera handler.
 	 */
 	private void setCameraHandler() {
-		SurfaceView camera1View = (SurfaceView) findViewById(R.id.camera1_preview);
-		TextureView camera2View = (TextureView) findViewById(R.id.camera2_preview);
+		SurfaceView camera1View = findViewById(R.id.camera1_preview);
+		TextureView camera2View = findViewById(R.id.camera2_preview);
 		if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && isCamera2()) {
 			mCameraHandler = new Camera2Handler(this, (FrameLayout) findViewById(R.id.camera_preview_frame), camera2View, mOnPictureTakenHandler);
 			camera1View.setVisibility(GONE);
@@ -1441,25 +1442,25 @@ public class CameraActivity extends StandardActivity {
 	private void realignViewElements(final boolean isReverseLandscape) {
 		int rotation = isReverseLandscape ? 180 : 0; // MAGIC_NUMBER
 
-		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
+		LinearLayout cameraThumbRight = findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setRotation(rotation);
 		FrameLayout.LayoutParams frameParams = (FrameLayout.LayoutParams) cameraThumbRight.getLayoutParams();
 		frameParams.gravity = isReverseLandscape ? Gravity.RIGHT | Gravity.BOTTOM : Gravity.LEFT | Gravity.TOP;
 		cameraThumbRight.setLayoutParams(frameParams);
 
-		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
+		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
 		cameraThumbLeft.setRotation(rotation);
 		frameParams = (FrameLayout.LayoutParams) cameraThumbLeft.getLayoutParams();
 		frameParams.gravity = isReverseLandscape ? Gravity.LEFT | Gravity.BOTTOM : Gravity.RIGHT | Gravity.TOP;
 		cameraThumbLeft.setLayoutParams(frameParams);
 
-		LinearLayout cameraButtonsRight = (LinearLayout) findViewById(R.id.camera_buttons_layout_right);
+		LinearLayout cameraButtonsRight = findViewById(R.id.camera_buttons_layout_right);
 		cameraButtonsRight.setRotation(rotation);
 		frameParams = (FrameLayout.LayoutParams) cameraButtonsRight.getLayoutParams();
 		frameParams.gravity = isReverseLandscape ? Gravity.RIGHT | Gravity.TOP : Gravity.RIGHT | Gravity.BOTTOM;
 		cameraButtonsRight.setLayoutParams(frameParams);
 
-		LinearLayout cameraSettings = (LinearLayout) findViewById(R.id.cameraSettingsLayout);
+		LinearLayout cameraSettings = findViewById(R.id.cameraSettingsLayout);
 		cameraSettings.setRotation(rotation);
 		frameParams = (FrameLayout.LayoutParams) cameraSettings.getLayoutParams();
 		frameParams.gravity = isReverseLandscape ? Gravity.LEFT | Gravity.TOP : Gravity.LEFT | Gravity.BOTTOM;
@@ -1486,7 +1487,7 @@ public class CameraActivity extends StandardActivity {
 		for (int i = 0; i < childIds.length; i++) {
 			childViews[i] = findViewById(childIds[i]);
 		}
-		LinearLayout layout = (LinearLayout) findViewById(layoutId);
+		LinearLayout layout = findViewById(layoutId);
 		layout.removeAllViews();
 		if (reverse) {
 			for (int i = childViews.length - 1; i >= 0; i--) {

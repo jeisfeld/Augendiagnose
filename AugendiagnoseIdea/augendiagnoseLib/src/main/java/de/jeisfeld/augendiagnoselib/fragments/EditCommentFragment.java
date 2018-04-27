@@ -68,7 +68,7 @@ public class EditCommentFragment extends Fragment {
 			return;
 		}
 
-		mEditText = (EditText) getView().findViewById(R.id.input_edit_comment);
+		mEditText = getView().findViewById(R.id.input_edit_comment);
 		mEditText.setText(mText);
 
 		mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -81,7 +81,7 @@ public class EditCommentFragment extends Fragment {
 			}
 		});
 
-		final Button buttonCancel = (Button) getView().findViewById(R.id.buttonCancel);
+		final Button buttonCancel = getView().findViewById(R.id.buttonCancel);
 		buttonCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -90,7 +90,7 @@ public class EditCommentFragment extends Fragment {
 			}
 		});
 
-		final Button buttonClear = (Button) getView().findViewById(R.id.buttonClear);
+		final Button buttonClear = getView().findViewById(R.id.buttonClear);
 		buttonClear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -98,7 +98,7 @@ public class EditCommentFragment extends Fragment {
 			}
 		});
 
-		final Button buttonOk = (Button) getView().findViewById(R.id.buttonOk);
+		final Button buttonOk = getView().findViewById(R.id.buttonOk);
 		buttonOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {

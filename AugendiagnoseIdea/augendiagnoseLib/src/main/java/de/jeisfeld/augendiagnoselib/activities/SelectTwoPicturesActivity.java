@@ -147,7 +147,7 @@ public class SelectTwoPicturesActivity extends StandardActivity {
 		mFileNames = getIntent().getStringArrayExtra(STRING_EXTRA_FILENAMES);
 
 		// Prepare the view
-		mGridView = (GridView) findViewById(R.id.gridViewSelectTwoPictures);
+		mGridView = findViewById(R.id.gridViewSelectTwoPictures);
 		mGridView.setAdapter(new SelectTwoPicturesArrayAdapter(this, getEyePhotos()));
 		updateEyePhotoList();
 

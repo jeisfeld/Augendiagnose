@@ -70,7 +70,7 @@ public class ListPicturesForNameArrayAdapter extends ListPicturesForNameBaseArra
 	public final View getView(final int position, final View convertView, final ViewGroup parent) {
 		View rowView = super.getView(position, convertView, parent);
 
-		final TextView textView = (TextView) rowView.findViewById(R.id.textPictureDate);
+		final TextView textView = rowView.findViewById(R.id.textPictureDate);
 		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {

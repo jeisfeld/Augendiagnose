@@ -1,8 +1,5 @@
 package com.android.vending.billing;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -20,6 +17,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides convenience methods for in-app billing. You can create one instance of this class for your application and
@@ -719,7 +719,7 @@ public class IabHelper {
 	 * @param code The response code
 	 * @return A human-readable string explaining the result code. It also includes the result code numerically.
 	 */
-	public static final String getResponseDesc(final int code) {
+	public static String getResponseDesc(final int code) {
 		String[] iabMsgs = ("0:OK/1:User Canceled/2:Unknown/"
 				+ "3:Billing Unavailable/4:Item unavailable/"
 				+ "5:Developer Error/6:Error/7:Item Already Owned/"
@@ -905,8 +905,7 @@ public class IabHelper {
 	private int querySkuDetails(final String itemType, @NonNull final Inventory inv, @Nullable final List<String> moreSkus)
 			throws RemoteException, JSONException {
 		logDebug("Querying SKU details.");
-		ArrayList<String> skuList = new ArrayList<>();
-		skuList.addAll(inv.getAllOwnedSkus(itemType));
+		ArrayList<String> skuList = new ArrayList<>(inv.getAllOwnedSkus(itemType));
 		if (moreSkus != null) {
 			for (String sku : moreSkus) {
 				if (!skuList.contains(sku)) {
