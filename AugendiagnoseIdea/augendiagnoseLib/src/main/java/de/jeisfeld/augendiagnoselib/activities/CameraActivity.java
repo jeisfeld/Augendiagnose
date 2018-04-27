@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
@@ -307,7 +308,7 @@ public class CameraActivity extends StandardActivity {
 		configureFlashlightButton(null);
 		// Focus button is configured after callback from CameraHandler.
 
-		int screenAppearance =
+		final int screenAppearance =
 				PreferenceUtil.getSharedPreferenceIntString(R.string.key_camera_screen_position, R.string.pref_default_camera_screen_position);
 		if (screenAppearance > 0) {
 			FrameLayout cameraOverallFrame = (FrameLayout) findViewById(R.id.camera_overall_frame);
@@ -399,7 +400,16 @@ public class CameraActivity extends StandardActivity {
 		mOrientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
 			@Override
 			public void onOrientationChange(final ScreenOrientation screenOrientation) {
-				mCurrentScreenOrientation = screenOrientation;
+				switch (screenOrientation) {
+				case LANDSCAPE:
+				case REVERSED_LANDSCAPE:
+					if (screenOrientation != mCurrentScreenOrientation) {
+						mCurrentScreenOrientation = screenOrientation;
+						realignViewElements(screenOrientation == ScreenOrientation.REVERSED_LANDSCAPE);
+					}
+				default:
+					// do nothing
+				}
 			}
 		});
 		mOrientationManager.enable();
@@ -1081,6 +1091,9 @@ public class CameraActivity extends StandardActivity {
 		ImageView imageView = (ImageView) findViewById(mCurrentRightLeft == RIGHT ? R.id.camera_thumb_image_right : R.id.camera_thumb_image_left);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, getResources().getDimensionPixelSize(R.dimen.camera_thumb_size));
+		if (mCurrentScreenOrientation == ScreenOrientation.REVERSED_LANDSCAPE) {
+			bitmap = ImageUtil.rotateBitmap(bitmap, ExifInterface.ORIENTATION_ROTATE_180);
+		}
 
 		imageView.setImageBitmap(bitmap);
 	}
@@ -1112,6 +1125,9 @@ public class CameraActivity extends StandardActivity {
 		PinchImageView imageView = (PinchImageView) findViewById(R.id.camera_review);
 
 		Bitmap bitmap = ImageUtil.getImageBitmap(data, findViewById(R.id.camera_preview_frame).getWidth());
+		if (mCurrentScreenOrientation == ScreenOrientation.REVERSED_LANDSCAPE) {
+			bitmap = ImageUtil.rotateBitmap(bitmap, ExifInterface.ORIENTATION_ROTATE_180);
+		}
 
 		imageView.setImage(bitmap);
 	}
@@ -1225,12 +1241,8 @@ public class CameraActivity extends StandardActivity {
 		switch (mCurrentScreenOrientation) {
 		case LANDSCAPE:
 			return ExifInterface.ORIENTATION_NORMAL;
-		case PORTRAIT:
-			return ExifInterface.ORIENTATION_ROTATE_90;
 		case REVERSED_LANDSCAPE:
 			return ExifInterface.ORIENTATION_ROTATE_180;
-		case REVERSED_PORTRAIT:
-			return ExifInterface.ORIENTATION_ROTATE_270;
 		default:
 			return ExifInterface.ORIENTATION_NORMAL;
 		}
@@ -1421,6 +1433,78 @@ public class CameraActivity extends StandardActivity {
 	}
 
 	/**
+	 * Realign the view elements for landscape vs. reverseLandscape
+	 *
+	 * @param isReverseLandscape true if for reverse landscape
+	 */
+	private void realignViewElements(final boolean isReverseLandscape) {
+		int rotation = isReverseLandscape ? 180 : 0;
+
+		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
+		cameraThumbRight.setRotation(rotation);
+		FrameLayout.LayoutParams frameParams = (FrameLayout.LayoutParams) cameraThumbRight.getLayoutParams();
+		frameParams.gravity = isReverseLandscape ? Gravity.RIGHT | Gravity.BOTTOM : Gravity.LEFT | Gravity.TOP;
+		cameraThumbRight.setLayoutParams(frameParams);
+
+		LinearLayout cameraThumbLeft = (LinearLayout) findViewById(R.id.camera_thumb_layout_left);
+		cameraThumbLeft.setRotation(rotation);
+		frameParams = (FrameLayout.LayoutParams) cameraThumbLeft.getLayoutParams();
+		frameParams.gravity = isReverseLandscape ? Gravity.LEFT | Gravity.BOTTOM : Gravity.RIGHT | Gravity.TOP;
+		cameraThumbLeft.setLayoutParams(frameParams);
+
+		LinearLayout cameraButtonsRight = (LinearLayout) findViewById(R.id.camera_buttons_layout_right);
+		cameraButtonsRight.setRotation(rotation);
+		frameParams = (FrameLayout.LayoutParams) cameraButtonsRight.getLayoutParams();
+		frameParams.gravity = isReverseLandscape ? Gravity.RIGHT | Gravity.TOP : Gravity.RIGHT | Gravity.BOTTOM;
+		cameraButtonsRight.setLayoutParams(frameParams);
+
+		LinearLayout cameraSettings = (LinearLayout) findViewById(R.id.cameraSettingsLayout);
+		cameraSettings.setRotation(rotation);
+		frameParams = (FrameLayout.LayoutParams) cameraSettings.getLayoutParams();
+		frameParams.gravity = isReverseLandscape ? Gravity.LEFT | Gravity.TOP : Gravity.LEFT | Gravity.BOTTOM;
+		cameraSettings.setLayoutParams(frameParams);
+
+		realignLinearLayout(R.id.layoutCameraFocus, isReverseLandscape, R.id.buttonCameraFocus, R.id.seekbarCameraFocus);
+		realignLinearLayout(R.id.layoutCameraZoom, isReverseLandscape, R.id.buttonCameraZoomOverlayCircle, R.id.layoutCameraZoomSeekbars);
+		((LinearLayout) findViewById(R.id.cameraSettingsLayout)).setGravity(isReverseLandscape ? Gravity.RIGHT : Gravity.LEFT);
+
+		findViewById(R.id.buttonCameraAccept).setRotation(rotation);
+		findViewById(R.id.buttonCameraTrigger).setRotation(rotation);
+		findViewById(R.id.camera_review).setRotation(rotation);
+	}
+
+	/**
+	 * Align elements of a linear layout to either original sequence or reverted sequence.
+	 *
+	 * @param layoutId The id of the linear layout.
+	 * @param reverse  true for reverting the order of children.
+	 * @param childIds The ids of the children.
+	 */
+	private void realignLinearLayout(final int layoutId, final boolean reverse, final int... childIds) {
+		View[] childViews = new View[childIds.length];
+		for (int i = 0; i < childIds.length; i++) {
+			childViews[i] = findViewById(childIds[i]);
+		}
+		LinearLayout layout = (LinearLayout) findViewById(layoutId);
+		layout.removeAllViews();
+		if (reverse) {
+			for (int i = childViews.length - 1; i >= 0; i--) {
+				if (childViews[i] != null) {
+					layout.addView(childViews[i]);
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < childViews.length; i++) {
+				if (childViews[i] != null) {
+					layout.addView(childViews[i]);
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * Get information if Camera2 API is used.
 	 *
 	 * @return true if Camera2 API is used.
@@ -1486,7 +1570,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * The task responsible for saving the picture.
 	 */
-	private final class SavePhotoTask extends AsyncTask<File, String, File> {
+	private static final class SavePhotoTask extends AsyncTask<File, String, File> {
 		/**
 		 * The data to be saved.
 		 */

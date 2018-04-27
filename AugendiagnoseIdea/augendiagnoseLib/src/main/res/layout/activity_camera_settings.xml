@@ -58,7 +58,7 @@
             android:textSize="@dimen/camerabutton_text_size"/>
 
         <LinearLayout
-            android:id="@+id/layoutCameryZoomSeekbars"
+            android:id="@+id/layoutCameraZoomSeekbars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

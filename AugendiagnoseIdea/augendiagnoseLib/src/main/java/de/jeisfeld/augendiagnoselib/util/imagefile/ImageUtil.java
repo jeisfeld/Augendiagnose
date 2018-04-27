@@ -85,7 +85,6 @@ public final class ImageUtil {
 	 * @param path The file path of the image
 	 * @return the date stored in the EXIF data.
 	 */
-	@Nullable
 	public static Date getExifDate(@NonNull final String path) {
 		Date retrievedDate = null;
 		try {
@@ -382,7 +381,7 @@ public final class ImageUtil {
 	 * @param orientation  The EXIF orientation
 	 * @return the rotated bitmap.
 	 */
-	public static Bitmap rotateBitmap(@NonNull final Bitmap source, final short orientation) {
+	public static Bitmap rotateBitmap(@NonNull final Bitmap source, final int orientation) {
 		int angle = convertExifOrientationToRotation(orientation);
 		if (angle == 0) {
 			return source;
@@ -459,7 +458,6 @@ public final class ImageUtil {
 	 * @param uri The URI
 	 * @return the mime type.
 	 */
-	@Nullable
 	public static String getMimeType(@NonNull final Uri uri) {
 		ContentResolver contentResolver = Application.getAppContext().getContentResolver();
 		String mimeType = contentResolver.getType(uri);
