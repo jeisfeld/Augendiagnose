@@ -199,10 +199,12 @@ public class SizableImageView extends ScrollPane {
 		double postScrollYFactor = Math.max(0, targetHeight - getHeight());
 
 		// New scrollbar positions keeping the mouse position.
-		double newHvalue = postScrollXFactor > 0 // STORE_PROPERTY
+		// VARIABLE_DISTANCE:OFF
+		double newHvalue = postScrollXFactor > 0
 				? ((mouseXPosition * targetWidth) - xCenter) / postScrollXFactor : oldHvalue;
-		double newVvalue = postScrollYFactor > 0 // STORE_PROPERTY
+		double newVvalue = postScrollYFactor > 0
 				? ((mouseYPosition * targetHeight) - yCenter) / postScrollYFactor : oldVvalue;
+		// VARIABLE_DISTANCE:ON
 
 		mImageView.setFitWidth(targetWidth);
 		mImageView.setFitHeight(targetHeight);

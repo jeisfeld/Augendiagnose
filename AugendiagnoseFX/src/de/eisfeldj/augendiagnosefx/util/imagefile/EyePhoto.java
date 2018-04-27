@@ -622,7 +622,7 @@ public class EyePhoto {
 		 *            The String to be converted.
 		 * @return the converted RightString.
 		 */
-		public static final RightLeft fromString(final String rightLeftString) {
+		public static RightLeft fromString(final String rightLeftString) {
 			if (rightLeftString != null && rightLeftString.matches("[rRdD].*")) {
 				return RIGHT;
 			}

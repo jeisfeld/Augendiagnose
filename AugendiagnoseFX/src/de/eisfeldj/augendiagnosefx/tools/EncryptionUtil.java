@@ -191,8 +191,8 @@ public final class EncryptionUtil {
 	 *             thrown if there are issues with text input.
 	 */
 	public static void main(final String[] args) throws IOException {
-
-		System.out.print("Enter name: "); // SYSTEMOUT
+		// SYSTEMOUT:OFF
+		System.out.print("Enter name: ");
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input = br.readLine();
@@ -203,6 +203,7 @@ public final class EncryptionUtil {
 		else {
 			System.out.println("User key: " + createUserKey(input)); // SYSTEMOUT
 		}
+		// SYSTEMOUT:ON
 
 		/*
 		 * Used keys:

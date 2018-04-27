@@ -404,9 +404,11 @@ public final class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
+			// VARIABLE_DISTANCE:OFF
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE); // STORE_PROPERTY
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
+			// VARIABLE_DISTANCE:ON
 
 			mListener = (MessageDialogListener) getArguments().getSerializable(PARAM_LISTENER);
 			getArguments().putSerializable(PARAM_LISTENER, null);
@@ -500,8 +502,10 @@ public final class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
+			// VARIABLE_DISTANCE:OFF
 			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE); // STORE_PROPERTY
 			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
+			// VARIABLE_DISTANCE:ON
 
 			mListener = (ConfirmDialogListener) getArguments().getSerializable(PARAM_LISTENER);
 			getArguments().putSerializable(PARAM_LISTENER, null);
@@ -600,10 +604,12 @@ public final class DialogUtil {
 	public static class DisplayTipFragment extends DialogFragment {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
+			// VARIABLE_DISTANCE:OFF
 			String message = getArguments().getString(PARAM_MESSAGE);
 			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
+			// VARIABLE_DISTANCE:ON
 
 			WebView webView = new WebView(getActivity());
 			webView.setBackgroundColor(0x00000000);

@@ -226,6 +226,26 @@ JE Customizations of Sun Checks (Eclipse)
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
+    <module name="SuppressWithNearbyCommentFilter">
+      <metadata name="net.sf.eclipsecs.core.comment" value="MAGIC_NUMBER"/>
+      <property name="commentFormat" value="MAGIC_NUMBER"/>
+      <property name="checkFormat" value="MagicNumber"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+      <metadata name="net.sf.eclipsecs.core.comment" value="OVERRIDABLE"/>
+      <property name="commentFormat" value="OVERRIDABLE"/>
+      <property name="checkFormat" value="DesignForExtension|OverridableMethodInConstructor"/>
+      <property name="influenceFormat" value="1"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+      <metadata name="net.sf.eclipsecs.core.comment" value="SUPPRESS_CHECKSTYLE"/>
+      <property name="commentFormat" value="SUPPRESS_CHECKSTYLE"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+      <metadata name="net.sf.eclipsecs.core.comment" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
+      <property name="commentFormat" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
+      <property name="checkFormat" value="BooleanExpressionComplexity"/>
+    </module>
   </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
@@ -235,35 +255,8 @@ JE Customizations of Sun Checks (Eclipse)
     <property name="format" value="\s+$"/>
     <property name="message" value="Line has trailing spaces."/>
   </module>
-  <module name="SuppressWithNearbyCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="MAGIC_NUMBER"/>
-    <property name="commentFormat" value="MAGIC_NUMBER"/>
-    <property name="checkFormat" value="MagicNumber"/>
-  </module>
   <module name="SuppressionFilter">
     <property name="file" value="D:\Git\Augendiagnose\suppressions.xml"/>
-  </module>
-  <module name="SuppressionCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="JAVADOC"/>
-    <property name="offCommentFormat" value="JAVADOC\:OFF"/>
-    <property name="onCommentFormat" value="JAVADOC\:ON"/>
-    <property name="checkFormat" value=".*Javadoc"/>
-  </module>
-  <module name="SuppressWithNearbyCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="OVERRIDABLE"/>
-    <property name="commentFormat" value="OVERRIDABLE"/>
-    <property name="checkFormat" value="DesignForExtension|OverridableMethodInConstructor"/>
-    <property name="influenceFormat" value="1"/>
-  </module>
-  <module name="SuppressionCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="PUBLIC_FIELDS"/>
-    <property name="offCommentFormat" value="PUBLIC_FIELDS\:START"/>
-    <property name="onCommentFormat" value="PUBLIC_FIELDS\:END"/>
-    <property name="checkFormat" value="VisibilityModifier"/>
-  </module>
-  <module name="SuppressWithNearbyCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="SUPPRESS_CHECKSTYLE"/>
-    <property name="commentFormat" value="SUPPRESS_CHECKSTYLE"/>
   </module>
   <module name="RegexpSingleline">
     <metadata name="net.sf.eclipsecs.core.comment" value="Do not use System.out.println"/>
@@ -275,19 +268,28 @@ JE Customizations of Sun Checks (Eclipse)
     <property name="format" value="Logger.log"/>
     <property name="message" value="Use Logger.log only for debugging purposes"/>
   </module>
-  <module name="SuppressWithNearbyCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="STORE_PROPERTY"/>
-    <property name="commentFormat" value="STORE_PROPERTY"/>
-    <property name="checkFormat" value="VariableDeclarationUsageDistance"/>
+  <module name="SuppressWithPlainTextCommentFilter">
+    <metadata name="net.sf.eclipsecs.core.comment" value="JAVADOC"/>
+    <property name="offCommentFormat" value="// JAVADOC:OFF"/>
+    <property name="onCommentFormat" value="// JAVADOC:ON"/>
+    <property name="checkFormat" value=".*Javadoc"/>
   </module>
-  <module name="SuppressWithNearbyCommentFilter">
+  <module name="SuppressWithPlainTextCommentFilter">
+    <metadata name="net.sf.eclipsecs.core.comment" value="PUBLIC_FIELDS"/>
+    <property name="offCommentFormat" value="// PUBLIC_FIELDS:START"/>
+    <property name="onCommentFormat" value="// PUBLIC_FIELDS:END"/>
+    <property name="checkFormat" value="VisibilityModifier"/>
+  </module>
+  <module name="SuppressWithPlainTextCommentFilter">
     <metadata name="net.sf.eclipsecs.core.comment" value="SYSTEMOUT"/>
-    <property name="commentFormat" value="SYSTEMOUT"/>
+    <property name="offCommentFormat" value="// SYSTEMOUT:OFF"/>
+    <property name="onCommentFormat" value="// SYSTEMOUT:ON"/>
     <property name="checkFormat" value="RegexpSingleline"/>
   </module>
-  <module name="SuppressWithNearbyCommentFilter">
-    <metadata name="net.sf.eclipsecs.core.comment" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
-    <property name="commentFormat" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
-    <property name="checkFormat" value="BooleanExpressionComplexity"/>
+  <module name="SuppressWithPlainTextCommentFilter">
+    <metadata name="net.sf.eclipsecs.core.comment" value="VARIABLE_DISTANCE"/>
+    <property name="offCommentFormat" value="// VARIABLE_DISTANCE:OFF"/>
+    <property name="onCommentFormat" value="// VARIABLE_DISTANCE:ON"/>
+    <property name="checkFormat" value="VariableDeclarationUsageDistance"/>
   </module>
 </module>
