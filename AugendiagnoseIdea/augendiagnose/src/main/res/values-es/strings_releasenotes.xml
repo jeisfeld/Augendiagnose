@@ -119,7 +119,7 @@ primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me info
         <item>Corrección de errores</item>
         <item>Habilita el uso de la aplicación de cámara del sistema. (Se puede desactivar en la configuración de la cámara). Corrección de errores</item>
         <item>Habilitado para elegir fotos de la galería.</item>
-        <item>Corrección de errores</item>
+        <item>Mejor manejo de la orientación de la cámara. Corrección de errores</item>
     </string-array>
 
 </resources>
