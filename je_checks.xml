@@ -13,7 +13,6 @@ JE Customizations of Sun Checks (Eclipse)
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <property name="tabWidth" value="4"/>
-    <module name="FileContentsHolder"/>
     <module name="JavadocMethod">
       <property name="minLineCount" value="1"/>
       <property name="allowMissingPropertyJavadoc" value="true"/>
