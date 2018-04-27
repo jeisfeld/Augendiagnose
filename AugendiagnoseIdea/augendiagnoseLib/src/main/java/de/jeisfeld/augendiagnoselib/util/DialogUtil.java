@@ -500,7 +500,7 @@ public final class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE); // STORE_PROPERTY
 			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
 
 			mListener = (ConfirmDialogListener) getArguments().getSerializable(PARAM_LISTENER);

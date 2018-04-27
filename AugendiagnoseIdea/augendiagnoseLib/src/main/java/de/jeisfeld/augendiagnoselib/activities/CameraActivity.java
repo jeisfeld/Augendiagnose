@@ -407,6 +407,7 @@ public class CameraActivity extends StandardActivity {
 						mCurrentScreenOrientation = screenOrientation;
 						realignViewElements(screenOrientation == ScreenOrientation.REVERSED_LANDSCAPE);
 					}
+					break;
 				default:
 					// do nothing
 				}
@@ -1438,7 +1439,7 @@ public class CameraActivity extends StandardActivity {
 	 * @param isReverseLandscape true if for reverse landscape
 	 */
 	private void realignViewElements(final boolean isReverseLandscape) {
-		int rotation = isReverseLandscape ? 180 : 0;
+		int rotation = isReverseLandscape ? 180 : 0; // MAGIC_NUMBER
 
 		LinearLayout cameraThumbRight = (LinearLayout) findViewById(R.id.camera_thumb_layout_right);
 		cameraThumbRight.setRotation(rotation);

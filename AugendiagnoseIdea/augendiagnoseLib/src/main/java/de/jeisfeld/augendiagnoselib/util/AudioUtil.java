@@ -53,6 +53,7 @@ public final class AudioUtil {
 			samples[i] = sample;
 			samples[i + 1] = sample;
 		}
+		@SuppressWarnings("deprecation")
 		AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, (int) BITRATE,
 				AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
 				count * (Short.SIZE / 8), AudioTrack.MODE_STATIC); // MAGIC_NUMBER
@@ -75,6 +76,7 @@ public final class AudioUtil {
 			samples[i] = sample;
 			samples[i + 1] = sample;
 		}
+		@SuppressWarnings("deprecation")
 		AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, (int) BITRATE,
 				AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
 				count * (Short.SIZE / 8), AudioTrack.MODE_STATIC); // MAGIC_NUMBER
@@ -96,6 +98,7 @@ public final class AudioUtil {
 			samples[i] = sample;
 			samples[i + 1] = sample;
 		}
+		@SuppressWarnings("deprecation")
 		AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, (int) BITRATE,
 				AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
 				count * (Short.SIZE / 8), AudioTrack.MODE_STATIC); // MAGIC_NUMBER
