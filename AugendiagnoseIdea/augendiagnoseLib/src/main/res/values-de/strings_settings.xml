@@ -29,7 +29,7 @@
     <string name="pref_title_enable_flash">Blitzlicht erlauben</string>
     <string name="pref_title_enable_flash_ext">Externen LED-Blitz unterstützen</string>
     <string name="pref_title_use_front_camera">Frontkamera verwenden</string>
-    <string name="pref_title_enable_external_camera">Link zur Kamera-App anzeigen</string>
+    <string name="pref_title_enable_external_camera">Link zur Systemkamera anzeigen</string>
     <string name="pref_title_camera_api_version">Kamera-Kompatibilität</string>
     <string name="pref_title_camera_screen_position">Kamera-Bildschirmposition</string>
     <string name="pref_title_overlay_button">Overlay-Button %1$s</string>

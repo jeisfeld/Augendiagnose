@@ -1051,21 +1051,27 @@ public class Camera2Handler implements CameraHandler {
 	 */
 	private void updateAvailableOtherModes() {
 		int[] availableStabilizationModes = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION);
-		for (int mode : availableStabilizationModes) {
-			if (mode == CameraCharacteristics.LENS_OPTICAL_STABILIZATION_MODE_ON) {
-				mOpticalStabilizationMode = mode;
+		if (availableStabilizationModes != null) {
+			for (int mode : availableStabilizationModes) {
+				if (mode == CameraCharacteristics.LENS_OPTICAL_STABILIZATION_MODE_ON) {
+					mOpticalStabilizationMode = mode;
+				}
 			}
 		}
 		int[] availableNoiseReductionModes = mCameraCharacteristics.get(CameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES);
-		for (int mode : availableNoiseReductionModes) {
-			if (mode == CameraCharacteristics.NOISE_REDUCTION_MODE_FAST) {
-				mNoiseReductionMode = mode;
+		if (availableNoiseReductionModes != null) {
+			for (int mode : availableNoiseReductionModes) {
+				if (mode == CameraCharacteristics.NOISE_REDUCTION_MODE_FAST) {
+					mNoiseReductionMode = mode;
+				}
 			}
 		}
 		int[] availableEdgeModes = mCameraCharacteristics.get(CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES);
-		for (int mode : availableEdgeModes) {
-			if (mode == CameraCharacteristics.EDGE_MODE_FAST) {
-				mEdgeMode = mode;
+		if (availableEdgeModes != null) {
+			for (int mode : availableEdgeModes) {
+				if (mode == CameraCharacteristics.EDGE_MODE_FAST) {
+					mEdgeMode = mode;
+				}
 			}
 		}
 	}

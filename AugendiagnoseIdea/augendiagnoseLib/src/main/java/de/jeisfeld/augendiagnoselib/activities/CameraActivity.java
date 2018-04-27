@@ -109,6 +109,10 @@ public class CameraActivity extends StandardActivity {
 	 * The request code for calling external camera app.
 	 */
 	private static final int REQUEST_CODE_CAMERA_APP = 6;
+	/**
+	 * The requestCode used when calling the gallery for importing an image.
+	 */
+	public static final int REQUEST_CODE_GALLERY = 8;
 
 	/**
 	 * The size of the circle overlay bitmap.
@@ -227,7 +231,7 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * The current screen orientation.
 	 */
-	private ScreenOrientation mCurrentScreenOrientation;
+	private ScreenOrientation mCurrentScreenOrientation = ScreenOrientation.LANDSCAPE;
 
 	/**
 	 * The handler operating the camera.
@@ -302,7 +306,7 @@ public class CameraActivity extends StandardActivity {
 		setCameraHandler();
 
 		configureMainButtons();
-		configureExternalCameraButton();
+		configureExternalAppButtons();
 		configureThumbButtons();
 		configureZoomCircleButton();
 		configureFlashlightButton(null);
@@ -588,9 +592,9 @@ public class CameraActivity extends StandardActivity {
 	/**
 	 * Configure the button for calling external camera app.
 	 */
-	private void configureExternalCameraButton() {
-		Button externalCameraButton = findViewById(R.id.buttonCameraExternal);
+	private void configureExternalAppButtons() {
 		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera)) {
+			Button externalCameraButton = findViewById(R.id.buttonCameraExternal);
 			externalCameraButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -615,7 +619,18 @@ public class CameraActivity extends StandardActivity {
 					}
 				}
 			});
+
+			Button importFromGalleryButton = findViewById(R.id.buttonImportFromGallery);
+			importFromGalleryButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					intent.setType("image/*");
+					startActivityForResult(intent, REQUEST_CODE_GALLERY);
+				}
+			});
 		}
+
 	}
 
 	/**
@@ -896,6 +911,7 @@ public class CameraActivity extends StandardActivity {
 		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
 		Button buttonCapture = findViewById(R.id.buttonCameraTrigger);
 		Button buttonCameraApp = findViewById(R.id.buttonCameraExternal);
+		Button buttonImportGallery = findViewById(R.id.buttonImportFromGallery);
 		Button buttonAccept = findViewById(R.id.buttonCameraAccept);
 		Button buttonDecline = findViewById(R.id.buttonCameraDecline);
 		Button buttonReturn = findViewById(R.id.buttonCameraReturn);
@@ -911,6 +927,7 @@ public class CameraActivity extends StandardActivity {
 			buttonCapture.setVisibility(VISIBLE);
 			buttonCapture.setEnabled(true);
 			buttonCameraApp.setVisibility(PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera) ? VISIBLE : GONE);
+			buttonImportGallery.setVisibility(PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera) ? VISIBLE : GONE);
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(mLeftEyeFile == null && mRightEyeFile == null ? GONE : VISIBLE);
@@ -934,6 +951,7 @@ public class CameraActivity extends StandardActivity {
 		case CHECK_PHOTO:
 			buttonCapture.setVisibility(GONE);
 			buttonCameraApp.setVisibility(GONE);
+			buttonImportGallery.setVisibility(GONE);
 			buttonAccept.setVisibility(VISIBLE);
 			buttonDecline.setVisibility(VISIBLE);
 			buttonReturn.setVisibility(GONE);
@@ -948,6 +966,7 @@ public class CameraActivity extends StandardActivity {
 		case RE_TAKE_PHOTO:
 			buttonCapture.setVisibility(GONE);
 			buttonCameraApp.setVisibility(GONE);
+			buttonImportGallery.setVisibility(GONE);
 			buttonAccept.setVisibility(GONE);
 			buttonDecline.setVisibility(GONE);
 			buttonReturn.setVisibility(VISIBLE);
@@ -1448,7 +1467,7 @@ public class CameraActivity extends StandardActivity {
 		frameParams.gravity = isReverseLandscape ? Gravity.RIGHT | Gravity.BOTTOM : Gravity.LEFT | Gravity.TOP;
 		cameraThumbRight.setLayoutParams(frameParams);
 
-		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
+		LinearLayout cameraThumbLeft = findViewById(R.id.camera_top_right_elements);
 		cameraThumbLeft.setRotation(rotation);
 		frameParams = (FrameLayout.LayoutParams) cameraThumbLeft.getLayoutParams();
 		frameParams.gravity = isReverseLandscape ? Gravity.LEFT | Gravity.BOTTOM : Gravity.RIGHT | Gravity.TOP;
@@ -1542,31 +1561,33 @@ public class CameraActivity extends StandardActivity {
 
 	@Override
 	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-		if (requestCode == REQUEST_CODE_CAMERA_APP) {
-			if (resultCode == RESULT_OK) {
-				JpegMetadata metadata = new JpegMetadata();
-				metadata.setRightLeft(mCurrentRightLeft);
-				metadata.setComment("");
-				metadata.setOrganizeDate(new Date());
-				JpegSynchronizationUtil.storeJpegMetadata(mNewExternalFile.getAbsolutePath(), metadata);
+		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_GALLERY) {
+			String fileName = MediaStoreUtil.getRealPathFromUri(data.getData());
+			mNewExternalFile = FileUtil.getTempJpegFile();
+			FileUtil.copyFile(new File(fileName), mNewExternalFile);
+		}
 
-				if (mCurrentRightLeft == RIGHT) {
-					mNewRightEyeFile = mNewExternalFile;
-				}
-				else {
-					mNewLeftEyeFile = mNewExternalFile;
-				}
+		if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_GALLERY || requestCode == REQUEST_CODE_CAMERA_APP)) {
+			JpegMetadata metadata = new JpegMetadata();
+			metadata.setRightLeft(mCurrentRightLeft);
+			metadata.setComment("");
+			metadata.setOrganizeDate(new Date());
+			JpegSynchronizationUtil.storeJpegMetadata(mNewExternalFile.getAbsolutePath(), metadata);
 
-				setThumbImage(mNewExternalFile.getAbsolutePath(), mCurrentRightLeft);
-				setReviewImage(mNewExternalFile);
-				setAction(CHECK_PHOTO, mCurrentRightLeft);
-
+			if (mCurrentRightLeft == RIGHT) {
+				mNewRightEyeFile = mNewExternalFile;
 			}
 			else {
-				Log.w(Application.TAG, "Did not successfully capture picture");
-				finish();
+				mNewLeftEyeFile = mNewExternalFile;
 			}
+
+			setThumbImage(mNewExternalFile.getAbsolutePath(), mCurrentRightLeft);
+			setReviewImage(mNewExternalFile);
+			setAction(CHECK_PHOTO, mCurrentRightLeft);
+			return;
 		}
+
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	/**

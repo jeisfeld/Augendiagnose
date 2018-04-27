@@ -74,31 +74,53 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/camera_thumb_layout_left"
-        android:layout_width="@dimen/camera_thumb_frame_size"
+        android:id="@+id/camera_top_right_elements"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
-        android:background="@drawable/camera_thumb_background"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonCameraViewImages"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginRight="@dimen/camerabutton_distance"
+            android:background="@drawable/circlebutton_view_images"/>
+
+        <Button
+            android:id="@+id/buttonCameraReturn"
+            android:layout_width="@dimen/camerabutton_size"
+            android:layout_height="@dimen/camerabutton_size"
+            android:layout_marginRight="@dimen/camerabutton_distance"
+            android:background="@drawable/circlebutton_return"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/camera_thumb_layout_left"
+            android:layout_width="@dimen/camera_thumb_frame_size"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
-            android:gravity="center_horizontal"
-            android:text="@string/content_description_left_eye"/>
+            android:background="@drawable/camera_thumb_background"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
-        <ImageView
-            android:id="@+id/camera_thumb_image_left"
-            android:layout_width="@dimen/camera_thumb_size"
-            android:layout_height="@dimen/camera_thumb_size"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
-            android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
-            android:contentDescription="@string/content_description_left_eye"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icon_eye_left"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
+                android:gravity="center_horizontal"
+                android:text="@string/content_description_left_eye"/>
+
+            <ImageView
+                android:id="@+id/camera_thumb_image_left"
+                android:layout_width="@dimen/camera_thumb_size"
+                android:layout_height="@dimen/camera_thumb_size"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/camera_thumb_frame_boundary"
+                android:layout_marginTop="@dimen/camera_thumb_frame_boundary"
+                android:contentDescription="@string/content_description_left_eye"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_eye_left"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -124,11 +146,11 @@
             android:layout_marginBottom="@dimen/camerabutton_distance">
 
             <Button
-                android:id="@+id/buttonCameraViewImages"
+                android:id="@+id/buttonImportFromGallery"
                 android:layout_width="@dimen/camerabutton_size"
                 android:layout_height="@dimen/camerabutton_size"
-                android:layout_gravity="center"
-                android:background="@drawable/circlebutton_view_images"/>
+                android:layout_gravity="bottom|right"
+                android:background="@drawable/circlebutton_import_gallery"/>
 
             <Button
                 android:id="@+id/buttonCameraDecline"
@@ -137,17 +159,8 @@
                 android:layout_gravity="bottom|right"
                 android:background="@drawable/circlebutton_decline"
                 android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/buttonCameraReturn"
-                android:layout_width="@dimen/camerabutton_size"
-                android:layout_height="@dimen/camerabutton_size"
-                android:layout_gravity="bottom|right"
-                android:background="@drawable/circlebutton_return"
-                android:visibility="gone"/>
         </FrameLayout>
     </LinearLayout>
-
 
     <Button
         android:id="@+id/buttonCameraAccept"
