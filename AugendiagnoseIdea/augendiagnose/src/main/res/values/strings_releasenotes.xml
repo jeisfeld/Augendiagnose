@@ -198,7 +198,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
         <item>Enabled picking photos from the gallery.</item>
         <item>Improved camera orientation handling. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled camera trigger by volume button</item>
     </string-array>
 
 </resources>

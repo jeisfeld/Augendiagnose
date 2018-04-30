@@ -28,6 +28,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
@@ -453,6 +454,21 @@ public class CameraActivity extends StandardActivity {
 		}
 		super.onPause();
 		TrackingUtil.sendTiming(Category.TIME_USAGE, CAMERA, null, System.currentTimeMillis() - mTrackingTimestamp);
+	}
+
+	@Override
+	public final boolean onKeyDown(final int keyCode, final KeyEvent event) {
+		final Button captureButton = findViewById(R.id.buttonCameraTrigger);
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)
+				&& captureButton.isEnabled() && mCurrentFlashlightMode != FlashMode.EXT) {
+			captureButton.setEnabled(false);
+			mCameraHandler.takePicture();
+			TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
+			return true;
+		}
+		else {
+			return super.onKeyDown(keyCode, event);
+		}
 	}
 
 	@Override

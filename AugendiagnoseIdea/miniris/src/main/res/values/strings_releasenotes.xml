@@ -87,7 +87,7 @@
         <item>Enabled use of system camera app. (May be switched off in camera settings.) Bugfixes</item>
         <item>Minor update on camera buttons</item>
         <item>Improved camera orientation handling. Enabled picking photos from the gallery. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Enabled camera trigger by volume button</item>
     </string-array>
 
 </resources>

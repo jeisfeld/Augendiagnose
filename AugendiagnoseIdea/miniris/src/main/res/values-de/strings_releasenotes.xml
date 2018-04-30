@@ -48,7 +48,7 @@
         <item>Ermögliche Verwendung der Systemkamera-App. (Kann in den Kameraeinstellungen ausgeschaltet werden.) Fehlerkorrekturen</item>
         <item>Kleine Änderung der Kamera-Buttons</item>
         <item>Verbesserte Handhabung der Kameraausrichtung. Ermögliche die Auswahl von Fotos aus der Galerie. Fehlerkorrekturen</item>
-        <item>Fehlerkorrekturen</item>
+        <item>Kameraauslösung über die Lautstärketaste</item>
     </string-array>
 
 </resources>
