@@ -8,8 +8,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Environment;
+import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -752,12 +754,34 @@ public final class FileUtil {
 		String baseFolder = null;
 
 		// First try to get the base folder via unofficial StorageVolume API from the URIs.
-
-		for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
-			String treeBase = getFullPathFromTreeUri(treeUris[i]);
-			if (treeBase != null && fullPath.startsWith(treeBase)) {
-				treeUri = treeUris[i];
-				baseFolder = treeBase;
+		if (Build.VERSION.SDK_INT > VERSION_CODES.O) {
+			StorageManager storageManager = (StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
+			StorageVolume volume = storageManager.getStorageVolume(file);
+			String uuid = volume.getUuid();
+			for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
+				String volumeId = FileUtil.getVolumeIdFromTreeUri(treeUris[i]);
+				if (uuid.equals(volumeId)) {
+					treeUri = treeUris[i];
+					// Use parcel to get the hidden path field from StorageVolume
+					Parcel parcel = Parcel.obtain();
+					volume.writeToParcel(parcel, 0);
+					parcel.setDataPosition(0);
+					parcel.readString();
+					parcel.readInt();
+					String volumeBasePath = parcel.readString();
+					parcel.recycle();
+					baseFolder = getFullPathFromTreeUri(treeUris[i], volumeBasePath);
+				}
+			}
+		}
+		else {
+			for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
+				// Use Java Reflection to access hidden methods from StorageVolume
+				String treeBase = getFullPathFromTreeUri(treeUris[i], getVolumePath(FileUtil.getVolumeIdFromTreeUri(treeUris[i])));
+				if (treeBase != null && fullPath.startsWith(treeBase)) {
+					treeUri = treeUris[i];
+					baseFolder = treeBase;
+				}
 			}
 		}
 
@@ -805,19 +829,20 @@ public final class FileUtil {
 	/**
 	 * Get the full path of a document from its tree URI.
 	 *
-	 * @param treeUri The tree RI.
+	 * @param treeUri        The tree URI.
+	 * @param volumeBasePath the base path of the volume.
 	 * @return The path (without trailing file separator).
 	 */
 	@RequiresApi(api = VERSION_CODES.LOLLIPOP)
 	@Nullable
-	private static String getFullPathFromTreeUri(@Nullable final Uri treeUri) {
+	private static String getFullPathFromTreeUri(@Nullable final Uri treeUri, final String volumeBasePath) {
 		if (treeUri == null) {
 			return null;
 		}
-		String volumePath = FileUtil.getVolumePath(FileUtil.getVolumeIdFromTreeUri(treeUri));
-		if (volumePath == null) {
+		if (volumeBasePath == null) {
 			return File.separator;
 		}
+		String volumePath = volumeBasePath;
 		if (volumePath.endsWith(File.separator)) {
 			volumePath = volumePath.substring(0, volumePath.length() - 1);
 		}
@@ -852,16 +877,15 @@ public final class FileUtil {
 		}
 
 		try {
-			StorageManager mStorageManager =
-					(StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
+			StorageManager storageManager = (StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
 
 			Class<?> storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
 
-			Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
+			Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
 			Method getUuid = storageVolumeClazz.getMethod("getUuid");
 			Method getPath = storageVolumeClazz.getMethod("getPath");
 			Method isPrimary = storageVolumeClazz.getMethod("isPrimary");
-			Object result = getVolumeList.invoke(mStorageManager);
+			Object result = getVolumeList.invoke(storageManager);
 
 			final int length = Array.getLength(result);
 			for (int i = 0; i < length; i++) {
