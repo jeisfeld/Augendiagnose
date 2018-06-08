@@ -39,6 +39,11 @@ public class Application extends android.app.Application {
 	 */
 	public static final String TAG = "Augendiagnose.JE";
 
+	/**
+	 * The system default locale.
+	 */
+	private static final Locale DEFAULT_LOCALE = Locale.getDefault();
+
 	@Nullable
 	private static ApplicationSettings getApplicationSettings() {
 		return mApplicationSettings;
@@ -183,25 +188,29 @@ public class Application extends android.app.Application {
 	public static void setLanguage() {
 		String languageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 		if (languageString == null || languageString.length() == 0) {
+			languageString = "0";
 			PreferenceUtil.setSharedPreferenceString(R.string.key_language, "0");
-			return;
 		}
 
 		int languageSetting = Integer.parseInt(languageString);
+		if (languageSetting == 0 && VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
+			return;
+		}
 
-		if (languageSetting != 0) {
-			switch (languageSetting) {
-			case 1:
-				setLocale(Locale.ENGLISH);
-				break;
-			case 2:
-				setLocale(Locale.GERMAN);
-				break;
-			case 3: // MAGIC_NUMBER
-				setLocale(new Locale("es"));
-				break;
-			default:
-			}
+		switch (languageSetting) {
+		case 0:
+			setLocale(DEFAULT_LOCALE);
+			break;
+		case 1:
+			setLocale(Locale.ENGLISH);
+			break;
+		case 2:
+			setLocale(Locale.GERMAN);
+			break;
+		case 3: // MAGIC_NUMBER
+			setLocale(new Locale("es"));
+			break;
+		default:
 		}
 	}
 

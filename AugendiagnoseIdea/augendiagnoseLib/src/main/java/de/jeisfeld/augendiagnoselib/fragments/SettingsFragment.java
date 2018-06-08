@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -231,7 +232,7 @@ public class SettingsFragment extends PreferenceFragment {
 				initializeGoogleBilling();
 			}
 			else {
-				ActivityCompat.requestPermissions(getActivity(), new String[] {"com.android.vending.BILLING"}, REQUEST_CODE_PERMISSION);
+				ActivityCompat.requestPermissions(getActivity(), new String[]{"com.android.vending.BILLING"}, REQUEST_CODE_PERMISSION);
 			}
 		}
 
@@ -608,13 +609,15 @@ public class SettingsFragment extends PreferenceFragment {
 			else if (preference.getKey().equals(preference.getContext().getString(R.string.key_language))) {
 				String oldLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 				if (oldLanguageString == null || !oldLanguageString.equals(value)) {
-					Application.setLanguage();
 					PreferenceUtil.setSharedPreferenceString(R.string.key_language, stringValue);
+					Application.setLanguage();
 
 					// Workaround to get rid of all kinds of cashing
 					if (!JpegSynchronizationUtil.isSaving()) {
 						Application.startApplication(getActivity());
-						System.exit(0);
+						if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
+							System.exit(0);
+						}
 					}
 
 				}
