@@ -51,9 +51,14 @@ public class InstantAutoCompleteTextView extends AutoCompleteTextView {
 
 	@Override
 	protected final void onFocusChanged(final boolean focused, final int direction, final Rect previouslyFocusedRect) {
-		super.onFocusChanged(focused, direction, previouslyFocusedRect);
-		if (focused) {
-			performFiltering(getText(), 0);
+		try {
+			super.onFocusChanged(focused, direction, previouslyFocusedRect);
+			if (focused) {
+				performFiltering(getText(), 0);
+			}
+		}
+		catch (Exception e) {
+			// Ignore error here - this was intruduced due to issue on Huawei P20 pro
 		}
 	}
 
