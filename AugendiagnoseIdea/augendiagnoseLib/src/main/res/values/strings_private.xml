@@ -6,5 +6,6 @@
     <string name="private_key_string" translatable="false"/>
 
     <string-array name="private_special_keys" translatable="false"/>
+    <string-array name="private_trial_prolongation_keys" translatable="false"/>
 
 </resources>

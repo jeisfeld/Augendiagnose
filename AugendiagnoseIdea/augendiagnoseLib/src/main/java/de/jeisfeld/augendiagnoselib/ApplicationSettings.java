@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil.KeyValidationResult;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
@@ -23,14 +24,16 @@ public abstract class ApplicationSettings {
 		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
 		boolean hasPremiumPack = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack);
 		boolean hasUnlockerApp = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app);
-		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || EncryptionUtil.validateUserKey(userKey);
+		KeyValidationResult userKeyValidationResult = EncryptionUtil.validateUserKey(userKey);
+		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || userKeyValidationResult == KeyValidationResult.SUCCESS;
 
 		if (isAuthorizedUser) {
 			return AuthorizationLevel.FULL_ACCESS;
 		}
 		long firstStartTime = PreferenceUtil.getSharedPreferenceLong(R.string.key_statistics_firststarttime, -1);
+		int trialPeriod = userKeyValidationResult == KeyValidationResult.PROLONG_TRIAL ? 180 : 14; // MAGIC_NUMBER
 
-		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(14) // MAGIC_NUMBER
+		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(trialPeriod)
 				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
 	}
 

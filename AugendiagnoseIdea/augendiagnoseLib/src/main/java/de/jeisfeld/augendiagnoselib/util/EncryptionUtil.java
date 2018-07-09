@@ -1,5 +1,11 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Base64;
+import android.util.Log;
+
 import java.security.Key;
 import java.security.MessageDigest;
 import java.util.Arrays;
@@ -9,12 +15,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
-
-import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Base64;
-import android.util.Log;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -47,6 +47,12 @@ public final class EncryptionUtil {
 	private static final List<String> SPECIAL_KEYS;
 
 	/**
+	 * Special keys that lead to prolonged trial period.
+	 */
+	@NonNull
+	private static final List<String> TRIAL_PROLONGATION_KEYS;
+
+	/**
 	 * The private key to be used for user key generation.
 	 */
 	@NonNull
@@ -62,6 +68,9 @@ public final class EncryptionUtil {
 
 		String[] specialKeys = Application.getAppContext().getResources().getStringArray(R.array.private_special_keys);
 		SPECIAL_KEYS = Arrays.asList(specialKeys);
+
+		String[] trialProlongationKeys = Application.getAppContext().getResources().getStringArray(R.array.private_trial_prolongation_keys);
+		TRIAL_PROLONGATION_KEYS = Arrays.asList(trialProlongationKeys);
 
 		initializeCipher();
 	}
@@ -91,7 +100,7 @@ public final class EncryptionUtil {
 	 */
 	public static void test(@NonNull final String name) {
 		String key = createUserKey(name);
-		Log.i(Application.TAG, "Key: " + key + ". Verified: " + validateUserKey(key));
+		Log.i(Application.TAG, "Key: " + key + ". Verification result: " + validateUserKey(key));
 	}
 
 	/**
@@ -100,22 +109,25 @@ public final class EncryptionUtil {
 	 * @param key the user key to be validated.
 	 * @return true if the user key is valid.
 	 */
-	public static boolean validateUserKey(@Nullable final String key) {
+	public static KeyValidationResult validateUserKey(@Nullable final String key) {
 		if (key == null || key.length() == 0 || !mIsInitialized) {
-			return false;
+			return KeyValidationResult.FAILED;
 		}
 		if (SPECIAL_KEYS.contains(key)) {
-			return true;
+			return KeyValidationResult.SUCCESS;
+		}
+		if (TRIAL_PROLONGATION_KEYS.contains(key)) {
+			return KeyValidationResult.PROLONG_TRIAL;
 		}
 
 		int index = key.lastIndexOf('-');
 		if (index > 0) {
 			String name = key.substring(0, index);
 			String hash = key.substring(index + 1);
-			return createCryptoHash(name).equals(hash);
+			return createCryptoHash(name).equals(hash) ? KeyValidationResult.SUCCESS : KeyValidationResult.FAILED;
 		}
 		else {
-			return false;
+			return KeyValidationResult.FAILED;
 		}
 	}
 
@@ -204,5 +216,23 @@ public final class EncryptionUtil {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	/**
+	 * Result of user key validation.
+	 */
+	public enum KeyValidationResult {
+		/**
+		 * Validation successful.
+		 */
+		SUCCESS,
+		/**
+		 * Validation failed.
+		 */
+		FAILED,
+		/**
+		 * Extension of trial period.
+		 */
+		PROLONG_TRIAL
 	}
 }
