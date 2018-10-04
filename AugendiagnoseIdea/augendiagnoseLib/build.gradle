@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         minSdkVersion 15
@@ -25,6 +25,7 @@ dependencies {
     api files('libs/admarvel-android-sdk-core-adcolony.jar')
     api files('libs/annotations.jar')
     api files('libs/xmpcore.jar')
+    implementation 'com.android.support:support-annotations:26.1.0'
     implementation 'com.android.support:support-v13:26.1.0'
     implementation 'com.google.android.gms:play-services-analytics:12.0.1'
 }
