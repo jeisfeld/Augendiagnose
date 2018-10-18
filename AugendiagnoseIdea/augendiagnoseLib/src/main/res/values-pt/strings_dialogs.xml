@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="title_dialog_change_name">Mudar de nome</string>
+    <string name="title_dialog_error">Erro</string>
+    <string name="title_dialog_info">Informação</string>
+    <string name="title_dialog_image_info">Dados da imagem</string>
+    <string name="title_dialog_confirmation">Confirmação</string>
+    <string name="title_dialog_select_folder">Selecione a pasta</string>
+    <string name="title_dialog_tip">Conselho</string>
+    <string name="message_dialog_no_picture"><![CDATA[[HTML]Nenhuma foto na pasta de entrada.<br><br>Você pode precisar de <a href="appcode://selectInputFolder">personalizar a pasta de entrada</a> e reiniciar esta ação.<br><br>Como alternativa, agora você pode importar fotos da galeria.]]></string>
+    <string name="message_dialog_no_photos_for_name">Não há foto dos olhos disponíveis</string>
+    <string name="message_dialog_no_photos_in_input_folder">Não há imagens na pasta de entrada. Você pode importar fotos da galeria.</string>
+    <string name="message_dialog_select_name">Por favor selecione um nome</string>
+    <string name="message_dialog_organized_photos">As fotos selecionadas foram organizadas. Existem mais fotos que podem ser organizadas.</string>
+    <string name="message_dialog_cannot_create_folder">Não é possível criar a pasta %1$s</string>
+    <string name="message_dialog_cannot_write_to_folder">Não é possível gravar na pasta %1$s. Por favor, selecione uma pasta diferente.</string>
+    <string name="message_dialog_cannot_write_to_folder_saf">Não é possível gravar na pasta %1$s. Por favor, certifique-se de conceder direitos de acesso para o cartão SD completo.</string>
+    <string name="message_dialog_cannot_change_date">A data de %1$s fotos de %2$s não pode ser alterada para %3$s, pois já existem fotos para essa data</string>
+    <string name="message_dialog_no_organized_photos">Nenhuma foto disponível para visualização. Por favor, tire primeiro algumas fotos dos olhos e atribua seu nome e data.</string>
+    <string name="message_dialog_file_does_not_exist">O arquivo %1$s não existe.</string>
+    <string name="message_dialog_failed_to_move_file">Erro ao mover o arquivo %1$s para %2$s</string>
+    <string name="message_dialog_failed_to_move_folder_partially">Erro ao mover a pasta %1$s para %2$s - Por favor, verifique as pastas e mova os arquivos para a pasta apropriada.</string>
+    <string name="message_dialog_failed_to_rename_file">Erro ao renomear o arquivo %1$s para %2$s</string>
+    <string name="message_dialog_failed_to_delete_file">Não é possível excluir a foto %1$s</string>
+    <string name="message_dialog_failed_to_delete_all_files">Não foi possível excluir todos os arquivos na pasta de entrada</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Não é possível excluir %1$s fotos de %2$s</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Erro ao mover fotos de %1$s para %2$s</string>
+    <string name="message_dialog_failed_to_delete_folder">A pasta %1$s não pôde ser excluída</string>
+    <string name="message_dialog_failed_to_change_date">Não foi possível alterar a data das fotos de %1$s de %2$s para %3$s</string>
+    <string name="message_dialog_failed_to_store_metadata">Não é possível armazenar metadados no arquivo %1$s</string>
+    <string name="message_dialog_failed_to_store_exif">Os metadados EXIF não puderam ser armazenados no arquivo %1$s - entre em contato com o produtor.</string>
+    <string name="message_dialog_failed_to_access_camera">Não é possível acessar a câmera.\n\nDetalhes do erro: %1$s</string>
+    <string name="message_dialog_failed_to_use_camera2">Seu dispositivo parece não suportar os recursos da câmera para Android 5. O aplicativo foi reconfigurado para usar a compatibilidade com o Android 4. Por favor, inicie o aplicativo novamente.</string>
+    <string name="message_dialog_failed_to_open_google_play">Erro ao abrir o Google Play.</string>
+    <string name="message_dialog_trial_names">Na versão de teste, é permitido usar apenas até três nomes. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
+    <string name="message_dialog_trial_time">A versão de avaliação do aplicativo pode ser usada apenas por duas semanas. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
+    <string name="message_dialog_trial_overlays">A versão experimental do aplicativo limita o uso apenas aos mapas iridológicos 1-3. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
+    <string name="message_dialog_purchase_thanks">Obrigado por sua compra!</string>
+    <string name="message_dialog_purchase_thanks_premium">Obrigado por sua compra! Agora você pode usar o aplicativo ilimitadamente.</string>
+    <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
+    <string name="message_dialog_unformatted_file">O arquivo %1$s não está formatado corretamente</string>
+    <string name="message_dialog_confirm_delete_date">Você realmente deseja excluir as fotos de %1$s de %2$s?</string>
+    <string name="message_dialog_confirm_delete_folder">Você realmente deseja excluir %1$s com todas as fotos?</string>
+    <string name="message_dialog_confirm_delete_photo">Você realmente quer apagar a foto %1$s?</string>
+    <string name="message_dialog_confirm_delete_two_photos">Você realmente quer apagar as duas fotos?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Você realmente deseja excluir todas as fotos na pasta de entrada?</string>
+    <string name="message_dialog_confirm_no_jpeg">As fotos selecionadas não são fotos JPG. Portanto, parte da funcionalidade (como armazenamento de informações) não funcionará. Você quer continuar?</string>
+    <string name="message_dialog_confirm_overwrite">Para o nome «%1$s» já existem fotos de olho de %2$s. Deseja sobrescrever estes?\n\nSe caso contrário, selecione um nome ou data diferente.</string>
+    <string name="message_dialog_confirm_need_read_permission">Este aplicativo deve ter a permissão de seu armazenamento externo para acessar as imagens. Por favor, forneça este acesso - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Por favor, forneça acesso à câmera - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_rate_app">Se você gosta do aplicativo, por favor, eu recomendo. Gostaria de avaliá-lo no Google Play?</string>
+    <string name="message_dialog_confirm_rate_icon">Deseja excluir o ícone de classificação do aplicativo?</string>
+    <string name="message_dialog_confirm_external_flash">Você quer usar um flash LED externo conectado ao conector de fone de ouvido?</string>
+    <string name="message_dialog_outofmemoryerror">O aplicativo foi bloqueado devido à falta de memória. Se isso acontecer repetidamente, você deve ir para as configurações, alterar a opção «Mostrar imagem de alta resolução» no valor «Carregar somente se solicitado» e reduzir o valor de «Tamanho máximo dos bitmaps».</string>
+    <string name="message_dialog_hints_will_be_shown">A partir de agora, o aplicativo mostrará conselhos em várias situações (incluindo aquelas que você desativou antes). Você pode desativá-los individualmente.</string>
+    <string name="message_dialog_no_hints_will_be_shown">De agora em diante, o aplicativo não mostrará nenhuma das dicas existentes atualmente. Se versões futuras do aplicativo tiverem novas dicas, elas serão exibidas.</string>
+    <string name="message_dialog_triggering_purchase">Ativando a compra no Google Play ...</string>
+    <string name="message_guide_resize_iris">Por favor, mova o olho até que a íris preencha o círculo. Em seguida, pressione «OK».</string>
+    <string name="message_guide_resize_pupil">Agora, mude o tamanho do olho até que a pupila preencha o círculo. Em seguida, pressione «OK».</string>
+    <string name="imageinfo_line_filename">Nome do arquivo:</string>
+    <string name="imageinfo_line_filedate">Data do arquivo:</string>
+    <string name="imageinfo_line_name">Nome:</string>
+    <string name="imageinfo_line_comment">Comentário:</string>
+</resources>

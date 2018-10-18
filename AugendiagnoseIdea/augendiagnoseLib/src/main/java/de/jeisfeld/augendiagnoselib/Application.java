@@ -210,6 +210,9 @@ public class Application extends android.app.Application {
 		case 3: // MAGIC_NUMBER
 			setLocale(new Locale("es"));
 			break;
+		case 4: // MAGIC_NUMBER
+			setLocale(new Locale("pt"));
+			break;
 		default:
 		}
 	}

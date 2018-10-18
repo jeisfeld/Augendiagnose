@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Entries related to context menus -->
+
+	<string name="menu_store_color_settings">Salvar configurações de cores</string>
+    <string name="menu_reset_color_settings">Restablecer configurações de cor</string>
+    <string name="menu_store_position">Salvar zoom e posição</string>
+    <string name="menu_reset_position">Restablecer zoom e posição</string>
+    <string name="menu_store_overlay_color">Salvar cor de sobreposição</string>
+    <string name="menu_reset_overlay_color">Restablecer cor de sobreposição</string>
+    <string name="menu_delete_overlay_position">Excluir a posição de sobreposição</string>
+    <string name="menu_share_this_image">Compartilhar esta imagem</string>
+    <string name="menu_share_this_image_view">Compartilhar esta visualização de imagem</string>
+    <string name="menu_share_both_images">Compartilhar as duas imagens</string>
+    <string name="menu_share_both_image_views">Compartilhar as duas visualizações de imagem</string>
+    <string name="menu_delete_images">Excluir fotos</string>
+    <string name="menu_delete_selected_image">Excluir foto selecionada</string>
+    <string name="menu_delete_all_images">Excluir todas as fotos</string>
+    <string name="menu_change_date">Mudar a data</string>
+    <string name="menu_move_to_input_folder">Mover para a pasta de entrada</string>
+    <string name="menu_change_name">Mudar de nome</string>
+    <string name="menu_remove_overlay_button">Remova o botão</string>
+    <string name="menu_add_overlay_button">Botão Adicionar</string>
+    <string name="menu_rotate_right">Gire 90° para a direita</string>
+    <string name="menu_rotate_left">Gire 90° para a esquerda</string>
+    <string name="menu_rotate_180">Rodar 180º</string>
+
+     <!-- Entries related to buttons in the settings -->
+
+    <string name="menu_hide_all_hints">Não mostre conselhos</string>
+    <string name="menu_show_all_hints">Mostrar todas as dicas</string>
+    <string name="menu_title_unlocker_app">Aplicação «Iridology unlocker»</string>
+    <string name="menu_detail_unlocker_app">Uma alternativa aos pacotes premium - este aplicativo oferece acesso ilimitado aos aplicativos «Diagnóstico Ocular» e «Miniris»</string>
+    <string name="menu_title_contact_developer">Entre em contato com o desenvolvedor</string>
+    <string name="menu_detail_contact_developer">Por e-mail em caso de problemas ou perguntas</string>
+    <string name="menu_subject_contact_developer">Pergunta sobre aplicação Diagnóstico ocular</string>
+</resources>

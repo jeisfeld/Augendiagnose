@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Environment;
 import android.os.Parcel;
@@ -233,6 +234,13 @@ public final class FileUtil {
 	public static boolean moveFile(@NonNull final File source, @NonNull final File target) {
 		// First try the normal rename.
 		boolean success = source.renameTo(target);
+
+		if (!success && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && source.getParent().equals(target.getParent())) {
+			// Storage Access Framework
+			DocumentFile sourceDocument = null;
+			sourceDocument = getDocumentFile(source, false, false);
+			success = sourceDocument.renameTo(target.getName());
+		}
 
 		if (!success) {
 			success = copyFile(source, target);

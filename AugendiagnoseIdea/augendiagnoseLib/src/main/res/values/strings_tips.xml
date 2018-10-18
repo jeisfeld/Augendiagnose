@@ -4,9 +4,6 @@
     <string name="key_tip_firstuse" translatable="false">key_tip_firstuse</string>
     <string name="message_tip_firstuse">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>First steps:</h2>
 	<p><b>Step 1:</b> Go to settings and set the &ldquo;Input folder for new eye photos&rdquo; to the folder where your new eye photos are located.</p>
 	<p><b>Step 2:</b> Go to the action &ldquo;Organize New Photos&rdquo; and assign names and dates to your eye photos.
@@ -17,210 +14,138 @@
 			Then click on the Photo to display the photos.
 	</p>
 	<p>See the corresponding help pages for more information.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_organizephotos" translatable="false">key_tip_organizephotos</string>
     <string name="message_tip_organizephotos">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Organize new photos:</h2>
 	<p>Select one pair of eye photos of one person and arrange the right and left eye correctly.</p>
 	<p>Then enter the name of the person.</p>
 	<p>The date of the photos is preselected from the photos - you may change it.</p>
 	<p>Finally press &ldquo;OK&rdquo; to move the photos into the application folder from where you can then view and compare them.</p>
 	<p>See the corresponding help pages for more information.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_displaynames" translatable="false">key_tip_displaynames</string>
     <string name="message_tip_displaynames">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
-	<h2>Display Photos:</h2>
+	<h2>View Photos:</h2>
 	<p>You see the list of all names for which you have eye photos (previously organized).</p>
 	<p>Click on a name - then you see the list of eye photo pairs for this name, ordered by date.</p>
 	<p>Then you can select either one or two photos to view them in detail.</p>
 	<p>See the corresponding help pages for more information.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_displaypictures" translatable="false">key_tip_displaypictures</string>
     <string name="message_tip_displaypictures">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
-	<h2>Display Photos:</h2>
+	<h2>View Photos:</h2>
 	<p>You see the list of eye photo pairs for one person.</p>
 	<p>Click on one photo to display it in detail.</p>
 	<p>Click on a date to display both photos in detail.</p>
 	<p>Make a long click on one photo and then select a different photo in order to compare two photos.</p>
 	<p>See the corresponding help pages for more information.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_displaypicturestablet">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
-	<h2>Display Photos:</h2>
+	<h2>View Photos:</h2>
 	<p>On the left, you see the list of all names for which you have eye photos (previously organized).</p>
 	<p>Click on a name - then you see on the right the list of eye photo pairs for this name, ordered by date.</p>
 	<p>Click on one photo to display it in detail.</p>
 	<p>Click on a date to display both photos in detail.</p>
 	<p>Make a long click on one photo and then select a different photo in order to compare two photos.</p>
 	<p>See the corresponding help pages for more information.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_displaydetails" translatable="false">key_tip_displaydetails</string>
     <string name="message_tip_displaydetails">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
-	<h2>Display Details:</h2>
+	<h2>View Details:</h2>
 	<p>You see one or two photos. Using two fingers, you can resize or move the photo(s).</p>
 	<p>There are slide controls by which you can change brightness and contrast, and there are buttons by which you can display iris topographies as overlays over the photos. These controls may be faded in or out.</p>
 	<p>Moreover, there are buttons for editing a comment for a photo, and for saving view details.</p>
-</body>
-</html>
 ]]>
     </string>
 	<string name="key_tip_jpeg" translatable="false">key_tip_jpeg</string>
     <string name="message_tip_jpeg">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Supported image formats:</h2>
 	<p>This app stores information (like iris position or comments) directly in the JPG image files.</p>
 	<p>This has the advantage that all such information is still available if you copy the pictures from one device to another one.</p>
 	<p>However, this has the consequence that only the JPG format is fully supported by the app. For other image formats, most of the app functionality is not available.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_editcomment" translatable="false">key_tip_editcomment</string>
     <string name="message_tip_editcomment">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Edit comment:</h2>
 	<p>Here you can add any comment to the photo (such as the results of your eye diagnosis).</p>
 	<p>The comment will be saved within the JPG file. Therefore, if you copy the File to Windows, you can still see and edit the comment there.</p>
 	<p>Note: Saving works only on JPG files.</p>
-</body>
-</html>
 ]]>
     </string>
 	<string name="key_tip_overlay_buttons" translatable="false">key_tip_overlay_buttons</string>
     <string name="message_tip_overlay_buttons">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Iris Topography Overlays:</h2>
 	<p>By pressing the different numbered buttons, you can display different Iris topographies on top of your photo.</p>
 	<p>By making a long click on a button, you can select a different iris topography to be shown by this button.</p>
 	<p>You can also change the color of the overlay by means of the &ldquo;color&rdquo; button. (The default color can be changed in the settings.)</p>
 	<p>The &ldquo;lock&rdquo; button can be used to unlock or lock the iris position on the photo. The button next to it allows to modify the size and position of the pupil.</p>
 	<p>Note: In the trial version of the app, you can use only the first three topography types.</p>
-</body>
-</html>
 ]]>
     </string>
 	<string name="key_tip_overlay_guided" translatable="false">key_tip_overlay_guided</string>
     <string name="message_tip_overlay_guided">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Iris and Pupil positioning:</h2>
 	<p>By default, when first pressing the overlay button, you are guided through setting the iris and pupil position, so that iris topographies can be positioned correctly on the photo.</p>
 	<p>If you do not want to use this guide, you can switch it off in the Settings (under &ldquo;Display Settings&rdquo;).</p>
 	<p>Note: Saving of the iris position works only on JPG files.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_saveview" translatable="false">key_tip_saveview</string>
     <string name="message_tip_saveview">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Saving view details:</h2>
 	<p>Here you can save the position in which you view the eye photo, or the settings for brightness/contrast, so that these settings are maintained when you watch the same photo again.</p>
 	<p>You may also reset these settings to the default again.</p>
 	<p>Note: Saving works only on JPG files.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_clarity" translatable="false">key_tip_clarity</string>
     <string name="message_tip_clarity">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Display with full resolution:</h2>
 	<p>With this button, you can display the currently displayed part of the image with full resolution.</p>
 	<p>This may also be automated in the settings. However, for devices with little memory, display in full resolution may lead to issues.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_admarvel" translatable="false">key_tip_admarvel</string>
     <string name="message_tip_admarvel">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Advertisements:</h2>
 	<p>Please support the development of the app by checking the advertisement every now and then.</p>
 	<p>If you clicked on the advertisement, it will not reappear until the next app start.</p>
 	<p>The &ldquo;donation&rdquo; section in the settings offers the possibility to switch off ads.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_external_flash" translatable="false">key_tip_external_flash</string>
     <string name="message_tip_external_flash">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Usage of external flash:</h2>
 	<p>Please ensure that you use external flash mode only if your external LED flash is connected to your headphone jack.</p>
 	<p>To trigger the external LED flash, the media volume must be set to the maximum value.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="key_tip_external_flash_pref" translatable="false">key_tip_external_flash_pref</string>
     <string name="message_tip_external_flash_pref">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Usage of external flash:</h2>
 	<p>Whenever you use the headphone jack with the camera, you will be asked for usage of external LED flash.</p>
 	<p>You may disable this in the camera settings.</p>
-</body>
-</html>
 ]]>
     </string>
 </resources>

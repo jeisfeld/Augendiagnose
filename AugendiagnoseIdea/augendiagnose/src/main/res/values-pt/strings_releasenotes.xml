@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+<h3>Nota importante:</h3>
+
+<p>Esta aplicação permite o uso gratuito apenas por duas semanas, com limitações no número de fotos.</p>
+
+<p>Por favor, tente o aplicativo. Se você achar útil, então você pode comprar um pacote premium dentro do aplicativo, que permite uso ilimitado.</p>
+
+<h3>Informações para novos usuários:</h3>
+
+<p>O objetivo desta aplicação é a organização e visualização de fotos nos olhos. Antes do primeiro uso, é necessário
+Faça o seguinte:</p>
+<p>1. Defina uma pasta de entrada para novas fotos de olhos e
+<a href="appcode://selectInputFolder">defina a pasta de entrada nas configurações</a>.</p>
+<p>2. Copie todas as fotos dos seus olhos existentes na pasta de entrada.</p>
+<p>3. Atribua essas fotos a pessoas e datas e mude para a pasta de fotos de olhos do aplicativo, usando a funcionalidade &laquo;Organizar novas fotos&raquo ;.</p>
+<p>Após essa preparação, você pode usar a funcionalidade &laquo;Visualizar as fotos&raquo; para ver e analisar suas fotos.</p>
+
+<p>Na maioria das páginas do aplicativo, há um ponto de interrogação no canto superior direito - aqui você pode acessar a página de ajuda.</p>
+
+<p>Existe um aplicativo complementar do Windows que pode ser usado para exibir fotos que foram
+organizado com esta aplicação. Para mais informações, consulte
+<a href="http://augendiagnose.jeisfeld.de/?page=windowsapp"> http://augendiagnose.jeisfeld.de/?page=windowsapp </a>.</p>
+
+<p><b>Nota importante:</b> Esta aplicação modifica os ficheiros JPG de uma forma não destrutiva, a fim de armazenar os metadados dentro
+os arquivos. Isso tem a vantagem de que todas as informações estão disponíveis se você
+Copie as imagens de um dispositivo para outro. Até certo ponto, as informações como comentários
+Ele ainda estará disponível no MS Windows, mas esse tipo de armazenamento impõe um pequeno risco. Você pode
+acontecer em alguns dispositivos, ou para as fotos de algumas câmeras,
+o armazenamento de informações no JPG falha, ou possivelmente até
+destrói o arquivo JPG. Portanto, é recomendável que você mantenha cópias de
+segurança de seus arquivos JPG, pelo menos quando você usa o aplicativo para
+Primeira vez com um novo dispositivo ou com uma nova câmera. Por favor, informe-me se esses problemas aparecerem.
+]]>
+    </string>
+    <string name="releasenotes_current_remark">
+<![CDATA[<h3>Nota importante:</h3> A partir da versão 1.0, o aplicativo permite uso livre
+         apenas por duas semanas, com limitações no número de fotos. O uso adicional requer a compra de um pacote premium. br>
+         Os usuários que usam o aplicativo antes manterão todas as funções, quando o aplicativo permanecer instalado.<br>
+         Novas instalações só terão acesso experimental.]]>
+    </string>
+	
+    <string-array name="releasenotes_version_notes">
+        <item>Versão inicial. Ele permite que você organize fotos em uma pasta de destino e mostre pares de fotos.</item>
+        <item>Funcionalidade básica de sobreposições</item>
+        <item>Correções menores</item>
+        <item>Adicionado sobreposição</item>
+        <item>Seleção de fotos alternativas na organização.</item>
+        <item>Melhoria da atribuição de brilho / contraste.</item>
+        <item>Várias pequenas melhorias e correções.</item>
+        <item>Versão em inglês da sobreposição.</item>
+        <item>Início do aplicativo pelo lado de fora com um conjunto de imagens</item>
+        <item>Permitir imagens não JPG. Consideração da orientação EXIF da imagem.</item>
+        <item>Segunda sobreposição personalizada Melhora a sobreposição de beliscar. Corrigidos alguns problemas de visualização</item>
+        <item>Várias telas de ajuda.</item>
+        <item>Armazenamento da posição de sobreposição no arquivo JPG.</item>
+        <item>Adicionado mais uma sobreposição (italiano). Adicionado tela inicial para novos usuários. Correção de erros</item>
+        <item>Menu de contexto em vista da imagem. Permite o armazenamento de contraste e brilho. Editando os comentários da imagem. Pequenas melhorias</item>
+        <item>Exclua fotos e altere as datas através do menu de contexto. Pequenas melhorias e correções de bugs</item>
+        <item>Introduziu o design especial para tablets - lista de nomes mesclados com a lista de fotos por nome</item>
+        <item>Permitido armazenamento de posição e zoom da imagem. Mudança de brilho e contraste em vista de duas imagens.</item>
+        <item>Ao editar o comentário, a imagem ainda é exibida. Correção de erros</item>
+        <item>Agora é possível procurar por nomes. Ao organizar fotos, novos nomes podem ser inseridos mais diretamente.</item>
+        <item>Correções de bugs</item>
+        <item>Seleção de pasta simplificada na configuração.</item>
+        <item>Em mover fotos para a pasta de entrada. O aplicativo fica com a organização das fotos se houver mais fotos a serem organizadas.</item>
+        <item>Navegação adicionada nas páginas de ajuda. Correção de erros</item>
+        <item>Novas sobreposições Escolha a cor das sobreposições. Correção de erros</item>
+        <item>Adicionado mais uma sobreposição Página de ajuda para as notas de lançamento. Correção de erros</item>
+        <item>Melhoria da escala de contraste. Ativado salvando no cartão SD para o Android 4.4. Localização espanhola.</item>
+        <item>Nova sobreposição</item>
+        <item>Correção de erros - entre outros, o problema foi resolvido com letras maiúsculas na extensão do arquivo ("JPG")</item>
+        <item>Ativando a mudança de idioma. Ativando ordem pelo sobrenome. Ativando a exclusão de fotos da pasta de entrada. Mostrar os últimos pares de fotos dos olhos no topo. Correções de bugs</item>
+        <item>Ao exibir imagens, em vez de usar um menu contextual, agora há uma barra de ação na parte superior. Exibição do detalhe atual da imagem em resolução total. Correções de bugs</item>
+        <item>Mostrar imagens automaticamente em resolução total. Nota: Se esta atualização levar a erros ou lentidão da aplicação no seu dispositivo, você deve alterar a configuração</item>
+        <item>Opções modificadas para visualização em resolução total devido a problemas com dispositivos com pouca memória</item>
+        <item>Correções de bugs</item>
+        <item>Ativado salvando no cartão SD para Android 5. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Adicionado diálogos com dicas. Melhor gerenciamento de erros.</item>
+        <item>Habilitado para mostrar informações da imagem durante a exibição detalhada. Lançamento do aplicativo do Windows. Correções de bugs</item>
+        <item>Tire fotos diretamente do aplicativo. Permitir o uso de diferentes cartões SD para a pasta de entrada e a pasta de fotos. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Anúncios (apenas nos EUA). Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Adicionadas doações por meio de compras no aplicativo. Anúncios ativados sem som Reorganizou as configurações. Correção de Erros.</item>
+        <item>Novo processo para tirar fotos do aplicativo. Feito versão gratuita do aplicativo apenas uma versão de teste. Correções de bugs</item>
+        <item>Tornou a câmera opcional novamente.</item>
+        <item>Seleção de modos de foco da câmera. Ativando a base dos recursos do Android 5 da câmera. Correção de erros</item>
+        <item>Adaptação de sobreposições no tamanho e posição da pupila.\nPossibilidade de mover a tela da câmera através das configurações.\nCorreção de erros</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Versão em espanhol da topografia de Jensen (Posição 3).\nPermitir o zoom enquanto analisa as imagens da câmera.\nCorreção de erros</item>
+        <item>Foi adicionado um modo guiado para definir a posição da íris e da pupila.\nRay Raypography.\nNow os usuários podem especificar quais as sobreposições associadas aos botões de sobreposição.\nFix correction.</item>
+        <item>Correções de bugs</item>
+        <item>Correção de erros Corrigidos problemas com o acesso de arquivos para o Android 6.</item>
+        <item>Correções de bugs</item>
+        <item>Detecção automática da íris e posição da pupila. Correções de bugs</item>
+        <item>Mudança na saturação e temperatura de cor. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Zoom habilitado da câmera. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Ícone de classificação Correções de bugs</item>
+        <item>Ligado a nova aplicação de olhos-fi. Correções de bugs</item>
+        <item>Política de privacidade adicionada</item>
+        <item>Ativou o gerenciamento de uma única foto do olho. Correções de bugs</item>
+        <item>Ativar o compartilhamento de fotos dos olhos. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Usando o flash LED externo. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Ativou o uso da câmera frontal. Rotação de Imagens</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Permite o uso do aplicativo da câmera do sistema. (Pode ser desativado na configuração da câmera). Correções de bugs</item>
+        <item>Habilitado para escolher fotos da galeria.</item>
+        <item>Melhor manuseio da orientação da câmera. Correções de bugs</item>
+        <item>Fotografar a câmera usando o botão de volume</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Adicionado localização portuguesa. Correções de bugs</item>
+    </string-array>
+</resources>

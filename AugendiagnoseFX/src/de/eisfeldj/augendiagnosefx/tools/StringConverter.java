@@ -53,6 +53,14 @@ public final class StringConverter {
 			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-es/strings_dialogs.xml")};
 
 	/**
+	 * The Portuguese String file.
+	 */
+	private static final File[] XML_FILES_PT = {new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-pt/strings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-pt/strings_menu.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-pt/strings_settings.xml"),
+			new File("../AugendiagnoseIdea/augendiagnoseLib/src/main/res/values-pt/strings_dialogs.xml")};
+
+	/**
 	 * The global Properties file.
 	 */
 	private static final File PROP_FILE_GLOBAL = new File("resources/bundles/Strings.properties");
@@ -66,6 +74,11 @@ public final class StringConverter {
 	 * The Spanish Properties file.
 	 */
 	private static final File PROP_FILE_ES = new File("resources/bundles/Strings_es.properties");
+
+	/**
+	 * The Portuguese Properties file.
+	 */
+	private static final File PROP_FILE_PT = new File("resources/bundles/Strings_pt.properties");
 
 	/**
 	 * The class containing resource constants.
@@ -111,19 +124,22 @@ public final class StringConverter {
 	 */
 	private void process() {
 		File tmpPropFile = new File(PROP_FILE_GLOBAL.getPath() + FILE_SUFFIX);
-		File tmpPropFileDe = new File(PROP_FILE_DE.getPath() + FILE_SUFFIX);
-		File tmpPropFileEs = new File(PROP_FILE_ES.getPath() + FILE_SUFFIX);
-
 		PROP_FILE_GLOBAL.renameTo(tmpPropFile);
+		File tmpPropFileDe = new File(PROP_FILE_DE.getPath() + FILE_SUFFIX);
 		PROP_FILE_DE.renameTo(tmpPropFileDe);
+		File tmpPropFileEs = new File(PROP_FILE_ES.getPath() + FILE_SUFFIX);
 		PROP_FILE_ES.renameTo(tmpPropFileEs);
+		File tmpPropFilePt = new File(PROP_FILE_PT.getPath() + FILE_SUFFIX);
+		PROP_FILE_PT.renameTo(tmpPropFilePt);
 
 		try (InputStream reader = new FileInputStream(tmpPropFile);
 				Writer writer = new FilteredFileWriter(PROP_FILE_GLOBAL);
 				InputStream readerDe = new FileInputStream(tmpPropFileDe);
 				Writer writerDe = new FilteredFileWriter(PROP_FILE_DE);
 				InputStream readerEs = new FileInputStream(tmpPropFileEs);
-				Writer writerEs = new FilteredFileWriter(PROP_FILE_ES)) {
+				Writer writerEs = new FilteredFileWriter(PROP_FILE_ES);
+				InputStream readerPt = new FileInputStream(tmpPropFilePt);
+				Writer writerPt = new FilteredFileWriter(PROP_FILE_PT)) {
 
 			AlphabeticProperties props = new AlphabeticProperties();
 			props.load(reader);
@@ -133,6 +149,9 @@ public final class StringConverter {
 
 			AlphabeticProperties propsEs = new AlphabeticProperties();
 			propsEs.load(readerEs);
+
+			AlphabeticProperties propsPt = new AlphabeticProperties();
+			propsPt.load(readerPt);
 
 			Enumeration<?> e = props.propertyNames();
 
@@ -156,11 +175,18 @@ public final class StringConverter {
 						propsEs.setProperty(key, xmlValueEs);
 					}
 				}
+				for (File xmlFile : XML_FILES_PT) {
+					String xmlValuePt = getValueFromXml(xmlFile, key);
+					if (xmlValuePt != null) {
+						propsPt.setProperty(key, xmlValuePt);
+					}
+				}
 			}
 
 			props.store(writer, "String resources");
 			propsDe.store(writerDe, "String resources DE");
 			propsEs.store(writerEs, "String resources ES");
+			propsPt.store(writerPt, "String resources PT");
 
 			createResourceConstants(props);
 		}
@@ -170,6 +196,7 @@ public final class StringConverter {
 		tmpPropFile.delete();
 		tmpPropFileDe.delete();
 		tmpPropFileEs.delete();
+		tmpPropFilePt.delete();
 	}
 
 	/**

@@ -3,9 +3,6 @@
 
     <string name="message_tip_firstuse">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Erste Schritte:</h2>
 	<p><b>Schritt 1:</b> Gehen Sie zu den Einstellungen und setzen Sie das &bdquo;Eingangsverzeichnis für neue Fotos&ldquo; auf den Order, in dem Ihre neuen Augenfotos liegen.</p>
 	<p><b>Schritt 2:</b> Klicken Sie auf &bdquo;Neue Fotos einordnen&ldquo; legen Sie für Ihre Augenfotos den Namen und das Datum fest.
@@ -16,59 +13,39 @@
 			Anschließend berühren Sie das Foto, um es anzuschauen.
 	</p>
 	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_organizephotos">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Neue Fotos einordnen:</h2>
 	<p>Wählen Sie ein Paar Augenfotos aus und ordnen Sie das rechte und linke Auge korrekt an.</p>
 	<p>Geben Sie anschließend den Namen der Person ein.</p>
 	<p>Außerdem können Sie das Datum ändern - es wird mit dem Datum des Fotos vorbefüllt.</p>
 	<p>Klicken Sie zuletzt auf &bdquo;OK&ldquo;, um die Fotos in das App-Verzeichnis zu verschieben, von wo Sie die Fotos anschließend anschauen können.</p>
 	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_displaynames">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Fotos anzeigen:</h2>
 	<p>Zunächst sehen Sie eine Liste aller Namen, für die Sie Augenfotos eingeordnet haben.</p>
 	<p>Klicken Sie auf einen Namen - dann sehen Sie die Liste aller Augenfotopaare zu diesem Namen, angeordnet nach Datum.</p>
 	<p>Dann können Sie ein oder zwei Fotos auswählen, um sie im Detail anzuschauen.</p>
 	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_displaypictures">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Fotos anzeigen:</h2>
 	<p>Sie sehen die Liste der Augenfotopaare einer Person.</p>
 	<p>Klicken Sie auf ein Foto, um es im Detail zu sehen.</p>
 	<p>Klicken Sie auf ein Datum, um beide Fotos im Detail zu sehen.</p>
 	<p>Klicken Sie lange auf ein Foto und wählen Sie anschließend ein anderes Foto aus, um die beiden Fotos zu vergleichen.</p>
 	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_displaypicturestablet">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Fotos anzeigen:</h2>
 	<p>Auf der linken Seite sehen Sie eine Liste aller Namen, für die Sie Augenfotos eingeordnet haben.</p>
 	<p>Klicken Sie auf einen Namen - dann sehen Sie rechts die Liste aller Augenfotopaare zu diesem Namen, angeordnet nach Datum.</p>
@@ -76,137 +53,85 @@
 	<p>Klicken Sie auf ein Datum, um beide Fotos im Detail zu sehen.</p>
 	<p>Klicken Sie lange auf ein Foto und wählen Sie anschließend ein anderes Foto aus, um die beiden Fotos zu vergleichen.</p>
 	<p>Sehen Sie sich die Hilfeseiten an, um mehr Informationen zu erhalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_displaydetails">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Fotos im Detail anschauen:</h2>
 	<p>Sie sehen ein oder zwei Fotos. Mit zwei Fingern können sie die Größe ändern oder die Fotos verschieben.</p>
 	<p>Es gibt Schieberegler, mit denen Sie Helligkeit und Kontrast ändern können, und es gibt Knöpfe, über die Sie Iristopographien einblenden können. Diese Regler und Knöpfe lassen sich ein- und ausblenden.</p>
 	<p>Außerdem gibt es Knöpfe, mit denen Sie einen Bildkommentar bearbeiten oder Anzeigedetails speichern können.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_jpeg">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Unterstützte Bildformate:</h2>
 	<p>Diese App speichert Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien.</p>
 	<p>Dies hat den Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren</p>
 	<p>Dies hat aber zur Folge, dass die App nur das JPG-Format voll unterstützt. Für andere Bildformate stehen die meisten Funktionen nicht zur Verfügung.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_editcomment">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Kommentar bearbeiten:</h2>
 	<p>Hier können Sie einen Text zum Foto hinzufügen (z.B. das Ergebnis Ihrer Iris-Diagnose)</p>
 	<p>Der Text wird in der JPG-Datei gespeichert. Wenn Sie das Foto also z.B. nach Windows kopieren, können Sie auch dort den Kommentar sehen und bearbeiten.</p>
 	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_overlay_buttons">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Iristopographie-Overlays:</h2>
 	<p>Sie können verschiedene Iristopographien auf Ihrem Foto anzeigen, indem Sie die nummerierten Knöpfe drücken.</p>
 	<p>Wenn Sie lange auf einen dieser Knöpfe drücken, können Sie diesem Knopf eine andere Iristopographie zuordnen.</p>
 	<p>Sie können auch die Farbe des Overlays mit Hilfe des &bdquo;Farb&ldquo;-Buttons ändern. (Die Standardfarbe können Sie in den Einstellungen ändern.)</p>
 	<p>Der &bdquo;Schloss&ldquo;-Button kann benutzt werden, um die Position der Iris auf dem Foto zu lösen und wieder festzulegen. Der Knopf daneben kann genutzt werden, um die Größe und Position der Pupille zu ändern.</p>
 	<p>Hinweis: In der Testversion der App können Sie nur die ersten drei Topographie-Typen verwenden.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_overlay_guided">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Positionierung von Iris und Pupille:</h2>
 	<p>Wenn Sie den Topographie-Button bei einem neuen Foto drücken, fordert die App Sie auf, die Position der Iris und der Pupille auf dem Foto festzulegen, damit Iristopographien auf dem Foto korrekt angezeigt werden können.</p>
 	<p>Wenn Sie dies nicht wollen, können Sie dieses Verhalten in den Einstellungen ausschalten (unter &bdquo;Anzeigeeinstellungen&ldquo;).</p>
 	<p>Hinweis: das Speichern der Irisposition funktioniert nur bei JPG-Dateien.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_saveview">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Speichern der Ansicht:</h2>
 	<p>Hier können Sie Ihre Einstellungen für Helligkeit/Kontrast speichern, oder auch die Ausschnittsvergrößerung des Fotos, so dass diese Einstellungen erhalten bleiben, wenn Sie das Foto erneut ansehen.</p>
 	<p>Sie können über dieses Menü auch die Einstellungen zurücksetzen.</p>
 	<p>Hinweis: das Speichern funktioniert nur bei JPG-Dateien.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_clarity">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Anzeige in voller Auflösung:</h2>
 	<p>Mit diesem Button können Sie die aktuelle Ansicht in voller Auflösung anschauen.</p>
 	<p>Dies kann in den Einstellungen automatisiert werden. Dies kann aber zu Problemen führen, falls das Gerät zu wenig Speicher hat.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_admarvel">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Werbung:</h2>
 	<p>Bitte unterstützen Sie die Entwicklung der App, indem Sie ab und zu die Werbung anschauen.</p>
 	<p>Wenn Sie auf den Werbebanner klicken, wird er bis zum nächsten Start der App nicht mehr erscheinen.</p>
 	<p>Der Abschnitt &bdquo;Spenden&ldquo; in den Einstellungen bietet die Möglichkeit, Werbung auszuschalten.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_external_flash">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Benutzung des externen Blitzes:</h2>
 	<p>Bitte stellen Sie sicher, dass Sie den externen Blitzmodus nur verwenden, wenn Ihr externer LED-Blitz an die Kopfhörerbuchse angeschlossen ist.</p>
 	<p>Um den externen LED-Blitz auszulösen, muss das Medienvolumen auf den Maximalwert eingestellt sein.</p>
-</body>
-</html>
 ]]>
     </string>
     <string name="message_tip_external_flash_pref">
 <![CDATA[
-<!DOCTYPE html>
-<html>
-<body>
 	<h2>Benutzung des externen Blitzes:</h2>
 	<p>Jedes Mal, wenn Sie die Kopfhörerbuchse mit der Kamera verwenden, werden Sie gefragt, ob Sie einen externen LED-Blitz verwenden wollen.</p>
 	<p>Sie können dies in den Kameraeinstellungen deaktivieren.</p>
-</body>
-</html>
 ]]>
     </string>
 

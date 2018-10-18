@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="pref_title_eye_sequence_choice">Comece com o olho esquerdo</string>
+    <string name="pref_title_folder_input" />
+    <string name="menu_subject_contact_developer">Pergunta sobre o aplicativo Miniris</string>
+</resources>

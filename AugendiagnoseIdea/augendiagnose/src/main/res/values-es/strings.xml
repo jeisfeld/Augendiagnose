@@ -3,7 +3,7 @@
 
     <string name="app_name">Diagnóstico ocular</string>
     <string name="button_open_eyefi_app">Abrir aplicación Eye-Fi</string>
-    <string name="button_display_pictures">Visualizar las fotos</string>
+    <string name="button_display_pictures">Ver fotos</string>
     <string name="button_organize_new_photos">Organizar nuevas fotos</string>
     <string name="button_take_pictures">Tomar fotografías</string>
 

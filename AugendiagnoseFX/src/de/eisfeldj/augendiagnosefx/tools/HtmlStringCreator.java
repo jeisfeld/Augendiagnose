@@ -65,10 +65,16 @@ public final class HtmlStringCreator {
 	 */
 	private static final String ES = "es";
 
+	/**
+	 * Abbreviation of language Portuguese.
+	 */
+	private static final String PT = "pt";
+
 	static {
 		LANGUAGE_MAP.put(EN, "values");
 		LANGUAGE_MAP.put(DE, "values-de");
 		LANGUAGE_MAP.put(ES, "values-es");
+		LANGUAGE_MAP.put(PT, "values-pt");
 
 		PAGE_MAP.put("overview.php", "html_overview");
 		PAGE_MAP.put("settings.php", "html_settings");

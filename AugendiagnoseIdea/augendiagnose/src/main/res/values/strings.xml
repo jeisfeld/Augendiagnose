@@ -4,7 +4,7 @@
     <string name="app_name">Eye Diagnosis</string>
     <string name="class_application_settings" translatable="false">de.eisfeldj.augendiagnose.ApplicationSettings</string>
     <string name="button_open_eyefi_app">Open Eye-Fi App</string>
-    <string name="button_display_pictures">Display Photos</string>
+    <string name="button_display_pictures">View Photos</string>
     <string name="button_organize_new_photos">Organize New Photos</string>
     <string name="button_take_pictures">Take pictures</string>
     <bool name="hide_button_view_images">true</bool>

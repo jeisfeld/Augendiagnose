@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Iridology unlocker</string>
+    <string name="text_warning">Aviso</string>
+    <string name="text_message_missing_main_app">O aplicativo «Iridology Unlocker» não pode ser executado de forma independente. Ele serve apenas como chave para desbloquear os aplicativos «Diagnóstico ocular» e «Miniris». Por favor, instale um desses aplicativos.</string>
+    <string name="button_install_eye_diagnosis">Instalar «Diagnóstico Ocular»</string>
+    <string name="button_install_miniris">Instalar «Miniris»</string>
+    <string name="text_thanks">Obrigado!</string>
+    <string name="text_message_unlimited_use">Obrigado por comprar «Iridology Unlocker». Agora você pode usar os aplicativos «Diagnóstico ocular» e «Miniris» ilimitadamente neste dispositivo.</string>
+    <string name="button_ok">OK</string>
+    <string name="title_dialog_error">Erro</string>
+    <string name="message_dialog_failed_to_open_google_play">Erro ao abrir o Google Play.</string>
+	
+</resources>

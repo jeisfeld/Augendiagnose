@@ -17,6 +17,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -611,30 +612,35 @@ public final class DialogUtil {
 			int iconResource = getArguments().getInt(PARAM_ICON);
 			// VARIABLE_DISTANCE:ON
 
+			RelativeLayout layout = new RelativeLayout(getActivity());
+
 			WebView webView = new WebView(getActivity());
 			webView.setBackgroundColor(0x00000000);
+			layout.addView(webView);
+
 			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
 
 			message = ReleaseNotesUtil.HTML_PREFIX + message + ReleaseNotesUtil.HTML_POSTFIX;
-			webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", "");
+			webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", null);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(title)
 					.setIcon(iconResource)
-					.setView(webView)
+					.setView(layout)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(@NonNull final DialogInterface dialog, final int id) {
 							PreferenceUtil.setSharedPreferenceBoolean(key, false);
 							dialog.dismiss();
 						}
-					}).setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(@NonNull final DialogInterface dialog, final int id) {
-					PreferenceUtil.setSharedPreferenceBoolean(key, true);
-					dialog.dismiss();
-				}
-			});
+					})
+					.setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(@NonNull final DialogInterface dialog, final int id) {
+							PreferenceUtil.setSharedPreferenceBoolean(key, true);
+							dialog.dismiss();
+						}
+					});
 			return builder.create();
 		}
 	}

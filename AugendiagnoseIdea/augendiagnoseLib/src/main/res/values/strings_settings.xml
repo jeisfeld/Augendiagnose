@@ -115,12 +115,14 @@
         <item>English</item>
         <item>Deutsch</item>
         <item>Español</item>
+        <item>Português</item>
     </string-array>
     <string-array name="pref_list_values_language" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
     <string-array name="pref_list_titles_camera_api_version">
         <item>Android 4</item>

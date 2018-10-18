@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview">Übersicht</string>
-    <string name="html_navigation_settings">Einstellungen</string>
-    <string name="html_navigation_organize_photos">Organisation der Fotos</string>
-    <string name="html_navigation_display_photos">Betrachten der Fotos</string>
-    <string name="html_navigation_release_notes">Release Notes</string>
     <string name="html_release_notes_base">
 <![CDATA[
 <html>
@@ -72,7 +67,7 @@
 		einsetzen.
 	</p>
 
-	<h4>Schritt 2: Betrachten der Fotos</h4>
+	<h4>Schritt 2: Fotos anschauen</h4>
 
 	<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige Organisation über Schritt 1 voraus.</p>
 
@@ -355,12 +350,11 @@
 		Aufnahmedatum vorausgewählt. Sie können aber auch ein anderes Datum wählen. Dies ist insbesondere dann nötig, wenn es
 		schon Fotos dieses Nutzers von diesem Datum gibt - die App erlaubt nur ein Augenpaar einer Person zu einem Datum.</p>
 
-	<p>Mit dem Button &bdquo;Anwenden&ldquo; können Sie das gewählte Paar Augenfotos in das Augenfoto-Verzeichnis
+	<p>Mit dem Button &bdquo;OK&ldquo; können Sie das gewählte Paar Augenfotos in das Augenfoto-Verzeichnis
 		verschieben. Die Fotos werden zur angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem Programm
 		anschließend zur Verfügung.</p>
 
-	<p>Durch das Antippen des Fotopaares können Sie die beiden Fotos im Detail ansehen. (Siehe auch: &bdquo;Betrachten der
-		Fotos&ldquo;)</p>
+	<p>Durch das Antippen des Fotopaares können Sie die beiden Fotos im Detail ansehen. (Siehe auch: &bdquo;Fotos ansehen&ldquo;)</p>
 </body>
 </html>
 ]]>
@@ -368,9 +362,9 @@
     <string name="html_display_photos" formatted="false">
 <![CDATA[
 <html>
-<head><title>Augendiagnose - Fotos betrachten</title></head>
+<head><title>Augendiagnose - Fotos ansehen</title></head>
 <body>
-	<h2>Betrachten der Fotos</h2>
+	<h2>Fotos ansehen</h2>
 
 	<p>Hier können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen. Daraufhin sehen
 		Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>

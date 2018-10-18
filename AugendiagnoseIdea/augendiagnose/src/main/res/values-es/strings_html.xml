@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview">Información general</string>
-    <string name="html_navigation_settings">Ajustes</string>
-    <string name="html_navigation_organize_photos">Organizar nuevas fotos</string>
-    <string name="html_navigation_display_photos">Visualizar las fotos</string>
-    <string name="html_navigation_release_notes">Notas de la versión</string>
     <string name="html_release_notes_base">
 <![CDATA[
 <html>
@@ -43,7 +38,7 @@
 
 	<h3>Principales actividades</h3>
 
-	<h4>Paso 1:. Organizar las fotos</h4>
+	<h4>Paso 1: Organizar las fotos</h4>
 
 	<p>En este paso, puede organizar las fotos de ojos.</p>
 
@@ -69,7 +64,7 @@
 		.
 	</p>
 
-	<h4>Paso 2:. Visualizar las fotos</h4>
+	<h4>Paso 2: Ver fotos</h4>
 
 	<p>Este es el objetivo principal de la aplicación, pero requiere de las fotos para ser organizado por medio del paso 1.</p>
 
@@ -84,7 +79,7 @@
 	<h3>Periodo de prueba / Paquetes premium</h3>
 
 	<p>La aplicación permite el uso gratuito sólo durante un periodo de prueba de dos semanas. Uso adicional requiere la
-		compra de un paquete dentro de la aplicación. (una sola vez).</p>
+		compra de un paquete dentro de la aplicación (una sola vez).</p>
 
 	<h3>Aplicación para Windows</h3>
 
@@ -352,7 +347,7 @@
 		Esto es necesario particularmente, si desea mantener más de un par de ojos de una persona de un fecha - la aplicación
 		permite sólo un par de fotos por día y persona</p>
 
-	<p>Con el botón &laquo;Aceptar&raquo; puede mover el par de fotos de ojos seleccionado a la carpeta de fotos ojo. Las
+	<p>Con el botón &laquo;OK&raquo; puede mover el par de fotos de ojos seleccionado a la carpeta de fotos ojo. Las
 		fotos están asociadas con el nombre y fecha determinada y luego pueden ser utilizadas por la aplicación.</p>
 
 	<p>Al tocar en el par de fotos, puede ver las dos fotos en detalle. (Ver también &laquo;Visualizar las fotos&raquo;)</p>
@@ -363,9 +358,9 @@
     <string name="html_display_photos" formatted="false">
 <![CDATA[
 <html>
-<head><title>Diagnóstico ocular - Visualizar las fotos</title></head>
+<head><title>Diagnóstico ocular - Ver fotos</title></head>
 <body>
-	<h2>Visualizar las fotos</h2>
+	<h2>Ver fotos</h2>
 
 	<p>Aquí se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
 		todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
@@ -375,9 +370,9 @@
 	<ul>
 		<li>Mostrar una de las fotos en detalle (haciendo clic en una foto).</li>
 
-		<li>Mostrar los dos fotos de una fecha (haciendo clic en una fecha)</li>
+		<li>Mostrar los dos fotos de una fecha (haciendo clic en una fecha).</li>
 
-		<li>Mostrar dos fotos de diferentes fechas (haciendo largo clic en una foto y después clic en una segunda foto)</li>
+		<li>Mostrar dos fotos de diferentes fechas (haciendo largo clic en una foto y después clic en una segunda foto).</li>
 
 		<li>Mostrar dos fotos de diferentes personas: seleccione una foto de esta persona (mediante pulsación larga) y luego
 			seleccione una foto de una persona diferente.</li>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="html_navigation_overview">Übersicht</string>
-    <string name="html_navigation_settings">Einstellungen</string>
-	<string name="html_navigation_organize_photos"/>
-    <string name="html_navigation_display_photos">Betrachten der Fotos</string>
-    <string name="html_navigation_release_notes">Release Notes</string>
     <string name="html_release_notes_base">
 <![CDATA[
 <html>
@@ -57,8 +52,8 @@
 	<ul>
 		<li>Auf der rechten Seite befindet sich in der Mitte der Knopf zum Aufnehmen der Fotos. Nach Aufnahme eines Fotos
 			können Sie entscheiden, ob Sie das Foto behalten wollen, oder ob Sie es verwerfen und neu aufnehmen wollen.</li>
-		<li>Darunter gibt es ein Knopf, mit der Sie das Foto mit der Systemkamera-App aufnehmen können. Dies kann bei
-			Geräten mit speziellen Kamerafunktionen wie z.B. Dual-Objektiv nützlich sein.</li>
+		<li>Darunter gibt es ein Knopf, mit der Sie das Foto mit der Systemkamera-App aufnehmen können. Dies kann bei Geräten
+			mit speziellen Kamerafunktionen wie z.B. Dual-Objektiv nützlich sein.</li>
 		<li>In den oberen Ecken befindet sich die Anzeige des rechten und linken Augenfotos. Die rote Markierung zeigt an,
 			welches Auge als nächstes aufgenommen wird. Wenn Sie auf eine dieser Flächen drücken, können Sie die Seite wechseln.</li>
 		<li>Auf der Kameraanzeige befindet sich ein großer Kreis. Dieser Kreis zeigt an, wo Sie die Iris aufnehmen sollten.</li>
@@ -300,9 +295,9 @@
     <string name="html_display_photos" formatted="false">
 <![CDATA[
 <html>
-<head><title>Miniris - Fotos betrachten</title></head>
+<head><title>Miniris - Fotos ansehen</title></head>
 <body>
-	<h2>Betrachten der Fotos</h2>
+	<h2>Fotos ansehen</h2>
 
 	<p>Hier können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen. Daraufhin sehen
 		Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>

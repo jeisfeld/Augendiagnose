@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="releasenotes_title">Notas de lançamento</string>
+    <string name="releasenotes_changes">Mudanças recentes</string>
+    <string name="releasenotes_release">Versão</string>
+</resources>

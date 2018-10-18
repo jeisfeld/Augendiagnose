@@ -27,7 +27,7 @@ public final class ReleaseNotesUtil {
 	 * The prefix to be put in front of the HTML.
 	 */
 	protected static final String HTML_PREFIX =
-			"<html><head>"
+			"<!DOCTYPE html><html><head>"
 					+ "<style type=\"text/css\">"
 					+ "body{color: #ffffff;} "
 					+ "img {width: 24px; height: 24px; vertical-align: middle;} "

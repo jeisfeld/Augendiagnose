@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+	<h3>Nota importante:</h3>
+
+	<p>Esta aplicação permite o uso gratuito apenas por duas semanas, com limitações no número de fotos.</p>
+
+	<p>Por favor, tente o aplicativo. Se você achar útil, então você pode comprar um pacote premium dentro do aplicativo, que permite uso ilimitado.</p>
+]]>
+    </string>
+
+    <string-array name="releasenotes_version_notes">
+        <item>Versão inicial, baseada no aplicativo Eye Diagnostic, com grandes melhorias no uso da câmera.</item>
+        <item>Várias correções de bugs</item>
+        <item>Corrigido problemas com a compra do pacote premium.</item>
+        <item>Aumentou o período de teste para 2 semanas. Ativou vários círculos de orientação da câmera. Correção de erros</item>
+        <item>Você pode usar o flash na câmera. Fotos verticais são possíveis. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Seleção de modos de foco da câmera. Ativando a base dos recursos do Android 5 da câmera. Correção de erros</item>
+        <item>Adaptação de sobreposições no tamanho e na posição da pupila.\nPossibilidade de mover a tela da câmera através das configurações (se os botões estiverem cobertos pela fita Miniris).\nBrush correction</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Versão em espanhol da topografia de Jensen (Posição 3).\nPermitir o zoom enquanto analisa as imagens da câmera.\nCorreção de erros</item>
+        <item>Foi adicionado um modo guiado para definir a posição da íris e da pupila.\nRay Raypography.\nNow os usuários podem especificar quais as sobreposições associadas aos botões de sobreposição.\nFix correction.</item>
+        <item>Correções de bugs</item>
+        <item>Correção de erros Corrigidos problemas com o acesso de arquivos para o Android 6.</item>
+        <item>Correções de bugs</item>
+        <item>Detecção automática da íris e posição da pupila. Correções de bugs</item>
+        <item>Mudança na saturação e temperatura de cor. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Zoom habilitado da câmera. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Ícone de classificação Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Política de privacidade adicionada</item>
+        <item>Ativou a captura de uma única foto do olho. Correções de bugs</item>
+        <item>Ativar o compartilhamento de fotos dos olhos. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Usando o flash LED externo. Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Ativou o uso da câmera frontal. Rotação de Imagens</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Permite o uso do aplicativo da câmera do sistema. (Pode ser desativado na configuração da câmera). Correções de bugs</item>
+        <item>Pequena atualização nos botões da câmera</item>
+        <item>Melhor manuseio da orientação da câmera. Habilitado para escolher fotos da galeria. Correções de bugs</item>
+        <item>Fotografar a câmera usando o botão de volume</item>
+        <item>Correções de bugs</item>
+        <item>Correções de bugs</item>
+        <item>Adicionado localização portuguesa. Correções de bugs</item>
+    </string-array>
+</resources>

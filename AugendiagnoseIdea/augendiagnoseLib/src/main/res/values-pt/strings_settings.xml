@@ -1,0 +1,89 @@
+<resources>
+	<string name="title_activity_settings">Configurações</string>
+
+    <!-- Strings related to Subscreens -->
+
+    <string name="pref_screen_input_settings">Configurações de entrada</string>
+    <string name="pref_screen_storage_settings">Configurações de armazenamento e memória</string>
+    <string name="pref_screen_display_settings">Configurações de exibição</string>
+    <string name="pref_screen_camera_settings">Configurações da câmera</string>
+    <string name="pref_screen_overlay_settings">Botões de sobreposição</string>
+    <string name="pref_screen_premium_settings">Pacotes Premium / Ajuda</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_title_folder_photos">Pasta de fotos dos olhos</string>
+    <string name="pref_default_folder_photos">__ext_storage__/PhotosOcular</string>
+    <string name="pref_title_folder_input">Pasta de entrada para novas fotos</string>
+    <string name="pref_title_max_bitmap_size">Tamanho máximo de bitmaps</string>
+    <string name="pref_title_eye_sequence_choice">Última foto é olho direito</string>
+    <string name="pref_title_sort_by_last_name">Ordenar pelo sobrenome</string>
+    <string name="pref_title_guided_topo_setup">Configuração guiada de íris e pupila</string>
+    <string name="pref_title_store_options">Salvar dados adicionais no JPG</string>
+    <string name="pref_title_automatic_iris_detection">Detecção automática de íris</string>
+    <string name="pref_title_full_resolution">Mostrar imagem de alta resolução</string>
+    <string name="pref_title_overlay_color">Cor padrão de sobreposições</string>
+    <string name="pref_title_language">Idioma</string>
+    <string name="pref_title_user_key">Senha do usuário</string>
+    <string name="pref_title_enable_flash">Ativar o flash</string>
+    <string name="pref_title_enable_flash_ext">Ativar flash LED externo</string>
+    <string name="pref_title_use_front_camera">Use a câmera frontal</string>
+    <string name="pref_title_enable_external_camera">Mostrar link para o sistema da câmera</string>
+    <string name="pref_title_camera_api_version">Compatibilidade câmera</string>
+    <string name="pref_title_camera_screen_position">Posição da tela da câmera</string>
+    <string name="pref_title_overlay_button">Botão de sobreposição %1$s</string>
+    <string name="pref_value_overlay_button_empty">(Não usado)</string>
+    <string name="pref_title_show_rating_icon">Mostrar ícone de classificação</string>
+
+     <!-- Strings related to Setting arrays -->
+   
+
+    <string-array name="pref_list_titles_folder_input">
+        <item>Pasta Eye-Fi</item>
+        <item>Pasta de câmera padrão</item>
+        <item>Pasta personalizada</item>
+    </string-array>
+    <string-array name="pref_list_titles_folder_photos">
+        <item>Pasta padrão</item>
+        <item>Pasta personalizada</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_photos">
+        <item>__ext_storage__/PhotosOcular</item>
+        <item>__custom__</item>
+    </string-array>
+    <string-array name="pref_list_titles_max_bitmap_size">
+        <item>4096</item>
+        <item>2880</item>
+        <item>2048 (recomendado)</item>
+        <item>1440</item>
+        <item>1024</item>
+        <item>720</item>
+        <item>512</item>
+    </string-array>
+    <string-array name="pref_list_titles_store_options">
+        <item>Salvar para EXIF</item>
+        <item>Salvar em campos personalizados</item>
+        <item>Não salve dados em imagens</item>
+    </string-array>
+    <string-array name="pref_list_titles_full_resolution">
+        <item>Sempre carregar automaticamente</item>
+        <item>Carregar automaticamente quando apenas a foto é exibida</item>
+        <item>Carregar apenas se solicitado</item>
+    </string-array>
+    <string-array name="pref_list_titles_language">
+        <item>Idioma do sistema</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Português</item>
+    </string-array>
+    <string-array name="pref_list_titles_camera_api_version">
+        <item>Android 4</item>
+        <item>Android 5</item>
+    </string-array>
+    <string-array name="pref_list_titles_camera_screen_position">
+        <item>Tela completa</item>
+        <item>Deslocar para a direita</item>
+        <item>Deslocar para a esquerda</item>
+    </string-array>
+</resources>

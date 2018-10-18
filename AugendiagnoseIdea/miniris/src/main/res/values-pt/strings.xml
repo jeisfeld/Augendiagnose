@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_camera">Miniris Camera</string>
+    <string name="title_activity_list_folders_for_display">Galeria Miniris</string>
+    <string name="title_activity_organize_new_photos">Definir nome e data</string>
+    <string name="section_select_photos" />
+    <string name="menu_move_to_input_folder">Atribuir um nome diferente</string>
+</resources>

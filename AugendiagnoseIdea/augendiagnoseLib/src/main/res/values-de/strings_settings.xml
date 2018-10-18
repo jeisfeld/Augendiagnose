@@ -75,6 +75,7 @@
         <item>English</item>
         <item>Deutsch</item>
         <item>Español</item>
+        <item>Português</item>
     </string-array>
     <string-array name="pref_list_titles_camera_api_version">
         <item>Android 4</item>
