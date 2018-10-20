@@ -5,7 +5,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 
@@ -28,10 +27,10 @@ public abstract class BaseImageSelectionHandler {
 	private void highlightSelectedViews(final boolean highlight) {
 		for (EyeImageView view : mSelectedViews) {
 			if (highlight) {
-				view.setBackgroundColor(Application.getAppContext().getResources().getColor(android.R.color.holo_orange_light));
+				view.setBackgroundColor(view.getContext().getResources().getColor(android.R.color.holo_orange_light));
 			}
 			else {
-				view.setBackgroundColor(Application.getAppContext().getResources().getColor(android.R.color.transparent));
+				view.setBackgroundColor(view.getContext().getResources().getColor(android.R.color.transparent));
 			}
 		}
 	}

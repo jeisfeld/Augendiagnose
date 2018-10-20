@@ -167,11 +167,11 @@ public class SettingsActivity extends BasePreferenceActivity {
 	 */
 	@SuppressLint("SdCardPath")
 	public static void setDefaultSharedPreferences(@NonNull final Context context) {
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_input, true);
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_display, true);
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_storage, true);
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_camera, true);
-		PreferenceManager.setDefaultValues(Application.getAppContext(), R.xml.prefs_premium, true);
+		PreferenceManager.setDefaultValues(context, R.xml.prefs_input, true);
+		PreferenceManager.setDefaultValues(context, R.xml.prefs_display, true);
+		PreferenceManager.setDefaultValues(context, R.xml.prefs_storage, true);
+		PreferenceManager.setDefaultValues(context, R.xml.prefs_camera, true);
+		PreferenceManager.setDefaultValues(context, R.xml.prefs_premium, true);
 
 		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_folder_input))) {

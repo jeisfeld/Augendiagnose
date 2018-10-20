@@ -12,7 +12,6 @@ import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
-import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
@@ -53,7 +52,7 @@ public class ColorDialogPreference extends DialogPreference implements OnColorSe
 	 * Update the summary of the preference.
 	 */
 	private void updateSummary() {
-		SpannableString summary = new SpannableString(Application.getAppContext().getString(R.string.button_select_color));
+		SpannableString summary = new SpannableString(getContext().getString(R.string.button_select_color));
 		int overlayColor = PreferenceUtil.getSharedPreferenceInt(R.string.key_overlay_color, Color.RED);
 		summary.setSpan(new ForegroundColorSpan(overlayColor), 0, summary.length(), 0);
 		summary.setSpan(new RelativeSizeSpan(1.2f), 0, summary.length(), 0); // MAGIC_NUMBER

@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 
-import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 
@@ -56,7 +55,7 @@ public class DisplayHelpNavigationFragment extends ListFragment {
 		@Override
 		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 			TypedArray htmlResources =
-					Application.getAppContext().getResources().obtainTypedArray(R.array.html_resources);
+					getActivity().getResources().obtainTypedArray(R.array.html_resources);
 			int resource = htmlResources.getResourceId(position, 0);
 			htmlResources.recycle();
 
