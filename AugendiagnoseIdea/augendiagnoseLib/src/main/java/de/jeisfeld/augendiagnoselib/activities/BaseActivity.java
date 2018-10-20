@@ -16,7 +16,7 @@ import de.jeisfeld.augendiagnoselib.Application;
 public abstract class BaseActivity extends Activity {
 	@Override
 	protected final void attachBaseContext(final Context newBase) {
-		super.attachBaseContext(Application.getAppContext());
+		super.attachBaseContext(Application.createContextWrapperForLocale(newBase));
 	}
 
 	// OVERRIDABLE

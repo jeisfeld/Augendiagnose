@@ -84,7 +84,6 @@ public abstract class StandardActivity extends AdMarvelActivity {
 	@Override
 	protected void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Application.setLanguage();
 		DialogUtil.checkOutOfMemoryError(this);
 		test();
 
@@ -479,7 +478,7 @@ public abstract class StandardActivity extends AdMarvelActivity {
 				missingPermissions.add(permission);
 			}
 		}
-		return missingPermissions.toArray(new String[missingPermissions.size()]);
+		return missingPermissions.toArray(new String[0]);
 	}
 
 	// OVERRIDABLE

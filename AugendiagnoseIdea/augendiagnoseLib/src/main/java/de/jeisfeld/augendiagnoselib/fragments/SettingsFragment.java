@@ -610,7 +610,6 @@ public class SettingsFragment extends PreferenceFragment {
 				String oldLanguageString = PreferenceUtil.getSharedPreferenceString(R.string.key_language);
 				if (oldLanguageString == null || !oldLanguageString.equals(value)) {
 					PreferenceUtil.setSharedPreferenceString(R.string.key_language, stringValue);
-					Application.setLanguage();
 
 					// Workaround to get rid of all kinds of cashing
 					if (!JpegSynchronizationUtil.isSaving()) {
