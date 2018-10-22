@@ -87,17 +87,17 @@ Primeira vez com um novo dispositivo ou com uma nova câmera. Por favor, informe
         <item>Correções de bugs</item>
         <item>Anúncios (apenas nos EUA). Correções de bugs</item>
         <item>Correções de bugs</item>
-        <item>Adicionadas doações por meio de compras no aplicativo. Anúncios ativados sem som Reorganizou as configurações. Correção de Erros.</item>
+        <item>Adicionadas doações por meio de compras no aplicativo. Anúncios ativados sem som Reorganizou as configurações. Correção de bugs.</item>
         <item>Novo processo para tirar fotos do aplicativo. Feito versão gratuita do aplicativo apenas uma versão de teste. Correções de bugs</item>
         <item>Tornou a câmera opcional novamente.</item>
-        <item>Seleção de modos de foco da câmera. Ativando a base dos recursos do Android 5 da câmera. Correção de erros</item>
-        <item>Adaptação de sobreposições no tamanho e posição da pupila.\nPossibilidade de mover a tela da câmera através das configurações.\nCorreção de erros</item>
+        <item>Seleção de modos de foco da câmera. Ativando a base dos recursos do Android 5 da câmera. Correção de bugs</item>
+        <item>Adaptação de sobreposições no tamanho e posição da pupila.\nPossibilidade de mover a tela da câmera através das configurações.\nCorreção de bugs</item>
         <item>Correções de bugs</item>
         <item>Correções de bugs</item>
         <item>Versão em espanhol da topografia de Jensen (Posição 3).\nPermitir o zoom enquanto analisa as imagens da câmera.\nCorreção de erros</item>
-        <item>Foi adicionado um modo guiado para definir a posição da íris e da pupila.\nRay Raypography.\nNow os usuários podem especificar quais as sobreposições associadas aos botões de sobreposição.\nFix correction.</item>
+        <item>Foi adicionado um modo guiado para definir a posição da íris e da pupila.\nTopografía di Rayid.\nAgora os usuários podem especificar quais as sobreposições associadas aos botões de sobreposição.\nFix correction.</item>
         <item>Correções de bugs</item>
-        <item>Correção de erros Corrigidos problemas com o acesso de arquivos para o Android 6.</item>
+        <item>Correção de bugs. Corrigidos problemas com o acesso de arquivos para o Android 6.</item>
         <item>Correções de bugs</item>
         <item>Detecção automática da íris e posição da pupila. Correções de bugs</item>
         <item>Mudança na saturação e temperatura de cor. Correções de bugs</item>
@@ -124,6 +124,6 @@ Primeira vez com um novo dispositivo ou com uma nova câmera. Por favor, informe
         <item>Correções de bugs</item>
         <item>Correções de bugs</item>
         <item>Adicionado localização portuguesa. Correções de bugs</item>
-        <item>Correções de bugs</item>
+        <item>Topografía di Rayid numérico. Correções de bugs</item>
     </string-array>
 </resources>

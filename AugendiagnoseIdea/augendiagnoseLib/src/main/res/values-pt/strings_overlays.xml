@@ -5,11 +5,12 @@
         <item>Mapa combinado textual</item>
         <item>Mapa gráfico combinado</item>
         <item>Mapa de Bernard Jensen</item>
-        <item>Mapa de Rayid</item>
+    <item>Mapa de Rayid textual</item>
         <item>Mapa de Zupan (alemão)</item>
         <item>Mapa de Siegfried Rizzi (italiano)</item>
         <item>Mapa de Josef Deck (alemão)</item>
         <item>Mapa de Werner Theegarten (alemão)</item>
+    <item>Mapa de Rayid numérico</item>
         <item>Círculo da pupila (alemão)</item>
     </string-array>
 </resources>

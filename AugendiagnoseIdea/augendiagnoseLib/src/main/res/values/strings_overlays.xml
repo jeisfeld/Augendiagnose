@@ -4,7 +4,7 @@
     <!-- Resources defining overlay characteristics -->
 
 
-    <!-- Arrays on overlays (first is wheel, last is pupil -->
+    <!-- Arrays on overlays (first is wheel, last is pupil) -->
 
     <array name="overlays_left">
         <item>@drawable/overlay_circle</item>
@@ -16,6 +16,7 @@
         <item>@drawable/overlay_topo_rizzi_l</item>
         <item>@drawable/overlay_topo_deck_l</item>
         <item>@drawable/overlay_topo_theegarten_l</item>
+        <item>@drawable/overlay_topo_rayid_numeric_l</item>
         <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlays_right">
@@ -28,6 +29,7 @@
         <item>@drawable/overlay_topo_rizzi_r</item>
         <item>@drawable/overlay_topo_deck_r</item>
         <item>@drawable/overlay_topo_theegarten_r</item>
+        <item>@drawable/overlay_topo_rayid_numeric_r</item>
         <item>@drawable/overlay_pupil</item>
     </array>
 
@@ -36,11 +38,12 @@
         <item>Combined textual map</item>
         <item>Combined graphical map</item>
         <item>Bernard Jensen map</item>
-        <item>Rayid map</item>
+        <item>Rayid map textual</item>
         <item>Zupan map (German)</item>
         <item>Siegfried Rizzi map (Italian)</item>
         <item>Josef Deck map (German)</item>
         <item>Werner Theegarten map (German)</item>
+        <item>Rayid map numeric</item>
         <item>Pupil circle</item>
     </string-array>
     <string-array name="overlay_pupil_sizes" translatable="false">
@@ -53,6 +56,7 @@
         <item>0.21</item>
         <item>0.24</item>
         <item>0.16</item>
+        <item>0.24</item>
         <item>0</item>
     </string-array>
 
@@ -60,6 +64,7 @@
         <item>1</item>
         <item>1</item>
         <item>0</item>
+        <item>1</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>

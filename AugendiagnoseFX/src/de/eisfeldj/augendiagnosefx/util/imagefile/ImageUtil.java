@@ -31,6 +31,7 @@ import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_5_PREFI
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_6_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_7_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_8_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_9_PREFIX;
 
 /**
  * Utility for handling images.
@@ -49,7 +50,7 @@ public final class ImageUtil {
 	/**
 	 * The pupil sizes in the original overlay images.
 	 */
-	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f};
+	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f, 0.24f};
 
 	/**
 	 * The number four.
@@ -195,6 +196,9 @@ public final class ImageUtil {
 			break;
 		case 8: // MAGIC_NUMBER
 			baseName = ResourceUtil.getString(OVERLAY_8_PREFIX);
+			break;
+		case 9: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_9_PREFIX);
 			break;
 		default:
 			return null;

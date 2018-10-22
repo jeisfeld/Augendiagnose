@@ -55,12 +55,12 @@ public class DisplayImageController extends BaseController implements Initializa
 	/**
 	 * The number of available overlay buttons (excluding circle). Must be at most OVERLAY_COUNT.
 	 */
-	public static final int OVERLAY_BUTTON_COUNT = 8;
+	public static final int OVERLAY_BUTTON_COUNT = 9;
 
 	/**
 	 * The number of available overlays (excluding circle).
 	 */
-	public static final int OVERLAY_COUNT = 8;
+	public static final int OVERLAY_COUNT = 9;
 
 	/**
 	 * The names of the overlays.
@@ -190,6 +190,8 @@ public class DisplayImageController extends BaseController implements Initializa
 	private ToggleButton mBtnOverlay7;
 	@FXML
 	private ToggleButton mBtnOverlay8;
+	@FXML
+	private ToggleButton mBtnOverlay9;
 
 	private ToggleButton[] mOverlayButtons;
 
@@ -280,7 +282,7 @@ public class DisplayImageController extends BaseController implements Initializa
 		mSliderColorTemperature.setMax(1);
 
 		mOverlayButtons = new ToggleButton[] {mBtnOverlayCircle, mBtnOverlay1, mBtnOverlay2, mBtnOverlay3, mBtnOverlay4, mBtnOverlay5, mBtnOverlay6,
-				mBtnOverlay7, mBtnOverlay8};
+				mBtnOverlay7, mBtnOverlay8, mBtnOverlay9};
 		createOverlayButtonContextMenus();
 
 		mIsInitialized = true;
