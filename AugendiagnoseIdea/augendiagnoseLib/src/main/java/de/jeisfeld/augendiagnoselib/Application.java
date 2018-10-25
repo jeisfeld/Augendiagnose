@@ -51,9 +51,10 @@ public class Application extends android.app.Application {
 			justification = "Make some context visible statically (no matter which one)")
 	public void onCreate() {
 		super.onCreate();
-		Application.mContext = this.getApplicationContext();
+		Application.mContext = getApplicationContext();
+		Application.mContext = createContextWrapperForLocale(getApplicationContext());
 
-		SettingsActivity.setDefaultSharedPreferences(getApplicationContext());
+		SettingsActivity.setDefaultSharedPreferences(mContext);
 		setExceptionHandler();
 
 		// Initialize special classes
