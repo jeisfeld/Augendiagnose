@@ -40,6 +40,11 @@ public class Application extends android.app.Application {
 	 */
 	public static final String TAG = "Augendiagnose.JE";
 
+	/**
+	 * The default locale.
+	 */
+	private static final Locale DEFAULT_LOCALE = Locale.getDefault();
+
 	@Nullable
 	private static ApplicationSettings getApplicationSettings() {
 		return mApplicationSettings;
@@ -51,10 +56,10 @@ public class Application extends android.app.Application {
 			justification = "Make some context visible statically (no matter which one)")
 	public void onCreate() {
 		super.onCreate();
-		Application.mContext = getApplicationContext();
+		Application.mContext = this;
 		Application.mContext = createContextWrapperForLocale(getApplicationContext());
 
-		SettingsActivity.setDefaultSharedPreferences(mContext);
+		SettingsActivity.setDefaultSharedPreferences(getAppContext());
 		setExceptionHandler();
 
 		// Initialize special classes
@@ -192,7 +197,7 @@ public class Application extends android.app.Application {
 		int languageSetting = Integer.parseInt(languageString);
 		switch (languageSetting) {
 		case 0:
-			return Locale.getDefault();
+			return DEFAULT_LOCALE;
 		case 1:
 			return Locale.ENGLISH;
 		case 2:
@@ -202,7 +207,7 @@ public class Application extends android.app.Application {
 		case 4: // MAGIC_NUMBER
 			return new Locale("pt");
 		default:
-			return Locale.getDefault();
+			return DEFAULT_LOCALE;
 		}
 	}
 
