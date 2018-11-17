@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -611,12 +610,9 @@ public class SettingsFragment extends PreferenceFragment {
 				if (oldLanguageString == null || !oldLanguageString.equals(value)) {
 					PreferenceUtil.setSharedPreferenceString(R.string.key_language, stringValue);
 
-					// Workaround to get rid of all kinds of cashing
+					// Restart application
 					if (!JpegSynchronizationUtil.isSaving()) {
 						Application.startApplication(getActivity());
-						if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
-							System.exit(0);
-						}
 					}
 
 				}

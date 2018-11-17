@@ -16,6 +16,8 @@ import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -61,6 +63,10 @@ public final class DialogUtil {
 	 * Parameter to pass the key for the shared preference indicating if the tip should be shown.
 	 */
 	private static final String PARAM_PREFERENCE_KEY = "keyPrefTip";
+	/**
+	 * Parameter to pass information if a special layout is used instead of a message.
+	 */
+	private static final String PARAM_IS_LAYOUT = "keyIsLayout";
 
 	/**
 	 * Instance state flag indicating if a dialog should not be recreated after orientation change.
@@ -251,7 +257,7 @@ public final class DialogUtil {
 	 */
 	public static void displayTip(@NonNull final Activity activity, final int messageResource,
 								  final int preferenceResource) {
-		displayTip(activity, R.string.title_dialog_tip, R.drawable.ic_title_tipp, messageResource, preferenceResource);
+		displayTip(activity, R.string.title_dialog_tip, R.drawable.ic_title_tipp, messageResource, preferenceResource, false);
 	}
 
 	/**
@@ -262,19 +268,19 @@ public final class DialogUtil {
 	 * @param iconResource       The resource containing the icon.
 	 * @param messageResource    The resource containing the text of the tip.
 	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
+	 * @param isLayoutResource If true, then messageResource is a layout instead of a String.
 	 */
-	private static void displayTip(@NonNull final Activity activity, final int titleResource, final int iconResource,
-								   final int messageResource, final int preferenceResource) {
-		String message = activity.getString(messageResource);
-
+	public static void displayTip(@NonNull final Activity activity, final int titleResource, final int iconResource,
+								  final int messageResource, final int preferenceResource, final boolean isLayoutResource) {
 		boolean skip = PreferenceUtil.getSharedPreferenceBoolean(preferenceResource);
 
 		if (!skip) {
 			Bundle bundle = new Bundle();
 			bundle.putString(PARAM_TITLE, activity.getString(titleResource));
 			bundle.putInt(PARAM_ICON, iconResource);
-			bundle.putString(PARAM_MESSAGE, message);
+			bundle.putInt(PARAM_MESSAGE, messageResource);
 			bundle.putInt(PARAM_PREFERENCE_KEY, preferenceResource);
+			bundle.putBoolean(PARAM_IS_LAYOUT, isLayoutResource);
 
 			DisplayTipFragment fragment = new DisplayTipFragment();
 			fragment.setArguments(bundle);
@@ -606,27 +612,33 @@ public final class DialogUtil {
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
 			// VARIABLE_DISTANCE:OFF
-			String message = getArguments().getString(PARAM_MESSAGE);
+			int messageResource = getArguments().getInt(PARAM_MESSAGE);
 			final int key = getArguments().getInt(PARAM_PREFERENCE_KEY);
 			String title = getArguments().getString(PARAM_TITLE);
 			int iconResource = getArguments().getInt(PARAM_ICON);
+			boolean isLayout = getArguments().getBoolean(PARAM_IS_LAYOUT);
 			// VARIABLE_DISTANCE:ON
 
-			RelativeLayout layout = new RelativeLayout(getActivity());
+			View mainView;
 
-			WebView webView = new WebView(getActivity());
-			webView.setBackgroundColor(0x00000000);
-			layout.addView(webView);
-
-			DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
-
-			message = ReleaseNotesUtil.HTML_PREFIX + message + ReleaseNotesUtil.HTML_POSTFIX;
-			webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", null);
+			if (isLayout) {
+				mainView = LayoutInflater.from(getActivity()).inflate(messageResource, null);
+			}
+			else {
+				RelativeLayout layout = new RelativeLayout(getActivity());
+				WebView webView = new WebView(getActivity());
+				webView.setBackgroundColor(0x00000000);
+				layout.addView(webView);
+				DisplayHtmlFragment.setOpenLinksInExternalBrowser(webView);
+				String message = ReleaseNotesUtil.HTML_PREFIX + getString(messageResource) + ReleaseNotesUtil.HTML_POSTFIX;
+				webView.loadDataWithBaseURL("file:///android_res/drawable/", message, "text/html", "utf-8", null);
+				mainView = layout;
+			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(title)
 					.setIcon(iconResource)
-					.setView(layout)
+					.setView(mainView)
 					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(@NonNull final DialogInterface dialog, final int id) {

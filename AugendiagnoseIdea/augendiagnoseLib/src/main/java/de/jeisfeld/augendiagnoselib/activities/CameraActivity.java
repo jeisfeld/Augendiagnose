@@ -300,7 +300,8 @@ public class CameraActivity extends StandardActivity {
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// Display tipp only after successful orientation setting
-			DialogUtil.displayTip(CameraActivity.this, R.string.message_tip_camera, R.string.key_tip_camera);
+			DialogUtil.displayTip(CameraActivity.this, R.string.title_dialog_tip, R.drawable.ic_title_tipp, R.layout.tipp_camera,
+					R.string.key_tip_camera, true);
 		}
 	}
 
