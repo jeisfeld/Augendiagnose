@@ -367,7 +367,7 @@ public class Camera2Handler implements CameraHandler {
 					}
 				}
 				else if (afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_FOCUSED
-						&& aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
+						&& aeState != null && aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
 					captureStillPictureIfExternalFlashReady();
 				}
 				break;
