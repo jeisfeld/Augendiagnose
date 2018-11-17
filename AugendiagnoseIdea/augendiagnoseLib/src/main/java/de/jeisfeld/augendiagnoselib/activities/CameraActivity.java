@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -296,6 +297,11 @@ public class CameraActivity extends StandardActivity {
 			setupActivity();
 		}
 		// StandardActivity will request for permission. If permission is granted, then onRequestPermissionsResult will setup the activity.
+
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			// Display tipp only after successful orientation setting
+			DialogUtil.displayTip(CameraActivity.this, R.string.message_tip_camera, R.string.key_tip_camera);
+		}
 	}
 
 	/**
@@ -801,7 +807,7 @@ public class CameraActivity extends StandardActivity {
 			storedFocusMode = FocusMode.valueOf(storedFocusModeString);
 		}
 		catch (Exception e) {
-			storedFocusMode = FocusMode.MACRO;
+			storedFocusMode = FocusMode.CONTINUOUS;
 			PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, storedFocusMode.toString());
 		}
 		if (!mFocusModes.contains(storedFocusMode)) {

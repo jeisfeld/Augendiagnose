@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
@@ -37,7 +36,8 @@ public final class PreferenceUtil {
 			R.string.key_tip_overlay_guided,
 			R.string.key_tip_saveview,
 			R.string.key_tip_external_flash,
-			R.string.key_tip_external_flash_pref
+			R.string.key_tip_external_flash_pref,
+			R.string.key_tip_camera
 	};
 
 	/**
@@ -130,7 +130,7 @@ public final class PreferenceUtil {
 		if (uri2 != null) {
 			uris.add(uri2);
 		}
-		return uris.toArray(new Uri[uris.size()]);
+		return uris.toArray(new Uri[0]);
 	}
 
 	/**
@@ -410,7 +410,7 @@ public final class PreferenceUtil {
 	 * @param value The value.
 	 */
 	public static void setAllHints(final boolean value) {
-		for (int preferenceId : Arrays.asList(HINT_PREFERENCES)) {
+		for (int preferenceId : HINT_PREFERENCES) {
 			setSharedPreferenceBoolean(preferenceId, value);
 		}
 	}

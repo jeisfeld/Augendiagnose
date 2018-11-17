@@ -68,7 +68,7 @@
 	<p>Moreover, there are buttons for editing a comment for a photo, and for saving view details.</p>
 ]]>
     </string>
-	<string name="key_tip_jpeg" translatable="false">key_tip_jpeg</string>
+    <string name="key_tip_jpeg" translatable="false">key_tip_jpeg</string>
     <string name="message_tip_jpeg">
 <![CDATA[
 	<h2>Supported image formats:</h2>
@@ -86,7 +86,7 @@
 	<p>Note: Saving works only on JPG files.</p>
 ]]>
     </string>
-	<string name="key_tip_overlay_buttons" translatable="false">key_tip_overlay_buttons</string>
+    <string name="key_tip_overlay_buttons" translatable="false">key_tip_overlay_buttons</string>
     <string name="message_tip_overlay_buttons">
 <![CDATA[
 	<h2>Iris Topography Overlays:</h2>
@@ -97,7 +97,7 @@
 	<p>Note: In the trial version of the app, you can use only the first three topography types.</p>
 ]]>
     </string>
-	<string name="key_tip_overlay_guided" translatable="false">key_tip_overlay_guided</string>
+    <string name="key_tip_overlay_guided" translatable="false">key_tip_overlay_guided</string>
     <string name="message_tip_overlay_guided">
 <![CDATA[
 	<h2>Iris and Pupil positioning:</h2>
@@ -146,6 +146,12 @@
 	<h2>Usage of external flash:</h2>
 	<p>Whenever you use the headphone jack with the camera, you will be asked for usage of external LED flash.</p>
 	<p>You may disable this in the camera settings.</p>
+]]>
+    </string>
+    <string name="key_tip_camera" translatable="false">key_tip_camera</string>
+    <string name="message_tip_camera" translatable="false">
+<![CDATA[
+	<img src="help_screen_camera.jpg" class="fullscreen" />
 ]]>
     </string>
 </resources>

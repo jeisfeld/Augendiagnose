@@ -6,8 +6,6 @@ import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import de.jeisfeld.augendiagnoselib.Application;
-
 /**
  * Helper class that allows to listen on orientation changes of the device.
  */
@@ -43,6 +41,10 @@ public class OrientationManager extends OrientationEventListener {
 	 * The listener reacting on changes of screen orientation.
 	 */
 	private OrientationListener mListener;
+	/**
+	 * The context in which this is created.
+	 */
+	private Context mContext;
 
 	/**
 	 * Constructor for the orientation manager.
@@ -53,7 +55,8 @@ public class OrientationManager extends OrientationEventListener {
 	 */
 	public OrientationManager(final Context context, final int rate, final OrientationListener listener) {
 		super(context, rate);
-		setListener(listener);
+		mListener = listener;
+		mContext = context;
 	}
 
 	public OrientationManager(final Context context, final int rate) {
@@ -69,9 +72,8 @@ public class OrientationManager extends OrientationEventListener {
 		if (orientation == -1) {
 			return;
 		}
-
 		int adjustedOrientation = orientation;
-		if (getDeviceDefaultOrientation() == Configuration.ORIENTATION_LANDSCAPE) {
+		if (getDeviceDefaultOrientation(mContext) == Configuration.ORIENTATION_LANDSCAPE) {
 			adjustedOrientation = (orientation + 270) % 360; // MAGIC_NUMBER
 		}
 		ScreenOrientation newScreenOrientation;
@@ -95,10 +97,6 @@ public class OrientationManager extends OrientationEventListener {
 		}
 	}
 
-	private void setListener(final OrientationListener listener) {
-		this.mListener = listener;
-	}
-
 	public final ScreenOrientation getScreenOrientation() {
 		return mScreenOrientation;
 	}
@@ -106,11 +104,12 @@ public class OrientationManager extends OrientationEventListener {
 	/**
 	 * Get the default orientation of the device.
 	 *
+	 * @param context the context.
 	 * @return The default orientation of the device.
 	 */
-	private static int getDeviceDefaultOrientation() {
-		WindowManager windowManager = (WindowManager) Application.getAppContext().getSystemService(Context.WINDOW_SERVICE);
-		Configuration config = Application.getAppContext().getResources().getConfiguration();
+	private static int getDeviceDefaultOrientation(final Context context) {
+		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Configuration config = context.getResources().getConfiguration();
 		int rotation = windowManager.getDefaultDisplay().getRotation();
 
 		if ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)

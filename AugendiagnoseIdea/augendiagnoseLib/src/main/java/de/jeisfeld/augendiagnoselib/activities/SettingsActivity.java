@@ -220,6 +220,8 @@ public class SettingsActivity extends BasePreferenceActivity {
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_firstuse, false);
 			// always show hint on max volume for external LED
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_external_flash, false);
+			// always show hint on camera
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_tip_camera, false);
 
 			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_initialized_hints, true);
 		}

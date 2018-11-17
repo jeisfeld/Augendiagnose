@@ -31,6 +31,7 @@ public final class ReleaseNotesUtil {
 					+ "<style type=\"text/css\">"
 					+ "body{color: #ffffff;} "
 					+ "img {width: 24px; height: 24px; vertical-align: middle;} "
+					+ "img.fullscreen {width: 100%; height: auto; display: block;}"
 					+ "a {color: #7fffff;} "
 					+ "li {margin-top: 6px; }"
 					+ "</style></head><body>";
