@@ -122,6 +122,8 @@ public class PreferencesController extends DialogController implements Initializ
 		LANGUAGE_MAP.put(2, "Deutsch");
 		LANGUAGE_MAP.put(3, "Español"); // MAGIC_NUMBER
 		LANGUAGE_MAP.put(4, "Português"); // MAGIC_NUMBER
+		LANGUAGE_MAP.put(5, "English/Français"); // MAGIC_NUMBER
+		LANGUAGE_MAP.put(6, "English/Polski"); // MAGIC_NUMBER
 
 		LANGUAGE_MAP.forEach((key, value) -> LANGUAGE_MAP_BACK.put(value, key));
 

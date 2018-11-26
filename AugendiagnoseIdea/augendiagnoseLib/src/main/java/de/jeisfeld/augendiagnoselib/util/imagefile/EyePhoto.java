@@ -680,7 +680,7 @@ public class EyePhoto {
 		 */
 		@NonNull
 		public static RightLeft fromString(@Nullable final String rightLeftString) {
-			if (rightLeftString != null && rightLeftString.matches("[rRdD].*")) {
+			if (rightLeftString != null && rightLeftString.matches("[rRdDpP].*")) {
 				return RIGHT;
 			}
 			else {

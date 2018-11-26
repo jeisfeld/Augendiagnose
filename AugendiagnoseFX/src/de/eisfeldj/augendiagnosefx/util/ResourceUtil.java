@@ -36,6 +36,12 @@ public final class ResourceUtil {
 		case 4: // MAGIC_NUMBER
 			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("pt"));
 			break;
+		case 5: // MAGIC_NUMBER
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("fr"));
+			break;
+		case 6: // MAGIC_NUMBER
+			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("pl"));
+			break;
 		default:
 			STRINGS_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 		}

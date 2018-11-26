@@ -206,6 +206,10 @@ public class Application extends android.app.Application {
 			return new Locale("es");
 		case 4: // MAGIC_NUMBER
 			return new Locale("pt");
+		case 5: // MAGIC_NUMBER
+			return Locale.FRENCH;
+		case 6: // MAGIC_NUMBER
+			return new Locale("pl");
 		default:
 			return DEFAULT_LOCALE;
 		}
