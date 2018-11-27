@@ -35,7 +35,6 @@ import java.io.File;
 import java.util.List;
 
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference.OnDialogClosedListener;
@@ -629,12 +628,6 @@ public class SettingsFragment extends PreferenceFragment {
 						PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, buttonPosition, -1);
 
 				if (oldOverlayIndex != overlayIndex) {
-					if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-							&& overlayIndex >= Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
-						DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
-						return false;
-					}
-
 					if (oldButtonPosition != null && !oldButtonPosition.equals(buttonPosition)) {
 						// If the same overlay is already used, switch overlays
 						PreferenceUtil.setIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, oldButtonPosition,

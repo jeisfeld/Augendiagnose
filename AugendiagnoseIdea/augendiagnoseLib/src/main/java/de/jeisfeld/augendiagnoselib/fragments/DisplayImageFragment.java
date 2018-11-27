@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 import de.jeisfeld.augendiagnoselib.activities.DisplayImageActivity;
@@ -770,13 +769,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		int overlayPosition = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);
 
-		if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS && isChecked
-				&& overlayPosition > Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
-			DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
-			mToggleOverlayButtons[position].setChecked(false);
-			return;
-		}
-
 		for (int i = 0; i < OVERLAY_BUTTON_COUNT; i++) {
 			if (position != i) {
 				if (mToggleOverlayButtons[i].isChecked()) {
@@ -879,12 +871,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(final MenuItem item) {
-						if (Application.getAuthorizationLevel() == AuthorizationLevel.TRIAL_ACCESS
-								&& index > Integer.parseInt(Application.getResourceString(R.string.overlay_trial_count))) {
-							DialogUtil.displayAuthorizationError(getActivity(), R.string.message_dialog_trial_overlays);
-							return true;
-						}
-
 						if (oldButtonPosition != null && oldButtonPosition != position) {
 							// If the same overlay is already used, switch overlays
 							int currentOverlay = PreferenceUtil.getIndexedSharedPreferenceIntString(R.string.key_indexed_overlaytype, position, -1);

@@ -55,7 +55,6 @@
     <string name="button_purchased_item">%1$s (bought)</string>
     <string name="button_rate">Rate the app</string>
     <string name="button_external_flash">External flash</string>
-    <string name="overlay_trial_count" translatable="false">3</string>
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>
