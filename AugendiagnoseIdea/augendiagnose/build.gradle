@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "de.eisfeldj.augendiagnose"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -25,5 +25,5 @@ android {
 dependencies {
     implementation project(':augendiagnoseLib')
     implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.android.support:support-v13:26.1.0'
+    implementation 'com.android.support:support-v13:28.0.0'
 }

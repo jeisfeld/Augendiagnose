@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearanceLargeCustomOverflowMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/TextAppearanceSmallCustomOverflowMenu</item>
+    </style>
+
+    <style name="TextAppearanceSmallCustomOverflowMenu" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Small">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearanceLargeCustomOverflowMenu" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Large">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>
