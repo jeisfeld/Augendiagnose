@@ -13,7 +13,7 @@
     <application
         android:name="de.jeisfeld.miniris.Application"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="false"
@@ -22,11 +22,11 @@
         <activity
             tools:replace="android:label"
             android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/title_activity_camera"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
             <intent-filter
-                android:icon="@drawable/ic_launcher"
+                android:icon="@mipmap/ic_launcher"
                 android:label="@string/title_activity_camera">
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -37,7 +37,7 @@
 
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity"
-            android:icon="@drawable/ic_launcher_gallery"
+            android:icon="@mipmap/ic_launcher_gallery"
             android:label="@string/title_activity_list_folders_for_display"
             tools:ignore="UnusedAttribute">
             <intent-filter android:label="@string/title_activity_list_folders_for_display">
