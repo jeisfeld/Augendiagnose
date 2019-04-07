@@ -24,7 +24,7 @@
             android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/title_activity_camera"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+            android:theme="@style/AppTheme.Fullscreen">
             <intent-filter
                 android:icon="@mipmap/ic_launcher"
                 android:label="@string/title_activity_camera">
