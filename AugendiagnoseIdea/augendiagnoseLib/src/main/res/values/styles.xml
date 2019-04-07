@@ -17,6 +17,19 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="AppBaseTheme.Fullscreen" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme.Fullscreen" parent="AppBaseTheme.Fullscreen">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>

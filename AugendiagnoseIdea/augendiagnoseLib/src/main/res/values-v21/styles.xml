@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <item name="android:navigationBarColor">@android:color/background_dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="AppBaseTheme.Fullscreen" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+        <item name="android:navigationBarColor">@android:color/background_dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+</resources>

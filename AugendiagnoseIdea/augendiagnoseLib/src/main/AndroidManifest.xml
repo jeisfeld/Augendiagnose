@@ -36,13 +36,13 @@
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayTwoActivity"
             android:label="@string/title_activity_display_two"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            android:theme="@style/AppTheme.Fullscreen"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayOneActivity"
             android:label="@string/title_activity_display_one"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            android:theme="@style/AppTheme.Fullscreen"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
@@ -64,7 +64,7 @@
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+            android:theme="@style/AppTheme.Fullscreen">
         </activity>
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.ListPicturesForNameActivity"
