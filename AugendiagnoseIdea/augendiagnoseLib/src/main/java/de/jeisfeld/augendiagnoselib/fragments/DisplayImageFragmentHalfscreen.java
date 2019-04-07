@@ -10,6 +10,8 @@ import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+
 /**
  * Variant of DisplayImageFragment that is intended for a half screen.
  *
@@ -20,7 +22,7 @@ public class DisplayImageFragmentHalfscreen extends DisplayImageFragment {
 	@Override
 	public final View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
 								   final Bundle savedInstanceState) {
-		if (SystemUtil.isLandscape()) {
+		if (getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE) {
 			setLandscape(false);
 			return inflater.inflate(R.layout.fragment_display_image_portrait, container, false);
 		}

@@ -63,6 +63,8 @@ import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
  */
@@ -301,7 +303,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		if (SystemUtil.isLandscape()) {
+		if (getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE) {
 			setLandscape(true);
 			return inflater.inflate(R.layout.fragment_display_image_landscape, container, false);
 		}
@@ -448,6 +450,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		OnTouchListener onIconTouchListener1 = new OnTouchListener() {
 			@Override
 			public boolean onTouch(final View v, final MotionEvent event) {
+				v.performClick();
 				if (mImageView == null) {
 					return false;
 				}
@@ -473,6 +476,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		OnTouchListener onIconTouchListener2 = new OnTouchListener() {
 			@Override
 			public boolean onTouch(final View v, final MotionEvent event) {
+				v.performClick();
 				if (mImageView == null) {
 					return false;
 				}
@@ -747,7 +751,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 
 		Canvas canvas = new Canvas(overlayBitmap);
 		int circleRadius = mOverlayStatus == OverlayStatus.GUIDE_IRIS ? CIRCLE_RADIUS_IRIS : CIRCLE_RADIUS_PUPIL;
-		canvas.drawCircle(CIRCLE_BITMAP_SIZE / 2, CIRCLE_BITMAP_SIZE / 2, circleRadius, paint);
+		canvas.drawCircle(CIRCLE_BITMAP_SIZE / 2.0f, CIRCLE_BITMAP_SIZE / 2.0f, circleRadius, paint);
 
 		overlayView.setImageBitmap(overlayBitmap);
 		overlayView.setVisibility(View.VISIBLE);

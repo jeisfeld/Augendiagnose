@@ -117,22 +117,6 @@ public final class SystemUtil {
 	}
 
 	/**
-	 * Determine if the screen is shown in landscape mode (i.e. width &gt; height)
-	 *
-	 * @return true if the app runs in landscape mode
-	 */
-	public static boolean isLandscape() {
-		// use screen width as criterion rather than getRotation
-		WindowManager wm = (WindowManager) Application.getAppContext().getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-		return width > height;
-	}
-
-	/**
 	 * Determine if the device is a tablet (i.e. it has a large screen).
 	 *
 	 * @return true if the app is running on a tablet.
