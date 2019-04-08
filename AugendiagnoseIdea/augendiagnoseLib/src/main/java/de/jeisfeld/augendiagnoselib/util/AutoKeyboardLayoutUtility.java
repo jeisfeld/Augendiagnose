@@ -19,12 +19,6 @@ import android.widget.FrameLayout;
  * assistActivity() on an Activity that already has its content view set.
  */
 public final class AutoKeyboardLayoutUtility {
-
-	/**
-	 * Assumed minimum portion that the keyboard fills vertically.
-	 */
-	private static final float MIN_KEYBOARD_SIZE = .1f;
-
 	/**
 	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
 	 *
@@ -35,19 +29,6 @@ public final class AutoKeyboardLayoutUtility {
 		new AutoKeyboardLayoutUtility(activity);
 	}
 
-	/**
-	 * Method to be called to apply the workaround to the activity. Should be called at the end of onCreate().
-	 *
-	 * @param activity     the activity which uses the workaround.
-	 * @param callback     a callback to be called if the kayboard is shown or hidden.
-	 * @param changeLayout Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
-	 */
-	public static void assistActivity(@NonNull final Activity activity, final OnKeyboardChangeListener callback,
-									  final boolean changeLayout) {
-		AutoKeyboardLayoutUtility instance = new AutoKeyboardLayoutUtility(activity);
-		instance.mCallback = callback;
-		instance.mChangeLayout = changeLayout;
-	}
 
 	// JAVADOC:OFF
 	private final View mChildOfContent;
@@ -58,17 +39,6 @@ public final class AutoKeyboardLayoutUtility {
 	private ActivityWithExplicitLayoutTrigger mActivityWithLayoutTrigger = null;
 
 	// JAVADOC:ON
-
-	/**
-	 * A callback to be called if the kayboard is shown or hidden.
-	 */
-	@Nullable
-	private OnKeyboardChangeListener mCallback = null;
-
-	/**
-	 * Flag indicating if the layout should be changed by this tool, or if it is only used for the callback.
-	 */
-	private boolean mChangeLayout = true;
 
 	/**
 	 * Constructor, adding a listener to change the global layout if required.
@@ -97,26 +67,7 @@ public final class AutoKeyboardLayoutUtility {
 	private void possiblyResizeChildOfContent() {
 		int usableHeightNow = computeUsableHeight();
 		if (usableHeightNow != mUsableHeightPrevious) {
-			int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
-			int heightDifference = usableHeightSansKeyboard - usableHeightNow;
-			if (heightDifference > (usableHeightSansKeyboard * MIN_KEYBOARD_SIZE)) {
-				// keyboard probably just became visible
-				if (mChangeLayout) {
-					mFrameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
-				}
-				if (mCallback != null) {
-					mCallback.onKeyboardChanged(true);
-				}
-			}
-			else {
-				// keyboard probably just became hidden
-				if (mChangeLayout) {
-					mFrameLayoutParams.height = usableHeightSansKeyboard;
-				}
-				if (mCallback != null) {
-					mCallback.onKeyboardChanged(false);
-				}
-			}
+			mFrameLayoutParams.height = usableHeightNow;
 			mChildOfContent.requestLayout();
 			mUsableHeightPrevious = usableHeightNow;
 
