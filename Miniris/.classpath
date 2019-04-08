@@ -9,7 +9,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="/AugendiagnoseLib/libs-local/support-annotations-25.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Git/Augendiagnose/AugendiagnoseLib/libs-local/support-annotations-28.0.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.andmore.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
