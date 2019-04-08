@@ -17,7 +17,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
  *
  * @author Joerg
  */
-public abstract class DisplayImageActivity extends BaseActivity implements ContextMenuReferenceHolder,
+public abstract class DisplayImageActivity extends BaseFragmentActivity implements ContextMenuReferenceHolder,
 		ActivityWithExplicitLayoutTrigger {
 	/**
 	 * The fragment tag for the edit fragment.
@@ -139,8 +139,8 @@ public abstract class DisplayImageActivity extends BaseActivity implements Conte
 			mFragmentEdit = new EditCommentFragment();
 			mFragmentEdit.setParameters(text);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_edit, mFragmentEdit, FRAGMENT_EDIT_TAG).commit();
-			getFragmentManager().executePendingTransactions();
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_edit, mFragmentEdit, FRAGMENT_EDIT_TAG).commit();
+			getSupportFragmentManager().executePendingTransactions();
 		}
 
 		mViewFragmentEdit.setVisibility(View.VISIBLE);
@@ -152,8 +152,8 @@ public abstract class DisplayImageActivity extends BaseActivity implements Conte
 	// OVERRIDABLE
 	protected void hideEditFragment() {
 		mFragmentEdit.hideKeyboard();
-		getFragmentManager().beginTransaction().remove(mFragmentEdit).commit();
-		getFragmentManager().executePendingTransactions();
+		getSupportFragmentManager().beginTransaction().remove(mFragmentEdit).commit();
+		getSupportFragmentManager().executePendingTransactions();
 		mFragmentEdit = null;
 
 		mViewFragmentEdit.setVisibility(View.GONE);

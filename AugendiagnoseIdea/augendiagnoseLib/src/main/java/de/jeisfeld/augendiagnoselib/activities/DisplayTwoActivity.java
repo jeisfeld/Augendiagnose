@@ -88,25 +88,25 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 		setContentView(R.layout.activity_display_two);
 
-		mFragmentImage1 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
+		mFragmentImage1 = (DisplayImageFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_IMAGE1_TAG);
 		if (mFragmentImage1 == null) {
 			mFragmentImage1 = createFragment();
 			mFragmentImage1.setParameters(file1, 1, presetRightLeft ? RightLeft.RIGHT : null);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image1, mFragmentImage1, FRAGMENT_IMAGE1_TAG)
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_image1, mFragmentImage1, FRAGMENT_IMAGE1_TAG)
 					.commit();
 		}
 
-		mFragmentImage2 = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
+		mFragmentImage2 = (DisplayImageFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_IMAGE2_TAG);
 		if (mFragmentImage2 == null) {
 			mFragmentImage2 = createFragment();
 			mFragmentImage2.setParameters(file2, 2, presetRightLeft ? RightLeft.LEFT : null);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image2, mFragmentImage2, FRAGMENT_IMAGE2_TAG)
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_image2, mFragmentImage2, FRAGMENT_IMAGE2_TAG)
 					.commit();
 		}
 
-		getFragmentManager().executePendingTransactions();
+		getSupportFragmentManager().executePendingTransactions();
 
 		mViewFragmentImage1 = findViewById(R.id.fragment_image1);
 		mViewFragmentImage2 = findViewById(R.id.fragment_image2);
@@ -116,7 +116,7 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 		mViewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
-		mFragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
+		mFragmentEdit = (EditCommentFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
 
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");

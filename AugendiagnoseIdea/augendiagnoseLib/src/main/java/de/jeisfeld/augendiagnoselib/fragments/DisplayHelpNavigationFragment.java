@@ -1,8 +1,8 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import android.app.ListFragment;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;

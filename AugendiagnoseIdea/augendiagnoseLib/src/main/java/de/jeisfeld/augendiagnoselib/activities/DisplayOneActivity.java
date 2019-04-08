@@ -63,14 +63,14 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		setContentView(R.layout.activity_display_one);
 
-		mFragmentImage = (DisplayImageFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+		mFragmentImage = (DisplayImageFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
 		if (mFragmentImage == null) {
 			mFragmentImage = new DisplayImageFragment();
 			mFragmentImage.setParameters(file, 1, null);
 
-			getFragmentManager().beginTransaction().add(R.id.fragment_image, mFragmentImage, FRAGMENT_TAG).commit();
-			getFragmentManager().executePendingTransactions();
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_image, mFragmentImage, FRAGMENT_TAG).commit();
+			getSupportFragmentManager().executePendingTransactions();
 		}
 
 		mViewFragmentImage = findViewById(R.id.fragment_image);
@@ -79,7 +79,7 @@ public class DisplayOneActivity extends DisplayImageActivity {
 		mViewSeparatorAfterEdit = findViewById(R.id.separator_after_edit);
 
 		// Restore in case of orientation change
-		mFragmentEdit = (EditCommentFragment) getFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
+		mFragmentEdit = (EditCommentFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_EDIT_TAG);
 
 		if (savedInstanceState != null) {
 			int fragmentEditVisibility = savedInstanceState.getInt("fragmentEditVisibility");

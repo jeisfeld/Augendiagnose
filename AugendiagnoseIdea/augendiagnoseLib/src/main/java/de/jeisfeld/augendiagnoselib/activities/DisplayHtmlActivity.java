@@ -21,7 +21,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 /**
  * Activity to display an HTML page. Used for display of help pages.
  */
-public class DisplayHtmlActivity extends BaseActivity {
+public class DisplayHtmlActivity extends BaseFragmentActivity {
 
 	/**
 	 * The resource key for the resource to be displayed.
@@ -82,7 +82,7 @@ public class DisplayHtmlActivity extends BaseActivity {
 			setContentView(R.layout.activity_fragments_single);
 		}
 
-		if (getFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+		if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
 			if (SystemUtil.isTablet() || resource == NO_RESOURCE) {
 				displayNavigation();
 			}
@@ -109,10 +109,10 @@ public class DisplayHtmlActivity extends BaseActivity {
 	private void displayNavigation() {
 		int containerViewId = SystemUtil.isTablet() ? R.id.fragment_list : R.id.fragment_container;
 		DisplayHelpNavigationFragment fragment = new DisplayHelpNavigationFragment();
-		getFragmentManager().beginTransaction()
+		getSupportFragmentManager().beginTransaction()
 				.replace(containerViewId, fragment, FRAGMENT_TAG)
 				.commit();
-		getFragmentManager().executePendingTransactions();
+		getSupportFragmentManager().executePendingTransactions();
 	}
 
 	/**
@@ -126,10 +126,10 @@ public class DisplayHtmlActivity extends BaseActivity {
 
 		DisplayHtmlFragment detailFragment = new DisplayHtmlFragment();
 		detailFragment.setParameters(resourceId);
-		getFragmentManager().beginTransaction()
+		getSupportFragmentManager().beginTransaction()
 				.replace(containerViewId, detailFragment, fragmentTag)
 				.commit();
-		getFragmentManager().executePendingTransactions();
+		getSupportFragmentManager().executePendingTransactions();
 	}
 
 	/*
