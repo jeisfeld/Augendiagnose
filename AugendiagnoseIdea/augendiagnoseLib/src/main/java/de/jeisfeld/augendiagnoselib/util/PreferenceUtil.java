@@ -297,7 +297,7 @@ public final class PreferenceUtil {
 	 * @return The index.
 	 */
 	public static Integer getIndexFromPreferenceKey(@NonNull final String key) {
-		String[] parts = key.split("\\[|\\]");
+		String[] parts = key.split("[\\[]]");
 		if (parts.length < 2) {
 			return null;
 		}
@@ -425,7 +425,10 @@ public final class PreferenceUtil {
 		if (maxBitmapSize == null || maxBitmapSize.length() == 0) {
 			// Only if 512 MB are accessible, then full resolution image should be stored.
 			int memoryClass = SystemUtil.getLargeMemoryClass();
-			if (memoryClass >= 256) { // MAGIC_NUMBER
+			if (memoryClass >= 512) { // MAGIC_NUMBER
+				maxBitmapSize = "4096";
+			}
+			else if (memoryClass >= 256) { // MAGIC_NUMBER
 				maxBitmapSize = "2048";
 			}
 			else {
