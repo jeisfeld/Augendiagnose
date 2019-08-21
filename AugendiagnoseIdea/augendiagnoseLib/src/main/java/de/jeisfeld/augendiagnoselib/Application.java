@@ -10,12 +10,12 @@ import android.content.res.Resources;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.LocaleList;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.activities.SettingsActivity;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -257,10 +257,6 @@ public class Application extends android.app.Application {
 		 * Only trial access.
 		 */
 		TRIAL_ACCESS,
-		/**
-		 * Full usage, but with ads.
-		 */
-		FULL_ACCESS_WITH_ADS,
 		/**
 		 * Full usage.
 		 */

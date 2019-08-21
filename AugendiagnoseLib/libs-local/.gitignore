@@ -1,7 +1,10 @@
-/common-1.1.1.jar
-/documentfile-28.0.0.jar
-/runtime-1.1.1.jar
-/support-annotations-28.0.0.jar
-/support-compat-28.0.0.jar
-/support-fragment-28.0.0.jar
-/viewmodel-1.1.1.jar
+
+/activity-1.0.0-rc01.jar
+/annotation-1.1.0.jar
+/core-1.1.0-rc03.jar
+/documentfile-1.0.1.jar
+/fragment-1.1.0-rc04.jar
+/lifecycle-common-2.1.0-rc01.jar
+/lifecycle-viewmodel-2.1.0-rc01.jar
+/savedstate-1.0.0-rc01.jar
+/play-services-measurement-api-17.1.0.jar

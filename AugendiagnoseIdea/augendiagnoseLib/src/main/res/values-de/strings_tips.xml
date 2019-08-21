@@ -112,14 +112,6 @@
 	<p>Dies kann in den Einstellungen automatisiert werden. Dies kann aber zu Problemen führen, falls das Gerät zu wenig Speicher hat.</p>
 ]]>
     </string>
-    <string name="message_tip_admarvel">
-<![CDATA[
-	<h2>Werbung:</h2>
-	<p>Bitte unterstützen Sie die Entwicklung der App, indem Sie ab und zu die Werbung anschauen.</p>
-	<p>Wenn Sie auf den Werbebanner klicken, wird er bis zum nächsten Start der App nicht mehr erscheinen.</p>
-	<p>Der Abschnitt &bdquo;Spenden&ldquo; in den Einstellungen bietet die Möglichkeit, Werbung auszuschalten.</p>
-]]>
-    </string>
     <string name="message_tip_external_flash">
 <![CDATA[
 	<h2>Benutzung des externen Blitzes:</h2>

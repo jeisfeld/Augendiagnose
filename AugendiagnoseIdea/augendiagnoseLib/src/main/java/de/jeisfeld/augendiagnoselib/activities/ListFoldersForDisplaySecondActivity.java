@@ -3,8 +3,8 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersForDisplaySecondFragment;

@@ -1,9 +1,9 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;

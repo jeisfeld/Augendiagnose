@@ -1,12 +1,12 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import android.support.annotation.Nullable;
-import android.util.Log;
-
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**

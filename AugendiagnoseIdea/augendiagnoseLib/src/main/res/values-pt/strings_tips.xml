@@ -111,14 +111,6 @@ Em seguida, clique na foto para ver as fotos.
 	<p>Isso também pode ser automatizado nas configurações. No entanto, para dispositivos com pouca memória, a visualização com resolução total pode causar problemas.</p>
 ]]>
     </string>
-    <string name="message_tip_admarvel">
-<![CDATA[
-	<h2>Anúncios:</h2>
-	<p>Por favor, apoie o desenvolvimento do aplicativo, verificando a publicidade de tempos em tempos.</p>
-	<p>Se você clicou no anúncio, ele não aparecerá novamente até o próximo início do aplicativo.</p>
-	<p>A seção &laquo;doar&raquo; das configurações oferece a capacidade de desativar os anúncios.</p>
-]]>
-    </string>
     <string name="message_tip_external_flash">
 <![CDATA[
 	<h2>Usando flash externo:</h2>

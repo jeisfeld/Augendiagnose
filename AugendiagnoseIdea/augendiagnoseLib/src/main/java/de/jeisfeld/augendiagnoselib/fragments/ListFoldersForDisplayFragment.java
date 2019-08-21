@@ -2,7 +2,6 @@ package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -13,6 +12,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;

@@ -2,8 +2,8 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.ImageSelectionAndDisplayHandler;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhotoPair;

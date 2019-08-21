@@ -1,11 +1,11 @@
 package de.jeisfeld.augendiagnoselib.fragments;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.activities.ListPicturesForSecondNameActivity;
 
 /**

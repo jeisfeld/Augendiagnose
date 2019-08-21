@@ -3,9 +3,9 @@ package de.jeisfeld.augendiagnoselib.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
@@ -57,8 +57,6 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaypictures, R.string.key_tip_displaypictures);
-
-		requestBannerAdIfEligible();
 	}
 
 }

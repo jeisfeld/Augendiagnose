@@ -1,9 +1,8 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import android.support.annotation.NonNull;
-
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 
 /**

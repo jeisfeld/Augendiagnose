@@ -1,7 +1,7 @@
 package com.android.vending.billing;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Represents the result of an in-app billing operation. A result is composed of a response code (an integer) and

@@ -4,7 +4,6 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.graphics.Color;
 import android.preference.DialogPreference;
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -12,6 +11,7 @@ import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;

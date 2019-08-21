@@ -1,11 +1,12 @@
 package de.jeisfeld.augendiagnoseunlocker;
 
-import java.security.MessageDigest;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import java.security.MessageDigest;
+
+import androidx.annotation.NonNull;
 
 /**
  * Main activity of the application.

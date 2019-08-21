@@ -63,12 +63,6 @@
             android:text="@string/button_display_pictures"
             tools:ignore="NestedWeights"/>
 
-        <com.admarvel.android.ads.AdMarvelView
-            android:id="@+id/admarvel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/buttons_main_margin"
-            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

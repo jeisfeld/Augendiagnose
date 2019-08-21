@@ -1,10 +1,10 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity;
 import de.jeisfeld.augendiagnoselib.components.EyeImageView;
 

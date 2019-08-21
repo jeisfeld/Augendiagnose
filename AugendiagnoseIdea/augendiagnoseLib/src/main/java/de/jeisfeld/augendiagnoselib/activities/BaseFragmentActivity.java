@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**

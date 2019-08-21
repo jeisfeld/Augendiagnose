@@ -123,15 +123,6 @@
 	<p>This may also be automated in the settings. However, for devices with little memory, display in full resolution may lead to issues.</p>
 ]]>
     </string>
-    <string name="key_tip_admarvel" translatable="false">key_tip_admarvel</string>
-    <string name="message_tip_admarvel">
-<![CDATA[
-	<h2>Advertisements:</h2>
-	<p>Please support the development of the app by checking the advertisement every now and then.</p>
-	<p>If you clicked on the advertisement, it will not reappear until the next app start.</p>
-	<p>The &ldquo;donation&rdquo; section in the settings offers the possibility to switch off ads.</p>
-]]>
-    </string>
     <string name="key_tip_external_flash" translatable="false">key_tip_external_flash</string>
     <string name="message_tip_external_flash">
 <![CDATA[

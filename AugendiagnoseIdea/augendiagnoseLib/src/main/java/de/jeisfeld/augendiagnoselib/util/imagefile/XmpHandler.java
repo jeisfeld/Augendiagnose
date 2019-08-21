@@ -1,10 +1,5 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.adobe.xmp.XMPDateTime;
@@ -16,6 +11,11 @@ import com.adobe.xmp.XMPPathFactory;
 import com.adobe.xmp.XMPSchemaRegistry;
 import com.adobe.xmp.options.PropertyOptions;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**

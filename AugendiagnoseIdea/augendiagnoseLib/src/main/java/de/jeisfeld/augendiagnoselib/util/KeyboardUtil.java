@@ -1,9 +1,10 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 /**
  * Utility class for keyboard handling.

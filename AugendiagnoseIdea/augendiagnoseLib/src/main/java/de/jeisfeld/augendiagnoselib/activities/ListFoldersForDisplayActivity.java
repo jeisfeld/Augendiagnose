@@ -1,16 +1,16 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import java.io.File;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import java.io.File;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListFoldersForDisplayFragment;
@@ -108,8 +108,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 			// Associate image display to this activity
 			ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
 		}
-
-		requestBannerAdIfEligible();
 	}
 
 	@Override

@@ -15,18 +15,19 @@
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs-local/google-analytics-9.6.1.jar"/>
-	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/admarvel-android-sdk-core-adcolony.jar"/>
 	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/annotations.jar"/>
 	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/xmpcore.jar"/>
 	<classpathentry kind="con" path="org.eclipse.andmore.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs-local/support-fragment-28.0.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/support-compat-28.0.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/viewmodel-1.1.1.jar"/>
-	<classpathentry kind="lib" path="libs-local/documentfile-28.0.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/support-annotations-28.0.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/common-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/annotation-1.1.0.jar"/>
+	<classpathentry kind="lib" path="libs-local/core-1.1.0-rc03.jar"/>
+	<classpathentry kind="lib" path="libs-local/fragment-1.1.0-rc04.jar"/>
+	<classpathentry kind="lib" path="libs-local/activity-1.0.0-rc01.jar"/>
+	<classpathentry kind="lib" path="libs-local/documentfile-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/lifecycle-common-2.1.0-rc01.jar"/>
+	<classpathentry kind="lib" path="libs-local/lifecycle-viewmodel-2.1.0-rc01.jar"/>
+	<classpathentry kind="lib" path="libs-local/savedstate-1.0.0-rc01.jar"/>
+	<classpathentry kind="lib" path="libs-local/play-services-measurement-api-17.1.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

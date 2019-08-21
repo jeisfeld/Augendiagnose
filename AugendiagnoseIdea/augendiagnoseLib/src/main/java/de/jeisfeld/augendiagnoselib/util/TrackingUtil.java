@@ -1,15 +1,12 @@
 package de.jeisfeld.augendiagnoselib.util;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders.EventBuilder;
-import com.google.android.gms.analytics.HitBuilders.ExceptionBuilder;
-import com.google.android.gms.analytics.HitBuilders.ScreenViewBuilder;
-import com.google.android.gms.analytics.HitBuilders.TimingBuilder;
-import com.google.android.gms.analytics.StandardExceptionParser;
-import com.google.android.gms.analytics.Tracker;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class for sending Google Analytics Events.
@@ -18,7 +15,7 @@ public final class TrackingUtil {
 	/**
 	 * The tracker for Google Analytics (on instance level).
 	 */
-	private static Tracker mTracker;
+	private static FirebaseAnalytics mFirebaseAnalytics;
 
 	/**
 	 * Hide default constructor.
@@ -30,19 +27,17 @@ public final class TrackingUtil {
 	/**
 	 * Send a screen opening event.
 	 *
-	 * @param object The activity or fragment showing the screen.
+	 * @param activity The activity showing the screen.
 	 */
-	public static void sendScreen(final Object object) {
-		getDefaultTracker();
-		mTracker.setScreenName(object.getClass().getSimpleName());
-		mTracker.send(new ScreenViewBuilder().build());
-	}
+	public static void sendScreen(final Activity activity) {
+		getDefaultFirebaseAnalytics();
 
-	/**
-	 * Start a new session.
-	 */
-	public static void startSession() {
-		mTracker.send(new ScreenViewBuilder().setNewSession().build());
+		mFirebaseAnalytics.setCurrentScreen(activity, null, null);
+
+		Bundle params = new Bundle();
+		params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "screen");
+		params.putString(FirebaseAnalytics.Param.ITEM_NAME, activity.getClass().getSimpleName());
+		mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
 	}
 
 	/**
@@ -54,22 +49,21 @@ public final class TrackingUtil {
 	 * @param value    An associated value.
 	 */
 	public static void sendEvent(final Category category, final String action, final String label, final Long value) {
-		getDefaultTracker();
-		EventBuilder eventBuilder = new EventBuilder();
-		eventBuilder.setCategory(category.toString());
-		if (action != null) {
-			eventBuilder.setAction(action);
-		}
+		getDefaultFirebaseAnalytics();
+
+		Bundle params = new Bundle();
+		params.putString("category", category.toString());
+		params.putString("action", action);
 		if (label == null) {
-			eventBuilder.setLabel(action);
+			params.putString("label", action);
 		}
 		else {
-			eventBuilder.setLabel(action + " - " + label);
+			params.putString("label", action + " - " + label);
 		}
 		if (value != null) {
-			eventBuilder.setValue(value);
+			params.putLong("value", value);
 		}
-		mTracker.send(eventBuilder.build());
+		mFirebaseAnalytics.logEvent(action, params);
 	}
 
 	/**
@@ -92,18 +86,19 @@ public final class TrackingUtil {
 	 * @param duration The duration.
 	 */
 	public static void sendTiming(final Category category, final String variable, final String label, final long duration) {
-		getDefaultTracker();
-		TimingBuilder timingBuilder = new TimingBuilder();
-		timingBuilder.setCategory(category.toString());
-		timingBuilder.setVariable(variable);
+		getDefaultFirebaseAnalytics();
+
+		Bundle params = new Bundle();
+		params.putString("category", category.toString());
+		params.putString("variable", variable);
 		if (label == null) {
-			timingBuilder.setLabel(variable);
+			params.putString("label", variable);
 		}
 		else {
-			timingBuilder.setLabel(variable + " - " + label);
+			params.putString("label", variable + " - " + label);
 		}
-		timingBuilder.setValue(duration);
-		mTracker.send(timingBuilder.build());
+		params.putLong("value", duration);
+		mFirebaseAnalytics.logEvent("Timing", params);
 	}
 
 	/**
@@ -113,28 +108,31 @@ public final class TrackingUtil {
 	 * @param e       The exception.
 	 */
 	public static void sendException(final String message, final Throwable e) {
-		getDefaultTracker();
-		ExceptionBuilder exceptionBuilder = new ExceptionBuilder();
-		exceptionBuilder
-				.setDescription(new StandardExceptionParser(Application.getAppContext(), null)
-						.getDescription(message == null ? Thread.currentThread().getName() : message, e))
-				.setFatal(false);
-		mTracker.send(exceptionBuilder.build());
+		getDefaultFirebaseAnalytics();
+
+		Bundle params = new Bundle();
+		params.putString("category", "Exception");
+		params.putString("message1", message);
+		if (e != null) {
+			params.putString("message2", e.getMessage());
+			params.putString("class", e.getClass().toString());
+			if (e.getStackTrace() != null) {
+				params.putString("stacktrace0", e.getStackTrace()[0].toString());
+			}
+		}
+		mFirebaseAnalytics.logEvent("Exception", params);
 	}
 
 	/**
-	 * Gets the default {@link Tracker} for this {@link Application}.
+	 * Gets the default {@link FirebaseAnalytics} for this {@link Application}.
 	 *
 	 * @return tracker
 	 */
-	private static synchronized Tracker getDefaultTracker() {
-		if (mTracker == null) {
-			GoogleAnalytics analytics = GoogleAnalytics.getInstance(Application.getAppContext());
-			// To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-			mTracker = analytics.newTracker(R.xml.global_tracker);
-			mTracker.enableExceptionReporting(true);
+	private static synchronized FirebaseAnalytics getDefaultFirebaseAnalytics() {
+		if (mFirebaseAnalytics == null) {
+			mFirebaseAnalytics = FirebaseAnalytics.getInstance(Application.getAppContext());
 		}
-		return mTracker;
+		return mFirebaseAnalytics;
 	}
 
 	/**

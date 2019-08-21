@@ -2,12 +2,12 @@ package de.jeisfeld.augendiagnoselib.fragments;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 
+import androidx.fragment.app.ListFragment;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity;
 

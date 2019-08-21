@@ -1,12 +1,12 @@
 package com.android.vending.billing;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-
-import de.jeisfeld.augendiagnoselib.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import androidx.annotation.NonNull;
+import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Represents an in-app product's listing details.

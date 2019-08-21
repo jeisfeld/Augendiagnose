@@ -7,10 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -43,7 +43,7 @@ import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 /**
  * Base activity being the subclass of most application activities. Handles the help menu, and handles startup activities related to authorization.
  */
-public abstract class StandardActivity extends AdMarvelActivity {
+public abstract class StandardActivity extends BaseActivity {
 	/**
 	 * The request code for the unlocker app.
 	 */

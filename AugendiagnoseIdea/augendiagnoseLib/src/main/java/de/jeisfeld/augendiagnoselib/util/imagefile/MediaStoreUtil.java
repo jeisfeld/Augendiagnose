@@ -12,10 +12,10 @@ import android.os.Build.VERSION_CODES;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
-import android.support.annotation.NonNull;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**

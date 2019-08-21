@@ -11,8 +11,6 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -20,6 +18,8 @@ import android.view.WindowManager;
 
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import de.jeisfeld.augendiagnoselib.Application;
 
 /**

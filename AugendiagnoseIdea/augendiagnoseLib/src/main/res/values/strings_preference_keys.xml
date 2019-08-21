@@ -72,10 +72,6 @@
     <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
     <string name="key_statistics_countirisdetectionsuccess" translatable="false">statistics_countirisdetectionsuccess</string>
     <string name="key_statistics_countirisdetectionfailed" translatable="false">statistics_countirisdetectionfailed</string>
-    <string name="key_admarvel_countclicks" translatable="false">admarvel_countclicks</string>
-    <string name="key_admarvel_countdisplays" translatable="false">admarvel_countdisplays</string>
-    <string name="key_admarvel_checkssincelastclick" translatable="false">admarvel_checkssincelastclick</string>
-    <string name="key_admarvel_iscurrentlyclicked" translatable="false">admarvel_iscurrentlyclicked</string>
 
     <!-- Indexed keys -->
 
