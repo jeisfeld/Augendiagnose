@@ -130,6 +130,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.3.9</item>
         <item>1.3.10</item>
         <item>1.3.11</item>
+        <item>1.3.12</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -218,6 +219,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added overlays in French and Polish</item>
         <item>Updated for Android 9. Bugfixes</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
