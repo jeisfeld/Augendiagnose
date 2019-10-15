@@ -1,3 +1,16 @@
+/*
+ * Copyright (C) 2019 Jörg Eisfeld
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 package de.jeisfeld.augendiagnoselib.components;
 
 import android.content.Context;
@@ -37,7 +50,7 @@ public class VerticalSeekBar extends SeekBar {
 	 * Standard constructor to be implemented for all views.
 	 *
 	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs   The attributes of the XML tag that is inflating the view.
+	 * @param attrs The attributes of the XML tag that is inflating the view.
 	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public VerticalSeekBar(final Context context, final AttributeSet attrs) {
@@ -47,10 +60,10 @@ public class VerticalSeekBar extends SeekBar {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context  The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs    The attributes of the XML tag that is inflating the view.
+	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs The attributes of the XML tag that is inflating the view.
 	 * @param defStyle An attribute in the current theme that contains a reference to a style resource that supplies default
-	 *                 values for the view. Can be 0 to not look for defaults.
+	 *            values for the view. Can be 0 to not look for defaults.
 	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public VerticalSeekBar(final Context context, final AttributeSet attrs, final int defStyle) {
