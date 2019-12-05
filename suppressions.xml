@@ -5,4 +5,5 @@
 <suppressions>
     <suppress checks="UncommentedMain" files="de[/\\]eisfeldj[/\\]augendiagnosefx[/\\]tools[/\\].*\.java" />
     <suppress checks="UncommentedMain" files="de[/\\]eisfeldj[/\\]augendiagnosefx[/\\]Application\.java" />
+    <suppress checks="UncommentedMain" files="de[/\\]jeisfeld[/\\]pi[/\\]examples[/\\].*\.java" />
 </suppressions>
