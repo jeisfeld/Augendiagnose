@@ -72,6 +72,8 @@ public final class ResourceConstants {
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTO = "message_progress_loading_photo";
 	public static final String MESSAGE_PROGRESS_LOADING_PHOTOS = "message_progress_loading_photos";
 	public static final String MESSAGE_PROGRESS_LOADING_UPDATE = "message_progress_loading_update";
+	public static final String OVERLAY_10_NAME = "overlay_10_name";
+	public static final String OVERLAY_10_PREFIX = "overlay_10_prefix";
 	public static final String OVERLAY_1_NAME = "overlay_1_name";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
 	public static final String OVERLAY_2_NAME = "overlay_2_name";

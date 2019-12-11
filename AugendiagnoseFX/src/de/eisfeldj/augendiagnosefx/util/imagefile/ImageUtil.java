@@ -23,6 +23,7 @@ import javafx.scene.image.PixelFormat;
 import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.paint.Color;
 
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_10_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_2_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_3_PREFIX;
@@ -50,7 +51,7 @@ public final class ImageUtil {
 	/**
 	 * The pupil sizes in the original overlay images.
 	 */
-	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f, 0.24f};
+	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f, 0.24f, 0.23f};
 
 	/**
 	 * The number four.
@@ -199,6 +200,9 @@ public final class ImageUtil {
 			break;
 		case 9: // MAGIC_NUMBER
 			baseName = ResourceUtil.getString(OVERLAY_9_PREFIX);
+			break;
+		case 10: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_10_PREFIX);
 			break;
 		default:
 			return null;

@@ -84,6 +84,9 @@
 			<ToggleButton fx:id="mBtnOverlay9" text="%button_overlay_9" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 			</ToggleButton>
+			<ToggleButton fx:id="mBtnOverlay10" text="%button_overlay_10" styleClass="toggleOverlay" selected="false" alignment="CENTER" onAction="#btnOverlayPressed" toggleGroup="$overlayGroup"> 
+				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+			</ToggleButton>
 			<Separator/> 
 			<ColorPicker fx:id="mColorPicker" onAction="#onColorChanged"> 
 				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>

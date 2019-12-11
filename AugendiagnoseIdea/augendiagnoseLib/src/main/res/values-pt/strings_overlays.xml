@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string-array name="overlay_names">
+    <string-array name="overlay_names">
         <item>Mapa do setor</item>
         <item>Mapa combinado textual</item>
         <item>Mapa gráfico combinado</item>
         <item>Mapa de Bernard Jensen</item>
-    <item>Mapa de Rayid textual</item>
+        <item>Mapa de Rayid textual</item>
         <item>Mapa de Zupan (alemão)</item>
         <item>Mapa de Siegfried Rizzi (italiano)</item>
         <item>Mapa de Josef Deck (alemão)</item>
         <item>Mapa de Werner Theegarten (alemão)</item>
-    <item>Mapa de Rayid numérico</item>
+        <item>Mapa de Rayid numérico</item>
+        <item>Mapa de Jausas (francês)</item>
         <item>Círculo da pupila (alemão)</item>
     </string-array>
 </resources>
