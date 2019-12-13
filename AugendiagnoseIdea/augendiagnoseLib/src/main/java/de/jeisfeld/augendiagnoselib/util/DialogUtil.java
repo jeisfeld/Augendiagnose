@@ -322,7 +322,7 @@ public final class DialogUtil {
 	public static void displayImageInfo(@NonNull final Activity activity, @NonNull final EyePhoto eyePhoto) {
 		StringBuilder message = new StringBuilder();
 		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filename, eyePhoto.getFilename()));
-		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString()));
+		message.append(formatImageInfoLine(activity, R.string.imageinfo_line_filedate, eyePhoto.getDateString(activity)));
 
 		try {
 			JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(eyePhoto.getAbsolutePath());

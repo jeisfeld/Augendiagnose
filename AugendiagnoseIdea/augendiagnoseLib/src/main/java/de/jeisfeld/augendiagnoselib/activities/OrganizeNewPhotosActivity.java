@@ -384,8 +384,8 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 				}
 			}
 
-			files = fileList.toArray(new File[fileList.size()]);
-			mFileNames = fileNameList.toArray(new String[fileNameList.size()]);
+			files = fileList.toArray(new File[0]);
+			mFileNames = fileNameList.toArray(new String[0]);
 		}
 
 		if (files.length > 0) {
@@ -497,7 +497,7 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 		if (updateDate) {
 			Date date = mPhotoRight == null ? mPhotoLeft.getDate() : mPhotoRight.getDate();
 			mPictureDate.setTime(date);
-			mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
+			mEditDate.setText(DateUtil.getDisplayDate(this, mPictureDate));
 			mEditDate.invalidate();
 		}
 
@@ -646,7 +646,7 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 				public void onDialogNegativeClick(final DialogFragment dialog) {
 					// Do nothing
 				}
-			}, R.string.button_overwrite, R.string.message_dialog_confirm_overwrite, name, DateUtil.format(date));
+			}, R.string.button_overwrite, R.string.message_dialog_confirm_overwrite, name, DateUtil.format(this, date));
 			return;
 		}
 
@@ -789,7 +789,7 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 	 */
 	private void setDate(final int yearSelected, final int monthOfYear, final int dayOfMonth) {
 		mPictureDate = new GregorianCalendar(yearSelected, monthOfYear, dayOfMonth);
-		mEditDate.setText(DateUtil.getDisplayDate(mPictureDate));
+		mEditDate.setText(DateUtil.getDisplayDate(this, mPictureDate));
 		mEditDate.invalidate();
 	}
 

@@ -1,5 +1,6 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -247,10 +248,11 @@ public class EyePhoto {
 	/**
 	 * Retrieve the date as a string with default date format.
 	 *
+	 * @param context the context
 	 * @return the date string.
 	 */
-	public final String getDateString() {
-		return DateUtil.format(getDate());
+	public final String getDateString(final Context context) {
+		return DateUtil.format(context, getDate());
 	}
 
 	/**

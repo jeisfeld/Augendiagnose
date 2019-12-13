@@ -1,5 +1,7 @@
 package de.jeisfeld.augendiagnoselib.util;
 
+import android.content.Context;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,7 +10,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import de.jeisfeld.augendiagnoselib.Application;
 
 /**
  * Utility class for handling dates.
@@ -50,22 +51,24 @@ public final class DateUtil {
 	/**
 	 * Format a date object into a date String using the Android system default date format.
 	 *
+	 * @param context the context.
 	 * @param date the date object
 	 * @return the formatted date
 	 */
-	public static String format(final Date date) {
-		DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(Application.getAppContext());
+	public static String format(final Context context, final Date date) {
+		DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(context);
 		return dateFormat.format(date);
 	}
 
 	/**
 	 * Get display format of the date.
 	 *
+	 * @param context the context
 	 * @param calendar the date as calendar object
 	 * @return the date formatted for display
 	 */
-	public static String getDisplayDate(@NonNull final Calendar calendar) {
-		DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(Application.getAppContext());
+	public static String getDisplayDate(final Context context, @NonNull final Calendar calendar) {
+		DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(context);
 		return dateFormat.format(calendar.getTime());
 	}
 
