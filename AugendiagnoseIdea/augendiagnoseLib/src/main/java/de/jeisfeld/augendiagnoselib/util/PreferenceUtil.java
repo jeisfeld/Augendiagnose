@@ -296,7 +296,7 @@ public final class PreferenceUtil {
 	 * @return The index.
 	 */
 	public static Integer getIndexFromPreferenceKey(@NonNull final String key) {
-		String[] parts = key.split("[\\[]]");
+		String[] parts = key.split("[\\[\\]]");
 		if (parts.length < 2) {
 			return null;
 		}
