@@ -22,6 +22,7 @@
         <activity
             tools:replace="android:label"
             android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
+            android:screenOrientation="landscape"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/title_activity_camera"
             android:theme="@style/AppTheme.Fullscreen">
