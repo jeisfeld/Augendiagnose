@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnKeyListener;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -27,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 
 /**
  * Class to present a dialog for selection of a directory.
@@ -43,6 +47,11 @@ import de.jeisfeld.augendiagnoselib.R;
  * <p>Inspired by http://www.codeproject.com/Articles/547636/Android-Ready-to-use-simple-directory-chooser-dial
  */
 public class DirectoryChooserDialogFragment extends DialogFragment {
+	/**
+	 * The String used for the root folder.
+	 */
+	private static final String ROOT_FOLDER_STRING = "...";
+
 	/**
 	 * The text view showing the current folder.
 	 */
@@ -139,7 +148,12 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				mBackStack.push(mDir);
-				mDir += File.separator + mListAdapter.getItem(position);
+				if (mListAdapter.getItem(position).startsWith(File.separator) || mListAdapter.getItem(position).equals(ROOT_FOLDER_STRING)) {
+					mDir = mListAdapter.getItem(position);
+				}
+				else {
+					mDir += File.separator + mListAdapter.getItem(position);
+				}
 				updateDirectory();
 			}
 		});
@@ -209,9 +223,25 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 
 		try {
 			File dirFile = new File(dir);
+
+			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+				// Not allowed to parse through all folders
+				if (FileUtil.isSdCardPath(dirFile)) {
+					dirs.remove("..");
+					dirs.add("...");
+				}
+				else if (ROOT_FOLDER_STRING.equals(dir)) {
+					dirs.remove("..");
+					dirs.add(FileUtil.getSdCardPath());
+					dirs.addAll(Arrays.asList(FileUtil.getExtSdCardPaths()));
+					return dirs;
+				}
+			}
+
 			if (!dirFile.exists() || !dirFile.isDirectory()) {
 				return dirs;
 			}
+
 			File[] files = dirFile.listFiles();
 			if (files == null) {
 				return dirs;
@@ -241,11 +271,13 @@ public class DirectoryChooserDialogFragment extends DialogFragment {
 	 * Update the current directory.
 	 */
 	private void updateDirectory() {
-		try {
-			mDir = new File(mDir).getCanonicalPath();
-		}
-		catch (IOException e) {
-			// i
+		if (!ROOT_FOLDER_STRING.equals(mDir)) {
+			try {
+				mDir = new File(mDir).getCanonicalPath();
+			}
+			catch (IOException e) {
+				// ignore
+			}
 		}
 		if (mDir == null || "".equals(mDir)) {
 			mDir = File.separator;
