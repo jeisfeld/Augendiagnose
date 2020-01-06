@@ -60,6 +60,7 @@
         <item>1.3.10</item>
         <item>1.3.11</item>
         <item>1.3.12</item>
+        <item>1.3.13</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -110,6 +111,7 @@
         <item>Updated for Android 9. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Added Jausas topography (French). Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
