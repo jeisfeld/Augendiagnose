@@ -10,11 +10,6 @@
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="genref">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/annotations.jar"/>
 	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/xmpcore.jar"/>
 	<classpathentry kind="con" path="org.eclipse.andmore.ANDROID_FRAMEWORK"/>
@@ -29,5 +24,6 @@
 	<classpathentry kind="lib" path="libs-local/lifecycle-viewmodel-2.1.0-rc01.jar"/>
 	<classpathentry kind="lib" path="libs-local/savedstate-1.0.0-rc01.jar"/>
 	<classpathentry kind="lib" path="libs-local/play-services-measurement-api-17.1.0.jar"/>
+	<classpathentry kind="lib" path="libs-local/R.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
