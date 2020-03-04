@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Check Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
     Checkstyle-Configuration: JE Checks
-    Description: 
+    Description:
 JE Customizations of Sun Checks (Eclipse)
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
+  <property name="tabWidth" value="4"/>
   <module name="TreeWalker">
-    <property name="tabWidth" value="4"/>
-    <module name="JavadocMethod">
-      <property name="minLineCount" value="1"/>
-      <property name="allowMissingPropertyJavadoc" value="true"/>
-      <property name="suppressLoadErrors" value="true"/>
-    </module>
+    <module name="JavadocMethod"/>
     <module name="JavadocType"/>
     <module name="JavadocVariable"/>
     <module name="JavadocStyle">
@@ -40,10 +36,6 @@ JE Customizations of Sun Checks (Eclipse)
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
-    <module name="LineLength">
-      <property name="max" value="150"/>
-      <property name="tabWidth" value="4"/>
-    </module>
     <module name="MethodLength"/>
     <module name="ParameterNumber"/>
     <module name="EmptyForIteratorPad"/>
@@ -246,6 +238,13 @@ JE Customizations of Sun Checks (Eclipse)
       <property name="commentFormat" value="BOOLEAN_EXPRESSION_COMPLEXITY"/>
       <property name="checkFormat" value="BooleanExpressionComplexity"/>
     </module>
+    <module name="JavadocMethod">
+      <property name="tokens" value="CTOR_DEF,ANNOTATION_FIELD_DEF"/>
+    </module>
+    <module name="MissingJavadocMethod"/>
+  </module>
+  <module name="LineLength">
+    <property name="max" value="150"/>
   </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
