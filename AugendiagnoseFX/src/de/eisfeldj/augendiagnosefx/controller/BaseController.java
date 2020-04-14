@@ -24,10 +24,20 @@ public abstract class BaseController implements Controller {
 	 */
 	private int mPaneIndex = 0;
 
+	/**
+	 * Get the pane index.
+	 *
+	 * @return The pane index.
+	 */
 	public final int getPaneIndex() {
 		return mPaneIndex;
 	}
 
+	/**
+	 * Set the pane index.
+	 *
+	 * @param newPaneIndex The pane index.
+	 */
 	public final void setPaneIndex(final int newPaneIndex) {
 		mPaneIndex = newPaneIndex;
 	}
@@ -37,10 +47,20 @@ public abstract class BaseController implements Controller {
 	 */
 	private boolean mIsCloseable = true;
 
+	/**
+	 * Get the isCloseable flag.
+	 *
+	 * @return The isCloseable flag.
+	 */
 	public final boolean isCloseable() {
 		return mIsCloseable;
 	}
 
+	/**
+	 * Set the isCloseable flag.
+	 *
+	 * @param isCloseable The isCloseable flag.
+	 */
 	public final void setCloseable(final boolean isCloseable) {
 		this.mIsCloseable = isCloseable;
 	}

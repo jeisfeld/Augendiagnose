@@ -14,6 +14,11 @@ public class EyePhotoPair {
 	 */
 	private EyePhoto mRightEye, mLeftEye;
 
+	/**
+	 * Get the right eye.
+	 *
+	 * @return The right eye.
+	 */
 	public final EyePhoto getRightEye() {
 		return mRightEye;
 	}
@@ -22,6 +27,11 @@ public class EyePhotoPair {
 		this.mRightEye = rightEye;
 	}
 
+	/**
+	 * Get the left eye.
+	 *
+	 * @return The left eye.
+	 */
 	public final EyePhoto getLeftEye() {
 		return mLeftEye;
 	}

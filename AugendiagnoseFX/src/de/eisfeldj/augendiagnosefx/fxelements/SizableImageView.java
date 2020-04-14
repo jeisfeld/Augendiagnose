@@ -81,6 +81,11 @@ public class SizableImageView extends ScrollPane {
 	 */
 	private int mTouchCount = 0;
 
+	/**
+	 * Get the initialized flag.
+	 *
+	 * @return The initialized flag.
+	 */
 	public final boolean isInitialized() {
 		return mIsInitialized;
 	}
@@ -90,6 +95,11 @@ public class SizableImageView extends ScrollPane {
 	 */
 	private ImageView mImageView;
 
+	/**
+	 * Get the image view.
+	 *
+	 * @return The image view.
+	 */
 	public final ImageView getImageView() {
 		return mImageView;
 	}
@@ -201,9 +211,11 @@ public class SizableImageView extends ScrollPane {
 		// New scrollbar positions keeping the mouse position.
 		// VARIABLE_DISTANCE:OFF
 		double newHvalue = postScrollXFactor > 0
-				? ((mouseXPosition * targetWidth) - xCenter) / postScrollXFactor : oldHvalue;
+				? ((mouseXPosition * targetWidth) - xCenter) / postScrollXFactor
+				: oldHvalue;
 		double newVvalue = postScrollYFactor > 0
-				? ((mouseYPosition * targetHeight) - yCenter) / postScrollYFactor : oldVvalue;
+				? ((mouseYPosition * targetHeight) - yCenter) / postScrollYFactor
+				: oldVvalue;
 		// VARIABLE_DISTANCE:ON
 
 		mImageView.setFitWidth(targetWidth);

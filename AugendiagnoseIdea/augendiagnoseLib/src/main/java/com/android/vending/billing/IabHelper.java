@@ -90,7 +90,7 @@ public class IabHelper {
 
 	// Public key for verifying signature, in base64 encoding
 	@Nullable
-	private String mSignatureBase64 = null;
+	private String mSignatureBase64;
 
 	// Billing response codes
 	public static final int BILLING_RESPONSE_RESULT_OK = 0;
@@ -312,21 +312,63 @@ public class IabHelper {
 	@Nullable
 	private OnIabPurchaseFinishedListener mPurchaseListener;
 
+	/**
+	 * Initiate the UI flow for an in-app purchase.
+	 *
+	 * @param act         The calling activity.
+	 * @param sku         The sku of the item to purchase.
+	 * @param requestCode A request code (to differentiate from other responses -- as in
+	 *                    {@link android.app.Activity#startActivityForResult}).
+	 * @param listener    The listener to notify when the purchase process finishes
+	 */
 	public final void launchPurchaseFlow(@NonNull final Activity act, final String sku, final int requestCode,
 										 final OnIabPurchaseFinishedListener listener) {
 		launchPurchaseFlow(act, sku, requestCode, listener, "");
 	}
 
+	/**
+	 * Initiate the UI flow for an in-app purchase.
+	 *
+	 * @param act         The calling activity.
+	 * @param sku         The sku of the item to purchase.
+	 * @param requestCode A request code (to differentiate from other responses -- as in
+	 *                    {@link android.app.Activity#startActivityForResult}).
+	 * @param listener    The listener to notify when the purchase process finishes
+	 * @param extraData   Extra data (developer payload), which will be returned with the purchase data when the purchase
+	 *                    completes. This extra data will be permanently bound to that purchase and will always be returned when
+	 *                    the purchase is queried.
+	 */
 	private void launchPurchaseFlow(@NonNull final Activity act, final String sku, final int requestCode,
 									final OnIabPurchaseFinishedListener listener, final String extraData) {
 		launchPurchaseFlow(act, sku, ITEM_TYPE_INAPP, requestCode, listener, extraData);
 	}
 
+	/**
+	 * Initiate the UI flow for an in-app subscription purchase.
+	 *
+	 * @param act         The calling activity.
+	 * @param sku         The sku of the item to purchase.
+	 * @param requestCode A request code (to differentiate from other responses -- as in
+	 *                    {@link android.app.Activity#startActivityForResult}).
+	 * @param listener    The listener to notify when the purchase process finishes
+	 */
 	public final void launchSubscriptionPurchaseFlow(@NonNull final Activity act, final String sku, final int requestCode,
 													 final OnIabPurchaseFinishedListener listener) {
 		launchSubscriptionPurchaseFlow(act, sku, requestCode, listener, "");
 	}
 
+	/**
+	 * Initiate the UI flow for an in-app subscription purchase.
+	 *
+	 * @param act         The calling activity.
+	 * @param sku         The sku of the item to purchase.
+	 * @param requestCode A request code (to differentiate from other responses -- as in
+	 *                    {@link android.app.Activity#startActivityForResult}).
+	 * @param listener    The listener to notify when the purchase process finishes
+	 * @param extraData   Extra data (developer payload), which will be returned with the purchase data when the purchase
+	 *                    completes. This extra data will be permanently bound to that purchase and will always be returned when
+	 *                    the purchase is queried.
+	 */
 	private void launchSubscriptionPurchaseFlow(@NonNull final Activity act, final String sku, final int requestCode,
 												final OnIabPurchaseFinishedListener listener, final String extraData) {
 		launchPurchaseFlow(act, sku, ITEM_TYPE_SUBS, requestCode, listener, extraData);
@@ -637,10 +679,25 @@ public class IabHelper {
 		})).start();
 	}
 
+	/**
+	 * Asynchronous wrapper for inventory query. This will perform an inventory query as described in
+	 * {@link #queryInventory}, but will do so asynchronously and call back the specified listener upon completion. This
+	 * method is safe to call from a UI thread.
+	 *
+	 * @param listener The listener to notify when the refresh operation completes.
+	 */
 	public final void queryInventoryAsync(final QueryInventoryFinishedListener listener) {
 		queryInventoryAsync(true, null, listener);
 	}
 
+	/**
+	 * Asynchronous wrapper for inventory query. This will perform an inventory query as described in
+	 * {@link #queryInventory}, but will do so asynchronously and call back the specified listener upon completion. This
+	 * method is safe to call from a UI thread.
+	 *
+	 * @param querySkuDetails as in {@link #queryInventory}
+	 * @param listener The listener to notify when the refresh operation completes.
+	 */
 	public final void queryInventoryAsync(final boolean querySkuDetails, final QueryInventoryFinishedListener listener) {
 		queryInventoryAsync(querySkuDetails, null, listener);
 	}
@@ -738,15 +795,15 @@ public class IabHelper {
 
 		if (code <= IABHELPER_ERROR_BASE) {
 			int index = IABHELPER_ERROR_BASE - code;
-			if (index >= 0 && index < iabhelperMsgs.length) {
+			if (index < iabhelperMsgs.length) {
 				return iabhelperMsgs[index];
 			}
 			else {
-				return String.valueOf(code) + ":Unknown IAB Helper Error";
+				return code + ":Unknown IAB Helper Error";
 			}
 		}
 		else if (code < 0 || code >= iabMsgs.length) {
-			return String.valueOf(code) + ":Unknown";
+			return code + ":Unknown";
 		}
 		else {
 			return iabMsgs[code];
@@ -846,7 +903,7 @@ public class IabHelper {
 					itemType, continueToken);
 
 			int response = getResponseCodeFromBundle(ownedItems);
-			logDebug("Owned items response: " + String.valueOf(response));
+			logDebug("Owned items response: " + response);
 			if (response != BILLING_RESPONSE_RESULT_OK) {
 				logDebug("getPurchases() failed: " + getResponseDesc(response));
 				return response;

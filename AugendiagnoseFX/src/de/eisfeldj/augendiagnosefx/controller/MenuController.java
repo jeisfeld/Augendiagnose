@@ -47,6 +47,11 @@ public class MenuController extends BaseController implements Initializable {
 	@FXML
 	private CheckMenuItem mMenuOverlayPane;
 
+	/**
+	 * Get the menu overlay pane.
+	 *
+	 * @return The menu overlay pane.
+	 */
 	public final CheckMenuItem getMenuOverlayPane() {
 		return mMenuOverlayPane;
 	}

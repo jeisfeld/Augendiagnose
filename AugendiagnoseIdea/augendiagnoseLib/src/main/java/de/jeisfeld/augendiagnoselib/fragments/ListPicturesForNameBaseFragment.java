@@ -61,7 +61,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 * Initialize the listFoldersFragment with parentFolder and name.
 	 *
 	 * @param initialParentFolder The parent folder
-	 * @param initialName         the name
+	 * @param initialName the name
 	 */
 	public final void setParameters(final String initialParentFolder, final String initialName) {
 		Bundle args = new Bundle();
@@ -144,7 +144,7 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 			}
 		}
 
-		return eyePhotoMap.values().toArray(new EyePhotoPair[eyePhotoMap.size()]);
+		return eyePhotoMap.values().toArray(new EyePhotoPair[0]);
 	}
 
 	/**
@@ -154,20 +154,27 @@ public abstract class ListPicturesForNameBaseFragment extends Fragment {
 	 */
 	protected final boolean createAndStoreEyePhotoList() {
 		mEyePhotoPairs = createEyePhotoList(new File(mParentFolder, mName));
-		if (mEyePhotoPairs == null) {
-			mEyePhotoPairs = new EyePhotoPair[0];
-		}
 
 		getActivity().findViewById(R.id.textViewNoImagesForName).setVisibility(mEyePhotoPairs.length == 0 ? View.VISIBLE : View.GONE);
 
 		return mEyePhotoPairs.length > 0;
 	}
 
+	/**
+	 * Get the parent folder.
+	 *
+	 * @return The parent folder.
+	 */
 	@Nullable
 	public final String getParentFolder() {
 		return mParentFolder;
 	}
 
+	/**
+	 * Get the name.
+	 *
+	 * @return The name.
+	 */
 	@Nullable
 	public final String getName() {
 		return mName;

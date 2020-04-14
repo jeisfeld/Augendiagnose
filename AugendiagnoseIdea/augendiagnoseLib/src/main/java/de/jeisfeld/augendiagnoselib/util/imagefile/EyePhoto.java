@@ -103,11 +103,11 @@ public class EyePhoto {
 	/**
 	 * Create the EyePhoto, giving details.
 	 *
-	 * @param path      The file path
-	 * @param name      The person name
-	 * @param date      The date
+	 * @param path The file path
+	 * @param name The person name
+	 * @param date The date
 	 * @param rightLeft right or left eye?
-	 * @param suffix    File suffix (".jpg")
+	 * @param suffix File suffix (".jpg")
 	 */
 	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
 					@NonNull final String suffix) {
@@ -206,6 +206,11 @@ public class EyePhoto {
 		return mRightLeft;
 	}
 
+	/**
+	 * Set the rightLeft flag.
+	 *
+	 * @param rightLeft The rightLeft flag.
+	 */
 	public final void setRightLeft(final RightLeft rightLeft) {
 		this.mRightLeft = rightLeft;
 	}
@@ -259,7 +264,7 @@ public class EyePhoto {
 	 * Set the date from a String.
 	 *
 	 * @param dateString the date string
-	 * @param format     the date format
+	 * @param format the date format
 	 * @return true if successful.
 	 */
 	private boolean setDateString(final String dateString, final String format) {
@@ -338,7 +343,7 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
-	 * @param target         the file information of the target file.
+	 * @param target the file information of the target file.
 	 * @param allowOverwrite if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
@@ -353,7 +358,7 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target folder.
 	 *
-	 * @param folderName   the target folder
+	 * @param folderName the target folder
 	 * @param createUnique if true, then a unique target file name is created if a file with the same name exists in the target folder.
 	 * @return true if the move was successful.
 	 */
@@ -413,7 +418,6 @@ public class EyePhoto {
 		}
 	}
 
-
 	/**
 	 * Copy the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
@@ -456,7 +460,6 @@ public class EyePhoto {
 		return success;
 	}
 
-
 	/**
 	 * Check if the date of the eye photo is changeable to the given date.
 	 *
@@ -468,7 +471,6 @@ public class EyePhoto {
 		target.setDate(newDate);
 		return !target.exists();
 	}
-
 
 	/**
 	 * Change the date renaming the file (keeping the path).

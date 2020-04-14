@@ -13,18 +13,38 @@ public class EyePhotoPair {
 	 */
 	private EyePhoto mRightEye, mLeftEye;
 
+	/**
+	 * Get the right eye photo.
+	 *
+	 * @return The right eye photo.
+	 */
 	public final EyePhoto getRightEye() {
 		return mRightEye;
 	}
 
+	/**
+	 * Set the right eye photo.
+	 *
+	 * @param rightEye The right eye photo.
+	 */
 	public final void setRightEye(final EyePhoto rightEye) {
 		this.mRightEye = rightEye;
 	}
 
+	/**
+	 * Get the left eye photo.
+	 *
+	 * @return The left eye photo.
+	 */
 	public final EyePhoto getLeftEye() {
 		return mLeftEye;
 	}
 
+	/**
+	 * Set the left eye photo.
+	 *
+	 * @param leftEye The left eye photo.
+	 */
 	public final void setLeftEye(final EyePhoto leftEye) {
 		this.mLeftEye = leftEye;
 	}

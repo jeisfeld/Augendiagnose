@@ -214,6 +214,11 @@ public final class VersioningUtil {
 		 */
 		private int mVersionNumber;
 
+		/**
+		 * Get the version number.
+		 *
+		 * @return The version number.
+		 */
 		public int getVersionNumber() {
 			return mVersionNumber;
 		}
@@ -223,6 +228,11 @@ public final class VersioningUtil {
 		 */
 		private String mVersionString;
 
+		/**
+		 * Get the version string.
+		 *
+		 * @return The version string.
+		 */
 		public String getVersionString() {
 			return mVersionString;
 		}

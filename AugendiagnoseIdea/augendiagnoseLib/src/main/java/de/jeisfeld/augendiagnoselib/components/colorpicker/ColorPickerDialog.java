@@ -89,11 +89,11 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Create a new ColorPickerDialog.
 	 *
-	 * @param titleResId    The resource if of the title.
-	 * @param colors        The list of colors to be displayed.
+	 * @param titleResId The resource if of the title.
+	 * @param colors The list of colors to be displayed.
 	 * @param selectedColor The selected color.
-	 * @param columns       The number of columns.
-	 * @param size          The size of the displayed swatches.
+	 * @param columns The number of columns.
+	 * @param size The size of the displayed swatches.
 	 * @return The dialog.
 	 */
 	@NonNull
@@ -107,11 +107,11 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Initialize the dialog.
 	 *
-	 * @param titleResId    The resource if of the title.
-	 * @param colors        The list of colors to be displayed.
+	 * @param titleResId The resource if of the title.
+	 * @param colors The list of colors to be displayed.
 	 * @param selectedColor The selected color.
-	 * @param columns       The number of columns.
-	 * @param size          The size of the displayed swatches.
+	 * @param columns The number of columns.
+	 * @param size The size of the displayed swatches.
 	 */
 	private void initialize(final int titleResId, final int[] colors, final int selectedColor, final int columns,
 							final int size) {
@@ -123,8 +123,8 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	 * Set the arguments to be passed to the dialog.
 	 *
 	 * @param titleResId The resource id of the title.
-	 * @param columns    The number of columns.
-	 * @param size       The size of the displayed swatches.
+	 * @param columns The number of columns.
+	 * @param size The size of the displayed swatches.
 	 */
 	private void setArguments(final int titleResId, final int columns, final int size) {
 		Bundle bundle = new Bundle();
@@ -134,6 +134,11 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 		setArguments(bundle);
 	}
 
+	/**
+	 * Set the dialog listener.
+	 *
+	 * @param listener The dialog listener.
+	 */
 	public final void setOnColorSelectedListener(final OnColorSelectedListener listener) {
 		mListener = listener;
 	}
@@ -207,7 +212,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 	/**
 	 * Set the list of colors and the selected color.
 	 *
-	 * @param colors        The list of colors to be displayed.
+	 * @param colors The list of colors to be displayed.
 	 * @param selectedColor The selected color.
 	 */
 	private void setColors(final int[] colors, final int selectedColor) {
@@ -227,11 +232,21 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 		}
 	}
 
+	/**
+	 * Get the colors.
+	 *
+	 * @return The colors.
+	 */
 	@Nullable
 	public final int[] getColors() {
 		return mColors;
 	}
 
+	/**
+	 * Get the selected color.
+	 *
+	 * @return The selected color.
+	 */
 	public final int getSelectedColor() {
 		return mSelectedColor;
 	}

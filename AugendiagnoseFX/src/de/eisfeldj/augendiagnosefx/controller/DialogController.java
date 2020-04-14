@@ -11,10 +11,20 @@ public abstract class DialogController extends BaseController {
 	 */
 	private Stage mStage;
 
+	/**
+	 * Set the stage.
+	 *
+	 * @param stage The stage.
+	 */
 	public final void setStage(final Stage stage) {
 		this.mStage = stage;
 	}
 
+	/**
+	 * Get the stage.
+	 *
+	 * @return The stage.
+	 */
 	public final Stage getStage() {
 		return mStage;
 	}

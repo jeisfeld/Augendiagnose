@@ -205,6 +205,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilXCenter = 0;
 
+	/**
+	 * Get the horizontal center of the pupil (in the interval [0,1]).
+	 *
+	 * @return The horizontal center of the pupil (in the interval [0,1]).
+	 */
 	public final float getPupilXCenter() {
 		return mPupilXCenter;
 	}
@@ -214,6 +219,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilYCenter = 0;
 
+	/**
+	 * Get the vertical center of the pupil (in the interval [0,1]).
+	 *
+	 * @return The vertical center of the pupil (in the interval [0,1]).
+	 */
 	public final float getPupilYCenter() {
 		return mPupilYCenter;
 	}
@@ -223,6 +233,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mPupilRadius = 0;
 
+	/**
+	 * Get the radius of the pupil (in the interval [0,1], relative to the minimum of width and height).
+	 *
+	 * @return The radius of the pupil (in the interval [0,1], relative to the minimum of width and height).
+	 */
 	public final float getPupilRadius() {
 		return mPupilRadius;
 	}
@@ -232,6 +247,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisXCenter = 0;
 
+	/**
+	 * Get the horizontal center of the iris (in the interval [0,1]).
+	 *
+	 * @return The horizontal center of the iris (in the interval [0,1]).
+	 */
 	public final float getIrisXCenter() {
 		return mIrisXCenter;
 	}
@@ -241,6 +261,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisYCenter = 0;
 
+	/**
+	 * Get the vertical center of the iris (in the interval [0,1]).
+	 *
+	 * @return The vertical center of the iris (in the interval [0,1]).
+	 */
 	public final float getIrisYCenter() {
 		return mIrisYCenter;
 	}
@@ -250,6 +275,11 @@ public class PupilAndIrisDetector {
 	 */
 	private float mIrisRadius = 0;
 
+	/**
+	 * Get the radius of the iris (in the interval [0,1], relative to the minimum of width and height).
+	 *
+	 * @return The radius of the iris (in the interval [0,1], relative to the minimum of width and height).
+	 */
 	public final float getIrisRadius() {
 		return mIrisRadius;
 	}

@@ -44,7 +44,7 @@ public abstract class ListFoldersBaseActivity extends StandardActivity {
 	 * Display the ListFoldersBaseFragment in the main listFoldersFragment container.
 	 *
 	 * @param fragment The fragment to be displayed.
-	 * @param tag      The tag name of the fragment.
+	 * @param tag The tag name of the fragment.
 	 */
 	protected final void displayOnFullScreen(final ListFoldersBaseFragment fragment, final String tag) {
 		getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, tag).commit();
@@ -69,6 +69,11 @@ public abstract class ListFoldersBaseActivity extends StandardActivity {
 		return mParentFolder;
 	}
 
+	/**
+	 * Get the fragment displaying the list of folders.
+	 *
+	 * @return The fragment displaying the list of folders.
+	 */
 	public final ListFoldersBaseFragment getListFoldersFragment() {
 		return mListFoldersFragment;
 	}

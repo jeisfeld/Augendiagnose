@@ -87,6 +87,11 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 */
 	private BooleanProperty mImagesLoadedProperty = new SimpleBooleanProperty(false);
 
+	/**
+	 * Get the property if images are loaded.
+	 *
+	 * @return The property if images are loaded.
+	 */
 	public final BooleanProperty getImagesLoadedProperty() {
 		return mImagesLoadedProperty;
 	}

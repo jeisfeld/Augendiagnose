@@ -152,7 +152,7 @@ public class PinchImageView extends ImageView {
 	 * Standard constructor to be implemented for all views.
 	 *
 	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs   The attributes of the XML tag that is inflating the view.
+	 * @param attrs The attributes of the XML tag that is inflating the view.
 	 * @see android.view.View#View(Context, AttributeSet)
 	 */
 	public PinchImageView(final Context context, final AttributeSet attrs) {
@@ -162,10 +162,10 @@ public class PinchImageView extends ImageView {
 	/**
 	 * Standard constructor to be implemented for all views.
 	 *
-	 * @param context  The Context the view is running in, through which it can access the current theme, resources, etc.
-	 * @param attrs    The attributes of the XML tag that is inflating the view.
+	 * @param context The Context the view is running in, through which it can access the current theme, resources, etc.
+	 * @param attrs The attributes of the XML tag that is inflating the view.
 	 * @param defStyle An attribute in the current theme that contains a reference to a style resource that supplies default
-	 *                 values for the view. Can be 0 to not look for defaults.
+	 *            values for the view. Can be 0 to not look for defaults.
 	 * @see android.view.View#View(Context, AttributeSet, int)
 	 */
 	public PinchImageView(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -178,8 +178,8 @@ public class PinchImageView extends ImageView {
 	 * Fill with an image, making the image fit into the view. If the pathName is unchanged (restored), then it is not
 	 * refilled. The sizing (for fit) happens only once at first initialization of the view.
 	 *
-	 * @param pathName   The pathname of the image
-	 * @param activity   The triggering activity (required for bitmap caching)
+	 * @param pathName The pathname of the image
+	 * @param activity The triggering activity (required for bitmap caching)
 	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	// OVERRIDABLE
@@ -226,8 +226,8 @@ public class PinchImageView extends ImageView {
 	 * Fill with an image from image resource, making the image fit into the view.
 	 *
 	 * @param imageResource The image resource id
-	 * @param activity      The triggering activity (required for bitmap caching)
-	 * @param cacheIndex    A unique index of the view in the activity
+	 * @param activity The triggering activity (required for bitmap caching)
+	 * @param cacheIndex A unique index of the view in the activity
 	 */
 	public final void setImage(final int imageResource, @NonNull final Activity activity, final int cacheIndex) {
 		// retrieve bitmap from cache if possible
@@ -537,6 +537,11 @@ public class PinchImageView extends ImageView {
 		return moved;
 	}
 
+	/**
+	 * Set the gesture detector.
+	 *
+	 * @param gestureDetector The gesture detector.
+	 */
 	public final void setGestureDetector(final GestureDetector gestureDetector) {
 		this.mGestureDetector = gestureDetector;
 	}
@@ -606,11 +611,21 @@ public class PinchImageView extends ImageView {
 		@Nullable
 		private Bitmap mRetainBitmap;
 
+		/**
+		 * Get the bitmap.
+		 *
+		 * @return The bitmap.
+		 */
 		@Nullable
 		public final Bitmap getBitmap() {
 			return mRetainBitmap;
 		}
 
+		/**
+		 * Set the bitmap.
+		 *
+		 * @param bitmap The bitmap.
+		 */
 		public final void setBitmap(final Bitmap bitmap) {
 			this.mRetainBitmap = bitmap;
 		}
@@ -618,7 +633,7 @@ public class PinchImageView extends ImageView {
 		/**
 		 * Get the retainFragment - search it by the index. If not found, create a new one.
 		 *
-		 * @param fm    The fragment manager handling this fragment.
+		 * @param fm The fragment manager handling this fragment.
 		 * @param index The index of the view (required in case of multiple PinchImageViews to be retained).
 		 * @return the retainFragment.
 		 */

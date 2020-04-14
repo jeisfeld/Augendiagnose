@@ -1,5 +1,10 @@
 package de.jeisfeld.augendiagnoselib.util.imagefile;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.util.Log;
+import android.util.SparseArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,11 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.util.Log;
-import android.util.SparseArray;
 
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -226,6 +226,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mPupilXCenter = 0;
 
+	/**
+	 * Get the horizontal center of the pupil (in the interval [0,1]).
+	 *
+	 * @return The horizontal center of the pupil (in the interval [0,1]).
+	 */
 	public float getPupilXCenter() {
 		return mPupilXCenter;
 	}
@@ -235,6 +240,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mPupilYCenter = 0;
 
+	/**
+	 * Get the vertical center of the pupil (in the interval [0,1]).
+	 *
+	 * @return The vertical center of the pupil (in the interval [0,1]).
+	 */
 	public float getPupilYCenter() {
 		return mPupilYCenter;
 	}
@@ -244,6 +254,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mPupilRadius = 0;
 
+	/**
+	 * Get the radius of the pupil (in the interval [0,1], relative to the minimum of width and height).
+	 *
+	 * @return The radius of the pupil (in the interval [0,1], relative to the minimum of width and height).
+	 */
 	public float getPupilRadius() {
 		return mPupilRadius;
 	}
@@ -253,6 +268,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mIrisXCenter = 0;
 
+	/**
+	 * Get the horizontal center of the iris (in the interval [0,1]).
+	 *
+	 * @return The horizontal center of the iris (in the interval [0,1]).
+	 */
 	public float getIrisXCenter() {
 		return mIrisXCenter;
 	}
@@ -262,6 +282,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mIrisYCenter = 0;
 
+	/**
+	 * Get the vertical center of the iris (in the interval [0,1]).
+	 *
+	 * @return The vertical center of the iris (in the interval [0,1]).
+	 */
 	public float getIrisYCenter() {
 		return mIrisYCenter;
 	}
@@ -271,6 +296,11 @@ public final class PupilAndIrisDetector {
 	 */
 	private float mIrisRadius = 0;
 
+	/**
+	 * Get the radius of the iris (in the interval [0,1], relative to the minimum of width and height).
+	 *
+	 * @return The radius of the iris (in the interval [0,1], relative to the minimum of width and height).
+	 */
 	public float getIrisRadius() {
 		return mIrisRadius;
 	}
@@ -385,7 +415,7 @@ public final class PupilAndIrisDetector {
 		};
 
 		synchronized (FILES_IN_PROCESS) {
-			if (FILES_IN_PROCESS2.keySet().contains(imagePath)) {
+			if (FILES_IN_PROCESS2.containsKey(imagePath)) {
 				return;
 			}
 			else {
@@ -600,11 +630,11 @@ public final class PupilAndIrisDetector {
 		/**
 		 * Create a PupilCenterInfo with certain coordinates.
 		 *
-		 * @param image  the image.
+		 * @param image the image.
 		 * @param pixels the image pixels.
 		 * @param xCoord The x coordinate.
 		 * @param yCoord The y coordinate.
-		 * @param phase  The phase in which the info is used.
+		 * @param phase The phase in which the info is used.
 		 */
 		private PupilCenterInfo(final Bitmap image, final int[] pixels, final int xCoord, final int yCoord, final Phase phase) {
 			mXCenter = xCoord;
@@ -655,7 +685,7 @@ public final class PupilAndIrisDetector {
 		/**
 		 * Add pixel info for another pixel.
 		 *
-		 * @param distance   The distance of the pixel.
+		 * @param distance The distance of the pixel.
 		 * @param brightness The brightness of the pixel.
 		 */
 		private void addInfo(final int distance, final int brightness) {
@@ -809,10 +839,10 @@ public final class PupilAndIrisDetector {
 		/**
 		 * Get the minimum p-quantile for a certain set of radii.
 		 *
-		 * @param p          The quantile parameter.
+		 * @param p The quantile parameter.
 		 * @param fromRadius The start radius.
-		 * @param toRadius   The end radius.
-		 * @param max        if true, the maximum is returned, otherwise the minimum.
+		 * @param toRadius The end radius.
+		 * @param max if true, the maximum is returned, otherwise the minimum.
 		 * @return The minimum quantile.
 		 */
 		private float getMinMaxQuantile(final float p, final int fromRadius, final int toRadius, final boolean max) {
@@ -928,7 +958,7 @@ public final class PupilAndIrisDetector {
 		/**
 		 * The iris radius.
 		 */
-		private int mRadius = 0;
+		private int mRadius;
 
 		/**
 		 * The points on the left side of the iris boundary (map from y to x coordinate).
@@ -942,10 +972,10 @@ public final class PupilAndIrisDetector {
 		/**
 		 * Initialize the IrisBoundary.
 		 *
-		 * @param image   The image.
+		 * @param image The image.
 		 * @param xCenter the initial x coordinate of the center.
 		 * @param yCenter the initial y coordinate of the center.
-		 * @param radius  the initial iris radius.
+		 * @param radius the initial iris radius.
 		 */
 		private IrisBoundary(final Bitmap image, final int xCenter, final int yCenter, final int radius) {
 			mImage = image;
@@ -988,7 +1018,7 @@ public final class PupilAndIrisDetector {
 		/**
 		 * Determine the boundary points for a certain y coordinate.
 		 *
-		 * @param yCoord         The y coordinate for which to find the boundary points.
+		 * @param yCoord The y coordinate for which to find the boundary points.
 		 * @param xDistanceRange the horizontal range which is considered.
 		 * @return true if a boundary point has been found.
 		 */

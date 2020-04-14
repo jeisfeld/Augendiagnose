@@ -49,8 +49,8 @@ public class OrientationManager extends OrientationEventListener {
 	/**
 	 * Constructor for the orientation manager.
 	 *
-	 * @param context  The context/activity starting the orientation manager.
-	 * @param rate     The rate at which the sensor should be checked.
+	 * @param context The context/activity starting the orientation manager.
+	 * @param rate The rate at which the sensor should be checked.
 	 * @param listener The listener called in case of orientation change.
 	 */
 	public OrientationManager(final Context context, final int rate, final OrientationListener listener) {
@@ -59,10 +59,21 @@ public class OrientationManager extends OrientationEventListener {
 		mContext = context;
 	}
 
+	/**
+	 * Constructor for the orientation manager.
+	 *
+	 * @param context The context/activity starting the orientation manager.
+	 * @param rate    The rate at which the sensor should be checked.
+	 */
 	public OrientationManager(final Context context, final int rate) {
 		super(context, rate);
 	}
 
+	/**
+	 * Constructor for the orientation manager.
+	 *
+	 * @param context The context/activity starting the orientation manager.
+	 */
 	public OrientationManager(final Context context) {
 		super(context);
 	}
@@ -97,6 +108,11 @@ public class OrientationManager extends OrientationEventListener {
 		}
 	}
 
+	/**
+	 * Get the screen orientation.
+	 *
+	 * @return The screen orientation.
+	 */
 	public final ScreenOrientation getScreenOrientation() {
 		return mScreenOrientation;
 	}
