@@ -40,7 +40,6 @@
     <string name="button_overwrite">Sobrescribir</string>
     <string name="button_dont_show">No mostrar de nuevo</string>
     <string name="button_show_later">Mostrar de nuevo</string>
-    <string name="button_purchased_item">%1$s (comprado)</string>
     <string name="button_rate">Califica la aplicación</string>
     <string name="button_external_flash">Flash externo</string>
     <string name="content_description_right_eye">Ojo derecho</string>
@@ -58,5 +57,11 @@
     <string name="color_picker_default_title" msgid="1248663997452044787">Seleccionar color</string>
     <string name="color_swatch_description" msgid="2883438431173736180">Color <xliff:g id="COLOR_INDEX">%1$d</xliff:g></string>
     <string name="color_swatch_description_selected" msgid="5020921249944943124">Color <xliff:g id="COLOR_INDEX">%1$d</xliff:g> seleccionado</string>
+    <string name="googlebilling_onetime_title">Paquete Premium (%1$s)</string>
+    <string name="googlebilling_subscription_title">Paquete mensual (%1$s)</string>
+    <string name="googlebilling_onetime_title_purchased">Paquete Premium (comprado)</string>
+    <string name="googlebilling_subscription_title_purchased">Paquete mensual (suscrito)</string>
+    <string name="googlebilling_onetime_text">Uso ilimitado de la aplicación. Esto requiere un pago único de %1$s.</string>
+    <string name="googlebilling_subscription_text">Uso de la aplicación con todas las funciones durante un mes. La suscripción tiene un período de prueba de 2 semanas, cuesta %1$s por mes, se extiende mensualmente y se puede cancelar en cualquier momento a través de Google Play.</string>
 
 </resources>

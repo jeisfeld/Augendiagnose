@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.android.vending.billing.IabHelper;
 import com.android.vending.billing.IabResult;
 import com.android.vending.billing.Inventory;
@@ -11,14 +15,11 @@ import com.android.vending.billing.Purchase;
 import com.android.vending.billing.PurchasedSku;
 import com.android.vending.billing.SkuDetails;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import de.jeisfeld.augendiagnoselib.Application;
+import de.jeisfeld.augendiagnoselib.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import de.jeisfeld.augendiagnoselib.Application;
-import de.jeisfeld.augendiagnoselib.R;
 
 /**
  * Utility class to support in-ad purchases via Google Billing.
@@ -37,12 +38,14 @@ public final class GoogleBillingHelper {
 	/**
 	 * The product ids to be offered.
 	 */
-	private static final String[] PRODUCT_IDS = Application.getAppContext().getResources().getStringArray(R.array.googlebilling_ids);
+	private static final List<String> PRODUCT_IDS =
+			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_ids));
 
 	/**
 	 * The product ids which set premium status.
 	 */
-	private static final String[] PREMIUM_IDS = Application.getAppContext().getResources().getStringArray(R.array.googlebilling_premium_ids);
+	private static final List<String> PREMIUM_IDS =
+			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_premium_ids));
 
 	/**
 	 * The primary product id used for one-click purchase.
@@ -52,8 +55,8 @@ public final class GoogleBillingHelper {
 	/**
 	 * The product ids which are subscriptions.
 	 */
-	private static final String[] SUBSCRIPTION_IDS =
-			Application.getAppContext().getResources().getStringArray(R.array.googlebilling_subscription_ids);
+	private static final List<String> SUBSCRIPTION_IDS =
+			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_subscription_ids));
 
 	/**
 	 * An instance of GoogleBillingHelper.
@@ -130,7 +133,7 @@ public final class GoogleBillingHelper {
 			public void onIabSetupFinished(@NonNull final IabResult result) {
 				if (result.isSuccess()) {
 					Log.d(TAG, "Finished IAB setup");
-					mIabHelper.queryInventoryAsync(true, Arrays.asList(PRODUCT_IDS), mGotInventoryListener);
+					mIabHelper.queryInventoryAsync(true, PRODUCT_IDS, mGotInventoryListener);
 				}
 				else {
 					Log.e(TAG, "Problem setting up In-app Billing: " + result);
@@ -152,7 +155,7 @@ public final class GoogleBillingHelper {
 		}
 		mInstance.mOnPurchaseSuccessListener = listener;
 
-		if (Arrays.asList(SUBSCRIPTION_IDS).contains(productId)) {
+		if (isSubscription(productId)) {
 			Log.d(TAG, "Starting subscription purchase flow for " + productId);
 			mInstance.mIabHelper.launchSubscriptionPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
 					mInstance.mPurchaseFinishedListener);
@@ -162,6 +165,16 @@ public final class GoogleBillingHelper {
 			mInstance.mIabHelper.launchPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
 					mInstance.mPurchaseFinishedListener);
 		}
+	}
+
+	/**
+	 * Get information if a certain product is a subscription.
+	 *
+	 * @param productId The product id.
+	 * @return true if subscription.
+	 */
+	public static boolean isSubscription(final String productId) {
+		return SUBSCRIPTION_IDS.contains(productId);
 	}
 
 	/**
@@ -221,7 +234,7 @@ public final class GoogleBillingHelper {
 
 					List<PurchasedSku> purchases = new ArrayList<>();
 					List<SkuDetails> nonPurchases = new ArrayList<>();
-					for (String purchaseId : Arrays.asList(PRODUCT_IDS)) {
+					for (String purchaseId : PRODUCT_IDS) {
 						Purchase purchase = inventory.getPurchase(purchaseId);
 						SkuDetails skuDetails = inventory.getSkuDetails(purchaseId);
 
@@ -236,7 +249,7 @@ public final class GoogleBillingHelper {
 								else {
 									Log.d(TAG, "Found purchase: " + purchase);
 									purchases.add(new PurchasedSku(skuDetails, purchase));
-									if (Arrays.asList(PREMIUM_IDS).contains(purchase.getSku())) {
+									if (PREMIUM_IDS.contains(purchase.getSku())) {
 										mIsPremium = true;
 									}
 								}
@@ -272,7 +285,7 @@ public final class GoogleBillingHelper {
 					Log.d(TAG, "Purchase successful.");
 
 					if (mOnPurchaseSuccessListener != null) {
-						boolean isPremiumProduct = Arrays.asList(PREMIUM_IDS).contains(purchase.getSku());
+						boolean isPremiumProduct = PREMIUM_IDS.contains(purchase.getSku());
 						mOnPurchaseSuccessListener.handlePurchase(purchase, isPremiumProduct && !mIsPremium);
 						mIsPremium = mIsPremium || isPremiumProduct;
 					}

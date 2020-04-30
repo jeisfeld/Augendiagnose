@@ -412,23 +412,29 @@ public class SettingsFragment extends PreferenceFragment {
 			// List inventory items.
 			for (PurchasedSku purchase : purchases) {
 				Preference purchasePreference = new Preference(getActivity());
-				String title = String.format(getString(R.string.button_purchased_item), purchase.getSkuDetails().getDisplayTitle(getActivity()));
-				purchasePreference.setTitle(title);
-				purchasePreference.setSummary(purchase.getSkuDetails().getDescription());
+				String titleString = getString(GoogleBillingHelper.isSubscription(purchase.getSkuDetails().getSku())
+						? R.string.googlebilling_subscription_title_purchased : R.string.googlebilling_onetime_title_purchased);
+				purchasePreference.setTitle(titleString);
+				String descriptionResourceString = getString(GoogleBillingHelper.isSubscription(purchase.getSkuDetails().getSku())
+						? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
+				purchasePreference.setSummary(String.format(descriptionResourceString, purchase.getSkuDetails().getPrice()));
 				purchasePreference.setEnabled(false);
 
 				getPreferenceScreen().addPreference(purchasePreference);
 			}
-			for (SkuDetails skuDetails : availableProducts) {
+			for (final SkuDetails skuDetails : availableProducts) {
 				Preference skuPreference = new Preference(getActivity());
-				skuPreference.setTitle(skuDetails.getDisplayTitle(getActivity()));
+				String titleString = getString(GoogleBillingHelper.isSubscription(skuDetails.getSku())
+						? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, skuDetails.getPrice());
+				skuPreference.setTitle(titleString);
 				skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
-				skuPreference.setSummary(skuDetails.getDescription());
+				String descriptionResourceString = getString(GoogleBillingHelper.isSubscription(skuDetails.getSku())
+						? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
+				skuPreference.setSummary(String.format(descriptionResourceString, skuDetails.getPrice()));
 				skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 					@Override
 					public boolean onPreferenceClick(@NonNull final Preference preference) {
-						String productId = preference.getKey().substring(SKU_KEY_PREFIX.length());
-						GoogleBillingHelper.launchPurchaseFlow(productId, mOnPurchaseSuccessListener);
+						GoogleBillingHelper.launchPurchaseFlow(skuDetails.getSku(), mOnPurchaseSuccessListener);
 						return false;
 					}
 				});

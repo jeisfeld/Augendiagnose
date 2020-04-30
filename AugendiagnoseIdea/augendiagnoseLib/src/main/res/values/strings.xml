@@ -52,7 +52,6 @@
     <string name="button_select_color" translatable="false">\u25a0</string>
     <string name="button_dont_show">Do not show again</string>
     <string name="button_show_later">Show again</string>
-    <string name="button_purchased_item">%1$s (bought)</string>
     <string name="button_rate">Rate the app</string>
     <string name="button_external_flash">External flash</string>
     <string name="content_description_right_eye">Right Eye</string>
@@ -88,6 +87,12 @@
     <string-array name="googlebilling_ids" translatable="false"/>
     <string-array name="googlebilling_premium_ids" translatable="false"/>
     <string-array name="googlebilling_subscription_ids" translatable="false"/>
+    <string name="googlebilling_onetime_title">Premium Pack (%1$s)</string>
+    <string name="googlebilling_subscription_title">Monthly Pack (%1$s)</string>
+    <string name="googlebilling_onetime_title_purchased">Premium Pack (purchased)</string>
+    <string name="googlebilling_subscription_title_purchased">Monthly Pack (subscribed)</string>
+    <string name="googlebilling_onetime_text">Unlimited use of the app. This requires a one-time payment of %1$s.</string>
+    <string name="googlebilling_subscription_text">Use of the app with all features for one month. The subscription has a trial period of 2 weeks, costs %1$s per month, is extended monthly and can be canceled at any time via Google Play.</string>
 
     <string name="help_overview_in_list_folders" translatable="false">false</string>
 

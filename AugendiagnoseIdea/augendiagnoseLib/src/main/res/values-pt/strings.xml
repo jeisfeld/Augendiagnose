@@ -11,7 +11,7 @@
     <string name="title_activity_list_pictures_for_second_name">Selecione a segunda foto</string>
     <string name="title_activity_select_two_pictures">Selecione duas novas fotos</string>
     <string name="title_settings">Ajustes</string>
-    <string name="title_camera">Camera</string>
+    <string name="title_camera">Câmera</string>
     <string name="title_purchase">Comprar</string>
     <string name="title_rating">Qualificar</string>
     <string name="title_help">Ajuda</string>
@@ -35,12 +35,11 @@
     <string name="button_other_pictures">Outras fotos</string>
     <string name="button_import_from_gallery">Importar imagem da galeria</string>
     <string name="button_import">Importar</string>
-    <string name="button_camera">Camera</string>
+    <string name="button_camera">Câmera</string>
     <string name="button_zoom">zoom</string>
     <string name="button_overwrite">Sobrescrever</string>
     <string name="button_dont_show">Não mostre novamente</string>
     <string name="button_show_later">Mostrar novamente</string>
-    <string name="button_purchased_item">%1$s (comprado)</string>
     <string name="button_rate">Avalie o aplicativo</string>
     <string name="button_external_flash">Flash externo</string>
     <string name="content_description_right_eye">Olho direito</string>
@@ -58,5 +57,11 @@
     <string msgid="1248663997452044787" name="color_picker_default_title">Selecione a cor</string>
     <string msgid="2883438431173736180" name="color_swatch_description">Cor <xliff:g id="COLOR_INDEX">%1$d</xliff:g></string>
     <string msgid="5020921249944943124" name="color_swatch_description_selected">Cor <xliff:g id="COLOR_INDEX">%1$d</xliff:g> seleccionado</string>
+    <string name="googlebilling_onetime_title">Pacote premium (%1$s)</string>
+    <string name="googlebilling_subscription_title">Pacote mensal (%1$s)</string>
+    <string name="googlebilling_onetime_title_purchased">Pacote premium (comprado)</string>
+    <string name="googlebilling_subscription_title_purchased">Pacote mensal (subscrito)</string>
+    <string name="googlebilling_onetime_text">Uso ilimitado do aplicativo. Isso requer um pagamento único de %1$s.</string>
+    <string name="googlebilling_subscription_text">Uso do aplicativo completo por um mês. A assinatura tem um período de avaliação de 2 semanas, custa %1$s por mês, é estendida mensalmente e pode ser cancelada a qualquer momento pelo Google Play.</string>
 
 </resources>
