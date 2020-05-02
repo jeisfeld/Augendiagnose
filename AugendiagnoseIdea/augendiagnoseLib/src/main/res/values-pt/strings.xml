@@ -61,6 +61,8 @@
     <string name="googlebilling_subscription_title">Pacote mensal (%1$s)</string>
     <string name="googlebilling_onetime_title_purchased">Pacote premium (comprado)</string>
     <string name="googlebilling_subscription_title_purchased">Pacote mensal (subscrito)</string>
+    <string name="googlebilling_onetime_title_pending">Pacote premium (pendente)</string>
+    <string name="googlebilling_subscription_title_pending">Pacote mensal (pendente)</string>
     <string name="googlebilling_onetime_text">Uso ilimitado do aplicativo. Isso requer um pagamento único de %1$s.</string>
     <string name="googlebilling_subscription_text">Uso do aplicativo completo por um mês. A assinatura tem um período de avaliação de 2 semanas, custa %1$s por mês, é estendida mensalmente e pode ser cancelada a qualquer momento pelo Google Play.</string>
 

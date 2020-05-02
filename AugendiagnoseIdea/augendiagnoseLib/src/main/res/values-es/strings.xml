@@ -61,6 +61,8 @@
     <string name="googlebilling_subscription_title">Paquete mensual (%1$s)</string>
     <string name="googlebilling_onetime_title_purchased">Paquete Premium (comprado)</string>
     <string name="googlebilling_subscription_title_purchased">Paquete mensual (suscrito)</string>
+    <string name="googlebilling_onetime_title_pending">Paquete Premium (pendiente)</string>
+    <string name="googlebilling_subscription_title_pending">Paquete mensual (pendiente)</string>
     <string name="googlebilling_onetime_text">Uso ilimitado de la aplicación. Esto requiere un pago único de %1$s.</string>
     <string name="googlebilling_subscription_text">Uso de la aplicación con todas las funciones durante un mes. La suscripción tiene un período de prueba de 2 semanas, cuesta %1$s por mes, se extiende mensualmente y se puede cancelar en cualquier momento a través de Google Play.</string>
 

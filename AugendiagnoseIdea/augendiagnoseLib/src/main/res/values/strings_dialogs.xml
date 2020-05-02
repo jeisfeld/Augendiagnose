@@ -35,9 +35,11 @@
     <string name="message_dialog_failed_to_open_google_play">Failed to open Google Play.</string>
     <string name="message_dialog_trial_names">In the trial version you are allowed to use only up to three names. Please purchase a premium pack to get unlimited access.</string>
     <string name="message_dialog_trial_time">The trial version of the app can be used only for two weeks. Please purchase a premium pack to get unlimited access.</string>
+    <string name="message_dialog_trial_pending">Your purchase transaction of premium pack is pending. You can use the app as soon as the transaction is complete.</string>
     <string name="message_dialog_trial_overlays">The trial version of the app is limited to three overlays. Please purchase a premium pack to get unlimited access.</string>
     <string name="message_dialog_purchase_thanks">Thanks for your purchase!</string>
     <string name="message_dialog_purchase_thanks_premium">Thanks for your purchase! You can now use the app without limitations.</string>
+    <string name="message_dialog_purchase_thanks_pending">Thanks for your purchase! As soon as the transaction is confirmed, you can use the app without limitations.</string>
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>

@@ -22,7 +22,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
-import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.SkuDetails;
 
 import java.io.File;
@@ -432,6 +431,10 @@ public class SettingsFragment extends PreferenceFragment {
 			skuPreference.setTitle(getString(isSubscription
 					? R.string.googlebilling_subscription_title_purchased : R.string.googlebilling_onetime_title_purchased));
 		}
+		else if (skuPurchase.isPending()) {
+			skuPreference.setTitle(getString(isSubscription
+					? R.string.googlebilling_subscription_title_pending : R.string.googlebilling_onetime_title_pending));
+		}
 		else {
 			skuPreference.setTitle(getString(isSubscription
 					? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, skuDetails.getPrice()));
@@ -441,9 +444,9 @@ public class SettingsFragment extends PreferenceFragment {
 		String descriptionResourceString = getString(isSubscription ? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
 		skuPreference.setSummary(String.format(descriptionResourceString, skuDetails.getPrice()));
 
-		skuPreference.setEnabled(!skuPurchase.isPurchased());
+		skuPreference.setEnabled(!skuPurchase.isPurchased() && !skuPurchase.isPending());
 
-		if (!skuPurchase.isPurchased()) {
+		if (!skuPurchase.isPurchased() && !skuPurchase.isPending()) {
 			skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(@NonNull final Preference preference) {
@@ -460,11 +463,13 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private final OnPurchaseSuccessListener mOnPurchaseSuccessListener = new OnPurchaseSuccessListener() {
 		@Override
-		public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
-			if (addedPremiumProduct) {
+		public void handlePurchase(final boolean addedPremiumProduct, final boolean isPending) {
+			if (addedPremiumProduct && !isPending) {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
 			}
-			int messageResource = addedPremiumProduct ? R.string.message_dialog_purchase_thanks_premium : R.string.message_dialog_purchase_thanks;
+			int messageResource = addedPremiumProduct
+					? (isPending ? R.string.message_dialog_purchase_thanks_pending : R.string.message_dialog_purchase_thanks_premium)
+					: R.string.message_dialog_purchase_thanks;
 
 			MessageDialogListener listener = new MessageDialogListener() {
 				private static final long serialVersionUID = 1L;
@@ -482,7 +487,9 @@ public class SettingsFragment extends PreferenceFragment {
 				}
 			};
 
-			DialogUtil.displayInfo(getActivity(), listener, messageResource);
+			if (getActivity() != null) {
+				DialogUtil.displayInfo(getActivity(), listener, messageResource);
+			}
 		}
 
 		@Override

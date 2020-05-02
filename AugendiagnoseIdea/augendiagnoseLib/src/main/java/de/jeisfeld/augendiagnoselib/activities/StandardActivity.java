@@ -136,7 +136,7 @@ public abstract class StandardActivity extends BaseActivity {
 					// Check in-app purchases
 					GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
 						@Override
-						public void onHasPremiumPack(final boolean hasPremiumPack) {
+						public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
 							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
 							if (hasPremiumPack) {
 								invalidateOptionsMenu();
@@ -237,11 +237,14 @@ public abstract class StandardActivity extends BaseActivity {
 		if (mIsCreationFailed) {
 			GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
 				@Override
-				public void onHasPremiumPack(final boolean hasPremiumPack) {
+				public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
 					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
 					if (hasPremiumPack) {
 						finish();
 						startActivity(getIntent());
+					}
+					else if (isPending) {
+						DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_pending);
 					}
 					else {
 						DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);

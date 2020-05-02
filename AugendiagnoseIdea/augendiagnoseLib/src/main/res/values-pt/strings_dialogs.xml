@@ -35,9 +35,11 @@
     <string name="message_dialog_failed_to_open_google_play">Erro ao abrir o Google Play.</string>
     <string name="message_dialog_trial_names">Na versão de teste, é permitido usar apenas até três nomes. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
     <string name="message_dialog_trial_time">A versão de avaliação do aplicativo pode ser usada apenas por duas semanas. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
-    <string name="message_dialog_trial_overlays">A versão experimental do aplicativo limita o uso apenas aos mapas iridológicos 1-3. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
-    <string name="message_dialog_purchase_thanks">Obrigado por sua compra!</string>
-    <string name="message_dialog_purchase_thanks_premium">Obrigado por sua compra! Agora você pode usar o aplicativo ilimitadamente.</string>
+    <string name="message_dialog_trial_pending">Sua transação de compra do pacote premium está pendente. Você pode usar o aplicativo assim que a transação for concluída.</string>
+    <string name="message_dialog_trial_overlays">A versão experimental do aplicativo limita o uso apenas aos mapas iridológicos 1–3. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
+    <string name="message_dialog_purchase_thanks">Obrigado pela sua compra!</string>
+    <string name="message_dialog_purchase_thanks_premium">Obrigado pela sua compra! Agora você pode usar o aplicativo ilimitadamente.</string>
+    <string name="message_dialog_purchase_thanks_pending">Obrigado pela sua compra! Assim que a transação for confirmada, você poderá usar o aplicativo sem limitações.</string>
     <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
     <string name="message_dialog_unformatted_file">O arquivo %1$s não está formatado corretamente</string>
     <string name="message_dialog_confirm_delete_date">Você realmente deseja excluir as fotos de %1$s de %2$s?</string>
@@ -55,7 +57,7 @@
     <string name="message_dialog_outofmemoryerror">O aplicativo foi bloqueado devido à falta de memória. Se isso acontecer repetidamente, você deve ir para as configurações, alterar a opção «Mostrar imagem de alta resolução» no valor «Carregar somente se solicitado» e reduzir o valor de «Tamanho máximo dos bitmaps».</string>
     <string name="message_dialog_hints_will_be_shown">A partir de agora, o aplicativo mostrará conselhos em várias situações (incluindo aquelas que você desativou antes). Você pode desativá-los individualmente.</string>
     <string name="message_dialog_no_hints_will_be_shown">De agora em diante, o aplicativo não mostrará nenhuma das dicas existentes atualmente. Se versões futuras do aplicativo tiverem novas dicas, elas serão exibidas.</string>
-    <string name="message_dialog_triggering_purchase">Ativando a compra no Google Play ...</string>
+    <string name="message_dialog_triggering_purchase">Ativando a compra no Google Play&#8230;</string>
     <string name="message_guide_resize_iris">Por favor, mova o olho até que a íris preencha o círculo. Em seguida, pressione «OK».</string>
     <string name="message_guide_resize_pupil">Agora, mude o tamanho do olho até que a pupila preencha o círculo. Em seguida, pressione «OK».</string>
     <string name="imageinfo_line_filename">Nome do arquivo:</string>

@@ -121,7 +121,8 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	public void hasPremiumPack(final OnPurchaseQueryCompletedListener listener) {
 		if (mIsConnected) {
-			listener.onHasPremiumPack(doHasPremiumPack());
+			int premiumPackState = doHasPremiumPack();
+			listener.onHasPremiumPack(premiumPackState == PurchaseState.PURCHASED, premiumPackState == PurchaseState.PENDING);
 		}
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
@@ -130,7 +131,8 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
-						listener.onHasPremiumPack(doHasPremiumPack());
+						int premiumPackState = doHasPremiumPack();
+						listener.onHasPremiumPack(premiumPackState == PurchaseState.PURCHASED, premiumPackState == PurchaseState.PENDING);
 					}
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
@@ -150,16 +152,18 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	/**
 	 * Get information if there is a premium pack for the app.
 	 *
-	 * @return True if there is a premium pack.
+	 * @return The purchase state if existing, otherwise -1
 	 */
-	private boolean doHasPremiumPack() {
+	private int doHasPremiumPack() {
 		PurchasesResult purchasesResult = mBillingClient.queryPurchases(SkuType.INAPP);
+		int result = -1;
 		if (purchasesResult.getPurchasesList() != null) {
 			for (Purchase purchase : purchasesResult.getPurchasesList()) {
+				result = PurchaseState.PENDING;
 				if (INAPP_PRODUCT_IDS.contains(purchase.getSku())) {
 					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
 						doAcknowledgePurchaseIfRequired(purchase);
-						return true;
+						return PurchaseState.PURCHASED;
 					}
 				}
 			}
@@ -167,15 +171,16 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		purchasesResult = mBillingClient.queryPurchases(SkuType.SUBS);
 		if (purchasesResult.getPurchasesList() != null) {
 			for (Purchase purchase : purchasesResult.getPurchasesList()) {
+				result = PurchaseState.PENDING;
 				if (SUBSCRIPTION_IDS.contains(purchase.getSku())) {
 					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
 						doAcknowledgePurchaseIfRequired(purchase);
-						return true;
+						return PurchaseState.PURCHASED;
 					}
 				}
 			}
 		}
-		return false;
+		return result;
 	}
 
 	/**
@@ -304,12 +309,20 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		Log.i(TAG, "Purchase successful.");
 
 		if (mOnPurchaseSuccessListener != null && purchaseList != null) {
+			boolean hasPurchase = false;
+			boolean isPurchased = false;
 			for (Purchase purchase : purchaseList) {
+				hasPurchase = true;
 				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
 					Log.i(TAG, "Purchase " + purchase.getSku() + " finished");
-					mOnPurchaseSuccessListener.handlePurchase(purchase, !mIsPremium);
-					mIsPremium = true;
+					isPurchased = true;
 					doAcknowledgePurchaseIfRequired(purchase);
+				}
+			}
+			if (hasPurchase) {
+				mOnPurchaseSuccessListener.handlePurchase(!mIsPremium, !isPurchased);
+				if (isPurchased) {
+					mIsPremium = true;
 				}
 			}
 		}
@@ -453,7 +466,16 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		 * @return true if purchased.
 		 */
 		public boolean isPurchased() {
-			return mPurchase != null;
+			return mPurchase != null && mPurchase.getPurchaseState() == PurchaseState.PURCHASED;
+		}
+
+		/**
+		 * Get information if the SKU is pending.
+		 *
+		 * @return true if pending.
+		 */
+		public boolean isPending() {
+			return mPurchase != null && mPurchase.getPurchaseState() != PurchaseState.PURCHASED;
 		}
 	}
 
@@ -465,8 +487,9 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		 * Callback called if premium pack status is available.
 		 *
 		 * @param hasPremiumPack true if premium pack is available.
+		 * @param isPending trie if there is a pending purchase.
 		 */
-		void onHasPremiumPack(boolean hasPremiumPack);
+		void onHasPremiumPack(boolean hasPremiumPack, boolean isPending);
 	}
 
 	/**
@@ -489,10 +512,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		/**
 		 * Handler called after a purchase has been successfully completed.
 		 *
-		 * @param purchase            The completed purchase.
 		 * @param addedPremiumProduct Flag indicating if there was a premium upgrade.
+		 * @param isPending           Flag indicating if the purchase is in pending state.
 		 */
-		void handlePurchase(Purchase purchase, boolean addedPremiumProduct);
+		void handlePurchase(boolean addedPremiumProduct, boolean isPending);
 
 		/**
 		 * Handler called after the failure of a purchase.

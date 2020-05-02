@@ -89,6 +89,8 @@
     <string name="googlebilling_subscription_title">Monthly Pack (%1$s)</string>
     <string name="googlebilling_onetime_title_purchased">Premium Pack (purchased)</string>
     <string name="googlebilling_subscription_title_purchased">Monthly Pack (subscribed)</string>
+    <string name="googlebilling_onetime_title_pending">Premium Pack (pending)</string>
+    <string name="googlebilling_subscription_title_pending">Monthly Pack (pending)</string>
     <string name="googlebilling_onetime_text">Unlimited use of the app. This requires a one-time payment of %1$s.</string>
     <string name="googlebilling_subscription_text">Use of the app with all features for one month. The subscription has a trial period of 2 weeks, costs %1$s per month, is extended monthly and can be canceled at any time via Google Play.</string>
 
