@@ -22,9 +22,8 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
-import com.android.vending.billing.Purchase;
-import com.android.vending.billing.PurchasedSku;
-import com.android.vending.billing.SkuDetails;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.SkuDetails;
 
 import java.io.File;
 import java.util.List;
@@ -46,6 +45,7 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.SkuPurchase;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
@@ -241,7 +241,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	public final void initializeGoogleBilling() {
 		try {
-			GoogleBillingHelper.initialize(getActivity(), mOnInventoryFinishedListener);
+			GoogleBillingHelper.getInstance(getActivity()).querySkuDetails(mOnInventoryFinishedListener);
 		}
 		catch (Exception e) {
 			android.util.Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
@@ -407,41 +407,53 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private final OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
 		@Override
-		public void handleProducts(@NonNull final List<PurchasedSku> purchases,
-								   @NonNull final List<SkuDetails> availableProducts, final boolean isPremium) {
+		public void handleProducts(@NonNull final List<SkuPurchase> inAppSkus, @NonNull final List<SkuPurchase> subscriptionSkus) {
 			// List inventory items.
-			for (PurchasedSku purchase : purchases) {
-				Preference purchasePreference = new Preference(getActivity());
-				String titleString = getString(GoogleBillingHelper.isSubscription(purchase.getSkuDetails().getSku())
-						? R.string.googlebilling_subscription_title_purchased : R.string.googlebilling_onetime_title_purchased);
-				purchasePreference.setTitle(titleString);
-				String descriptionResourceString = getString(GoogleBillingHelper.isSubscription(purchase.getSkuDetails().getSku())
-						? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
-				purchasePreference.setSummary(String.format(descriptionResourceString, purchase.getSkuDetails().getPrice()));
-				purchasePreference.setEnabled(false);
-
-				getPreferenceScreen().addPreference(purchasePreference);
+			for (final SkuPurchase skuPurchase : inAppSkus) {
+				getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, false));
 			}
-			for (final SkuDetails skuDetails : availableProducts) {
-				Preference skuPreference = new Preference(getActivity());
-				String titleString = getString(GoogleBillingHelper.isSubscription(skuDetails.getSku())
-						? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, skuDetails.getPrice());
-				skuPreference.setTitle(titleString);
-				skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
-				String descriptionResourceString = getString(GoogleBillingHelper.isSubscription(skuDetails.getSku())
-						? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
-				skuPreference.setSummary(String.format(descriptionResourceString, skuDetails.getPrice()));
-				skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-					@Override
-					public boolean onPreferenceClick(@NonNull final Preference preference) {
-						GoogleBillingHelper.launchPurchaseFlow(skuDetails.getSku(), mOnPurchaseSuccessListener);
-						return false;
-					}
-				});
-				getPreferenceScreen().addPreference(skuPreference);
+			for (final SkuPurchase skuPurchase : subscriptionSkus) {
+				getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, true));
 			}
 		}
 	};
+
+	/**
+	 * Create a preference for the SKU.
+	 *
+	 * @param skuPurchase    The SKU to be added.
+	 * @param isSubscription Flag indicating if it is subscription or in-app product
+	 * @return the preference.
+	 */
+	private Preference createSkuPreference(final SkuPurchase skuPurchase, final boolean isSubscription) {
+		Preference skuPreference = new Preference(getActivity());
+		final SkuDetails skuDetails = skuPurchase.getSkuDetails();
+		if (skuPurchase.isPurchased()) {
+			skuPreference.setTitle(getString(isSubscription
+					? R.string.googlebilling_subscription_title_purchased : R.string.googlebilling_onetime_title_purchased));
+		}
+		else {
+			skuPreference.setTitle(getString(isSubscription
+					? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, skuDetails.getPrice()));
+		}
+
+		skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
+		String descriptionResourceString = getString(isSubscription ? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
+		skuPreference.setSummary(String.format(descriptionResourceString, skuDetails.getPrice()));
+
+		skuPreference.setEnabled(!skuPurchase.isPurchased());
+
+		if (!skuPurchase.isPurchased()) {
+			skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(@NonNull final Preference preference) {
+					GoogleBillingHelper.getInstance(getActivity()).launchPurchaseFlow(getActivity(), skuDetails, mOnPurchaseSuccessListener);
+					return false;
+				}
+			});
+		}
+		return skuPreference;
+	}
 
 	/**
 	 * A listener handling the response after purchasing a product.
@@ -560,14 +572,6 @@ public class SettingsFragment extends PreferenceFragment {
 				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 		// noinspection ResourceType
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
-	}
-
-	@Override
-	public final void onDestroy() {
-		super.onDestroy();
-		if (mType != null && mType.equals(getActivity().getString(R.string.key_dummy_screen_premium_settings))) {
-			GoogleBillingHelper.dispose();
-		}
 	}
 
 	/**

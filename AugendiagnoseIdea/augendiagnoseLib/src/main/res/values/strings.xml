@@ -72,7 +72,6 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
-    <string name="googlebilling_primary_id" translatable="false"/>
     <string-array name="activities_with_action_camera" translatable="false"/>
     <string-array name="activities_with_action_purchase" translatable="false"/>
     <string-array name="activities_with_action_settings" translatable="false"/>
@@ -84,8 +83,7 @@
         <item>de.jeisfeld.augendiagnoselib.activities.SelectTwoPicturesActivity</item>
         <item>de.jeisfeld.augendiagnoselib.activities.SettingsActivity</item>
     </string-array>
-    <string-array name="googlebilling_ids" translatable="false"/>
-    <string-array name="googlebilling_premium_ids" translatable="false"/>
+    <string-array name="googlebilling_inapp_ids" translatable="false" />
     <string-array name="googlebilling_subscription_ids" translatable="false"/>
     <string name="googlebilling_onetime_title">Premium Pack (%1$s)</string>
     <string name="googlebilling_subscription_title">Monthly Pack (%1$s)</string>

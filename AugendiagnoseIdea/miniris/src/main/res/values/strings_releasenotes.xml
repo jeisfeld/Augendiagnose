@@ -111,7 +111,7 @@
         <item>Updated for Android 9. Bugfixes</item>
         <item>Bugfixes</item>
         <item>Added Jausas topography (French). Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Updated handling of Google Billing. Bugfixes</item>
     </string-array>
 
 </resources>

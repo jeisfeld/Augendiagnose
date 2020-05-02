@@ -7,13 +7,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.android.vending.billing.Purchase;
-import com.android.vending.billing.PurchasedSku;
-import com.android.vending.billing.SkuDetails;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -30,11 +25,9 @@ import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
-import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
-import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
-import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseQueryCompletedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
@@ -141,22 +134,15 @@ public abstract class StandardActivity extends BaseActivity {
 					checkUnlockerApp();
 
 					// Check in-app purchases
-					try {
-						GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
-							@Override
-							public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-													   final boolean isPremium) {
-								PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
-								if (isPremium) {
-									invalidateOptionsMenu();
-								}
-								GoogleBillingHelper.dispose();
+					GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
+						@Override
+						public void onHasPremiumPack(final boolean hasPremiumPack) {
+							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
+							if (hasPremiumPack) {
+								invalidateOptionsMenu();
 							}
-						});
-					}
-					catch (Exception e) {
-						Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
-					}
+						}
+					});
 				}
 			}
 		}
@@ -232,21 +218,7 @@ public abstract class StandardActivity extends BaseActivity {
 			return true;
 		}
 		else if (itemId == R.id.action_purchase) {
-			DialogUtil.displayToast(this, R.string.message_dialog_triggering_purchase);
-			try {
-				triggerDefaultPurchase();
-			}
-			catch (Exception e) {
-				Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
-				Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
-				googlePlayIntent.setData(Uri.parse("market://details?id=de.jeisfeld.augendiagnoseunlocker"));
-				try {
-					startActivity(googlePlayIntent);
-				}
-				catch (Exception e1) {
-					DialogUtil.displayError(this, R.string.message_dialog_failed_to_open_google_play, false);
-				}
-			}
+			SettingsActivity.startActivity(this, R.string.key_dummy_screen_premium_settings);
 			return true;
 		}
 		else if (itemId == R.id.action_rating) {
@@ -263,15 +235,11 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private void checkPremiumPackAfterAuthorizationFailure() {
 		if (mIsCreationFailed) {
-			GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
-
+			GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
 				@Override
-				public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts,
-										   final boolean isPremium) {
-					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, isPremium);
-					GoogleBillingHelper.dispose();
-
-					if (isPremium) {
+				public void onHasPremiumPack(final boolean hasPremiumPack) {
+					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
+					if (hasPremiumPack) {
 						finish();
 						startActivity(getIntent());
 					}
@@ -318,53 +286,6 @@ public abstract class StandardActivity extends BaseActivity {
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
 			}
 		}
-	}
-
-	/**
-	 * Trigger the purchase of the default premium pack.
-	 */
-	private void triggerDefaultPurchase() {
-		// First dispose, in order to be sure to be able to instantiate the helper.
-		GoogleBillingHelper.dispose();
-		GoogleBillingHelper.initialize(this, new OnInventoryFinishedListener() {
-			@Override
-			public void handleProducts(final List<PurchasedSku> purchases, final List<SkuDetails> availableProducts, final boolean isPremium) {
-				GoogleBillingHelper.launchPurchaseFlow(GoogleBillingHelper.PRIMARY_ID, new OnPurchaseSuccessListener() {
-					@Override
-					public void handlePurchase(final Purchase purchase, final boolean addedPremiumProduct) {
-						if (addedPremiumProduct) {
-							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, true);
-						}
-						GoogleBillingHelper.dispose();
-						int messageResource = addedPremiumProduct
-								? R.string.message_dialog_purchase_thanks_premium : R.string.message_dialog_purchase_thanks;
-
-						MessageDialogListener listener = new MessageDialogListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void onDialogClick(final DialogFragment dialog) {
-								finish();
-								Application.startApplication(StandardActivity.this);
-							}
-
-							@Override
-							public void onDialogCancel(final DialogFragment dialog) {
-								finish();
-								Application.startApplication(StandardActivity.this);
-							}
-						};
-
-						DialogUtil.displayInfo(StandardActivity.this, listener, messageResource);
-					}
-
-					@Override
-					public void handleFailure() {
-						GoogleBillingHelper.dispose();
-					}
-				});
-			}
-		});
 	}
 
 	/**
@@ -438,8 +359,6 @@ public abstract class StandardActivity extends BaseActivity {
 			queryRemoveRatingIcon();
 		}
 		else {
-			GoogleBillingHelper.handleActivityResult(requestCode, resultCode, data);
-
 			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 			super.onActivityResult(requestCode, resultCode, data);

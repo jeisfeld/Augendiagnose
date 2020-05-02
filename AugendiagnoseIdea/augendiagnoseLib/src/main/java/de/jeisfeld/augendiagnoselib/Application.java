@@ -38,7 +38,7 @@ public class Application extends android.app.Application {
 	/**
 	 * The default tag for logging.
 	 */
-	public static final String TAG = "Augendiagnose.JE";
+	public static final String TAG = "JE.Augendiagnose";
 
 	/**
 	 * The default locale.
@@ -66,7 +66,7 @@ public class Application extends android.app.Application {
 		try {
 			Application.mApplicationSettings =
 					(ApplicationSettings) Class.forName(getResourceString(R.string.class_application_settings))
-							.getDeclaredMethod("getInstance", new Class<?>[0])
+							.getDeclaredMethod("getInstance")
 							.invoke(null);
 		}
 		catch (Exception e) {

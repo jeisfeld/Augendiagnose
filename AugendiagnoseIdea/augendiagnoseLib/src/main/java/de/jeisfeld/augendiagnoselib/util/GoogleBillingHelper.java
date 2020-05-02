@@ -1,56 +1,49 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.util.Log;
+
+import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClient.BillingResponseCode;
+import com.android.billingclient.api.BillingClient.SkuType;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.Purchase.PurchaseState;
+import com.android.billingclient.api.Purchase.PurchasesResult;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.android.vending.billing.IabHelper;
-import com.android.vending.billing.IabResult;
-import com.android.vending.billing.Inventory;
-import com.android.vending.billing.Purchase;
-import com.android.vending.billing.PurchasedSku;
-import com.android.vending.billing.SkuDetails;
-
+import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Utility class to support in-ad purchases via Google Billing.
  */
-public final class GoogleBillingHelper {
-	/**
-	 * The request code used for starting the payment activity - any number.
-	 */
-	private static final int REQUEST_CODE = 14254;
-
+public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	/**
 	 * The logging tag for this class.
 	 */
-	private static final String TAG = "GoogleBillingHelper";
+	private static final String TAG = "JE.Aug.GoogleBilling";
 
 	/**
 	 * The product ids to be offered.
 	 */
-	private static final List<String> PRODUCT_IDS =
-			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_ids));
-
-	/**
-	 * The product ids which set premium status.
-	 */
-	private static final List<String> PREMIUM_IDS =
-			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_premium_ids));
-
-	/**
-	 * The primary product id used for one-click purchase.
-	 */
-	public static final String PRIMARY_ID = Application.getResourceString(R.string.googlebilling_primary_id);
+	private static final List<String> INAPP_PRODUCT_IDS =
+			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_inapp_ids));
 
 	/**
 	 * The product ids which are subscriptions.
@@ -65,19 +58,9 @@ public final class GoogleBillingHelper {
 	private static GoogleBillingHelper mInstance;
 
 	/**
-	 * Helper class for Google Billing.
+	 * The context.
 	 */
-	private IabHelper mIabHelper;
-
-	/**
-	 * The activity starting Google Billing.
-	 */
-	private Activity mActivity;
-
-	/**
-	 * An onInventoryFinishedListener called after inventory has been retrieved.
-	 */
-	private OnInventoryFinishedListener mOnInventoryFinishedListener;
+	private Context mContext;
 
 	/**
 	 * An onPurchaseSuccessListener called after a purchase has been completed.
@@ -90,6 +73,24 @@ public final class GoogleBillingHelper {
 	private boolean mIsPremium = false;
 
 	/**
+	 * The Billing client connection.
+	 */
+	private BillingClient mBillingClient;
+
+	/**
+	 * Flag indicating if billing client is connected.
+	 */
+	private boolean mIsConnected = false;
+	/**
+	 * Found in app SKUs.
+	 */
+	private List<SkuPurchase> mInAppSkus = null;
+	/**
+	 * Found subscription SKUs.
+	 */
+	private List<SkuPurchase> mSubscriptionSkus = null;
+
+	/**
 	 * Hide default constructor.
 	 */
 	private GoogleBillingHelper() {
@@ -97,200 +98,376 @@ public final class GoogleBillingHelper {
 	}
 
 	/**
-	 * Initialize an instance of GoogleBillingHelper.
+	 * Get an instance of Google Billing Helper.
 	 *
-	 * @param activity The activity triggering Google Billing.
-	 * @param listener a listener called after the inventory has been retrieved.
+	 * @param context The context.
+	 * @return an instance of GoogleBillingHelper.
 	 */
-	public static void initialize(final Activity activity, final OnInventoryFinishedListener listener) {
+	public static GoogleBillingHelper getInstance(final Context context) {
 		synchronized (GoogleBillingHelper.class) {
-			if (mInstance != null) {
-				if (mInstance.mActivity == activity) {
-					return;
-				}
-				else {
-					dispose();
-				}
+			if (mInstance == null) {
+				mInstance = new GoogleBillingHelper();
+				mInstance.mContext = context;
+				mInstance.mBillingClient = BillingClient.newBuilder(context).setListener(mInstance).enablePendingPurchases().build();
 			}
-			mInstance = new GoogleBillingHelper();
-			mInstance.mActivity = activity;
-			mInstance.mOnInventoryFinishedListener = listener;
 		}
-		mInstance.initialize();
+		return mInstance;
 	}
 
 	/**
-	 * Initialize the GoogleBillingHelper.
+	 * Get information if there is a premium pack for the app. If there is no connection, then establish connection before.
+	 *
+	 * @param listener The listener called when the information is available.
 	 */
-	private void initialize() {
-		String base64EncodedPublicKey = Application.getResourceString(R.string.private_license_key);
-
-		// compute your public key and store it in base64EncodedPublicKey
-		mIabHelper = new IabHelper(mActivity, base64EncodedPublicKey);
-		mIabHelper.enableDebugLogging(false, TAG);
-		mIabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-			@Override
-			public void onIabSetupFinished(@NonNull final IabResult result) {
-				if (result.isSuccess()) {
-					Log.d(TAG, "Finished IAB setup");
-					mIabHelper.queryInventoryAsync(true, PRODUCT_IDS, mGotInventoryListener);
+	public void hasPremiumPack(final OnPurchaseQueryCompletedListener listener) {
+		if (mIsConnected) {
+			listener.onHasPremiumPack(doHasPremiumPack());
+		}
+		else {
+			mBillingClient.startConnection(new BillingClientStateListener() {
+				@Override
+				public void onBillingSetupFinished(final BillingResult billingResult) {
+					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
+						Log.d(TAG, "Google Billing Connection established.");
+						mIsConnected = true;
+						listener.onHasPremiumPack(doHasPremiumPack());
+					}
+					else {
+						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
+						mIsConnected = false;
+					}
 				}
-				else {
-					Log.e(TAG, "Problem setting up In-app Billing: " + result);
+
+				@Override
+				public void onBillingServiceDisconnected() {
+					Log.d(TAG, "Google Billing Connection lost.");
+					mIsConnected = false;
+				}
+			});
+		}
+	}
+
+	/**
+	 * Get information if there is a premium pack for the app.
+	 *
+	 * @return True if there is a premium pack.
+	 */
+	private boolean doHasPremiumPack() {
+		PurchasesResult purchasesResult = mBillingClient.queryPurchases(SkuType.INAPP);
+		if (purchasesResult.getPurchasesList() != null) {
+			for (Purchase purchase : purchasesResult.getPurchasesList()) {
+				if (INAPP_PRODUCT_IDS.contains(purchase.getSku())) {
+					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+						doAcknowledgePurchaseIfRequired(purchase);
+						return true;
+					}
 				}
 			}
-		});
+		}
+		purchasesResult = mBillingClient.queryPurchases(SkuType.SUBS);
+		if (purchasesResult.getPurchasesList() != null) {
+			for (Purchase purchase : purchasesResult.getPurchasesList()) {
+				if (SUBSCRIPTION_IDS.contains(purchase.getSku())) {
+					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+						doAcknowledgePurchaseIfRequired(purchase);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Query SKU details. If no connection available, establish connection.
+	 *
+	 * @param listener The listener called when the query is finished.
+	 */
+	public void querySkuDetails(final OnInventoryFinishedListener listener) {
+		if (mIsConnected) {
+			doQuerySkuDetails(listener);
+		}
+		else {
+			mBillingClient.startConnection(new BillingClientStateListener() {
+				@Override
+				public void onBillingSetupFinished(final BillingResult billingResult) {
+					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
+						Log.d(TAG, "Google Billing Connection established.");
+						mIsConnected = true;
+						doQuerySkuDetails(listener);
+					}
+					else {
+						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
+						mIsConnected = false;
+					}
+				}
+
+				@Override
+				public void onBillingServiceDisconnected() {
+					Log.d(TAG, "Google Billing Connection lost.");
+					mIsConnected = false;
+				}
+			});
+		}
+	}
+
+	/**
+	 * Query SKU details.
+	 *
+	 * @param listener The listener called when the query is finished.
+	 */
+	private void doQuerySkuDetails(final OnInventoryFinishedListener listener) {
+		synchronized (this) {
+			mInAppSkus = null;
+			mSubscriptionSkus = null;
+		}
+		mIsPremium = false;
+		mBillingClient.querySkuDetailsAsync(
+				SkuDetailsParams.newBuilder().setSkusList(INAPP_PRODUCT_IDS).setType(SkuType.INAPP).build(),
+				new SkuDetailsResponseListener() {
+					@Override
+					public void onSkuDetailsResponse(final BillingResult result, final List<SkuDetails> list) {
+						GoogleBillingHelper.this.onSkuDetailsResponse(result, list, false, listener);
+					}
+				});
+		mBillingClient.querySkuDetailsAsync(
+				SkuDetailsParams.newBuilder().setSkusList(SUBSCRIPTION_IDS).setType(SkuType.SUBS).build(),
+				new SkuDetailsResponseListener() {
+					@Override
+					public void onSkuDetailsResponse(final BillingResult result, final List<SkuDetails> list) {
+						GoogleBillingHelper.this.onSkuDetailsResponse(result, list, true, listener);
+					}
+				});
+	}
+
+	/**
+	 * Launch the purchase flow for a product. If there is no connection, then establish connection before.
+	 *
+	 * @param activity   The triggering activity.
+	 * @param skuDetails The details of the product to be purchased.
+	 * @param listener   a listener called after the purchase has been completed.
+	 */
+	public void launchPurchaseFlow(final Activity activity, final SkuDetails skuDetails, final OnPurchaseSuccessListener listener) {
+		if (mIsConnected) {
+			doLaunchPurchaseFlow(activity, skuDetails, listener);
+		}
+		else {
+			mBillingClient.startConnection(new BillingClientStateListener() {
+				@Override
+				public void onBillingSetupFinished(final BillingResult billingResult) {
+					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
+						Log.d(TAG, "Google Billing Connection established.");
+						mIsConnected = true;
+						doLaunchPurchaseFlow(activity, skuDetails, listener);
+					}
+					else {
+						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
+						mIsConnected = false;
+					}
+				}
+
+				@Override
+				public void onBillingServiceDisconnected() {
+					Log.d(TAG, "Google Billing Connection lost.");
+					mIsConnected = false;
+				}
+			});
+		}
 	}
 
 	/**
 	 * Launch the purchase flow for a product.
 	 *
-	 * @param productId The productId.
-	 * @param listener  a listener called after the purchase has been completed.
+	 * @param activity   The triggering activity.
+	 * @param skuDetails The details of the product to be purchased.
+	 * @param listener   a listener called after the purchase has been completed.
 	 */
-	public static void launchPurchaseFlow(final String productId, final OnPurchaseSuccessListener listener) {
-		if (mInstance == null || mInstance.mIabHelper == null) {
-			throw new NullPointerException(
-					"Tried to launch purchase flow without having GoogleBillingHelper initialized");
-		}
-		mInstance.mOnPurchaseSuccessListener = listener;
+	private void doLaunchPurchaseFlow(final Activity activity, final SkuDetails skuDetails, final OnPurchaseSuccessListener listener) {
+		mOnPurchaseSuccessListener = listener;
 
-		if (isSubscription(productId)) {
-			Log.d(TAG, "Starting subscription purchase flow for " + productId);
-			mInstance.mIabHelper.launchSubscriptionPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
-					mInstance.mPurchaseFinishedListener);
-		}
-		else {
-			Log.d(TAG, "Starting product purchase flow for " + productId);
-			mInstance.mIabHelper.launchPurchaseFlow(mInstance.mActivity, productId, REQUEST_CODE,
-					mInstance.mPurchaseFinishedListener);
-		}
+		Log.d(TAG, "Starting purchase flow for " + skuDetails.getSku());
+		mBillingClient.launchBillingFlow(activity, BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build());
 	}
 
-	/**
-	 * Get information if a certain product is a subscription.
-	 *
-	 * @param productId The product id.
-	 * @return true if subscription.
-	 */
-	public static boolean isSubscription(final String productId) {
-		return SUBSCRIPTION_IDS.contains(productId);
-	}
+	@Override
+	public void onPurchasesUpdated(final BillingResult billingResult, final @Nullable List<Purchase> purchaseList) {
+		Log.i(TAG, "Purchase finished: " + billingResult.getResponseCode());
 
-	/**
-	 * To be called in the onActivityResult method of the activity launching the purchase flow.
-	 *
-	 * @param requestCode The integer request code originally supplied to startActivityForResult(), allowing you to identify who
-	 *                    this result came from.
-	 * @param resultCode  The integer result code returned by the child activity through its setResult().
-	 * @param data        An Intent, which can return result data to the caller (various data can be attached to Intent
-	 *                    "extras").
-	 */
-	public static void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
-		if (requestCode == REQUEST_CODE) {
-			if (mInstance != null && mInstance.mIabHelper != null) {
-				mInstance.mIabHelper.handleActivityResult(requestCode, resultCode, data);
+		if (billingResult.getResponseCode() != BillingResponseCode.OK) {
+			Log.e(TAG, "Error purchasing: " + billingResult.getDebugMessage());
+			if (mOnPurchaseSuccessListener != null) {
+				mOnPurchaseSuccessListener.handleFailure();
+			}
+			return;
+		}
+
+		Log.i(TAG, "Purchase successful.");
+
+		if (mOnPurchaseSuccessListener != null && purchaseList != null) {
+			for (Purchase purchase : purchaseList) {
+				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+					Log.i(TAG, "Purchase " + purchase.getSku() + " finished");
+					mOnPurchaseSuccessListener.handlePurchase(purchase, !mIsPremium);
+					mIsPremium = true;
+					doAcknowledgePurchaseIfRequired(purchase);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Clean up GoogleBillingHelper instance.
+	 * Acknowledge a purchase.
+	 *
+	 * @param purchase The purchase.
 	 */
-	public static void dispose() {
-		Log.d(TAG, "Disposing GoogleBillingHelper");
-		synchronized (GoogleBillingHelper.class) {
-			if (mInstance != null) {
-				if (mInstance.mIabHelper != null) {
-					mInstance.mIabHelper.dispose();
+	private void doAcknowledgePurchaseIfRequired(final Purchase purchase) {
+		if (!purchase.isAcknowledged()) {
+			Log.d(TAG, "Acknowledging purchase " + purchase.getSku());
+			mBillingClient.acknowledgePurchase(
+					AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(),
+					new AcknowledgePurchaseResponseListener() {
+						@Override
+						public void onAcknowledgePurchaseResponse(final BillingResult billingResult) {
+							Log.d(TAG, "Acknowledgement result: " + billingResult.getResponseCode());
+						}
+					});
+		}
+	}
+
+	/**
+	 * Handle result of inventory query.
+	 *
+	 * @param billingResult  The result flag.
+	 * @param skuDetailsList The retrieved SKU details.
+	 * @param isSubscription Flag indicating if this was subscription query.
+	 * @param listener       The listener called when inventory calls are finished.
+	 */
+	private void onSkuDetailsResponse(final BillingResult billingResult, final List<SkuDetails> skuDetailsList, final boolean isSubscription,
+									  final OnInventoryFinishedListener listener) {
+		Log.d(TAG, "Query inventory finished - " + billingResult.getResponseCode() + " - " + isSubscription);
+
+		if (billingResult.getResponseCode() != BillingResponseCode.OK) {
+			Log.e(TAG, "Failed to query inventory: " + billingResult.getDebugMessage());
+			return;
+		}
+
+		Log.d(TAG, "Query inventory was successful.");
+
+		Map<String, Purchase> purchaseMap = new HashMap<>();
+		List<SkuPurchase> skuPurchases = new ArrayList<>();
+
+		PurchasesResult purchasesResult = mBillingClient.queryPurchases(isSubscription ? SkuType.SUBS : SkuType.INAPP);
+		if (purchasesResult.getResponseCode() != BillingResponseCode.OK) {
+			Log.e(TAG, "Failed to query purchases: " + purchasesResult.getBillingResult().getDebugMessage());
+			return;
+		}
+		for (Purchase purchase : purchasesResult.getPurchasesList()) {
+			if (purchase.getPackageName().equals(mContext.getPackageName())) {
+				purchaseMap.put(purchase.getSku(), purchase);
+				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+					doAcknowledgePurchaseIfRequired(purchase);
+					mIsPremium = true;
 				}
-				mInstance = null;
+			}
+		}
+
+		for (SkuDetails skuDetails : skuDetailsList) {
+			if (purchaseMap.containsKey(skuDetails.getSku())) {
+				skuPurchases.add(new SkuPurchase(skuDetails, purchaseMap.get(skuDetails.getSku())));
+			}
+			else {
+				skuPurchases.add(new SkuPurchase(skuDetails));
+			}
+		}
+
+		synchronized (this) {
+			if (isSubscription) {
+				mSubscriptionSkus = skuPurchases;
+			}
+			else {
+				mInAppSkus = skuPurchases;
+			}
+
+			if (listener != null && mSubscriptionSkus != null && mInAppSkus != null) {
+				listener.handleProducts(mInAppSkus, mSubscriptionSkus);
 			}
 		}
 	}
 
 	/**
-	 * The onInventoryFinishedListener started after the inventory is loaded.
+	 * Container for a Purchase with Sku Details.
 	 */
-	@Nullable
-	private final IabHelper.QueryInventoryFinishedListener mGotInventoryListener =
-			new IabHelper.QueryInventoryFinishedListener() {
-				@Override
-				public void onQueryInventoryFinished(@NonNull final IabResult result, @NonNull final Inventory inventory) {
-					Log.d(TAG, "Query inventory finished - " + inventory);
+	public static final class SkuPurchase {
+		/**
+		 * The purchase.
+		 */
+		private final Purchase mPurchase;
 
-					// Have we been disposed of in the meantime? If so, quit.
-					if (mIabHelper == null) {
-						return;
-					}
+		/**
+		 * Get the purchase.
+		 *
+		 * @return the purchase.
+		 */
+		public Purchase getPurchase() {
+			return mPurchase;
+		}
 
-					// Is it a failure?
-					if (result.isFailure()) {
-						Log.e(TAG, "Failed to query inventory: " + result);
-						return;
-					}
+		/**
+		 * The SKU details of the purchase.
+		 */
+		private final SkuDetails mSkuDetails;
 
-					Log.d(TAG, "Query inventory was successful.");
+		/**
+		 * Get the SKU details of the purchase.
+		 *
+		 * @return The SKU details of the purchase.
+		 */
+		public SkuDetails getSkuDetails() {
+			return mSkuDetails;
+		}
 
-					List<PurchasedSku> purchases = new ArrayList<>();
-					List<SkuDetails> nonPurchases = new ArrayList<>();
-					for (String purchaseId : PRODUCT_IDS) {
-						Purchase purchase = inventory.getPurchase(purchaseId);
-						SkuDetails skuDetails = inventory.getSkuDetails(purchaseId);
+		/**
+		 * Constructor, passing the SKU details and the purchase.
+		 *
+		 * @param skuDetails The SKU details
+		 * @param purchase   The purchase.
+		 */
+		private SkuPurchase(final SkuDetails skuDetails, final Purchase purchase) {
+			this.mSkuDetails = skuDetails;
+			this.mPurchase = purchase;
+		}
 
-						if (purchase == null && skuDetails == null) {
-							Log.w(TAG, "Did not find entry for " + purchaseId);
-						}
-						else {
-							synchronized (GoogleBillingHelper.class) {
-								if (purchase == null) {
-									nonPurchases.add(skuDetails);
-								}
-								else {
-									Log.d(TAG, "Found purchase: " + purchase);
-									purchases.add(new PurchasedSku(skuDetails, purchase));
-									if (PREMIUM_IDS.contains(purchase.getSku())) {
-										mIsPremium = true;
-									}
-								}
-							}
-						}
+		/**
+		 * Constructor, passing the SKU details for non-purchase.
+		 *
+		 * @param skuDetails The SKU details
+		 */
+		private SkuPurchase(final SkuDetails skuDetails) {
+			this.mSkuDetails = skuDetails;
+			this.mPurchase = null;
+		}
 
-					}
-
-					if (mOnInventoryFinishedListener != null) {
-						mOnInventoryFinishedListener.handleProducts(purchases, nonPurchases, mIsPremium);
-					}
-				}
-			};
+		/**
+		 * Get information if the SKU is purchased.
+		 *
+		 * @return true if purchased.
+		 */
+		public boolean isPurchased() {
+			return mPurchase != null;
+		}
+	}
 
 	/**
-	 * Callback for when a purchase is finished.
+	 * Listener called when query for purchases is completed.
 	 */
-	@Nullable
-	private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
-			new IabHelper.OnIabPurchaseFinishedListener() {
-				@Override
-				public void onIabPurchaseFinished(@NonNull final IabResult result, @NonNull final Purchase purchase) {
-					Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-
-					if (result.isFailure()) {
-						Log.e(TAG, "Error purchasing: " + result);
-						if (mOnPurchaseSuccessListener != null) {
-							mOnPurchaseSuccessListener.handleFailure();
-						}
-						return;
-					}
-
-					Log.d(TAG, "Purchase successful.");
-
-					if (mOnPurchaseSuccessListener != null) {
-						boolean isPremiumProduct = PREMIUM_IDS.contains(purchase.getSku());
-						mOnPurchaseSuccessListener.handlePurchase(purchase, isPremiumProduct && !mIsPremium);
-						mIsPremium = mIsPremium || isPremiumProduct;
-					}
-				}
-			};
+	public interface OnPurchaseQueryCompletedListener {
+		/**
+		 * Callback called if premium pack status is available.
+		 *
+		 * @param hasPremiumPack true if premium pack is available.
+		 */
+		void onHasPremiumPack(boolean hasPremiumPack);
+	}
 
 	/**
 	 * Listener to be called after inventory has been retrieved.
@@ -299,12 +476,10 @@ public final class GoogleBillingHelper {
 		/**
 		 * Handler called after inventory has been retrieved.
 		 *
-		 * @param purchases         The list of bought purchases.
-		 * @param availableProducts The list of available products.
-		 * @param isPremium         Flag indicating if there is a purchase setting premium status.
+		 * @param inAppSkus        The in-app SKUs.
+		 * @param subscriptionSkus The subscription SKUs.
 		 */
-		void handleProducts(List<PurchasedSku> purchases, List<SkuDetails> availableProducts,
-							boolean isPremium);
+		void handleProducts(List<SkuPurchase> inAppSkus, List<SkuPurchase> subscriptionSkus);
 	}
 
 	/**

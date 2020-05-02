@@ -11,19 +11,13 @@
 
     <!-- Resources configuring behaviour of activities in the app -->
 
-    <string name="googlebilling_primary_id" translatable="false">donation_medium</string>
     <string-array name="activities_with_action_settings" translatable="false">
         <item>de.eisfeldj.augendiagnose.activities.MainActivity</item>
     </string-array>
     <string-array name="activities_with_action_purchase" translatable="false">
         <item>de.eisfeldj.augendiagnose.activities.MainActivity</item>
     </string-array>
-    <string-array name="googlebilling_ids" translatable="false">
-        <item>donation_monthly_small</item>
-        <item>donation_medium</item>
-    </string-array>
-    <string-array name="googlebilling_premium_ids" translatable="false">
-        <item>donation_monthly_small</item>
+    <string-array name="googlebilling_inapp_ids" translatable="false">
         <item>donation_medium</item>
     </string-array>
     <string-array name="googlebilling_subscription_ids" translatable="false">
