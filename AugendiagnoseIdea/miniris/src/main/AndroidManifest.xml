@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.jeisfeld.miniris"
     android:installLocation="auto"
-    android:versionCode="49"
-    android:versionName="1.3.13">
+    android:versionCode="50"
+    android:versionName="1.3.14">
 
     <uses-feature
         android:name="android.hardware.camera"
