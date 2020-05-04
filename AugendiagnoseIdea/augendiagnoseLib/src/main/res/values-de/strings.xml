@@ -64,6 +64,6 @@
     <string name="googlebilling_onetime_title_pending">Premium-Paket (ausstehend)</string>
     <string name="googlebilling_subscription_title_pending">Monatliches Paket (ausstehend)</string>
     <string name="googlebilling_onetime_text">Unbegrenzte Nutzung der App. Dies erfordert eine einmalige Zahlung von %1$s</string>
-    <string name="googlebilling_subscription_text">Nutzung der App mit allen Funktionen für einen Monat. Das Abo hat eine Testzeit von 2 Wochen, kostet %1$s pro Monat, verlängert sich monatlich und kann jederzeit über Google Play gekündigt werden.</string>
+    <string name="googlebilling_subscription_text">Nutzung der App mit allen Funktionen für einen Monat. Das Abo kostet %1$s pro Monat, verlängert sich monatlich und kann jederzeit über Google Play gekündigt werden.</string>
 
 </resources>
