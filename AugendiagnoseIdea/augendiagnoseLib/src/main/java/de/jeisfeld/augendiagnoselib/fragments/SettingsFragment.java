@@ -25,6 +25,7 @@ import android.util.Log;
 import com.android.billingclient.api.SkuDetails;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -337,22 +338,23 @@ public class SettingsFragment extends PreferenceFragment {
 
 		String[] buttonStrings = getResources().getStringArray(R.array.overlay_button_strings);
 		String[] overlayNames = getResources().getStringArray(R.array.overlay_names);
+		boolean showUsed = buttonIndex <= highestOverlayButtonIndex;
 		boolean showUnused = buttonIndex >= highestOverlayButtonIndex;
-		int numberOfEntries = showUnused ? OverlayPinchImageView.OVERLAY_COUNT - 1 : OverlayPinchImageView.OVERLAY_COUNT - 2;
 
-		CharSequence[] entries = new CharSequence[numberOfEntries];
-		CharSequence[] entryValues = new CharSequence[numberOfEntries];
+		List<CharSequence> entries = new ArrayList<>();
+		List<CharSequence> entryValues = new ArrayList<>();
 
 		for (int i = 0; i < OverlayPinchImageView.OVERLAY_COUNT - 2; i++) {
 			int overlayIndex = i + 1;
-			entryValues[i] = Integer.toString(overlayIndex);
 			Integer currentButton = DisplayImageFragment.buttonForOverlayWithIndex(overlayIndex);
 
 			SpannableString entry;
 			if (currentButton == null) {
 				entry = new SpannableString(overlayNames[overlayIndex]);
+				entryValues.add(Integer.toString(overlayIndex));
+				entries.add(entry);
 			}
-			else {
+			else if (showUsed) {
 				entry = new SpannableString(buttonStrings[currentButton] + " " + overlayNames[overlayIndex]);
 				if (currentButton == buttonIndex) {
 					entry.setSpan(new StyleSpan(Typeface.BOLD), 0, entry.length(), 0);
@@ -360,18 +362,19 @@ public class SettingsFragment extends PreferenceFragment {
 				else {
 					entry.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, entry.length(), 0);
 				}
+				entryValues.add(Integer.toString(overlayIndex));
+				entries.add(entry);
 			}
-			entries[i] = entry;
 		}
 		if (showUnused) {
 			SpannableString entry = new SpannableString(getString(R.string.pref_value_overlay_button_empty));
 			entry.setSpan(new StyleSpan(Typeface.ITALIC), 0, entry.length(), 0);
-			entries[OverlayPinchImageView.OVERLAY_COUNT - 2] = entry;
-			entryValues[OverlayPinchImageView.OVERLAY_COUNT - 2] = "-1";
+			entries.add(entry);
+			entryValues.add("-1");
 		}
 
-		preference.setEntries(entries);
-		preference.setEntryValues(entryValues);
+		preference.setEntries(entries.toArray(new CharSequence[0]));
+		preference.setEntryValues(entryValues.toArray(new CharSequence[0]));
 	}
 
 	/**
