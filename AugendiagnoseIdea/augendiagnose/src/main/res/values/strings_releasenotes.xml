@@ -224,7 +224,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes</item>
         <item>Added Jausas topography (French). Bugfixes</item>
         <item>Updated handling of Google Billing. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Fixed issue with tablet cameras</item>
     </string-array>
 
 </resources>

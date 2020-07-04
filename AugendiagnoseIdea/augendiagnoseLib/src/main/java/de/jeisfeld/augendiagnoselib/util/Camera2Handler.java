@@ -839,7 +839,7 @@ public class Camera2Handler implements CameraHandler {
 					mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				}
 				else {
-					mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_OFF;
+					mCurrentAutoExposureMode = CaptureRequest.CONTROL_AE_MODE_ON;
 				}
 				break;
 			case ON:
@@ -940,6 +940,9 @@ public class Camera2Handler implements CameraHandler {
 
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, mCurrentFocusMode);
 				mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE, mCurrentFlashMode);
+				if (mCurrentAutoExposureMode == CaptureRequest.CONTROL_AE_MODE_OFF) {
+					mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
+				}
 				mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mCurrentAutoExposureMode);
 				mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, mMinimalFocalDistance * mCurrentRelativeFocalDistance);
 				mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, getCroppingRect(mCurrentRelativeZoom));
