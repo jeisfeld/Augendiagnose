@@ -8,6 +8,8 @@ import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
@@ -30,6 +32,11 @@ public class DirectorySelectionPreference extends ListPreference {
 	 * Tag to be replaced by the external storage root.
 	 */
 	private static final String EXTERNAL_STORAGE_PREFIX = "__ext_storage__";
+
+	/**
+	 * Tag to be replaced by the application storage root.
+	 */
+	private static final String APPLICATION_STORAGE_PREFIX = "__app_storage__";
 
 	/**
 	 * Tag to be replaced by the application's cache directory.
@@ -104,6 +111,10 @@ public class DirectorySelectionPreference extends ListPreference {
 	public static String replaceSpecialFolderTags(@NonNull final String path) {
 		if (path.startsWith(EXTERNAL_STORAGE_PREFIX)) {
 			return FileUtil.getSdCardPath() + path.substring(EXTERNAL_STORAGE_PREFIX.length());
+		}
+		else if (path.startsWith(APPLICATION_STORAGE_PREFIX)) {
+			File extFilesDir = Application.getAppContext().getExternalFilesDir(null);
+			return extFilesDir == null ? path : extFilesDir.getAbsolutePath() + path.substring(APPLICATION_STORAGE_PREFIX.length());
 		}
 		else if (path.startsWith(CACHE_DIR_PREFIX)) {
 			return FileUtil.getTempCameraFolder().getAbsolutePath() + path.substring(CACHE_DIR_PREFIX.length());

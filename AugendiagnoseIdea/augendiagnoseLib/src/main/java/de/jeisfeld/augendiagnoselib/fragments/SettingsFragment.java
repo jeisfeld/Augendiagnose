@@ -71,6 +71,11 @@ public class SettingsFragment extends PreferenceFragment {
 	private static final int REQUEST_CODE_STORAGE_ACCESS_INPUT = 4;
 
 	/**
+	 * The requestCode with which the storage access framework is triggered for input folder, and activity should be finished afterwards.
+	 */
+	private static final int REQUEST_CODE_STORAGE_ACCESS_INPUT_FINISH = 5;
+
+	/**
 	 * The resource key of the flag indicating the type of settings to be shown.
 	 * This key is used as well in pref_header.xml.
 	 */
@@ -135,6 +140,10 @@ public class SettingsFragment extends PreferenceFragment {
 
 			mFolderInput = PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input);
 			bindPreferenceSummaryToValue(R.string.key_folder_input);
+
+			if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+				addInputFolderPreferenceListener();
+			}
 		}
 		else if (mType.equals(getActivity().getString(R.string.key_folder_input))) {
 			// Special fragment for displaying only input folder.
@@ -148,16 +157,35 @@ public class SettingsFragment extends PreferenceFragment {
 			for (int i = 0; i < screen.getPreferenceCount(); i++) {
 				Preference pref = screen.getPreference(i);
 				if (pref.getKey().equals(getActivity().getString(R.string.key_folder_input))) {
-					DirectorySelectionPreference preference = (DirectorySelectionPreference) pref;
+					if (pref instanceof DirectorySelectionPreference) {
+						DirectorySelectionPreference preference = (DirectorySelectionPreference) pref;
+						preference.setOnDialogClosedListener(new OnDialogClosedListener() {
+							@Override
+							public void onDialogClosed() {
+								getActivity().finish();
+							}
+						});
+						preference.showDialog();
+					}
+					else {
+						DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
+							/**
+							 * Default serial version id.
+							 */
+							private static final long serialVersionUID = 1L;
 
-					preference.setOnDialogClosedListener(new OnDialogClosedListener() {
-						@Override
-						public void onDialogClosed() {
-							getActivity().finish();
-						}
-					});
+							@Override
+							@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+							public void onDialogClick(final DialogFragment dialog) {
+								triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_INPUT);
+							}
 
-					preference.showDialog();
+							@Override
+							public void onDialogCancel(final DialogFragment dialog) {
+								// do nothing.
+							}
+						}, R.string.message_dialog_select_input_folder);
+					}
 				}
 				else {
 					screen.removePreference(pref);
@@ -180,6 +208,10 @@ public class SettingsFragment extends PreferenceFragment {
 			bindPreferenceSummaryToValue(R.string.key_max_bitmap_size);
 			bindPreferenceSummaryToValue(R.string.key_store_option);
 			bindPreferenceSummaryToValue(R.string.key_full_resolution);
+
+			if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+				addPhotosFolderPreferenceListener();
+			}
 		}
 		else if (mType.equals(getActivity().getString(R.string.key_dummy_screen_camera_settings))) {
 			addPreferencesFromResource(R.xml.prefs_camera);
@@ -249,6 +281,66 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
 	/**
+	 * Add the listener for the eye photo folder preference for SAF.
+	 */
+	private void addPhotosFolderPreferenceListener() {
+		final Preference folderPhotosPreference = findPreference(getString(R.string.key_folder_photos));
+		folderPhotosPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
+					/**
+					 * Default serial version id.
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+					public void onDialogClick(final DialogFragment dialog) {
+						triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+					}
+
+					@Override
+					public void onDialogCancel(final DialogFragment dialog) {
+						// do nothing.
+					}
+				}, R.string.message_dialog_select_photos_folder);
+				return true;
+			}
+		});
+	}
+
+	/**
+	 * Add the listener for the input folder preference for SAF.
+	 */
+	private void addInputFolderPreferenceListener() {
+		final Preference folderInputPreference = findPreference(getString(R.string.key_folder_input));
+		folderInputPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(final Preference preference) {
+				DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
+					/**
+					 * Default serial version id.
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+					public void onDialogClick(final DialogFragment dialog) {
+						triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_INPUT);
+					}
+
+					@Override
+					public void onDialogCancel(final DialogFragment dialog) {
+						// do nothing.
+					}
+				}, R.string.message_dialog_select_input_folder);
+				return true;
+			}
+		});
+	}
+
+	/**
 	 * Add the listener for a "hints" button.
 	 *
 	 * @param preferenceId        The id of the button.
@@ -305,6 +397,17 @@ public class SettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
+	}
+
+	/**
+	 * Trigger the storage access framework to access the base folder of the ext sd card.
+	 *
+	 * @param code The request code to be used.
+	 */
+	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+	private void triggerStorageAccessFramework(final int code) {
+		Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+		startActivityForResult(intent, code);
 	}
 
 	/**
@@ -522,6 +625,10 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 	private void onActivityResultLollipop(final int requestCode, final int resultCode, @NonNull final Intent data) {
+		if (resultCode != Activity.RESULT_OK && SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+			return;
+		}
+
 		int preferenceKeyUri;
 		int preferenceKeyFolder;
 		String oldFolder;
@@ -530,7 +637,7 @@ public class SettingsFragment extends PreferenceFragment {
 			preferenceKeyFolder = R.string.key_folder_photos;
 			oldFolder = mFolderPhotos;
 		}
-		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
+		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT || requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT_FINISH) {
 			preferenceKeyUri = R.string.key_internal_uri_extsdcard_input;
 			preferenceKeyFolder = R.string.key_folder_input;
 			oldFolder = mFolderInput;
@@ -551,6 +658,10 @@ public class SettingsFragment extends PreferenceFragment {
 			treeUri = data.getData();
 			// Persist URI - this is required for verification of writability.
 			PreferenceUtil.setSharedPreferenceUri(preferenceKeyUri, treeUri);
+
+			if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+				mCurrentFolder = new File(FileUtil.getFullPathFromTreeUri(treeUri));
+			}
 		}
 
 		// If not confirmed SAF, or if still not writable, then revert settings.
@@ -582,6 +693,10 @@ public class SettingsFragment extends PreferenceFragment {
 				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 		// noinspection ResourceType
 		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+
+		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT_FINISH) {
+			getActivity().finish();
+		}
 	}
 
 	/**
@@ -736,9 +851,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 				// On Android 5, trigger storage access framework.
 				if (!FileUtil.isWritableNormalOrSaf(folder)) {
-					// Ensure via listener that storage access framework is called only after information
-					// message.
-					MessageDialogListener listener = new MessageDialogListener() {
+					DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
 						/**
 						 * Default serial version id.
 						 */
@@ -754,9 +867,7 @@ public class SettingsFragment extends PreferenceFragment {
 						public void onDialogCancel(final DialogFragment dialog) {
 							// do nothing.
 						}
-					};
-
-					DialogUtil.displayInfo(getActivity(), listener, R.string.message_dialog_select_extsdcard);
+					}, R.string.message_dialog_select_extsdcard);
 					return false;
 				}
 				// Only accept after SAF stuff is done.
@@ -777,17 +888,5 @@ public class SettingsFragment extends PreferenceFragment {
 				return false;
 			}
 		}
-
-		/**
-		 * Trigger the storage access framework to access the base folder of the ext sd card.
-		 *
-		 * @param code The request code to be used.
-		 */
-		@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-		private void triggerStorageAccessFramework(final int code) {
-			Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-			startActivityForResult(intent, code);
-		}
-
 	}
 }

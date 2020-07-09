@@ -237,8 +237,7 @@ public final class FileUtil {
 
 		if (!success && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && source.getParent().equals(target.getParent())) {
 			// Storage Access Framework
-			DocumentFile sourceDocument = null;
-			sourceDocument = getDocumentFile(source, false, false);
+			DocumentFile sourceDocument = getDocumentFile(source, false, false);
 			success = sourceDocument.renameTo(target.getName());
 		}
 
@@ -323,7 +322,7 @@ public final class FileUtil {
 	 */
 	@NonNull
 	public static File getTempFile(@NonNull final File file) {
-		File extDir = new File(Application.getAppContext().getExternalCacheDir(), "temp");
+		File extDir = new File(Application.getAppContext().getCacheDir(), "temp");
 		if (!extDir.exists()) {
 			// noinspection ResultOfMethodCallIgnored
 			extDir.mkdirs();
@@ -393,7 +392,7 @@ public final class FileUtil {
 	 */
 	@NonNull
 	public static File getTempCameraFolder() {
-		File result = new File(Application.getAppContext().getExternalCacheDir(), "Camera");
+		File result = new File(Application.getAppContext().getCacheDir(), "Camera");
 		if (!result.exists()) {
 			// noinspection ResultOfMethodCallIgnored
 			result.mkdirs();
@@ -780,6 +779,7 @@ public final class FileUtil {
 			return null;
 		}
 
+
 		String fullPath;
 		try {
 			fullPath = file.getCanonicalPath();
@@ -795,26 +795,32 @@ public final class FileUtil {
 			StorageManager storageManager = (StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
 			StorageVolume volume = storageManager.getStorageVolume(file);
 			String uuid = volume.getUuid();
+
 			for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
 				String volumeId = FileUtil.getVolumeIdFromTreeUri(treeUris[i]);
-				if (uuid.equals(volumeId)) {
+				if (volume.isPrimary() && "primary".equals(volumeId) || uuid.equals(volumeId)) {
 					treeUri = treeUris[i];
-					// Use parcel to get the hidden path field from StorageVolume
-					Parcel parcel = Parcel.obtain();
-					volume.writeToParcel(parcel, 0);
-					parcel.setDataPosition(0);
-					parcel.readString();
-					parcel.readInt();
-					String volumeBasePath = parcel.readString();
-					parcel.recycle();
-					baseFolder = getFullPathFromTreeUri(treeUris[i], volumeBasePath);
+					if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+						baseFolder = getFullPathFromTreeUri(treeUri);
+					}
+					else {
+						// Use parcel to get the hidden path field from StorageVolume
+						Parcel parcel = Parcel.obtain();
+						volume.writeToParcel(parcel, 0);
+						parcel.setDataPosition(0);
+						parcel.readString();
+						parcel.readInt();
+						String volumeBasePath = parcel.readString();
+						parcel.recycle();
+						baseFolder = getFullPathFromTreeUri(treeUris[i], volumeBasePath);
+					}
 				}
 			}
 		}
 		else {
 			for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
 				// Use Java Reflection to access hidden methods from StorageVolume
-				String treeBase = getFullPathFromTreeUri(treeUris[i], getVolumePath(FileUtil.getVolumeIdFromTreeUri(treeUris[i])));
+				String treeBase = getFullPathFromTreeUri(treeUris[i]);
 				if (treeBase != null && fullPath.startsWith(treeBase)) {
 					treeUri = treeUris[i];
 					baseFolder = treeBase;
@@ -834,6 +840,7 @@ public final class FileUtil {
 
 		// start with root of SD card and then parse through document tree.
 		DocumentFile document = DocumentFile.fromTreeUri(Application.getAppContext(), treeUri);
+
 		if (fullPath.equals(baseFolder)) {
 			return document;
 		}
@@ -903,6 +910,17 @@ public final class FileUtil {
 		else {
 			return volumePath;
 		}
+	}
+
+	/**
+	 * Get the full path of a document from its tree URI.
+	 *
+	 * @param treeUri The tree URI.
+	 * @return The path (without trailing file separator).
+	 */
+	@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+	public static String getFullPathFromTreeUri(final Uri treeUri) {
+		return getFullPathFromTreeUri(treeUri, getVolumePath(FileUtil.getVolumeIdFromTreeUri(treeUri)));
 	}
 
 	/**

@@ -41,6 +41,8 @@
     <string name="message_dialog_purchase_thanks_premium">Obrigado pela sua compra! Agora você pode usar o aplicativo ilimitadamente.</string>
     <string name="message_dialog_purchase_thanks_pending">Obrigado pela sua compra! Assim que a transação for confirmada, você poderá usar o aplicativo sem limitações.</string>
     <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
+    <string name="message_dialog_select_photos_folder">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior.</string>
+    <string name="message_dialog_select_input_folder">Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos e confirme na parte inferior.</string>
     <string name="message_dialog_unformatted_file">O arquivo %1$s não está formatado corretamente</string>
     <string name="message_dialog_confirm_delete_date">Você realmente deseja excluir as fotos de %1$s de %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">Você realmente deseja excluir %1$s com todas as fotos?</string>

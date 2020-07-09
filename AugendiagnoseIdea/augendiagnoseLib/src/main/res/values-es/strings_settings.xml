@@ -15,6 +15,7 @@
 
     <string name="pref_title_folder_photos">Carpeta de fotos oculares</string>
     <string name="pref_default_folder_photos">__ext_storage__/FotosOcular</string>
+    <string name="pref_default_folder_photos_11">__app_storage__/FotosOcular</string>
     <string name="pref_title_folder_input">Carpeta de entrada para nuevas fotos</string>
     <string name="pref_title_max_bitmap_size">Tamaño máximo de mapas de bits</string>
     <string name="pref_title_eye_sequence_choice">Última foto es ojo derecho</string>

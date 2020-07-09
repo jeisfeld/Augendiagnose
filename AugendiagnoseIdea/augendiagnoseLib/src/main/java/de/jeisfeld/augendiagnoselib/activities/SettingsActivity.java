@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -172,7 +173,8 @@ public class SettingsActivity extends BasePreferenceActivity {
 		PreferenceManager.setDefaultValues(context, R.xml.prefs_camera, true);
 		PreferenceManager.setDefaultValues(context, R.xml.prefs_premium, true);
 
-		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
+		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input) == null
+				|| PreferenceUtil.getSharedPreferenceString(R.string.key_folder_input).equals(
 				context.getString(R.string.pref_dummy_folder_input))) {
 			// On first startup, make default setting dependent on status of Eye-Fi.
 			if (SystemUtil.isAppInstalled(Application.getResourceString(R.string.package_mobi))) {
@@ -189,6 +191,18 @@ public class SettingsActivity extends BasePreferenceActivity {
 				// Otherwise, use normal default folder.
 				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_input,
 						context.getString(R.string.pref_default_folder_input));
+			}
+		}
+		if (PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos) == null
+				|| PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos).equals(
+				context.getString(R.string.pref_dummy_folder_input))) {
+			if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos,
+						context.getString(R.string.pref_default_folder_photos_11));
+			}
+			else {
+				PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos,
+						context.getString(R.string.pref_default_folder_photos));
 			}
 		}
 

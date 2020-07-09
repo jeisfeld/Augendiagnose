@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseQueryCompletedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
@@ -375,7 +377,13 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	// OVERRIDABLE
 	protected String[] getRequiredPermissions() {
-		return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+		// TODO: finally decide if this permission should be revoked for Q or only for R.
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+		}
+		else {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+		}
 	}
 
 	/**
@@ -410,6 +418,9 @@ public abstract class StandardActivity extends BaseActivity {
 			// If request is cancelled, the result arrays are empty.
 			if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 				finish();
+			}
+			else {
+				SettingsActivity.setDefaultSharedPreferences(this);
 			}
 		}
 	}
