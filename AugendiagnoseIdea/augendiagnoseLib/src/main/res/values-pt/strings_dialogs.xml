@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="title_dialog_change_name">Mudar de nome</string>
+    <string name="title_dialog_change_name">Mudar de nome</string>
     <string name="title_dialog_error">Erro</string>
     <string name="title_dialog_info">Informação</string>
     <string name="title_dialog_image_info">Dados da imagem</string>
@@ -50,8 +50,9 @@
     <string name="message_dialog_confirm_delete_all_photos">Você realmente deseja excluir todas as fotos na pasta de entrada?</string>
     <string name="message_dialog_confirm_no_jpeg">As fotos selecionadas não são fotos JPG. Portanto, parte da funcionalidade (como armazenamento de informações) não funcionará. Você quer continuar?</string>
     <string name="message_dialog_confirm_overwrite">Para o nome «%1$s» já existem fotos de olho de %2$s. Deseja sobrescrever estes?\n\nSe caso contrário, selecione um nome ou data diferente.</string>
-    <string name="message_dialog_confirm_need_read_permission">Este aplicativo deve ter a permissão de seu armazenamento externo para acessar as imagens. Por favor, forneça este acesso - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_need_file_permission">Este aplicativo deve ter a permissão de seu armazenamento externo para acessar as imagens. Por favor, forneça este acesso - caso contrário, o aplicativo não funcionará.</string>
     <string name="message_dialog_confirm_need_camera_permission">Por favor, forneça acesso à câmera - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_missing_permission">O aplicativo não pode ser executado com as permissões obrigatórias ausentes. O aplicativo está saindo.</string>
     <string name="message_dialog_confirm_rate_app">Se você gosta do aplicativo, por favor, eu recomendo. Gostaria de avaliá-lo no Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">Deseja excluir o ícone de classificação do aplicativo?</string>
     <string name="message_dialog_confirm_external_flash">Você quer usar um flash LED externo conectado ao conector de fone de ouvido?</string>

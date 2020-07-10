@@ -1573,7 +1573,7 @@ public class CameraActivity extends StandardActivity {
 				setupActivity();
 			}
 			else {
-				finish();
+				DialogUtil.displayError(this, R.string.message_dialog_confirm_missing_permission, true);
 			}
 		}
 	}

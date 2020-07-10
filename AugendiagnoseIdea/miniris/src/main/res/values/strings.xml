@@ -6,11 +6,14 @@
     <string name="title_activity_camera">Miniris Camera</string>
     <string name="title_activity_list_folders_for_display">Miniris Gallery</string>
     <string name="title_activity_organize_new_photos">Set Name and Date</string>
-    <string name="section_select_photos"/>
+    <string name="section_select_photos" />
     <string name="menu_move_to_input_folder">Assign different name</string>
     <string name="overlay_default_pupil_size" translatable="false">0.24</string>
     <bool name="flag_go_to_organize_after_move_to_input">true</bool>
     <bool name="flag_overwrite_by_camera_from_organize">true</bool>
+
+    <string name="message_dialog_confirm_need_file_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access - otherwise the app will not work.</string>
+    <string name="message_dialog_confirm_need_camera_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access - otherwise the app will not work.</string>
 
     <!-- Resources configuring behaviour of activities in the app -->
 

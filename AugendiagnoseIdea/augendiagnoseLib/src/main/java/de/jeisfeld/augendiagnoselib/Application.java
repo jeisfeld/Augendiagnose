@@ -139,6 +139,15 @@ public class Application extends android.app.Application {
 	}
 
 	/**
+	 * Get the required permissions.
+	 *
+	 * @return The required permissions for the app.
+	 */
+	public static String[] getRequiredPermissions() {
+		return getApplicationSettings().getRequiredPermissions();
+	}
+
+	/**
 	 * Get a resource string.
 	 *
 	 * @param resourceId the id of the resource.

@@ -1,10 +1,13 @@
 package de.jeisfeld.miniris;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build.VERSION_CODES;
 
 import androidx.annotation.NonNull;
 import de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -43,4 +46,14 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 		triggeringActivity.startActivity(intent);
 	}
 
+	@Override
+	protected String[] getRequiredPermissions() {
+		// TODO: finally decide if this permission should be revoked for Q or only for R.
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		}
+		else {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		}
+	}
 }

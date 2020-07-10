@@ -5,7 +5,10 @@
     <string name="title_activity_camera">Miniris Kamera</string>
     <string name="title_activity_list_folders_for_display">Miniris Galerie</string>
     <string name="title_activity_organize_new_photos">Name und Datum festlegen</string>
-    <string name="section_select_photos"></string>
+    <string name="section_select_photos" />
     <string name="menu_move_to_input_folder">Anderen Namen zuweisen</string>
+
+    <string name="message_dialog_confirm_need_file_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte geben Sie diesen Zugang an - sonst funktioniert die App nicht.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte geben Sie diesen Zugang an - sonst funktioniert die App nicht.</string>
 
 </resources>

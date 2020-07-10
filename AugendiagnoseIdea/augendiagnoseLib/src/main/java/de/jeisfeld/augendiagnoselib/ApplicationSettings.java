@@ -1,6 +1,8 @@
 package de.jeisfeld.augendiagnoselib;
 
+import android.Manifest;
 import android.app.Activity;
+import android.os.Build.VERSION_CODES;
 
 import java.util.concurrent.TimeUnit;
 
@@ -8,6 +10,7 @@ import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil.KeyValidationResult;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 
 /**
  * Utility interface for Settings which are application specific.
@@ -35,6 +38,22 @@ public abstract class ApplicationSettings {
 
 		return System.currentTimeMillis() < firstStartTime + TimeUnit.DAYS.toMillis(trialPeriod)
 				? AuthorizationLevel.TRIAL_ACCESS : AuthorizationLevel.NO_ACCESS;
+	}
+
+	/**
+	 * Get the required permissions.
+	 *
+	 * @return The required permissions for the app.
+	 */
+	// OVERRIDABLE
+	protected String[] getRequiredPermissions() {
+		// TODO: finally decide if this permission should be revoked for Q or only for R.
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+		}
+		else {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+		}
 	}
 
 	/**

@@ -1,12 +1,10 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
-import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,12 +24,12 @@ import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
+import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseQueryCompletedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
-import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
@@ -82,32 +80,9 @@ public abstract class StandardActivity extends BaseActivity {
 		DialogUtil.checkOutOfMemoryError(this);
 		test();
 
-		// Check permissions for Android 6
-		final String[] missingPermissions = checkRequiredPermissions();
-
-		if (missingPermissions.length > 0) {
-			// prevent NonSerializableException when changing orientation while showing confirmation dialog
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-
-			DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
-				/**
-				 * The serial version UID.
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onDialogPositiveClick(final DialogFragment dialog) {
-					ActivityCompat.requestPermissions(StandardActivity.this, missingPermissions, REQUEST_CODE_PERMISSION);
-				}
-
-				@Override
-				public void onDialogNegativeClick(final DialogFragment dialog) {
-					finish();
-				}
-			}, R.string.button_continue, getPermissionInfoResource());
-		}
-
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			checkPermissions();
+
 			// Check authorization.
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
 				mIsCreationFailed = true;
@@ -116,36 +91,35 @@ public abstract class StandardActivity extends BaseActivity {
 				checkUnlockerApp();
 				return;
 			}
-			else {
-				if (savedInstanceState == null) {
-					testOnce();
 
-					// Initial tip is triggered first, so that it is hidden behind release notes.
-					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
+			if (savedInstanceState == null) {
+				testOnce();
 
-					// When starting from launcher, check if started the first time in this version. If yes, display release
-					// notes.
-					int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
-					int currentVersion = Application.getVersion();
+				// Initial tip is triggered first, so that it is hidden behind release notes.
+				DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
 
-					if (storedVersion < currentVersion) {
-						ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
-					}
+				// When starting from launcher, check if started the first time in this version. If yes, display release
+				// notes.
+				int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
+				int currentVersion = Application.getVersion();
 
-					// Check unlocker app.
-					checkUnlockerApp();
-
-					// Check in-app purchases
-					GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
-						@Override
-						public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
-							PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
-							if (hasPremiumPack) {
-								invalidateOptionsMenu();
-							}
-						}
-					});
+				if (storedVersion < currentVersion) {
+					ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
 				}
+
+				// Check unlocker app.
+				checkUnlockerApp();
+
+				// Check in-app purchases
+				GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
+					@Override
+					public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
+						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
+						if (hasPremiumPack) {
+							invalidateOptionsMenu();
+						}
+					}
+				});
 			}
 		}
 
@@ -229,6 +203,36 @@ public abstract class StandardActivity extends BaseActivity {
 		}
 		else {
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * Check if the app has all required permissions.
+	 */
+	private void checkPermissions() {
+		// Check permissions for Android 6
+		final String[] missingPermissions = checkMissingPermissions();
+
+		if (missingPermissions.length > 0) {
+			// prevent NonSerializableException when changing orientation while showing confirmation dialog
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+			DialogUtil.displayInfo(this, new MessageDialogListener() {
+				/**
+				 * The serial version UID.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					ActivityCompat.requestPermissions(StandardActivity.this, missingPermissions, REQUEST_CODE_PERMISSION);
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					finish();
+				}
+			}, getPermissionInfoResource());
 		}
 	}
 
@@ -377,13 +381,7 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	// OVERRIDABLE
 	protected String[] getRequiredPermissions() {
-		// TODO: finally decide if this permission should be revoked for Q or only for R.
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
-			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-		}
-		else {
-			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-		}
+		return Application.getRequiredPermissions();
 	}
 
 	/**
@@ -393,7 +391,7 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	// OVERRIDABLE
 	protected int getPermissionInfoResource() {
-		return R.string.message_dialog_confirm_need_read_permission;
+		return R.string.message_dialog_confirm_need_file_permission;
 	}
 
 	/**
@@ -401,7 +399,7 @@ public abstract class StandardActivity extends BaseActivity {
 	 *
 	 * @return The list of missing required permissions.
 	 */
-	private String[] checkRequiredPermissions() {
+	private String[] checkMissingPermissions() {
 		List<String> missingPermissions = new ArrayList<>();
 		for (String permission : getRequiredPermissions()) {
 			if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -417,10 +415,12 @@ public abstract class StandardActivity extends BaseActivity {
 		if (requestCode == REQUEST_CODE_PERMISSION) {
 			// If request is cancelled, the result arrays are empty.
 			if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-				finish();
+				DialogUtil.displayError(this, R.string.message_dialog_confirm_missing_permission, true);
 			}
 			else {
 				SettingsActivity.setDefaultSharedPreferences(this);
+				finish();
+				startActivity(getIntent());
 			}
 		}
 	}
