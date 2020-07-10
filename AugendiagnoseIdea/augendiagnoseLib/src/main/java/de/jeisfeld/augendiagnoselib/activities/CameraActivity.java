@@ -379,7 +379,7 @@ public class CameraActivity extends StandardActivity {
 		else {
 			File[] existingFiles = getTempCameraFiles();
 
-			if (existingFiles == null || existingFiles.length == 0 || mPhotoFolder != null) {
+			if (existingFiles.length == 0 || mPhotoFolder != null) {
 				// This is the standard scenario.
 				boolean leftEyeFirst = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice);
 				setAction(TAKE_PHOTO, leftEyeFirst ? LEFT : RIGHT);
@@ -1361,26 +1361,16 @@ public class CameraActivity extends StandardActivity {
 
 		@Override
 		public void onCameraError(final String message, final String shortMessage, @Nullable final Throwable e) {
-			String messageString = message;
+			String messageString = message + " - " + shortMessage;
 			if (e == null) {
-				Log.e(Application.TAG, message);
+				Log.e(Application.TAG, messageString);
 			}
 			else {
-				Log.e(Application.TAG, message, e);
+				Log.e(Application.TAG, messageString, e);
 				messageString += "\n" + e.toString();
 			}
 
-			boolean isCamera2Api = mCameraHandler instanceof Camera2Handler;
-			boolean wasCamera2Successful = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera2_successful);
-
-			if (isCamera2Api && !wasCamera2Successful) {
-				// Reconfigure to Camera 1 API
-				PreferenceUtil.setSharedPreferenceIntString(R.string.key_camera_api_version, 1);
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_use_camera2, true, messageString);
-			}
-			else {
-				DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true, messageString);
-			}
+			DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true, messageString);
 
 			if (e != null) {
 				TrackingUtil.sendException(shortMessage, e);
@@ -1539,9 +1529,9 @@ public class CameraActivity extends StandardActivity {
 			}
 		}
 		else {
-			for (int i = 0; i < childViews.length; i++) {
-				if (childViews[i] != null) {
-					layout.addView(childViews[i]);
+			for (View childView : childViews) {
+				if (childView != null) {
+					layout.addView(childView);
 				}
 			}
 		}
@@ -1561,7 +1551,13 @@ public class CameraActivity extends StandardActivity {
 	@SuppressLint("InlinedApi")
 	@Override
 	protected final String[] getRequiredPermissions() {
-		return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		// TODO: finally decide if this permission should be revoked for Q or only for R.
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		}
+		else {
+			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+		}
 	}
 
 	@Override

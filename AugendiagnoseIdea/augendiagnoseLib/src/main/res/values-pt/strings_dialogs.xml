@@ -31,7 +31,6 @@
     <string name="message_dialog_failed_to_store_metadata">Não é possível armazenar metadados no arquivo %1$s</string>
     <string name="message_dialog_failed_to_store_exif">Os metadados EXIF não puderam ser armazenados no arquivo %1$s - entre em contato com o produtor.</string>
     <string name="message_dialog_failed_to_access_camera">Não é possível acessar a câmera.\n\nDetalhes do erro: %1$s</string>
-    <string name="message_dialog_failed_to_use_camera2">Seu dispositivo parece não suportar os recursos da câmera para Android 5. O aplicativo foi reconfigurado para usar a compatibilidade com o Android 4. Por favor, inicie o aplicativo novamente.</string>
     <string name="message_dialog_failed_to_open_google_play">Erro ao abrir o Google Play.</string>
     <string name="message_dialog_trial_names">Na versão de teste, é permitido usar apenas até três nomes. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
     <string name="message_dialog_trial_time">A versão de avaliação do aplicativo pode ser usada apenas por duas semanas. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
