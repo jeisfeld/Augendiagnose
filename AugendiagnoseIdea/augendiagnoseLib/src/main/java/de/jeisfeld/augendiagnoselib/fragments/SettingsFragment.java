@@ -688,11 +688,8 @@ public class SettingsFragment extends PreferenceFragment {
 		findPreference(getString(preferenceKeyFolder)).setSummary(mCurrentFolder.getAbsolutePath());
 
 		// Persist access permissions.
-		final int takeFlags = data.getFlags()
-				& (Intent.FLAG_GRANT_READ_URI_PERMISSION
-				| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-		// noinspection ResourceType
-		getActivity().getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+		getActivity().getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
+				& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
 
 		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT_FINISH) {
 			getActivity().finish();

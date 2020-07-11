@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.andmore.ANDROID_FRAMEWORK"/>
-	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen">
@@ -10,7 +9,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="/AugendiagnoseLib/libs-local/annotation-1.1.0.jar"/>
+	<classpathentry kind="lib" path="libs-local/R.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AugendiagnoseLib"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

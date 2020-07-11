@@ -797,13 +797,17 @@ public final class FileUtil {
 			String uuid = volume.getUuid();
 
 			for (int i = 0; baseFolder == null && i < treeUris.length; i++) {
-				String volumeId = FileUtil.getVolumeIdFromTreeUri(treeUris[i]);
-				if (volume.isPrimary() && "primary".equals(volumeId) || uuid.equals(volumeId)) {
-					treeUri = treeUris[i];
-					if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
-						baseFolder = getFullPathFromTreeUri(treeUri);
+				if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+					String uriPath = getFullPathFromTreeUri(treeUris[i]);
+					if (fullPath.startsWith(uriPath)) {
+						treeUri = treeUris[i];
+						baseFolder = uriPath;
 					}
-					else {
+				}
+				else {
+					String volumeId = FileUtil.getVolumeIdFromTreeUri(treeUris[i]);
+					if (volume.isPrimary() && "primary".equals(volumeId) || uuid.equals(volumeId)) {
+						treeUri = treeUris[i];
 						// Use parcel to get the hidden path field from StorageVolume
 						Parcel parcel = Parcel.obtain();
 						volume.writeToParcel(parcel, 0);

@@ -57,6 +57,10 @@ public abstract class StandardActivity extends BaseActivity {
 	 * The resource key for the response from the unlocker app.
 	 */
 	private static final String STRING_RESULT_RESPONSE_KEY = "de.jeisfeld.augendiagnoseunlocker.RESPONSE_KEY";
+	/**
+	 * The resource key for skipping startup hints.
+	 */
+	private static final String STRING_EXTRA_SKIP_STARTUP_HINTS = "de.jeisfeld.augendiagnoselib.SKIP_STARTUP_HINTS";
 
 	/**
 	 * The random string used for authorization versus unlocker app.
@@ -80,9 +84,9 @@ public abstract class StandardActivity extends BaseActivity {
 		DialogUtil.checkOutOfMemoryError(this);
 		test();
 
-		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			checkPermissions();
+		checkPermissions();
 
+		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			// Check authorization.
 			if (Application.getAuthorizationLevel() == AuthorizationLevel.NO_ACCESS) {
 				mIsCreationFailed = true;
@@ -95,16 +99,18 @@ public abstract class StandardActivity extends BaseActivity {
 			if (savedInstanceState == null) {
 				testOnce();
 
-				// Initial tip is triggered first, so that it is hidden behind release notes.
-				DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
+				if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_HINTS, false)) {
+					// Initial tip is triggered first, so that it is hidden behind release notes.
+					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
 
-				// When starting from launcher, check if started the first time in this version. If yes, display release
-				// notes.
-				int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
-				int currentVersion = Application.getVersion();
+					// When starting from launcher, check if started the first time in this version. If yes, display release
+					// notes.
+					int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
+					int currentVersion = Application.getVersion();
 
-				if (storedVersion < currentVersion) {
-					ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
+					if (storedVersion < currentVersion) {
+						ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
+					}
 				}
 
 				// Check unlocker app.
@@ -209,7 +215,8 @@ public abstract class StandardActivity extends BaseActivity {
 	/**
 	 * Check if the app has all required permissions.
 	 */
-	private void checkPermissions() {
+	//OVERRIDABLE
+	protected void checkPermissions() {
 		// Check permissions for Android 6
 		final String[] missingPermissions = checkMissingPermissions();
 
@@ -246,8 +253,7 @@ public abstract class StandardActivity extends BaseActivity {
 				public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
 					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
 					if (hasPremiumPack) {
-						finish();
-						startActivity(getIntent());
+						restartActivity();
 					}
 					else if (isPending) {
 						DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_pending);
@@ -259,6 +265,17 @@ public abstract class StandardActivity extends BaseActivity {
 			});
 		}
 	}
+
+	/**
+	 * Restart the activity.
+	 */
+	protected void restartActivity() {
+		finish();
+		Intent intent = getIntent();
+		intent.putExtra(STRING_EXTRA_SKIP_STARTUP_HINTS, true);
+		startActivity(getIntent());
+	}
+
 
 	/**
 	 * Check authorization via unlocker app.
@@ -355,8 +372,7 @@ public abstract class StandardActivity extends BaseActivity {
 				updateUnlockerAppStatus(true);
 
 				if (mIsCreationFailed) {
-					finish();
-					startActivity(getIntent());
+					restartActivity();
 				}
 			}
 			else {
@@ -419,8 +435,7 @@ public abstract class StandardActivity extends BaseActivity {
 			}
 			else {
 				SettingsActivity.setDefaultSharedPreferences(this);
-				finish();
-				startActivity(getIntent());
+				restartActivity();
 			}
 		}
 	}

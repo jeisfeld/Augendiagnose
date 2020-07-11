@@ -63,5 +63,10 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/miniris/src/main/java</locationURI>
 		</link>
+		<link>
+			<name>libs-local/R.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/miniris/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

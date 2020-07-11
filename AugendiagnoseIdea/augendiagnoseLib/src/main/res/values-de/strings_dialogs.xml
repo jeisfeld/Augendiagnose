@@ -39,9 +39,13 @@
     <string name="message_dialog_purchase_thanks">Danke für Ihren Kauf!</string>
     <string name="message_dialog_purchase_thanks_premium">Danke für Ihren Kauf! Sie können die App nun unbegrenzt nutzen.</string>
     <string name="message_dialog_purchase_thanks_pending">Danke für ihren Kauf! Sobald die Transaktion bestätigt wurde, können Sie die App ohne Einschränkungen verwenden.</string>
+
     <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>
     <string name="message_dialog_select_photos_folder">Wählen Sie im folgenden Android-Dialogfeld den Ordner aus, in dem Sie Augenfotos speichern möchten, und bestätigen Sie unten.</string>
     <string name="message_dialog_select_input_folder">Wählen Sie im folgenden Android-Dialogfeld den Eingabeordner für neue Augenfotos aus und bestätigen Sie unten.</string>
+    <string name="message_dialog_select_input_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Eingabeordner für neue Augenfotos %1$s aus und bestätigen Sie die Berechtigung.</string>
+    <string name="message_dialog_changed_input_folder">Sie haben Ihren Eingabeordner von %1$s zu %2$s geändert. Sie können ihn wieder in den Einstellungen ändern.</string>
+
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>
     <string name="message_dialog_confirm_delete_folder">Wollen Sie %1$s wirklich mit allen Fotos löschen?</string>

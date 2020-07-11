@@ -39,9 +39,13 @@
     <string name="message_dialog_purchase_thanks">¡Gracias por su compra!</string>
     <string name="message_dialog_purchase_thanks_premium">¡Gracias por su compra! Ahora puede utilizar la aplicación ilimitadamente.</string>
     <string name="message_dialog_purchase_thanks_pending">¡Gracias por su compra! Tan pronto como se confirme la transacción, puede usar la aplicación sin limitaciones.</string>
+
     <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
     <string name="message_dialog_select_photos_folder">En el siguiente cuadro de diálogo de Android, seleccione la carpeta donde desea almacenar las fotos de los ojos y confirme en la parte inferior.</string>
     <string name="message_dialog_select_input_folder">En el siguiente cuadro de diálogo de Android, seleccione la carpeta de entrada para nuevas fotos de ojos y confirme en la parte inferior.</string>
+    <string name="message_dialog_select_input_folder_saf">Para admitir las últimas versiones de Android, la aplicación debe volver a consultar los permisos de carpeta. En el siguiente cuadro de diálogo de Android, seleccione la carpeta de entrada para nuevas fotos de ojos %1$s y confirme el permiso.</string>
+    <string name="message_dialog_changed_input_folder">Cambió su carpeta de entrada de %1$s a %2$s. Puede volver a cambiarlo en la configuración.</string>
+
     <string name="message_dialog_unformatted_file">El archivo %1$s no está formateado correctamente</string>
     <string name="message_dialog_confirm_delete_date">¿Realmente desea borrar las fotos de %1$s de %2$s?</string>
     <string name="message_dialog_confirm_delete_folder">¿Realmente desea eliminar %1$s con todas las fotos?</string>
