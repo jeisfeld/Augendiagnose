@@ -42,9 +42,12 @@
 
     <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
     <string name="message_dialog_select_photos_folder">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior.</string>
+    <string name="message_dialog_select_photos_folder_saf_new">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior. O aplicativo armazenará as fotos em uma nova subpasta «%1$s» da pasta selecionada.</string>
+    <string name="message_dialog_select_photos_folder_saf">Para oferecer suporte às versões mais recentes do Android, o aplicativo precisa consultar as permissões de pasta novamente. Na caixa de diálogo a seguir do Android, selecione a pasta «%1$s» onde você armazena as fotos dos olhos, e confirme a permissão.</string>
+    <string name="message_dialog_changed_photos_folder">Você selecionou uma pasta diferente «%2$s». Selecione a pasta «%1$s» onde as fotos dos olhos estão atualmente armazenadas.</string>
     <string name="message_dialog_select_input_folder">Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos e confirme na parte inferior.</string>
     <string name="message_dialog_select_input_folder_saf">Para oferecer suporte às versões mais recentes do Android, o aplicativo precisa consultar as permissões de pasta novamente. Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos %1$s e confirme a permissão.</string>
-    <string name="message_dialog_changed_input_folder">Você alterou sua pasta de entrada de %1$s para %2$s. Você pode alterá-lo novamente nas configurações.</string>
+    <string name="message_dialog_changed_input_folder">Você alterou sua pasta de entrada de «%1$s» para «%2$s». Você pode alterá-lo novamente nas configurações.</string>
 
     <string name="message_dialog_unformatted_file">O arquivo %1$s não está formatado corretamente</string>
     <string name="message_dialog_confirm_delete_date">Você realmente deseja excluir as fotos de %1$s de %2$s?</string>

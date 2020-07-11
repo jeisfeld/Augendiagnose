@@ -42,9 +42,12 @@
 
     <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>
     <string name="message_dialog_select_photos_folder">Wählen Sie im folgenden Android-Dialogfeld den Ordner aus, in dem Sie Augenfotos speichern möchten, und bestätigen Sie unten.</string>
+    <string name="message_dialog_select_photos_folder_saf_new">Wählen Sie im folgenden Android-Dialogfeld den Ordner aus, in dem Sie Augenfotos speichern möchten, und bestätigen Sie unten. Die App speichert die Fotos in einem neuen Unterordner „%1$s“ des ausgewählten Ordners.</string>
+    <string name="message_dialog_select_photos_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Ordner „%1$s“ aus, in dem Sie die Augenfotos speichern, und bestätigen Sie die Berechtigung.</string>
+    <string name="message_dialog_changed_photos_folder">Sie haben einen anderen Ordner „%2$s“ ausgewählt. Bitte wählen Sie den Ordner „%1$s“ aus, in dem die Augenfotos aktuell gespeichert sind.</string>
     <string name="message_dialog_select_input_folder">Wählen Sie im folgenden Android-Dialogfeld den Eingabeordner für neue Augenfotos aus und bestätigen Sie unten.</string>
-    <string name="message_dialog_select_input_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Eingabeordner für neue Augenfotos %1$s aus und bestätigen Sie die Berechtigung.</string>
-    <string name="message_dialog_changed_input_folder">Sie haben Ihren Eingabeordner von %1$s zu %2$s geändert. Sie können ihn wieder in den Einstellungen ändern.</string>
+    <string name="message_dialog_select_input_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Eingabeordner für neue Augenfotos „%1$s“ aus und bestätigen Sie die Berechtigung.</string>
+    <string name="message_dialog_changed_input_folder">Sie haben Ihren Eingabeordner von „%1$s“ zu „%2$s“ geändert. Sie können ihn wieder in den Einstellungen ändern.</string>
 
     <string name="message_dialog_unformatted_file">Datei %1$s ist falsch formatiert</string>
     <string name="message_dialog_confirm_delete_date">Wollen Sie die Fotos von %1$s vom %2$s wirklich löschen?</string>

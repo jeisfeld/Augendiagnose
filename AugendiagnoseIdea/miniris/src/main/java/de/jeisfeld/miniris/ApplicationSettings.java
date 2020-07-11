@@ -48,7 +48,7 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 
 	@Override
 	protected String[] getRequiredPermissions() {
-		// TODO: finally decide if this permission should be revoked for Q or only for R.
+		// TODO: replace by R
 		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
 			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 		}

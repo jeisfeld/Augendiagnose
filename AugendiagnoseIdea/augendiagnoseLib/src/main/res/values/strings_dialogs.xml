@@ -42,9 +42,12 @@
 
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_select_photos_folder">In the following Android dialog, please select the folder where you want to store eye photos and confirm at the bottom.</string>
+    <string name="message_dialog_select_photos_folder_saf_new">In the following Android dialog, please select the folder where you want to store eye photos and confirm at the bottom. The app will store the photos in a new subfolder “%1$s” of the selected folder.</string>
+    <string name="message_dialog_select_photos_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the folder “%1$s” where you store the eye photos and confirm permission.</string>
+    <string name="message_dialog_changed_photos_folder">You selected a different folder “%2$s”. Please select the folder “%1$s” where the eye photos are currently stored.</string>
     <string name="message_dialog_select_input_folder">In the following Android dialog, please select the input folder for new eye photos and confirm at the bottom.</string>
-    <string name="message_dialog_select_input_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the input folder for new eye photos %1$s and confirm permission.</string>
-    <string name="message_dialog_changed_input_folder">You changed your input folder from %1$s to %2$s. You can change it back in the settings.</string>
+    <string name="message_dialog_select_input_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the input folder for new eye photos “%1$s” and confirm permission.</string>
+    <string name="message_dialog_changed_input_folder">You changed your input folder from “%1$s to “%2$s”. You can change it back in the settings.</string>
 
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>

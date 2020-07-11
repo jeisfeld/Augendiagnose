@@ -14,6 +14,7 @@
 
     <string name="pref_title_folder_photos">Pasta de fotos dos olhos</string>
     <string name="pref_default_folder_photos">__ext_storage__/PhotosOcular</string>
+    <string name="pref_default_folder_name_photos">PhotosOcular</string>
     <string name="pref_default_folder_photos_11">__app_storage__/PhotosOcular</string>
     <string name="pref_title_folder_input">Pasta de entrada para novas fotos</string>
     <string name="pref_title_max_bitmap_size">Tamanho máximo de bitmaps</string>

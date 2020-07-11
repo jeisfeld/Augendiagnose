@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
@@ -25,9 +27,6 @@ import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 /**
  * Main activity of the application.
@@ -191,38 +190,43 @@ public class MainActivity extends StandardActivity {
 	@Override
 	protected final void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT && resultCode == RESULT_OK && data != null) {
-			Uri treeUri = data.getData();
-			PreferenceUtil.setSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input, treeUri);
-			String path = FileUtil.getFullPathFromTreeUri(treeUri);
-			PreferenceUtil.setSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input, path);
-			// Persist access permissions.
-			getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
-					& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
+		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
+			if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+				Uri treeUri = data.getData();
+				PreferenceUtil.setSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input, treeUri);
+				String path = FileUtil.getFullPathFromTreeUri(treeUri);
+				PreferenceUtil.setSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input, path);
+				// Persist access permissions.
+				getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
+						& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
 
-			if (mExpectedFolderInput != null && !mExpectedFolderInput.equals(path)) {
-				DialogUtil.displayInfo(this, new MessageDialogListener() {
-					/**
-					 * The serial version uid.
-					 */
-					private static final long serialVersionUID = 1L;
+				if (mExpectedFolderInput != null && !mExpectedFolderInput.equals(path)) {
+					DialogUtil.displayInfo(this, new MessageDialogListener() {
+						/**
+						 * The serial version uid.
+						 */
+						private static final long serialVersionUID = 1L;
 
-					@Override
-					public void onDialogClick(final DialogFragment dialog) {
-						mExpectedFolderInput = null;
-						restartActivity();
-					}
+						@Override
+						public void onDialogClick(final DialogFragment dialog) {
+							mExpectedFolderInput = null;
+							restartActivity();
+						}
 
-					@Override
-					public void onDialogCancel(final DialogFragment dialog) {
-						mExpectedFolderInput = null;
-						restartActivity();
-					}
-				}, R.string.message_dialog_changed_input_folder, mExpectedFolderInput, path);
+						@Override
+						public void onDialogCancel(final DialogFragment dialog) {
+							mExpectedFolderInput = null;
+							restartActivity();
+						}
+					}, R.string.message_dialog_changed_input_folder, mExpectedFolderInput, path);
+				}
+				else {
+					mExpectedFolderInput = null;
+					restartActivity();
+				}
 			}
 			else {
-				mExpectedFolderInput = null;
-				restartActivity();
+				finish();
 			}
 		}
 	}

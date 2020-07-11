@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -17,8 +21,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.documentfile.provider.DocumentFile;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -30,8 +36,10 @@ import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseQueryCompletedListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
+import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
+import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 
 /**
  * Base activity being the subclass of most application activities. Handles the help menu, and handles startup activities related to authorization.
@@ -49,6 +57,10 @@ public abstract class StandardActivity extends BaseActivity {
 	 * The request code used to query for permission.
 	 */
 	protected static final int REQUEST_CODE_PERMISSION = 6;
+	/**
+	 * The requestCode with which the storage access framework is triggered for eye photo folder.
+	 */
+	private static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 5;
 	/**
 	 * The resource key for the authorizaton with the unlocker app.
 	 */
@@ -76,6 +88,11 @@ public abstract class StandardActivity extends BaseActivity {
 	protected final boolean isCreationFailed() {
 		return mIsCreationFailed;
 	}
+
+	/**
+	 * The expected eye photo folder folder.
+	 */
+	private String mExpectedFolderPhotos = null;
 
 	// OVERRIDABLE
 	@Override
@@ -241,6 +258,39 @@ public abstract class StandardActivity extends BaseActivity {
 				}
 			}, getPermissionInfoResource());
 		}
+
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)
+				&& PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos) == null) {
+			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
+			int dialogResource = R.string.message_dialog_select_photos_folder_saf_new;
+			String dialogParameter = getString(R.string.pref_default_folder_name_photos);
+			if (initialVersion < Application.getVersion()) {
+				mExpectedFolderPhotos = PreferenceUtil.getSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_photos);
+				dialogResource = R.string.message_dialog_select_photos_folder_saf;
+				dialogParameter = mExpectedFolderPhotos;
+			}
+			DialogUtil.displayInfo(this, new MessageDialogListener() {
+				/**
+				 * The serial version UID.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+							Uri.parse("content://com.android.externalstorage.documents/tree/primary%3A"
+									+ getString(R.string.pref_default_folder_name_photos) + "/document/primary%3A"
+									+ getString(R.string.pref_default_folder_name_photos)));
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					finish();
+				}
+			}, dialogResource, dialogParameter);
+		}
 	}
 
 	/**
@@ -383,12 +433,72 @@ public abstract class StandardActivity extends BaseActivity {
 		else if (requestCode == REQUEST_CODE_RATING) {
 			queryRemoveRatingIcon();
 		}
+		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_PHOTOS) {
+			if (resultCode == RESULT_OK && data != null) {
+				if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+					handleSelectedPhotoFolderUri(data);
+				}
+			}
+			else {
+				finish();
+			}
+		}
 		else {
 			updateUnlockerAppStatus(false);
 			checkPremiumPackAfterAuthorizationFailure();
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
+
+	@RequiresApi(api = VERSION_CODES.Q)
+	private void handleSelectedPhotoFolderUri(final Intent data) {
+		Uri treeUri = data.getData();
+		String path = FileUtil.getFullPathFromTreeUri(treeUri);
+
+		if (treeUri == null || path == null) {
+			restartActivity();
+			return;
+		}
+
+		if (mExpectedFolderPhotos != null && !mExpectedFolderPhotos.equals(path)) {
+			DialogUtil.displayInfo(this, new MessageDialogListener() {
+				/**
+				 * The serial version uid.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+				}
+			}, R.string.message_dialog_changed_photos_folder, mExpectedFolderPhotos, path);
+		}
+		else {
+			String defaultFolderName = getString(R.string.pref_default_folder_name_photos);
+			if (!defaultFolderName.equals(new File(path).getName())) {
+				path = new File(path, defaultFolderName).getAbsolutePath();
+				DocumentFile documentFile = DocumentFile.fromTreeUri(this, treeUri);
+				if (documentFile != null && documentFile.findFile(defaultFolderName) == null) {
+					documentFile.createDirectory(defaultFolderName);
+				}
+			}
+			PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos, treeUri);
+			PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, path);
+			getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
+					& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
+			mExpectedFolderPhotos = null;
+			restartActivity();
+		}
+
+	}
+
 
 	/**
 	 * Get the array of required permissions.
