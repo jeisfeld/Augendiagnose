@@ -54,6 +54,10 @@
     <string name="button_show_later">Show again</string>
     <string name="button_rate">Rate the app</string>
     <string name="button_external_flash">External flash</string>
+    <string name="button_saf_migrate_now">Give permissions now</string>
+    <string name="button_saf_postpone">Postpone until later</string>
+    <string name="button_saf_postpone_upgrade">Postpone until Android upgrade</string>
+    <string name="button_saf_postpone_restart">Ask again</string>
     <string name="content_description_right_eye">Right Eye</string>
     <string name="content_description_left_eye">Left Eye</string>
     <string name="text_initializing">Initializing&#8230;</string>

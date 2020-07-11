@@ -103,8 +103,7 @@ public class MainActivity extends StandardActivity {
 	protected final void checkPermissions() {
 		super.checkPermissions();
 
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)
-				&& PreferenceUtil.getSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input) == null) {
+		if (isSafMigrationRequired(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input)) {
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
 			int dialogResource = R.string.message_dialog_select_input_folder;
 			if (initialVersion < Application.getVersion()) {
@@ -192,42 +191,54 @@ public class MainActivity extends StandardActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
 			if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-				Uri treeUri = data.getData();
-				PreferenceUtil.setSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input, treeUri);
-				String path = FileUtil.getFullPathFromTreeUri(treeUri);
-				PreferenceUtil.setSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input, path);
-				// Persist access permissions.
-				getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
-						& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
-
-				if (mExpectedFolderInput != null && !mExpectedFolderInput.equals(path)) {
-					DialogUtil.displayInfo(this, new MessageDialogListener() {
-						/**
-						 * The serial version uid.
-						 */
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void onDialogClick(final DialogFragment dialog) {
-							mExpectedFolderInput = null;
-							restartActivity();
-						}
-
-						@Override
-						public void onDialogCancel(final DialogFragment dialog) {
-							mExpectedFolderInput = null;
-							restartActivity();
-						}
-					}, R.string.message_dialog_changed_input_folder, mExpectedFolderInput, path);
-				}
-				else {
-					mExpectedFolderInput = null;
-					restartActivity();
+				if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+					handleSelectedInputFolderUri(data);
 				}
 			}
 			else {
+				SafMigrationStatus.NEED_TO_ASK.storeValue();
 				finish();
 			}
+		}
+	}
+
+	@RequiresApi(api = VERSION_CODES.Q)
+	private void handleSelectedInputFolderUri(final Intent data) {
+		Uri treeUri = data.getData();
+		String path = FileUtil.getFullPathFromTreeUri(treeUri);
+
+		if (treeUri == null || path == null) {
+			restartActivity();
+			return;
+		}
+
+		if (mExpectedFolderInput != null && !mExpectedFolderInput.equals(path)) {
+			DialogUtil.displayInfo(this, new MessageDialogListener() {
+				/**
+				 * The serial version uid.
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onDialogClick(final DialogFragment dialog) {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+				}
+
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+				}
+			}, de.jeisfeld.augendiagnoselib.R.string.message_dialog_changed_input_folder, mExpectedFolderInput, path);
+		}
+		else {
+			PreferenceUtil.setSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input, treeUri);
+			PreferenceUtil.setSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input, path);
+			getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
+					& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));
+			mExpectedFolderInput = null;
+			restartActivity();
 		}
 	}
 }

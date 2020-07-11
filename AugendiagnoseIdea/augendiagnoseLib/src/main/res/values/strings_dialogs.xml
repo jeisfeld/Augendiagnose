@@ -47,7 +47,9 @@
     <string name="message_dialog_changed_photos_folder">You selected a different folder “%2$s”. Please select the folder “%1$s” where the eye photos are currently stored.</string>
     <string name="message_dialog_select_input_folder">In the following Android dialog, please select the input folder for new eye photos and confirm at the bottom.</string>
     <string name="message_dialog_select_input_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the input folder for new eye photos “%1$s” and confirm permission.</string>
-    <string name="message_dialog_changed_input_folder">You changed your input folder from “%1$s to “%2$s”. You can change it back in the settings.</string>
+    <string name="message_dialog_changed_input_folder">You selected a different folder “%2$s”. Please select the current input folder “%1$s”.</string>
+    <string name="message_dialog_migrate_saf_now">With Android 11, you will need to give additional permissions to the app, so that it can still read and write the eye photos on the device. You can give the permissions already now. Do you want to do this now?</string>
+    <string name="message_dialog_migrate_saf_postpone">Do you want to do it on next app use, or do you want to postpone it until the device is upgraded to Android 11?</string>
 
     <string name="message_dialog_unformatted_file">File %1$s is not formatted correctly</string>
     <string name="message_dialog_confirm_delete_date">Do you really want to delete the photos of %1$s from %2$s?</string>

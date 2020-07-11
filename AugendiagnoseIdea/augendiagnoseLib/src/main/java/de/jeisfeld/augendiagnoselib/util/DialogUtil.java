@@ -54,6 +54,10 @@ public final class DialogUtil {
 	/**
 	 * Parameter to pass the text resource for the confirmation button to the ConfirmDialogFragment.
 	 */
+	private static final String PARAM_NEGATIVE_BUTTON_RESOURCE = "negativeButtonResource";
+	/**
+	 * Parameter to pass the text resource for the neutral button to the ConfirmDialogFragment.
+	 */
 	private static final String PARAM_BUTTON_RESOURCE = "buttonResource";
 	/**
 	 * Parameter to pass the callback listener to the ConfirmDialogFragment.
@@ -238,10 +242,27 @@ public final class DialogUtil {
 	public static void displayConfirmationMessage(@NonNull final Activity activity,
 												  final ConfirmDialogListener listener, final int buttonResource,
 												  final int messageResource, final Object... args) {
+		displayConfirmationMessage(activity, listener, buttonResource, R.string.button_cancel, args);
+	}
+
+	/**
+	 * Display a confirmation message asking for cancel or ok.
+	 *
+	 * @param activity               the current activity
+	 * @param negativeButtonResource the display in the negative button
+	 * @param listener               The listener waiting for the response
+	 * @param buttonResource         the display on the positive button
+	 * @param messageResource        the confirmation message
+	 * @param args                   arguments for the confirmation message
+	 */
+	public static void displayConfirmationMessage(@NonNull final Activity activity, final int negativeButtonResource,
+												  final ConfirmDialogListener listener, final int buttonResource,
+												  final int messageResource, final Object... args) {
 		String message = String.format(activity.getString(messageResource), args);
 		Bundle bundle = new Bundle();
 		bundle.putCharSequence(PARAM_MESSAGE, message);
 		bundle.putInt(PARAM_BUTTON_RESOURCE, buttonResource);
+		bundle.putInt(PARAM_NEGATIVE_BUTTON_RESOURCE, negativeButtonResource);
 		bundle.putSerializable(PARAM_LISTENER, listener);
 		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
 		fragment.setArguments(bundle);
@@ -268,7 +289,7 @@ public final class DialogUtil {
 	 * @param iconResource       The resource containing the icon.
 	 * @param messageResource    The resource containing the text of the tip.
 	 * @param preferenceResource The resource for the key of the preference storing the information if the tip should be skipped later.
-	 * @param isLayoutResource If true, then messageResource is a layout instead of a String.
+	 * @param isLayoutResource   If true, then messageResource is a layout instead of a String.
 	 */
 	public static void displayTip(@NonNull final Activity activity, final int titleResource, final int iconResource,
 								  final int messageResource, final int preferenceResource, final boolean isLayoutResource) {
@@ -383,7 +404,6 @@ public final class DialogUtil {
 	 * @param html The html
 	 * @return the text
 	 */
-	@SuppressWarnings("deprecation")
 	private static Spanned fromHtml23(final String html) {
 		return Html.fromHtml(html);
 	}
@@ -509,10 +529,8 @@ public final class DialogUtil {
 
 		@Override
 		public final Dialog onCreateDialog(final Bundle savedInstanceState) {
-			// VARIABLE_DISTANCE:OFF
-			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE); // STORE_PROPERTY
-			int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
-			// VARIABLE_DISTANCE:ON
+			final int confirmButtonResource = getArguments().getInt(PARAM_BUTTON_RESOURCE);
+			final int negativeButtonResource = getArguments().getInt(PARAM_NEGATIVE_BUTTON_RESOURCE);
 
 			mListener = (ConfirmDialogListener) getArguments().getSerializable(PARAM_LISTENER);
 			getArguments().putSerializable(PARAM_LISTENER, null);
@@ -530,6 +548,7 @@ public final class DialogUtil {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+			CharSequence message = getArguments().getCharSequence(PARAM_MESSAGE);
 			if (message.toString().startsWith(PREFIX_HTML)) {
 				WebView webView = new WebView(getActivity());
 				webView.setBackgroundColor(0x00000000);
@@ -545,7 +564,7 @@ public final class DialogUtil {
 
 			builder.setTitle(R.string.title_dialog_confirmation)
 					.setIcon(R.drawable.ic_title_warning)
-					.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+					.setNegativeButton(negativeButtonResource, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(final DialogInterface dialog, final int id) {
 							// Send the positive button event back to the host activity

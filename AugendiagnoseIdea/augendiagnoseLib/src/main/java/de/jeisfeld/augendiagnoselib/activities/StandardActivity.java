@@ -70,9 +70,9 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private static final String STRING_RESULT_RESPONSE_KEY = "de.jeisfeld.augendiagnoseunlocker.RESPONSE_KEY";
 	/**
-	 * The resource key for skipping startup hints.
+	 * The resource key for skipping startup messages.
 	 */
-	private static final String STRING_EXTRA_SKIP_STARTUP_HINTS = "de.jeisfeld.augendiagnoselib.SKIP_STARTUP_HINTS";
+	private static final String STRING_EXTRA_SKIP_STARTUP_MESSAGES = "de.jeisfeld.augendiagnoselib.SKIP_STARTUP_MESSAGES";
 
 	/**
 	 * The random string used for authorization versus unlocker app.
@@ -101,6 +101,12 @@ public abstract class StandardActivity extends BaseActivity {
 		DialogUtil.checkOutOfMemoryError(this);
 		test();
 
+		if (Intent.ACTION_MAIN.equals(getIntent().getAction()) && savedInstanceState == null
+				&& !getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, false)
+				&& SafMigrationStatus.getStoredValue() == SafMigrationStatus.POSTPONED) {
+			SafMigrationStatus.NEED_TO_ASK.storeValue();
+		}
+
 		checkPermissions();
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
@@ -116,7 +122,7 @@ public abstract class StandardActivity extends BaseActivity {
 			if (savedInstanceState == null) {
 				testOnce();
 
-				if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_HINTS, false)) {
+				if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, false)) {
 					// Initial tip is triggered first, so that it is hidden behind release notes.
 					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
 
@@ -259,8 +265,7 @@ public abstract class StandardActivity extends BaseActivity {
 			}, getPermissionInfoResource());
 		}
 
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q)
-				&& PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos) == null) {
+		if (isSafMigrationRequired(R.string.key_internal_uri_extsdcard_photos)) {
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
 			int dialogResource = R.string.message_dialog_select_photos_folder_saf_new;
 			String dialogParameter = getString(R.string.pref_default_folder_name_photos);
@@ -294,6 +299,60 @@ public abstract class StandardActivity extends BaseActivity {
 	}
 
 	/**
+	 * Check if migration to SAF is required.
+	 *
+	 * @param key the key for which migration should be checked.
+	 * @return true if required.
+	 */
+	protected boolean isSafMigrationRequired(final int key) {
+		if (PreferenceUtil.getSharedPreferenceUri(key) != null) {
+			return false;
+		}
+		// TODO: replace by R
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+			return true;
+		}
+		if (!SystemUtil.isAtLeastVersion(VERSION_CODES.Q)) {
+			return false;
+		}
+
+		SafMigrationStatus safMigrationStatus = SafMigrationStatus.getStoredValue();
+
+		if (safMigrationStatus == SafMigrationStatus.NOT_REQUIRED || safMigrationStatus == SafMigrationStatus.POSTPONED) {
+			return false;
+		}
+		if (safMigrationStatus == SafMigrationStatus.DO_MIGRATION) {
+			return true;
+		}
+
+		DialogUtil.displayConfirmationMessage(this, R.string.button_saf_postpone, new ConfirmDialogListener() {
+			@Override
+			public void onDialogPositiveClick(final DialogFragment dialog) {
+				SafMigrationStatus.DO_MIGRATION.storeValue();
+				restartActivity();
+			}
+
+			@Override
+			public void onDialogNegativeClick(final DialogFragment dialog) {
+				DialogUtil.displayConfirmationMessage(StandardActivity.this, R.string.button_saf_postpone_restart, new ConfirmDialogListener() {
+					@Override
+					public void onDialogPositiveClick(final DialogFragment dialog) {
+						SafMigrationStatus.NOT_REQUIRED.storeValue();
+						restartActivity();
+					}
+
+					@Override
+					public void onDialogNegativeClick(final DialogFragment dialog) {
+						SafMigrationStatus.POSTPONED.storeValue();
+						restartActivity();
+					}
+				}, R.string.button_saf_postpone_upgrade, R.string.message_dialog_migrate_saf_postpone);
+			}
+		}, R.string.button_saf_migrate_now, R.string.message_dialog_migrate_saf_now);
+		return false;
+	}
+
+	/**
 	 * After all other authorization options have failed, try to authorize via premium pack.
 	 */
 	private void checkPremiumPackAfterAuthorizationFailure() {
@@ -322,7 +381,7 @@ public abstract class StandardActivity extends BaseActivity {
 	protected void restartActivity() {
 		finish();
 		Intent intent = getIntent();
-		intent.putExtra(STRING_EXTRA_SKIP_STARTUP_HINTS, true);
+		intent.putExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, true);
 		startActivity(getIntent());
 	}
 
@@ -434,12 +493,13 @@ public abstract class StandardActivity extends BaseActivity {
 			queryRemoveRatingIcon();
 		}
 		else if (requestCode == REQUEST_CODE_STORAGE_ACCESS_PHOTOS) {
-			if (resultCode == RESULT_OK && data != null) {
+			if (resultCode == RESULT_OK && data != null && data.getData() != null) {
 				if (VERSION.SDK_INT >= VERSION_CODES.Q) {
 					handleSelectedPhotoFolderUri(data);
 				}
 			}
 			else {
+				SafMigrationStatus.NEED_TO_ASK.storeValue();
 				finish();
 			}
 		}
@@ -496,9 +556,7 @@ public abstract class StandardActivity extends BaseActivity {
 			mExpectedFolderPhotos = null;
 			restartActivity();
 		}
-
 	}
-
 
 	/**
 	 * Get the array of required permissions.
@@ -567,6 +625,51 @@ public abstract class StandardActivity extends BaseActivity {
 	 * Utility method - here it is possible to place code to be tested on each activity start.
 	 */
 	private void test() {
+	}
+
+
+	/**
+	 * The status when to do SAF upgrade.
+	 */
+	protected enum SafMigrationStatus {
+		/**
+		 * Need to ask for status.
+		 */
+		NEED_TO_ASK,
+		/**
+		 * No upgrade required (until possibly next Android upgrade).
+		 */
+		NOT_REQUIRED,
+		/**
+		 * Do the migration.
+		 */
+		DO_MIGRATION,
+		/**
+		 * Upgrade postponed to next restart.
+		 */
+		POSTPONED;
+
+		/**
+		 * Get the stored value.
+		 *
+		 * @return The stored value.
+		 */
+		protected static SafMigrationStatus getStoredValue() {
+			int ordinal = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_saf_migration_status, -1);
+			for (SafMigrationStatus safMigrationStatus : values()) {
+				if (safMigrationStatus.ordinal() == ordinal) {
+					return safMigrationStatus;
+				}
+			}
+			return NEED_TO_ASK;
+		}
+
+		/**
+		 * Store the value.
+		 */
+		public void storeValue() {
+			PreferenceUtil.setSharedPreferenceInt(R.string.key_internal_saf_migration_status, ordinal());
+		}
 	}
 
 }

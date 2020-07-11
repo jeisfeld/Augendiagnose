@@ -57,6 +57,7 @@
     <string name="key_internal_camera2_successful" translatable="false">camera2_successful</string>
     <string name="key_internal_initialized_hints" translatable="false">initialized_hints</string>
     <string name="key_internal_iris_detection_is_set" translatable="false">iris_detection_is_set</string>
+    <string name="key_internal_saf_migration_status" translatable="false">saf_migration_status</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
     <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>

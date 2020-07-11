@@ -42,6 +42,10 @@
     <string name="button_show_later">Mostrar novamente</string>
     <string name="button_rate">Avalie o aplicativo</string>
     <string name="button_external_flash">Flash externo</string>
+    <string name="button_saf_migrate_now">Dê permissões agora</string>
+    <string name="button_saf_postpone">Adiar até mais tarde</string>
+    <string name="button_saf_postpone_upgrade">Adiar até a atualização do Android</string>
+    <string name="button_saf_postpone_restart">Pergunte novamente</string>
     <string name="content_description_right_eye">Olho direito</string>
     <string name="content_description_left_eye">Olho esquerdo</string>
     <string name="text_initializing">Inicializando&#8230;</string>
