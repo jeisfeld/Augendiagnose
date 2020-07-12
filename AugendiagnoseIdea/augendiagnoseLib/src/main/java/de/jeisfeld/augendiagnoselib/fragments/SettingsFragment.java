@@ -666,7 +666,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// If not confirmed SAF, or if still not writable, then revert settings.
 		if (resultCode != Activity.RESULT_OK || !FileUtil.isWritableNormalOrSaf(mCurrentFolder)) {
-			DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder_saf, false,
+			DialogUtil.displayError(getActivity(), R.string.message_dialog_cannot_write_to_folder, false,
 					mCurrentFolder);
 
 			PreferenceUtil.setSharedPreferenceString(preferenceKeyFolder, oldFolder);

@@ -73,6 +73,10 @@ public abstract class StandardActivity extends BaseActivity {
 	 * The resource key for skipping startup messages.
 	 */
 	private static final String STRING_EXTRA_SKIP_STARTUP_MESSAGES = "de.jeisfeld.augendiagnoselib.SKIP_STARTUP_MESSAGES";
+	/**
+	 * The document URI of DCIM folder on primary card.
+	 */
+	protected static final Uri DCIM_URI = Uri.parse("content://com.android.externalstorage.documents/tree/primary%3ADCIM/document/primary%3ADCIM");
 
 	/**
 	 * The random string used for authorization versus unlocker app.
@@ -266,13 +270,23 @@ public abstract class StandardActivity extends BaseActivity {
 		}
 
 		if (isSafMigrationRequired(R.string.key_internal_uri_extsdcard_photos)) {
+			final int dialogResource;
+			final String dialogParameter;
+			final Uri initialUri;
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
-			int dialogResource = R.string.message_dialog_select_photos_folder_saf_new;
-			String dialogParameter = getString(R.string.pref_default_folder_name_photos);
 			if (initialVersion < Application.getVersion()) {
 				mExpectedFolderPhotos = PreferenceUtil.getSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_photos);
 				dialogResource = R.string.message_dialog_select_photos_folder_saf;
 				dialogParameter = mExpectedFolderPhotos;
+				initialUri = Uri.parse("content://com.android.externalstorage.documents/tree/primary%3A"
+						+ getString(R.string.pref_default_folder_name_photos) + "/document/primary%3A"
+						+ getString(R.string.pref_default_folder_name_photos));
+			}
+			else {
+				mExpectedFolderPhotos = null;
+				dialogResource = R.string.message_dialog_select_photos_folder_saf_new;
+				dialogParameter = getString(R.string.pref_default_folder_name_photos);
+				initialUri = DCIM_URI;
 			}
 			DialogUtil.displayInfo(this, new MessageDialogListener() {
 				/**
@@ -283,10 +297,7 @@ public abstract class StandardActivity extends BaseActivity {
 				@Override
 				public void onDialogClick(final DialogFragment dialog) {
 					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-					intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,
-							Uri.parse("content://com.android.externalstorage.documents/tree/primary%3A"
-									+ getString(R.string.pref_default_folder_name_photos) + "/document/primary%3A"
-									+ getString(R.string.pref_default_folder_name_photos)));
+					intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, initialUri);
 					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
 				}
 
@@ -325,7 +336,18 @@ public abstract class StandardActivity extends BaseActivity {
 			return true;
 		}
 
+		// now we are in UNKNOWN state in Android 10. For fresh installations in this version always use SAF.
+		if (PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1)
+				== Application.getVersion()) {
+			return true;
+		}
+
 		DialogUtil.displayConfirmationMessage(this, R.string.button_saf_postpone, new ConfirmDialogListener() {
+			/**
+			 * The serial version uid.
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onDialogPositiveClick(final DialogFragment dialog) {
 				SafMigrationStatus.DO_MIGRATION.storeValue();
@@ -335,14 +357,19 @@ public abstract class StandardActivity extends BaseActivity {
 			@Override
 			public void onDialogNegativeClick(final DialogFragment dialog) {
 				DialogUtil.displayConfirmationMessage(StandardActivity.this, R.string.button_saf_postpone_restart, new ConfirmDialogListener() {
+					/**
+					 * The serial version uid.
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void onDialogPositiveClick(final DialogFragment dialog) {
+					public void onDialogPositiveClick(final DialogFragment dialog2) {
 						SafMigrationStatus.NOT_REQUIRED.storeValue();
 						restartActivity();
 					}
 
 					@Override
-					public void onDialogNegativeClick(final DialogFragment dialog) {
+					public void onDialogNegativeClick(final DialogFragment dialog2) {
 						SafMigrationStatus.POSTPONED.storeValue();
 						restartActivity();
 					}
@@ -550,6 +577,31 @@ public abstract class StandardActivity extends BaseActivity {
 				}
 			}
 			PreferenceUtil.setSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos, treeUri);
+
+			// If still not writable, then revert settings.
+			if (!FileUtil.isWritableNormalOrSaf(new File(path))) {
+				PreferenceUtil.removeSharedPreference(R.string.key_internal_uri_extsdcard_photos);
+				DialogUtil.displayInfo(this, new MessageDialogListener() {
+					/**
+					 * The serial version uid.
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onDialogClick(final DialogFragment dialog) {
+						Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+						startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+					}
+
+					@Override
+					public void onDialogCancel(final DialogFragment dialog) {
+						Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+						startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+					}
+				}, R.string.message_dialog_cannot_write_to_folder, path);
+				return;
+			}
+
 			PreferenceUtil.setSharedPreferenceString(R.string.key_folder_photos, path);
 			getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
 					& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));

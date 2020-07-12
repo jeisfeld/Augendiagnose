@@ -14,8 +14,7 @@
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
     <string name="message_dialog_organized_photos">Die ausgewählten Fotos wurden eingeordnet. Es gibt noch weitere Fotos, die eingeordnet werden können.</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
-    <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis.</string>
-    <string name="message_dialog_cannot_write_to_folder_saf">Verzeichnis %1$s ist nicht schreibbar. Bitte stellen Sie sicher, dass Sie Schreibrechte für die ganze SD-Karte erteilen.</string>
+    <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis im internen Speicher oder auf der SD-Karte.</string>
     <string name="message_dialog_cannot_change_date">Das Datum der Fotos von %1$s vom %2$s kann nicht auf %3$s geändert werden, da schon Fotos dieses Datums existieren</string>
     <string name="message_dialog_no_organized_photos">Es sind keine eingeordneten Fotos zum anzeigen vorhanden. Bitte nehmen Sie zunächst ein Paar Augenfotos auf und weisen Sie Name und Datum zu.</string>
     <string name="message_dialog_file_does_not_exist">Datei %1$s existiert nicht</string>

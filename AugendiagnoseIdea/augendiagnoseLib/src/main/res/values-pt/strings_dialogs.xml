@@ -14,8 +14,7 @@
     <string name="message_dialog_select_name">Por favor selecione um nome</string>
     <string name="message_dialog_organized_photos">As fotos selecionadas foram organizadas. Existem mais fotos que podem ser organizadas.</string>
     <string name="message_dialog_cannot_create_folder">Não é possível criar a pasta %1$s</string>
-    <string name="message_dialog_cannot_write_to_folder">Não é possível gravar na pasta %1$s. Por favor, selecione uma pasta diferente.</string>
-    <string name="message_dialog_cannot_write_to_folder_saf">Não é possível gravar na pasta %1$s. Por favor, certifique-se de conceder direitos de acesso para o cartão SD completo.</string>
+    <string name="message_dialog_cannot_write_to_folder">Não é possível gravar na pasta %1$s. Por favor, selecione uma pasta diferente no armazenamento interno ou no cartão SD.</string>
     <string name="message_dialog_cannot_change_date">A data de %1$s fotos de %2$s não pode ser alterada para %3$s, pois já existem fotos para essa data</string>
     <string name="message_dialog_no_organized_photos">Nenhuma foto disponível para visualização. Por favor, tire primeiro algumas fotos dos olhos e atribua seu nome e data.</string>
     <string name="message_dialog_file_does_not_exist">O arquivo %1$s não existe.</string>

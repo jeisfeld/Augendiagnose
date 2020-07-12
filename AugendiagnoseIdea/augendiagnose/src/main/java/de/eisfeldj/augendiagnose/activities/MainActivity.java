@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
@@ -119,6 +121,7 @@ public class MainActivity extends StandardActivity {
 				@Override
 				public void onDialogClick(final DialogFragment dialog) {
 					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+					intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, DCIM_URI);
 					startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_INPUT);
 				}
 
@@ -234,6 +237,31 @@ public class MainActivity extends StandardActivity {
 		}
 		else {
 			PreferenceUtil.setSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input, treeUri);
+
+			// If still not writable, then revert settings.
+			if (!FileUtil.isWritableNormalOrSaf(new File(path))) {
+				PreferenceUtil.removeSharedPreference(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input);
+				DialogUtil.displayInfo(this, new MessageDialogListener() {
+					/**
+					 * The serial version uid.
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onDialogClick(final DialogFragment dialog) {
+						Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+						startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+					}
+
+					@Override
+					public void onDialogCancel(final DialogFragment dialog) {
+						Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+						startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS_INPUT);
+					}
+				}, de.jeisfeld.augendiagnoselib.R.string.message_dialog_cannot_write_to_folder, path);
+				return;
+			}
+
 			PreferenceUtil.setSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input, path);
 			getContentResolver().takePersistableUriPermission(treeUri, data.getFlags()
 					& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION));

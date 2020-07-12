@@ -129,8 +129,8 @@ public final class DialogUtil {
 	 * @param listener listener to react on dialog confirmation or dismissal.
 	 * @param args     arguments for the error message
 	 */
-	private static void displayError(@NonNull final Activity activity, final int resource, @Nullable final MessageDialogListener listener,
-									 final Object... args) {
+	public static void displayError(@NonNull final Activity activity, final int resource, @Nullable final MessageDialogListener listener,
+									final Object... args) {
 		String message = String.format(activity.getString(resource), args);
 		Log.w(Application.TAG, "Dialog message: " + message);
 		Bundle bundle = new Bundle();
@@ -242,7 +242,7 @@ public final class DialogUtil {
 	public static void displayConfirmationMessage(@NonNull final Activity activity,
 												  final ConfirmDialogListener listener, final int buttonResource,
 												  final int messageResource, final Object... args) {
-		displayConfirmationMessage(activity, listener, buttonResource, R.string.button_cancel, args);
+		displayConfirmationMessage(activity, R.string.button_cancel, listener, buttonResource, messageResource, args);
 	}
 
 	/**
