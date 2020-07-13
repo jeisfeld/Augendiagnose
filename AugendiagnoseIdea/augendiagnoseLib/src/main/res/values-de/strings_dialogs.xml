@@ -58,7 +58,7 @@
     <string name="message_dialog_confirm_delete_all_photos">Wollen Sie wirklich alle Fotos im Eingangsverzeichnis löschen?</string>
     <string name="message_dialog_confirm_no_jpeg">Die gewählten Fotos sind keine JPG-Fotos. Daher werden Teile der App (wie Speichern von Daten) nicht funktionieren. Wollen Sie trotzdem fortsetzen?</string>
     <string name="message_dialog_confirm_overwrite">Zum Namen „%1$s“ gibt es bereits Augenfotos vom %2$s. Wollen Sie diese überschreiben?\n\nAnsonsten wählen Sie bitte einen anderen Namen oder ein anderes Datum.</string>
-    <string name="message_dialog_confirm_need_file_permission">Die App benötigt Zugriff auf den Speicher, um auf Ihre Bilder zugreifen zu können. Bitte erlauben Sie diesen Zugriff - andernfalls wird die App nicht funktionieren.</string>
+    <string name="message_dialog_confirm_need_file_permission">Die App benötigt Zugriff auf den Speicher, um auf Ihre Bilder zugreifen zu können. Bitte erlauben Sie diesen Zugriff.</string>
     <string name="message_dialog_confirm_need_camera_permission">Bitte erlauben Sie den Zugriff auf die Kamera - andernfalls wird die App nicht funktionieren.</string>
     <string name="message_dialog_confirm_missing_permission">Die App kann nicht mit fehlenden obligatorischen Berechtigungen ausgeführt werden. App wird beendet.</string>
     <string name="message_dialog_confirm_rate_app">Wenn Ihnen die App gefällt, dann empfehlen Sie die App bitte weiter.\n\nWollen Sie eine Bewertung auf Google Play abgeben?</string>

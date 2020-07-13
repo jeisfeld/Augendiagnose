@@ -13,10 +13,10 @@
 
 <p>El objetivo de esta aplicación es la organización y visualización de fotos en los ojos. Antes del primer uso, es necesario
 hacer lo siguiente: </p>
-<p>1. Definir una carpeta de entrada para nuevas fotos oculares y 
-<a href="appcode://selectInputFolder">configurar la carpeta de entrada en los ajustes</a>.</p>
-<p>2. Copiar todas sus fotos oculares existentes en la carpeta de entrada.</p>
-<p>3. Asignar estas fotos a las personas y las fechas y cambiar a la carpeta de fotos ojo de la aplicación, utilizando la funcionalidad &laquo;Organizar nuevas fotos&raquo;.</p>
+<p>1. Defina una carpeta de entrada donde la aplicación recupere nuevas fotos de ojos, configure esta carpeta de entrada en la configuración y otorgue permisos a la aplicación para esta carpeta.</p>
+<p>2. (Android 10 o superior) Defina la carpeta donde la aplicación almacena las fotos de los ojos y otorgue permisos a la aplicación para esta carpeta.</p>
+<p>3. Copiar todas sus fotos oculares existentes en la carpeta de entrada.</p>
+<p>4. Asignar estas fotos a las personas y las fechas y cambiar a la carpeta de fotos ojo de la aplicación, utilizando la funcionalidad &laquo;Organizar nuevas fotos&raquo;.</p>
 <p>Después de esta preparación, puede utilizar la funcionalidad &laquo;Visualizar las fotos&raquo; para ver y analizar sus fotos.</p>
 
 <p>En la mayoría de las páginas de la aplicación hay un signo de interrogación en la esquina superior derecha - aquí se puede acceder a la página de ayuda.</p>
@@ -36,13 +36,6 @@ seguridad de sus archivos JPG, al menos cuando se utiliza el aplicación por
 primera vez con un nuevo dispositivo o con una nueva cámara. Por favor, me informen si aparecen estos problemas.
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[<h3>Nota importante:</h3> A partir de versión 1.0, la aplicación permite el uso gratuito
-        sólo para dos semanas, con limitaciones en el número de fotos. Uso adicional requiere la compra de un paquete premium.<br>
-        Los usuarios que utilizan la aplicación antes mantendrán todas las funciones, cuando la aplicación se queda instalado.<br>
-        Nuevas instalaciones sólo se darán acceso de prueba.]]>
-    </string>
-
     <string-array name="releasenotes_version_notes">
         <item>Versión inicial. Permite organizar las fotos en una carpeta de destino, y para mostrar pares de fotos.</item>
         <item>Funcionalidad básica de superposiciones</item>

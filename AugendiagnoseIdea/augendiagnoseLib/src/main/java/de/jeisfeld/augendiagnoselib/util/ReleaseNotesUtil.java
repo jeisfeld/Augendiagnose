@@ -64,12 +64,6 @@ public final class ReleaseNotesUtil {
 			message.append(context.getString(R.string.releasenotes_first_usage));
 		}
 		else {
-			int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
-			int currentRemarkVersion = Integer.parseInt(context.getString(R.string.releasenotes_current_remark_version));
-			if (storedVersion < currentRemarkVersion) {
-				message.append(context.getString(R.string.releasenotes_current_remark));
-			}
-
 			message.append("<h3>");
 			message.append(context.getString(R.string.releasenotes_changes));
 			message.append("</h3>");

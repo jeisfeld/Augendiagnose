@@ -13,10 +13,10 @@
 
 <p>O objetivo desta aplicação é a organização e visualização de fotos nos olhos. Antes do primeiro uso, é necessário
 Faça o seguinte:</p>
-<p>1. Defina uma pasta de entrada para novas fotos de olhos e
-<a href="appcode://selectInputFolder">defina a pasta de entrada nas configurações</a>.</p>
-<p>2. Copie todas as fotos dos seus olhos existentes na pasta de entrada.</p>
-<p>3. Atribua essas fotos a pessoas e datas e mude para a pasta de fotos de olhos do aplicativo, usando a funcionalidade &laquo;Organizar novas fotos&raquo ;.</p>
+<p>1. Defina uma pasta de entrada na qual o aplicativo recupera novas fotos oculares, configure esta pasta de entrada nas configurações e conceda ao aplicativo permissões para esta pasta.</p>
+<p>2. (Android 10 ou superior) Defina a pasta em que o aplicativo armazena fotos dos olhos e conceda permissões ao aplicativo para esta pasta.</p>
+<p>3. Copie todas as fotos dos seus olhos existentes na pasta de entrada.</p>
+<p>4. Atribua essas fotos a pessoas e datas e mude para a pasta de fotos de olhos do aplicativo, usando a funcionalidade &laquo;Organizar novas fotos&raquo ;.</p>
 <p>Após essa preparação, você pode usar a funcionalidade &laquo;Visualizar as fotos&raquo; para ver e analisar suas fotos.</p>
 
 <p>Na maioria das páginas do aplicativo, há um ponto de interrogação no canto superior direito - aqui você pode acessar a página de ajuda.</p>
@@ -36,13 +36,6 @@ segurança de seus arquivos JPG, pelo menos quando você usa o aplicativo para
 Primeira vez com um novo dispositivo ou com uma nova câmera. Por favor, informe-me se esses problemas aparecerem.
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[<h3>Nota importante:</h3> A partir da versão 1.0, o aplicativo permite uso livre
-         apenas por duas semanas, com limitações no número de fotos. O uso adicional requer a compra de um pacote premium. br>
-         Os usuários que usam o aplicativo antes manterão todas as funções, quando o aplicativo permanecer instalado.<br>
-         Novas instalações só terão acesso experimental.]]>
-    </string>
-	
     <string-array name="releasenotes_version_notes">
         <item>Versão inicial. Ele permite que você organize fotos em uma pasta de destino e mostre pares de fotos.</item>
         <item>Funcionalidade básica de sobreposições</item>

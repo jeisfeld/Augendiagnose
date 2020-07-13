@@ -13,10 +13,10 @@
 
 <p>Diese App dient der Organisation und Anzeige von Augenfotos.
 Vor der ersten Benutzung sind folgende Schritte erforderlich:</p>
-<p>1. Legen Sie ein Eingangsverzeichnis für neue Augenfotos fest, und 
-<a href="appcode://selectInputFolder">konfigurieren Sie das Eingangsverzeichnis in den Einstellungen</a>.</p>
-<p>2. Kopieren Sie ihre vorhandenen Augenfotos in das Eingangsverzeichnis.</p>
-<p>3. Nutzen Sie die Funktion &bdquo;Neue Fotos einordnen&ldquo;, um Ihre Fotos Personen und Daten zuzuordnen und die Fotos
+<p>1. Definieren Sie ein Eingangsverzeichnis, in dem die App neue Augenfotos abruft, konfigurieren Sie dieses Eingangsverzeichnis in den Einstellungen und erteilen Sie der App Berechtigungen für diesen Ordner.</p>
+<p>2. (Android 10 oder höher) Definieren Sie den Ordner, in dem die App Augenfotos speichert, und erteilen Sie der App Berechtigungen für diesen Ordner.</p>
+<p>3. Kopieren Sie ihre vorhandenen Augenfotos in das Eingangsverzeichnis.</p>
+<p>4. Nutzen Sie die Funktion &bdquo;Neue Fotos einordnen&ldquo;, um Ihre Fotos Personen und Daten zuzuordnen und die Fotos
 in das Augenfoto-Verzeichnis der App zu verschieben.</p>
 <p>Nach dieser Vorbereitung können Sie die Funktion &bdquo;Fotos anzeigen&ldquo; nutzen, um Ihre Fotos zu analysieren.</p>
 
@@ -37,15 +37,6 @@ vorzuhalten, wenn Sie die App zum ersten Mal mit einem neuen Smartphone/Tablet o
 Kamera benutzen. Bitte informieren Sie mich, wenn solche Probleme auftreten.</p>
 ]]>
     </string>
-    <string name="releasenotes_current_remark">
-<![CDATA[<h3>Wichtiger Hinweis:</h3> Ab Version 1.0 ermöglicht die App die kostenlose Nutzung
-        nur für einen Testzeitraum von zwei Wochen, mit Beschränkungen für die Anzahl der Fotos. Weitere Nutzung ist nur nach Erwerb
-        eines Premium-Packs möglich.<br>
-        Benutzern, die frühere Versionen der App bereits nutzten, bleibt die volle Funktionalität erhalten, solange
-        die App installiert bleibt.<br>
-        Für neue Installationen gilt eine freie Nutzung für zwei Wochen.]]>
-    </string>
-
     <string-array name="releasenotes_version_notes">
         <item>Erste Version. Erlaubt die Organisation der Fotos, und die Anzeige von ein oder zwei Augenfotos.</item>
         <item>Overlays können über die Bilder gelegt werden.</item>

@@ -8,6 +8,8 @@
 	<p>This app allows free use only for two weeks, with limitations on the number of photos.</p>
 
 	<p>Please test the app. If you find it useful, then you may purchase a premium pack within the app that allows unlimited use.</p>
+
+	<p>Before you can use the app, you need to give permission to read/write files in the folder where the app stores eye photos.</p>
 ]]>
     </string>
 
