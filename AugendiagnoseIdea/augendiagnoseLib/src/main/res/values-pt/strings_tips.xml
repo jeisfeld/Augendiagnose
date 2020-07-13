@@ -4,12 +4,12 @@
     <string name="message_tip_firstuse">
 <![CDATA[
 	<h2>Primeiros passos:</h2>
-	<p><b>Passo 1:</b> Vá para as configurações e ajuste a pasta de entrada do &laquo;para novas fotos&raquo; para a pasta onde estão localizadas as novas fotos dos seus olhos</p>
-	<p><b>Passo 2:</b> Vá para a ação &laquo;Organizar novas fotos&raquo; e atribua nomes e datas para suas fotos de olhos.
+	<p>Se a pasta de entrada ainda não estiver definida, faça isso nas <a href="appcode://selectInputFolder">configurações</a>. Então:</p>
+	<p><b>Passo 1:</b> Vá para a ação &laquo;Organizar novas fotos&raquo; e atribua nomes e datas para suas fotos de olhos.
 Observe que as fotos serão renomeadas e movidas para a &laquo;Pasta de fotos dos olhos&raquo;.
 O primeiro uso, recomenda-se manter as cópias de backup das fotos em outro lugar.
 	</p>
-	<p><b>Passo 3:</b> Vá para a ação &laquo;Visualize as fotos&raquo; e selecione um nome para o qual você deseja ver as fotos.
+	<p><b>Passo 2:</b> Vá para a ação &laquo;Visualize as fotos&raquo; e selecione um nome para o qual você deseja ver as fotos.
 Em seguida, clique na foto para ver as fotos.
 	</p>
 	<p>Veja as páginas de ajuda correspondentes para mais informações.</p>

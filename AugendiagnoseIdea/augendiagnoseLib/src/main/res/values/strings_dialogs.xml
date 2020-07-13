@@ -59,7 +59,7 @@
     <string name="message_dialog_confirm_no_jpeg">The selected photos are no JPG photos. Therefore, part of the functionality (such as storing information) will not work. Do you want to continue?</string>
     <string name="message_dialog_confirm_overwrite">For the name “%1$s” there are already eye photos from %2$s. Do you want to overwrite these?\n\nOtherwise, please select a different name or date.</string>
     <string name="message_dialog_confirm_need_file_permission">This app needs to have permission on your external storage in order to access the images. Please provide this access.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Please provide access to the camera - otherwise the app will not work.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Please provide access to the camera.</string>
     <string name="message_dialog_confirm_missing_permission">The app cannot run with missing mandatory permissions. Finishing app.</string>
     <string name="message_dialog_confirm_rate_app">If you like the app, then please recommend it.\n\nWould you like to rate it on Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">Do you want to remove the rating icon from the app?</string>

@@ -59,7 +59,7 @@
     <string name="message_dialog_confirm_no_jpeg">As fotos selecionadas não são fotos JPG. Portanto, parte da funcionalidade (como armazenamento de informações) não funcionará. Você quer continuar?</string>
     <string name="message_dialog_confirm_overwrite">Para o nome «%1$s» já existem fotos de olho de %2$s. Deseja sobrescrever estes?\n\nSe caso contrário, selecione um nome ou data diferente.</string>
     <string name="message_dialog_confirm_need_file_permission">Este aplicativo deve ter a permissão de seu armazenamento externo para acessar as imagens. Por favor, forneça este acesso.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Por favor, forneça acesso à câmera - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Por favor, forneça acesso à câmera.</string>
     <string name="message_dialog_confirm_missing_permission">O aplicativo não pode ser executado com as permissões obrigatórias ausentes. O aplicativo está saindo.</string>
     <string name="message_dialog_confirm_rate_app">Se você gosta do aplicativo, por favor, eu recomendo. Gostaria de avaliá-lo no Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">Deseja excluir o ícone de classificação do aplicativo?</string>

@@ -74,6 +74,10 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private static final String STRING_EXTRA_SKIP_STARTUP_MESSAGES = "de.jeisfeld.augendiagnoselib.SKIP_STARTUP_MESSAGES";
 	/**
+	 * The resource key for skipping startup messages.
+	 */
+	private static final String STRING_EXTRA_SKIP_FIRSTUSE_TIPP = "de.jeisfeld.augendiagnoselib.SKIP_FIRSTUSE_TIPP";
+	/**
 	 * The document URI of DCIM folder on primary card.
 	 */
 	protected static final Uri DCIM_URI = Uri.parse("content://com.android.externalstorage.documents/tree/primary%3ADCIM/document/primary%3ADCIM");
@@ -111,7 +115,14 @@ public abstract class StandardActivity extends BaseActivity {
 			SafMigrationStatus.NEED_TO_ASK.storeValue();
 		}
 
-		checkPermissions();
+		if (!checkGeneralPermissions()) {
+			mIsCreationFailed = true;
+			return;
+		}
+		final boolean hasRequiredSafPermissions = checkSafPermissions();
+		if (!hasRequiredSafPermissions) {
+			mIsCreationFailed = true;
+		}
 
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			// Check authorization.
@@ -123,22 +134,30 @@ public abstract class StandardActivity extends BaseActivity {
 				return;
 			}
 
+			if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, false)) {
+				// When starting from launcher, check if started the first time in this version. If yes, display release
+				// notes.
+				int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
+				int currentVersion = Application.getVersion();
+
+				if (storedVersion < currentVersion) {
+					ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
+				}
+				getIntent().putExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, true);
+			}
+
+			if (!hasRequiredSafPermissions) {
+				// when triggering SAF dialogs, only show first use dialog.
+				return;
+			}
+
+			if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_FIRSTUSE_TIPP, false)) {
+				DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
+				getIntent().putExtra(STRING_EXTRA_SKIP_FIRSTUSE_TIPP, true);
+			}
+
 			if (savedInstanceState == null) {
 				testOnce();
-
-				if (!getIntent().getBooleanExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, false)) {
-					// Initial tip is triggered first, so that it is hidden behind release notes.
-					DialogUtil.displayTip(this, R.string.message_tip_firstuse, R.string.key_tip_firstuse);
-
-					// When starting from launcher, check if started the first time in this version. If yes, display release
-					// notes.
-					int storedVersion = PreferenceUtil.getSharedPreferenceIntString(R.string.key_internal_stored_version, null);
-					int currentVersion = Application.getVersion();
-
-					if (storedVersion < currentVersion) {
-						ReleaseNotesUtil.displayReleaseNotes(this, storedVersion == 0, storedVersion + 1, currentVersion);
-					}
-				}
 
 				// Check unlocker app.
 				checkUnlockerApp();
@@ -241,10 +260,10 @@ public abstract class StandardActivity extends BaseActivity {
 
 	/**
 	 * Check if the app has all required permissions.
+	 *
+	 * @return true if all permissions are there.
 	 */
-	//OVERRIDABLE
-	protected void checkPermissions() {
-		// Check permissions for Android 6
+	private boolean checkGeneralPermissions() {
 		final String[] missingPermissions = checkMissingPermissions();
 
 		if (missingPermissions.length > 0) {
@@ -267,9 +286,21 @@ public abstract class StandardActivity extends BaseActivity {
 					finish();
 				}
 			}, getPermissionInfoResource());
+			return false;
 		}
+		else {
+			return true;
+		}
+	}
 
-		if (isSafMigrationRequired(R.string.key_internal_uri_extsdcard_photos)) {
+	/**
+	 * Check if the app has all required SAF folder permissions.
+	 *
+	 * @return true if all SAF permissions are in place.
+	 */
+	//OVERRIDABLE
+	protected boolean checkSafPermissions() {
+		if (isSafEnablementRequired(R.string.key_internal_uri_extsdcard_photos)) {
 			final int dialogResource;
 			final String dialogParameter;
 			final Uri initialUri;
@@ -306,6 +337,10 @@ public abstract class StandardActivity extends BaseActivity {
 					finish();
 				}
 			}, dialogResource, dialogParameter);
+			return false;
+		}
+		else {
+			return true;
 		}
 	}
 
@@ -315,7 +350,7 @@ public abstract class StandardActivity extends BaseActivity {
 	 * @param key the key for which migration should be checked.
 	 * @return true if required.
 	 */
-	protected boolean isSafMigrationRequired(final int key) {
+	protected boolean isSafEnablementRequired(final int key) {
 		if (PreferenceUtil.getSharedPreferenceUri(key) != null) {
 			return false;
 		}
@@ -407,8 +442,6 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	protected void restartActivity() {
 		finish();
-		Intent intent = getIntent();
-		intent.putExtra(STRING_EXTRA_SKIP_STARTUP_MESSAGES, true);
 		startActivity(getIntent());
 	}
 

@@ -1566,19 +1566,6 @@ public class CameraActivity extends StandardActivity {
 	}
 
 	@Override
-	public final void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
-		if (requestCode == REQUEST_CODE_PERMISSION) {
-			// If request is cancelled, the result arrays are empty.
-			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				setupActivity();
-			}
-			else {
-				DialogUtil.displayError(this, R.string.message_dialog_confirm_missing_permission, true);
-			}
-		}
-	}
-
-	@Override
 	protected final void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_GALLERY) {
 			String fileName = MediaStoreUtil.getRealPathFromUri(data.getData());

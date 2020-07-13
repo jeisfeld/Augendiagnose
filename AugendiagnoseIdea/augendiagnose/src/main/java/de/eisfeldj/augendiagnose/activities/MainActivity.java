@@ -48,7 +48,7 @@ public class MainActivity extends StandardActivity {
 		super.onCreate(savedInstanceState);
 
 		if (isCreationFailed()) {
-			finish();
+			return;
 		}
 
 		if (VERSION.SDK_INT >= VERSION_CODES.N && isInMultiWindowMode() && !SystemUtil.isTablet()) {
@@ -102,10 +102,8 @@ public class MainActivity extends StandardActivity {
 	}
 
 	@Override
-	protected final void checkPermissions() {
-		super.checkPermissions();
-
-		if (isSafMigrationRequired(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input)) {
+	protected final boolean checkSafPermissions() {
+		if (isSafEnablementRequired(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input)) {
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
 			int dialogResource = R.string.message_dialog_select_input_folder;
 			if (initialVersion < Application.getVersion()) {
@@ -130,9 +128,12 @@ public class MainActivity extends StandardActivity {
 					finish();
 				}
 			}, dialogResource, mExpectedFolderInput);
+			return false;
+		}
+		else {
+			return super.checkSafPermissions();
 		}
 	}
-
 
 	/**
 	 * onClick action for Button to open the Eye-Fi app.

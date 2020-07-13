@@ -58,8 +58,8 @@
     <string name="message_dialog_confirm_delete_all_photos">¿Realmente desea eliminar todas las fotos de la carpeta de entrada?</string>
     <string name="message_dialog_confirm_no_jpeg">Las fotos seleccionadas no son JPG fotos. Por lo tanto, parte de la funcionalidad (tal como almacenamiento de información) no funcionará. ¿Quiere continuar?</string>
     <string name="message_dialog_confirm_overwrite">Para el nombre «%1$s» ya hay fotos de ojo de %2$s. ¿Desea sobrescribir estos?\n\nDe lo contrario, por favor seleccione un nombre o una fecha diferente.</string>
-    <string name="message_dialog_confirm_need_file_permission">Esta aplicación tiene que tener el permiso de su almacenamiento externo con el fin de acceder a las imágenes. Por favor, proporcionar este acceso.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Por favor, proporcionar acceso a la cámara - de lo contrario la aplicación no funcionará.</string>
+    <string name="message_dialog_confirm_need_file_permission">Esta aplicación tiene que tener el permiso de su almacenamiento externo con el fin de acceder a las imágenes. Por favor, proporcione este acceso.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Por favor, proporcionar acceso a la cámara.</string>
     <string name="message_dialog_confirm_missing_permission">La aplicación no puede ejecutarse con permisos obligatorios faltantes. La aplicación está saliendo.</string>
     <string name="message_dialog_confirm_rate_app">Si le gusta la aplicación, por favor, lo recomiendo. ¿Le gustaría calificarla en Google Play?</string>
     <string name="message_dialog_confirm_rate_icon">¿Desea eliminar el icono de calificación de la aplicación?</string>

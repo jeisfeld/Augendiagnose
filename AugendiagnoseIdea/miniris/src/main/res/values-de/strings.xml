@@ -8,7 +8,7 @@
     <string name="section_select_photos" />
     <string name="menu_move_to_input_folder">Anderen Namen zuweisen</string>
 
-    <string name="message_dialog_confirm_need_file_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte geben Sie diesen Zugang an - sonst funktioniert die App nicht.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte geben Sie diesen Zugang an - sonst funktioniert die App nicht.</string>
+    <string name="message_dialog_confirm_need_file_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte erlauben Sie diesen Zugriff.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Diese App muss über die Berechtigung für Kamera und Speicher verfügen, um Bilder aufnehmen und speichern zu können. Bitte erlauben Sie diesen Zugriff.</string>
 
 </resources>

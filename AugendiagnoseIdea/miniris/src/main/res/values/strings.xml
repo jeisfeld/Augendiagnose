@@ -12,8 +12,8 @@
     <bool name="flag_go_to_organize_after_move_to_input">true</bool>
     <bool name="flag_overwrite_by_camera_from_organize">true</bool>
 
-    <string name="message_dialog_confirm_need_file_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access - otherwise the app will not work.</string>
-    <string name="message_dialog_confirm_need_camera_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access - otherwise the app will not work.</string>
+    <string name="message_dialog_confirm_need_file_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access.</string>
+    <string name="message_dialog_confirm_need_camera_permission">This app needs to have permission on camera and storage for taking images and storing them. Please provide this access.</string>
 
     <!-- Resources configuring behaviour of activities in the app -->
 

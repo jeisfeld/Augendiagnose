@@ -6,7 +6,7 @@
     <string name="section_select_photos" />
     <string name="menu_move_to_input_folder">Atribuir um nome diferente</string>
 
-    <string name="message_dialog_confirm_need_file_permission">Este aplicativo precisa ter permissão na câmera e no armazenamento para capturar imagens e armazená-las. Forneça esse acesso - caso contrário, o aplicativo não funcionará.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Este aplicativo precisa ter permissão na câmera e no armazenamento para capturar imagens e armazená-las. Forneça esse acesso - caso contrário, o aplicativo não funcionará.</string>
+    <string name="message_dialog_confirm_need_file_permission">Este aplicativo precisa ter permissão na câmera e no armazenamento para capturar imagens e armazená-las. Por favor, forneça este acesso.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Este aplicativo precisa ter permissão na câmera e no armazenamento para capturar imagens e armazená-las. Por favor, forneça este acesso.</string>
 
 </resources>

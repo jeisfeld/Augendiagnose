@@ -4,12 +4,12 @@
     <string name="message_tip_firstuse">
 <![CDATA[
 	<h2>Primeros pasos:</h2>
-	<p><b>Paso 1:</b> Vaya a la configuración y ajuste la &laquo;carpeta de entrada para nuevas fotos&raquo; a la carpeta donde se encuentran sus nuevas fotos oculares</p>
-	<p><b>Paso 2:</b> Vaya a la acción &laquo;Organizar nuevas fotos&raquo; y asigne nombres y fechas para sus fotos de ojo.
+	<p>Si la carpeta de entrada aún no está configurada, hágalo en las <a href="appcode://selectInputFolder">ajustes</a>. Luego:</p>
+	<p><b>Paso 1:</b> Vaya a la acción &laquo;Organizar nuevas fotos&raquo; y asigne nombres y fechas para sus fotos de ojo.
 			Tenga en cuenta que las fotos serán renombrados y se trasladaron a la &laquo;Carpeta de fotos oculares&raquo;.
 			El primer uso, se recomienda mantener las copias de seguridad de las fotos en alguna otra parte.
 	</p>
-	<p><b>Paso 3:</b> Vaya a la acción &laquo;Visualizar las fotos&raquo; y seleccione un nombre para el que desea ver las fotos.
+	<p><b>Paso 2:</b> Vaya a la acción &laquo;Visualizar las fotos&raquo; y seleccione un nombre para el que desea ver las fotos.
 		Luego haga clic en la foto para ver las fotos.
 	</p>
 	<p>Vea las páginas de ayuda correspondientes para obtener más información.</p>

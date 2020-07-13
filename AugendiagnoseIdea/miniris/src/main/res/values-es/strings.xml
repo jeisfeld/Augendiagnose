@@ -8,7 +8,7 @@
     <string name="section_select_photos" />
     <string name="menu_move_to_input_folder">Asignar un nombre diferente</string>
 
-    <string name="message_dialog_confirm_need_file_permission">Esta aplicación necesita tener permiso en la cámara y el almacenamiento para tomar imágenes y almacenarlas. Proporcione este acceso; de lo contrario, la aplicación no funcionará.</string>
-    <string name="message_dialog_confirm_need_camera_permission">Esta aplicación necesita tener permiso en la cámara y el almacenamiento para tomar imágenes y almacenarlas. Proporcione este acceso; de lo contrario, la aplicación no funcionará.</string>
+    <string name="message_dialog_confirm_need_file_permission">Esta aplicación necesita tener permiso en la cámara y el almacenamiento para tomar imágenes y almacenarlas. Por favor, proporcione este acceso.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Esta aplicación necesita tener permiso en la cámara y el almacenamiento para tomar imágenes y almacenarlas. Por favor, proporcione este acceso.</string>
 
 </resources>
