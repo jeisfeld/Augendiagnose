@@ -17,7 +17,6 @@ import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -624,14 +623,9 @@ public class CameraActivity extends StandardActivity {
 					Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 					mNewExternalFile = FileUtil.getTempJpegFile();
 
-					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-						takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mNewExternalFile));
-					}
-					else {
-						Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
-								getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
-						takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-					}
+					Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
+							getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
+					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 					takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 					if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) == null) {
 						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_enable_external_camera, false);
