@@ -10,6 +10,7 @@
     <string name="title_activity_list_pictures_for_name">Fotos wählen</string>
     <string name="title_activity_list_pictures_for_second_name">Zweites Foto wählen</string>
     <string name="title_activity_select_two_pictures">Zwei neue Fotos auswählen</string>
+    <string name="title_activity_request_saf">Ordnerberechtigung erteilen</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_camera">Kamera</string>
     <string name="title_purchase">Kaufen</string>

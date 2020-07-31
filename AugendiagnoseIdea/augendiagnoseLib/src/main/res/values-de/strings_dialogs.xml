@@ -12,7 +12,8 @@
     <string name="message_dialog_no_photos_for_name">Keine Augenfotos vorhanden</string>
     <string name="message_dialog_no_photos_in_input_folder">Keine Augenfotos im Eingangsverzeichnis. Sie können Fotos aus der Galerie importieren.</string>
     <string name="message_dialog_select_name">Bitte wählen Sie einen Namen aus</string>
-    <string name="message_dialog_organized_photos">Die ausgewählten Fotos wurden eingeordnet. Es gibt noch weitere Fotos, die eingeordnet werden können.</string>
+    <string name="message_dialog_organized_photos">Die ausgewählten Fotos wurden eingeordnet.</string>
+    <string name="message_dialog_moved_to_input_folder">Die ausgewählten Fotos wurden in das Eingangsverzeichnis verschoben.</string>
     <string name="message_dialog_cannot_create_folder">Verzeichnis %1$s kann nicht erstellt werden</string>
     <string name="message_dialog_cannot_write_to_folder">Verzeichnis %1$s ist nicht schreibbar. Bitte wählen Sie ein anderes Verzeichnis im internen Speicher oder auf der SD-Karte.</string>
     <string name="message_dialog_cannot_change_date">Das Datum der Fotos von %1$s vom %2$s kann nicht auf %3$s geändert werden, da schon Fotos dieses Datums existieren</string>
@@ -42,9 +43,11 @@
     <string name="message_dialog_select_extsdcard">Bitte wählen Sie im folgenden Android-Dialog Ihre SD-Karte (entweder das Hauptverzeichnis der Karte oder das ausgewählte Unterverzeichnis), und bestätigen Sie am unteren Ende.</string>
     <string name="message_dialog_select_photos_folder">Wählen Sie im folgenden Android-Dialogfeld den Ordner aus, in dem Sie Augenfotos speichern möchten, und bestätigen Sie unten.</string>
     <string name="message_dialog_select_photos_folder_saf_new">Wählen Sie im folgenden Android-Dialogfeld den Ordner aus, in dem Sie Augenfotos speichern möchten, und bestätigen Sie unten. Die App speichert die Fotos in einem neuen Unterordner „%1$s“ des ausgewählten Ordners.</string>
+    <string name="message_dialog_select_photos_folder_saf_redo">Es scheint Probleme mit dem Zugriff auf den Augenfotoordner zu geben. Wählen Sie im folgenden Android-Dialogfeld den Ordner „%1$s“ aus, in dem Sie die Augenfotos speichern, und bestätigen Sie die Berechtigung.</string>
     <string name="message_dialog_select_photos_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Ordner „%1$s“ aus, in dem Sie die Augenfotos speichern, und bestätigen Sie die Berechtigung.</string>
     <string name="message_dialog_changed_photos_folder">Sie haben einen anderen Ordner „%2$s“ ausgewählt. Bitte wählen Sie den Ordner „%1$s“ aus, in dem die Augenfotos aktuell gespeichert sind.</string>
     <string name="message_dialog_select_input_folder">Wählen Sie im folgenden Android-Dialogfeld den Eingangsordner für neue Augenfotos aus und bestätigen Sie unten.</string>
+    <string name="message_dialog_select_input_folder_saf_redo">Wählen Sie im folgenden Android-Dialogfeld den Eingangsordner für neue Augenfotos „%1$s“ aus und bestätigen Sie die Berechtigung.</string>
     <string name="message_dialog_select_input_folder_saf">Um die neuesten Android-Versionen zu unterstützen, muss die App erneut nach Ordnerberechtigungen fragen. Wählen Sie im folgenden Android-Dialogfeld den Eingangsordner für neue Augenfotos „%1$s“ aus und bestätigen Sie die Berechtigung.</string>
     <string name="message_dialog_changed_input_folder">Sie haben einen anderen Ordner „%2$s“ ausgewählt. Bitte wählen Sie den aktuellen Eingangsordner „%1$s“.</string>
     <string name="message_dialog_migrate_saf_now">Bei Android 11 müssen Sie der App zusätzliche Berechtigungen erteilen, damit sie weiterhin die Augenfotos auf dem Gerät lesen und schreiben kann. Sie können die Berechtigungen bereits jetzt erteilen. Wollen Sie das jetzt machen?</string>

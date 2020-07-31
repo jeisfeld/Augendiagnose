@@ -60,7 +60,7 @@ public abstract class StandardActivity extends BaseActivity {
 	/**
 	 * The requestCode with which the storage access framework is triggered for eye photo folder.
 	 */
-	private static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 5;
+	protected static final int REQUEST_CODE_STORAGE_ACCESS_PHOTOS = 5;
 	/**
 	 * The resource key for the authorizaton with the unlocker app.
 	 */
@@ -306,7 +306,7 @@ public abstract class StandardActivity extends BaseActivity {
 			final Uri initialUri;
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
 			if (initialVersion < Application.getVersion()) {
-				mExpectedFolderPhotos = PreferenceUtil.getSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_photos);
+				setExpectedFolderPhotos(PreferenceUtil.getSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_photos));
 				dialogResource = R.string.message_dialog_select_photos_folder_saf;
 				dialogParameter = mExpectedFolderPhotos;
 				initialUri = Uri.parse("content://com.android.externalstorage.documents/tree/primary%3A"
@@ -314,7 +314,7 @@ public abstract class StandardActivity extends BaseActivity {
 						+ getString(R.string.pref_default_folder_name_photos));
 			}
 			else {
-				mExpectedFolderPhotos = null;
+				setExpectedFolderPhotos(null);
 				dialogResource = R.string.message_dialog_select_photos_folder_saf_new;
 				dialogParameter = getString(R.string.pref_default_folder_name_photos);
 				initialUri = DCIM_URI;
@@ -325,6 +325,7 @@ public abstract class StandardActivity extends BaseActivity {
 				 */
 				private static final long serialVersionUID = 1L;
 
+				@RequiresApi(api = VERSION_CODES.O)
 				@Override
 				public void onDialogClick(final DialogFragment dialog) {
 					Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
@@ -342,6 +343,15 @@ public abstract class StandardActivity extends BaseActivity {
 		else {
 			return true;
 		}
+	}
+
+	/**
+	 * Set the folder expected as eye photo folder when triggering SAF.
+	 *
+	 * @param folder The folder expected as eye photo folder.
+	 */
+	protected void setExpectedFolderPhotos(final String folder) {
+		mExpectedFolderPhotos = folder;
 	}
 
 	/**
@@ -570,6 +580,11 @@ public abstract class StandardActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * Process the URI returned from SAF for eye photo folder.
+	 *
+	 * @param data The returned data.
+	 */
 	@RequiresApi(api = VERSION_CODES.Q)
 	private void handleSelectedPhotoFolderUri(final Intent data) {
 		Uri treeUri = data.getData();

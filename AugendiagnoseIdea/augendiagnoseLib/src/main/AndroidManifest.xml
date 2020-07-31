@@ -79,6 +79,9 @@
             android:name="de.jeisfeld.augendiagnoselib.activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
+            android:name="de.jeisfeld.augendiagnoselib.activities.RequestSafActivity"
+            android:label="@string/title_activity_request_saf" />
+        <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.DisplayHtmlActivity"
             android:label="@string/title_help"
             tools:ignore="UnusedAttribute" />

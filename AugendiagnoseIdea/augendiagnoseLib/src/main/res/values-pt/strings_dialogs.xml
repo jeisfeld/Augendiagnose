@@ -12,7 +12,8 @@
     <string name="message_dialog_no_photos_for_name">Não há foto dos olhos disponíveis</string>
     <string name="message_dialog_no_photos_in_input_folder">Não há imagens na pasta de entrada. Você pode importar fotos da galeria.</string>
     <string name="message_dialog_select_name">Por favor selecione um nome</string>
-    <string name="message_dialog_organized_photos">As fotos selecionadas foram organizadas. Existem mais fotos que podem ser organizadas.</string>
+    <string name="message_dialog_organized_photos">As fotos selecionadas foram organizadas.</string>
+    <string name="message_dialog_moved_to_input_folder">As fotos selecionadas foram movidas para a pasta de entrada.</string>
     <string name="message_dialog_cannot_create_folder">Não é possível criar a pasta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">Não é possível gravar na pasta %1$s. Por favor, selecione uma pasta diferente no armazenamento interno ou no cartão SD.</string>
     <string name="message_dialog_cannot_change_date">A data de %1$s fotos de %2$s não pode ser alterada para %3$s, pois já existem fotos para essa data</string>
@@ -42,9 +43,11 @@
     <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
     <string name="message_dialog_select_photos_folder">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior.</string>
     <string name="message_dialog_select_photos_folder_saf_new">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior. O aplicativo armazenará as fotos em uma nova subpasta «%1$s» da pasta selecionada.</string>
+    <string name="message_dialog_select_photos_folder_saf_redo">Parece haver problemas com o acesso à pasta de fotos oculares. Na caixa de diálogo a seguir do Android, selecione a pasta «%1$s» onde você armazena as fotos dos olhos, e confirme a permissão.</string>
     <string name="message_dialog_select_photos_folder_saf">Para oferecer suporte às versões mais recentes do Android, o aplicativo precisa consultar as permissões de pasta novamente. Na caixa de diálogo a seguir do Android, selecione a pasta «%1$s» onde você armazena as fotos dos olhos, e confirme a permissão.</string>
     <string name="message_dialog_changed_photos_folder">Você selecionou uma pasta diferente «%2$s». Selecione a pasta «%1$s» onde as fotos dos olhos estão atualmente armazenadas.</string>
     <string name="message_dialog_select_input_folder">Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos e confirme na parte inferior.</string>
+    <string name="message_dialog_select_input_folder_saf_redo">Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos %1$s e confirme a permissão.</string>
     <string name="message_dialog_select_input_folder_saf">Para oferecer suporte às versões mais recentes do Android, o aplicativo precisa consultar as permissões de pasta novamente. Na caixa de diálogo a seguir do Android, selecione a pasta de entrada para novas fotos dos olhos %1$s e confirme a permissão.</string>
     <string name="message_dialog_changed_input_folder">Você selecionou uma pasta diferente «%2$s». Por favor, selecione a pasta de entrada atual «%1$s».</string>
     <string name="message_dialog_migrate_saf_now">Com o Android 11, você precisará conceder permissões adicionais ao aplicativo, para que ele ainda possa ler e gravar as fotos dos olhos no dispositivo. Você pode dar as permissões já agora. Deseja fazer isso agora?</string>

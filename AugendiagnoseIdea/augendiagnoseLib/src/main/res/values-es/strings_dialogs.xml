@@ -12,7 +12,8 @@
     <string name="message_dialog_no_photos_for_name">No hay ninguna foto de los ojos disponibles</string>
     <string name="message_dialog_no_photos_in_input_folder">No hay imágenes en la carpeta de entrada. Puede importar fotos de la galería.</string>
     <string name="message_dialog_select_name">Por favor seleccione un nombre</string>
-    <string name="message_dialog_organized_photos">Se han organizado las fotos seleccionadas. Hay más fotos que se pueden organizar.</string>
+    <string name="message_dialog_organized_photos">Se han organizado las fotos seleccionadas.</string>
+    <string name="message_dialog_moved_to_input_folder">Las fotos seleccionadas se han movido a la carpeta de entrada.</string>
     <string name="message_dialog_cannot_create_folder">No se puede crear la carpeta %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">No se puede escribir en la carpeta %1$s. Por favor, seleccione una carpeta diferente en el almacenamiento interno o en la tarjeta SD.</string>
     <string name="message_dialog_cannot_change_date">La fecha de las fotos de %1$s de %2$s no se puede cambiar a %3$s, ya que ya hay fotos para esta fecha</string>
@@ -42,9 +43,11 @@
     <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
     <string name="message_dialog_select_photos_folder">En el siguiente cuadro de diálogo de Android, seleccione la carpeta donde desea almacenar las fotos de los ojos y confirme en la parte inferior.</string>
     <string name="message_dialog_select_photos_folder_saf_new">En el siguiente cuadro de diálogo de Android, seleccione la carpeta donde desea almacenar las fotos de los ojos y confirme en la parte inferior. La aplicación almacenará las fotos en una nueva subcarpeta «%1$s» de la carpeta seleccionada.</string>
+    <string name="message_dialog_select_photos_folder_saf_redo">Parece haber problemas con el acceso a la carpeta de fotos del ojo. En el siguiente cuadro de diálogo de Android, seleccione la carpeta «%1$s» donde almacena las fotos de los ojos, y confirme el permiso.</string>
     <string name="message_dialog_select_photos_folder_saf">Para admitir las últimas versiones de Android, la aplicación debe volver a consultar los permisos de carpeta. En el siguiente cuadro de diálogo de Android, seleccione la carpeta «%1$s» donde almacena las fotos de los ojos, y confirme el permiso.</string>
     <string name="message_dialog_changed_photos_folder">Seleccionó una carpeta diferente «%2$s». Seleccione la carpeta «%1$s» donde se almacenan actualmente las fotos del ojo.</string>
     <string name="message_dialog_select_input_folder">En el siguiente cuadro de diálogo de Android, seleccione la carpeta de entrada para nuevas fotos de ojos y confirme en la parte inferior.</string>
+    <string name="message_dialog_select_input_folder_saf_redo">En el siguiente cuadro de diálogo de Android, seleccione la carpeta de entrada para nuevas fotos de ojos %1$s y confirme el permiso.</string>
     <string name="message_dialog_select_input_folder_saf">Para admitir las últimas versiones de Android, la aplicación debe volver a consultar los permisos de carpeta. En el siguiente cuadro de diálogo de Android, seleccione la carpeta de entrada para nuevas fotos de ojos %1$s y confirme el permiso.</string>
     <string name="message_dialog_changed_input_folder">Seleccionó una carpeta diferente «%2$s». Seleccione la carpeta de entrada actual «%1$s».</string>
     <string name="message_dialog_migrate_saf_now">Con Android 11, deberá otorgar permisos adicionales a la aplicación, para que aún pueda leer y escribir las fotos de los ojos en el dispositivo. Puede dar los permisos ya ahora. ¿Quiere hacer esto ahora?</string>
