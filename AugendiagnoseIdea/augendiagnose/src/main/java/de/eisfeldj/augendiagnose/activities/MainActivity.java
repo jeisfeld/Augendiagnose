@@ -13,8 +13,6 @@ import android.widget.Button;
 import java.io.File;
 import java.util.ArrayList;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
@@ -29,6 +27,9 @@ import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 /**
  * Main activity of the application.
@@ -103,6 +104,14 @@ public class MainActivity extends StandardActivity {
 
 	@Override
 	protected final boolean checkSafPermissions() {
+		if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			if (PreferenceUtil.getSharedPreferenceUri(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input) != null
+					&& !FileUtil.isWritableNormalOrSaf(
+							new File(PreferenceUtil.getSharedPreferenceString(de.jeisfeld.augendiagnoselib.R.string.key_folder_input)))) {
+				PreferenceUtil.removeSharedPreference(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input);
+			}
+		}
+
 		if (isSafEnablementRequired(de.jeisfeld.augendiagnoselib.R.string.key_internal_uri_extsdcard_input)) {
 			int initialVersion = PreferenceUtil.getSharedPreferenceInt(de.jeisfeld.augendiagnoselib.R.string.key_statistics_initialversion, -1);
 			int dialogResource = R.string.message_dialog_select_input_folder;

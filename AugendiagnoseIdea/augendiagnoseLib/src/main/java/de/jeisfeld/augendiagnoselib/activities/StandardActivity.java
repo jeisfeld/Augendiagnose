@@ -119,6 +119,7 @@ public abstract class StandardActivity extends BaseActivity {
 			mIsCreationFailed = true;
 			return;
 		}
+
 		final boolean hasRequiredSafPermissions = checkSafPermissions();
 		if (!hasRequiredSafPermissions) {
 			mIsCreationFailed = true;
@@ -300,6 +301,13 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	//OVERRIDABLE
 	protected boolean checkSafPermissions() {
+		if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			if (PreferenceUtil.getSharedPreferenceUri(R.string.key_internal_uri_extsdcard_photos) != null
+					&& !FileUtil.isWritableNormalOrSaf(new File(PreferenceUtil.getSharedPreferenceString(R.string.key_folder_photos)))) {
+				PreferenceUtil.removeSharedPreference(R.string.key_internal_uri_extsdcard_photos);
+			}
+		}
+
 		if (isSafEnablementRequired(R.string.key_internal_uri_extsdcard_photos)) {
 			final int dialogResource;
 			final String dialogParameter;
