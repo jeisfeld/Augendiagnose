@@ -206,11 +206,6 @@ public class MainActivity extends StandardActivity {
 		}
 	}
 
-	/**
-	 * Process the URI returned from SAF for input folder.
-	 *
-	 * @param data The returned data.
-	 */
 	@RequiresApi(api = VERSION_CODES.Q)
 	private void handleSelectedInputFolderUri(final Intent data) {
 		Uri treeUri = data.getData();

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.activities.RequestSafActivity;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
@@ -197,12 +196,13 @@ public final class JpegSynchronizationUtil {
 			if (e != null) {
 				if (e instanceof ExifStorageException) {
 					Log.e(TAG, "Failed to save file " + mPathname, e);
-					DialogUtil.displayToast(Application.getAppContext(), R.string.message_dialog_failed_to_store_exif, mPathname);
+					DialogUtil.displayToast(Application.getAppContext(),
+							R.string.message_dialog_failed_to_store_exif, mPathname);
 				}
 				else {
 					Log.e(TAG, "Failed to store EXIF data for file " + mPathname, e);
-					DialogUtil.displayToast(Application.getAppContext(), R.string.message_dialog_failed_to_store_metadata, mPathname);
-					RequestSafActivity.startActivity(Application.getAppContext());
+					DialogUtil.displayToast(Application.getAppContext(),
+							R.string.message_dialog_failed_to_store_metadata, mPathname);
 				}
 			}
 			else {

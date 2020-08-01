@@ -12,8 +12,7 @@
     <string name="message_dialog_no_photos_for_name">No eye photos available</string>
     <string name="message_dialog_no_photos_in_input_folder">There are no pictures in the input folder. You may import photos from the gallery.</string>
     <string name="message_dialog_select_name">Please select a name</string>
-    <string name="message_dialog_organized_photos">The selected photos have been organized.</string>
-    <string name="message_dialog_moved_to_input_folder">The selected photos have been moved to the input folder.</string>
+    <string name="message_dialog_organized_photos">The selected photos have been organized. There are more photos that may be organized.</string>
     <string name="message_dialog_cannot_create_folder">Cannot create folder %1$s</string>
     <string name="message_dialog_cannot_write_to_folder">Cannot write to folder %1$s. Please select a different folder in internal storage or SD card.</string>
     <string name="message_dialog_cannot_change_date">The date of the photos of %1$s from %2$s cannot be changed to %3$s, as there are already photos for this date</string>
@@ -43,11 +42,9 @@
     <string name="message_dialog_select_extsdcard">In the following Android dialog, please select the external SD card (either the full card or your selected folder) and confirm at the bottom.</string>
     <string name="message_dialog_select_photos_folder">In the following Android dialog, please select the folder where you want to store eye photos and confirm at the bottom.</string>
     <string name="message_dialog_select_photos_folder_saf_new">In the following Android dialog, please select the folder where you want to store eye photos and confirm at the bottom. The app will store the photos in a new subfolder “%1$s” of the selected folder.</string>
-    <string name="message_dialog_select_photos_folder_saf_redo">There seem to be issues with access to the eye photo folder. In the following Android dialog, please select the folder “%1$s” where you store the eye photos and confirm permission.</string>
     <string name="message_dialog_select_photos_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the folder “%1$s” where you store the eye photos and confirm permission.</string>
     <string name="message_dialog_changed_photos_folder">You selected a different folder “%2$s”. Please select the folder “%1$s” where the eye photos are currently stored.</string>
     <string name="message_dialog_select_input_folder">In the following Android dialog, please select the input folder for new eye photos and confirm at the bottom.</string>
-    <string name="message_dialog_select_input_folder_saf_redo">In the following Android dialog, please select the input folder for new eye photos “%1$s” and confirm permission.</string>
     <string name="message_dialog_select_input_folder_saf">In order to support latest Android versions, the app needs to query for folder permissions again. In the following Android dialog, please select the input folder for new eye photos “%1$s” and confirm permission.</string>
     <string name="message_dialog_changed_input_folder">You selected a different folder “%2$s”. Please select the current input folder “%1$s”.</string>
     <string name="message_dialog_migrate_saf_now">With Android 11, you will need to give additional permissions to the app, so that it can still read and write the eye photos on the device. You can give the permissions already now. Do you want to do this now?</string>

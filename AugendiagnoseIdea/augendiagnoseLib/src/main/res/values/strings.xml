@@ -9,7 +9,6 @@
     <string name="package_mobi" translatable="false">com.eyefi.android.mobi</string>
     <bool name="flag_go_to_organize_after_move_to_input">false</bool>
     <bool name="flag_overwrite_by_camera_from_organize">false</bool>
-    <bool name="flag_requires_input_folder">true</bool>
     <bool name="hide_button_view_images">false</bool>
 
     <!-- Generic constants -->
@@ -22,7 +21,6 @@
     <string name="title_activity_list_pictures_for_name">Select Pictures</string>
     <string name="title_activity_list_pictures_for_second_name">Select Second Picture</string>
     <string name="title_activity_select_two_pictures">Select Two Pictures</string>
-    <string name="title_activity_request_saf">Grant folder permission</string>
     <string name="title_settings">Settings</string>
     <string name="title_camera">Camera</string>
     <string name="title_purchase">Purchase</string>

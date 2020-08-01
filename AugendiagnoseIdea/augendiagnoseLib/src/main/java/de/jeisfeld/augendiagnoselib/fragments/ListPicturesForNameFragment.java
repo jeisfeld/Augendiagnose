@@ -185,9 +185,6 @@ public class ListPicturesForNameFragment extends ListPicturesForNameBaseFragment
 								PreferenceUtil.getSharedPreferenceBoolean(R.string.key_eye_sequence_choice),
 								NextAction.VIEW_IMAGES);
 					}
-					else {
-						DialogUtil.displayToast(getActivity(), R.string.message_dialog_moved_to_input_folder);
-					}
 				}
 				else {
 					DialogUtil.displayError(ListPicturesForNameFragment.this.getActivity(),

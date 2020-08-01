@@ -141,10 +141,7 @@ public final class FileUtil {
 					return false;
 				}
 
-				if (outStream == null) {
-					return false;
-				}
-				else {
+				if (outStream != null) {
 					// Both for SAF and for Kitkat, write to output stream.
 					byte[] buffer = new byte[4096]; // MAGIC_NUMBER
 					int bytesRead;
@@ -237,6 +234,7 @@ public final class FileUtil {
 	public static boolean moveFile(@NonNull final File source, @NonNull final File target) {
 		// First try the normal rename.
 		boolean success = source.renameTo(target);
+
 		if (!success && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && source.getParent().equals(target.getParent())) {
 			// Storage Access Framework
 			DocumentFile sourceDocument = getDocumentFile(source, false, false);

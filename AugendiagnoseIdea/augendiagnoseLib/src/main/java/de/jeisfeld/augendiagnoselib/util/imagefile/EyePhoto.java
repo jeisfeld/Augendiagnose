@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
-import de.jeisfeld.augendiagnoselib.activities.RequestSafActivity;
 import de.jeisfeld.augendiagnoselib.util.DateUtil;
 
 /**
@@ -104,11 +103,11 @@ public class EyePhoto {
 	/**
 	 * Create the EyePhoto, giving details.
 	 *
-	 * @param path      The file path
-	 * @param name      The person name
-	 * @param date      The date
+	 * @param path The file path
+	 * @param name The person name
+	 * @param date The date
 	 * @param rightLeft right or left eye?
-	 * @param suffix    File suffix (".jpg")
+	 * @param suffix File suffix (".jpg")
 	 */
 	public EyePhoto(final String path, final String name, final Date date, final RightLeft rightLeft,
 					@NonNull final String suffix) {
@@ -265,7 +264,7 @@ public class EyePhoto {
 	 * Set the date from a String.
 	 *
 	 * @param dateString the date string
-	 * @param format     the date format
+	 * @param format the date format
 	 * @return true if successful.
 	 */
 	private boolean setDateString(final String dateString, final String format) {
@@ -344,7 +343,7 @@ public class EyePhoto {
 	/**
 	 * Move the eye photo to a target path and target personName (given via EyePhoto object).
 	 *
-	 * @param target         the file information of the target file.
+	 * @param target the file information of the target file.
 	 * @param allowOverwrite if true, then an existing file is overwritten.
 	 * @return true if the renaming was successful.
 	 */
@@ -353,17 +352,13 @@ public class EyePhoto {
 			return false;
 		}
 
-		boolean success = FileUtil.moveFile(getFile(), target.getFile());
-		if (!success) {
-			RequestSafActivity.startActivity(Application.getAppContext());
-		}
-		return success;
+		return FileUtil.moveFile(getFile(), target.getFile());
 	}
 
 	/**
 	 * Move the eye photo to a target folder.
 	 *
-	 * @param folderName   the target folder
+	 * @param folderName the target folder
 	 * @param createUnique if true, then a unique target file name is created if a file with the same name exists in the target folder.
 	 * @return true if the move was successful.
 	 */
@@ -435,11 +430,7 @@ public class EyePhoto {
 			return false;
 		}
 
-		boolean success = FileUtil.copyFile(getFile(), target.getFile());
-		if (!success) {
-			RequestSafActivity.startActivity(Application.getAppContext());
-		}
-		return success;
+		return FileUtil.copyFile(getFile(), target.getFile());
 	}
 
 	/**
