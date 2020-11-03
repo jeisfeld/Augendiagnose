@@ -26,8 +26,8 @@ dependencies {
     api files('libs/xmpcore.jar')
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'com.google.firebase:firebase-core:17.4.4'
-    implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.android.billingclient:billing:3.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
