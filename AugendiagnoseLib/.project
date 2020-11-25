@@ -71,7 +71,7 @@
 		<link>
 			<name>libs-local/R.jar</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseLib/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/R.jar</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/AugendiagnoseIdea/augendiagnoseLib/build/intermediates/compile_r_class_jar/debug/R.jar</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
