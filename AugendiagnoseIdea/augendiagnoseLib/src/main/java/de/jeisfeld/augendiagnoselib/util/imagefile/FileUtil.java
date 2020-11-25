@@ -844,6 +844,9 @@ public final class FileUtil {
 
 		// start with root of SD card and then parse through document tree.
 		DocumentFile document = DocumentFile.fromTreeUri(Application.getAppContext(), treeUri);
+		if (document == null) {
+			return null;
+		}
 
 		if (fullPath.equals(baseFolder)) {
 			return document;
@@ -934,36 +937,20 @@ public final class FileUtil {
 	 * @return The path.
 	 */
 	private static String getVolumePath(final String volumeId) {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+		if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
 			return null;
 		}
-
-		try {
+		else if (VERSION.SDK_INT >= VERSION_CODES.R) {
 			StorageManager storageManager = (StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
 
-			Class<?> storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
-
-			Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
-			Method getUuid = storageVolumeClazz.getMethod("getUuid");
-			Method getPath = storageVolumeClazz.getMethod("getPath");
-			Method isPrimary = storageVolumeClazz.getMethod("isPrimary");
-			Object result = getVolumeList.invoke(storageManager);
-
-			final int length = Array.getLength(result);
-			for (int i = 0; i < length; i++) {
-				Object storageVolumeElement = Array.get(result, i);
-				String uuid = (String) getUuid.invoke(storageVolumeElement);
-				Boolean primary = (Boolean) isPrimary.invoke(storageVolumeElement);
-
-				// primary volume?
-				if (primary && PRIMARY_VOLUME_NAME.equals(volumeId)) {
-					return (String) getPath.invoke(storageVolumeElement);
+			for (StorageVolume storageVolume : storageManager.getStorageVolumes()) {
+				File directory = storageVolume.getDirectory();
+				if (storageVolume.isPrimary() && PRIMARY_VOLUME_NAME.equals(volumeId)) {
+					return directory == null ? null : directory.getAbsolutePath();
 				}
-
-				// other volumes?
-				if (uuid != null) {
-					if (uuid.equals(volumeId)) {
-						return (String) getPath.invoke(storageVolumeElement);
+				else if (storageVolume.getUuid() != null) {
+					if (storageVolume.getUuid().equals(volumeId)) {
+						return directory == null ? null : directory.getAbsolutePath();
 					}
 				}
 			}
@@ -971,8 +958,43 @@ public final class FileUtil {
 			// not found.
 			return null;
 		}
-		catch (Exception ex) {
-			return null;
+		else {
+			try {
+				StorageManager storageManager = (StorageManager) Application.getAppContext().getSystemService(Context.STORAGE_SERVICE);
+
+				Class<?> storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+
+				Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
+				Method getUuid = storageVolumeClazz.getMethod("getUuid");
+				Method getPath = storageVolumeClazz.getMethod("getPath");
+				Method isPrimary = storageVolumeClazz.getMethod("isPrimary");
+				Object result = getVolumeList.invoke(storageManager);
+
+				final int length = result == null ? 0 : Array.getLength(result);
+				for (int i = 0; i < length; i++) {
+					Object storageVolumeElement = Array.get(result, i);
+					String uuid = (String) getUuid.invoke(storageVolumeElement);
+					Boolean primary = (Boolean) isPrimary.invoke(storageVolumeElement);
+
+					// primary volume?
+					if (primary != null && primary && PRIMARY_VOLUME_NAME.equals(volumeId)) {
+						return (String) getPath.invoke(storageVolumeElement);
+					}
+
+					// other volumes?
+					if (uuid != null) {
+						if (uuid.equals(volumeId)) {
+							return (String) getPath.invoke(storageVolumeElement);
+						}
+					}
+				}
+
+				// not found.
+				return null;
+			}
+			catch (Exception ex) {
+				return null;
+			}
 		}
 	}
 
