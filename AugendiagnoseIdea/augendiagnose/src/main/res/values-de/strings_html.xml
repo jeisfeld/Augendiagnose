@@ -3,454 +3,427 @@
 
     <string name="html_release_notes_base">
 <![CDATA[
-<html>
-<head>
-<title>Augendiagnose - Release Notes</title>
-</head>
-<body>
 	<h2>Augendiagnose - Release Notes</h2>
-</body>
-</html>
 ]]>
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
-<html>
-<head><title>Augendiagnose - Übersicht</title></head>
-<body>
-	<h2>Augendiagnose - Übersicht</h2>
+<h2>Augendiagnose - Übersicht</h2>
 
 	
 	Diese App dient dazu, Fotografien von Augen im Detail anzuschauen und zu vergleichen, im Rahmen der medizinischen
 	Augendiagnose.
 
-	<h3>Funktionalitäten</h3>
+<h3>Funktionalitäten</h3>
 
-	<ul>
-		<li>Organisation von Augenfotos nach Name, Datum und Körperseite (rechts/links)</li>
+<ul>
+	<li>Organisation von Augenfotos nach Name, Datum und Körperseite (rechts/links)</li>
 
-		<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalität), so dass man zwei Fotos vergleichen kann (z.B.
-			Vergleich rechts-links, Vergleich früher-später, Vergleich zweier Personen, oder Vergleich eines Fotos mit einer
-			Iristopographie).</li>
+	<li>Gleichzeigige Anzeige zweier Fotos (mit voller Zoom-Funktionalität), so dass man zwei Fotos vergleichen kann (z.B.
+		Vergleich rechts-links, Vergleich früher-später, Vergleich zweier Personen, oder Vergleich eines Fotos mit einer
+		Iristopographie).</li>
 
-		<li>Änderung von Helligkeit und Kontrast eines Augenfotos bei der Anzeige, und Anzeige des Fotos mit einer
-			eingeblendeten Iristopographie (als Overlay)</li>
+	<li>Änderung von Helligkeit und Kontrast eines Augenfotos bei der Anzeige, und Anzeige des Fotos mit einer
+		eingeblendeten Iristopographie (als Overlay)</li>
 
-		<li>Sie können auch Informationen in den Fotos speichern, z.B. Helligkeitsanpassungen und Kommentare. Um Informationen
-			speichern zu können und die volle Funktionalität der App nutzen zu können, brauchen Sie Fotos im JPG-Format.</li>
-	</ul>
+	<li>Sie können auch Informationen in den Fotos speichern, z.B. Helligkeitsanpassungen und Kommentare. Um Informationen
+		speichern zu können und die volle Funktionalität der App nutzen zu können, brauchen Sie Fotos im JPG-Format.</li>
+</ul>
 
-	<h3>Aktivitäten</h3>
+<h3>Aktivitäten</h3>
 
-	<h4>Schritt 1: Organisation der Fotos</h4>
+<h4>Schritt 1: Organisation der Fotos</h4>
 
-	<p>In diesem Schritt können Sie Ihre Augenfotos organisieren.</p>
+<p>In diesem Schritt können Sie Ihre Augenfotos organisieren.</p>
 
-	<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das Zielverzeichnis
-		der Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen geändert werden.</p>
+<p>Die App erwartet neue Augenfotos in einem Eingangsverzeichnis. Dieses ist Vorkunfiguriert als das Zielverzeichnis der
+	Eye-Fi App oder als das Standardverzeichnis der Kamera, es kann aber über die Einstellungen geändert werden.</p>
 
-	<p>In der Aktivität &bdquo;Neue Fotos einordnen&ldquo; können Sie neue Augenfotos aus dem Eingangsverzeichnis einer
-		Person und einem Datum zuordnen und so für die App vorbereiten. Dabei werden die Fotos Umbenannt und in das
-		Augenfoto-Verzeichnis verschoben.</p>
+<p>In der Aktivität &bdquo;Neue Fotos einordnen&ldquo; können Sie neue Augenfotos aus dem Eingangsverzeichnis einer
+	Person und einem Datum zuordnen und so für die App vorbereiten. Dabei werden die Fotos Umbenannt und in das
+	Augenfoto-Verzeichnis verschoben.</p>
 
-	<p>Als Alternative zur Nutzung des Eingangsverzeichnisses können Sie auch zwei Fotos in einem Dateibrowser oder einer
-		Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In diesem
-		Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
+<p>Als Alternative zur Nutzung des Eingangsverzeichnisses können Sie auch zwei Fotos in einem Dateibrowser oder einer
+	Foto-App auswählen und an die Augendiagnose-App senden. Dann können Sie diese Fotos in der App einordnen. In diesem
+	Fall werden die Fotos nicht aus ihrem alten Verzeichnis gelöscht.</p>
 
-	<p>
-		Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies wird
-		normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer professionellen
-		Kamera, insbesondere dann, wenn Sie eine Makro-Linse wie das
-		<a href="https://sites.google.com/view/irisocamera/home/english/miniris-eng" target="_blank">Miniris-2</a>
-		oder
-		<a href="https://sites.google.com/view/irisocamera/home/english/iricell-eng" target="_blank">Iricell</a>
-		einsetzen.
-	</p>
+<p>
+	Als weitere Alternative können Sie auch Fotos direkt aus der App heraus mit der Geräte-Kamera aufnehmen. Dies wird
+	normalerweise nicht zu Fotos in ausreichender Qualität führen, ist aber eine Ersatzlösung zu einer professionellen
+	Kamera, insbesondere dann, wenn Sie eine Makro-Linse wie das
+	<a href="https://sites.google.com/view/irisocamera/home/english/miniris-eng" target="_blank">Miniris-2</a>
+	oder
+	<a href="https://sites.google.com/view/irisocamera/home/english/iricell-eng" target="_blank">Iricell</a>
+	einsetzen.
+</p>
 
-	<h4>Schritt 2: Fotos anschauen</h4>
+<h4>Schritt 2: Fotos anschauen</h4>
 
-	<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige Organisation über Schritt 1 voraus.</p>
+<p>Dies ist der Hauptzweck der App, aber er setzt die vorherige Organisation über Schritt 1 voraus.</p>
 
-	<p>In dieser Aktivität können Sie</p>
+<p>In dieser Aktivität können Sie</p>
 
-	<ul>
-		<li>Ein Foto im Detail Anschauen. Dabei können Sie auch Helligkeit und Kontrast ändern, Iristopographien als Overlay
-			anzeigen oder einen Kommentar zu einem Foto schreiben.</li>
+<ul>
+	<li>Ein Foto im Detail Anschauen. Dabei können Sie auch Helligkeit und Kontrast ändern, Iristopographien als Overlay
+		anzeigen oder einen Kommentar zu einem Foto schreiben.</li>
 
-		<li>Zwei Fotos vergleichen (und dabei unabhängig voneinander zoomen).</li>
-	</ul>
+	<li>Zwei Fotos vergleichen (und dabei unabhängig voneinander zoomen).</li>
+</ul>
 
-	<h3>Testzeitraum / In-App-Käufe</h3>
+<h3>Testzeitraum / In-App-Käufe</h3>
 
-	<p>Die App erlaubt freie Nutzung nur für einen Testzeitraum von zwei Wochen. Für die weitere Nutzung ist der einmalige
-		Erwerb eines Paketes innerhalb der App erforderlich.</p>
+<p>Die App erlaubt freie Nutzung nur für einen Testzeitraum von zwei Wochen. Für die weitere Nutzung ist der einmalige
+	Erwerb eines Paketes innerhalb der App erforderlich.</p>
 
-	<h3>Windows-Anwendung</h3>
+<h3>Windows-Anwendung</h3>
 
-	<p>
-		Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App organisiert haben,
-		auf Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
-		<a href="https://augendiagnose-app.de/?lang=de&page=windowsapp" target="_top">https://augendiagnose-app.de/?page=windowsapp</a>
-		.
-	</p>
+<p>
+	Es gibt auch eine Windows-Anwendung, die Sie nutzen können, um die Fotos, die Sie mit dieser App organisiert haben, auf
+	Ihrem Windows-Computer anzuschauen. Für mehr Informationen siehe
+	<a href="https://augendiagnose-app.de/?lang=de&page=windowsapp" target="_top">https://augendiagnose-app.de/?page=windowsapp</a>
+	.
+</p>
 
-	<h3>Datenspeicherung</h3>
+<h3>Datenspeicherung</h3>
 
-	<p>Die App speichert Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien. Dies hat den
-		Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren. Zum
-		Teil sind die Informationen (wie Kommentare) sogar unter Windows verfügbar.</p>
+<p>Die App speichert Informationen (wie Irisposition oder Kommentare) direkt in den JPG-Bilddateien. Dies hat den
+	Vorteil, dass alle Informationen auch dann noch verfügbar sind, wenn Sie die Fotos auf ein anderes Gerät kopieren. Zum
+	Teil sind die Informationen (wie Kommentare) sogar unter Windows verfügbar.</p>
 
-	<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets oder
-		für spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht sogar
-		die Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App zum
-		ersten Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
-		
+<p>Diese Form der Speicherung birgt leider auch Risiken. Es könnte sein, dass für spezielle Smartphones/Tablets oder für
+	spezielle Kameras die Speicherung der Informationen in den JPG-Dateien nicht funktioniert, und vielleicht sogar die
+	Dateien zerstört. Daher empfehle ich, von Ihren Fotos eine Sicherheitskopie vorzuhalten, wenn Sie die App zum ersten
+	Mal mit einem neuen Smartphone/Tablet oder einer neuen Kamera benutzen.</p>
 
-	<a name="privacy"></a>
-	<h3>Datenschutzerklärung</h3>
 
-	<p>
+<a name="privacy"></a>
+<h3>Datenschutzerklärung</h3>
+
+<p>
 		Die App &bdquo;Augendiagnose&ldquo; nutzt die Kamera für die Aufnahme von Fotos. 
 		Die App speichert, sammelt oder sendet keine persönlichen Daten jeglicher Art. Alle von der App aufgenommenen Bilder
 		werden nur lokal auf Ihrem Gerät gespeichert.
 	</p>
 
-	<p>
-		Die App verwendet auch Google Analytics, um statistische Informationen über App-Fehler und App-Nutzung zu sammeln.
-		Dies dient dazu, Informationen für weitere Verbesserungen der App zu erhalten. Siehe die
-		<a href="https://support.google.com/analytics/answer/6004245?hl=de" target="_blank">Google
-			Analytics-Datenschutzbestimmungen</a>
-		für mehr Details.
-	</p>
-</body>
-</html>
+<p>
+	Die App verwendet auch Google Analytics, um statistische Informationen über App-Fehler und App-Nutzung zu sammeln. Dies
+	dient dazu, Informationen für weitere Verbesserungen der App zu erhalten. Siehe die
+	<a href="https://support.google.com/analytics/answer/6004245?hl=de" target="_blank">Google
+		Analytics-Datenschutzbestimmungen</a>
+	für mehr Details.
+</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<html>
-<head><title>Augendiagnose - Einstellungen</title></head>
-<body>
-	<h2>Einstellungen</h2>
+<h2>Einstellungen</h2>
 
-	Die Applikation ermöglicht folgende Einstellungen:
-	<h3>Eingangseinstellungen</h3>
+Die Applikation ermöglicht folgende Einstellungen:
+<h3>Eingangseinstellungen</h3>
 
-	<table width="100%" border="1">
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Eingangsverzeichnis für neue Augenfotos</td>
+		<td width="70%" valign="top">
+			<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert. Als Standard ist hier entweder das
+				Zielverzeichnis der Eye-Fi-App gesetzt oder das Standardverzeichnis der Kamera-App. Es kann aber ein beliebiges
+				anderes Verzeichnis gewählt werden (z.B. das Kamera-Verzeichnis).</p>
+
+			<p>Hintergrund zur Eye-Fi-App: Eine Smartphone-Kamera ist typischerweise nicht ausreichend, um hochwertige
+				Augenfotografien zu machen. Daher wird eine externe Kamera benötigt. Der einfachste Weg, die Fotos von einer
+				externen Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte, die die Fotos per WiFi auf
+				das Smartphone schickt.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Letztes Foto ist rechtes Auge</td>
+		<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge ist.
+			Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das linke Auge
+			fotografiert haben).</td>
+	</tr>
+</table>
+
+<h3>Anzeigeeinstellungen</h3>
+
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Sortieren nach Nachname</td>
+		<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden
+			soll.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Angeleitete Einrichtung von Iris- und Pupillenposition</td>
+		<td width="70%" valign="top">Hier können Sie wählen, ob Sie durch die Positionierung von Iris und Pupille geleitet
+			werden, bevor Sie die Iristopographien anzeigen können.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Standardfarbe für Overlays</td>
+		<td width="70%" valign="top">Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays normalerweise
+			angezeigt werden. (Voreinstellung: rot)</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Sprache</td>
+		<td width="70%" valign="top">Hier können Sie die Anzeigesprache der Applikation ändern. Eine Änderung des Wertes
+			erzwingt einen Neustart der App.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Alle Tipps zeigen</td>
+		<td width="70%" valign="top">Hier können Sie alle Tipps reaktivieren.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Tipps nicht mehr zeigen</td>
+		<td width="70%" valign="top">Hier können Sie alle vorhandenen Tipps deaktivieren (was nützlich ist, wenn Sie die App
+			schon kennen, aber neu installieren).</td>
+	</tr>
+</table>
+
+<h3>Speicher- und Leistungseinstellungen</h3>
+
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Verzeichnis der Augenfotos</td>
+		<td width="70%" valign="top"><p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss
+				normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
+
+			<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
+
+			<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der SD-Karte wählen. Unter Android 4.4
+				(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger. In
+				Android 5 müssen Sie bei der Auswahl eines Verzeichnisses der SD-Karte zunächst der App den Zugriff auf die SD-Karte
+				gewähren (mittels des Storage Access Frameworks von Android).</p></td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Maximale Bitmap-Größe</td>
+		<td width="70%" valign="top">Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist nötig, um
+			Speicherplatz zu sparen. Als Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein kleinerer
+			Wert (z.B. 1024) konfiguriert werden. Zu große Werte können zu Abstürzen führen.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Anzeige in voller Auflösung</td>
+		<td width="70%" valign="top">Hier können Sie festlegen, unter welchen Umständen das Foto in voller Auflösung angezeigt
+			wird. Dies erlaubt es, mehr Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
+
+			<ul>
+				<li><b>Immer automatisch laden:</b> Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt dazu,
+					dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht genug
+					Speicher zur Verfügung steht.</li>
+
+				<li><b>Automatisch laden, wenn nur ein Foto angezeigt wird:</b> Das Foto wird nur bei Anzeige eines einzigen Fotos
+					in voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
+
+				<li><b>Nur auf Anfrage:</b> Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher
+					und Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons <img
+					src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Speichern von Daten in JPG-Dateien</td>
+		<td width="70%" valign="top">Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien speichert.
+
+			<ul>
+				<li><b>Speichern in EXIF (empfohlen):</b> Die Applikation speichert verfügbare Informationen in der JPG-Datei, auch
+					in Standardfeldern, die z.B. in Windows sichtbar sind.</li>
+
+				<li><b>Speichern in Extra-Feldern:</b> Die Applikation speichert Informationen in der JPG-Datei, aber nur in neuen
+					Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
+
+				<li><b>Nicht in Fotos speichern:</b> Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur Teile
+					der Funktionalität der App zur Verfügng.)</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Automatische Iris-Erkennung</td>
+		<td width="70%" valign="top">Hier können Sie wählen, ob die App automatisch versuchen soll, die Position von Iris und
+			Pupille in den Augenfotos zu bestimmen. Dies wird typischerweise die Positionierung der Overlays vereinfachen, aber
+			es erfordert viele Systemressourcen, und das Ergebnis kann inkorrekt sein.</td>
+	</tr>
+</table>
+
+<h3>Kameraeinstellungen</h3>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Eingangsverzeichnis für neue Augenfotos</td>
-			<td width="70%" valign="top">
-				<p>Dies ist das Verzeichnis, aus dem die App neue Augenfotos importiert. Als Standard ist hier entweder das
-					Zielverzeichnis der Eye-Fi-App gesetzt oder das Standardverzeichnis der Kamera-App. Es kann aber ein beliebiges
-					anderes Verzeichnis gewählt werden (z.B. das Kamera-Verzeichnis).</p>
+		<td width="30%" valign="top">Kamera-Kompatibilität</td>
+		<td width="70%" valign="top">Falls Ihr Smartphone Android 5 oder höher nutzt, dann kann hier eingestellt werden, ob
+			die neuen Kamera-Funktionen von Android 5 genutzt werden sollen. Die Wahl &bdquo;Android 4&ldquo; ist sinnvoll im
+			Fall von Problemen mit den Kamerafunktionen von Android 5.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Blitzlicht erlauben</td>
+		<td width="70%" valign="top">Hier können Sie die Verwendung des Blitzlichtes erlauben. In der Voreinstellung ist dies
+			nicht erlaubt, da das Blitzlicht direkt vor dem Auge gefährlich ist.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Externen LED-Blitz unterstützen</td>
+		<td width="70%" valign="top">Hier können Sie einstellen, ob die Verwendung eines &bdquo;Flash & Fill-in Light&ldquo;,
+			das in die Kopfhörerbuchse eingesteckt wird, unterstützt werden soll.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Frontkamera verwenden</td>
+		<td width="70%" valign="top">Hier können Sie festlegen, dass Sie zum Fotografieren die vordere Kamera verwenden
+			wollen. Normalerweise wird die hintere Kamera verwendet.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Link zur Kamera-App anzeigen</td>
+		<td width="70%" valign="top">Hier können Sie festlegen, ob der Knopf zum Aufnehmen von Fotos mit der Systemkamera-App
+			angezeigt werden soll.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Kamera-Bildschirmposition</td>
+		<td width="70%" valign="top">Wenn das Miniris-Band Knöpfe auf dem Kamera-Bildschirm verbirgt, dann können Sie diese
+			Einstellung verwenden, um den Kamera-Bildschirm nach rechts oder links zu verschieben.</td>
+	</tr>
+</table>
 
-				<p>Hintergrund zur Eye-Fi-App: Eine Smartphone-Kamera ist typischerweise nicht ausreichend, um hochwertige
-					Augenfotografien zu machen. Daher wird eine externe Kamera benötigt. Der einfachste Weg, die Fotos von einer
-					externen Kamera auf das Smartphone zu bekommen, ist die Nutzung einer Eye-Fi SD-Karte, die die Fotos per WiFi auf
-					das Smartphone schickt.</p>
-			</td>
-		</tr>
+<h3>Overlay-Buttons</h3>
+
+<p>Diese Seite ermöglicht es Ihnen festzulegen, welche Iristopographie-Overlays den jeweiligen Buttons zugeordnet sind.
+	Die gleiche Konfiguration können Sie auch beim Betrachten der Fotos machen, indem Sie lange auf einen der Buttons
+	drücken.</p>
+
+<h3>Premium-Pakete / Hilfe</h3>
+
+<p>Diese Seite ermöglicht den Erwerb eines Premium-Paketes, über das die unbegrenzte Nutzung aller Funktionen der App
+	freigeschaltet wird..</p>
+
+<p>Darüber hinaus gibt es folgende Optionen:</p>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Letztes Foto ist rechtes Auge</td>
-			<td width="70%" valign="top">Hier kann eingestellt werden, ob das letzte Foto das rechte oder das linke Auge ist.
-				Standardmäßig ist hier das linke Auge gewählt (unter der Annahme, dass Sie zuerst das rechte, und dann das linke
-				Auge fotografiert haben).</td>
-		</tr>
-	</table>
-
-	<h3>Anzeigeeinstellungen</h3>
-
-	<table width="100%" border="1">
+		<td width="30%" valign="top">Werbung entfernen (nur für Nutzer älterer Versionen)</td>
+		<td width="70%" valign="top">Hier können Sie die Werbung entfernen (vorerst nur in den USA). Diese Möglichkeit kann
+			per Spende oder Nutzerschlüssel freigeschaltet werden.</td>
+	</tr>
 		<tr>
-			<td width="30%" valign="top">Sortieren nach Nachname</td>
-			<td width="70%" valign="top">Hier kann eingestellt werden, ob die Liste der Namen nach dem Nachnamen sortiert werden
-				soll.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Angeleitete Einrichtung von Iris- und Pupillenposition</td>
-			<td width="70%" valign="top">Hier können Sie wählen, ob Sie durch die Positionierung von Iris und Pupille geleitet
-				werden, bevor Sie die Iristopographien anzeigen können.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Standardfarbe für Overlays</td>
-			<td width="70%" valign="top">Hier können Sie die Farbe festlegen, in der Iristopographie-Overlays normalerweise
-				angezeigt werden. (Voreinstellung: rot)</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Sprache</td>
-			<td width="70%" valign="top">Hier können Sie die Anzeigesprache der Applikation ändern. Eine Änderung des Wertes
-				erzwingt einen Neustart der App.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Alle Tipps zeigen</td>
-			<td width="70%" valign="top">Hier können Sie alle Tipps reaktivieren.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Tipps nicht mehr zeigen</td>
-			<td width="70%" valign="top">Hier können Sie alle vorhandenen Tipps deaktivieren (was nützlich ist, wenn Sie die App
-				schon kennen, aber neu installieren).</td>
-		</tr>
-	</table>
-
-	<h3>Speicher- und Leistungseinstellungen</h3>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Verzeichnis der Augenfotos</td>
-			<td width="70%" valign="top"><p>Dies ist das Verzeichnis, in dem die App die Augenfotos verwaltet. Dieses muss
-					normalerweise nicht geändert werden. Von hier können Sie die Fotos auf andere Geräte kopieren.</p>
-
-				<p>Das vorgegebene Verzeichnis ist &bdquo;Augenfotos&ldquo;.</p>
-
-				<p>Sie können hier ein Verzeichnis wahlweise im Gerätespeicher oder auf der SD-Karte wählen. Unter Android 4.4
-					(Kitkat) gibt es Einschränkungen beim schreiben auf SD-Karten, daher dauern manche Operationen etwas länger. In
-					Android 5 müssen Sie bei der Auswahl eines Verzeichnisses der SD-Karte zunächst der App den Zugriff auf die
-					SD-Karte gewähren (mittels des Storage Access Frameworks von Android).</p></td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Maximale Bitmap-Größe</td>
-			<td width="70%" valign="top">Dies ist die Größe, auf die Fotos zur Anzeige herunterskaliert werden. Dies ist nötig,
-				um Speicherplatz zu sparen. Als Standard ist hier 2048 eingestellt. Auf speicherarmen Geräten muss evtl. ein
-				kleinerer Wert (z.B. 1024) konfiguriert werden. Zu große Werte können zu Abstürzen führen.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Anzeige in voller Auflösung</td>
-			<td width="70%" valign="top">Hier können Sie festlegen, unter welchen Umständen das Foto in voller Auflösung
-				angezeigt wird. Dies erlaubt es, mehr Details auf dem Foto zu sehen, aber es verbraucht Speicher und Rechenzeit.
-
-				<ul>
-					<li><b>Immer automatisch laden:</b> Das Foto wird immer in voller Auflösung im Speicher gehalten. Dies führt dazu,
-						dass man auf High-End-Geräten immer alle Details sehen kann. Es könnte aber zu Abstürzen führen, falls nicht genug
-						Speicher zur Verfügung steht.</li>
-
-					<li><b>Automatisch laden, wenn nur ein Foto angezeigt wird:</b> Das Foto wird nur bei Anzeige eines einzigen Fotos
-						in voller Auflösung angezeigt. Dies benötigt nur halb so viel Speicher.</li>
-
-					<li><b>Nur auf Anfrage:</b> Die App lädt die Fotos nicht in voller Auflösung. Dies verbraucht am wenigsten Speicher
-						und Rechenzeit, aber Details in den Fotos könnten nicht sichtbar sein. Mit Hilfe des &bdquo;Lupen&ldquo;-Buttons <img
-						src="../drawable/ic_clarity.png" /> kann der aktuelle Ausschnitt in voller Bildauflösung angezeigt werden.</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Speichern von Daten in JPG-Dateien</td>
-			<td width="70%" valign="top">Hier können Sie einschränken, inwieweit die App Daten in den JPG-Dateien speichert.
-
-				<ul>
-					<li><b>Speichern in EXIF (empfohlen):</b> Die Applikation speichert verfügbare Informationen in der JPG-Datei, auch
-						in Standardfeldern, die z.B. in Windows sichtbar sind.</li>
-
-					<li><b>Speichern in Extra-Feldern:</b> Die Applikation speichert Informationen in der JPG-Datei, aber nur in neuen
-						Feldern. Standardfelder bleiben unverändert; der Datenaustausch mit Windows ist nicht möglich.</li>
-
-					<li><b>Nicht in Fotos speichern:</b> Die Applikation speichert keine Informationen in Fotos. (Dann stehen nur Teile
-						der Funktionalität der App zur Verfügng.)</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Automatische Iris-Erkennung</td>
-			<td width="70%" valign="top">Hier können Sie wählen, ob die App automatisch versuchen soll, die Position von Iris und
-				Pupille in den Augenfotos zu bestimmen. Dies wird typischerweise die Positionierung der Overlays vereinfachen, aber
-				es erfordert viele Systemressourcen, und das Ergebnis kann inkorrekt sein.</td>
-		</tr>
-	</table>
-
-	<h3>Kameraeinstellungen</h3>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Kamera-Kompatibilität</td>
-			<td width="70%" valign="top">Falls Ihr Smartphone Android 5 oder höher nutzt, dann kann hier eingestellt werden, ob
-				die neuen Kamera-Funktionen von Android 5 genutzt werden sollen. Die Wahl &bdquo;Android 4&ldquo; ist sinnvoll im
-				Fall von Problemen mit den Kamerafunktionen von Android 5.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Blitzlicht erlauben</td>
-			<td width="70%" valign="top">Hier können Sie die Verwendung des Blitzlichtes erlauben. In der Voreinstellung ist dies
-				nicht erlaubt, da das Blitzlicht direkt vor dem Auge gefährlich ist.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Externen LED-Blitz unterstützen</td>
-			<td width="70%" valign="top">Hier können Sie einstellen, ob die Verwendung eines &bdquo;Flash & Fill-in Light&ldquo;,
-				das in die Kopfhörerbuchse eingesteckt wird, unterstützt werden soll.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Frontkamera verwenden</td>
-			<td width="70%" valign="top">Hier können Sie festlegen, dass Sie zum Fotografieren die vordere Kamera verwenden
-				wollen. Normalerweise wird die hintere Kamera verwendet.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Link zur Kamera-App anzeigen</td>
-			<td width="70%" valign="top">Hier können Sie festlegen, ob der Knopf zum Aufnehmen von Fotos mit der Systemkamera-App
-				angezeigt werden soll.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Kamera-Bildschirmposition</td>
-			<td width="70%" valign="top">Wenn das Miniris-Band Knöpfe auf dem Kamera-Bildschirm verbirgt, dann können Sie diese
-				Einstellung verwenden, um den Kamera-Bildschirm nach rechts oder links zu verschieben.</td>
-		</tr>
-	</table>
-
-	<h3>Overlay-Buttons</h3>
-
-	<p>Diese Seite ermöglicht es Ihnen festzulegen, welche Iristopographie-Overlays den jeweiligen Buttons zugeordnet sind.
-		Die gleiche Konfiguration können Sie auch beim Betrachten der Fotos machen, indem Sie lange auf einen der Buttons
-		drücken.</p>
-
-	<h3>Premium-Pakete / Hilfe</h3>
-
-	<p>Diese Seite ermöglicht den Erwerb eines Premium-Paketes, über das die unbegrenzte Nutzung aller Funktionen der App
-		freigeschaltet wird..</p>
-
-	<p>Darüber hinaus gibt es folgende Optionen:</p>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Werbung entfernen (nur für Nutzer älterer Versionen)</td>
-			<td width="70%" valign="top">Hier können Sie die Werbung entfernen (vorerst nur in den USA). Diese Möglichkeit kann
-				per Spende oder Nutzerschlüssel freigeschaltet werden.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Kontakt mit dem Entwickler</td>
-			<td width="70%" valign="top">Hier können Sie eine E-Mail an den Entwickler schreiben, falls Sie Wünsche oder Probleme
-				haben.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Nutzerschlüssel</td>
-			<td width="70%" valign="top">Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.</td>
-		</tr>
-	</table>
-
-</body>
-</html>
+		<td width="30%" valign="top">Kontakt mit dem Entwickler</td>
+		<td width="70%" valign="top">Hier können Sie eine E-Mail an den Entwickler schreiben, falls Sie Wünsche oder Probleme
+			haben.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Nutzerschlüssel</td>
+		<td width="70%" valign="top">Ein Nutzerkennwort, das die Freigabe zusätzlicher Funktionalitäten ermöglicht.</td>
+	</tr>
+</table>
 ]]>
     </string>
     <string name="html_organize_photos" formatted="false">
 <![CDATA[
-<html>
-<head><title>Augendiagnose - Fotos organisieren</title></head>
-<body>
-	<h2>Organisation der Fotos</h2>
+<h2>Organisation der Fotos</h2>
 
-	<p>Hier können Sie Ihre Augenfotos organisieren.</p>
+<p>Hier können Sie Ihre Augenfotos organisieren.</p>
 
-	<p>Es werden die beiden letzten Fotos aus dem Eingangsverzeichnis angezeigt.</p>
+<p>Es werden die beiden letzten Fotos aus dem Eingangsverzeichnis angezeigt.</p>
 
-	<p>Mit dem Button &bdquo;Tauschen&ldquo; können Sie die beiden Fotos tauschen.</p>
+<p>Mit dem Button &bdquo;Tauschen&ldquo; können Sie die beiden Fotos tauschen.</p>
 
-	<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie ein oder zwei andere Fotos aus dem Eingangsverzeichnis
-		auswählen, indem sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen,
-		indem Sie durch einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
+<p>Mit dem Button &bdquo;Andere Fotos&ldquo; können Sie ein oder zwei andere Fotos aus dem Eingangsverzeichnis
+	auswählen, indem sie zwei der angezeigten Fotos anklicken. Hier können Sie auch Fotos im Eingangsverzeichnis löschen,
+	indem Sie durch einen langen Klick auf ein Foto das Kontextmenü öffnen.</p>
 
-	<p>Unter &bdquo;Name wählen&ldquo; können Sie den Namen der Person festlegen, zu der die Augen gehören. Hier können Sie
-		entweder einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.</p>
+<p>Unter &bdquo;Name wählen&ldquo; können Sie den Namen der Person festlegen, zu der die Augen gehören. Hier können Sie
+	entweder einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.</p>
 
-	<p>Unter &bdquo;Datum wählen&ldquo; können Sie das Datum wählen, dem die Fotos zugeordnet sind. Hier ist das
-		Aufnahmedatum vorausgewählt. Sie können aber auch ein anderes Datum wählen. Dies ist insbesondere dann nötig, wenn es
-		schon Fotos dieses Nutzers von diesem Datum gibt - die App erlaubt nur ein Augenpaar einer Person zu einem Datum.</p>
+<p>Unter &bdquo;Datum wählen&ldquo; können Sie das Datum wählen, dem die Fotos zugeordnet sind. Hier ist das
+	Aufnahmedatum vorausgewählt. Sie können aber auch ein anderes Datum wählen. Dies ist insbesondere dann nötig, wenn es
+	schon Fotos dieses Nutzers von diesem Datum gibt - die App erlaubt nur ein Augenpaar einer Person zu einem Datum.</p>
 
-	<p>Mit dem Button &bdquo;OK&ldquo; können Sie das gewählte Paar Augenfotos in das Augenfoto-Verzeichnis
-		verschieben. Die Fotos werden zur angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem Programm
-		anschließend zur Verfügung.</p>
+<p>Mit dem Button &bdquo;OK&ldquo; können Sie das gewählte Paar Augenfotos in das Augenfoto-Verzeichnis verschieben. Die
+	Fotos werden zur angegebenen Person und dem angegebenen Datum zugeordnet und stehen dem Programm anschließend zur
+	Verfügung.</p>
 
-	<p>Durch das Antippen des Fotopaares können Sie die beiden Fotos im Detail ansehen. (Siehe auch: &bdquo;Fotos ansehen&ldquo;)</p>
-</body>
-</html>
+<p>Durch das Antippen des Fotopaares können Sie die beiden Fotos im Detail ansehen. (Siehe auch: &bdquo;Fotos
+	ansehen&ldquo;)</p>
 ]]>
     </string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<html>
-<head><title>Augendiagnose - Fotos ansehen</title></head>
-<body>
-	<h2>Fotos ansehen</h2>
+<h2>Fotos ansehen</h2>
 
-	<p>Hier können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen. Daraufhin sehen
-		Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
+<p>Hier können Sie aus einer Liste den Namen der Person auswählen, dessen Fotos Sie betrachten wollen. Daraufhin sehen
+	Sie eine Liste aller Augenaufnahmen dieser Person, sortiert nach Datum.</p>
 
-	<p>Anschließend haben Sie folgende Möglichkeiten:</p>
+<p>Anschließend haben Sie folgende Möglichkeiten:</p>
 
-	<ul>
-		<li>Detailansicht eines Fotos (durch Klick auf dieses Foto).</li>
+<ul>
+	<li>Detailansicht eines Fotos (durch Klick auf dieses Foto).</li>
 
-		<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das Datum)</li>
+	<li>Detailansicht beider Fotos von einem Datum (durch Klick auf das Datum)</li>
 
-		<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen Klick auf ein Foto und anschließenden Klick
-			auf ein anderes Foto)</li>
+	<li>Detailansicht von zwei Fotos unterschiedlichen Datums (durch langen Klick auf ein Foto und anschließenden Klick auf
+		ein anderes Foto)</li>
 
-		<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie erst einen langen Klick auf ein Foto, und
-			wählen Sie dann ein Foto einer zweiten Person aus.</li>
-	</ul>
+	<li>Detailansicht von zwei Fotos unterschiedlicher Personen - machen Sie erst einen langen Klick auf ein Foto, und
+		wählen Sie dann ein Foto einer zweiten Person aus.</li>
+</ul>
 
-	<p>Mit Hilfe dieser Funktionalität können Sie auch ein Augenfoto mit einer Iristopographie vergleichen. Hierzu müssen
-		Sie nur die Grafiken von Iristopographien genauso organisieren wie Augenfotos. Die App liefert keine Iristopographien
-		mit (außer als Overlays).</p>
+<p>Mit Hilfe dieser Funktionalität können Sie auch ein Augenfoto mit einer Iristopographie vergleichen. Hierzu müssen
+	Sie nur die Grafiken von Iristopographien genauso organisieren wie Augenfotos. Die App liefert keine Iristopographien
+	mit (außer als Overlays).</p>
 
-	<h3>Weitere Optionen in der Übersicht</h3>
+<h3>Weitere Optionen in der Übersicht</h3>
 
-	<ul>
-		<li>In der Liste der Namen können Sie lange auf einen Namen klicken, und dann den Namen ändern oder löschen.</li>
+<ul>
+	<li>In der Liste der Namen können Sie lange auf einen Namen klicken, und dann den Namen ändern oder löschen.</li>
 
-		<li>In der Liste der Fotos zu einem Namen können Sie lange auf ein Datum klicken, und dann das Datum ändern oder die
+	<li>In der Liste der Fotos zu einem Namen können Sie lange auf ein Datum klicken, und dann das Datum ändern oder die
 			Fotos dieses Datums löschen, oder die Fotos dieses Datums 
 						ins Eingangsverzeichnis zurückschieben (z.B. um sie einem anderen Namen zuzuordnen).
 						</li>
-	</ul>
+</ul>
 
-	<h3>Weitere Optionen in der Detailansicht</h3>
+<h3>Weitere Optionen in der Detailansicht</h3>
 
-	<p>In der Detailansicht (von einem oder zwei Fotos) bestehen noch folgende Möglichkeiten:</p>
+<p>In der Detailansicht (von einem oder zwei Fotos) bestehen noch folgende Möglichkeiten:</p>
 
-	<ul>
-		<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
-			src="../drawable/ic_seek_contrast.png" />, und Verändern von Sättigung <img src="../drawable/ic_seek_saturation.png" />
-			und Farbtemperatur <img src="../drawable/ic_seek_color_temperature.png" /></li>
+<ul>
+	<li>Verändern von Helligkeit und Kontrast mit Hilfe der Schieberegler <img src="../drawable/ic_seek_brightness.png" /><img
+		src="../drawable/ic_seek_contrast.png" />, und Verändern von Sättigung <img src="../drawable/ic_seek_saturation.png" />
+		und Farbtemperatur <img src="../drawable/ic_seek_color_temperature.png" /></li>
 
-		<li>Rotation des Fotos (Button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
-		</li>
+	<li>Rotation des Fotos (Button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+	</li>
 
-		<li>
-			<p>
-				Anzeige von Iristopographien als Overlay (Kreis-Button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
-				und nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern der Position der Overlays (Lock-Button <img
-					src="../drawable/ic_lock_open.png" />)
-			</p>
-			<p>Wenn sie lange auf einen der nummerierten Buttons drücken, können Sie das Overlay ändern, das diesem Button
-				zugeordnet ist. Beim letzten nummerierten Button haben Sie hier außerdem die Möglichkeit, den Button zu entfernen
-				oder einen Button hinzuzufügen.</p>
-		</li>
+	<li>
+		<p>
+			Anzeige von Iristopographien als Overlay (Kreis-Button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
+			und nummerierte Buttons), Anpassen der Overlays an die Iris, Speichern der Position der Overlays (Lock-Button <img
+				src="../drawable/ic_lock_open.png" />)
+		</p>
+		<p>Wenn sie lange auf einen der nummerierten Buttons drücken, können Sie das Overlay ändern, das diesem Button
+			zugeordnet ist. Beim letzten nummerierten Button haben Sie hier außerdem die Möglichkeit, den Button zu entfernen
+			oder einen Button hinzuzufügen.</p>
+	</li>
 
-		<li>Anpassen der Pupillengröße für die Overlays (Button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />).
-			Hier können Sie die Pupille entweder zentriert lassen (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />)
-			oder frei bewegen (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
-		</li>
+	<li>Anpassen der Pupillengröße für die Overlays (Button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />).
+		Hier können Sie die Pupille entweder zentriert lassen (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />)
+		oder frei bewegen (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
+	</li>
 
-		<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button <img
-			src="../drawable/ic_action_save.png" /> im Action-Menü)
-		</li>
+	<li>Speichern der Einstellung von Helligkeit und Kontrast (über den &bdquo;Speichern&ldquo;-Button <img
+		src="../drawable/ic_action_save.png" /> im Action-Menü)
+	</li>
 
-		<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button <img src="../drawable/ic_action_save.png" />
-			im Action-Menü)
-		</li>
+	<li>Speichern von Position und Zoom (über den &bdquo;Speichern&ldquo;-Button <img src="../drawable/ic_action_save.png" />
+		im Action-Menü)
+	</li>
 
-		<li>Teilen des Fotos (über den &bdquo;Teilen&ldquo;-Button <img src="../drawable/ic_action_share.png" /> im
-			Action-Menü)
-		</li>
+	<li>Teilen des Fotos (über den &bdquo;Teilen&ldquo;-Button <img src="../drawable/ic_action_share.png" /> im
+		Action-Menü)
+	</li>
 
-		<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img src="../drawable/ic_comment.png" />
-			im Action-Menü)
-		</li>
-	</ul>
+	<li>Ändern der Beschreibung des Fotos (über den &bdquo;Dokument&ldquo;-Button <img src="../drawable/ic_comment.png" />
+		im Action-Menü)
+	</li>
+</ul>
 
-	<p>
-		Die zugehörigen Tools können über den Button &bdquo;Hilfsmittel anzeigen/verbergen&ldquo; (<img
-			src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
-			src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />) aktiviert oder deaktiviert
-		werden.
-	</p>
-</body>
-</html>
+<p>
+	Die zugehörigen Tools können über den Button &bdquo;Hilfsmittel anzeigen/verbergen&ldquo; (<img
+		src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
+		src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />) aktiviert oder deaktiviert
+	werden.
+</p>
 ]]>
     </string>
 

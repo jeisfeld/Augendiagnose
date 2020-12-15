@@ -34,6 +34,14 @@ public class DisplayHtmlFragment extends Fragment {
 					+ "table p, li p {padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 6px; }"
 					+ "table p:last-child, table ul:last-child {margin-bottom: 2px; }"
 					+ "</style>";
+	/**
+	 * The HTML head.
+	 */
+	private static final String HEAD = "<html><head>" + STYLE + "</head></body>";
+	/**
+	 * The HTML tail.
+	 */
+	private static final String TAIL = "</body></html>";
 
 	/**
 	 * The resource key for the resource to be displayed (for storage in the bundle).
@@ -84,15 +92,13 @@ public class DisplayHtmlFragment extends Fragment {
 
 		String html = getString(mResource);
 		if (mResource == R.string.html_release_notes_base) {
-			int indexBody = html.indexOf("</body>");
 			String releaseNotes =
 					ReleaseNotesUtil.getReleaseNotesHtml(getActivity(), false, 1, Application.getVersion());
-			html = html.substring(0, indexBody) + releaseNotes + html.substring(indexBody);
+			html += releaseNotes;
 		}
 
 		// add style
-		int index = html.indexOf("</head>");
-		html = html.substring(0, index) + STYLE + html.substring(index);
+		html = HEAD + html + TAIL;
 
 		webView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", "");
 	}

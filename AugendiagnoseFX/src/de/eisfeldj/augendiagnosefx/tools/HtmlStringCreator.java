@@ -194,30 +194,6 @@ public final class HtmlStringCreator {
 		}
 		in.close();
 		String htmlContent = htmlBuffer.toString();
-
-		// remove everything before html tag
-		int htmlIndex = htmlContent.indexOf("<html>");
-		if (htmlIndex >= 0) {
-			htmlContent = htmlContent.substring(htmlIndex);
-		}
-		else {
-			// no html content
-			htmlContent = "";
-		}
-
-		// from head, keep only the title
-		int headStartIndex = htmlContent.indexOf("<head>") + "<head>".length();
-		int headEndIndex = htmlContent.indexOf("</head>", headStartIndex);
-		int titleStartIndex = htmlContent.indexOf("<title>", headStartIndex);
-		int titleEndIndex = htmlContent.indexOf("</title>", titleStartIndex) + "</title>".length();
-		if (titleStartIndex > 0 && titleEndIndex > 0 && titleEndIndex <= headEndIndex) {
-			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(titleStartIndex, titleEndIndex)
-					+ htmlContent.substring(headEndIndex);
-		}
-		else if (headEndIndex > 0) {
-			htmlContent = htmlContent.substring(0, headStartIndex) + htmlContent.substring(headEndIndex);
-		}
-
 		return htmlContent;
 	}
 
@@ -234,7 +210,7 @@ public final class HtmlStringCreator {
 	 */
 	private URL getUrl(final String app, final String language, final String fileName) {
 		try {
-			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName);
+			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName + "?createHtmlString=true");
 		}
 		catch (MalformedURLException e) {
 			return null;

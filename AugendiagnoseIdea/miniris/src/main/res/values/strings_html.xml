@@ -15,269 +15,258 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - Overview</title></head>
-<body>
-	<h2>Miniris - Overview</h2>
+<h2>Miniris - Overview</h2>
 
 
-	<p>
-		This App has the purpose to support the capturing and visualization of iris photographs on an Android device, in order
-		to do medical iris diagnosis. It is optimized for the use with the
-		<a href="https://sites.google.com/view/irisocamera/home/english/miniris-eng" target="_blank">Miniris-2</a>
-		or
-		<a href="https://sites.google.com/view/irisocamera/home/english/iricell-eng" target="_blank">Iricell</a>
-		attachment .
-	</p>
+<p>
+	This App has the purpose to support the capturing and visualization of iris photographs on an Android device, in order
+	to do medical iris diagnosis. It is optimized for the use with the
+	<a href="https://sites.google.com/view/irisocamera/home/english/miniris-eng" target="_blank">Miniris-2</a>
+	or
+	<a href="https://sites.google.com/view/irisocamera/home/english/iricell-eng" target="_blank">Iricell</a>
+	attachment .
+</p>
 
-	<h3>Key Features</h3>
+<h3>Key Features</h3>
 
-	<p>The key features of the App are</p>
+<p>The key features of the App are</p>
 
-	<ul>
-		<li>Capturing of iris photos using the phone camera (e.g. with the help of the Miniris-2 attachment).</li>
-		<li>Organization of iris photos by name, date and side (right/left).</li>
-		<li>Display of two iris photos in parallel (with full support of individual resizing).</li>
-		<li>Change of brightness and contrast of the photo during display, overlay with an iris topography, and saving of
-			comments.</li>
-	</ul>
+<ul>
+	<li>Capturing of iris photos using the phone camera (e.g. with the help of the Miniris-2 attachment).</li>
+	<li>Organization of iris photos by name, date and side (right/left).</li>
+	<li>Display of two iris photos in parallel (with full support of individual resizing).</li>
+	<li>Change of brightness and contrast of the photo during display, overlay with an iris topography, and saving of
+		comments.</li>
+</ul>
 
-	<p>The app stores data (such as position of center of eye) as metadata in the JPG files. This allows to transfer stored
-		data between different devices by just copying the photos.</p>
+<p>The app stores data (such as position of center of eye) as metadata in the JPG files. This allows to transfer stored
+	data between different devices by just copying the photos.</p>
 
-	<h3>Camera usage</h3>
+<h3>Camera usage</h3>
 
-	<p>When opening the camera, you see the following areas:</p>
+<p>When opening the camera, you see the following areas:</p>
 
-	<ul>
-		<li>On the right hand side in the middle there is the button for capturing the photo. After capturing a photo, you can
-			decide if you want to keep the photo or if you want to dismiss it and try again.</li>
-		<li>Below there is a button that allows taking the photo with the system camera app. This may be of use in case of
-			devices with special camera features, such as dual lens.</li>
-		<li>In the corners on top of the screen there is the display of the right and left eye photo. The red marking
-			indicates which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
-		<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
-			photo.</li>
-		<li>On the bottom left, there is a button with a circle and the text &ldquo;zoom&rdquo;. Here you can set the camera
-			zoom, and select how big the iris should be on the photo.</li>
-		<li>Above, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select the focus
-			mode of the camera. For closeups, the MACRO mode is normally a good choice.</li>
-		<li>Above, there is a flashlight button. Here you can switch on the light of your device. As a flashlight in front of
-			your eye is dangerous, this is disabled by default, but you may enable it in the settings. You may also use an LED
-			&ldquo;Flash & Fill-in Light&rdquo; plugged in the headphone jack.</li>
-	</ul>
+<ul>
+	<li>On the right hand side in the middle there is the button for capturing the photo. After capturing a photo, you can
+		decide if you want to keep the photo or if you want to dismiss it and try again.</li>
+	<li>Below there is a button that allows taking the photo with the system camera app. This may be of use in case of
+		devices with special camera features, such as dual lens.</li>
+	<li>In the corners on top of the screen there is the display of the right and left eye photo. The red marking indicates
+		which eye is planned for the next photo. By pressing on one of these areas you can change the side.</li>
+	<li>On the camera display there is a big circle. This circle indicates the place where the iris should appear on the
+		photo.</li>
+	<li>On the bottom left, there is a button with a circle and the text &ldquo;zoom&rdquo;. Here you can set the camera
+		zoom, and select how big the iris should be on the photo.</li>
+	<li>Above, there is a button with the text &ldquo;MACRO&rdquo; or &ldquo;AUTO&rdquo;. Here you may select the focus
+		mode of the camera. For closeups, the MACRO mode is normally a good choice.</li>
+	<li>Above, there is a flashlight button. Here you can switch on the light of your device. As a flashlight in front of
+		your eye is dangerous, this is disabled by default, but you may enable it in the settings. You may also use an LED
+		&ldquo;Flash & Fill-in Light&rdquo; plugged in the headphone jack.</li>
+</ul>
 
-	<p>After taking photos of both eyes, you are directed to a page where you can review the two photos, and where you have
-		to enter the name of the person to whom these photos should be assigned. Here you may also change the date of the
-		photos - for each person and each date, only one pair of photos may be stored.</p>
+<p>After taking photos of both eyes, you are directed to a page where you can review the two photos, and where you have
+	to enter the name of the person to whom these photos should be assigned. Here you may also change the date of the
+	photos - for each person and each date, only one pair of photos may be stored.</p>
 
-	<p>If you stop the app after taking one or two eye photos, but before assigning a name, then the next start of the app
-		will continue where you stopped - the photos which you have taken will be kept until you decide to delete or overwrite
-		them.</p>
+<p>If you stop the app after taking one or two eye photos, but before assigning a name, then the next start of the app
+	will continue where you stopped - the photos which you have taken will be kept until you decide to delete or overwrite
+	them.</p>
 
-	<h3>Trial period / In-App purchases</h3>
+<h3>Trial period / In-App purchases</h3>
 
-	<p>The app allows free use only for a trial period of two weeks. Further use requires the one-time purchase of an
-		in-app package.</p>
+<p>The app allows free use only for a trial period of two weeks. Further use requires the one-time purchase of an in-app
+	package.</p>
 
-	<h3>Windows application</h3>
+<h3>Windows application</h3>
 
-	<p>
-		There is an accompanying Windows application that can be used to view the photos that have been organized with this
-		app. For more information, see
-		<a href="https://augendiagnose-app.de/?app=miniris&lang=en&page=windowsapp" target="_top">https://augendiagnose-app.de/?app=miniris&page=windowsapp</a>
-		.
-	</p>
-	
+<p>
+	There is an accompanying Windows application that can be used to view the photos that have been organized with this
+	app. For more information, see
+	<a href="https://augendiagnose-app.de/?app=miniris&lang=en&page=windowsapp" target="_top">https://augendiagnose-app.de/?app=miniris&page=windowsapp</a>
+	.
+</p>
 
-	<a name="privacy"></a>
-	<h3>Privacy Policy</h3>
 
-	<p>
+<a name="privacy"></a>
+<h3>Privacy Policy</h3>
+
+<p>
 		The app &ldquo;Miniris&rdquo; uses the camera for taking eye photos. The app does not store, collect or send any personal data of any kind.
 		All pictures taken by the app are stored only locally on your device.
 	</p>
 
-	<p>
-		The app also uses Google Analytics to collect statistical information about app errors and app usage. This has the
-		purpose to get information for further improvements of the app. See the
-		<a href="https://support.google.com/analytics/answer/6004245?hl=en" target="_blank">Google Analytics Privacy Policy</a>
-		for more details.
-	</p>
-</body>
-</html>
-
+<p>
+	The app also uses Google Analytics to collect statistical information about app errors and app usage. This has the
+	purpose to get information for further improvements of the app. See the
+	<a href="https://support.google.com/analytics/answer/6004245?hl=en" target="_blank">Google Analytics Privacy Policy</a>
+	for more details.
+</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - Settings</title></head>
-<body>
-	<h2>Settings</h2>
+<h2>Settings</h2>
 
-	The application allows the following settings:
+The application allows the following settings:
 
-	<h3>Display Settings</h3>
+<h3>Display Settings</h3>
 
-	<table width="100%" border="1">
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Sort by last name</td>
+		<td width="70%" valign="top">Here you may decide that names are not ordered strictly alphabetically as given, but by
+			the last name.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Guided setup of iris and pupil position</td>
+		<td width="70%" valign="top">Here you may decide if you are guided through setting the iris and pupil position before
+			you can display overlays.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Default overlay color</td>
+		<td width="70%" valign="top">Here you can define the default color for iris topography overlays. (Standard: red)</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Language</td>
+		<td width="70%" valign="top">Here you can change the language in which the app is displayed. A value change forces a
+			restart of the app.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Display all hints</td>
+		<td width="70%" valign="top">Here you can re-enable all hints.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Do not display hints</td>
+		<td width="70%" valign="top">Here you can disable all existing hints (which is helpful after new installation if you
+			know the app already).</td>
+	</tr>
+</table>
+
+<h3>Storage and Memory Settings</h3>
+
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Eye Photo Folder</td>
+		<td width="70%" valign="top"><p>This is the folder in which the app manages the eye photos. Normally, you need not
+				change this. From here, you can copy the photos to other devices.</p>
+
+			<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
+
+			<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on SD
+				card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on SD
+				card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p></td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Max Bitmap size</td>
+		<td width="70%" valign="top">This is the size to which photos are scaled down before displaying. This downscaling is
+			required to save device memory. The default value is 2048. In devices with little memory, it may be required to
+			configure a smaller value (such as 1024). Too big values may crash the application.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Show image in full resolution</td>
+		<td width="70%" valign="top">Here you can decide under which circumstances the photo is displayed in full resolution,
+			which allows to see more details on the photo, but consumes memory and computing time.
+
+			<ul>
+				<li><b>Always load automatically:</b> The app always stores the photos in full resolution in memory. This gives the
+					best user experience on high end devices, but may lead to crashes if there is not enough memory available.</li>
+
+				<li><b>Load automatically when displaying single photo:</b> The app shows full resolution only when displaying a
+					single image. This requires half of the memory.</li>
+
+				<li><b>Load only on demand:</b> The app does not show the image in full resolution. This requires least memory and
+					CPU, but details in the photo may be lost. The &ldquo;magnifier&rdquo; button <img src="../drawable/ic_clarity.png" />
+					allows to display the current picture detail in full resolution.</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Save additional data in jpeg</td>
+		<td width="70%" valign="top">Here you can limit the storage of data in the JPG files by the app.
+
+			<ul>
+				<li><b>Store in EXIF (recommended):</b> The app stores relevant information in the JPG file, even in standard fields
+					which are visible in Windows.</li>
+
+				<li><b>Store in custom fields:</b> The app stores information in the JPG file, but only in separate fields. Standard
+					fields remain unchanged; the data exchange with Windows is not possible.</li>
+
+				<li><b>Don&apos;t store data in images:</b> The app does not store information in JPG files. (This limits the
+					functionality of the app.)</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Automatic detection of iris</td>
+		<td width="70%" valign="top">Here you can select if the app should automatically try to find the position of iris and
+			pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of
+			the phone, and the result may be incorrect.</td>
+	</tr>
+</table>
+
+<h3>Camera Settings</h3>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Sort by last name</td>
-			<td width="70%" valign="top">Here you may decide that names are not ordered strictly alphabetically as given, but by
-				the last name.</td>
-		</tr>
+		<td width="30%" valign="top">Start with left eye</td>
+		<td width="70%" valign="top">Here you can define which eye should be photographed first. By default this is the right
+			eye.</td>
+	</tr>
 		<tr>
-			<td width="30%" valign="top">Guided setup of iris and pupil position</td>
-			<td width="70%" valign="top">Here you may decide if you are guided through setting the iris and pupil position before
-				you can display overlays.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Default overlay color</td>
-			<td width="70%" valign="top">Here you can define the default color for iris topography overlays. (Standard: red)</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Language</td>
-			<td width="70%" valign="top">Here you can change the language in which the app is displayed. A value change forces a
-				restart of the app.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Display all hints</td>
-			<td width="70%" valign="top">Here you can re-enable all hints.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Do not display hints</td>
-			<td width="70%" valign="top">Here you can disable all existing hints (which is helpful after new installation if you
-				know the app already).</td>
-		</tr>
-	</table>
+		<td width="30%" valign="top">Camera compatibility</td>
+		<td width="70%" valign="top">If your device runs on Android 5 or higher, then here you can select if the camera
+			functionality should use the new Android 5 features or not. Selection of &ldquo;Android 4&rdquo; makes sense in case
+			of issues with Android 5 compatibility.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Enable flash</td>
+		<td width="70%" valign="top">Here you may enable the flashlight functionality. By default, this is disabled, as it is
+			dangerous to use the flashlight close to the eye.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Enable external LED flash</td>
+		<td width="70%" valign="top">Here you can set whether the use of a &ldquo;Flash & Fill-in Light&rdquo; plugged in the
+			headphone jack should be supported.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Use front camera</td>
+		<td width="70%" valign="top">Here you can specify to use the front camera for taking pictures. By default, the rear
+			camera is used.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Show link to Camera App</td>
+		<td width="70%" valign="top">Here you can specify if the button for taking photos with the system camera app should be
+			displayed.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Camera screen position</td>
+		<td width="70%" valign="top">If the Miniris ribbon hides some buttons on the camera screen, then you can use this
+			setting to shift the camera screen to the right or left.</td>
+	</tr>
+</table>
 
-	<h3>Storage and Memory Settings</h3>
+<h3>Overlay Button Configuration</h3>
 
-	<table width="100%" border="1">
+<p>This page allows you to define which iris topography overlays can be displayed by pressing the overlay buttons. The
+	same setting can also be done while displaying the photos, by making a long click on some overlay button.</p>
+
+<h3>Premium Packs / Support</h3>
+
+<p>This page offers the possibility to purchase a premium pack which gives you unlimited access to all functions of the
+	app.</p>
+
+<p>In addition, there are the following features:</p>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Eye Photo Folder</td>
-			<td width="70%" valign="top"><p>This is the folder in which the app manages the eye photos. Normally, you need not
-					change this. From here, you can copy the photos to other devices.</p>
-
-				<p>The predefined folder is &ldquo;EyePhotos&rdquo;.</p>
-
-				<p>You can select here a folder either on your device memory or on an SD card. In Android 4.4 (Kitkat), storage on
-					SD card has some limitations, therefore some operations will take longer. In Android 5, when selecting a folder on
-					SD card, you will have to grant access rights to the SD card via Android&apos;s Storage Access Framework.</p></td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Max Bitmap size</td>
-			<td width="70%" valign="top">This is the size to which photos are scaled down before displaying. This downscaling is
-				required to save device memory. The default value is 2048. In devices with little memory, it may be required to
-				configure a smaller value (such as 1024). Too big values may crash the application.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Show image in full resolution</td>
-			<td width="70%" valign="top">Here you can decide under which circumstances the photo is displayed in full resolution,
-				which allows to see more details on the photo, but consumes memory and computing time.
-
-				<ul>
-					<li><b>Always load automatically:</b> The app always stores the photos in full resolution in memory. This gives the
-						best user experience on high end devices, but may lead to crashes if there is not enough memory available.</li>
-
-					<li><b>Load automatically when displaying single photo:</b> The app shows full resolution only when displaying a
-						single image. This requires half of the memory.</li>
-
-					<li><b>Load only on demand:</b> The app does not show the image in full resolution. This requires least memory and
-						CPU, but details in the photo may be lost. The &ldquo;magnifier&rdquo; button <img
-						src="../drawable/ic_clarity.png" /> allows to display the current picture detail in full resolution.</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Save additional data in jpeg</td>
-			<td width="70%" valign="top">Here you can limit the storage of data in the JPG files by the app.
-
-				<ul>
-					<li><b>Store in EXIF (recommended):</b> The app stores relevant information in the JPG file, even in standard
-						fields which are visible in Windows.</li>
-
-					<li><b>Store in custom fields:</b> The app stores information in the JPG file, but only in separate fields.
-						Standard fields remain unchanged; the data exchange with Windows is not possible.</li>
-
-					<li><b>Don&apos;t store data in images:</b> The app does not store information in JPG files. (This limits the
-						functionality of the app.)</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Automatic detection of iris</td>
-			<td width="70%" valign="top">Here you can select if the app should automatically try to find the position of iris and
-				pupil in the eye photos. This typically will simplify the positioning of overlays, but it requires many resources of
-				the phone, and the result may be incorrect.</td>
-		</tr>
-	</table>
-
-	<h3>Camera Settings</h3>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Start with left eye</td>
-			<td width="70%" valign="top">Here you can define which eye should be photographed first. By default this is the right
-				eye.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Camera compatibility</td>
-			<td width="70%" valign="top">If your device runs on Android 5 or higher, then here you can select if the camera
-				functionality should use the new Android 5 features or not. Selection of &ldquo;Android 4&rdquo; makes sense in case
-				of issues with Android 5 compatibility.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Enable flash</td>
-			<td width="70%" valign="top">Here you may enable the flashlight functionality. By default, this is disabled, as it is
-				dangerous to use the flashlight close to the eye.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Enable external LED flash</td>
-			<td width="70%" valign="top">Here you can set whether the use of a &ldquo;Flash & Fill-in Light&rdquo; plugged in the
-				headphone jack should be supported.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Use front camera</td>
-			<td width="70%" valign="top">Here you can specify to use the front camera for taking pictures. By default, the rear
-				camera is used.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Show link to Camera App</td>
-			<td width="70%" valign="top">Here you can specify if the button for taking photos with the system camera app should
-				be displayed.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Camera screen position</td>
-			<td width="70%" valign="top">If the Miniris ribbon hides some buttons on the camera screen, then you can use this
-				setting to shift the camera screen to the right or left.</td>
-		</tr>
-	</table>
-
-	<h3>Overlay Button Configuration</h3>
-
-	<p>This page allows you to define which iris topography overlays can be displayed by pressing the overlay buttons. The
-		same setting can also be done while displaying the photos, by making a long click on some overlay button.</p>
-
-	<h3>Premium Packs / Support</h3>
-
-	<p>This page offers the possibility to purchase a premium pack which gives you unlimited access to all functions of the
-		app.</p>
-
-	<p>In addition, there are the following features:</p>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Contact the developer</td>
-			<td width="70%" valign="top">Here you can send an email to the developer in case you have wishes or problems.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">User key</td>
-			<td width="70%" valign="top">A user key that allows unlocking of additional functionality.</td>
-		</tr>
-	</table>
-</body>
-</html>
+		<td width="30%" valign="top">Contact the developer</td>
+		<td width="70%" valign="top">Here you can send an email to the developer in case you have wishes or problems.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">User key</td>
+		<td width="70%" valign="top">A user key that allows unlocking of additional functionality.</td>
+	</tr>
+</table>
 ]]>
     </string>
     <string name="html_organize_photos" formatted="false">
@@ -286,92 +275,86 @@
     </string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - View Photos</title></head>
-<body>
-	<h2>View photos</h2>
+<h2>View photos</h2>
 
-	<p>Here you can select the name of a person whose eye photos you want to see. Then you get shown all eye photos of this
-		person in a list sorted by date.</p>
+<p>Here you can select the name of a person whose eye photos you want to see. Then you get shown all eye photos of this
+	person in a list sorted by date.</p>
 
-	<p>Then you have the following possibilities:</p>
+<p>Then you have the following possibilities:</p>
 
-	<ul>
-		<li>Show one of the photos in detail (via click on a photo).</li>
+<ul>
+	<li>Show one of the photos in detail (via click on a photo).</li>
 
-		<li>Show both photos of one date (via click on a date)</li>
+	<li>Show both photos of one date (via click on a date)</li>
 
-		<li>Show two photos of different dates (via long click on one photo and click on a second photo)</li>
+	<li>Show two photos of different dates (via long click on one photo and click on a second photo)</li>
 
-		<li>Show two photos of different persons: Select one photo of this person (via long click) and then select a photo of
-			a different person.</li>
-	</ul>
+	<li>Show two photos of different persons: Select one photo of this person (via long click) and then select a photo of a
+		different person.</li>
+</ul>
 
-	<p>Note that iris topography graphics may be organized just like eye photos - this allows to compare eye photos with
-		iris topography graphics. Such graphics are not included in the app (except as overlays).</p>
+<p>Note that iris topography graphics may be organized just like eye photos - this allows to compare eye photos with
+	iris topography graphics. Such graphics are not included in the app (except as overlays).</p>
 
-	<h3>Further options in the overview</h3>
+<h3>Further options in the overview</h3>
 
-	<ul>
-		<li>When making a long click on a name in the list of names, you may change or delete the name</li>
+<ul>
+	<li>When making a long click on a name in the list of names, you may change or delete the name</li>
 
-		<li>When making a long click on a date in the list of pictures for a name, you may change the date or delete the
+	<li>When making a long click on a date in the list of pictures for a name, you may change the date or delete the
 			pictures of that date, or you may
 						move them to a different name.
 					</li>
-	</ul>
+</ul>
 
-	<h3>Further options in the detail view</h3>
+<h3>Further options in the detail view</h3>
 
-	<p>In the detail view (one or two photos), you have the following further possibilities:</p>
+<p>In the detail view (one or two photos), you have the following further possibilities:</p>
 
-	<ul>
-		<li>Change of brightness and contrast via sliders <img src="../drawable/ic_seek_brightness.png" /><img
-			src="../drawable/ic_seek_contrast.png" />, as well as change of saturation <img
-			src="../drawable/ic_seek_saturation.png" /> and color temperature <img
-			src="../drawable/ic_seek_color_temperature.png" /></li>
+<ul>
+	<li>Change of brightness and contrast via sliders <img src="../drawable/ic_seek_brightness.png" /><img
+		src="../drawable/ic_seek_contrast.png" />, as well as change of saturation <img
+		src="../drawable/ic_seek_saturation.png" /> and color temperature <img src="../drawable/ic_seek_color_temperature.png" /></li>
 
-		<li>Rotation of the photo (button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
-		</li>
+	<li>Rotation of the photo (button <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+	</li>
 
-		<li>
-			<p>
-				Display of iris topographies as overlay (circle button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
-				and numbered buttons), adaption of the overlay to the iris and storage of overlay position (lock button <img
-					src="../drawable/ic_lock_open.png" />)
-			</p>
-			<p>When making a long click on one of the numbered buttons, you can change the overlay for this button. For the last
-				numbered button, this allows you also to remove the button or add another button.</p>
-		</li>
+	<li>
+		<p>
+			Display of iris topographies as overlay (circle button <img src="../drawable/ic_btn_wheel.png" class="frameless" />
+			and numbered buttons), adaption of the overlay to the iris and storage of overlay position (lock button <img
+				src="../drawable/ic_lock_open.png" />)
+		</p>
+		<p>When making a long click on one of the numbered buttons, you can change the overlay for this button. For the last
+			numbered button, this allows you also to remove the button or add another button.</p>
+	</li>
 
-		<li>Set the pupil size for the overlays (button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />). Here
-			you can either keep the pupil centered (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />) or move it
-			freely (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
-		</li>
+	<li>Set the pupil size for the overlays (button <img src="../drawable/ic_btn_pupil_0.png" class="frameless" />). Here
+		you can either keep the pupil centered (<img src="../drawable/ic_btn_pupil_1.png" class="frameless" />) or move it
+		freely (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
+	</li>
 
-		<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; <img
-			src="../drawable/ic_action_save.png" /> button on action bar)
-		</li>
+	<li>Store the selected settings of brightness and contrast (via &ldquo;save&rdquo; <img
+		src="../drawable/ic_action_save.png" /> button on action bar)
+	</li>
 
-		<li>Store the position and zoom (via &ldquo;save&rdquo; <img src="../drawable/ic_action_save.png" /> button on action
-			bar)
-		</li>
+	<li>Store the position and zoom (via &ldquo;save&rdquo; <img src="../drawable/ic_action_save.png" /> button on action
+		bar)
+	</li>
 
-		<li>Share the image (via &ldquo;share&rdquo; <img src="../drawable/ic_action_share.png" /> button on action bar)
-		</li>
+	<li>Share the image (via &ldquo;share&rdquo; <img src="../drawable/ic_action_share.png" /> button on action bar)
+	</li>
 
-		<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button on
-			action bar)
-		</li>
-	</ul>
+	<li>Change the comment of the photo (via &ldquo;document&rdquo; <img src="../drawable/ic_comment.png" /> button on
+		action bar)
+	</li>
+</ul>
 
-	<p>
-		These features may be enabled or disabled via the button &ldquo;Show/Hide utilities&rdquo; (<img
-			src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
-			src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />).
-	</p>
-</body>
-</html>
+<p>
+	These features may be enabled or disabled via the button &ldquo;Show/Hide utilities&rdquo; (<img
+		src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
+		src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />).
+</p>
 ]]>
     </string>
 

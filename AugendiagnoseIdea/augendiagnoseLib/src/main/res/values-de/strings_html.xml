@@ -4,7 +4,7 @@
     <string name="html_navigation_overview">Übersicht</string>
     <string name="html_navigation_settings">Einstellungen</string>
     <string name="html_navigation_organize_photos">Organisation der Fotos</string>
-    <string name="html_navigation_display_photos">Betrachten der Fotos</string>
+    <string name="html_navigation_display_photos">Fotos ansehen</string>
     <string name="html_navigation_release_notes">Release Notes</string>
 
 </resources>

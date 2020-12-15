@@ -15,275 +15,263 @@
     </string>
     <string name="html_overview" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - Información general</title></head>
-<body>
-	<h2>Miniris - Información general</h2>
+<h2>Miniris - Información general</h2>
 
 
-	<p>
-		Esta aplicación tiene la finalidad de apoyar la captura y visualización de fotografías del iris en un dispositivo
-		Android, con el fin de hacer un diagnóstico del iris. Está optimizado para el uso con el
-		<a href="https://sites.google.com/view/irisocamera/home/espanol/miniris-esp" target="_blank">Miniris-2</a>
-		o el
-		<a href="https://sites.google.com/view/irisocamera/home/espanol/iricell-esp" target="_blank">Iricell</a>
-		aditamento .
-	</p>
+<p>
+	Esta aplicación tiene la finalidad de apoyar la captura y visualización de fotografías del iris en un dispositivo
+	Android, con el fin de hacer un diagnóstico del iris. Está optimizado para el uso con el
+	<a href="https://sites.google.com/view/irisocamera/home/espanol/miniris-esp" target="_blank">Miniris-2</a>
+	o el
+	<a href="https://sites.google.com/view/irisocamera/home/espanol/iricell-esp" target="_blank">Iricell</a>
+	aditamento .
+</p>
 
-	<p>Las características principales de la App son</p>
+<p>Las características principales de la App son</p>
 
-	<ul>
-		<li>Captura de fotos del iris usando la cámara del teléfono (por ejemplo, con la ayuda del Miniris-2 aditamento).</li>
-		<li>La organización de fotos del iris por nombre, fecha y lateral (derecha / izquierda).</li>
-		<li>La visualización de dos fotos de iris en paralelo (con el soporte del cambio de tamaño individual).</li>
-		<li>Cambio de brillo y contraste de la foto durante la visualización, superposición con una topografía del iris, y
-			ahorro de comentarios.</li>
-	</ul>
+<ul>
+	<li>Captura de fotos del iris usando la cámara del teléfono (por ejemplo, con la ayuda del Miniris-2 aditamento).</li>
+	<li>La organización de fotos del iris por nombre, fecha y lateral (derecha / izquierda).</li>
+	<li>La visualización de dos fotos de iris en paralelo (con el soporte del cambio de tamaño individual).</li>
+	<li>Cambio de brillo y contraste de la foto durante la visualización, superposición con una topografía del iris, y
+		ahorro de comentarios.</li>
+</ul>
 
-	<p>La aplicación graba información (como posición del iris o comentarios) directamente en los archivos de imagen JPG.
-		Esto tiene la ventaja de que toda la información es todavía disponible si copia las imágenes de un dispositivo a otro.</p>
+<p>La aplicación graba información (como posición del iris o comentarios) directamente en los archivos de imagen JPG.
+	Esto tiene la ventaja de que toda la información es todavía disponible si copia las imágenes de un dispositivo a otro.</p>
 
-	<h3>Uso de la cámara</h3>
+<h3>Uso de la cámara</h3>
 
-	<p>Al abrir la cámara, verá las siguientes áreas:</p>
+<p>Al abrir la cámara, verá las siguientes áreas:</p>
 
-	<ul>
-		<li>En el lado derecho en el medio está el botón para capturar la foto. Después de capturar una foto, puede decidir si
-			desea conservar la foto o si desea descartarlo y capturar la foto de nuevo.</li>
-		<li>Debajo hay un botón que permite tomar la foto con la aplicación de cámara del sistema. Esto puede ser útil en el
-			caso de dispositivos con características especiales de la cámara, como lentes dobles.</li>
-		<li>En las esquinas en la parte superior se encuentra la pantalla del derecho y del izquierdo ojo. La marca roja
-			indica que ojo está previsto para la próxima foto. Pulsando sobre una de estas áreas se puede cambiar el lado.</li>
-		<li>En la pantalla de la cámara hay un gran círculo. Este círculo indica el lugar donde el iris debe aparecer en la
-			foto.</li>
-		<li>En la parte inferior izquierda, hay un botón con un círculo y el texto &laquo;zoom&raquo;. Aquí se puede
-			establecer el zoom de la cámara y seleccionar qué tan grande el iris debe estar en la foto.</li>
-		<li>Arriba, hay un botón con el texto &laquo;MACRO&raquo; o &laquo;AUTO&raquo;. Aquí usted puede seleccionar el modo
-			de enfoque de la cámara. Para primeros planos, el modo macro es normalmente una buena opción.</li>
-		<li>Arriba, hay un botón de flash. Aquí se puede encender la luz de su dispositivo. Como un flash frente a el ojo es
-			peligroso, esto está desactivado por defecto, pero puede activarlo en la configuración. También se puede utilizar de
-			&laquo;Flash & Fill-in Light&raquo; enchufado a la toma de auriculares.</li>
-	</ul>
+<ul>
+	<li>En el lado derecho en el medio está el botón para capturar la foto. Después de capturar una foto, puede decidir si
+		desea conservar la foto o si desea descartarlo y capturar la foto de nuevo.</li>
+	<li>Debajo hay un botón que permite tomar la foto con la aplicación de cámara del sistema. Esto puede ser útil en el
+		caso de dispositivos con características especiales de la cámara, como lentes dobles.</li>
+	<li>En las esquinas en la parte superior se encuentra la pantalla del derecho y del izquierdo ojo. La marca roja indica
+		que ojo está previsto para la próxima foto. Pulsando sobre una de estas áreas se puede cambiar el lado.</li>
+	<li>En la pantalla de la cámara hay un gran círculo. Este círculo indica el lugar donde el iris debe aparecer en la
+		foto.</li>
+	<li>En la parte inferior izquierda, hay un botón con un círculo y el texto &laquo;zoom&raquo;. Aquí se puede establecer
+		el zoom de la cámara y seleccionar qué tan grande el iris debe estar en la foto.</li>
+	<li>Arriba, hay un botón con el texto &laquo;MACRO&raquo; o &laquo;AUTO&raquo;. Aquí usted puede seleccionar el modo de
+		enfoque de la cámara. Para primeros planos, el modo macro es normalmente una buena opción.</li>
+	<li>Arriba, hay un botón de flash. Aquí se puede encender la luz de su dispositivo. Como un flash frente a el ojo es
+		peligroso, esto está desactivado por defecto, pero puede activarlo en la configuración. También se puede utilizar de
+		&laquo;Flash & Fill-in Light&raquo; enchufado a la toma de auriculares.</li>
+</ul>
 
-	<p>Después de tomar fotos de ambos ojos, se abre una página donde usted puede revisar las dos fotos, y donde se puede
-		introducir el nombre de la persona a la que estas fotos se deben asignar. Aquí también se puede cambiar la fecha de la
-		fotos - para cada persona y cada fecha, sólo un par de fotos se pueden almacenar.</p>
+<p>Después de tomar fotos de ambos ojos, se abre una página donde usted puede revisar las dos fotos, y donde se puede
+	introducir el nombre de la persona a la que estas fotos se deben asignar. Aquí también se puede cambiar la fecha de la
+	fotos - para cada persona y cada fecha, sólo un par de fotos se pueden almacenar.</p>
 
-	<p>Si detiene la aplicación después de tomar una o dos fotos de los ojos, pero antes de asignar un nombre, luego el
-		siguiente inicio de la aplicación continuará donde se detuvo - las fotos que se han tomado se mantendrá hasta que
-		decida eliminar o sobrescribir ellos.</p>
+<p>Si detiene la aplicación después de tomar una o dos fotos de los ojos, pero antes de asignar un nombre, luego el
+	siguiente inicio de la aplicación continuará donde se detuvo - las fotos que se han tomado se mantendrá hasta que
+	decida eliminar o sobrescribir ellos.</p>
 
-	<h3>Periodo de prueba / Paquetes premium</h3>
+<h3>Periodo de prueba / Paquetes premium</h3>
 
-	<p>La aplicación permite el uso gratuito sólo durante un periodo de prueba de dos semanas. Uso adicional requiere la
-		compra de un paquete dentro de la aplicación (una sola vez).</p>
+<p>La aplicación permite el uso gratuito sólo durante un periodo de prueba de dos semanas. Uso adicional requiere la
+	compra de un paquete dentro de la aplicación (una sola vez).</p>
 
-	<h3>Aplicación para Windows</h3>
+<h3>Aplicación para Windows</h3>
 
-	<p>
-		Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido organizada con
-		esta aplicación. Para obtener más información, consulte
-		<a href="https://augendiagnose-app.de/?app=miniris&lang=es&page=windowsapp" target="_top">https://augendiagnose-app.de/?app=miniris&page=windowsapp</a>
-		.
-	</p>
+<p>
+	Hay una aplicación de acompañamiento de Windows que se puede utilizar para ver las fotos que han sido organizada con
+	esta aplicación. Para obtener más información, consulte
+	<a href="https://augendiagnose-app.de/?app=miniris&lang=es&page=windowsapp" target="_top">https://augendiagnose-app.de/?app=miniris&page=windowsapp</a>
+	.
+</p>
 
 
-	<a name="privacy"></a>
-	<h3>Política de privacidad</h3>
+<a name="privacy"></a>
+<h3>Política de privacidad</h3>
 
-	<p>
+<p>
 		La aplicación &laquo;Miniris&raquo; utiliza la cámara para tomar fotos de los ojos.
 		La aplicación no almacena, recopila ni envía ningún tipo de datos personales.
 		Todas las fotografías tomadas por la aplicación se almacenan sólo localmente en el dispositivo.
 	</p>
 
-	<p>
-		La aplicación también utiliza Google Analytics para recopilar información estadística sobre errores y uso de la
-		aplicación. Esto tiene el propósito de obtener información para mejoras de la aplicación. Vea el
-		<a href="https://support.google.com/analytics/answer/6004245?hl=es" target="_blank">Política de privacidad de Google
-			Analytics</a>
-		para más detalles.
-	</p>
-</body>
-</html>
+<p>
+	La aplicación también utiliza Google Analytics para recopilar información estadística sobre errores y uso de la
+	aplicación. Esto tiene el propósito de obtener información para mejoras de la aplicación. Vea el
+	<a href="https://support.google.com/analytics/answer/6004245?hl=es" target="_blank">Política de privacidad de Google
+		Analytics</a>
+	para más detalles.
+</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - Ajustes</title></head>
-<body>
-	<h2>Ajustes</h2>
+<h2>Ajustes</h2>
 
-	La aplicación permite a los siguientes ajustes:
+La aplicación permite a los siguientes ajustes:
 
-	<h3>Ajustes de la visualización</h3>
+<h3>Ajustes de la visualización</h3>
 
-	<table width="100%" border="1">
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Ordenar por apellido</td>
+		<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Configuración guiada de iris y pupila</td>
+		<td width="70%" valign="top">Aquí usted puede decidir si se le guiará a través de la determinación de la posición del
+			iris y de la pupila antes puede mostrar superposiciones.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Color predeterminado de superposiciones</td>
+		<td width="70%" valign="top">Aquí puede definir el color predeterminado para los superposiciones de topografías del
+			iris. (Estándar: rojo)</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Idioma</td>
+		<td width="70%" valign="top">Aquí puede cambiar el idioma en el que se mostrará la aplicación. Un cambio de valor
+			fuerza un reinicio de la aplicación.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Mostrar todos los consejos</td>
+		<td width="70%" valign="top">Aquí se puede volver a habilitar todos los consejos.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">No mostrar consejos</td>
+		<td width="70%" valign="top">Aquí se puede desactivar todas consejos existentes (que es útile después de la nueva
+			instalación si ya conoce la aplicación).</td>
+	</tr>
+</table>
+
+<h3>Ajustes de almacenamiento y memoria</h3>
+
+<table width="100%" border="1">
+	<tr>
+		<td width="30%" valign="top">Carpeta de fotos oculares</td>
+		<td width="70%" valign="top"><p>Esta es la carpeta en la que la aplicación administra las fotos de ojos. Normalmente,
+				usted no tiene que cambiar esto. Desde aquí, puede copiar las fotos a otros dispositivos.</p>
+
+			<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
+
+			<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
+				(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán
+				más. En Android 5, al seleccionar una carpeta en la tarjeta SD, usted tendrá que conceder derechos de acceso a la
+				tarjeta SD a través del &laquo;Storage Access Framework&raquo; de Android.</p></td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Tamaño máximo de mapas de bits</td>
+		<td width="70%" valign="top">Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se requiere para
+			ahorrar memoria del dispositivo. El valor predeterminado es 2048. En dispositivos con poca memoria, puede ser
+			necesario para configurar un valor menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la
+			aplicación.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Mostrar imagen en alta resolución</td>
+		<td width="70%" valign="top">Aquí usted puede decidir en qué circunstancias se muestra la foto en alta resolución, que
+			permite ver más detalles en la foto, pero consume memoria y tiempo de cálculo.
+
+			<ul>
+				<li><b>Siempre cargar automáticamente:</b> La aplicación siempre almacena las fotos en resolución completa en la
+					memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a fallos si
+					no hay suficiente memoria disponible.</li>
+
+				<li><b>Cargar automáticamente cuando se muestra sola foto:</b> La aplicación muestra la resolución completa sólo
+					cuando se muestre un único imagen. Esto requiere un medio de la memoria.</li>
+
+				<li><b>Cargar sólo si se solicita:</b> La aplicación no muestra la imagen en alta resolución. Esto requiere menos
+					memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. La botón &laquo;lupa&raquo; <img
+					src="../drawable/ic_clarity.png" /> permite visualizar el detalle actual de la imagen en la plena resolución.</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Guardar datos adicionales en JPG</td>
+		<td width="70%" valign="top">Aquí puede limitar el almacenamiento de datos en los archivos JPG de la aplicación.
+
+			<ul>
+				<li><b>Guardar en EXIF (recomendado):</b> La aplicación guarda la información relevante en el archivo JPG, incluso
+					en campos estándar que son visibles en Windows.</li>
+
+				<li><b>Guardar en campos personalizados:</b> La aplicación guarda la información en el archivo JPG, pero sólo en
+					campos separados. Campos estándar se mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
+
+				<li><b>No guarde datos en imágenes:</b> La aplicación no almacena información en archivos JPG. (Esto limita la
+					funcionalidad de la aplicación.)</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Detección automática del iris</td>
+		<td width="70%" valign="top">Aquí puede seleccionar si la aplicación debe tratar de encontrar automáticamente la
+			posición del iris y pupila en las fotos de ojos. Normalmente, esto va a simplificar la colocación de las
+			superposiciones, pero requiere muchos recursos de la teléfono, y el resultado puede ser incorrecto.</td>
+	</tr>
+</table>
+
+<h3>Ajustes de la cámara</h3>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Ordenar por apellido</td>
-			<td width="70%" valign="top">Aquí se puede establecer si la lista de nombres será ordenada por apellido.</td>
-		</tr>
+		<td width="30%" valign="top">Comenzar con el ojo izquierdo</td>
+		<td width="70%" valign="top">Aquí puede definir el ojo que debería ser fotografiada primero. Como configuración
+			predeterminada este es el ojo derecho.</td>
+	</tr>
 		<tr>
-			<td width="30%" valign="top">Configuración guiada de iris y pupila</td>
-			<td width="70%" valign="top">Aquí usted puede decidir si se le guiará a través de la determinación de la posición del
-				iris y de la pupila antes puede mostrar superposiciones.</td>
-		</tr>
+		<td width="30%" valign="top">Compatibilidad de la cámara</td>
+		<td width="70%" valign="top">Si el dispositivo funciona con Android 5 o superior, entonces aquí se puede seleccionar
+			si la cámara debe utilizar los nuevos Android 5 funciones o no. Selección de &laquo;Android 4&raquo; tiene sentido en
+			el caso de problemas con Android 5 compatibilidad.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Activar el flash</td>
+		<td width="70%" valign="top">Aquí usted puede habilitar el flash. Por defecto, este está desactivado, ya que es
+			peligroso para usar el flash cerca del ojo.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Activar flash LED externo</td>
+		<td width="70%" valign="top">Aquí puede establecer si el uso de un &laquo;Flash & Fill-in Light&raquo; enchufado a la
+			toma de auriculares debe ser habilitado.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Utilizar la cámara frontal</td>
+		<td width="70%" valign="top">Aquí puede especificar utilizar la cámara frontal para tomar fotografías. De forma
+			predeterminada, se utiliza la cámara trasera.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Mostrar enlace a la apl. cámara</td>
+		<td width="70%" valign="top">Aquí puede especificar si se debe mostrar el botón para tomar fotos con la aplicación de
+			cámara del sistema.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Posición de la pantalla de la cámara</td>
+		<td width="70%" valign="top">Si la cinta Miniris oculta algunos botones de la pantalla de la cámara, entonces usted
+			puede utilizar este ajuste para desplazar la pantalla de la cámara hacia la derecha o izquierda.</td>
+	</tr>
+</table>
+
+<h3>Botones de superposición</h3>
+
+<p>Esta página le permite definir que superposiciones topografía del iris se puede visualizar pulsando los botones de
+	superposición. Esto también se puede hacer mientras ve las fotos, haciendo una pulsación larga en algún botón de
+	superposición.</p>
+
+<h3>Paquetes premium / Ayuda</h3>
+
+<p>Esta página ofrece la posibilidad de comprar un paquete premium, que le da acceso anlimited a todas las funciones de
+	la aplicación.</p>
+
+<p>Además, hay las siguientes funciones:</p>
+
+<table width="100%" border="1">
 		<tr>
-			<td width="30%" valign="top">Color predeterminado de superposiciones</td>
-			<td width="70%" valign="top">Aquí puede definir el color predeterminado para los superposiciones de topografías del
-				iris. (Estándar: rojo)</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Idioma</td>
-			<td width="70%" valign="top">Aquí puede cambiar el idioma en el que se mostrará la aplicación. Un cambio de valor
-				fuerza un reinicio de la aplicación.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Mostrar todos los consejos</td>
-			<td width="70%" valign="top">Aquí se puede volver a habilitar todos los consejos.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">No mostrar consejos</td>
-			<td width="70%" valign="top">Aquí se puede desactivar todas consejos existentes (que es útile después de la nueva
-				instalación si ya conoce la aplicación).</td>
-		</tr>
-	</table>
-
-	<h3>Ajustes de almacenamiento y memoria</h3>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Carpeta de fotos oculares</td>
-			<td width="70%" valign="top"><p>Esta es la carpeta en la que la aplicación administra las fotos de ojos. Normalmente,
-					usted no tiene que cambiar esto. Desde aquí, puede copiar las fotos a otros dispositivos.</p>
-
-				<p>La carpeta predeterminada es &laquo;FotosOcular&raquo;.</p>
-
-				<p>Puede seleccionar aquí una carpeta, ya sea en la memoria del dispositivo o en una tarjeta SD. En Android 4.4
-					(Kitkat), almacenamiento en la tarjeta SD tiene algunas limitaciones, Por lo tanto, algunas operaciones tardarán
-					más. En Android 5, al seleccionar una carpeta en la tarjeta SD, usted tendrá que conceder derechos de acceso a la
-					tarjeta SD a través del &laquo;Storage Access Framework&raquo; de Android.</p></td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Tamaño máximo de mapas de bits</td>
-			<td width="70%" valign="top">Este es el tamaño en el que las fotos se reducen antes de mostrar. Este se requiere para
-				ahorrar memoria del dispositivo. El valor predeterminado es 2048. En dispositivos con poca memoria, puede ser
-				necesario para configurar un valor menor (por ejemplo, 1024). valores demasiado grandes pueden bloquear la
-				aplicación.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Mostrar imagen en alta resolución</td>
-			<td width="70%" valign="top">Aquí usted puede decidir en qué circunstancias se muestra la foto en alta resolución,
-				que permite ver más detalles en la foto, pero consume memoria y tiempo de cálculo.
-
-				<ul>
-					<li><b>Siempre cargar automáticamente:</b> La aplicación siempre almacena las fotos en resolución completa en la
-						memoria. Esto da la mejor experiencia del usuario en los dispositivos de gama alta, pero puede conducir a fallos
-						si no hay suficiente memoria disponible.</li>
-
-					<li><b>Cargar automáticamente cuando se muestra sola foto:</b> La aplicación muestra la resolución completa sólo
-						cuando se muestre un único imagen. Esto requiere un medio de la memoria.</li>
-
-					<li><b>Cargar sólo si se solicita:</b> La aplicación no muestra la imagen en alta resolución. Esto requiere menos
-						memoria y tiempo de cálculo, pero los detalles en la foto se pueden perder. La botón &laquo;lupa&raquo; <img
-						src="../drawable/ic_clarity.png" /> permite visualizar el detalle actual de la imagen en la plena resolución.</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Guardar datos adicionales en JPG</td>
-			<td width="70%" valign="top">Aquí puede limitar el almacenamiento de datos en los archivos JPG de la aplicación.
-
-				<ul>
-					<li><b>Guardar en EXIF (recomendado):</b> La aplicación guarda la información relevante en el archivo JPG, incluso
-						en campos estándar que son visibles en Windows.</li>
-
-					<li><b>Guardar en campos personalizados:</b> La aplicación guarda la información en el archivo JPG, pero sólo en
-						campos separados. Campos estándar se mantienen sin cambios; los datos intercambio con Windows no es posible.</li>
-
-					<li><b>No guarde datos en imágenes:</b> La aplicación no almacena información en archivos JPG. (Esto limita la
-						funcionalidad de la aplicación.)</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Detección automática del iris</td>
-			<td width="70%" valign="top">Aquí puede seleccionar si la aplicación debe tratar de encontrar automáticamente la
-				posición del iris y pupila en las fotos de ojos. Normalmente, esto va a simplificar la colocación de las
-				superposiciones, pero requiere muchos recursos de la teléfono, y el resultado puede ser incorrecto.</td>
-		</tr>
-	</table>
-
-	<h3>Ajustes de la cámara</h3>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Comenzar con el ojo izquierdo</td>
-			<td width="70%" valign="top">Aquí puede definir el ojo que debería ser fotografiada primero. Como configuración
-				predeterminada este es el ojo derecho.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Compatibilidad de la cámara</td>
-			<td width="70%" valign="top">Si el dispositivo funciona con Android 5 o superior, entonces aquí se puede seleccionar
-				si la cámara debe utilizar los nuevos Android 5 funciones o no. Selección de &laquo;Android 4&raquo; tiene sentido
-				en el caso de problemas con Android 5 compatibilidad.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Activar el flash</td>
-			<td width="70%" valign="top">Aquí usted puede habilitar el flash. Por defecto, este está desactivado, ya que es
-				peligroso para usar el flash cerca del ojo.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Activar flash LED externo</td>
-			<td width="70%" valign="top">Aquí puede establecer si el uso de un &laquo;Flash & Fill-in Light&raquo; enchufado a la
-				toma de auriculares debe ser habilitado.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Utilizar la cámara frontal</td>
-			<td width="70%" valign="top">Aquí puede especificar utilizar la cámara frontal para tomar fotografías. De forma
-				predeterminada, se utiliza la cámara trasera.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Mostrar enlace a la apl. cámara</td>
-			<td width="70%" valign="top">Aquí puede especificar si se debe mostrar el botón para tomar fotos con la aplicación de
-				cámara del sistema.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Posición de la pantalla de la cámara</td>
-			<td width="70%" valign="top">Si la cinta Miniris oculta algunos botones de la pantalla de la cámara, entonces usted
-				puede utilizar este ajuste para desplazar la pantalla de la cámara hacia la derecha o izquierda.</td>
-		</tr>
-	</table>
-
-	<h3>Botones de superposición</h3>
-
-	<p>Esta página le permite definir que superposiciones topografía del iris se puede visualizar pulsando los botones de
-		superposición. Esto también se puede hacer mientras ve las fotos, haciendo una pulsación larga en algún botón de
-		superposición.</p>
-
-	<h3>Paquetes premium / Ayuda</h3>
-
-	<p>Esta página ofrece la posibilidad de comprar un paquete premium, que le da acceso anlimited a todas las funciones de
-		la aplicación.</p>
-
-	<p>Además, hay las siguientes funciones:</p>
-
-	<table width="100%" border="1">
-		<tr>
-			<td width="30%" valign="top">Póngase en contacto co el desarrollador</td>
-			<td width="70%" valign="top">Aquí usted puede enviar un correo electrónico al desarrollador en caso de tener deseos o
-				problemas.</td>
-		</tr>
-		<tr>
-			<td width="30%" valign="top">Clave de usuario</td>
-			<td width="70%" valign="top">Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.</td>
-		</tr>
-	</table>
-
-
-</body>
-</html>
+		<td width="30%" valign="top">Póngase en contacto co el desarrollador</td>
+		<td width="70%" valign="top">Aquí usted puede enviar un correo electrónico al desarrollador en caso de tener deseos o
+			problemas.</td>
+	</tr>
+	<tr>
+		<td width="30%" valign="top">Clave de usuario</td>
+		<td width="70%" valign="top">Una clave de usuario que permite el desbloqueo de la funcionalidad adicional.</td>
+	</tr>
+</table>
 ]]>
     </string>
     <string name="html_organize_photos" formatted="false">
@@ -292,94 +280,89 @@
     </string>
     <string name="html_display_photos" formatted="false">
 <![CDATA[
-<html>
-<head><title>Miniris - Ver fotos</title></head>
-<body>
-	<h2>Ver fotos</h2>
+<h2>Ver fotos</h2>
 
-	<p>Aquí se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
-		todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
+<p>Aquí se puede seleccionar el nombre de una persona cuyas fotos oculares se quiere ver. Luego la aplicación mostrará
+	todas las fotos de ojo de esta persona en una lista ordenada por fecha.</p>
 
-	<p>A continuación, usted tiene las siguientes posibilidades:</p>
+<p>A continuación, usted tiene las siguientes posibilidades:</p>
 
-	<ul>
-		<li>Mostrar una de las fotos en detalle (haciendo clic en una foto).</li>
+<ul>
+	<li>Mostrar una de las fotos en detalle (haciendo clic en una foto).</li>
 
-		<li>Mostrar los dos fotos de una fecha (haciendo clic en una fecha).</li>
+	<li>Mostrar los dos fotos de una fecha (haciendo clic en una fecha).</li>
 
-		<li>Mostrar dos fotos de diferentes fechas (haciendo largo clic en una foto y después clic en una segunda foto).</li>
+	<li>Mostrar dos fotos de diferentes fechas (haciendo largo clic en una foto y después clic en una segunda foto).</li>
 
-		<li>Mostrar dos fotos de diferentes personas: seleccione una foto de esta persona (mediante pulsación larga) y luego
-			seleccione una foto de una persona diferente.</li>
-	</ul>
+	<li>Mostrar dos fotos de diferentes personas: seleccione una foto de esta persona (mediante pulsación larga) y luego
+		seleccione una foto de una persona diferente.</li>
+</ul>
 
-	<p>Tenga en cuenta que los gráficos de la topografía del iris pueden organizarse como fotos oculares - Esto permite
-		comparar las fotos de los ojos con los gráficos de la topografía del iris. Tal gráficos no están incluidos en la
-		aplicación (excepto de superposiciónes).</p>
+<p>Tenga en cuenta que los gráficos de la topografía del iris pueden organizarse como fotos oculares - Esto permite
+	comparar las fotos de los ojos con los gráficos de la topografía del iris. Tal gráficos no están incluidos en la
+	aplicación (excepto de superposiciónes).</p>
 
-	<h3>Otras opciones en la vista general</h3>
+<h3>Otras opciones en la vista general</h3>
 
-	<ul>
-		<li>Al hacer una pulsación larga en un nombre en la lista de nombres, es posible que cambiar o eliminar el nombre</li>
+<ul>
+	<li>Al hacer una pulsación larga en un nombre en la lista de nombres, es posible que cambiar o eliminar el nombre</li>
 
-		<li>Al hacer una pulsación larga en una fecha en la lista de fotos para una nombre, usted puede cambiar la fecha o
+	<li>Al hacer una pulsación larga en una fecha en la lista de fotos para una nombre, usted puede cambiar la fecha o
 			eliminar las imágenes de esa fecha, o puede 
 						trasladar estas fotos a un diferente nombre.
 					</li>
-	</ul>
+</ul>
 
-	<h3>Otras opciones en la vista de detalle</h3>
+<h3>Otras opciones en la vista de detalle</h3>
 
-	<p>En la vista de detalle (una o dos fotos), tiene las siguientes más posibilidades:</p>
+<p>En la vista de detalle (una o dos fotos), tiene las siguientes más posibilidades:</p>
 
-	<ul>
-		<li>Cambio de brillo y contraste mediante correderas <img src="../drawable/ic_seek_brightness.png" /><img
-			src="../drawable/ic_seek_contrast.png" />, así como el cambio de saturación <img
-			src="../drawable/ic_seek_saturation.png" /> y temperatura de color <img
-			src="../drawable/ic_seek_color_temperature.png" /></li>
+<ul>
+	<li>Cambio de brillo y contraste mediante correderas <img src="../drawable/ic_seek_brightness.png" /><img
+		src="../drawable/ic_seek_contrast.png" />, así como el cambio de saturación <img
+		src="../drawable/ic_seek_saturation.png" /> y temperatura de color <img
+		src="../drawable/ic_seek_color_temperature.png" /></li>
 
-		<li>Rotación de la foto (botón <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
-		</li>
+	<li>Rotación de la foto (botón <img src="../drawable/ic_btn_rotate.png" class="frameless" />)
+	</li>
 
-		<li>
-			<p>
-				Visualización de una topografía de iris como superposición (botón círculo <img src="../drawable/ic_btn_wheel.png"
-					class="frameless" /> y botones numerados), adaptación de la superposición al iris y almacenamiento de la posición
-				de superposición (botón de cerradura <img src="../drawable/ic_lock_open.png" />)
-			</p>
-			<p>Al hacer una pulsación larga en uno de los botones numerados, puede cambiar la superposición para este botón. Por
-				el último botón numerado, esto le permite también eliminar el botón o añadir otro botón.</p>
-		</li>
+	<li>
+		<p>
+			Visualización de una topografía de iris como superposición (botón círculo <img src="../drawable/ic_btn_wheel.png"
+				class="frameless" /> y botones numerados), adaptación de la superposición al iris y almacenamiento de la posición de
+			superposición (botón de cerradura <img src="../drawable/ic_lock_open.png" />)
+		</p>
+		<p>Al hacer una pulsación larga en uno de los botones numerados, puede cambiar la superposición para este botón. Por
+			el último botón numerado, esto le permite también eliminar el botón o añadir otro botón.</p>
+	</li>
 
-		<li>Adaptación del tamaño de la pupila de las superposiciones (botón <img src="../drawable/ic_btn_pupil_0.png"
-			class="frameless" />). Aquí usted puede mantener la pupila centrada (<img src="../drawable/ic_btn_pupil_1.png"
-			class="frameless" />) o moverla libremente (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
-		</li>
+	<li>Adaptación del tamaño de la pupila de las superposiciones (botón <img src="../drawable/ic_btn_pupil_0.png"
+		class="frameless" />). Aquí usted puede mantener la pupila centrada (<img src="../drawable/ic_btn_pupil_1.png"
+		class="frameless" />) o moverla libremente (<img src="../drawable/ic_btn_pupil_2.png" class="frameless" />).
+	</li>
 
-		<li>Guardar los ajustes seleccionados de brillo y contraste (por medio del botón &laquo;guardar&raquo; <img
-			src="../drawable/ic_action_save.png" /> en la barra de acciones)
-		</li>
+	<li>Guardar los ajustes seleccionados de brillo y contraste (por medio del botón &laquo;guardar&raquo; <img
+		src="../drawable/ic_action_save.png" /> en la barra de acciones)
+	</li>
 
-		<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; <img src="../drawable/ic_action_save.png" />
-			en la barra de acciones)
-		</li>
+	<li>Guardar la posición y zoom (por medio del botón &laquo;guardar&raquo; <img src="../drawable/ic_action_save.png" />
+		en la barra de acciones)
+	</li>
 
-		<li>Compartir la foto (por medio del botón &laquo;compartir&raquo; <img src="../drawable/ic_action_share.png" /> en la
-			barra de acciones)
-		</li>
+	<li>Compartir la foto (por medio del botón &laquo;compartir&raquo; <img src="../drawable/ic_action_share.png" /> en la
+		barra de acciones)
+	</li>
 
-		<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; <img
-			src="../drawable/ic_comment.png" /> en la barra de acciones)
-		</li>
-	</ul>
+	<li>Cambiar el comentario de la foto (por medio del botón &laquo;documento&raquo; <img src="../drawable/ic_comment.png" />
+		en la barra de acciones)
+	</li>
+</ul>
 
-	<p>
-		Estas funciones pueden activarse o desactivarse mediante el botón &laquo;Mostrar/Ocultar herramientas&raquo; (<img
-			src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
-			src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />).
-	</p>
-</body>
-</html>
+<p>
+	Estas funciones pueden activarse o desactivarse mediante el botón &laquo;Mostrar/Ocultar herramientas&raquo; (<img
+		src="../drawable/ic_tools_up.png" /> <img src="../drawable/ic_tools_down.png" /> <img
+		src="../drawable/ic_tools_left.png" /> <img src="../drawable/ic_tools_right.png" />).
+</p>
 ]]>
     </string>
 
