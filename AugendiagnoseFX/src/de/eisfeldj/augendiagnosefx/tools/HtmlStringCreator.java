@@ -210,7 +210,7 @@ public final class HtmlStringCreator {
 	 */
 	private URL getUrl(final String app, final String language, final String fileName) {
 		try {
-			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName + "?createHtmlString=true");
+			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName + "-android");
 		}
 		catch (MalformedURLException e) {
 			return null;
