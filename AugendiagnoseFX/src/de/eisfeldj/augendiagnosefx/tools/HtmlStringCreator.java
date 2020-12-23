@@ -76,10 +76,10 @@ public final class HtmlStringCreator {
 		LANGUAGE_MAP.put(ES, "values-es");
 		LANGUAGE_MAP.put(PT, "values-pt");
 
-		PAGE_MAP.put("overview.php", "html_overview");
-		PAGE_MAP.put("settings.php", "html_settings");
-		PAGE_MAP.put("organize_photos.php", "html_organize_photos");
-		PAGE_MAP.put("display_photos.php", "html_display_photos");
+		PAGE_MAP.put("overview", "html_overview");
+		PAGE_MAP.put("settings", "html_settings");
+		PAGE_MAP.put("organize_photos", "html_organize_photos");
+		PAGE_MAP.put("display_photos", "html_display_photos");
 
 		APP_URL_MAP.put(AUGENDIAGNOSE, "http://localhost:8002");
 		APP_URL_MAP.put(MINIRIS, "http://localhost:8007");
@@ -133,9 +133,10 @@ public final class HtmlStringCreator {
 		File resourceFile = new File(new File(APP_RESOURCE_FOLDER_MAP.get(app), LANGUAGE_MAP.get(language)), RESOURCE_FILE_NAME);
 		String resourceFileContent = readFile(resourceFile, resourceFileEncoding);
 
-		for (String htmlFile : PAGE_MAP.keySet()) {
-			String htmlFileContent = readHtml(language, app, htmlFile);
-			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlFile), htmlFileContent);
+		for (String htmlPage : PAGE_MAP.keySet()) {
+			String htmlFileContent = readHtml(language, app, htmlPage);
+			htmlFileContent = htmlFileContent.replaceAll("src=\"/drawable/", "src=\"../drawable/");
+			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlPage), htmlFileContent);
 		}
 
 		writeFile(resourceFile, resourceFileContent, resourceFileEncoding);
@@ -176,14 +177,14 @@ public final class HtmlStringCreator {
 	 *            The language.
 	 * @param app
 	 *            the app,
-	 * @param fileName
+	 * @param pageName
 	 *            The name of the page.
 	 * @return The content of the page.
 	 * @throws IOException
 	 *             thrown if there are issues reading the file.
 	 */
-	private String readHtml(final String language, final String app, final String fileName) throws IOException {
-		URL oracle = getUrl(app, language, fileName);
+	private String readHtml(final String language, final String app, final String pageName) throws IOException {
+		URL oracle = getUrl(app, language, pageName);
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(oracle.openStream()));
 
@@ -204,13 +205,13 @@ public final class HtmlStringCreator {
 	 *            The application name.
 	 * @param language
 	 *            The language.
-	 * @param fileName
+	 * @param pageName
 	 *            The file name.
 	 * @return The URL.
 	 */
-	private URL getUrl(final String app, final String language, final String fileName) {
+	private URL getUrl(final String app, final String language, final String pageName) {
 		try {
-			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + fileName + "-android");
+			return new URL(APP_URL_MAP.get(app) + "/" + language + "/" + pageName + "-android");
 		}
 		catch (MalformedURLException e) {
 			return null;
