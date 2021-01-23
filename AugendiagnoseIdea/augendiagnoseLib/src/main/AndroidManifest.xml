@@ -134,8 +134,5 @@
         <intent>
             <action android:name="android.intent.action.OPEN_DOCUMENT_TREE" />
         </intent>
-        <intent>
-            <action android:name="android.intent.action.MEDIA_SCANNER_SCAN_FILE" />
-        </intent>
     </queries>
 </manifest>

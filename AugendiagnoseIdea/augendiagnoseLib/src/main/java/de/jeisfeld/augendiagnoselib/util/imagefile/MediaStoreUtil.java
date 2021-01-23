@@ -2,10 +2,10 @@ package de.jeisfeld.augendiagnoselib.util.imagefile;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -40,7 +40,6 @@ public final class MediaStoreUtil {
 	 * @param contentUri Thr URI of the media store
 	 * @return the file path.
 	 */
-	@SuppressWarnings("static-access")
 	public static String getRealPathFromUri(@NonNull final Uri contentUri) {
 		Cursor cursor = null;
 		try {
@@ -70,7 +69,6 @@ public final class MediaStoreUtil {
 	 * @return the image id.
 	 * @throws ImageNotFoundException thrown if the image is not found in the media store.
 	 */
-	@SuppressWarnings("static-access")
 	private static int getImageId(final String path) throws ImageNotFoundException {
 		ContentResolver resolver = Application.getAppContext().getContentResolver();
 
@@ -173,19 +171,6 @@ public final class MediaStoreUtil {
 	}
 
 	/**
-	 * Add a picture to the media store (via scanning).
-	 *
-	 * @param path the path of the image.
-	 */
-	public static void addFileToMediaStore(@NonNull final String path) {
-		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		File file = new File(path);
-		Uri contentUri = Uri.fromFile(file);
-		mediaScanIntent.setData(contentUri);
-		Application.getAppContext().sendBroadcast(mediaScanIntent);
-	}
-
-	/**
 	 * Retrieve a thumbnail of a bitmap from the mediastore.
 	 *
 	 * @param path    The path of the image
@@ -216,9 +201,9 @@ public final class MediaStoreUtil {
 
 	/**
 	 * Set the BitmapFactory to dither = true. (Deprecated since Android N.)
+	 *
 	 * @param options The BitmapFactory options.
 	 */
-	@SuppressWarnings("deprecation")
 	private static void setDither(final BitmapFactory.Options options) {
 		if (Build.VERSION.SDK_INT <= VERSION_CODES.M) {
 			options.inDither = true;
@@ -231,11 +216,7 @@ public final class MediaStoreUtil {
 	 * @param path the path of the image.
 	 */
 	public static void addPictureToMediaStore(@NonNull final String path) {
-		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		File file = new File(path);
-		Uri contentUri = Uri.fromFile(file);
-		mediaScanIntent.setData(contentUri);
-		Application.getAppContext().sendBroadcast(mediaScanIntent);
+		MediaScannerConnection.scanFile(Application.getAppContext(), new String[]{path}, null, null);
 	}
 
 	/**
