@@ -221,7 +221,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Updated handling of Google Billing. Bugfixes</item>
         <item>Fixed issue with tablet cameras</item>
         <item>Preparation for Android 11</item>
-        <item>Bugfixes</item>
+        <item>Switched to Android 11 API</item>
     </string-array>
 
 </resources>
