@@ -66,5 +66,6 @@
         <item>Corrigido o problema com as câmeras do tablet</item>
         <item>Preparação para o Android 11</item>
         <item>Mudou para Android 11 API</item>
+        <item>Correções de bugs</item>
     </string-array>
 </resources>
