@@ -514,11 +514,14 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public void handleProducts(@NonNull final List<SkuPurchase> inAppSkus, @NonNull final List<SkuPurchase> subscriptionSkus) {
 			// List inventory items.
-			for (final SkuPurchase skuPurchase : inAppSkus) {
-				getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, false));
-			}
-			for (final SkuPurchase skuPurchase : subscriptionSkus) {
-				getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, true));
+			Activity activity = getActivity();
+			if (activity != null) {
+				for (final SkuPurchase skuPurchase : inAppSkus) {
+					getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, false, activity));
+				}
+				for (final SkuPurchase skuPurchase : subscriptionSkus) {
+					getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, true, activity));
+				}
 			}
 		}
 	};
@@ -528,10 +531,11 @@ public class SettingsFragment extends PreferenceFragment {
 	 *
 	 * @param skuPurchase    The SKU to be added.
 	 * @param isSubscription Flag indicating if it is subscription or in-app product
+	 * @param activity       The triggering activity.
 	 * @return the preference.
 	 */
-	private Preference createSkuPreference(final SkuPurchase skuPurchase, final boolean isSubscription) {
-		Preference skuPreference = new Preference(getActivity());
+	private Preference createSkuPreference(final SkuPurchase skuPurchase, final boolean isSubscription, final Activity activity) {
+		Preference skuPreference = new Preference(activity);
 		final SkuDetails skuDetails = skuPurchase.getSkuDetails();
 		if (skuPurchase.isPurchased()) {
 			skuPreference.setTitle(getString(isSubscription
@@ -556,7 +560,7 @@ public class SettingsFragment extends PreferenceFragment {
 			skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(@NonNull final Preference preference) {
-					GoogleBillingHelper.getInstance(getActivity()).launchPurchaseFlow(getActivity(), skuDetails, mOnPurchaseSuccessListener);
+					GoogleBillingHelper.getInstance(activity).launchPurchaseFlow(activity, skuDetails, mOnPurchaseSuccessListener);
 					return false;
 				}
 			});

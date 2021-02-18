@@ -1567,7 +1567,7 @@ public class CameraActivity extends StandardActivity {
 			FileUtil.copyFile(new File(fileName), mNewExternalFile);
 		}
 
-		if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_GALLERY || requestCode == REQUEST_CODE_CAMERA_APP)) {
+		if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_GALLERY || requestCode == REQUEST_CODE_CAMERA_APP) && mNewExternalFile != null) {
 			JpegMetadata metadata = new JpegMetadata();
 			metadata.setRightLeft(mCurrentRightLeft);
 			metadata.setComment("");
