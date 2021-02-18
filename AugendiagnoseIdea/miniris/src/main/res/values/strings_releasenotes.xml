@@ -67,6 +67,7 @@
         <item>1.4</item>
         <item>1.4.1</item>
         <item>1.4.2</item>
+        <item>1.4.3</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -121,6 +122,7 @@
         <item>Fixed issue with tablet cameras</item>
         <item>Preparation for Android 11</item>
         <item>Switched to Android 11 API</item>
+        <item>Bugfixes</item>
         <item>Bugfixes</item>
     </string-array>
 
