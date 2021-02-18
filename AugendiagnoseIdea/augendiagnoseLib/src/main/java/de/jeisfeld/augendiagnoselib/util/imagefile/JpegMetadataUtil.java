@@ -2,6 +2,7 @@ package de.jeisfeld.augendiagnoselib.util.imagefile;
 
 import android.media.ExifInterface;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.adobe.xmp.XMPException;
 
@@ -176,6 +177,15 @@ public final class JpegMetadataUtil {
 		File file = new File(jpegImageFileName);
 		String mimeType;
 		try {
+			int dotIndex = jpegImageFileName.lastIndexOf(".");
+			if (dotIndex < 0) {
+				throw new IOException("File " + jpegImageFileName + " has no valid extension");
+			}
+			String extension = jpegImageFileName.substring(dotIndex + 1);
+			if (!"image/jpeg".equals(MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension))) {
+				throw new IOException("Bad extension " + extension + " - can handle metadata only for image/jpeg.");
+			}
+
 			mimeType = Imaging.getImageInfo(file).getMimeType();
 			if (!"image/jpeg".equals(mimeType)) {
 				throw new IOException("Bad MIME type " + mimeType + " - can handle metadata only for image/jpeg.");
