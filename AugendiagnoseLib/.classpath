@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="/AugendiagnoseIdea/augendiagnoseLib/libs/xmpcore.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs-local/annotation-1.1.0.jar"/>
+	<classpathentry kind="lib" path="libs-local/annotation-1.2.0.jar"/>
 	<classpathentry kind="lib" path="libs-local/core-1.1.0-rc03.jar"/>
 	<classpathentry kind="lib" path="libs-local/fragment-1.1.0-rc04.jar"/>
 	<classpathentry kind="lib" path="libs-local/activity-1.0.0-rc01.jar"/>
@@ -24,6 +24,6 @@
 	<classpathentry kind="lib" path="libs-local/savedstate-1.0.0-rc01.jar"/>
 	<classpathentry kind="lib" path="libs-local/play-services-measurement-api-17.1.0.jar"/>
 	<classpathentry kind="lib" path="libs-local/R.jar"/>
-	<classpathentry kind="lib" path="libs-local/billing-3.0.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/billing-3.0.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
