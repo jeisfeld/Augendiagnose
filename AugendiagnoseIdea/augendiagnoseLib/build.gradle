@@ -19,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -26,8 +31,8 @@ dependencies {
     api files('libs/xmpcore.jar')
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'com.google.firebase:firebase-core:18.0.3'
-    implementation 'com.android.billingclient:billing:3.0.3'
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.android.billingclient:billing:4.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

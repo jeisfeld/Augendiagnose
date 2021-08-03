@@ -23,7 +23,8 @@
 	<classpathentry kind="lib" path="libs-local/lifecycle-viewmodel-2.1.0-rc01.jar"/>
 	<classpathentry kind="lib" path="libs-local/savedstate-1.0.0-rc01.jar"/>
 	<classpathentry kind="lib" path="libs-local/play-services-measurement-api-17.1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs-local/R.jar"/>
-	<classpathentry kind="lib" path="libs-local/billing-3.0.3.jar"/>
+	<classpathentry kind="lib" path="libs-local/billing-4.0.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

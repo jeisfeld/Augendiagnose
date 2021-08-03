@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
-import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClient.BillingResponseCode;
 import com.android.billingclient.api.BillingClient.SkuType;
@@ -18,7 +17,6 @@ import com.android.billingclient.api.Purchase.PurchasesResult;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -127,7 +126,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
 				@Override
-				public void onBillingSetupFinished(final BillingResult billingResult) {
+				public void onBillingSetupFinished(@NonNull final BillingResult billingResult) {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
@@ -160,10 +159,12 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		if (purchasesResult.getPurchasesList() != null) {
 			for (Purchase purchase : purchasesResult.getPurchasesList()) {
 				result = PurchaseState.PENDING;
-				if (INAPP_PRODUCT_IDS.contains(purchase.getSku())) {
-					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-						doAcknowledgePurchaseIfRequired(purchase);
-						return PurchaseState.PURCHASED;
+				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+					for (String sku : purchase.getSkus()) {
+						if (INAPP_PRODUCT_IDS.contains(sku)) {
+							doAcknowledgePurchaseIfRequired(purchase);
+							return PurchaseState.PURCHASED;
+						}
 					}
 				}
 			}
@@ -172,10 +173,12 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		if (purchasesResult.getPurchasesList() != null) {
 			for (Purchase purchase : purchasesResult.getPurchasesList()) {
 				result = PurchaseState.PENDING;
-				if (SUBSCRIPTION_IDS.contains(purchase.getSku())) {
-					if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-						doAcknowledgePurchaseIfRequired(purchase);
-						return PurchaseState.PURCHASED;
+				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
+					for (String sku : purchase.getSkus()) {
+						if (SUBSCRIPTION_IDS.contains(sku)) {
+							doAcknowledgePurchaseIfRequired(purchase);
+							return PurchaseState.PURCHASED;
+						}
 					}
 				}
 			}
@@ -195,7 +198,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
 				@Override
-				public void onBillingSetupFinished(final BillingResult billingResult) {
+				public void onBillingSetupFinished(@NonNull final BillingResult billingResult) {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
@@ -229,20 +232,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		mIsPremium = false;
 		mBillingClient.querySkuDetailsAsync(
 				SkuDetailsParams.newBuilder().setSkusList(INAPP_PRODUCT_IDS).setType(SkuType.INAPP).build(),
-				new SkuDetailsResponseListener() {
-					@Override
-					public void onSkuDetailsResponse(final BillingResult result, final List<SkuDetails> list) {
-						GoogleBillingHelper.this.onSkuDetailsResponse(result, list, false, listener);
-					}
-				});
+				(result, list) -> GoogleBillingHelper.this.onSkuDetailsResponse(result, list, false, listener));
 		mBillingClient.querySkuDetailsAsync(
 				SkuDetailsParams.newBuilder().setSkusList(SUBSCRIPTION_IDS).setType(SkuType.SUBS).build(),
-				new SkuDetailsResponseListener() {
-					@Override
-					public void onSkuDetailsResponse(final BillingResult result, final List<SkuDetails> list) {
-						GoogleBillingHelper.this.onSkuDetailsResponse(result, list, true, listener);
-					}
-				});
+				(result, list) -> GoogleBillingHelper.this.onSkuDetailsResponse(result, list, true, listener));
 	}
 
 	/**
@@ -259,7 +252,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
 				@Override
-				public void onBillingSetupFinished(final BillingResult billingResult) {
+				public void onBillingSetupFinished(@NonNull final BillingResult billingResult) {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
@@ -314,7 +307,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			for (Purchase purchase : purchaseList) {
 				hasPurchase = true;
 				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-					Log.i(TAG, "Purchase " + purchase.getSku() + " finished");
+					Log.i(TAG, "Purchase " + purchase.getSkus() + " finished");
 					isPurchased = true;
 					doAcknowledgePurchaseIfRequired(purchase);
 				}
@@ -335,15 +328,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	private void doAcknowledgePurchaseIfRequired(final Purchase purchase) {
 		if (!purchase.isAcknowledged()) {
-			Log.d(TAG, "Acknowledging purchase " + purchase.getSku());
+			Log.d(TAG, "Acknowledging purchase " + purchase.getSkus());
 			mBillingClient.acknowledgePurchase(
 					AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(),
-					new AcknowledgePurchaseResponseListener() {
-						@Override
-						public void onAcknowledgePurchaseResponse(final BillingResult billingResult) {
-							Log.d(TAG, "Acknowledgement result: " + billingResult.getResponseCode());
-						}
-					});
+					billingResult -> Log.d(TAG, "Acknowledgement result: " + billingResult.getResponseCode()));
 		}
 	}
 
@@ -374,12 +362,17 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			Log.e(TAG, "Failed to query purchases: " + purchasesResult.getBillingResult().getDebugMessage());
 			return;
 		}
-		for (Purchase purchase : purchasesResult.getPurchasesList()) {
-			if (purchase.getPackageName().equals(mContext.getPackageName())) {
-				purchaseMap.put(purchase.getSku(), purchase);
-				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-					doAcknowledgePurchaseIfRequired(purchase);
-					mIsPremium = true;
+
+		if (purchasesResult.getPurchasesList() != null) {
+			for (Purchase purchase : purchasesResult.getPurchasesList()) {
+				if (purchase.getPackageName().equals(mContext.getPackageName())) {
+					for (String sku : purchase.getSkus()) {
+						purchaseMap.put(sku, purchase);
+					}
+					if (purchase.getPurchaseState() == PurchaseState.PURCHASED && purchasesResult.getPurchasesList().size() > 0) {
+						doAcknowledgePurchaseIfRequired(purchase);
+						mIsPremium = true;
+					}
 				}
 			}
 		}
@@ -487,7 +480,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		 * Callback called if premium pack status is available.
 		 *
 		 * @param hasPremiumPack true if premium pack is available.
-		 * @param isPending trie if there is a pending purchase.
+		 * @param isPending      trie if there is a pending purchase.
 		 */
 		void onHasPremiumPack(boolean hasPremiumPack, boolean isPending);
 	}
