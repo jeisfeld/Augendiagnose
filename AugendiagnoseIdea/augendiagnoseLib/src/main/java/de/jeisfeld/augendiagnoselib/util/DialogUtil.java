@@ -266,7 +266,12 @@ public final class DialogUtil {
 		bundle.putSerializable(PARAM_LISTENER, listener);
 		ConfirmDialogFragment fragment = new ConfirmDialogFragment();
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		try {
+			fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		}
+		catch (IllegalStateException e) {
+			// May appear if activity is not active any more - ignore.
+		}
 	}
 
 	/**
@@ -305,7 +310,12 @@ public final class DialogUtil {
 
 			DisplayTipFragment fragment = new DisplayTipFragment();
 			fragment.setArguments(bundle);
-			fragment.show(activity.getFragmentManager(), DisplayTipFragment.class.toString());
+			try {
+				fragment.show(activity.getFragmentManager(), DisplayTipFragment.class.toString());
+			}
+			catch (IllegalStateException e) {
+				// May appear if activity is not active any more - ignore.
+			}
 		}
 	}
 
@@ -365,7 +375,12 @@ public final class DialogUtil {
 		bundle.putInt(PARAM_ICON, R.drawable.ic_title_info);
 		DialogFragment fragment = new DisplayMessageDialogFragment();
 		fragment.setArguments(bundle);
-		fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		try {
+			fragment.show(activity.getFragmentManager(), fragment.getClass().toString());
+		}
+		catch (IllegalStateException e) {
+			// May appear if activity is not active any more - ignore.
+		}
 	}
 
 	/**
@@ -467,14 +482,11 @@ public final class DialogUtil {
 
 			builder.setTitle(title)
 					.setIcon(iconResource)
-					.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(@NonNull final DialogInterface dialog, final int id) {
-							if (mListener != null) {
-								mListener.onDialogClick(DisplayMessageDialogFragment.this);
-							}
-							dialog.dismiss();
+					.setPositiveButton(R.string.button_ok, (dialog, id) -> {
+						if (mListener != null) {
+							mListener.onDialogClick(DisplayMessageDialogFragment.this);
 						}
+						dialog.dismiss();
 					});
 			return builder.create();
 		}
@@ -564,22 +576,16 @@ public final class DialogUtil {
 
 			builder.setTitle(R.string.title_dialog_confirmation)
 					.setIcon(R.drawable.ic_title_warning)
-					.setNegativeButton(negativeButtonResource, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
-							// Send the positive button event back to the host activity
-							if (mListener != null) {
-								mListener.onDialogNegativeClick(ConfirmDialogFragment.this);
-							}
+					.setNegativeButton(negativeButtonResource, (dialog, id) -> {
+						// Send the positive button event back to the host activity
+						if (mListener != null) {
+							mListener.onDialogNegativeClick(ConfirmDialogFragment.this);
 						}
 					}) //
-					.setPositiveButton(confirmButtonResource, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(final DialogInterface dialog, final int id) {
-							// Send the negative button event back to the host activity
-							if (mListener != null) {
-								mListener.onDialogPositiveClick(ConfirmDialogFragment.this);
-							}
+					.setPositiveButton(confirmButtonResource, (dialog, id) -> {
+						// Send the negative button event back to the host activity
+						if (mListener != null) {
+							mListener.onDialogPositiveClick(ConfirmDialogFragment.this);
 						}
 					});
 			return builder.create();
@@ -658,19 +664,13 @@ public final class DialogUtil {
 			builder.setTitle(title)
 					.setIcon(iconResource)
 					.setView(mainView)
-					.setNegativeButton(R.string.button_show_later, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(@NonNull final DialogInterface dialog, final int id) {
-							PreferenceUtil.setSharedPreferenceBoolean(key, false);
-							dialog.dismiss();
-						}
+					.setNegativeButton(R.string.button_show_later, (dialog, id) -> {
+						PreferenceUtil.setSharedPreferenceBoolean(key, false);
+						dialog.dismiss();
 					})
-					.setPositiveButton(R.string.button_dont_show, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(@NonNull final DialogInterface dialog, final int id) {
-							PreferenceUtil.setSharedPreferenceBoolean(key, true);
-							dialog.dismiss();
-						}
+					.setPositiveButton(R.string.button_dont_show, (dialog, id) -> {
+						PreferenceUtil.setSharedPreferenceBoolean(key, true);
+						dialog.dismiss();
 					});
 			return builder.create();
 		}
