@@ -19,14 +19,16 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute"
+        android:fullBackupContent="true">
         <activity
             android:name="de.jeisfeld.augendiagnoselib.activities.CameraActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/title_activity_camera"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.Fullscreen"
-            tools:replace="android:label">
+            tools:replace="android:label"
+            android:exported="true">
             <intent-filter
                 android:icon="@mipmap/ic_launcher"
                 android:label="@string/title_activity_camera">
@@ -41,7 +43,8 @@
             android:name="de.jeisfeld.augendiagnoselib.activities.ListFoldersForDisplayActivity"
             android:icon="@mipmap/ic_launcher_gallery"
             android:label="@string/title_activity_list_folders_for_display"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:exported="true">
             <intent-filter android:label="@string/title_activity_list_folders_for_display">
                 <action android:name="android.intent.action.MAIN" />
 

@@ -29,6 +29,6 @@ android {
 
 dependencies {
     implementation project(':augendiagnoseLib')
-    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.annotation:annotation:1.3.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
 }
