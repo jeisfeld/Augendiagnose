@@ -225,7 +225,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Preparation for Android 11</item>
         <item>Switched to Android 11 API</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Bugfixes. Adapted for Android 12.</item>
     </string-array>
 
 </resources>

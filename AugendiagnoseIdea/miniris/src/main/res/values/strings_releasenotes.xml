@@ -123,7 +123,7 @@
         <item>Preparation for Android 11</item>
         <item>Switched to Android 11 API</item>
         <item>Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Bugfixes. Adapted for Android 12.</item>
     </string-array>
 
 </resources>

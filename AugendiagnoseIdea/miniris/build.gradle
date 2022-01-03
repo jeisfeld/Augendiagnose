@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "de.jeisfeld.miniris"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 31
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
