@@ -131,5 +131,6 @@ Primeira vez com um novo dispositivo ou com uma nova câmera. Por favor, informe
         <item>Mudou para Android 11 API</item>
         <item>Correções de bugs</item>
         <item>Correções de bugs. Adaptado para Android 12.</item>
+        <item>Correções de bugs</item>
     </string-array>
 </resources>
