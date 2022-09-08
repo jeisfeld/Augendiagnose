@@ -24,12 +24,13 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    namespace 'de.jeisfeld.augendiagnoselib'
 }
 
 dependencies {
     api files('libs/annotations.jar')
     api files('libs/xmpcore.jar')
-    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
     //noinspection GradleDependency
     implementation 'com.google.firebase:firebase-core:19.0.2'

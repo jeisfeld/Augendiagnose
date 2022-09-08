@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="AugendiagnoseFX" default="do-deploy" basedir="."
-	xmlns:fx="javafx:com.sun.javafx.tools.ant">
+<project name="AugendiagnoseFX" default="do-deploy" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
 		<property name="application.version">0.1.16</property>
 
 		<path id="fxant">
 			<filelist>
-				<file name="${java.home}\..\lib\ant-javafx.jar" />
-				<file name="${java.home}\lib\jfxrt.jar" />
+				<file name="C:\Program Files\Java\jdk1.8.0_333\lib\ant-javafx.jar" />
 			</filelist>
 		</path>
 
-		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant"
-			classpathref="fxant" />
+		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpathref="fxant" />
 	</target>
 	<target name="setup-staging-area">
 		<delete dir="externalLibs" />
@@ -21,19 +18,10 @@
 		<mkdir dir="externalLibs" />
 
 		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
-				<filename name="annotations.jar" />
-			</fileset>
+			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib" />
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
-				<filename name="xmpcore.jar" />
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib">
-				<filename name="commons-lang3-3.3.2.jar" />
-			</fileset>
+			<fileset dir="C:\Transferrable\javafx-sdk-18.0.2\lib" />
 		</copy>
 
 		<mkdir dir="project" />
@@ -66,8 +54,7 @@
 			</fileset>
 		</copy>
 
-		<javac includeantruntime="false" source="1.8" target="1.8"
-			srcdir="build/src" destdir="build/classes" encoding="UTF-8">
+		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="UTF-8">
 			<classpath>
 				<fileset dir="externalLibs">
 					<include name="*" />
@@ -102,9 +89,7 @@
 			<fx:fileset dir="jar" includes="AugendiagnoseFX.jar" />
 		</fx:resources>
 
-		<fx:application id="fxApplication" name="AugendiagnoseFX${buildtype}"
-			version="${application.version}" mainClass="de.eisfeldj.augendiagnosefx.Application"
-			toolkit="fx" />
+		<fx:application id="fxApplication" name="AugendiagnoseFX${buildtype}" version="${application.version}" mainClass="de.eisfeldj.augendiagnosefx.Application" toolkit="fx" />
 
 		<mkdir dir="build/classes/META-INF" />
 
@@ -120,15 +105,6 @@
 				<attribute name="JavaFX-Feature-Proxy" value="None" />
 			</manifest>
 		</fx:jar>
-
-		<!-- Need to use ${basedir} because somehow the ant task is calculating
-			the directory differently -->
-		<fx:signjar keystore="D:\Jörg\Miscellaneous\Keystores\jekeystore1"
-			alias="jeisfeld.de" keypass="supila1" storepass="supila1" destDir="${basedir}/jar">
-			<fileset dir='jar'>
-				<include name='**/*.jar' />
-			</fileset>
-		</fx:signjar>
 	</target>
 	<target name="do-deploy" depends="do-build">
 		<delete dir="deploy" />
@@ -136,15 +112,12 @@
 
 		<!-- Need to use ${basedir} because somehow the ant task is calculating
 			the directory differently -->
-		<fx:deploy embedJNLP="false" extension="false" includeDT="false"
-			offlineAllowed="true" outdir="${basedir}/deploy" outfile="AugendiagnoseFX${buildtype}"
-			nativeBundles="exe" updatemode="background">
-			<fx:platform basedir="${java.home}">
+		<fx:deploy embedJNLP="false" extension="false" includeDT="false" offlineAllowed="true" outdir="${basedir}/deploy" outfile="AugendiagnoseFX${buildtype}" nativeBundles="exe" updatemode="background">
+			<fx:platform basedir="C:\Program Files\Java\jdk1.8.0_333">
 				<fx:jvmarg value="-Xmx1024m" />
 			</fx:platform>
 			<fx:info title="AugendiagnoseFX" vendor="Jörg Eisfeld">
-				<fx:icon href="resources/img/Augendiagnose.ico" depth="32"
-					height="48" kind="default" width="48" />
+				<fx:icon href="resources/img/Augendiagnose.ico" depth="32" height="48" kind="default" width="48" />
 			</fx:info>
 			<fx:preferences menu="true" install="false" shortcut="true" />
 			<fx:application refId="fxApplication" />
