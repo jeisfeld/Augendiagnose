@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -22,7 +21,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
-import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.ProductDetails;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import androidx.core.content.ContextCompat;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference;
-import de.jeisfeld.augendiagnoselib.components.DirectorySelectionPreference.OnDialogClosedListener;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
 import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
@@ -45,7 +43,7 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
-import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.SkuPurchase;
+import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.ProductPurchase;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
@@ -84,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A prefix put before the productId to define the according preference key.
 	 */
-	private static final String SKU_KEY_PREFIX = "sku_";
+	private static final String PRODUCT_KEY_PREFIX = "product_";
 
 	/**
 	 * A listener handling the change of preferences.
@@ -101,12 +99,6 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	@Nullable
 	private String mFolderPhotos;
-
-	/**
-	 * The type of fragment to be shown.
-	 */
-	@Nullable
-	private String mType = null;
 
 	/**
 	 * Field for temporarily storing the folder used for Storage Access Framework.
@@ -134,7 +126,10 @@ public class SettingsFragment extends PreferenceFragment {
 			return;
 		}
 
-		mType = getArguments().getString(STRING_PREF_TYPE);
+		/**
+		 * The type of fragment to be shown.
+		 */
+		String mType = getArguments().getString(STRING_PREF_TYPE);
 		if (mType.equals(getActivity().getString(R.string.key_dummy_screen_input_settings))) {
 			addPreferencesFromResource(R.xml.prefs_input);
 
@@ -159,12 +154,7 @@ public class SettingsFragment extends PreferenceFragment {
 				if (pref.getKey().equals(getActivity().getString(R.string.key_folder_input))) {
 					if (pref instanceof DirectorySelectionPreference) {
 						DirectorySelectionPreference preference = (DirectorySelectionPreference) pref;
-						preference.setOnDialogClosedListener(new OnDialogClosedListener() {
-							@Override
-							public void onDialogClosed() {
-								getActivity().finish();
-							}
-						});
+						preference.setOnDialogClosedListener(() -> getActivity().finish());
 						preference.showDialog();
 					}
 					else {
@@ -273,7 +263,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	public final void initializeGoogleBilling() {
 		try {
-			GoogleBillingHelper.getInstance(getActivity()).querySkuDetails(mOnInventoryFinishedListener);
+			GoogleBillingHelper.getInstance(getActivity()).queryProductDetails(mOnInventoryFinishedListener);
 		}
 		catch (Exception e) {
 			android.util.Log.e(Application.TAG, "Failed to call Google Billing Helper", e);
@@ -285,28 +275,25 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void addPhotosFolderPreferenceListener() {
 		final Preference folderPhotosPreference = findPreference(getString(R.string.key_folder_photos));
-		folderPhotosPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
-					/**
-					 * Default serial version id.
-					 */
-					private static final long serialVersionUID = 1L;
+		folderPhotosPreference.setOnPreferenceClickListener(preference -> {
+			DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
+				/**
+				 * Default serial version id.
+				 */
+				private static final long serialVersionUID = 1L;
 
-					@Override
-					@RequiresApi(api = VERSION_CODES.LOLLIPOP)
-					public void onDialogClick(final DialogFragment dialog) {
-						triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
-					}
+				@Override
+				@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+				public void onDialogClick(final DialogFragment dialog) {
+					triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_PHOTOS);
+				}
 
-					@Override
-					public void onDialogCancel(final DialogFragment dialog) {
-						// do nothing.
-					}
-				}, R.string.message_dialog_select_photos_folder);
-				return true;
-			}
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					// do nothing.
+				}
+			}, R.string.message_dialog_select_photos_folder);
+			return true;
 		});
 	}
 
@@ -315,28 +302,25 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void addInputFolderPreferenceListener() {
 		final Preference folderInputPreference = findPreference(getString(R.string.key_folder_input));
-		folderInputPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
-					/**
-					 * Default serial version id.
-					 */
-					private static final long serialVersionUID = 1L;
+		folderInputPreference.setOnPreferenceClickListener(preference -> {
+			DialogUtil.displayInfo(getActivity(), new MessageDialogListener() {
+				/**
+				 * Default serial version id.
+				 */
+				private static final long serialVersionUID = 1L;
 
-					@Override
-					@RequiresApi(api = VERSION_CODES.LOLLIPOP)
-					public void onDialogClick(final DialogFragment dialog) {
-						triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_INPUT);
-					}
+				@Override
+				@RequiresApi(api = VERSION_CODES.LOLLIPOP)
+				public void onDialogClick(final DialogFragment dialog) {
+					triggerStorageAccessFramework(REQUEST_CODE_STORAGE_ACCESS_INPUT);
+				}
 
-					@Override
-					public void onDialogCancel(final DialogFragment dialog) {
-						// do nothing.
-					}
-				}, R.string.message_dialog_select_input_folder);
-				return true;
-			}
+				@Override
+				public void onDialogCancel(final DialogFragment dialog) {
+					// do nothing.
+				}
+			}, R.string.message_dialog_select_input_folder);
+			return true;
 		});
 	}
 
@@ -348,14 +332,11 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void addHintButtonListener(final int preferenceId, final boolean hintPreferenceValue) {
 		Preference showPreference = findPreference(getString(preferenceId));
-		showPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				PreferenceUtil.setAllHints(hintPreferenceValue);
-				DialogUtil.displayInfo(getActivity(), null,
-						hintPreferenceValue ? R.string.message_dialog_no_hints_will_be_shown : R.string.message_dialog_hints_will_be_shown);
-				return true;
-			}
+		showPreference.setOnPreferenceClickListener(preference -> {
+			PreferenceUtil.setAllHints(hintPreferenceValue);
+			DialogUtil.displayInfo(getActivity(), null,
+					hintPreferenceValue ? R.string.message_dialog_no_hints_will_be_shown : R.string.message_dialog_hints_will_be_shown);
+			return true;
 		});
 	}
 
@@ -364,19 +345,16 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void addUnlockerAppButtonListener() {
 		Preference unlockPreference = findPreference(getString(R.string.key_dummy_unlocker_app));
-		unlockPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
-				googlePlayIntent.setData(Uri.parse("market://details?id=de.jeisfeld.augendiagnoseunlocker"));
-				try {
-					startActivity(googlePlayIntent);
-				}
-				catch (Exception e) {
-					DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_open_google_play, false);
-				}
-				return true;
+		unlockPreference.setOnPreferenceClickListener(preference -> {
+			Intent googlePlayIntent = new Intent(Intent.ACTION_VIEW);
+			googlePlayIntent.setData(Uri.parse("market://details?id=de.jeisfeld.augendiagnoseunlocker"));
+			try {
+				startActivity(googlePlayIntent);
 			}
+			catch (Exception e) {
+				DialogUtil.displayError(getActivity(), R.string.message_dialog_failed_to_open_google_play, false);
+			}
+			return true;
 		});
 		unlockPreference.setEnabled(!SystemUtil.isAppInstalled("de.jeisfeld.augendiagnoseunlocker"));
 	}
@@ -386,16 +364,13 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void addDeveloperContactButtonListener() {
 		Preference contactPreference = findPreference(getString(R.string.key_dummy_contact_developer));
-		contactPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(final Preference preference) {
-				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-						"mailto", getString(R.string.menu_email_contact_developer), null));
-				intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.menu_subject_contact_developer));
+		contactPreference.setOnPreferenceClickListener(preference -> {
+			Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+					"mailto", getString(R.string.menu_email_contact_developer), null));
+			intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.menu_subject_contact_developer));
 
-				startActivity(intent);
-				return true;
-			}
+			startActivity(intent);
+			return true;
 		});
 	}
 
@@ -510,62 +485,61 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * A listener handling the response after reading the in-add purchase inventory.
 	 */
-	private final OnInventoryFinishedListener mOnInventoryFinishedListener = new OnInventoryFinishedListener() {
-		@Override
-		public void handleProducts(@NonNull final List<SkuPurchase> inAppSkus, @NonNull final List<SkuPurchase> subscriptionSkus) {
-			// List inventory items.
-			Activity activity = getActivity();
-			if (activity != null) {
-				for (final SkuPurchase skuPurchase : inAppSkus) {
-					getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, false, activity));
-				}
-				for (final SkuPurchase skuPurchase : subscriptionSkus) {
-					getPreferenceScreen().addPreference(createSkuPreference(skuPurchase, true, activity));
-				}
+	private final OnInventoryFinishedListener mOnInventoryFinishedListener = (inAppProducts, subscriptionProducts) -> {
+		// List inventory items.
+		Activity activity = getActivity();
+		if (activity != null) {
+			for (final ProductPurchase productPurchase : inAppProducts) {
+				getPreferenceScreen().addPreference(createProductPreference(productPurchase, false, activity));
+			}
+			for (final ProductPurchase productPurchase : subscriptionProducts) {
+				getPreferenceScreen().addPreference(createProductPreference(productPurchase, true, activity));
 			}
 		}
 	};
 
 	/**
-	 * Create a preference for the SKU.
+	 * Create a preference for the Product.
 	 *
-	 * @param skuPurchase    The SKU to be added.
-	 * @param isSubscription Flag indicating if it is subscription or in-app product
-	 * @param activity       The triggering activity.
+	 * @param productPurchase The Product to be added.
+	 * @param isSubscription  Flag indicating if it is subscription or in-app product
+	 * @param activity        The triggering activity.
 	 * @return the preference.
 	 */
-	private Preference createSkuPreference(final SkuPurchase skuPurchase, final boolean isSubscription, final Activity activity) {
-		Preference skuPreference = new Preference(activity);
-		final SkuDetails skuDetails = skuPurchase.getSkuDetails();
-		if (skuPurchase.isPurchased()) {
-			skuPreference.setTitle(getString(isSubscription
+	private Preference createProductPreference(final ProductPurchase productPurchase, final boolean isSubscription, final Activity activity) {
+		Preference productPreference = new Preference(activity);
+		final ProductDetails productDetails = productPurchase.getProductDetails();
+		String price = isSubscription
+				? productDetails.getSubscriptionOfferDetails().get(0).getPricingPhases().getPricingPhaseList().get(0).getFormattedPrice()
+				: productDetails.getOneTimePurchaseOfferDetails().getFormattedPrice();
+
+
+		if (productPurchase.isPurchased()) {
+			productPreference.setTitle(getString(isSubscription
 					? R.string.googlebilling_subscription_title_purchased : R.string.googlebilling_onetime_title_purchased));
 		}
-		else if (skuPurchase.isPending()) {
-			skuPreference.setTitle(getString(isSubscription
+		else if (productPurchase.isPending()) {
+			productPreference.setTitle(getString(isSubscription
 					? R.string.googlebilling_subscription_title_pending : R.string.googlebilling_onetime_title_pending));
 		}
 		else {
-			skuPreference.setTitle(getString(isSubscription
-					? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, skuDetails.getPrice()));
+			productPreference.setTitle(getString(isSubscription
+					? R.string.googlebilling_subscription_title : R.string.googlebilling_onetime_title, price));
 		}
 
-		skuPreference.setKey(SKU_KEY_PREFIX + skuDetails.getSku());
+		productPreference.setKey(PRODUCT_KEY_PREFIX + productDetails.getProductId());
 		String descriptionResourceString = getString(isSubscription ? R.string.googlebilling_subscription_text : R.string.googlebilling_onetime_text);
-		skuPreference.setSummary(String.format(descriptionResourceString, skuDetails.getPrice()));
+		productPreference.setSummary(String.format(descriptionResourceString, price));
 
-		skuPreference.setEnabled(!skuPurchase.isPurchased() && !skuPurchase.isPending());
+		productPreference.setEnabled(!productPurchase.isPurchased() && !productPurchase.isPending());
 
-		if (!skuPurchase.isPurchased() && !skuPurchase.isPending()) {
-			skuPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				@Override
-				public boolean onPreferenceClick(@NonNull final Preference preference) {
-					GoogleBillingHelper.getInstance(activity).launchPurchaseFlow(activity, skuDetails, mOnPurchaseSuccessListener);
-					return false;
-				}
+		if (!productPurchase.isPurchased() && !productPurchase.isPending()) {
+			productPreference.setOnPreferenceClickListener(preference -> {
+				GoogleBillingHelper.getInstance(activity).launchPurchaseFlow(activity, productDetails, mOnPurchaseSuccessListener);
+				return false;
 			});
 		}
-		return skuPreference;
+		return productPreference;
 	}
 
 	/**

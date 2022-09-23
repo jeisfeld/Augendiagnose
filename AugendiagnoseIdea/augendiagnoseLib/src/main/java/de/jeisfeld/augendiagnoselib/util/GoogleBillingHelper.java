@@ -7,16 +7,17 @@ import android.util.Log;
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClient.BillingResponseCode;
-import com.android.billingclient.api.BillingClient.SkuType;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingFlowParams.ProductDetailsParams;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.Purchase.PurchaseState;
-import com.android.billingclient.api.Purchase.PurchasesResult;
+import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.QueryProductDetailsParams;
+import com.android.billingclient.api.QueryProductDetailsParams.Product;
+import com.android.billingclient.api.QueryPurchasesParams;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
+
+import static com.android.billingclient.api.BillingClient.ProductType.INAPP;
+import static com.android.billingclient.api.BillingClient.ProductType.SUBS;
+import static com.android.billingclient.api.Purchase.PurchaseState.PENDING;
+import static com.android.billingclient.api.Purchase.PurchaseState.PURCHASED;
 
 /**
  * Utility class to support in-ad purchases via Google Billing.
@@ -51,10 +57,28 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			Arrays.asList(Application.getAppContext().getResources().getStringArray(R.array.googlebilling_subscription_ids));
 
 	/**
+	 * The in-app products to be offered.
+	 */
+	private static final List<Product> INAPP_PRODUCTS = new ArrayList<>();
+	/**
+	 * The subscription products to be offered.
+	 */
+	private static final List<Product> SUBS_PRODUCTS = new ArrayList<>();
+
+	/**
 	 * An instance of GoogleBillingHelper.
 	 */
 	@Nullable
 	private static GoogleBillingHelper mInstance;
+
+	static {
+		for (String productId : INAPP_PRODUCT_IDS) {
+			INAPP_PRODUCTS.add(Product.newBuilder().setProductType(INAPP).setProductId(productId).build());
+		}
+		for (String productId : SUBSCRIPTION_IDS) {
+			SUBS_PRODUCTS.add(Product.newBuilder().setProductType(SUBS).setProductId(productId).build());
+		}
+	}
 
 	/**
 	 * The context.
@@ -81,13 +105,13 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	private boolean mIsConnected = false;
 	/**
-	 * Found in app SKUs.
+	 * Found in app Products.
 	 */
-	private List<SkuPurchase> mInAppSkus = null;
+	private List<ProductPurchase> mInAppProducts = null;
 	/**
-	 * Found subscription SKUs.
+	 * Found subscription Products.
 	 */
-	private List<SkuPurchase> mSubscriptionSkus = null;
+	private List<ProductPurchase> mSubscriptionProducts = null;
 
 	/**
 	 * Hide default constructor.
@@ -120,8 +144,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	public void hasPremiumPack(final OnPurchaseQueryCompletedListener listener) {
 		if (mIsConnected) {
-			int premiumPackState = doHasPremiumPack();
-			listener.onHasPremiumPack(premiumPackState == PurchaseState.PURCHASED, premiumPackState == PurchaseState.PENDING);
+			doHasPremiumPack(listener);
 		}
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
@@ -130,8 +153,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
-						int premiumPackState = doHasPremiumPack();
-						listener.onHasPremiumPack(premiumPackState == PurchaseState.PURCHASED, premiumPackState == PurchaseState.PENDING);
+						doHasPremiumPack(listener);
 					}
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
@@ -151,49 +173,52 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	/**
 	 * Get information if there is a premium pack for the app.
 	 *
-	 * @return The purchase state if existing, otherwise -1
+	 * @param listener The listener called when the information is available.
 	 */
-	private int doHasPremiumPack() {
-		PurchasesResult purchasesResult = mBillingClient.queryPurchases(SkuType.INAPP);
-		int result = -1;
-		if (purchasesResult.getPurchasesList() != null) {
-			for (Purchase purchase : purchasesResult.getPurchasesList()) {
-				result = PurchaseState.PENDING;
-				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-					for (String sku : purchase.getSkus()) {
-						if (INAPP_PRODUCT_IDS.contains(sku)) {
-							doAcknowledgePurchaseIfRequired(purchase);
-							return PurchaseState.PURCHASED;
-						}
-					}
-				}
-			}
-		}
-		purchasesResult = mBillingClient.queryPurchases(SkuType.SUBS);
-		if (purchasesResult.getPurchasesList() != null) {
-			for (Purchase purchase : purchasesResult.getPurchasesList()) {
-				result = PurchaseState.PENDING;
-				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-					for (String sku : purchase.getSkus()) {
-						if (SUBSCRIPTION_IDS.contains(sku)) {
-							doAcknowledgePurchaseIfRequired(purchase);
-							return PurchaseState.PURCHASED;
-						}
-					}
-				}
-			}
-		}
-		return result;
+	private void doHasPremiumPack(final OnPurchaseQueryCompletedListener listener) {
+		mBillingClient.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(INAPP).build(),
+				(billingResultInApp, listInApp) ->
+						mBillingClient.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(INAPP).build(),
+								(billingResultSubs, listSubs) -> {
+									int result = -1;
+									for (Purchase purchase : listInApp) {
+										result = PENDING;
+										if (purchase.getPurchaseState() == PURCHASED) {
+											for (String product : purchase.getProducts()) {
+												if (INAPP_PRODUCT_IDS.contains(product)) {
+													doAcknowledgePurchaseIfRequired(purchase);
+													result = PURCHASED;
+												}
+											}
+										}
+									}
+									if (result != PURCHASED) {
+										for (Purchase purchase : listSubs) {
+											result = PENDING;
+											if (purchase.getPurchaseState() == PURCHASED) {
+												for (String product : purchase.getProducts()) {
+													if (INAPP_PRODUCT_IDS.contains(product)) {
+														doAcknowledgePurchaseIfRequired(purchase);
+														result = PURCHASED;
+													}
+												}
+											}
+										}
+									}
+
+									listener.onHasPremiumPack(result == PURCHASED, result == PENDING);
+								}));
+
 	}
 
 	/**
-	 * Query SKU details. If no connection available, establish connection.
+	 * Query Product details. If no connection available, establish connection.
 	 *
 	 * @param listener The listener called when the query is finished.
 	 */
-	public void querySkuDetails(final OnInventoryFinishedListener listener) {
+	public void queryProductDetails(final OnInventoryFinishedListener listener) {
 		if (mIsConnected) {
-			doQuerySkuDetails(listener);
+			doQueryProductDetails(listener);
 		}
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
@@ -202,7 +227,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
-						doQuerySkuDetails(listener);
+						doQueryProductDetails(listener);
 					}
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
@@ -220,34 +245,34 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	}
 
 	/**
-	 * Query SKU details.
+	 * Query Product details.
 	 *
 	 * @param listener The listener called when the query is finished.
 	 */
-	private void doQuerySkuDetails(final OnInventoryFinishedListener listener) {
+	private void doQueryProductDetails(final OnInventoryFinishedListener listener) {
 		synchronized (this) {
-			mInAppSkus = null;
-			mSubscriptionSkus = null;
+			mInAppProducts = null;
+			mSubscriptionProducts = null;
 		}
 		mIsPremium = false;
-		mBillingClient.querySkuDetailsAsync(
-				SkuDetailsParams.newBuilder().setSkusList(INAPP_PRODUCT_IDS).setType(SkuType.INAPP).build(),
-				(result, list) -> GoogleBillingHelper.this.onSkuDetailsResponse(result, list, false, listener));
-		mBillingClient.querySkuDetailsAsync(
-				SkuDetailsParams.newBuilder().setSkusList(SUBSCRIPTION_IDS).setType(SkuType.SUBS).build(),
-				(result, list) -> GoogleBillingHelper.this.onSkuDetailsResponse(result, list, true, listener));
+		mBillingClient.queryProductDetailsAsync(
+				QueryProductDetailsParams.newBuilder().setProductList(INAPP_PRODUCTS).build(),
+				(result, list) -> GoogleBillingHelper.this.onProductDetailsResponse(result, list, false, listener));
+		mBillingClient.queryProductDetailsAsync(
+				QueryProductDetailsParams.newBuilder().setProductList(SUBS_PRODUCTS).build(),
+				(result, list) -> GoogleBillingHelper.this.onProductDetailsResponse(result, list, true, listener));
 	}
 
 	/**
 	 * Launch the purchase flow for a product. If there is no connection, then establish connection before.
 	 *
-	 * @param activity   The triggering activity.
-	 * @param skuDetails The details of the product to be purchased.
-	 * @param listener   a listener called after the purchase has been completed.
+	 * @param activity       The triggering activity.
+	 * @param productDetails The details of the product to be purchased.
+	 * @param listener       a listener called after the purchase has been completed.
 	 */
-	public void launchPurchaseFlow(final Activity activity, final SkuDetails skuDetails, final OnPurchaseSuccessListener listener) {
+	public void launchPurchaseFlow(final Activity activity, final ProductDetails productDetails, final OnPurchaseSuccessListener listener) {
 		if (mIsConnected) {
-			doLaunchPurchaseFlow(activity, skuDetails, listener);
+			doLaunchPurchaseFlow(activity, productDetails, listener);
 		}
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
@@ -256,7 +281,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
-						doLaunchPurchaseFlow(activity, skuDetails, listener);
+						doLaunchPurchaseFlow(activity, productDetails, listener);
 					}
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
@@ -276,15 +301,24 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	/**
 	 * Launch the purchase flow for a product.
 	 *
-	 * @param activity   The triggering activity.
-	 * @param skuDetails The details of the product to be purchased.
-	 * @param listener   a listener called after the purchase has been completed.
+	 * @param activity       The triggering activity.
+	 * @param productDetails The details of the product to be purchased.
+	 * @param listener       a listener called after the purchase has been completed.
 	 */
-	private void doLaunchPurchaseFlow(final Activity activity, final SkuDetails skuDetails, final OnPurchaseSuccessListener listener) {
+	private void doLaunchPurchaseFlow(final Activity activity, final ProductDetails productDetails, final OnPurchaseSuccessListener listener) {
 		mOnPurchaseSuccessListener = listener;
 
-		Log.d(TAG, "Starting purchase flow for " + skuDetails.getSku());
-		mBillingClient.launchBillingFlow(activity, BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build());
+		List<ProductDetailsParams> params = new ArrayList<>();
+		if (SUBS.equals(productDetails.getProductType())) {
+			String offerToken = productDetails.getSubscriptionOfferDetails().get(0).getOfferToken();
+			params.add(ProductDetailsParams.newBuilder().setProductDetails(productDetails).setOfferToken(offerToken).build());
+		}
+		else {
+			params.add(ProductDetailsParams.newBuilder().setProductDetails(productDetails).build());
+		}
+
+		Log.d(TAG, "Starting purchase flow for " + productDetails.getName());
+		mBillingClient.launchBillingFlow(activity, BillingFlowParams.newBuilder().setProductDetailsParamsList(params).build());
 	}
 
 	@Override
@@ -306,8 +340,8 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			boolean isPurchased = false;
 			for (Purchase purchase : purchaseList) {
 				hasPurchase = true;
-				if (purchase.getPurchaseState() == PurchaseState.PURCHASED) {
-					Log.i(TAG, "Purchase " + purchase.getSkus() + " finished");
+				if (purchase.getPurchaseState() == PURCHASED) {
+					Log.i(TAG, "Purchase " + purchase.getProducts() + " finished");
 					isPurchased = true;
 					doAcknowledgePurchaseIfRequired(purchase);
 				}
@@ -328,7 +362,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	private void doAcknowledgePurchaseIfRequired(final Purchase purchase) {
 		if (!purchase.isAcknowledged()) {
-			Log.d(TAG, "Acknowledging purchase " + purchase.getSkus());
+			Log.d(TAG, "Acknowledging purchase " + purchase.getProducts());
 			mBillingClient.acknowledgePurchase(
 					AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(),
 					billingResult -> Log.d(TAG, "Acknowledgement result: " + billingResult.getResponseCode()));
@@ -338,13 +372,13 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	/**
 	 * Handle result of inventory query.
 	 *
-	 * @param billingResult  The result flag.
-	 * @param skuDetailsList The retrieved SKU details.
-	 * @param isSubscription Flag indicating if this was subscription query.
-	 * @param listener       The listener called when inventory calls are finished.
+	 * @param billingResult      The result flag.
+	 * @param productDetailsList The retrieved Product details.
+	 * @param isSubscription     Flag indicating if this was subscription query.
+	 * @param listener           The listener called when inventory calls are finished.
 	 */
-	private void onSkuDetailsResponse(final BillingResult billingResult, final List<SkuDetails> skuDetailsList, final boolean isSubscription,
-									  final OnInventoryFinishedListener listener) {
+	private void onProductDetailsResponse(final BillingResult billingResult, final List<ProductDetails> productDetailsList, final boolean isSubscription,
+										  final OnInventoryFinishedListener listener) {
 		Log.d(TAG, "Query inventory finished - " + billingResult.getResponseCode() + " - " + isSubscription);
 
 		if (billingResult.getResponseCode() != BillingResponseCode.OK) {
@@ -355,55 +389,56 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		Log.d(TAG, "Query inventory was successful.");
 
 		Map<String, Purchase> purchaseMap = new HashMap<>();
-		List<SkuPurchase> skuPurchases = new ArrayList<>();
+		List<ProductPurchase> productPurchases = new ArrayList<>();
 
-		PurchasesResult purchasesResult = mBillingClient.queryPurchases(isSubscription ? SkuType.SUBS : SkuType.INAPP);
-		if (purchasesResult.getResponseCode() != BillingResponseCode.OK) {
-			Log.e(TAG, "Failed to query purchases: " + purchasesResult.getBillingResult().getDebugMessage());
-			return;
-		}
+		mBillingClient.queryPurchasesAsync(
+				QueryPurchasesParams.newBuilder().setProductType(isSubscription ? SUBS : INAPP).build(), new PurchasesResponseListener() {
+					@Override
+					public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
+						if (billingResult.getResponseCode() != BillingResponseCode.OK) {
+							Log.e(TAG, "Failed to query purchases: " + billingResult.getDebugMessage());
+							return;
+						}
+						for (Purchase purchase : list) {
+							if (purchase.getPackageName().equals(mContext.getPackageName())) {
+								for (String product : purchase.getProducts()) {
+									purchaseMap.put(product, purchase);
+								}
+								if (purchase.getPurchaseState() == PURCHASED && list.size() > 0) {
+									doAcknowledgePurchaseIfRequired(purchase);
+									mIsPremium = true;
+								}
+							}
+						}
+						for (ProductDetails productDetails : productDetailsList) {
+							if (purchaseMap.containsKey(productDetails.getProductId())) {
+								productPurchases.add(new ProductPurchase(productDetails, purchaseMap.get(productDetails.getProductId())));
+							}
+							else {
+								productPurchases.add(new ProductPurchase(productDetails));
+							}
+						}
 
-		if (purchasesResult.getPurchasesList() != null) {
-			for (Purchase purchase : purchasesResult.getPurchasesList()) {
-				if (purchase.getPackageName().equals(mContext.getPackageName())) {
-					for (String sku : purchase.getSkus()) {
-						purchaseMap.put(sku, purchase);
+						synchronized (this) {
+							if (isSubscription) {
+								mSubscriptionProducts = productPurchases;
+							}
+							else {
+								mInAppProducts = productPurchases;
+							}
+
+							if (listener != null && mSubscriptionProducts != null && mInAppProducts != null) {
+								listener.handleProducts(mInAppProducts, mSubscriptionProducts);
+							}
+						}
 					}
-					if (purchase.getPurchaseState() == PurchaseState.PURCHASED && purchasesResult.getPurchasesList().size() > 0) {
-						doAcknowledgePurchaseIfRequired(purchase);
-						mIsPremium = true;
-					}
-				}
-			}
-		}
-
-		for (SkuDetails skuDetails : skuDetailsList) {
-			if (purchaseMap.containsKey(skuDetails.getSku())) {
-				skuPurchases.add(new SkuPurchase(skuDetails, purchaseMap.get(skuDetails.getSku())));
-			}
-			else {
-				skuPurchases.add(new SkuPurchase(skuDetails));
-			}
-		}
-
-		synchronized (this) {
-			if (isSubscription) {
-				mSubscriptionSkus = skuPurchases;
-			}
-			else {
-				mInAppSkus = skuPurchases;
-			}
-
-			if (listener != null && mSubscriptionSkus != null && mInAppSkus != null) {
-				listener.handleProducts(mInAppSkus, mSubscriptionSkus);
-			}
-		}
+				});
 	}
 
 	/**
-	 * Container for a Purchase with Sku Details.
+	 * Container for a Purchase with Product Details.
 	 */
-	public static final class SkuPurchase {
+	public static final class ProductPurchase {
 		/**
 		 * The purchase.
 		 */
@@ -419,56 +454,56 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		}
 
 		/**
-		 * The SKU details of the purchase.
+		 * The Product details of the purchase.
 		 */
-		private final SkuDetails mSkuDetails;
+		private final ProductDetails mProductDetails;
 
 		/**
-		 * Get the SKU details of the purchase.
+		 * Get the Product details of the purchase.
 		 *
-		 * @return The SKU details of the purchase.
+		 * @return The Product details of the purchase.
 		 */
-		public SkuDetails getSkuDetails() {
-			return mSkuDetails;
+		public ProductDetails getProductDetails() {
+			return mProductDetails;
 		}
 
 		/**
-		 * Constructor, passing the SKU details and the purchase.
+		 * Constructor, passing the Product details and the purchase.
 		 *
-		 * @param skuDetails The SKU details
+		 * @param productDetails The Product details
 		 * @param purchase   The purchase.
 		 */
-		private SkuPurchase(final SkuDetails skuDetails, final Purchase purchase) {
-			this.mSkuDetails = skuDetails;
+		private ProductPurchase(final ProductDetails productDetails, final Purchase purchase) {
+			this.mProductDetails = productDetails;
 			this.mPurchase = purchase;
 		}
 
 		/**
-		 * Constructor, passing the SKU details for non-purchase.
+		 * Constructor, passing the Product details for non-purchase.
 		 *
-		 * @param skuDetails The SKU details
+		 * @param productDetails The Product details
 		 */
-		private SkuPurchase(final SkuDetails skuDetails) {
-			this.mSkuDetails = skuDetails;
+		private ProductPurchase(final ProductDetails productDetails) {
+			this.mProductDetails = productDetails;
 			this.mPurchase = null;
 		}
 
 		/**
-		 * Get information if the SKU is purchased.
+		 * Get information if the Product is purchased.
 		 *
 		 * @return true if purchased.
 		 */
 		public boolean isPurchased() {
-			return mPurchase != null && mPurchase.getPurchaseState() == PurchaseState.PURCHASED;
+			return mPurchase != null && mPurchase.getPurchaseState() == PURCHASED;
 		}
 
 		/**
-		 * Get information if the SKU is pending.
+		 * Get information if the Product is pending.
 		 *
 		 * @return true if pending.
 		 */
 		public boolean isPending() {
-			return mPurchase != null && mPurchase.getPurchaseState() != PurchaseState.PURCHASED;
+			return mPurchase != null && mPurchase.getPurchaseState() != PURCHASED;
 		}
 	}
 
@@ -492,10 +527,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		/**
 		 * Handler called after inventory has been retrieved.
 		 *
-		 * @param inAppSkus        The in-app SKUs.
-		 * @param subscriptionSkus The subscription SKUs.
+		 * @param inAppProducts        The in-app Products.
+		 * @param subscriptionProducts The subscription Products.
 		 */
-		void handleProducts(List<SkuPurchase> inAppSkus, List<SkuPurchase> subscriptionSkus);
+		void handleProducts(List<ProductPurchase> inAppProducts, List<ProductPurchase> subscriptionProducts);
 	}
 
 	/**
