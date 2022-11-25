@@ -10,6 +10,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="/AugendiagnoseLib/libs-local/annotation-1.3.0.jar"/>
+	<classpathentry kind="lib" path="/AugendiagnoseLib/libs-local/annotation-1.5.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
