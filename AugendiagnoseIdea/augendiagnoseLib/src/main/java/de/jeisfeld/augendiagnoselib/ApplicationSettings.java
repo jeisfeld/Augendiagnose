@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.app.Activity;
 import android.os.Build.VERSION_CODES;
 
@@ -47,8 +48,10 @@ public abstract class ApplicationSettings {
 	 */
 	// OVERRIDABLE
 	protected String[] getRequiredPermissions() {
-		// TODO: replace by R
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.TIRAMISU)) {
+			return new String[]{permission.READ_MEDIA_IMAGES};
+		}
+		else if (SystemUtil.isAtLeastVersion(VERSION_CODES.R)) {
 			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 		}
 		else {

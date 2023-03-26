@@ -1,6 +1,7 @@
 package de.jeisfeld.miniris;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
@@ -48,8 +49,10 @@ public final class ApplicationSettings extends de.jeisfeld.augendiagnoselib.Appl
 
 	@Override
 	protected String[] getRequiredPermissions() {
-		// TODO: replace by R
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.TIRAMISU)) {
+			return new String[]{permission.READ_MEDIA_IMAGES, Manifest.permission.CAMERA};
+		}
+		else if (SystemUtil.isAtLeastVersion(VERSION_CODES.R)) {
 			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 		}
 		else {

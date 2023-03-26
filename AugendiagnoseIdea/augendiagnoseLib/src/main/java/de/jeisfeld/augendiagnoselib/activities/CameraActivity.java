@@ -1,6 +1,7 @@
 package de.jeisfeld.augendiagnoselib.activities;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -14,7 +15,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.hardware.SensorManager;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build.VERSION;
@@ -28,7 +28,6 @@ import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -51,6 +50,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.activities.OrganizeNewPhotosActivity.NextAction;
@@ -64,7 +64,6 @@ import de.jeisfeld.augendiagnoselib.util.CameraHandler;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager;
-import de.jeisfeld.augendiagnoselib.util.OrientationManager.OrientationListener;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
@@ -408,20 +407,17 @@ public class CameraActivity extends StandardActivity {
 		int overlayCircleSize = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_camera_circle_size, DEFAULT_CIRCLE_RADIUS);
 		drawOverlayCircle(overlayCircleSize);
 
-		mOrientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, new OrientationListener() {
-			@Override
-			public void onOrientationChange(final ScreenOrientation screenOrientation) {
-				switch (screenOrientation) {
-				case LANDSCAPE:
-				case REVERSED_LANDSCAPE:
-					if (screenOrientation != mCurrentScreenOrientation) {
-						mCurrentScreenOrientation = screenOrientation;
-						realignViewElements(screenOrientation == ScreenOrientation.REVERSED_LANDSCAPE);
-					}
-					break;
-				default:
-					// do nothing
+		mOrientationManager = new OrientationManager(this, SensorManager.SENSOR_DELAY_NORMAL, screenOrientation -> {
+			switch (screenOrientation) {
+			case LANDSCAPE:
+			case REVERSED_LANDSCAPE:
+				if (screenOrientation != mCurrentScreenOrientation) {
+					mCurrentScreenOrientation = screenOrientation;
+					realignViewElements(screenOrientation == ScreenOrientation.REVERSED_LANDSCAPE);
 				}
+				break;
+			default:
+				// do nothing
 			}
 		});
 		mOrientationManager.enable();
@@ -489,108 +485,94 @@ public class CameraActivity extends StandardActivity {
 		// Add a listener to the capture button
 		final Button captureButton = findViewById(R.id.buttonCameraTrigger);
 		captureButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						// get an image from the camera
-						captureButton.setEnabled(false);
-						mCameraHandler.takePicture();
-						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
-					}
+				v -> {
+					// get an image from the camera
+					captureButton.setEnabled(false);
+					mCameraHandler.takePicture();
+					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
 				});
 
 		// Add listeners to the accept/decline button
 		Button acceptButton = findViewById(R.id.buttonCameraAccept);
 		acceptButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						// Analyze next required step
-						if (mCurrentRightLeft == RIGHT) {
-							if (mRightEyeFile != null && mRightEyeFile.exists()) {
-								// noinspection ResultOfMethodCallIgnored
-								mRightEyeFile.delete();
-							}
-							mRightEyeFile = mNewRightEyeFile;
-							mNewRightEyeFile = null;
-							mLastRightLeft = RIGHT;
+				v -> {
+					// Analyze next required step
+					if (mCurrentRightLeft == RIGHT) {
+						if (mRightEyeFile != null && mRightEyeFile.exists()) {
+							// noinspection ResultOfMethodCallIgnored
+							mRightEyeFile.delete();
+						}
+						mRightEyeFile = mNewRightEyeFile;
+						mNewRightEyeFile = null;
+						mLastRightLeft = RIGHT;
 
-							if (mLeftEyeFile == null) {
-								setAction(TAKE_PHOTO, LEFT);
-								PupilAndIrisDetector.determineAndStoreIrisPosition(mRightEyeFile.getAbsolutePath());
-							}
-							else {
-								setAction(FINISH_CAMERA, null);
-							}
+						if (mLeftEyeFile == null) {
+							setAction(TAKE_PHOTO, LEFT);
+							PupilAndIrisDetector.determineAndStoreIrisPosition(mRightEyeFile.getAbsolutePath());
 						}
 						else {
-							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
-								// noinspection ResultOfMethodCallIgnored
-								mLeftEyeFile.delete();
-							}
-							mLeftEyeFile = mNewLeftEyeFile;
-							mNewLeftEyeFile = null;
-							mLastRightLeft = LEFT;
-
-							if (mRightEyeFile == null) {
-								setAction(TAKE_PHOTO, RIGHT);
-								PupilAndIrisDetector.determineAndStoreIrisPosition(mLeftEyeFile.getAbsolutePath());
-							}
-							else {
-								setAction(FINISH_CAMERA, null);
-							}
+							setAction(FINISH_CAMERA, null);
 						}
-						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Accept");
 					}
+					else {
+						if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
+							// noinspection ResultOfMethodCallIgnored
+							mLeftEyeFile.delete();
+						}
+						mLeftEyeFile = mNewLeftEyeFile;
+						mNewLeftEyeFile = null;
+						mLastRightLeft = LEFT;
+
+						if (mRightEyeFile == null) {
+							setAction(TAKE_PHOTO, RIGHT);
+							PupilAndIrisDetector.determineAndStoreIrisPosition(mLeftEyeFile.getAbsolutePath());
+						}
+						else {
+							setAction(FINISH_CAMERA, null);
+						}
+					}
+					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Accept");
 				});
 
 		Button declineButton = findViewById(R.id.buttonCameraDecline);
 		declineButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						if (mCurrentAction == CHECK_PHOTO) {
-							if (mCurrentRightLeft == RIGHT) {
-								if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
-									// noinspection ResultOfMethodCallIgnored
-									mNewRightEyeFile.delete();
-								}
-								mNewRightEyeFile = null;
-								if (mRightEyeFile != null && mRightEyeFile.exists()) {
-									setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
-								}
-								else {
-									setThumbImage(null, RIGHT);
-								}
+				v -> {
+					if (mCurrentAction == CHECK_PHOTO) {
+						if (mCurrentRightLeft == RIGHT) {
+							if (mNewRightEyeFile != null && mNewRightEyeFile.exists()) {
+								// noinspection ResultOfMethodCallIgnored
+								mNewRightEyeFile.delete();
+							}
+							mNewRightEyeFile = null;
+							if (mRightEyeFile != null && mRightEyeFile.exists()) {
+								setThumbImage(mRightEyeFile.getAbsolutePath(), RIGHT);
 							}
 							else {
-								if (mNewLeftEyeFile != null && mNewLeftEyeFile.exists()) {
-									// noinspection ResultOfMethodCallIgnored
-									mNewLeftEyeFile.delete();
-								}
-								mNewLeftEyeFile = null;
+								setThumbImage(null, RIGHT);
 							}
-							if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
-								setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
-							}
-							else {
-								setThumbImage(null, LEFT);
-							}
-
-							setAction(TAKE_PHOTO, mCurrentRightLeft);
 						}
-						TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
+						else {
+							if (mNewLeftEyeFile != null && mNewLeftEyeFile.exists()) {
+								// noinspection ResultOfMethodCallIgnored
+								mNewLeftEyeFile.delete();
+							}
+							mNewLeftEyeFile = null;
+						}
+						if (mLeftEyeFile != null && mLeftEyeFile.exists()) {
+							setThumbImage(mLeftEyeFile.getAbsolutePath(), LEFT);
+						}
+						else {
+							setThumbImage(null, LEFT);
+						}
+
+						setAction(TAKE_PHOTO, mCurrentRightLeft);
 					}
+					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
 				});
 
 		Button returnButton = findViewById(R.id.buttonCameraReturn);
 		returnButton.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						setAction(FINISH_CAMERA, null);
-					}
-				});
+				v -> setAction(FINISH_CAMERA, null));
 
 
 		Button viewImagesButton = findViewById(R.id.buttonCameraViewImages);
@@ -602,12 +584,7 @@ public class CameraActivity extends StandardActivity {
 		else {
 			// Add a listener to the view image button
 			viewImagesButton.setOnClickListener(
-					new OnClickListener() {
-						@Override
-						public void onClick(final View v) {
-							setAction(CANCEL_AND_VIEW_IMAGES, null);
-						}
-					});
+					v -> setAction(CANCEL_AND_VIEW_IMAGES, null));
 		}
 	}
 
@@ -617,34 +594,28 @@ public class CameraActivity extends StandardActivity {
 	private void configureExternalAppButtons() {
 		if (PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_external_camera)) {
 			Button externalCameraButton = findViewById(R.id.buttonCameraExternal);
-			externalCameraButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					mNewExternalFile = FileUtil.getTempJpegFile();
+			externalCameraButton.setOnClickListener(v -> {
+				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				mNewExternalFile = FileUtil.getTempJpegFile();
 
-					Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
-							getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
-					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-					takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-					if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) == null) {
-						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_enable_external_camera, false);
-						findViewById(R.id.buttonCameraExternal).setVisibility(GONE);
-					}
-					else {
-						startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
-					}
+				Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),
+						getApplicationContext().getPackageName() + ".fileprovider", mNewExternalFile);
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+				takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+				if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) == null) {
+					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_enable_external_camera, false);
+					findViewById(R.id.buttonCameraExternal).setVisibility(GONE);
+				}
+				else {
+					startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA_APP);
 				}
 			});
 
 			Button importFromGalleryButton = findViewById(R.id.buttonImportFromGallery);
-			importFromGalleryButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-					intent.setType("image/*");
-					startActivityForResult(intent, REQUEST_CODE_GALLERY);
-				}
+			importFromGalleryButton.setOnClickListener(v -> {
+				Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				intent.setType("image/*");
+				startActivityForResult(intent, REQUEST_CODE_GALLERY);
 			});
 		}
 
@@ -656,20 +627,10 @@ public class CameraActivity extends StandardActivity {
 	private void configureThumbButtons() {
 
 		LinearLayout cameraThumbRight = findViewById(R.id.camera_thumb_layout_right);
-		cameraThumbRight.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				setAction(TAKE_PHOTO, RIGHT);
-			}
-		});
+		cameraThumbRight.setOnClickListener(v -> setAction(TAKE_PHOTO, RIGHT));
 
 		LinearLayout cameraThumbLeft = findViewById(R.id.camera_thumb_layout_left);
-		cameraThumbLeft.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				setAction(TAKE_PHOTO, LEFT);
-			}
-		});
+		cameraThumbLeft.setOnClickListener(v -> setAction(TAKE_PHOTO, LEFT));
 
 	}
 
@@ -678,15 +639,12 @@ public class CameraActivity extends StandardActivity {
 	 */
 	private void configureZoomCircleButton() {
 		Button overlayCircleButton = findViewById(R.id.buttonCameraZoomOverlayCircle);
-		overlayCircleButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				boolean isVisible = !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
-				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility, isVisible);
-				findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : INVISIBLE);
-				if (mIsZoomAvailable) {
-					findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : INVISIBLE);
-				}
+		overlayCircleButton.setOnClickListener(v -> {
+			boolean isVisible = !PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
+			PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility, isVisible);
+			findViewById(R.id.seekbarCameraOverlayCircle).setVisibility(isVisible ? VISIBLE : INVISIBLE);
+			if (mIsZoomAvailable) {
+				findViewById(R.id.seekbarCameraZoom).setVisibility(isVisible ? VISIBLE : INVISIBLE);
 			}
 		});
 		boolean isVisible = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_camera_zoom_circle_seekbar_visibility);
@@ -771,17 +729,14 @@ public class CameraActivity extends StandardActivity {
 			setFlashlightMode(storedFlashlightMode);
 			flashlightButton.setVisibility(VISIBLE);
 
-			flashlightButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					if (mFlashlightModes.size() > 0) {
-						int flashlightModeIndex = mFlashlightModes.indexOf(mCurrentFlashlightMode);
-						flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.size();
-						FlashMode newFlashlightMode = mFlashlightModes.get(flashlightModeIndex);
-						PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
+			flashlightButton.setOnClickListener(v -> {
+				if (mFlashlightModes.size() > 0) {
+					int flashlightModeIndex = mFlashlightModes.indexOf(mCurrentFlashlightMode);
+					flashlightModeIndex = (flashlightModeIndex + 1) % mFlashlightModes.size();
+					FlashMode newFlashlightMode = mFlashlightModes.get(flashlightModeIndex);
+					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, newFlashlightMode.toString());
 
-						setFlashlightMode(newFlashlightMode);
-					}
+					setFlashlightMode(newFlashlightMode);
 				}
 			});
 		}
@@ -833,17 +788,14 @@ public class CameraActivity extends StandardActivity {
 			return;
 		}
 
-		focusButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				if (mFocusModes.size() > 0) {
-					int focusModeIndex = mFocusModes.indexOf(mCurrentFocusMode);
-					focusModeIndex = (focusModeIndex + 1) % mFocusModes.size();
-					FocusMode newFocusMode = mFocusModes.get(focusModeIndex);
-					PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, newFocusMode.toString());
+		focusButton.setOnClickListener(v -> {
+			if (mFocusModes.size() > 0) {
+				int focusModeIndex = mFocusModes.indexOf(mCurrentFocusMode);
+				focusModeIndex = (focusModeIndex + 1) % mFocusModes.size();
+				FocusMode newFocusMode = mFocusModes.get(focusModeIndex);
+				PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_focus_mode, newFocusMode.toString());
 
-					setFocusMode(newFocusMode);
-				}
+				setFocusMode(newFocusMode);
 			}
 		});
 
@@ -881,34 +833,31 @@ public class CameraActivity extends StandardActivity {
 		boolean enableExternalFlash = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_enable_flash_ext);
 		if (enableExternalFlash) {
 			mHeadsetPlugReceiver = new HeadsetPlugReceiver();
-			mHeadsetPlugReceiver.register(this, new HeadsetPlugReceiver.HeadsetPlugHandler() {
-				@Override
-				public void handleHeadsetPlug(final boolean plugged) {
-					try {
-						configureFlashlightButton(mFlashlightModes);
-					}
-					catch (Exception e) {
-						TrackingUtil.sendException("hea1", e);
-						return;
-					}
-					if (plugged && mCurrentFlashlightMode != FlashMode.EXT) {
-						DialogUtil.displayConfirmationMessage(CameraActivity.this, new ConfirmDialogListener() {
-							private static final long serialVersionUID = 1L;
+			mHeadsetPlugReceiver.register(this, plugged -> {
+				try {
+					configureFlashlightButton(mFlashlightModes);
+				}
+				catch (Exception e) {
+					TrackingUtil.sendException("hea1", e);
+					return;
+				}
+				if (plugged && mCurrentFlashlightMode != FlashMode.EXT) {
+					DialogUtil.displayConfirmationMessage(CameraActivity.this, new ConfirmDialogListener() {
+						private static final long serialVersionUID = 1L;
 
-							@Override
-							public void onDialogPositiveClick(final DialogFragment dialog) {
-								PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, FlashMode.EXT.toString());
-								setFlashlightMode(FlashMode.EXT);
-								DialogUtil.displayTip(CameraActivity.this, R.string.message_tip_external_flash, R.string.key_tip_external_flash);
-							}
+						@Override
+						public void onDialogPositiveClick(final DialogFragment dialog) {
+							PreferenceUtil.setSharedPreferenceString(R.string.key_internal_camera_flashlight_mode, FlashMode.EXT.toString());
+							setFlashlightMode(FlashMode.EXT);
+							DialogUtil.displayTip(CameraActivity.this, R.string.message_tip_external_flash, R.string.key_tip_external_flash);
+						}
 
-							@Override
-							public void onDialogNegativeClick(final DialogFragment dialog) {
-								DialogUtil.displayTip(CameraActivity.this,
-										R.string.message_tip_external_flash_pref, R.string.key_tip_external_flash_pref);
-							}
-						}, R.string.button_external_flash, R.string.message_dialog_confirm_external_flash);
-					}
+						@Override
+						public void onDialogNegativeClick(final DialogFragment dialog) {
+							DialogUtil.displayTip(CameraActivity.this,
+									R.string.message_tip_external_flash_pref, R.string.key_tip_external_flash_pref);
+						}
+					}, R.string.button_external_flash, R.string.message_dialog_confirm_external_flash);
 				}
 			});
 		}
@@ -1293,12 +1242,7 @@ public class CameraActivity extends StandardActivity {
 	private final CameraCallback mOnPictureTakenHandler = new CameraCallback() {
 		@Override
 		public void onTakingPicture() {
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					animateFlash();
-				}
-			});
+			runOnUiThread(() -> animateFlash());
 		}
 
 		@Override
@@ -1343,13 +1287,10 @@ public class CameraActivity extends StandardActivity {
 			// save photo
 			new SavePhotoTask(data, mCurrentRightLeft, metadata).execute(imageFile);
 
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					setThumbImage(data);
-					setReviewImage(data);
-					setAction(CHECK_PHOTO, mCurrentRightLeft);
-				}
+			runOnUiThread(() -> {
+				setThumbImage(data);
+				setReviewImage(data);
+				setAction(CHECK_PHOTO, mCurrentRightLeft);
 			});
 		}
 
@@ -1545,8 +1486,10 @@ public class CameraActivity extends StandardActivity {
 	@SuppressLint("InlinedApi")
 	@Override
 	protected final String[] getRequiredPermissions() {
-		// TODO: replace by R
-		if (SystemUtil.isAtLeastVersion(VERSION_CODES.Q + 1)) {
+		if (SystemUtil.isAtLeastVersion(VERSION_CODES.TIRAMISU)) {
+			return new String[]{permission.READ_MEDIA_IMAGES, Manifest.permission.CAMERA};
+		}
+		else if (SystemUtil.isAtLeastVersion(VERSION_CODES.R)) {
 			return new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 		}
 		else {
