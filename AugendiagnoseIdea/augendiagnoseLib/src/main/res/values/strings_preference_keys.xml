@@ -45,6 +45,7 @@
     <string name="key_internal_show_utilities_halfscreen" translatable="false">show_utilities_halfscreen</string>
     <string name="key_internal_outofmemoryerror" translatable="false">outofmemoryerror</string>
     <string name="key_internal_has_premium_pack" translatable="false">has_premium_pack</string>
+    <string name="key_internal_has_premium_subscription" translatable="false">has_premium_subscription</string>
     <string name="key_internal_has_unlocker_app" translatable="false">has_unlocker_app</string>
     <string name="key_internal_unlocker_app_retries" translatable="false">unlocker_app_retries</string>
     <string name="key_internal_counter_tempfiles" translatable="false">counter_tempfiles</string>

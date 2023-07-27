@@ -228,8 +228,8 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Switched to Android 11 API</item>
         <item>Bugfixes</item>
         <item>Bugfixes. Adapted for Android 12.</item>
-        <item>Bugfixes</item>
         <item>Bugfixes. Adapted for Android 13.</item>
+        <item>Full app usage while pack payment is pending</item>
     </string-array>
 
 </resources>

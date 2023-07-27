@@ -68,8 +68,8 @@
         <item>Auf Android 11 API umgestellt</item>
         <item>Fehlerkorrekturen</item>
         <item>Fehlerkorrekturen. Anpassungen für Android 12.</item>
-        <item>Fehlerkorrekturen</item>
         <item>Fehlerkorrekturen. Anpassungen für Android 13.</item>
+        <item>Vollständige App-Nutzung, während die Paketzahlung aussteht</item>
     </string-array>
 
 </resources>

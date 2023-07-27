@@ -33,11 +33,11 @@
     <string name="message_dialog_failed_to_open_google_play">Error al abrir Google Play.</string>
     <string name="message_dialog_trial_names">En la versión de prueba es permitido utilizar sólo hasta tres nombres. Por favor, compre un paquete premium para obtener acceso ilimitado.</string>
     <string name="message_dialog_trial_time">La versión de prueba de la aplicación se puede utilizar solamente por dos semanas. Por favor, compre un paquete premium para obtener acceso ilimitado.</string>
-    <string name="message_dialog_trial_pending">Su transacción de compra del paquete premium está pendiente. Puede usar la aplicación tan pronto como se complete la transacción.</string>
+    <string name="message_dialog_trial_pending">Su transacción de compra del paquete premium está pendiente. Por favor, asegúrese de que la transacción se completará.</string>
     <string name="message_dialog_trial_overlays">La versión de prueba de la aplicación limita el uso a los mapas iridológicos 1–3 solamente. Por favor, compre un paquete premium para obtener acceso ilimitado.</string>
     <string name="message_dialog_purchase_thanks">¡Gracias por su compra!</string>
     <string name="message_dialog_purchase_thanks_premium">¡Gracias por su compra! Ahora puede utilizar la aplicación ilimitadamente.</string>
-    <string name="message_dialog_purchase_thanks_pending">¡Gracias por su compra! Tan pronto como se confirme la transacción, puede usar la aplicación sin limitaciones.</string>
+    <string name="message_dialog_purchase_thanks_pending">¡Gracias por su compra! Por favor, asegúrese de que la transacción se completará.</string>
 
     <string name="message_dialog_select_extsdcard">En el diálogo Android siguiente, por favor seleccione la tarjeta externa SD (ya sea la tarjeta sd completo o la carpeta seleccionada) y confirme en la parte inferior.</string>
     <string name="message_dialog_select_photos_folder">En el siguiente cuadro de diálogo de Android, seleccione la carpeta donde desea almacenar las fotos de los ojos y confirme en la parte inferior.</string>

@@ -33,7 +33,7 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.Confir
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
-import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseQueryCompletedListener;
+import de.jeisfeld.augendiagnoselib.util.Logger;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
@@ -56,7 +56,7 @@ public abstract class StandardActivity extends BaseActivity {
 	/**
 	 * The request code used to query for permission.
 	 */
-	protected static final int REQUEST_CODE_PERMISSION = 6;
+	private static final int REQUEST_CODE_PERMISSION = 6;
 	/**
 	 * The requestCode with which the storage access framework is triggered for eye photo folder.
 	 */
@@ -164,13 +164,13 @@ public abstract class StandardActivity extends BaseActivity {
 				checkUnlockerApp();
 
 				// Check in-app purchases
-				GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
-					@Override
-					public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
-						PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
-						if (hasPremiumPack) {
-							invalidateOptionsMenu();
-						}
+				GoogleBillingHelper.getInstance(this).hasPremiumPack((isSubscription, hasPremiumPack, isPending) -> {
+					PreferenceUtil.setSharedPreferenceBoolean(
+							isSubscription ? R.string.key_internal_has_premium_subscription : R.string.key_internal_has_premium_pack,
+							hasPremiumPack || isPending);
+					Logger.log("Pending:" + isPending + ", Success:" + hasPremiumPack);
+					if (hasPremiumPack || isPending) {
+						invalidateOptionsMenu();
 					}
 				});
 			}
@@ -427,19 +427,15 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private void checkPremiumPackAfterAuthorizationFailure() {
 		if (mIsCreationFailed) {
-			GoogleBillingHelper.getInstance(this).hasPremiumPack(new OnPurchaseQueryCompletedListener() {
-				@Override
-				public void onHasPremiumPack(final boolean hasPremiumPack, final boolean isPending) {
-					PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_premium_pack, hasPremiumPack);
-					if (hasPremiumPack) {
-						restartActivity();
-					}
-					else if (isPending) {
-						DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_pending);
-					}
-					else {
-						DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);
-					}
+			GoogleBillingHelper.getInstance(this).hasPremiumPack((isSubscription, isPremium, isPending) -> {
+				PreferenceUtil.setSharedPreferenceBoolean(
+						isSubscription ? R.string.key_internal_has_premium_subscription : R.string.key_internal_has_premium_pack,
+						isPremium || isPending);
+				if (isPremium || isPending) {
+					restartActivity();
+				}
+				else {
+					DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);
 				}
 			});
 		}
@@ -747,7 +743,7 @@ public abstract class StandardActivity extends BaseActivity {
 		 *
 		 * @return The stored value.
 		 */
-		protected static SafMigrationStatus getStoredValue() {
+		private static SafMigrationStatus getStoredValue() {
 			int ordinal = PreferenceUtil.getSharedPreferenceInt(R.string.key_internal_saf_migration_status, -1);
 			for (SafMigrationStatus safMigrationStatus : values()) {
 				if (safMigrationStatus.ordinal() == ordinal) {

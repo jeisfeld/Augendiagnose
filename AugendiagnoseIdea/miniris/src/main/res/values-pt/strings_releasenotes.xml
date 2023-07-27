@@ -68,7 +68,7 @@
         <item>Mudou para Android 11 API</item>
         <item>Correções de bugs</item>
         <item>Correções de bugs. Adaptado para Android 12.</item>
-        <item>Correções de bugs</item>
         <item>Correções de bugs. Adaptado para Android 13.</item>
+        <item>Uso total do aplicativo enquanto o pagamento do pacote está pendente</item>
     </string-array>
 </resources>

@@ -33,11 +33,11 @@
     <string name="message_dialog_failed_to_open_google_play">Erro ao abrir o Google Play.</string>
     <string name="message_dialog_trial_names">Na versão de teste, é permitido usar apenas até três nomes. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
     <string name="message_dialog_trial_time">A versão de avaliação do aplicativo pode ser usada apenas por duas semanas. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
-    <string name="message_dialog_trial_pending">Sua transação de compra do pacote premium está pendente. Você pode usar o aplicativo assim que a transação for concluída.</string>
+    <string name="message_dialog_trial_pending">Sua transação de compra do pacote premium está pendente. Certifique-se de que a transação será concluída.</string>
     <string name="message_dialog_trial_overlays">A versão experimental do aplicativo limita o uso apenas aos mapas iridológicos 1–3. Por favor, compre um pacote premium para obter acesso ilimitado.</string>
     <string name="message_dialog_purchase_thanks">Obrigado pela sua compra!</string>
     <string name="message_dialog_purchase_thanks_premium">Obrigado pela sua compra! Agora você pode usar o aplicativo ilimitadamente.</string>
-    <string name="message_dialog_purchase_thanks_pending">Obrigado pela sua compra! Assim que a transação for confirmada, você poderá usar o aplicativo sem limitações.</string>
+    <string name="message_dialog_purchase_thanks_pending">Obrigado pela sua compra! Certifique-se de que a transação será concluída.</string>
 
     <string name="message_dialog_select_extsdcard">Na seguinte caixa de diálogo do Android, selecione o cartão SD externo (o cartão SD completo ou a pasta selecionada) e confirme na parte inferior.</string>
     <string name="message_dialog_select_photos_folder">Na caixa de diálogo a seguir do Android, selecione a pasta em que deseja armazenar as fotos dos olhos e confirme na parte inferior.</string>

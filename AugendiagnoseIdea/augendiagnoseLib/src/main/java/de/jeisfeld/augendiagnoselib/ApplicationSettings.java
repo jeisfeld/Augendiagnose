@@ -27,9 +27,11 @@ public abstract class ApplicationSettings {
 	protected AuthorizationLevel getAuthorizationLevel() {
 		String userKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
 		boolean hasPremiumPack = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack);
+		boolean hasPremiumSubscription = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_subscription);
 		boolean hasUnlockerApp = PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app);
 		KeyValidationResult userKeyValidationResult = EncryptionUtil.validateUserKey(userKey);
-		boolean isAuthorizedUser = hasPremiumPack || hasUnlockerApp || userKeyValidationResult == KeyValidationResult.SUCCESS;
+		boolean isAuthorizedUser =
+				hasPremiumPack || hasPremiumSubscription || hasUnlockerApp || userKeyValidationResult == KeyValidationResult.SUCCESS;
 
 		if (isAuthorizedUser) {
 			return AuthorizationLevel.FULL_ACCESS;
