@@ -70,6 +70,7 @@
         <item>Corrección de errores. Adaptado para Android 12.</item>
         <item>Corrección de errores. Adaptado para Android 13.</item>
         <item>Uso completo de la aplicación mientras el pago del paquete está pendiente</item>
+        <item>Corrección de errores</item>
     </string-array>
 
 </resources>

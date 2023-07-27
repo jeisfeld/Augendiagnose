@@ -70,6 +70,7 @@
         <item>1.4.3</item>
         <item>1.4.4</item>
         <item>1.4.5</item>
+        <item>1.4.6</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -128,6 +129,7 @@
         <item>Bugfixes. Adapted for Android 12.</item>
         <item>Bugfixes. Adapted for Android 13.</item>
         <item>Full app usage while pack payment is pending</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
