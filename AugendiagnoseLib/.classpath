@@ -15,9 +15,9 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.andmore.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs-local/annotation-1.5.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/core-1.9.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/fragment-1.5.4.jar"/>
-	<classpathentry kind="lib" path="libs-local/activity-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/core-1.12.0.jar"/>
+	<classpathentry kind="lib" path="libs-local/fragment-1.6.2.jar"/>
+	<classpathentry kind="lib" path="libs-local/activity-1.8.2.jar"/>
 	<classpathentry kind="lib" path="libs-local/documentfile-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libs-local/lifecycle-common-2.5.1.jar"/>
 	<classpathentry kind="lib" path="libs-local/lifecycle-viewmodel-2.5.1.jar"/>
@@ -29,7 +29,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs-local/R.jar"/>
-	<classpathentry kind="lib" path="libs-local/billing-5.1.0.jar"/>
-	<classpathentry kind="lib" path="libs-local/exifinterface-1.3.6.jar"/>
+	<classpathentry kind="lib" path="libs-local/billing-6.0.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/exifinterface-1.3.7.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
