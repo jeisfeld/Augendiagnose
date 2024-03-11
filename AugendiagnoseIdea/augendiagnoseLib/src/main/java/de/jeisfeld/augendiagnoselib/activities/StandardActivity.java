@@ -32,8 +32,8 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
 import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil.UserKeyStatus;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
-import de.jeisfeld.augendiagnoselib.util.Logger;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
@@ -162,14 +162,12 @@ public abstract class StandardActivity extends BaseActivity {
 
 				// Check unlocker app.
 				checkUnlockerApp();
+				EncryptionUtil.checkUserKeyOnline(this, null);
 
 				// Check in-app purchases
-				GoogleBillingHelper.getInstance(this).hasPremiumPack((isSubscription, hasPremiumPack, isPending) -> {
-					PreferenceUtil.setSharedPreferenceBoolean(
-							isSubscription ? R.string.key_internal_has_premium_subscription : R.string.key_internal_has_premium_pack,
-							hasPremiumPack || isPending);
-					Logger.log("Pending:" + isPending + ", Success:" + hasPremiumPack);
-					if (hasPremiumPack || isPending) {
+				GoogleBillingHelper.getInstance(this).hasPremiumPack((hasPremium) -> {
+
+					if (hasPremium) {
 						invalidateOptionsMenu();
 					}
 				});
@@ -219,7 +217,7 @@ public abstract class StandardActivity extends BaseActivity {
 			}
 		}
 
-		if (getHelpResource() == 0 || getString(getHelpResource()).length() == 0) {
+		if (getHelpResource() == 0 || getString(getHelpResource()).isEmpty()) {
 			// Hide help icon if there is no help text
 			menu.findItem(R.id.action_help).setVisible(false);
 		}
@@ -427,15 +425,19 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private void checkPremiumPackAfterAuthorizationFailure() {
 		if (mIsCreationFailed) {
-			GoogleBillingHelper.getInstance(this).hasPremiumPack((isSubscription, isPremium, isPending) -> {
-				PreferenceUtil.setSharedPreferenceBoolean(
-						isSubscription ? R.string.key_internal_has_premium_subscription : R.string.key_internal_has_premium_pack,
-						isPremium || isPending);
-				if (isPremium || isPending) {
+			GoogleBillingHelper.getInstance(this).hasPremiumPack((hasPremium) -> {
+				if (hasPremium) {
 					restartActivity();
 				}
 				else {
-					DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);
+					EncryptionUtil.checkUserKeyOnline(this, (userKeyStatus, isStatusChanged) -> {
+						if (userKeyStatus == UserKeyStatus.SUCCESS && isStatusChanged) {
+							restartActivity();
+						}
+						else if (userKeyStatus != UserKeyStatus.SUCCESS) {
+							DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);
+						}
+					});
 				}
 			});
 		}
@@ -481,7 +483,7 @@ public abstract class StandardActivity extends BaseActivity {
 		}
 		else {
 			int retries = PreferenceUtil.incrementCounter(R.string.key_internal_unlocker_app_retries);
-			if (retries > 10) { // MAGIC_NUMBER
+			if (retries > 4) { // MAGIC_NUMBER
 				PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_has_unlocker_app, false);
 			}
 		}

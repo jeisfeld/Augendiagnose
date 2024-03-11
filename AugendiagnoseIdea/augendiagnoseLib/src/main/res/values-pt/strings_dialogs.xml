@@ -68,6 +68,7 @@
     <string name="message_dialog_hints_will_be_shown">A partir de agora, o aplicativo mostrará conselhos em várias situações (incluindo aquelas que você desativou antes). Você pode desativá-los individualmente.</string>
     <string name="message_dialog_no_hints_will_be_shown">De agora em diante, o aplicativo não mostrará nenhuma das dicas existentes atualmente. Se versões futuras do aplicativo tiverem novas dicas, elas serão exibidas.</string>
     <string name="message_dialog_triggering_purchase">Ativando a compra no Google Play&#8230;</string>
+    <string name="message_dialog_blocked_user_key">A chave de usuário “%1$s” foi revogada devido ao uso indevido</string>
     <string name="message_guide_resize_iris">Por favor, mova o olho até que a íris preencha o círculo. Em seguida, pressione «OK».</string>
     <string name="message_guide_resize_pupil">Agora, mude o tamanho do olho até que a pupila preencha o círculo. Em seguida, pressione «OK».</string>
     <string name="imageinfo_line_filename">Nome do arquivo:</string>

@@ -1,9 +1,21 @@
 package de.jeisfeld.augendiagnoselib.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.util.Base64;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.util.Arrays;
@@ -13,6 +25,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HttpsURLConnection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,12 +120,20 @@ public final class EncryptionUtil {
 	 * Validate a user key.
 	 *
 	 * @param key the user key to be validated.
-	 * @return true if the user key is valid.
+	 * @return the validation result
 	 */
 	public static KeyValidationResult validateUserKey(@Nullable final String key) {
-		if (key == null || key.length() == 0 || !mIsInitialized) {
+		if (key == null || key.isEmpty() || !mIsInitialized) {
 			return KeyValidationResult.FAILED;
 		}
+		UserKeyStatus userKeyStatus = UserKeyStatus.storedValue();
+		if (userKeyStatus == UserKeyStatus.BLOCKED || userKeyStatus == UserKeyStatus.FAILED) {
+			return KeyValidationResult.FAILED;
+		}
+		else if (userKeyStatus == UserKeyStatus.SUCCESS) {
+			return KeyValidationResult.SUCCESS;
+		}
+
 		if (SPECIAL_KEYS.contains(key)) {
 			return KeyValidationResult.SUCCESS;
 		}
@@ -120,16 +141,109 @@ public final class EncryptionUtil {
 			return KeyValidationResult.PROLONG_TRIAL;
 		}
 
+		return isKeyValid(key) ? KeyValidationResult.SUCCESS : KeyValidationResult.FAILED;
+	}
+
+	/**
+	 * Check if user key is valid according to standard key policy.
+	 *
+	 * @param key The key
+	 * @return True if valid
+	 */
+	private static boolean isKeyValid(final String key) {
 		int index = key.lastIndexOf('-');
 		if (index > 0) {
 			String name = key.substring(0, index);
 			String hash = key.substring(index + 1);
-			return createCryptoHash(name).equals(hash) ? KeyValidationResult.SUCCESS : KeyValidationResult.FAILED;
+			return createCryptoHash(name).equals(hash);
 		}
 		else {
-			return KeyValidationResult.FAILED;
+			return false;
 		}
 	}
+
+	/**
+	 * Make online check of the user key.
+	 *
+	 * @param activity The activity triggering the check.
+	 * @param listener The listener called after status is retrieved.
+	 */
+	public static void checkUserKeyOnline(final Activity activity, final OnKeyStatusReceivedListener listener) {
+		String key = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+		if (key == null || key.isEmpty()) {
+			PreferenceUtil.removeSharedPreference(R.string.key_user_key_status);
+			if (listener != null) {
+				listener.onKeyStatusReceived(UserKeyStatus.UNKNOWN, false);
+			}
+			return;
+		}
+		Authenticator.setDefault(new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(Application.getResourceString(R.string.private_http_username),
+						Application.getResourceString(R.string.private_http_password).toCharArray());
+			}
+		});
+		String urlBase = "https://augendiagnose-app.de/appauth/";
+
+		new Thread(() -> {
+			Reader in = null;
+			try {
+				URL url = new URL(urlBase);
+				URLConnection urlConnection = url.openConnection();
+				urlConnection.setDoOutput(true);
+				((HttpsURLConnection) urlConnection).setRequestMethod("POST");
+				urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+				String postData = "androidId=" + SystemUtil.getAndroidId() + "&userKey=" + key;
+				byte[] postDataBytes = postData.getBytes("UTF-8");
+				urlConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+				urlConnection.getOutputStream().write(postDataBytes);
+				in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+				StringBuilder result = new StringBuilder();
+				for (int c; (c = in.read()) >= 0; ) {
+					result.append((char) c);
+				}
+				JSONObject jsonObject = new JSONObject(result.toString());
+				boolean success = "success".equals(jsonObject.getString("status"));
+				if (success) {
+					String keyStatusString = jsonObject.getString("keystatus");
+					UserKeyStatus status = UserKeyStatus.valueOf(keyStatusString);
+					boolean isStatusChanged = status != UserKeyStatus.storedValue();
+					status.store();
+					if (listener != null) {
+						listener.onKeyStatusReceived(status, isStatusChanged);
+					}
+					if (status == UserKeyStatus.BLOCKED && isStatusChanged) {
+						PreferenceUtil.setSharedPreferenceString(R.string.key_user_key, "");
+						activity.runOnUiThread(() -> {
+							DialogUtil.displayError(activity, R.string.message_dialog_blocked_user_key, true, key);
+						});
+					}
+				}
+			}
+			catch (IOException e) {
+				Log.e(Application.TAG, "Invalid URL", e);
+			}
+			catch (JSONException e) {
+				Log.e(Application.TAG, "Invalid Response", e);
+			}
+			catch (IllegalArgumentException e) {
+				Log.e(Application.TAG, "Invalid Status", e);
+			}
+			finally {
+				if (in != null) {
+					try {
+						in.close();
+					}
+					catch (IOException e) {
+						// ignore
+					}
+				}
+			}
+		}).start();
+	}
+
+
 
 	/**
 	 * Generate a user key, which is a concatenation of user name and hash.
@@ -207,15 +321,28 @@ public final class EncryptionUtil {
 			md.update(buffer);
 			byte[] digest = md.digest();
 
-			String hexStr = "";
-			for (int i = 0; i < digest.length; i++) {
-				hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1); // MAGIC_NUMBER
+			StringBuilder hexStr = new StringBuilder();
+			for (byte b : digest) {
+				hexStr.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1)); // MAGIC_NUMBER
 			}
-			return hexStr;
+			return hexStr.toString();
 		}
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	/**
+	 * Listener called when online query for user key status is completed.
+	 */
+	public interface OnKeyStatusReceivedListener {
+		/**
+		 * Callback called if online query for user key status is done.
+		 *
+		 * @param userKeyStatus   The user key status.
+		 * @param isStatusChanged Flag indicating if status is changed.
+		 */
+		void onKeyStatusReceived(final UserKeyStatus userKeyStatus, final boolean isStatusChanged);
 	}
 
 	/**
@@ -233,6 +360,53 @@ public final class EncryptionUtil {
 		/**
 		 * Extension of trial period.
 		 */
-		PROLONG_TRIAL
+		PROLONG_TRIAL,
+		/**
+		 * Blocked due to fraud use.
+		 */
+		BLOCKED
+	}
+
+	/**
+	 * The online verification status of user key.
+	 */
+	public enum UserKeyStatus {
+		/**
+		 * Unknown.
+		 */
+		UNKNOWN,
+		/**
+		 * Successfully validated.
+		 */
+		SUCCESS,
+		/**
+		 * Rejected in validation.
+		 */
+		FAILED,
+		/**
+		 * Blocked.
+		 */
+		BLOCKED;
+
+		/**
+		 * Store the status.
+		 */
+		public void store() {
+			PreferenceUtil.setSharedPreferenceInt(R.string.key_user_key_status, ordinal());
+		}
+
+		/**
+		 * Get the stored status.
+		 * @return The stored status.
+		 */
+		public static UserKeyStatus storedValue() {
+			int ordinal = PreferenceUtil.getSharedPreferenceInt(R.string.key_user_key_status, -1);
+			for (UserKeyStatus status : values()) {
+				if (status.ordinal() == ordinal) {
+					return status;
+				}
+			}
+			return UNKNOWN;
+		}
 	}
 }

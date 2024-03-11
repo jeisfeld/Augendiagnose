@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -160,6 +161,14 @@ public final class SystemUtil {
 		double x = p.x / dm.xdpi;
 		double y = p.y / dm.ydpi;
 		return Math.max(x, y);
+	}
+
+	/**
+	 * Get the Android ID.
+	 * @return The Android ID.
+	 */
+	public static String getAndroidId() {
+		return Settings.Secure.getString(Application.getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 	}
 
 	/**

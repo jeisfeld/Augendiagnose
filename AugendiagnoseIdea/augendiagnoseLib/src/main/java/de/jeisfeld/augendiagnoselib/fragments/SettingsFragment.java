@@ -40,6 +40,7 @@ import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.util.Camera1Handler;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.DisplayMessageDialogFragment.MessageDialogListener;
+import de.jeisfeld.augendiagnoselib.util.EncryptionUtil;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnInventoryFinishedListener;
 import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper.OnPurchaseSuccessListener;
@@ -245,6 +246,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 			addDeveloperContactButtonListener();
 			addUnlockerAppButtonListener();
+			bindPreferenceSummaryToValue(R.string.key_user_key);
 
 			int permission = ContextCompat.checkSelfPermission(getActivity(), "com.android.vending.BILLING");
 
@@ -750,6 +752,15 @@ public class SettingsFragment extends PreferenceFragment {
 
 					PreferenceUtil.setIndexedSharedPreferenceString(R.string.key_indexed_overlaytype, buttonPosition, stringValue);
 					updateOverlayPreferenceEntries();
+				}
+			}
+
+			else if (preference.getKey().equals(preference.getContext().getString(R.string.key_user_key))) {
+				String oldUserKey = PreferenceUtil.getSharedPreferenceString(R.string.key_user_key);
+				if (oldUserKey == null || !oldUserKey.equals(value)) {
+					PreferenceUtil.setSharedPreferenceString(R.string.key_user_key, stringValue);
+					PreferenceUtil.removeSharedPreference(R.string.key_user_key_status);
+					EncryptionUtil.checkUserKeyOnline(getActivity(), null);
 				}
 			}
 

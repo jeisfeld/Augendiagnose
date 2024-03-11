@@ -144,8 +144,9 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 	 */
 	public void hasPremiumPack(final OnPurchaseQueryCompletedListener listener) {
 		if (mIsConnected) {
-			doHasPremiumPack(INAPP, listener);
-			doHasPremiumPack(SUBS, listener);
+			doHasPremiumPack(INAPP, (hasPremiumPack) ->
+					doHasPremiumPack(SUBS, hasPremiumSubscription ->
+							listener.onHasPremiumPack(hasPremiumPack || hasPremiumSubscription)));
 		}
 		else {
 			mBillingClient.startConnection(new BillingClientStateListener() {
@@ -154,8 +155,9 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					if (billingResult.getResponseCode() == BillingResponseCode.OK) {
 						Log.d(TAG, "Google Billing Connection established.");
 						mIsConnected = true;
-						doHasPremiumPack(INAPP, listener);
-						doHasPremiumPack(SUBS, listener);
+						doHasPremiumPack(INAPP, (hasPremiumPack) ->
+								doHasPremiumPack(SUBS, hasPremiumSubscription ->
+										listener.onHasPremiumPack(hasPremiumPack || hasPremiumSubscription)));
 					}
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
@@ -208,8 +210,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 											}
 										}
 									}
-									Logger.log("hasPremiumPack " + productType + ": " + result);
-									listener.onHasPremiumPack(SUBS.equals(productType), result == PURCHASED, result == PENDING);
+									PreferenceUtil.setSharedPreferenceBoolean(
+											SUBS.equals(productType) ? R.string.key_internal_has_premium_subscription : R.string.key_internal_has_premium_pack,
+											result == PURCHASED || result == PENDING);
+									listener.onHasPremiumPack(result == PURCHASED || result == PENDING);
 								}));
 
 	}
@@ -407,7 +411,7 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 								for (String product : purchase.getProducts()) {
 									purchaseMap.put(product, purchase);
 								}
-								if (purchase.getPurchaseState() == PURCHASED && list.size() > 0) {
+								if (purchase.getPurchaseState() == PURCHASED && !list.isEmpty()) {
 									doAcknowledgePurchaseIfRequired(purchase);
 									mIsPremium = true;
 								}
@@ -517,11 +521,9 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		/**
 		 * Callback called if premium pack status is available.
 		 *
-		 * @param isSubscription indicator if this is subscription or pack.
 		 * @param isPremium      true if premium pack is available.
-		 * @param isPending      true if there is a pending purchase.
 		 */
-		void onHasPremiumPack(boolean isSubscription, boolean isPremium, boolean isPending);
+		void onHasPremiumPack(boolean isPremium);
 	}
 
 	/**

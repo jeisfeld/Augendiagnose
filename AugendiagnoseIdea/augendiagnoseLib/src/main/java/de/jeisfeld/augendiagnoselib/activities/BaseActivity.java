@@ -27,7 +27,9 @@ public abstract class BaseActivity extends Activity {
 		// Update title - required for custom locale on Android N
 		try {
 			ActivityInfo activityInfo = getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
-			setTitle(activityInfo.labelRes);
+			if (activityInfo.labelRes != 0) {
+				setTitle(activityInfo.labelRes);
+			}
 		}
 		catch (Exception ex) {
 			Log.e(Application.TAG, "Error while getting activity info. " + ex.getMessage(), ex);

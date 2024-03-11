@@ -129,7 +129,7 @@
         <item>Bugfixes. Adapted for Android 12.</item>
         <item>Bugfixes. Adapted for Android 13.</item>
         <item>Full app usage while pack payment is pending</item>
-        <item>Bugfixes</item>
+        <item>Bugfixes. Adapted for Android 14.</item>
     </string-array>
 
 </resources>

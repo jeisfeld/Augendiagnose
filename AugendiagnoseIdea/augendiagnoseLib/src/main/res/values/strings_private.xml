@@ -4,6 +4,8 @@
     <string name="private_license_key" translatable="false"/>
     <string name="private_unlock_key" translatable="false"/>
     <string name="private_key_string" translatable="false"/>
+    <string name="private_http_username" translatable="false"/>
+    <string name="private_http_password" translatable="false"/>
 
     <string-array name="private_special_keys" translatable="false"/>
     <string-array name="private_trial_prolongation_keys" translatable="false"/>

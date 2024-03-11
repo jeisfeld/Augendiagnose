@@ -13,6 +13,7 @@
     <string name="key_overlay_color" translatable="false">overlay_color</string>
     <string name="key_language" translatable="false">language</string>
     <string name="key_user_key" translatable="false">user_key</string>
+    <string name="key_user_key_status" translatable="false">user_key_status</string>
     <string name="key_enable_flash" translatable="false">enable_flash</string>
     <string name="key_enable_flash_ext" translatable="false">enable_flash_ext</string>
     <string name="key_use_front_camera" translatable="false">use_front_camera</string>

@@ -20,7 +20,7 @@
 
     <EditTextPreference
         android:defaultValue=""
-        android:inputType="textPassword"
+        android:inputType="text"
         android:key="@string/key_user_key"
         android:order="104"
         android:title="@string/pref_title_user_key"/>
