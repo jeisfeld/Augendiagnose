@@ -360,11 +360,7 @@ public final class EncryptionUtil {
 		/**
 		 * Extension of trial period.
 		 */
-		PROLONG_TRIAL,
-		/**
-		 * Blocked due to fraud use.
-		 */
-		BLOCKED
+		PROLONG_TRIAL
 	}
 
 	/**
