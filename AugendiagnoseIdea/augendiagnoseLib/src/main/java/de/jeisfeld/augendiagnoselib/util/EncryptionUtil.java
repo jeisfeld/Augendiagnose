@@ -16,6 +16,7 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.util.Arrays;
@@ -194,7 +195,8 @@ public final class EncryptionUtil {
 				urlConnection.setDoOutput(true);
 				((HttpsURLConnection) urlConnection).setRequestMethod("POST");
 				urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-				String postData = "androidId=" + SystemUtil.getAndroidId() + "&userKey=" + key;
+				String encodedKey = URLEncoder.encode(key, "UTF-8");
+				String postData = "androidId=" + SystemUtil.getAndroidId() + "&userKey=" + encodedKey;
 				byte[] postDataBytes = postData.getBytes("UTF-8");
 				urlConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 				urlConnection.getOutputStream().write(postDataBytes);
