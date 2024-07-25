@@ -118,7 +118,7 @@
         <item>Deutsch</item>
         <item>Español</item>
         <item>Português</item>
-        <item>English/Français</item>
+        <item>Français</item>
         <item>English/Polski</item>
     </string-array>
     <string-array name="pref_list_values_language" translatable="false">

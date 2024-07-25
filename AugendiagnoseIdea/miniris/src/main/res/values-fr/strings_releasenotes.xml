@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+	<h3>Informations importantes :</h3>
+
+	<p>Cette application permet une utilisation gratuite uniquement pendant deux semaines, avec des limitations sur le nombre de photos.</p>
+
+	<p>Veuillez tester l\'application. Si vous la trouvez utile, vous pouvez acheter un pack premium dans l\'application qui permet une utilisation illimitée.</p>
+
+	<p>Avant de pouvoir utiliser l\'application, vous devez donner l\'autorisation de lire/écrire des fichiers dans le dossier où l\'application stocke les photos des yeux.</p>
+]]>
+    </string>
+
+    <string-array name="releasenotes_version_notes">
+        <item>Version initiale, basée sur l\'application Eye Diagnosis, avec un flux de caméra largement amélioré.</item>
+        <item>Diverses corrections de bugs</item>
+        <item>Correction des problèmes avec l\'achat premium.</item>
+        <item>Période d\'essai augmentée à 2 semaines. Activation de divers cercles de guidage sur la caméra. Corrections de bugs.</item>
+        <item>La lampe de poche peut être utilisée dans la caméra. Les photos verticales sont possibles. Corrections de bugs.</item>
+        <item>Corrections de bugs</item>
+        <item>Sélection des modes de mise au point de la caméra. Activation de base des fonctionnalités de la caméra Android 5. Corrections de bugs</item>
+        <item>Adaptation des superpositions à la taille et à la position de la pupille.\nPossibilité de déplacer l\'écran de la caméra via les paramètres (si les boutons sont couverts par le ruban Miniris).\nCorrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>La topographie de Jensen est maintenant multilingue - désormais à la position 3.\nAutoriser le zoom lors de la révision des images de la caméra.\nCorrections de bugs</item>
+        <item>Ajout d\'un mode guidé pour définir la position de l\'iris et de la pupille.\nAjout de la topographie Rayid.\nLes utilisateurs peuvent maintenant spécifier quelles superpositions sont associées aux boutons de superposition.\nCorrections de bugs.</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs. Correction des problèmes d\'accès aux fichiers pour Android 6.</item>
+        <item>Corrections de bugs</item>
+        <item>Détection automatique de la position de l\'iris et de la pupille. Corrections de bugs</item>
+        <item>Activation du changement de la saturation et de la température de couleur. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Zoom de la caméra activé. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de l\'icône d\'évaluation. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de la politique de confidentialité</item>
+        <item>Activation de la capture de photos d\'un seul œil. Corrections de bugs</item>
+        <item>Activation du partage des photos des yeux. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation d\'un flash LED externe. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation de la caméra frontale. Rotation des images</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation de l\'application caméra du système. (Peut être désactivée dans les paramètres de la caméra.) Corrections de bugs</item>
+        <item>Mise à jour mineure des boutons de la caméra</item>
+        <item>Amélioration de la gestion de l\'orientation de la caméra. Activation de la sélection de photos dans la galerie. Corrections de bugs</item>
+        <item>Activation du déclenchement de la caméra par le bouton de volume</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de la localisation portugaise. Corrections de bugs</item>
+        <item>Ajout de la topographie numérique Rayid. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de superpositions en français et en polonais</item>
+        <item>Mise à jour pour Android 9. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de la topographie Jausas (français). Corrections de bugs</item>
+        <item>Mise à jour de la gestion de la facturation Google. Corrections de bugs</item>
+        <item>Correction du problème avec les caméras de tablettes</item>
+        <item>Préparation pour Android 11</item>
+        <item>Passe à l\'API Android 11</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs. Adaptation pour Android 12.</item>
+        <item>Corrections de bugs. Adaptation pour Android 13.</item>
+        <item>Utilisation complète de l\'application pendant que le paiement du pack est en attente</item>
+        <item>Corrections de bugs. Adaptation pour Android 14.</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+    </string-array>
+
+</resources>

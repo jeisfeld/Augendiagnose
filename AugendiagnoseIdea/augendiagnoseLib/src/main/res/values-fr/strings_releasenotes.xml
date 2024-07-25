@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_title">Notes de version</string>
+    <string name="releasenotes_changes">Derniers changements</string>
+    <string name="releasenotes_release">Version</string>
+
+</resources>

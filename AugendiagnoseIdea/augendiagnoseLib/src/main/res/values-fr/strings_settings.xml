@@ -1,0 +1,94 @@
+<resources>
+
+    <string name="title_activity_settings">Paramètres</string>
+
+    <!-- Strings related to Subscreens -->
+
+    <string name="pref_screen_input_settings">Paramètres d\'entrée</string>
+    <string name="pref_screen_storage_settings">Paramètres de stockage et de mémoire</string>
+    <string name="pref_screen_display_settings">Paramètres d\'affichage</string>
+    <string name="pref_screen_camera_settings">Paramètres de la caméra</string>
+    <string name="pref_screen_overlay_settings">Configuration des boutons de superposition</string>
+    <string name="pref_screen_premium_settings">Packs Premium / Support</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_title_folder_photos">Dossier de photos des yeux</string>
+    <string name="pref_default_folder_photos">__ext_storage__/PhotosDesYeux</string>
+    <string name="pref_default_folder_name_photos">EyePhotos</string>
+    <string name="pref_default_folder_photos_11">__app_storage__/PhotosDesYeux</string>
+    <string name="pref_title_folder_input">Dossier d\'entrée pour les nouvelles photos des yeux</string>
+    <string name="pref_title_max_bitmap_size">Taille maximale de Bitmap</string>
+    <string name="pref_title_eye_sequence_choice">La dernière photo est l\'œil droit</string>
+    <string name="pref_title_sort_by_last_name">Trier par nom de famille</string>
+    <string name="pref_title_guided_topo_setup">Configuration guidée de la position de l\'iris et de la pupille</string>
+    <string name="pref_title_store_options">Enregistrer des données supplémentaires dans le jpeg</string>
+    <string name="pref_title_automatic_iris_detection">Détection automatique de l\'iris</string>
+    <string name="pref_title_full_resolution">Afficher l\'image en pleine résolution</string>
+    <string name="pref_title_overlay_color">Couleur de superposition par défaut</string>
+    <string name="pref_title_language">Langue</string>
+    <string name="pref_title_user_key">Clé utilisateur</string>
+    <string name="pref_title_enable_flash">Activer le flash</string>
+    <string name="pref_title_enable_flash_ext">Activer le flash LED externe</string>
+    <string name="pref_title_use_front_camera">Utiliser la caméra frontale</string>
+    <string name="pref_title_enable_external_camera">Afficher le lien vers la caméra système</string>
+    <string name="pref_title_camera_api_version">Compatibilité de la caméra</string>
+    <string name="pref_title_camera_screen_position">Position de l\'écran de la caméra</string>
+    <string name="pref_title_overlay_button">Bouton de superposition %1$s</string>
+    <string name="pref_value_overlay_button_empty">(Non utilisé)</string>
+    <string name="pref_title_show_rating_icon">Afficher l\'icône d\'évaluation</string>
+
+    <!-- Strings related to Setting arrays -->
+
+    <string-array name="pref_list_titles_folder_input">
+        <item>Dossier d\'entrée Eye-Fi</item>
+        <item>Dossier de la caméra par défaut</item>
+        <item>Dossier personnalisé</item>
+    </string-array>
+    <string-array name="pref_list_titles_folder_photos">
+        <item>Dossier par défaut</item>
+        <item>Dossier personnalisé</item>
+    </string-array>
+    <string-array name="pref_list_values_folder_photos">
+        <item>__ext_storage__/PhotosDesYeux</item>
+        <item>__custom__</item>
+    </string-array>
+    <string-array name="pref_list_titles_max_bitmap_size">
+        <item>4096</item>
+        <item>2880</item>
+        <item>2048 (recommandé)</item>
+        <item>1440</item>
+        <item>1024</item>
+        <item>720</item>
+        <item>512</item>
+    </string-array>
+    <string-array name="pref_list_titles_store_options">
+        <item>Enregistrer dans l\'EXIF</item>
+        <item>Enregistrer dans des champs personnalisés</item>
+        <item>Ne pas enregistrer de données dans les images</item>
+    </string-array>
+    <string-array name="pref_list_titles_full_resolution">
+        <item>Toujours charger automatiquement</item>
+        <item>Charger automatiquement lors de l\'affichage d\'une seule photo</item>
+        <item>Charger uniquement à la demande</item>
+    </string-array>
+    <string-array name="pref_list_titles_language">
+        <item>Langue du système</item>
+        <item>Anglais</item>
+        <item>Allemand</item>
+        <item>Espagnol</item>
+        <item>Portugais</item>
+        <item>Français</item>
+        <item>Anglais/Polonais</item>
+    </string-array>
+    <string-array name="pref_list_titles_camera_api_version">
+        <item>Android 4</item>
+        <item>Android 5</item>
+    </string-array>
+    <string-array name="pref_list_titles_camera_screen_position">
+        <item>Plein écran</item>
+        <item>Décalé vers la droite</item>
+        <item>Décalé vers la gauche</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">Diagnostic Oculaire</string>
+    <string name="title_activity_display_two">Comparer les photos</string>
+    <string name="title_activity_display_one">Afficher la photo</string>
+    <string name="title_activity_list_folders_for_display">Sélectionner un nom</string>
+    <string name="title_activity_list_folders_for_display_second">Sélectionner un nom pour la deuxième image</string>
+    <string name="title_activity_organize_new_photos">Organiser les nouvelles photos</string>
+    <string name="title_activity_list_pictures_for_name">Sélectionner les images</string>
+    <string name="title_activity_list_pictures_for_second_name">Sélectionner la deuxième image</string>
+    <string name="title_activity_select_two_pictures">Sélectionner deux images</string>
+    <string name="title_settings">Paramètres</string>
+    <string name="title_camera">Caméra</string>
+    <string name="title_purchase">Achat</string>
+    <string name="title_rating">Évaluation</string>
+    <string name="title_help">Aide</string>
+    <string name="section_select_photos">Sélectionner les photos</string>
+    <string name="section_select_name">Sélectionner un nom</string>
+    <string name="section_select_date">Sélectionner une date</string>
+    <string name="text_brightness">Luminosité</string>
+    <string name="text_contrast">Contraste</string>
+    <string name="text_saturation">Saturation</string>
+    <string name="text_color_temperature">Température de couleur</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Annuler</string>
+    <string name="button_clear">Effacer</string>
+    <string name="button_select">Sélectionner</string>
+    <string name="button_switch">Changer</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_remove">Retirer</string>
+    <string name="button_move">Déplacer</string>
+    <string name="button_continue">Continuer</string>
+    <string name="button_preview">Aperçu</string>
+    <string name="button_other_pictures">Autres photos</string>
+    <string name="button_import_from_gallery">Importer une image depuis la galerie</string>
+    <string name="button_import">Importer</string>
+    <string name="button_camera">Caméra</string>
+    <string name="button_zoom">Zoom</string>
+    <string name="button_overwrite">Écraser</string>
+    <string name="button_dont_show">Ne plus montrer</string>
+    <string name="button_show_later">Montrer plus tard</string>
+    <string name="button_rate">Évaluer l\'application</string>
+    <string name="button_external_flash">Flash externe</string>
+    <string name="button_saf_migrate_now">Donner les autorisations maintenant</string>
+    <string name="button_saf_postpone">Reporter à plus tard</string>
+    <string name="button_saf_postpone_upgrade">Reporter jusqu\'à la mise à jour Android</string>
+    <string name="button_saf_postpone_restart">Demander à nouveau</string>
+    <string name="content_description_right_eye">Œil droit</string>
+    <string name="content_description_left_eye">Œil gauche</string>
+    <string name="text_initializing">Initialisation&#8230;</string>
+    <string name="display_right_left">D-G</string>
+    <string name="file_infix_right">droit</string>
+    <string name="file_infix_left">gauche</string>
+    <string name="suffix_title_right">Œil droit</string>
+    <string name="suffix_title_left">Œil gauche</string>
+    <string name="hint_search_name">[Rechercher un nom]</string>
+    <string name="hint_insert_name">[Entrer un nom]</string>
+    <string name="hint_edit_comment">[Entrer un commentaire sur l\'image]</string>
+    <string name="color_picker_title">Sélectionner une couleur de superposition</string>
+    <string name="color_picker_default_title">Sélectionner une couleur</string>
+    <string name="color_swatch_description">Couleur <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
+    <string name="color_swatch_description_selected">Couleur <xliff:g id="color_index" example="14">%1$d</xliff:g> sélectionnée</string>
+    <string name="googlebilling_onetime_title">Pack Premium (%1$s)</string>
+    <string name="googlebilling_subscription_title">Pack Mensuel (%1$s)</string>
+    <string name="googlebilling_onetime_title_purchased">Pack Premium (acheté)</string>
+    <string name="googlebilling_subscription_title_purchased">Pack Mensuel (abonné)</string>
+    <string name="googlebilling_onetime_title_pending">Pack Premium (en attente)</string>
+    <string name="googlebilling_subscription_title_pending">Pack Mensuel (en attente)</string>
+    <string name="googlebilling_onetime_text">Utilisation illimitée de l\'application. Cela nécessite un paiement unique de %1$s.</string>
+    <string name="googlebilling_subscription_text">Utilisation de l\'application avec toutes les fonctionnalités pendant un mois. L\'abonnement coûte %1$s par mois, est prolongé mensuellement et peut être annulé à tout moment via Google Play.</string>
+
+</resources>

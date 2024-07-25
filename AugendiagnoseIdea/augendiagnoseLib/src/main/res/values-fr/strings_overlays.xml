@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="overlay_names">
+        <item>Carte sectorielle</item>
+        <item>Carte textuelle combinée</item>
+        <item>Carte graphique combinée</item>
+        <item>Carte de Bernard Jensen</item>
+        <item>Carte textuelle Rayid</item>
+        <item>Carte de Zupan (allemand)</item>
+        <item>Carte de Siegfried Rizzi (italien)</item>
+        <item>Carte de Josef Deck (allemand)</item>
+        <item>Carte de Werner Theegarten (allemand)</item>
+        <item>Carte numérique Rayid</item>
+        <item>Carte de Jausas (français)</item>
+        <item>Cercle de la pupille</item>
+    </string-array>
+
+
+</resources>

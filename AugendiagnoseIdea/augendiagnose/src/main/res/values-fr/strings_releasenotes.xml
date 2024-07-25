@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="releasenotes_first_usage">
+<![CDATA[
+<h3>Informations importantes :</h3>
+
+<p>Cette application permet une utilisation gratuite uniquement pendant deux semaines, avec des limitations sur le nombre de photos.</p>
+
+<p>Veuillez tester l\'application. Si vous la trouvez utile, vous pouvez acheter un pack premium au sein de l\'application qui permet une utilisation illimitée.</p>
+
+<h3>Informations pour les nouveaux utilisateurs :</h3>
+
+<p>Le but de cette application est l\'organisation et l\'affichage des photos des yeux. Lors de la première utilisation, vous devez faire ce qui suit :</p>
+<p>1. Définir un dossier d\'entrée où l\'application récupère les nouvelles photos des yeux, configurer ce dossier d\'entrée dans les paramètres et donner les autorisations nécessaires à l\'application pour ce dossier.</p>
+<p>2. (Android 10 ou supérieur) Définir le dossier où l\'application stocke les photos des yeux et donner les autorisations nécessaires à l\'application pour ce dossier.</p>
+<p>3. Copier toutes vos photos existantes des yeux dans le dossier d\'entrée.</p>
+<p>4. Attribuer ces photos à des personnes et des dates, puis les déplacer vers le dossier de photos des yeux de l\'application, en utilisant la fonctionnalité « Organiser les nouvelles photos ».</p>
+<p>Après cette préparation, vous pouvez utiliser la fonctionnalité « Afficher les photos » pour voir et analyser vos photos.</p>
+
+<p>Sur la plupart des pages de l\'application, vous trouverez un point d\'interrogation en haut à droite - vous pouvez accéder à la page d\'aide ici.</p>
+
+<p>Il existe une application Windows complémentaire qui peut être utilisée pour voir les photos qui ont été organisées avec cette application. Pour plus d\'informations, consultez
+<a href="https://augendiagnose-app.de/?page=windowsapp">https://augendiagnose-app.de/?page=windowsapp</a>.</p>
+
+<p><b>Remarque importante :</b> Cette application modifie vos fichiers JPG de manière non destructive, afin de stocker des métadonnées dans les fichiers. Cela a l\'avantage que toutes ces informations sont toujours disponibles si vous copiez les photos d\'un appareil à un autre. Dans une certaine mesure, des informations comme les commentaires seront même disponibles lors de la visualisation des fichiers sous MS Windows. Cependant, ce type de stockage impose un petit risque. Il peut arriver que sur certains appareils, ou pour des photos provenant de certaines caméras, le stockage d\'informations dans le JPG échoue, voire même détruise le fichier JPG. Par conséquent, il est recommandé de conserver des sauvegardes de vos fichiers JPG lorsque vous utilisez l\'application pour la première fois avec un nouvel appareil ou avec une nouvelle caméra. Veuillez m\'informer si de tels problèmes apparaissent.</p>
+]]>
+    </string>
+
+    <string-array name="releasenotes_version_notes">
+        <item>Version initiale. Permet d\'organiser les photos dans un dossier cible et d\'afficher des paires de photos.</item>
+        <item>Ajout de la fonctionnalité de superposition de base.</item>
+        <item>Corrections mineures.</item>
+        <item>Ajout de la superposition personnalisée.</item>
+        <item>Ajout de la sélection de photos alternatives lors de l\'organisation.</item>
+        <item>Amélioration de la cartographie de la luminosité/contraste.</item>
+        <item>Améliorations et corrections mineures diverses.</item>
+        <item>Ajout de la version anglaise de la superposition.</item>
+        <item>Activation du démarrage de l\'application de \'extérieur avec un ensemble d\'images</item>
+        <item>Activation des images non-JPG. Prendre en compte l\'orientation EXIF de l\'image.</item>
+        <item>Ajout d\'une deuxième superposition personnalisée. Amélioration du pincement de la superposition. Correction de certains problèmes d\'affichage.</item>
+        <item>Ajout de divers écrans d\'aide.</item>
+        <item>Activation du stockage de la position de la superposition dans le fichier JPG.</item>
+        <item>Ajout d\'une superposition supplémentaire (italienne). Ajout de l\'écran de démarrage pour les nouveaux utilisateurs. Corrections de bugs.</item>
+        <item>Ajout du menu contextuel dans la vue d\'image. Permet le stockage du contraste et de la luminosité. Permet l\'édition des commentaires sur les images. Améliorations mineures.</item>
+        <item>Activation de la suppression des photos et du changement de dates via le menu contextuel. Améliorations et corrections mineures.</item>
+        <item>Introduction d\'un design spécial pour les tablettes - fusion de la liste des noms avec la liste des photos par nom</item>
+        <item>Permet le stockage de la position de l\'image et du zoom. Activation des superpositions et des barres de défilement dans la vue à deux images.</item>
+        <item>Pendant l\'édition du commentaire, l\'image est toujours affichée. Corrections de bugs.</item>
+        <item>Il est désormais possible de rechercher des noms. Lors de l\'organisation des photos, de nouveaux noms peuvent être entrés plus directement.</item>
+        <item>Corrections de bugs</item>
+        <item>Simplification de la sélection des dossiers dans les paramètres.</item>
+        <item>Activation du déplacement des photos vers le dossier d\'entrée. L\'application reste avec l\'organisation des photos s\'il y a plus de photos à organiser.</item>
+        <item>Ajout de la navigation sur les pages d\'aide. Corrections de bugs.</item>
+        <item>Nouvelles superpositions. Choisir la couleur des superpositions. Corrections de bugs.</item>
+        <item>Ajout d\'une superposition supplémentaire. Page d\'aide pour les notes de version. Corrections de bugs.</item>
+        <item>Changement de l\'échelle de la barre de contraste. Activation de l\'enregistrement sur une carte SD externe pour Android 4.4. Localisation espagnole.</item>
+        <item>Ajout d\'une superposition supplémentaire.</item>
+        <item>Corrections de bugs - entre autres, correction des problèmes avec les extensions de fichiers en majuscules ("JPG")</item>
+        <item>Activation du changement de langue. Activation du tri par nom de famille. Activation de la suppression des photos du dossier d\'entrée. Affichage des dernières paires de photos des yeux en haut. Corrections de bugs</item>
+        <item>Lors de l\'affichage des images, au lieu d\'utiliser un menu contextuel, il y a maintenant une barre d\'action. Affichage du détail de l\'image actuelle en pleine résolution. Corrections de bugs.</item>
+        <item>Affichage automatique en pleine résolution. Remarque : Si cette mise à jour entraîne des plantages ou de mauvaises performances de l\'application sur votre appareil, vous devriez changer le paramètre « Afficher l\'image en pleine résolution »</item>
+        <item>Changement des options pour l\'affichage en pleine résolution en raison de problèmes avec les appareils à faible mémoire</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'enregistrement sur une carte SD externe pour Android 5. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de dialogues avec des conseils. Amélioration de la gestion des erreurs.</item>
+        <item>Permet d\'afficher les informations sur l\'image tout en regardant l\'image. Version de l\'application Windows publiée. Corrections de bugs</item>
+        <item>Prendre des photos directement depuis l\'application. Permet l\'utilisation de différentes cartes SD pour les entrées et les photos. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de publicités (uniquement aux États-Unis). Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de dons via achat intégré. Permet de désactiver les publicités. Réorganisation des paramètres. Corrections de bugs.</item>
+        <item>Nouveau flux de travail pour la prise de photos à partir de l\'application. Version gratuite de l\'application devenue uniquement une version d\'essai. Corrections de bugs</item>
+        <item>Rendre l\'appareil photo à nouveau optionnel.</item>
+        <item>Sélection des modes de mise au point de l\'appareil photo. Activation de base des fonctionnalités de l\'appareil photo Android 5. Corrections de bugs</item>
+        <item>Adaptation des superpositions à la taille et à la position de la pupille.\nPossibilité de déplacer l\'écran de la caméra via les paramètres.\nCorrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Rendre la topographie de Jensen multilingue - maintenant à la position 3.\nPermet de zoomer lors de la révision des images de la caméra.\nCorrections de bugs</item>
+        <item>Ajout d\'un mode guidé pour définir la position de l\'iris et de la pupille.\nAjout de la topographie Rayid.\nLes utilisateurs peuvent maintenant spécifier quelles superpositions sont associées aux boutons de superposition.\nCorrections de bugs.</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs. Correction des problèmes d\'accès aux fichiers pour Android 6.</item>
+        <item>Corrections de bugs</item>
+        <item>Détection automatique de la position de l\'iris et de la pupille. Corrections de bugs</item>
+        <item>Activation du changement de saturation et de la température de couleur. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation du zoom de l\'appareil photo. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de l\'icône de notation. Corrections de bugs</item>
+        <item>Lien avec la nouvelle application Eye-Fi. Corrections de bugs</item>
+        <item>Ajout de la politique de confidentialité</item>
+        <item>Activation de la gestion des photos d\'un seul œil. Corrections de bugs</item>
+        <item>Activation du partage des photos des yeux. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation du flash LED externe. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation de la caméra frontale. Rotation des images</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Activation de l\'utilisation de l\'application de la caméra système. (Peut être désactivé dans les paramètres de la caméra.) Corrections de bugs</item>
+        <item>Activation de la sélection des photos depuis la galerie.</item>
+        <item>Amélioration de la gestion de l\'orientation de la caméra. Corrections de bugs</item>
+        <item>Activation du déclenchement de la caméra par le bouton de volume</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de la localisation portugaise. Corrections de bugs</item>
+        <item>Ajout de la topographie Rayid numérique. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de superpositions en français et en polonais</item>
+        <item>Mise à jour pour Android 9. Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+        <item>Ajout de la topographie Jausas (français). Corrections de bugs</item>
+        <item>Mise à jour de la gestion de la facturation Google. Corrections de bugs</item>
+        <item>Correction du problème avec les caméras des tablettes</item>
+        <item>Préparation pour Android 11</item>
+        <item>Passage à l\'API Android 11</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs. Adaptation pour Android 12.</item>
+        <item>Corrections de bugs. Adaptation pour Android 13.</item>
+        <item>Utilisation complète de l\'application pendant que le paiement du pack est en attente</item>
+        <item>Corrections de bugs. Adaptation pour Android 14.</item>
+        <item>Corrections de bugs</item>
+        <item>Corrections de bugs</item>
+    </string-array>
+
+</resources>

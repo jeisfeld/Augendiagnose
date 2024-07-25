@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Diagnostic Oculaire</string>
+    <string name="button_open_eyefi_app">Ouvrir l\'application Eye-Fi</string>
+    <string name="button_display_pictures">Voir les photos</string>
+    <string name="button_organize_new_photos">Organiser les nouvelles photos</string>
+    <string name="button_take_pictures">Prendre des photos</string>
+    <bool name="hide_button_view_images">true</bool>
+
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Entries related to context menus -->
+
+    <string name="menu_store_color_settings">Enregistrer les paramètres de couleur</string>
+    <string name="menu_reset_color_settings">Réinitialiser les paramètres de couleur</string>
+    <string name="menu_store_position">Enregistrer le zoom/position</string>
+    <string name="menu_reset_position">Réinitialiser le zoom/position</string>
+    <string name="menu_store_overlay_color">Enregistrer la couleur des superpositions</string>
+    <string name="menu_reset_overlay_color">Réinitialiser la couleur des superpositions</string>
+    <string name="menu_delete_overlay_position">Réinitialiser la position de la superposition</string>
+    <string name="menu_share_this_image">Partager cette image</string>
+    <string name="menu_share_this_image_view">Partager cette vue d\'image</string>
+    <string name="menu_share_both_images">Partager les deux images</string>
+    <string name="menu_share_both_image_views">Partager les deux vues d\'image</string>
+    <string name="menu_delete_images">Supprimer les images</string>
+    <string name="menu_delete_selected_image">Supprimer l\'image sélectionnée</string>
+    <string name="menu_delete_all_images">Supprimer toutes les images</string>
+    <string name="menu_change_date">Changer la date</string>
+    <string name="menu_move_to_input_folder">Déplacer vers le dossier d\'entrée</string>
+    <string name="menu_change_name">Changer le nom</string>
+    <string name="menu_remove_overlay_button">Retirer le bouton</string>
+    <string name="menu_add_overlay_button">Ajouter un bouton</string>
+    <string name="menu_rotate_right">Faire pivoter de 90° à droite</string>
+    <string name="menu_rotate_left">Faire pivoter de 90° à gauche</string>
+    <string name="menu_rotate_180">Faire pivoter de 180°</string>
+
+    <!-- Entries related to buttons in the settings -->
+
+    <string name="menu_hide_all_hints">Ne pas afficher les conseils</string>
+    <string name="menu_show_all_hints">Afficher tous les conseils</string>
+    <string name="menu_title_unlocker_app">Application «Iridology unlocker»</string>
+    <string name="menu_detail_unlocker_app">Une alternative aux packs premium - donne un accès illimité aux deux applications “Eye Diagnosis” et “Miniris”</string>
+    <string name="menu_title_contact_developer">Contacter le développeur</string>
+    <string name="menu_detail_contact_developer">par email en cas de problèmes ou de questions</string>
+    <string name="menu_subject_contact_developer">Question sur l\'application Diagnostic Oculaire</string>
+
+</resources>

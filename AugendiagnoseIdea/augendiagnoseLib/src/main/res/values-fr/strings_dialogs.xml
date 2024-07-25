@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_dialog_change_name">Changer le nom</string>
+    <string name="title_dialog_error">Erreur</string>
+    <string name="title_dialog_info">Information</string>
+    <string name="title_dialog_image_info">Informations sur l\'image</string>
+    <string name="title_dialog_confirmation">Confirmation</string>
+    <string name="title_dialog_select_folder">Sélectionner un dossier</string>
+    <string name="title_dialog_tip">Conseil</string>
+    <string name="message_dialog_no_picture"><![CDATA[[HTML]Il n\'y a pas de photos dans le dossier d\'entrée.<br><br>Vous devrez peut-être <a href="appcode://selectInputFolder">changer le dossier d\'entrée</a> et redémarrer cette action.<br><br>Sinon, vous pouvez maintenant importer des photos depuis la galerie.]]></string>
+    <string name="message_dialog_no_photos_for_name">Pas de photos des yeux disponibles</string>
+    <string name="message_dialog_no_photos_in_input_folder">Il n\'y a pas de photos dans le dossier d\'entrée. Vous pouvez importer des photos depuis la galerie.</string>
+    <string name="message_dialog_select_name">Veuillez sélectionner un nom</string>
+    <string name="message_dialog_organized_photos">Les photos sélectionnées ont été organisées. Il reste des photos à organiser.</string>
+    <string name="message_dialog_cannot_create_folder">Impossible de créer le dossier %1$s</string>
+    <string name="message_dialog_cannot_write_to_folder">Impossible d\'écrire dans le dossier %1$s. Veuillez sélectionner un autre dossier dans la mémoire interne ou la carte SD.</string>
+    <string name="message_dialog_cannot_change_date">La date des photos de %1$s du %2$s ne peut pas être changée en %3$s, car il y a déjà des photos pour cette date</string>
+    <string name="message_dialog_no_organized_photos">Il n\'y a pas de photos organisées disponibles à afficher. Veuillez d\'abord prendre une paire de photos des yeux et attribuer un nom et une date.</string>
+    <string name="message_dialog_file_does_not_exist">Le fichier %1$s n\'existe pas</string>
+    <string name="message_dialog_failed_to_move_file">Impossible de déplacer le fichier %1$s vers %2$s</string>
+    <string name="message_dialog_failed_to_move_folder_partially">Erreur lors du déplacement du dossier %1$s vers %2$s - veuillez vérifier les dossiers et déplacer les fichiers vers le dossier approprié.</string>
+    <string name="message_dialog_failed_to_rename_file">Impossible de renommer le fichier %1$s en %2$s</string>
+    <string name="message_dialog_failed_to_delete_file">Impossible de supprimer la photo %1$s</string>
+    <string name="message_dialog_failed_to_delete_all_files">Impossible de supprimer tous les fichiers du dossier d\'entrée</string>
+    <string name="message_dialog_failed_to_delete_file_for_date">Impossible de supprimer les photos de %1$s du %2$s</string>
+    <string name="message_dialog_failed_to_move_file_for_date">Impossible de déplacer les photos de %1$s du %2$s</string>
+    <string name="message_dialog_failed_to_delete_folder">Impossible de supprimer le dossier de %1$s</string>
+    <string name="message_dialog_failed_to_change_date">Impossible de changer la date des photos de %1$s du %2$s au %3$s</string>
+    <string name="message_dialog_failed_to_store_metadata">Impossible de stocker les métadonnées dans le fichier %1$s</string>
+    <string name="message_dialog_failed_to_store_exif">Impossible de stocker les métadonnées EXIF dans le fichier %1$s - veuillez contacter le développeur !</string>
+    <string name="message_dialog_failed_to_access_camera">Impossible d\'accéder à la caméra.\n\nDétails de l\'erreur : %1$s</string>
+    <string name="message_dialog_failed_to_open_google_play">Impossible d\'ouvrir Google Play.</string>
+    <string name="message_dialog_trial_names">Dans la version d\'essai, vous pouvez utiliser jusqu\'à trois noms. Veuillez acheter un pack premium pour un accès illimité.</string>
+    <string name="message_dialog_trial_time">La version d\'essai de l\'application peut être utilisée pendant deux semaines seulement. Veuillez acheter un pack premium pour un accès illimité.</string>
+    <string name="message_dialog_trial_pending">Votre transaction d\'achat du pack premium est en attente. Veuillez vous assurer que la transaction sera complétée.</string>
+    <string name="message_dialog_trial_overlays">La version d\'essai de l\'application est limitée à trois superpositions. Veuillez acheter un pack premium pour un accès illimité.</string>
+    <string name="message_dialog_purchase_thanks">Merci pour votre achat !</string>
+    <string name="message_dialog_purchase_thanks_premium">Merci pour votre achat ! Vous pouvez maintenant utiliser l\'application sans limitations.</string>
+    <string name="message_dialog_purchase_thanks_pending">Merci pour votre achat ! Veuillez vous assurer que la transaction sera complétée.</string>
+
+    <string name="message_dialog_select_extsdcard">Dans le dialogue Android suivant, veuillez sélectionner la carte SD externe (soit la carte entière, soit le dossier sélectionné) et confirmer en bas.</string>
+    <string name="message_dialog_select_photos_folder">Dans le dialogue Android suivant, veuillez sélectionner le dossier où vous souhaitez stocker les photos des yeux et confirmer en bas.</string>
+    <string name="message_dialog_select_photos_folder_saf_new">Dans le dialogue Android suivant, veuillez sélectionner le dossier où vous souhaitez stocker les photos des yeux et confirmer en bas. L\'application stockera les photos dans un nouveau sous-dossier “%1$s” du dossier sélectionné.</string>
+    <string name="message_dialog_select_photos_folder_saf">Afin de prendre en charge les dernières versions d\'Android, l\'application doit redemander les autorisations de dossier. Dans le dialogue Android suivant, veuillez sélectionner le dossier “%1$s” où vous stockez les photos des yeux et confirmer l\'autorisation.</string>
+    <string name="message_dialog_changed_photos_folder">Vous avez sélectionné un dossier différent “%2$s”. Veuillez sélectionner le dossier “%1$s” où les photos des yeux sont actuellement stockées.</string>
+    <string name="message_dialog_select_input_folder">Dans le dialogue Android suivant, veuillez sélectionner le dossier d\'entrée pour les nouvelles photos des yeux et confirmer en bas.</string>
+    <string name="message_dialog_select_input_folder_saf">Afin de prendre en charge les dernières versions d\'Android, l\'application doit redemander les autorisations de dossier. Dans le dialogue Android suivant, veuillez sélectionner le dossier d\'entrée pour les nouvelles photos des yeux “%1$s” et confirmer l\'autorisation.</string>
+    <string name="message_dialog_changed_input_folder">Vous avez sélectionné un dossier différent “%2$s”. Veuillez sélectionner le dossier d\'entrée actuel “%1$s”.</string>
+    <string name="message_dialog_migrate_saf_now">Avec Android 11, vous devrez donner des autorisations supplémentaires à l\'application pour qu\'elle puisse continuer à lire et écrire les photos des yeux sur l\'appareil. Vous pouvez donner les autorisations dès maintenant. Voulez-vous le faire maintenant ?</string>
+    <string name="message_dialog_migrate_saf_postpone">Voulez-vous le faire à la prochaine utilisation de l\'application ou voulez-vous le reporter jusqu\'à ce que l\'appareil soit mis à jour vers Android 11 ?</string>
+
+    <string name="message_dialog_unformatted_file">Le fichier %1$s n\'est pas formaté correctement</string>
+    <string name="message_dialog_confirm_delete_date">Voulez-vous vraiment supprimer les photos de %1$s du %2$s ?</string>
+    <string name="message_dialog_confirm_delete_folder">Voulez-vous vraiment supprimer %1$s avec toutes les photos ?</string>
+    <string name="message_dialog_confirm_delete_photo">Voulez-vous vraiment supprimer la photo %1$s ?</string>
+    <string name="message_dialog_confirm_delete_two_photos">Voulez-vous vraiment supprimer les deux photos ?</string>
+    <string name="message_dialog_confirm_delete_all_photos">Voulez-vous vraiment supprimer toutes les photos du dossier d\'entrée ?</string>
+    <string name="message_dialog_confirm_no_jpeg">Les photos sélectionnées ne sont pas des photos JPG. Par conséquent, une partie des fonctionnalités (comme le stockage d\'informations) ne fonctionnera pas. Voulez-vous continuer ?</string>
+    <string name="message_dialog_confirm_overwrite">Pour le nom “%1$s” il y a déjà des photos des yeux du %2$s. Voulez-vous les écraser ?\n\nSinon, veuillez sélectionner un autre nom ou une autre date.</string>
+    <string name="message_dialog_confirm_need_file_permission">Cette application doit avoir l\'autorisation de votre stockage externe pour accéder aux images. Veuillez fournir cet accès.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Veuillez fournir l\'accès à la caméra.</string>
+    <string name="message_dialog_confirm_missing_permission">L\'application ne peut pas fonctionner sans les autorisations obligatoires manquantes. Fin de l\'application.</string>
+    <string name="message_dialog_confirm_rate_app">Si vous aimez l\'application, veuillez la recommander.\n\nVoulez-vous l\'évaluer sur Google Play ?</string>
+    <string name="message_dialog_confirm_rate_icon">Voulez-vous supprimer l\'icône d\'évaluation de l\'application ?</string>
+    <string name="message_dialog_confirm_external_flash">Voulez-vous utiliser un flash LED externe connecté à la prise casque ?</string>
+    <string name="message_dialog_outofmemoryerror">L\'application a planté en raison d\'un manque de mémoire. Si cela se produit de manière répétée, vous devez aller dans les paramètres, changer le paramètre “Afficher l\'image en pleine résolution” à la valeur “Charger seulement à la demande”, et réduire la valeur de “Taille maximale de Bitmap”.</string>
+    <string name="message_dialog_hints_will_be_shown">À partir de maintenant, l\'application affichera des conseils dans diverses situations (y compris celles que vous avez désactivées précédemment). Vous pouvez les désactiver individuellement.</string>
+    <string name="message_dialog_no_hints_will_be_shown">À partir de maintenant, l\'application n\'affichera aucun des conseils actuellement existants. Les nouveaux conseils des futures versions seront affichés.</string>
+    <string name="message_dialog_triggering_purchase">Déclenchement de l\'achat sur Google Play&#8230;</string>
+    <string name="message_dialog_blocked_user_key">La clé utilisateur “%1$s” a été révoquée en raison d\'abus</string>
+    <string name="message_guide_resize_iris">Veuillez redimensionner l\'œil jusqu\'à ce que l\'iris remplisse le cercle. Ensuite, appuyez sur “OK”.</string>
+    <string name="message_guide_resize_pupil">Veuillez redimensionner l\'œil jusqu\'à ce que la pupille remplisse le cercle. Ensuite, appuyez sur “OK”.</string>
+    <string name="imageinfo_line_filename">Nom du fichier :</string>
+    <string name="imageinfo_line_filedate">Date du fichier :</string>
+    <string name="imageinfo_line_name">Nom :</string>
+    <string name="imageinfo_line_comment">Commentaire :</string>
+
+</resources>

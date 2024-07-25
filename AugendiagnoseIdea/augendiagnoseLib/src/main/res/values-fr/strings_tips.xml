@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="message_tip_firstuse">
+<![CDATA[
+	<h2>Premiers pas :</h2>
+	<p>Si le dossier d\'entrée n\'est pas encore défini, faites-le dans les <a href="appcode://selectInputFolder">paramètres</a>. Ensuite :</p>
+	<p><b>Étape 1 :</b> Allez à l\'action « Organiser les nouvelles photos » et attribuez des noms et des dates à vos photos des yeux.
+			Sachez que les photos seront renommées et déplacées dans le « Dossier des photos des yeux ».
+			Lors de la première utilisation, il est recommandé de garder des sauvegardes des photos ailleurs.
+	</p>
+	<p><b>Étape 2 :</b> Allez à l\'action « Afficher les photos » et sélectionnez un nom pour lequel vous souhaitez voir les photos.
+			Cliquez ensuite sur la photo pour afficher les photos.
+	</p>
+	<p>Consultez les pages d\'aide correspondantes pour plus d\'informations.</p>
+]]>
+    </string>
+    <string name="message_tip_organizephotos">
+<![CDATA[
+	<h2>Organiser les nouvelles photos :</h2>
+	<p>Sélectionnez une paire de photos des yeux d\'une personne et arrangez correctement l\'œil droit et l\'œil gauche.</p>
+	<p>Entrez ensuite le nom de la personne.</p>
+	<p>La date des photos est présélectionnée à partir des photos - vous pouvez la modifier.</p>
+	<p>Enfin, appuyez sur « OK » pour déplacer les photos dans le dossier de l\'application à partir duquel vous pouvez ensuite les voir et les comparer.</p>
+	<p>Consultez les pages d\'aide correspondantes pour plus d\'informations.</p>
+]]>
+    </string>
+    <string name="message_tip_displaynames">
+<![CDATA[
+	<h2>Voir les photos :</h2>
+	<p>Vous voyez la liste de tous les noms pour lesquels vous avez des photos des yeux (précédemment organisées).</p>
+	<p>Cliquez sur un nom - puis vous voyez la liste des paires de photos des yeux pour ce nom, classées par date.</p>
+	<p>Ensuite, vous pouvez sélectionner une ou deux photos pour les voir en détail.</p>
+	<p>Consultez les pages d\'aide correspondantes pour plus d\'informations.</p>
+]]>
+    </string>
+    <string name="message_tip_displaypictures">
+<![CDATA[
+	<h2>Voir les photos :</h2>
+	<p>Vous voyez la liste des paires de photos des yeux pour une personne.</p>
+	<p>Cliquez sur une photo pour l\'afficher en détail.</p>
+	<p>Cliquez sur une date pour afficher les deux photos en détail.</p>
+	<p>Faites un clic long sur une photo, puis sélectionnez une autre photo afin de comparer deux photos.</p>
+	<p>Consultez les pages d\'aide correspondantes pour plus d\'informations.</p>
+]]>
+    </string>
+    <string name="message_tip_displaypicturestablet">
+<![CDATA[
+	<h2>Voir les photos :</h2>
+	<p>À gauche, vous voyez la liste de tous les noms pour lesquels vous avez des photos des yeux (précédemment organisées).</p>
+	<p>Cliquez sur un nom - puis vous voyez à droite la liste des paires de photos des yeux pour ce nom, classées par date.</p>
+	<p>Cliquez sur une photo pour l\'afficher en détail.</p>
+	<p>Cliquez sur une date pour afficher les deux photos en détail.</p>
+	<p>Faites un clic long sur une photo, puis sélectionnez une autre photo afin de comparer deux photos.</p>
+	<p>Consultez les pages d\'aide correspondantes pour plus d\'informations.</p>
+]]>
+    </string>
+    <string name="message_tip_displaydetails">
+<![CDATA[
+	<h2>Voir les détails :</h2>
+	<p>Vous voyez une ou deux photos. En utilisant deux doigts, vous pouvez redimensionner ou déplacer la/les photo(s).</p>
+	<p>Il y a des curseurs par lesquels vous pouvez modifier la luminosité et le contraste, et il y a des boutons par lesquels vous pouvez afficher des topographies de l\'iris en tant que superpositions sur les photos. Ces contrôles peuvent être affichés ou masqués.</p>
+	<p>De plus, il y a des boutons pour éditer un commentaire pour une photo et pour enregistrer les détails de la vue.</p>
+]]>
+    </string>
+    <string name="message_tip_jpeg">
+<![CDATA[
+	<h2>Formats d\'image pris en charge :</h2>
+	<p>Cette application stocke des informations (comme la position de l\'iris ou des commentaires) directement dans les fichiers image JPG.</p>
+	<p>Cela a l\'avantage que toutes ces informations sont toujours disponibles si vous copiez les photos d\'un appareil à un autre.</p>
+	<p>Cependant, cela a pour conséquence que seul le format JPG est entièrement pris en charge par l\'application. Pour d\'autres formats d\'image, la plupart des fonctionnalités de l\'application ne sont pas disponibles.</p>
+]]>
+    </string>
+    <string name="message_tip_editcomment">
+<![CDATA[
+	<h2>Éditer le commentaire :</h2>
+	<p>Ici, vous pouvez ajouter un commentaire à la photo (comme les résultats de votre diagnostic oculaire).</p>
+	<p>Le commentaire sera enregistré dans le fichier JPG. Par conséquent, si vous copiez le fichier sur Windows, vous pouvez toujours voir et éditer le commentaire là-bas.</p>
+	<p>Remarque : L\'enregistrement ne fonctionne que sur les fichiers JPG.</p>
+]]>
+    </string>
+    <string name="message_tip_overlay_buttons">
+<![CDATA[
+	<h2>Superpositions de topographie de l\'iris :</h2>
+	<p>En appuyant sur les différents boutons numérotés, vous pouvez afficher différentes topographies de l\'iris sur votre photo.</p>
+	<p>En faisant un clic long sur un bouton, vous pouvez sélectionner une autre topographie de l\'iris à afficher par ce bouton.</p>
+	<p>Vous pouvez également changer la couleur de la superposition à l\'aide du bouton « couleur ». (La couleur par défaut peut être modifiée dans les paramètres.)</p>
+	<p>Le bouton « verrouiller » peut être utilisé pour déverrouiller ou verrouiller la position de l\'iris sur la photo. Le bouton à côté permet de modifier la taille et la position de la pupille.</p>
+	<p>Remarque : Dans la version d\'essai de l\'application, vous ne pouvez utiliser que les trois premiers types de topographie.</p>
+]]>
+    </string>
+    <string name="message_tip_overlay_guided">
+<![CDATA[
+	<h2>Positionnement de l\'iris et de la pupille :</h2>
+	<p>Par défaut, lors de la première pression sur le bouton de superposition, vous êtes guidé à travers la définition de la position de l\'iris et de la pupille, afin que les topographies de l\'iris puissent être correctement positionnées sur la photo.</p>
+	<p>Si vous ne souhaitez pas utiliser ce guide, vous pouvez le désactiver dans les paramètres (sous « Paramètres d\'affichage »).</p>
+	<p>Remarque : L\'enregistrement de la position de l\'iris ne fonctionne que sur les fichiers JPG.</p>
+]]>
+    </string>
+    <string name="message_tip_saveview">
+<![CDATA[
+	<h2>Enregistrer les détails de la vue :</h2>
+	<p>Ici, vous pouvez enregistrer la position dans laquelle vous regardez la photo des yeux, ou les réglages de luminosité/contraste, afin que ces réglages soient conservés lorsque vous regardez à nouveau la même photo.</p>
+	<p>Vous pouvez également réinitialiser ces réglages à nouveau par défaut.</p>
+	<p>Remarque : L\'enregistrement fonctionne uniquement sur les fichiers JPG.</p>
+]]>
+    </string>
+    <string name="message_tip_clarity">
+<![CDATA[
+	<h2>Affichage en pleine résolution :</h2>
+	<p>Avec ce bouton, vous pouvez afficher la partie actuellement affichée de l\'image en pleine résolution.</p>
+	<p>Cela peut également être automatisé dans les paramètres. Cependant, pour les appareils avec peu de mémoire, l\'affichage en pleine résolution peut entraîner des problèmes.</p>
+]]>
+    </string>
+    <string name="message_tip_external_flash">
+<![CDATA[
+	<h2>Utilisation du flash externe :</h2>
+	<p>Assurez-vous d\'utiliser le mode flash externe uniquement si votre flash LED externe est connecté à votre prise casque.</p>
+	<p>Pour déclencher le flash LED externe, le volume média doit être réglé sur la valeur maximale.</p>
+]]>
+    </string>
+    <string name="message_tip_external_flash_pref">
+<![CDATA[
+	<h2>Utilisation du flash externe :</h2>
+	<p>Chaque fois que vous utilisez la prise casque avec la caméra, il vous sera demandé d\'utiliser le flash LED externe.</p>
+	<p>Vous pouvez désactiver cela dans les paramètres de la caméra.</p>
+]]>
+    </string>
+
+</resources>

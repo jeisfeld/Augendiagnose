@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Iridology Unlocker</string>
+    <string name="text_warning">Avertissement</string>
+    <string name="text_message_missing_main_app">L\'application “Iridoloty Unlocker” ne peut pas fonctionner seule. Elle sert uniquement de clé de déverrouillage pour les applications “Diagnostic Oculaire” et “Miniris”. Veuillez installer l\'une de ces applications.</string>
+    <string name="button_install_eye_diagnosis">Installer “Diagnostic Oculaire”</string>
+    <string name="button_install_miniris">Installer “Miniris”</string>
+    <string name="text_thanks">Merci !</string>
+    <string name="text_message_unlimited_use">Merci d\'avoir acheté “Déverrouilleur d\'iridologie”. Vous avez maintenant une utilisation illimitée des applications “Diagnostic Oculaire” et “Miniris” sur cet appareil.</string>
+    <string name="button_ok">OK</string>
+    <string name="title_dialog_error">Erreur</string>
+    <string name="message_dialog_failed_to_open_google_play">Échec de l\'ouverture de Google Play.</string>
+
+</resources>

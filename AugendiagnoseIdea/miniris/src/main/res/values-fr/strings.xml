@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Miniris</string>
+    <string name="title_activity_camera">Caméra Miniris</string>
+    <string name="title_activity_list_folders_for_display">Galerie Miniris</string>
+    <string name="title_activity_organize_new_photos">Définir le nom et la date</string>
+    <string name="section_select_photos" />
+    <string name="menu_move_to_input_folder">Attribuer un nom différent</string>
+
+    <string name="message_dialog_confirm_need_file_permission">Cette application a besoin d\'une autorisation sur la caméra et le stockage pour prendre des images et les stocker. Veuillez fournir cet accès.</string>
+    <string name="message_dialog_confirm_need_camera_permission">Cette application a besoin d\'une autorisation sur la caméra et le stockage pour prendre des images et les stocker. Veuillez fournir cet accès.</string>
+
+</resources>
