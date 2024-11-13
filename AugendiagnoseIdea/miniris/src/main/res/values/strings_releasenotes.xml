@@ -73,6 +73,7 @@
         <item>1.4.6</item>
         <item>1.4.7</item>
         <item>1.4.8</item>
+        <item>1.4.9</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -134,6 +135,7 @@
         <item>Bugfixes. Adapted for Android 14.</item>
         <item>Bugfixes</item>
         <item>Translation into French. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>

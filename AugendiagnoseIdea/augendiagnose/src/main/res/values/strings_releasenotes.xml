@@ -135,6 +135,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>1.4.6</item>
         <item>1.4.7</item>
         <item>1.4.8</item>
+        <item>1.4.9</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version. Allows to organize photos into a target folder, and to display pairs of photos.</item>
@@ -236,6 +237,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes. Adapted for Android 14.</item>
         <item>Bugfixes</item>
         <item>Translation into French. Bugfixes</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
