@@ -70,19 +70,25 @@ public final class HtmlStringCreator {
 	 */
 	private static final String PT = "pt";
 
+	/**
+	 * Abbreviation of language French.
+	 */
+	private static final String FR = "fr";
+
 	static {
 		LANGUAGE_MAP.put(EN, "values");
 		LANGUAGE_MAP.put(DE, "values-de");
 		LANGUAGE_MAP.put(ES, "values-es");
 		LANGUAGE_MAP.put(PT, "values-pt");
+		LANGUAGE_MAP.put(FR, "values-fr");
 
 		PAGE_MAP.put("overview", "html_overview");
 		PAGE_MAP.put("settings", "html_settings");
 		PAGE_MAP.put("organize_photos", "html_organize_photos");
 		PAGE_MAP.put("display_photos", "html_display_photos");
 
-		APP_URL_MAP.put(AUGENDIAGNOSE, "http://localhost:8002");
-		APP_URL_MAP.put(MINIRIS, "http://localhost:8007");
+		APP_URL_MAP.put(AUGENDIAGNOSE, "http://127.0.0.1:8002");
+		APP_URL_MAP.put(MINIRIS, "http://127.0.0.1:8007");
 
 		APP_RESOURCE_FOLDER_MAP.put(AUGENDIAGNOSE, new File("../AugendiagnoseIdea/augendiagnose/src/main/res"));
 		APP_RESOURCE_FOLDER_MAP.put(MINIRIS, new File("../AugendiagnoseIdea/miniris/src/main/res"));
@@ -136,6 +142,9 @@ public final class HtmlStringCreator {
 		for (String htmlPage : PAGE_MAP.keySet()) {
 			String htmlFileContent = readHtml(language, app, htmlPage);
 			htmlFileContent = htmlFileContent.replaceAll("src=\"/drawable/", "src=\"../drawable/");
+			if (FR.equals(language)) {
+				htmlFileContent = htmlFileContent.replaceAll("([a-zA-Z])'", "$1\\\\'");
+			}
 			resourceFileContent = replaceStringResource(resourceFileContent, PAGE_MAP.get(htmlPage), htmlFileContent);
 		}
 
