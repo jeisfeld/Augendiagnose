@@ -12,7 +12,6 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -30,6 +29,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.components.OverlayPinchImageView;
@@ -98,7 +98,7 @@ public final class ImageUtil {
 			retrievedDate = DateUtil.parse(dateString, "yyyy:MM:dd HH:mm:ss");
 		}
 		catch (Exception e) {
-			Log.w(Application.TAG, e.toString() + " - Cannot retrieve EXIF date for " + path);
+			Log.w(Application.TAG, e + " - Cannot retrieve EXIF date for " + path);
 		}
 		if (retrievedDate == null) {
 			File f = new File(path);
@@ -213,6 +213,7 @@ public final class ImageUtil {
 	@Nullable
 	public static Bitmap getImageBitmap(@NonNull final String path, final int maxSize) {
 		Bitmap bitmap = null;
+		boolean needToAdjustRotation = true;
 
 		if (maxSize <= 0) {
 			bitmap = BitmapFactory.decodeFile(path);
@@ -221,6 +222,7 @@ public final class ImageUtil {
 
 			if (maxSize <= MediaStoreUtil.MINI_THUMB_SIZE) {
 				bitmap = MediaStoreUtil.getThumbnailFromPath(path, maxSize);
+				needToAdjustRotation = bitmap == null;
 			}
 
 			if (bitmap == null) {
@@ -267,7 +269,9 @@ public final class ImageUtil {
 
 		}
 
-		bitmap = rotateBitmap(bitmap, (short) getExifOrientation(path));
+		if (needToAdjustRotation) {
+			bitmap = rotateBitmap(bitmap, (short) getExifOrientation(path));
+		}
 
 		return bitmap;
 	}
@@ -498,7 +502,7 @@ public final class ImageUtil {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(file.getPath(), options);
-		return options.outWidth >= 0 - 1 && options.outHeight >= 0;
+		return options.outWidth >= 0 && options.outHeight >= 0;
 	}
 
 	/**
@@ -517,12 +521,7 @@ public final class ImageUtil {
 		if (!folder.exists() || !folder.isDirectory()) {
 			return fileNames;
 		}
-		File[] imageFiles = folder.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(final File file) {
-				return isImage(file, false);
-			}
-		});
+		File[] imageFiles = folder.listFiles(file -> isImage(file, false));
 		if (imageFiles == null) {
 			return fileNames;
 		}
