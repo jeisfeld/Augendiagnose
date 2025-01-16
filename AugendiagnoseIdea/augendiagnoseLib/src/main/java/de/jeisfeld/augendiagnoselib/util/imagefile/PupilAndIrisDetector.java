@@ -17,8 +17,6 @@ import java.util.Set;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Class that serves to detect the pupil and iris within an eye photo.
@@ -365,7 +363,6 @@ public final class PupilAndIrisDetector {
 						PupilAndIrisDetector detector = new PupilAndIrisDetector(ImageUtil.getImageBitmap(newImagePath, 0));
 						Log.v(Application.TAG, "Finished finding iris for " + newImagePath + ". Duration: "
 								+ ((System.currentTimeMillis() - timestamp) / 1000.0)); // MAGIC_NUMBER
-						TrackingUtil.sendTiming(Category.TIME_BACKGROUND, "Iris detection", null, System.currentTimeMillis() - timestamp);
 						// Retrieve image path - in case the file has moved.
 						newImagePath = FILES_IN_PROCESS2.get(imagePath);
 						JpegMetadata metadata = JpegSynchronizationUtil.getJpegMetadata(newImagePath);
@@ -375,15 +372,11 @@ public final class PupilAndIrisDetector {
 							detector.updateMetadata(metadata);
 							JpegSynchronizationUtil.storeJpegMetadata(newImagePath, metadata);
 						}
-
-						PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionsuccess);
-						TrackingUtil.sendEvent(Category.EVENT_USER, "Iris detection", "Success");
 					}
 				}
 				catch (Throwable e) {
 					Log.e(Application.TAG, "Failed to find iris and pupil position for file " + imagePath, e);
 					int errorCounter = PreferenceUtil.incrementCounter(R.string.key_statistics_countirisdetectionfailed);
-					TrackingUtil.sendEvent(Category.EVENT_USER, "Iris detection", "Failed");
 					int successCounter = PreferenceUtil.getSharedPreferenceInt(R.string.key_statistics_countirisdetectionsuccess, 0);
 					if (errorCounter > 2 && errorCounter > successCounter) {
 						// If Iris detection typically fails, then switch it off.

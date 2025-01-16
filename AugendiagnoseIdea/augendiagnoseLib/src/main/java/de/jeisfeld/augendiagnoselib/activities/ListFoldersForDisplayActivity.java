@@ -20,8 +20,6 @@ import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.ImageSelectionAndDisplayHandler;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Activity to display the list of subfolders of the eye photo folder with the goal to display them after selection.
@@ -97,11 +95,6 @@ public class ListFoldersForDisplayActivity extends ListFoldersBaseActivity imple
 
 				DialogUtil.displayTip(this, R.string.message_tip_displaynames, R.string.key_tip_displaynames);
 			}
-		}
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countlistnames);
-			TrackingUtil.sendEvent(Category.EVENT_USER, "Display", "List names");
 		}
 
 		if (SystemUtil.isTablet()) {

@@ -10,7 +10,6 @@ import de.jeisfeld.augendiagnoselib.components.ContextMenuReferenceHolder;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 import de.jeisfeld.augendiagnoselib.fragments.EditCommentFragment;
 import de.jeisfeld.augendiagnoselib.util.AutoKeyboardLayoutUtility.ActivityWithExplicitLayoutTrigger;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
 
 /**
  * Base class for displaying images.
@@ -78,7 +77,6 @@ public abstract class DisplayImageActivity extends BaseFragmentActivity implemen
 	@Override
 	protected final void onResume() {
 		super.onResume();
-		TrackingUtil.sendScreen(this);
 	}
 
 	/*

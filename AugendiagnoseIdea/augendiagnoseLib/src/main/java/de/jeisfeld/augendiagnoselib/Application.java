@@ -84,8 +84,6 @@ public class Application extends android.app.Application {
 			PreferenceUtil.setSharedPreferenceLong(R.string.key_statistics_firststarttime, System.currentTimeMillis());
 		}
 
-		PreferenceUtil.incrementCounter(R.string.key_statistics_countstarts);
-		PreferenceUtil.sendStatistics();
 	}
 
 	/**

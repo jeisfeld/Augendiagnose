@@ -13,7 +13,6 @@ import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragmentHalfscreen;
 import de.jeisfeld.augendiagnoselib.fragments.EditCommentFragment;
 import de.jeisfeld.augendiagnoselib.util.AutoKeyboardLayoutUtility;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 
 /**
@@ -142,10 +141,6 @@ public class DisplayTwoActivity extends DisplayImageActivity {
 
 		// ensure that layout is refreshed if view gets resized
 		AutoKeyboardLayoutUtility.assistActivity(this);
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countdisplay);
-		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaydetails, R.string.key_tip_displaydetails);
 	}

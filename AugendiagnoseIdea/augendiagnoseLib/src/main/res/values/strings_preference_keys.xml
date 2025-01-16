@@ -62,17 +62,6 @@
     <string name="key_internal_saf_migration_status" translatable="false">saf_migration_status</string>
     <string name="key_statistics_initialversion" translatable="false">statistics_initialversion</string>
     <string name="key_statistics_firststarttime" translatable="false">statistics_firststarttime</string>
-    <string name="key_statistics_countstarts" translatable="false">statistics_countstarts</string>
-    <string name="key_statistics_countorganizestart" translatable="false">statistics_countorganizestart</string>
-    <string name="key_statistics_countorganizeend" translatable="false">statistics_countorganizeend</string>
-    <string name="key_statistics_countlistnames" translatable="false">statistics_countlistnames</string>
-    <string name="key_statistics_countlistpictures" translatable="false">statistics_countlistpictures</string>
-    <string name="key_statistics_countdisplay" translatable="false">statistics_countdisplay</string>
-    <string name="key_statistics_countlock" translatable="false">statistics_countlock</string>
-    <string name="key_statistics_countcomment" translatable="false">statistics_countcomment</string>
-    <string name="key_statistics_countsave" translatable="false">statistics_countsave</string>
-    <string name="key_statistics_counthelp" translatable="false">statistics_counthelp</string>
-    <string name="key_statistics_countsettings" translatable="false">statistics_countsettings</string>
     <string name="key_statistics_countirisdetectionsuccess" translatable="false">statistics_countirisdetectionsuccess</string>
     <string name="key_statistics_countirisdetectionfailed" translatable="false">statistics_countirisdetectionfailed</string>
 

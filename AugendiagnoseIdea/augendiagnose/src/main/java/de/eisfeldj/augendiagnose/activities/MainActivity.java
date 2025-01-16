@@ -13,6 +13,8 @@ import android.widget.Button;
 import java.io.File;
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import de.eisfeldj.augendiagnose.R;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.activities.CameraActivity;
@@ -27,9 +29,6 @@ import de.jeisfeld.augendiagnoselib.util.SystemUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
 import de.jeisfeld.augendiagnoselib.util.imagefile.MediaStoreUtil;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 /**
  * Main activity of the application.
@@ -92,9 +91,6 @@ public class MainActivity extends StandardActivity {
 			buttonTakePhotos.setVisibility(View.GONE);
 		}
 
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countmain);
-		}
 	}
 
 	@Override

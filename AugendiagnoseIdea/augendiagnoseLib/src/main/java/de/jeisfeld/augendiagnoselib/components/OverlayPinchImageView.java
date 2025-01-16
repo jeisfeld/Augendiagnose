@@ -26,9 +26,6 @@ import androidx.annotation.Nullable;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
 import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment.OverlayStatus;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.ImageUtil;
@@ -629,9 +626,6 @@ public class OverlayPinchImageView extends PinchImageView {
 
 				mEyePhoto.storeImageMetadata(mMetadata);
 				mHasOverlayPosition = true;
-
-				PreferenceUtil.incrementCounter(R.string.key_statistics_countlock);
-				TrackingUtil.sendEvent(Category.EVENT_USER, "Lock iris position", null);
 			}
 		}
 
@@ -1640,9 +1634,6 @@ public class OverlayPinchImageView extends PinchImageView {
 		if (mInitialized && mMetadata != null) {
 			mMetadata.setComment(comment);
 			mEyePhoto.storeImageMetadata(mMetadata);
-
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countcomment);
-			TrackingUtil.sendEvent(Category.EVENT_USER, "Edit comment", null);
 		}
 	}
 
@@ -1858,7 +1849,7 @@ public class OverlayPinchImageView extends PinchImageView {
 					fm.beginTransaction().add(fragment, TAG + index).commit();
 				}
 				catch (IllegalStateException e) {
-					TrackingUtil.sendException("opv1", e);
+					// ignore
 				}
 			}
 			return fragment;

@@ -57,8 +57,6 @@ import de.jeisfeld.augendiagnoselib.components.colorpicker.ColorPickerSwatch.OnC
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadata;
 import de.jeisfeld.augendiagnoselib.util.imagefile.JpegMetadataUtil;
@@ -242,11 +240,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	private PupilButtonStatus mPupilButtonStatus;
 
-	/**
-	 * Timestamp for measuring the tracking duration.
-	 */
-	private long mTrackingTimestamp = 0;
-
 	static {
 		TypedArray overlayButtonResources = Application.getAppContext().getResources().obtainTypedArray(R.array.overlay_buttons);
 		OVERLAY_BUTTON_COUNT = Math.min(overlayButtonResources.length(), OverlayPinchImageView.OVERLAY_COUNT) - 1;
@@ -287,13 +280,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	@Override
 	public final void onResume() {
 		super.onResume();
-		mTrackingTimestamp = System.currentTimeMillis();
 	}
 
 	@Override
 	public final void onPause() {
 		super.onPause();
-		TrackingUtil.sendTiming(Category.TIME_USAGE, "View Images", null, System.currentTimeMillis() - mTrackingTimestamp);
 	}
 
 	/*
@@ -792,7 +783,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			mImageView.triggerOverlay(overlayPosition, isChecked ? PinchMode.OVERLAY : PinchMode.ALL);
 			if (isChecked) {
 				String overlayName = getResources().getStringArray(R.array.overlay_names)[overlayPosition];
-				TrackingUtil.sendEvent(Category.EVENT_USER, "Display overlay", overlayName);
 			}
 		}
 

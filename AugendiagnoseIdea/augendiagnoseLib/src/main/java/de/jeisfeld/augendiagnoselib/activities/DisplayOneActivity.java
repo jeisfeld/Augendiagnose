@@ -12,7 +12,6 @@ import de.jeisfeld.augendiagnoselib.fragments.DisplayImageFragment;
 import de.jeisfeld.augendiagnoselib.fragments.EditCommentFragment;
 import de.jeisfeld.augendiagnoselib.util.AutoKeyboardLayoutUtility;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 
 /**
  * Variant of DisplayOneFragment that includes overlay handling.
@@ -93,10 +92,6 @@ public class DisplayOneActivity extends DisplayImageActivity {
 
 		// ensure that layout is refreshed if view gets resized
 		AutoKeyboardLayoutUtility.assistActivity(this);
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countdisplay);
-		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaydetails, R.string.key_tip_displaydetails);
 	}

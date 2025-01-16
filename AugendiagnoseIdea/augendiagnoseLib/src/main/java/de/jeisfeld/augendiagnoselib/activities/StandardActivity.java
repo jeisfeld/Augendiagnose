@@ -37,8 +37,6 @@ import de.jeisfeld.augendiagnoselib.util.GoogleBillingHelper;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.ReleaseNotesUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
 
 /**
@@ -184,7 +182,6 @@ public abstract class StandardActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		TrackingUtil.sendScreen(this);
 	}
 
 	/*
@@ -493,7 +490,6 @@ public abstract class StandardActivity extends BaseActivity {
 	 * Trigger the app rating on Google Play.
 	 */
 	private void triggerRating() {
-		TrackingUtil.sendEvent(Category.EVENT_USER, "Rating", "Pressed icon");
 		DialogUtil.displayConfirmationMessage(this, new ConfirmDialogListener() {
 			/**
 			 * The serial version UID.
@@ -502,7 +498,6 @@ public abstract class StandardActivity extends BaseActivity {
 
 			@Override
 			public void onDialogPositiveClick(final DialogFragment dialog) {
-				TrackingUtil.sendEvent(Category.EVENT_USER, "Rating", "Go to rating");
 				startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())), REQUEST_CODE_RATING);
 			}
 

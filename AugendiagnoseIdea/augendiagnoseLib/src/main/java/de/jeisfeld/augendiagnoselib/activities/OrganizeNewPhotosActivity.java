@@ -43,8 +43,6 @@ import de.jeisfeld.augendiagnoselib.util.DateUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil.ConfirmDialogFragment.ConfirmDialogListener;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.TwoImageSelectionHandler;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
@@ -248,11 +246,6 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 
 		if (getString(R.string.section_select_photos).length() == 0) {
 			findViewById(R.id.textViewSelectPhotos).setVisibility(View.GONE);
-		}
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizestart);
-			TrackingUtil.sendEvent(Category.EVENT_USER, "Organize", "Start");
 		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_organizephotos, R.string.key_tip_organizephotos);
@@ -705,9 +698,6 @@ public class OrganizeNewPhotosActivity extends StandardActivity {
 		// Store the name so that it may be opened automatically
 		PreferenceUtil.setSharedPreferenceString(R.string.key_internal_last_name, name);
 		PreferenceUtil.setSharedPreferenceBoolean(R.string.key_internal_organized_new_photo, true);
-
-		PreferenceUtil.incrementCounter(R.string.key_statistics_countorganizeend);
-		TrackingUtil.sendEvent(Category.EVENT_USER, "Organize", "End");
 
 		switch (mNextAction) {
 		case NEXT_IMAGES:

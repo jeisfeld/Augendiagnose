@@ -24,8 +24,6 @@ import de.jeisfeld.augendiagnoselib.components.PinchImageView;
 import de.jeisfeld.augendiagnoselib.fragments.SettingsFragment;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Activity to display the settings page.
@@ -79,17 +77,7 @@ public class SettingsActivity extends BasePreferenceActivity {
 
 				getFragmentManager().beginTransaction().replace(android.R.id.content, mFragment, FRAGMENT_TAG).commit();
 				getFragmentManager().executePendingTransactions();
-
-				if (savedInstanceState == null) {
-					PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
-					TrackingUtil.sendEvent(Category.EVENT_USER, "Open Settings", null);
-				}
 			}
-		}
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countsettings);
-			TrackingUtil.sendEvent(Category.EVENT_USER, "Open Settings", null);
 		}
 
 		String[] activitiesWithHomeEnablement = getResources().getStringArray(R.array.activities_with_home_enablement);
@@ -101,7 +89,6 @@ public class SettingsActivity extends BasePreferenceActivity {
 	@Override
 	protected final void onResume() {
 		super.onResume();
-		TrackingUtil.sendScreen(this);
 	}
 
 	@Override

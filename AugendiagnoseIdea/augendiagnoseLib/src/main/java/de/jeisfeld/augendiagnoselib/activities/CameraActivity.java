@@ -67,8 +67,6 @@ import de.jeisfeld.augendiagnoselib.util.OrientationManager;
 import de.jeisfeld.augendiagnoselib.util.OrientationManager.ScreenOrientation;
 import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
 import de.jeisfeld.augendiagnoselib.util.SystemUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto;
 import de.jeisfeld.augendiagnoselib.util.imagefile.EyePhoto.RightLeft;
 import de.jeisfeld.augendiagnoselib.util.imagefile.FileUtil;
@@ -238,11 +236,6 @@ public class CameraActivity extends StandardActivity {
 	 */
 	@Nullable
 	private CameraHandler mCameraHandler;
-
-	/**
-	 * Timestamp for measuring the tracking duration.
-	 */
-	private long mTrackingTimestamp = 0;
 
 	/**
 	 * The receiver handling headset plugin.
@@ -439,7 +432,6 @@ public class CameraActivity extends StandardActivity {
 		if (mCameraHandler != null) {
 			mCameraHandler.startPreview();
 		}
-		mTrackingTimestamp = System.currentTimeMillis();
 
 		registerHeadsetReceiver();
 	}
@@ -455,7 +447,6 @@ public class CameraActivity extends StandardActivity {
 			mCameraHandler.stopPreview();
 		}
 		super.onPause();
-		TrackingUtil.sendTiming(Category.TIME_USAGE, CAMERA, null, System.currentTimeMillis() - mTrackingTimestamp);
 	}
 
 	@Override
@@ -465,7 +456,6 @@ public class CameraActivity extends StandardActivity {
 				&& captureButton.isEnabled() && mCurrentFlashlightMode != FlashMode.EXT) {
 			captureButton.setEnabled(false);
 			mCameraHandler.takePicture();
-			TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
 			return true;
 		}
 		else {
@@ -489,7 +479,6 @@ public class CameraActivity extends StandardActivity {
 					// get an image from the camera
 					captureButton.setEnabled(false);
 					mCameraHandler.takePicture();
-					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Capture");
 				});
 
 		// Add listeners to the accept/decline button
@@ -531,7 +520,6 @@ public class CameraActivity extends StandardActivity {
 							setAction(FINISH_CAMERA, null);
 						}
 					}
-					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Accept");
 				});
 
 		Button declineButton = findViewById(R.id.buttonCameraDecline);
@@ -567,7 +555,6 @@ public class CameraActivity extends StandardActivity {
 
 						setAction(TAKE_PHOTO, mCurrentRightLeft);
 					}
-					TrackingUtil.sendEvent(Category.EVENT_USER, CAMERA, "Decline");
 				});
 
 		Button returnButton = findViewById(R.id.buttonCameraReturn);
@@ -838,7 +825,6 @@ public class CameraActivity extends StandardActivity {
 					configureFlashlightButton(mFlashlightModes);
 				}
 				catch (Exception e) {
-					TrackingUtil.sendException("hea1", e);
 					return;
 				}
 				if (plugged && mCurrentFlashlightMode != FlashMode.EXT) {
@@ -1306,10 +1292,6 @@ public class CameraActivity extends StandardActivity {
 			}
 
 			DialogUtil.displayError(CameraActivity.this, R.string.message_dialog_failed_to_access_camera, true, messageString);
-
-			if (e != null) {
-				TrackingUtil.sendException(shortMessage, e);
-			}
 		}
 
 		@Override

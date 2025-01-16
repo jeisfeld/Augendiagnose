@@ -11,9 +11,6 @@ import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameBaseFragment;
 import de.jeisfeld.augendiagnoselib.fragments.ListPicturesForNameFragment;
 import de.jeisfeld.augendiagnoselib.util.DialogUtil;
 import de.jeisfeld.augendiagnoselib.util.ImageSelectionAndDisplayHandler;
-import de.jeisfeld.augendiagnoselib.util.PreferenceUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil;
-import de.jeisfeld.augendiagnoselib.util.TrackingUtil.Category;
 
 /**
  * Activity to display the pictures in an eye photo folder (in pairs) Either pictures from this folder can be displayed
@@ -50,11 +47,6 @@ public class ListPicturesForNameActivity extends ListPicturesForNameBaseActivity
 
 		// Initialize the handler which manages the clicks
 		ImageSelectionAndDisplayHandler.getInstance().setActivity(this);
-
-		if (savedInstanceState == null) {
-			PreferenceUtil.incrementCounter(R.string.key_statistics_countlistpictures);
-			TrackingUtil.sendEvent(Category.EVENT_USER, "Display", "List pictures");
-		}
 
 		DialogUtil.displayTip(this, R.string.message_tip_displaypictures, R.string.key_tip_displaypictures);
 	}
