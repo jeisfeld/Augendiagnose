@@ -94,13 +94,6 @@
 		The app &ldquo;Miniris&rdquo; uses the camera for taking eye photos. The app does not store, collect or send any personal data of any kind.
 		All pictures taken by the app are stored only locally on your device.
 	</p>
-
-<p>
-	The app also uses Google Analytics to collect statistical information about app errors and app usage. This has the
-	purpose to get information for further improvements of the app. See the
-	<a href="https://support.google.com/analytics/answer/6004245?hl=en" target="_blank">Google Analytics Privacy Policy</a>
-	for more details.
-</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">

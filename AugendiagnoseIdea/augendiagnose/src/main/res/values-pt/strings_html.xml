@@ -98,14 +98,6 @@
 		coleta ou envia dados pessoais. Todas as fotografias tiradas pela aplicação são armazenadas apenas localmente 
 		no dispositivo.
 	</p>
-
-<p>
-	O aplicativo também usa o Google Analytics para coletar informações estatísticas sobre erros e uso do aplicativo. Isso
-	é com o objetivo de obter informações para melhorias no aplicativo. Consulte a
-	<a href="https://support.google.com/analytics/answer/6004245?hl=pt" target="_blank">Política de Privacidade do Google
-		Analytics </a>
-	para mais detalhes.
-</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
@@ -283,7 +275,7 @@ O aplicativo permite as seguintes configurações:
 		<tr>
 		<td width="30%" valign="top">Remover anúncios (somente para usuários de versões anteriores)</td>
 		<td width="70%" valign="top">Aquí usted puede desactivar todos los anuncios (actualmente sólo en los Estados Unidos).
-			Esta función se puede activar a través de una donación o mediante clave de usuario.</td>
+			Esta función se puede activar a través de una donación o mediante clave de usuário.</td>
 	</tr>
 		<tr>
 		<td width="30%" valign="top">Entre em contato com o desenvolvedor</td>

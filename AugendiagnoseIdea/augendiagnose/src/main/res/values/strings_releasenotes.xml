@@ -237,7 +237,7 @@ when using the app for the first time with a new device or with a new camera. Pl
         <item>Bugfixes. Adapted for Android 14.</item>
         <item>Bugfixes</item>
         <item>Translation into French. Bugfixes</item>
-        <item>Bugfixes</item>
+        <item>Added two new iris overlays. Bugfixes</item>
     </string-array>
 
 </resources>

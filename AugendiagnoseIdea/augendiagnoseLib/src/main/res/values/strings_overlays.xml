@@ -12,12 +12,14 @@
         <item>@drawable/overlay_topo_combined_graphical_l</item>
         <item>@drawable/overlay_topo_jensen_l</item>
         <item>@drawable/overlay_topo_rayid_l</item>
-        <item>@drawable/overlay_topo_zupan_l</item>
+        <item>@drawable/overlay_topo_raid_l</item>
         <item>@drawable/overlay_topo_rizzi_l</item>
-        <item>@drawable/overlay_topo_deck_l</item>
+        <item>@drawable/overlay_topo_zupan_l</item>
         <item>@drawable/overlay_topo_theegarten_l</item>
         <item>@drawable/overlay_topo_rayid_numeric_l</item>
         <item>@drawable/overlay_topo_jausas_l</item>
+        <item>@drawable/overlay_topo_deck_l</item>
+        <item>@drawable/overlay_topo_uterine</item>
         <item>@drawable/overlay_pupil</item>
     </array>
     <array name="overlays_right">
@@ -26,12 +28,14 @@
         <item>@drawable/overlay_topo_combined_graphical_r</item>
         <item>@drawable/overlay_topo_jensen_r</item>
         <item>@drawable/overlay_topo_rayid_r</item>
-        <item>@drawable/overlay_topo_zupan_r</item>
+        <item>@drawable/overlay_topo_raid_r</item>
         <item>@drawable/overlay_topo_rizzi_r</item>
-        <item>@drawable/overlay_topo_deck_r</item>
+        <item>@drawable/overlay_topo_zupan_r</item>
         <item>@drawable/overlay_topo_theegarten_r</item>
         <item>@drawable/overlay_topo_rayid_numeric_r</item>
         <item>@drawable/overlay_topo_jausas_r</item>
+        <item>@drawable/overlay_topo_deck_r</item>
+        <item>@drawable/overlay_topo_uterine</item>
         <item>@drawable/overlay_pupil</item>
     </array>
 
@@ -41,12 +45,14 @@
         <item>Combined graphical map</item>
         <item>Bernard Jensen map</item>
         <item>Rayid map textual</item>
-        <item>Zupan map (German)</item>
+        <item>Raid map</item>
         <item>Siegfried Rizzi map (Italian)</item>
-        <item>Josef Deck map (German)</item>
+        <item>Zupan map (German)</item>
         <item>Werner Theegarten map (German)</item>
         <item>Rayid map numeric</item>
         <item>Jausas map (French)</item>
+        <item>Josef Deck map (German)</item>
+        <item>Uterine map</item>
         <item>Pupil circle</item>
     </string-array>
     <string-array name="overlay_pupil_sizes" translatable="false">
@@ -55,12 +61,14 @@
         <item>0.28</item>
         <item>0.21</item>
         <item>0.24</item>
-        <item>0.24</item>
+        <item>0.185</item>
         <item>0.21</item>
         <item>0.24</item>
         <item>0.16</item>
         <item>0.24</item>
         <item>0.23</item>
+        <item>0.24</item>
+        <item>0.265</item>
         <item>0</item>
     </string-array>
 
@@ -68,6 +76,8 @@
         <item>1</item>
         <item>1</item>
         <item>0</item>
+        <item>1</item>
+        <item>1</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>

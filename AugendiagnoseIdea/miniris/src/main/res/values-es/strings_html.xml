@@ -93,14 +93,6 @@
 		La aplicación no almacena, recopila ni envía ningún tipo de datos personales.
 		Todas las fotografías tomadas por la aplicación se almacenan sólo localmente en el dispositivo.
 	</p>
-
-<p>
-	La aplicación también utiliza Google Analytics para recopilar información estadística sobre errores y uso de la
-	aplicación. Esto tiene el propósito de obtener información para mejoras de la aplicación. Vea el
-	<a href="https://support.google.com/analytics/answer/6004245?hl=es" target="_blank">Política de privacidad de Google
-		Analytics</a>
-	para más detalles.
-</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">

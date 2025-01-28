@@ -103,15 +103,6 @@
 <p>
     L\'application «Diagnostic oculaire» utilise la caméra pour prendre des photos des yeux. L\'application ne stocke, ne collecte ni n\'envoie aucune donnée personnelle de quelque nature que ce soit. Toutes les photos prises par l\'application sont stockées uniquement localement sur votre appareil.
 </p>
-
-<p>
-	L\'application utilise également Google Analytics pour collecter des informations statistiques sur les erreurs de
-	l\'application et son utilisation. Cela a pour but d\'obtenir des informations pour de futures améliorations de
-	l\'application. Consultez la
-	<a href="https://support.google.com/analytics/answer/6004245?hl=fr" target="_blank">Politique de confidentialité de
-		Google Analytics</a>
-	pour plus de détails.
-</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">

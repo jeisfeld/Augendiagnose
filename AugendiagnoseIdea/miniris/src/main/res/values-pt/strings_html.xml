@@ -93,14 +93,6 @@
 		coleta ou envia dados pessoais. Todas as fotografias tiradas pela aplicação são armazenadas apenas localmente 
 		no dispositivo.
 	</p>
-
-<p>
-	O aplicativo também usa o Google Analytics para coletar informações estatísticas sobre erros e uso do aplicativo. Isso
-	é com o objetivo de obter informações para melhorias no aplicativo. Consulte a
-	<a href="https://support.google.com/analytics/answer/6004245?hl=pt" target="_blank">Política de Privacidade do Google
-		Analytics </a>
-	para mais detalhes.
-</p>
 ]]>
     </string>
     <string name="html_settings" formatted="false">
