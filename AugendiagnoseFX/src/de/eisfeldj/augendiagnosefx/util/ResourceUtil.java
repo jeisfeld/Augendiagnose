@@ -73,7 +73,7 @@ public final class ResourceUtil {
 	 * @return The image object.
 	 */
 	public static Image getImage(final String name) {
-		return new Image(ClassLoader.getSystemResourceAsStream("img/" + name));
+		return new Image(ClassLoader.getSystemResourceAsStream("/img/" + name));
 	}
 
 }

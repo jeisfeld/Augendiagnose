@@ -101,7 +101,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				ToggleButton id mBtnOverlayCircle {
 					graphic : ImageView {
 						image : Image {
-							url : location "img/wheel.png"
+							url : location "/img/wheel.png"
 						}
 					},
 					styleClass : "toggleOverlay",
@@ -232,7 +232,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod btnClarityPressed,
 					graphic : ImageView {
 						image : Image {
-							url : location "img/clarity.png"
+							url : location "/img/clarity.png"
 						}
 					},
 					toggleGroup : idref overlayGroup
@@ -244,7 +244,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 					onAction : controllermethod displayInFullWindow,
 					graphic : ImageView {
 						image : Image {
-							url : location "img/fullscreen.png"
+							url : location "/img/fullscreen.png"
 						}
 					}
 				}
@@ -254,7 +254,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static rowIndex : 3,
 				static halignment : "CENTER",
 				image : Image {
-					url : location "img/color_temperature.png"
+					url : location "/img/color_temperature.png"
 				},
 				pickOnBounds : true,
 				onMousePressed : controllermethod showOriginalSaturation,
@@ -273,7 +273,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static rowIndex : 3,
 				static halignment : "CENTER",
 				image : Image {
-					url : location "img/saturation.png"
+					url : location "/img/saturation.png"
 				},
 				pickOnBounds : true,
 				onMousePressed : controllermethod showOriginalSaturation,
@@ -292,7 +292,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static rowIndex : 1,
 				static halignment : "CENTER",
 				image : Image {
-					url : location "img/brightness.png"
+					url : location "/img/brightness.png"
 				},
 				pickOnBounds : true,
 				onMousePressed : controllermethod showOriginalColors,
@@ -311,7 +311,7 @@ component DisplayImage controlledby DisplayImageController resourcefile "../bund
 				static rowIndex : 1,
 				static halignment : "CENTER",
 				image : Image {
-					url : location "img/contrast.png"
+					url : location "/img/contrast.png"
 				},
 				pickOnBounds : true,
 				onMousePressed : controllermethod showOriginalColors,

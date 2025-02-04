@@ -47,25 +47,25 @@
 	<GridPane fx:id="mOverlayPane" hgap="5" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="2"> 
 		<ImageView pickOnBounds="true" onMousePressed="#showOriginalSaturation" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
-				<Image url="@img/color_temperature.png"/> 
+				<Image url="@/img/color_temperature.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderColorTemperature" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<ImageView pickOnBounds="true" onMousePressed="#showOriginalSaturation" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 			<image>
-				<Image url="@img/saturation.png"/> 
+				<Image url="@/img/saturation.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderSaturation" orientation="HORIZONTAL" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<ImageView pickOnBounds="true" onMousePressed="#showOriginalColors" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"> 
 			<image>
-				<Image url="@img/brightness.png"/> 
+				<Image url="@/img/brightness.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderBrightness" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
 		<ImageView pickOnBounds="true" onMousePressed="#showOriginalColors" onMouseReleased="#showSlidebarColors" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"> 
 			<image>
-				<Image url="@img/contrast.png"/> 
+				<Image url="@/img/contrast.png"/> 
 			</image>
 		</ImageView>
 		<Slider fx:id="mSliderContrast" orientation="HORIZONTAL" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="SOMETIMES" GridPane.hgrow="SOMETIMES"/> 
@@ -75,7 +75,7 @@
 				<graphic>
 					<ImageView> 
 						<image>
-							<Image url="@img/wheel.png"/> 
+							<Image url="@/img/wheel.png"/> 
 						</image>
 					</ImageView>
 				</graphic>
@@ -128,7 +128,7 @@
 				<graphic>
 					<ImageView> 
 						<image>
-							<Image url="@img/clarity.png"/> 
+							<Image url="@/img/clarity.png"/> 
 						</image>
 					</ImageView>
 				</graphic>
@@ -139,7 +139,7 @@
 				<graphic>
 					<ImageView> 
 						<image>
-							<Image url="@img/fullscreen.png"/> 
+							<Image url="@/img/fullscreen.png"/> 
 						</image>
 					</ImageView>
 				</graphic>

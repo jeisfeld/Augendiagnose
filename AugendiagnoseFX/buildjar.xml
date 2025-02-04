@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project AugendiagnoseFX with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR file Export Wizard-->
+    <!--ANT 1.7 is required-->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="D:/Jörg/Eclipse/Android"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/build/jar"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/AugendiagnoseFX.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="de.eisfeldj.augendiagnosefx.Application"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ org.eclipse.fx.ide.css.jfx8_3.8.0.202204150904.jar xmpcore.jar annotations.jar commons-lang3-3.3.2.jar javafx.base.jar javafx.controls.jar javafx.fxml.jar javafx.graphics.jar javafx.media.jar javafx.swing.jar javafx.web.jar javafx-swt.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${dir.buildfile}/bin"/>
+            <zipfileset dir="C:/Transferrable/eclipse/plugins" includes="org.eclipse.fx.ide.css.jfx8_3.8.0.202204150904.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="xmpcore.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="annotations.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="commons-lang3-3.3.2.jar"/>
+        </jar>
+    </target>
+</project>

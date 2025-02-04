@@ -97,7 +97,7 @@ public class Application extends javafx.application.Application {
 
 		primaryStage.setScene(mScene);
 		primaryStage.setMaximized(PreferenceUtil.getPreferenceBoolean(KEY_WINDOW_MAXIMIZED));
-		primaryStage.getIcons().add(new Image("img/Augendiagnose.png"));
+		primaryStage.getIcons().add(new Image("/img/Augendiagnose.png"));
 		primaryStage.show();
 
 		FxmlUtil.displaySubpage(FxmlConstants.FXML_DISPLAY_PHOTOS, 0, false);

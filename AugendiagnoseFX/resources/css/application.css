@@ -48,19 +48,19 @@
 }
 
 .pane-button {
-    -fx-background-image: url('../img/twopane.png');
+    -fx-background-image: url('/img/twopane.png');
 }
 
 .pane-button:selected {
-    -fx-background-image: url('../img/twopane_selected.png');
+    -fx-background-image: url('/img/twopane_selected.png');
 }
 
 .comment-button {
-    -fx-background-image: url('../img/comment.png');
+    -fx-background-image: url('/img/comment.png');
 }
 
 .comment-button:selected {
-    -fx-background-image: url('../img/comment_selected.png');
+    -fx-background-image: url('/img/comment_selected.png');
 }
 
 .context-menu {

@@ -1,6 +1,7 @@
 package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.IOException;
+import java.net.URL;
 
 import de.eisfeldj.augendiagnosefx.controller.BaseController;
 import de.eisfeldj.augendiagnosefx.controller.Controller;
@@ -41,8 +42,9 @@ public final class FxmlUtil {
 		fxmlLoader.setResources(ResourceUtil.STRINGS_BUNDLE);
 		Parent root;
 		try {
-			root = fxmlLoader.load(ClassLoader.getSystemResource("fxml/" + fxmlFile).openStream());
-			root.getStylesheets().add(ClassLoader.getSystemResource("css/application.css").toExternalForm());
+			URL file = FxmlUtil.class.getResource("/fxml/" + fxmlFile);
+			root = fxmlLoader.load(file.openStream());
+			root.getStylesheets().add(FxmlUtil.class.getResource("/css/application.css").toExternalForm());
 
 			return fxmlLoader.getController();
 		}

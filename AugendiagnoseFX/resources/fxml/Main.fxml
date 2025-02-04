@@ -22,7 +22,7 @@
 			<HBox fx:id="mMenuButtons" maxWidth="0" spacing="10"> 
 				<ImageView fx:id="mImageSave" visible="false"> 
 					<image>
-						<Image url="@img/save.png"/> 
+						<Image url="@/img/save.png"/> 
 					</image>
 				</ImageView>
 				<ToggleButton fx:id="mCommentButton" styleClass="menu-toggle-button, comment-button" visible="false" onAction="#toggleCommentPane"/> 
@@ -31,7 +31,7 @@
 					<graphic>
 						<ImageView> 
 							<image>
-								<Image url="@img/close.png"/> 
+								<Image url="@/img/close.png"/> 
 							</image>
 						</ImageView>
 					</graphic>

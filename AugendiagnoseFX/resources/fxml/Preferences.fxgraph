@@ -50,7 +50,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				styleClass : "imageButton",
 				graphic : ImageView {
 					image : Image {
-						url : location "img/folder.png"
+						url : location "/img/folder.png"
 					}
 				},
 				onAction : controllermethod selectDirectory

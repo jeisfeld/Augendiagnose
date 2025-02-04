@@ -22,7 +22,7 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 					spacing : 10,
 					ImageView id mImageSave {
 						image : Image {
-							url : location "img/save.png"
+							url : location "/img/save.png"
 						},
 						visible : false
 					},
@@ -41,7 +41,7 @@ component Main controlledby MainController resourcefile "../bundles/Strings.prop
 						visible : false,
 						graphic : ImageView {
 							image : Image {
-								url : location "img/close.png"
+								url : location "/img/close.png"
 							}
 						}
 					}

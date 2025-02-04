@@ -34,7 +34,7 @@
 			<graphic>
 				<ImageView> 
 					<image>
-						<Image url="@img/folder.png"/> 
+						<Image url="@/img/folder.png"/> 
 					</image>
 				</ImageView>
 			</graphic>

@@ -2,7 +2,7 @@ package de.eisfeldj.augendiagnosefx.fxelements;
 
 import java.util.List;
 
-import com.sun.javafx.scene.NodeEventDispatcher;
+//import com.sun.javafx.scene.NodeEventDispatcher;
 
 import de.eisfeldj.augendiagnosefx.util.DialogUtil;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
@@ -138,7 +138,7 @@ public class SizableImageView extends ScrollPane {
 		setHbarPolicy(ScrollBarPolicy.NEVER);
 		setVbarPolicy(ScrollBarPolicy.NEVER);
 
-		final NodeEventDispatcher defaultEventDispatcher = (NodeEventDispatcher) getEventDispatcher();
+		final EventDispatcher defaultEventDispatcher = getEventDispatcher();
 
 		setEventDispatcher(new EventDispatcher() {
 
