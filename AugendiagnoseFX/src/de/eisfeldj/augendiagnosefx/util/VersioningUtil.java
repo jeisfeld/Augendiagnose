@@ -14,8 +14,6 @@ import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import javafx.application.Platform;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
@@ -56,8 +54,6 @@ public final class VersioningUtil {
 	 *
 	 * @return The latest version info.
 	 */
-	@SuppressFBWarnings(value = "NP_DEREFERENCE_OF_READLINE_VALUE",
-			justification = "Generically catching all exceptions")
 	public static VersionInfo getLatestVersionInfo() {
 		try {
 			URLConnection connection = new URL(CURRENT_VERSION_URL).openConnection();

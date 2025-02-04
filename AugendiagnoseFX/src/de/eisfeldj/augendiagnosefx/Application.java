@@ -14,8 +14,6 @@ import de.eisfeldj.augendiagnosefx.util.ResourceUtil;
 import de.eisfeldj.augendiagnosefx.util.VersioningUtil;
 import de.eisfeldj.augendiagnosefx.util.imagefile.JpegSynchronizationUtil;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -33,8 +31,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_WINDOW_SIZE_Y;
 /**
  * Application class for starting the application.
  */
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
-		justification = "Intentionally using same name as superclass")
 public class Application extends javafx.application.Application {
 	/**
 	 * The name of the application.
@@ -69,8 +65,6 @@ public class Application extends javafx.application.Application {
 	}
 
 	@Override
-	@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-			justification = "Intentionally write the stage statically")
 	public final void start(final Stage primaryStage) throws IOException, IllegalAccessException {
 		Application.mStage = primaryStage;
 		primaryStage.setTitle(ResourceUtil.getString("app_name"));

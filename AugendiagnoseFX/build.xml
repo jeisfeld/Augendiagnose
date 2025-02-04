@@ -1,146 +1,58 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="AugendiagnoseFX" default="do-deploy" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
-	<target name="init-fx-tasks">
-		<property name="application.version">0.1.16</property>
+<project name="AugendiagnoseFX" default="package-all" basedir=".">
 
-		<path id="fxant">
-			<filelist>
-				<file name="C:\Program Files\Java\jdk1.8.0_333\lib\ant-javafx.jar" />
-			</filelist>
-		</path>
-
-		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpathref="fxant" />
-	</target>
-	<target name="setup-staging-area">
-		<delete dir="externalLibs" />
-		<delete dir="project" />
-
-		<mkdir dir="externalLibs" />
-
-		<copy todir="externalLibs">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX\lib" />
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Transferrable\javafx-sdk-18.0.2\lib" />
-		</copy>
-
-		<mkdir dir="project" />
-		<copy todir="project">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX">
-				<include name="src/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="D:\Git\Augendiagnose\AugendiagnoseFX">
-				<include name="resources/**" />
-			</fileset>
-		</copy>
-	</target>
-	<target name='do-compile'>
-		<delete dir="build" />
-		<mkdir dir="build/src" />
-		<mkdir dir="build/libs" />
-		<mkdir dir="build/classes" />
-
-		<!-- Copy project sources itself -->
-		<copy todir="build/src">
-			<fileset dir="project/src">
-				<include name="**/*" />
-			</fileset>
-		</copy>
-		<copy todir="build/src">
-			<fileset dir="project/resources">
-				<include name="**/*" />
-			</fileset>
-		</copy>
-
-		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="UTF-8">
-			<classpath>
-				<fileset dir="externalLibs">
-					<include name="*" />
-				</fileset>
-			</classpath>
-		</javac>
-
-		<!-- Copy over none Java-Files -->
-		<copy todir="build/classes">
-			<fileset dir="project/src">
-				<exclude name="**/*.java" />
-			</fileset>
-			<fileset dir="project/resources">
-				<exclude name="**/*.java" />
-			</fileset>
-		</copy>
-
-		<!-- Extract project-libs references -->
-		<unzip dest="build/classes">
-			<fileset dir="externalLibs">
-				<include name="commons-lang3-3.3.2.jar" />
-				<include name="xmpcore.jar" />
-				<include name="annotations.jar" />
-			</fileset>
-		</unzip>
-	</target>
-	<target name="do-build" depends="setup-staging-area, do-compile, init-fx-tasks">
-		<delete dir="jar" />
-		<mkdir dir="jar" />
-
-		<fx:resources id="appRes">
-			<fx:fileset dir="jar" includes="AugendiagnoseFX.jar" />
-		</fx:resources>
-
-		<fx:application id="fxApplication" name="AugendiagnoseFX${buildtype}" version="${application.version}" mainClass="de.eisfeldj.augendiagnosefx.Application" toolkit="fx" />
-
-		<mkdir dir="build/classes/META-INF" />
-
-		<fx:jar destfile="jar/AugendiagnoseFX.jar">
-			<fx:application refid="fxApplication" />
-			<fileset dir="build/classes" />
-			<fx:resources refid="appRes" />
-
+	<!-- Step 1: Build the jar -->
+	<target name="build-jar">
+		<jar destfile="build/jar/AugendiagnoseFX.jar" basedir="bin">
 			<manifest>
-				<attribute name="Implementation-Vendor" value="Jörg Eisfeld" />
-				<attribute name="Implementation-Title" value="AugendiagnoseFX" />
-				<attribute name="Implementation-Version" value="${application.version}" />
-				<attribute name="JavaFX-Feature-Proxy" value="None" />
+				<attribute name="Main-Class" value="de.eisfeldj.augendiagnosefx.Application" />
 			</manifest>
-		</fx:jar>
+		</jar>
 	</target>
-	<target name="do-deploy" depends="do-build">
-		<delete dir="deploy" />
-		<mkdir dir="deploy" />
 
-		<!-- Need to use ${basedir} because somehow the ant task is calculating
-			the directory differently -->
-		<fx:deploy embedJNLP="false" extension="false" includeDT="false" offlineAllowed="true" outdir="${basedir}/deploy" outfile="AugendiagnoseFX${buildtype}" nativeBundles="exe" updatemode="background">
-			<fx:platform basedir="C:\Program Files\Java\jdk1.8.0_333">
-				<fx:jvmarg value="-Xmx1024m" />
-			</fx:platform>
-			<fx:info title="AugendiagnoseFX" vendor="Jörg Eisfeld">
-				<fx:icon href="resources/img/Augendiagnose.ico" depth="32" height="48" kind="default" width="48" />
-			</fx:info>
-			<fx:preferences menu="true" install="false" shortcut="true" />
-			<fx:application refId="fxApplication" />
-			<fx:resources refid="appRes" />
-			<fx:permissions elevated="true" />
-		</fx:deploy>
 
-		<mkdir dir="dist" />
+	<!-- Step 2: Create custom runtime image using jlink -->
+	<target name="jlink" depends="build-jar">
+		<echo message="Creating custom runtime image with jlink..." />
+		<delete dir="build/runtime"/>
+		<exec executable="jlink">
+			<!-- Adjust module path if needed: combining JDK jmods and JavaFX modules -->
+			<arg value="--module-path" />
+			<arg value="C:\Transferrable\jdk-23.0.2\jmods;C:\Transferrable\javafx-sdk-23.0.2\lib;build\jar;lib" />
+			<arg value="--add-modules" />
+			<arg value="javafx.controls,javafx.fxml,javafx.graphics,java.xml,java.logging,java.prefs,de.eisfeldj.xmpcore,commons.lang3" />
+			<arg value="--output" />
+			<arg value="build/runtime" />
+		</exec>
+	</target>
 
-		<copy todir="dist">
-			<fileset dir="jar">
-				<filename name="*.jar" />
-			</fileset>
-			<fileset dir="deploy/bundles">
-				<filename name="*.exe" />
-			</fileset>
-		</copy>
-		<copy todir="dist">
-			<fileset dir="jar">
-				<filename name="*.jar" />
-			</fileset>
-			<globmapper from="*.jar" to="*-${application.version}.jar" />
-		</copy>
+	<!-- Step 3: Package the application using jpackage -->
+	<target name="jpackage" depends="jlink">
+		<echo message="Packaging application with jpackage..." />
+		<exec executable="jpackage">
+			<arg value="--type" />
+			<arg value="msi" />
+			<arg value="--name" />
+			<arg value="AugendiagnoseFX" />
+			<arg value="--app-version" />
+			<arg value="0.1.16" />
+			<arg value="--input" />
+			<arg value="build/jar" />
+			<arg value="--main-jar" />
+			<arg value="AugendiagnoseFX.jar" />
+			<arg value="--main-class" />
+			<arg value="de.eisfeldj.augendiagnosefx.Application" />
+			<arg value="--runtime-image" />
+			<arg value="build/runtime" />
+			<arg value="--icon" />
+			<arg value="bin\img\Augendiagnose.ico" />
+			<arg value="--win-menu" />
+		</exec>
+	</target>
+
+	<!-- A target that runs everything -->
+	<target name="package-all" depends="jpackage">
+		<echo message="All steps completed. Application packaged." />
 	</target>
 
 </project>

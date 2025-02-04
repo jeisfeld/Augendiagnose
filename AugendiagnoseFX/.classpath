@@ -17,7 +17,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/commons-lang3-3.3.2.jar">
+	<classpathentry kind="lib" path="D:/Git/Augendiagnose/AugendiagnoseFX/lib/commons-lang3-3.17.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

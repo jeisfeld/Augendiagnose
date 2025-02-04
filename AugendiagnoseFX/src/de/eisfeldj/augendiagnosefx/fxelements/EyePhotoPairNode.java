@@ -16,8 +16,6 @@ import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhoto;
 import de.eisfeldj.augendiagnosefx.util.imagefile.EyePhotoPair;
 import de.eisfeldj.augendiagnosefx.util.imagefile.ImageUtil.Resolution;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -104,7 +102,6 @@ public class EyePhotoPairNode extends GridPane implements Controller {
 	 * @param initialParentController
 	 *            The parent controller.
 	 */
-	@SuppressFBWarnings(value = "UR_UNINIT_READ", justification = "Is initialized via fxml")
 	public EyePhotoPairNode(final EyePhotoPair pair, final DisplayPhotosController initialParentController) {
 		mParentController = initialParentController;
 		mPair = pair;

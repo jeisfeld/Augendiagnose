@@ -1,4 +1,5 @@
 /bin
 /build
 /doc/
-/custom-runtime/
+AugendiagnoseFX*.msi
+
