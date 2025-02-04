@@ -22,6 +22,8 @@ public final class ResourceConstants {
 	public static final String BUTTON_OK = "button_ok";
 	public static final String BUTTON_OVERLAY_1 = "button_overlay_1";
 	public static final String BUTTON_OVERLAY_10 = "button_overlay_10";
+	public static final String BUTTON_OVERLAY_11 = "button_overlay_11";
+	public static final String BUTTON_OVERLAY_12 = "button_overlay_12";
 	public static final String BUTTON_OVERLAY_2 = "button_overlay_2";
 	public static final String BUTTON_OVERLAY_3 = "button_overlay_3";
 	public static final String BUTTON_OVERLAY_4 = "button_overlay_4";
@@ -74,6 +76,10 @@ public final class ResourceConstants {
 	public static final String MESSAGE_PROGRESS_LOADING_UPDATE = "message_progress_loading_update";
 	public static final String OVERLAY_10_NAME = "overlay_10_name";
 	public static final String OVERLAY_10_PREFIX = "overlay_10_prefix";
+	public static final String OVERLAY_11_NAME = "overlay_11_name";
+	public static final String OVERLAY_11_PREFIX = "overlay_11_prefix";
+	public static final String OVERLAY_12_NAME = "overlay_12_name";
+	public static final String OVERLAY_12_PREFIX = "overlay_12_prefix";
 	public static final String OVERLAY_1_NAME = "overlay_1_name";
 	public static final String OVERLAY_1_PREFIX = "overlay_1_prefix";
 	public static final String OVERLAY_2_NAME = "overlay_2_name";

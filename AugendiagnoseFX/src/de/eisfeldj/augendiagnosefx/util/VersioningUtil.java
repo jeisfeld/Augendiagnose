@@ -32,7 +32,7 @@ public final class VersioningUtil {
 	/**
 	 * Base URL for downloading the application.
 	 */
-	private static final String DOWNLOAD_BASE_URL = "http://augendiagnose.jeisfeld.de/bin/";
+	private static final String DOWNLOAD_BASE_URL = "https://augendiagnose-app.de/bin/";
 
 	/**
 	 * The URL where to get the info about the latest version.

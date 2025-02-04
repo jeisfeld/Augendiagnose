@@ -24,6 +24,8 @@ import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.paint.Color;
 
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_10_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_11_PREFIX;
+import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_12_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_1_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_2_PREFIX;
 import static de.eisfeldj.augendiagnosefx.util.ResourceConstants.OVERLAY_3_PREFIX;
@@ -51,7 +53,7 @@ public final class ImageUtil {
 	/**
 	 * The pupil sizes in the original overlay images.
 	 */
-	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.24f, 0.21f, 0.24f, 0.16f, 0.24f, 0.23f};
+	private static final float[] ORIG_PUPIL_SIZES = {0.25f, 0.28f, 0.28f, 0.21f, 0.24f, 0.185f, 0.21f, 0.24f, 0.16f, 0.24f, 0.23f, 0.24f, 0.265f};
 
 	/**
 	 * The number four.
@@ -203,6 +205,12 @@ public final class ImageUtil {
 			break;
 		case 10: // MAGIC_NUMBER
 			baseName = ResourceUtil.getString(OVERLAY_10_PREFIX);
+			break;
+		case 11: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_11_PREFIX);
+			break;
+		case 12: // MAGIC_NUMBER
+			baseName = ResourceUtil.getString(OVERLAY_12_PREFIX);
 			break;
 		default:
 			return null;
@@ -461,18 +469,6 @@ public final class ImageUtil {
 			gc.drawImage(overlayImage, xPosition * width - overlaySize / 2,
 					yPosition * height - overlaySize / 2, overlaySize, overlaySize);
 		}
-
-//		PupilAndIrisDetector detector = new PupilAndIrisDetector(baseImage);
-//		gc.setStroke(Color.RED);
-//		gc.setLineWidth(5); // MAGIC_NUMBER
-//		int irisRadius = (int) (detector.getIrisRadius() * Math.max(baseImage.getHeight(), baseImage.getWidth()));
-//		int irisXCenter = (int) (detector.getIrisXCenter() * baseImage.getWidth());
-//		int irisYCenter = (int) (detector.getIrisYCenter() * baseImage.getHeight());
-//		gc.strokeOval(irisXCenter - irisRadius, irisYCenter - irisRadius, 2 * irisRadius, 2 * irisRadius);
-//		int pupilRadius = (int) (detector.getPupilRadius() * Math.max(baseImage.getHeight(), baseImage.getWidth()));
-//		int pupilXCenter = (int) (detector.getPupilXCenter() * baseImage.getWidth());
-//		int pupilYCenter = (int) (detector.getPupilYCenter() * baseImage.getHeight());
-//		gc.strokeOval(pupilXCenter - pupilRadius, pupilYCenter - pupilRadius, 2 * pupilRadius, 2 * pupilRadius);
 
 		return canvas.snapshot(null, null);
 	}

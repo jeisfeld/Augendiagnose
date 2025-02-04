@@ -1,0 +1,12 @@
+ValidatorConfiguration.is_project_specific=true
+eclipse.preferences.version=1
+org.eclipse.xtext.grammar.BidirectionalReference=warning
+org.eclipse.xtext.grammar.DiscouragedName=warning
+org.eclipse.xtext.grammar.DuplicateEnumLiteral=warning
+org.eclipse.xtext.grammar.InvalidFragmentFirstRule=error
+org.eclipse.xtext.grammar.InvalidJavaPackageName=ignore
+org.eclipse.xtext.grammar.InvalidMetaModelName=warning
+org.eclipse.xtext.grammar.InvalidPackageReference.external=warning
+org.eclipse.xtext.grammar.InvalidPackageReference.notOnClasspath=warning
+org.eclipse.xtext.grammar.InvalidTerminalRuleName=warning
+org.eclipse.xtext.grammar.UsageOfDeprecatedRule=warning
