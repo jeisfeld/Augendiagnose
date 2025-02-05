@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="run" name="Create Runnable Jar for Project AugendiagnoseFX with Jar-in-Jar Loader">
+	<property name="dir.buildfile" value="." />
+	<property name="dir.workspace" value="D:/Jörg/Eclipse/Android" />
+	<property name="dir.jarfile" value="${dir.buildfile}/build/jar" />
+	<target name="build-jar">
+		<jar destfile="${dir.jarfile}/AugendiagnoseFX.jar">
+			<manifest>
+				<attribute name="Main-Class" value="de.eisfeldj.augendiagnosefx.Application" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="${dir.buildfile}/bin" />
+		</jar>
+	</target>
+
+	<target name="run" depends="build-jar">
+		<exec executable="java">
+			<arg value="--module-path" />
+			<arg value="C:\Transferrable\javafx-sdk-23.0.2\lib;D:\Git\Augendiagnose\AugendiagnoseFX\lib" />
+			<arg value="--add-modules" />
+			<arg value="javafx.controls,javafx.fxml,javafx.graphics,java.xml,java.logging,java.prefs,de.eisfeldj.xmpcore,commons.lang3" />
+			<arg value="-jar" />
+			<arg value="${dir.jarfile}/AugendiagnoseFX.jar" />
+		</exec>
+	</target>
+
+</project>
