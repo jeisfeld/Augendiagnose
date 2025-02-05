@@ -67,8 +67,6 @@
 		<ColorPicker fx:id="mColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_sort_by_last_name" GridPane.columnIndex="0" GridPane.rowIndex="5"/> 
 		<CheckBox fx:id="mCheckBoxSortByLastName" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="2"/> 
-		<Label text="%pref_title_update_automatically" GridPane.columnIndex="0" GridPane.rowIndex="6"/> 
-		<CheckBox fx:id="mCheckBoxUpdateAutomatically" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="2"/> 
 		<Label text="%pref_title_language" GridPane.columnIndex="0" GridPane.rowIndex="7"/> 
 		<ChoiceBox fx:id="mChoiceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="2"/> 
 		<Button text="%button_cancel" onAction="#cancel" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.halignment="LEFT"/> 

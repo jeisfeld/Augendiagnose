@@ -102,6 +102,14 @@ public class Application extends javafx.application.Application {
 	}
 
 	/**
+	 * Show a web page in browser.
+	 * @param url The browser URL.
+	 */
+	public static void openWebPage(final String url) {
+		getApplicationHostServices().showDocument(url);
+	}
+
+	/**
 	 * Exit the application after asking for confirmation if there are unsaved data.
 	 */
 	public static void exitAfterConfirmation() {

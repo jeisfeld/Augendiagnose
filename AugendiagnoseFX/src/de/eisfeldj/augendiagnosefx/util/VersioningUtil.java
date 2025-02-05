@@ -1,20 +1,13 @@
 package de.eisfeldj.augendiagnosefx.util;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
 import de.eisfeldj.augendiagnosefx.Application;
 import de.eisfeldj.augendiagnosefx.util.DialogUtil.ConfirmDialogListener;
-import de.eisfeldj.augendiagnosefx.util.DialogUtil.ProgressDialog;
-
-import javafx.application.Platform;
 
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_LAST_KNOWN_VERSION;
 
@@ -36,11 +29,6 @@ public final class VersioningUtil {
 	 * The URL where to get the info about the latest version.
 	 */
 	private static final String CURRENT_VERSION_URL = DOWNLOAD_BASE_URL + "currentVersion.txt";
-
-	/**
-	 * Size of the buffer for downloading the jar file.
-	 */
-	private static final int DOWNLOAD_BUFFER = 4096;
 
 	/**
 	 * Hide default constructor.
@@ -80,67 +68,7 @@ public final class VersioningUtil {
 	 *            The version to be downloaded.
 	 */
 	public static void downloadUpdate(final VersionInfo version) {
-		String url = version.getJarDownloadUrl();
-		final File currentJarFile = SystemUtil.getJarPath();
-		final File tempJarFile;
-		final ProgressDialog dialog =
-				DialogUtil
-						.displayProgressDialog(ResourceConstants.MESSAGE_PROGRESS_LOADING_UPDATE, version.mVersionString);
-		final URLConnection connection;
-		try {
-			connection = new URL(url).openConnection();
-			tempJarFile = new File(SystemUtil.getTempDir(), "temp.jar");
-		}
-		catch (IOException e) {
-			Logger.error("Could not open URL " + url, e);
-			return;
-		}
-
-		Thread downloadThread = new Thread() {
-			@Override
-			public void run() {
-				Logger.info("Downloading update to file " + tempJarFile.getAbsolutePath());
-				try (InputStream input = connection.getInputStream();
-						OutputStream output = new FileOutputStream(tempJarFile)) {
-					long totalSize = connection.getContentLengthLong();
-					long currentSize = 0;
-
-					byte[] buffer = new byte[DOWNLOAD_BUFFER];
-					int n = -1;
-
-					while ((n = input.read(buffer)) != -1) {
-						if (n > 0) {
-							output.write(buffer, 0, n);
-							currentSize += n;
-							dialog.setProgress(1.0 * currentSize / totalSize);
-						}
-					}
-
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							dialog.close();
-							SystemUtil.updateApplication(tempJarFile.getAbsolutePath(),
-									currentJarFile.getAbsolutePath());
-
-							Application.exitAfterConfirmation();
-						}
-					});
-
-				}
-				catch (IOException e) {
-					Logger.error("Exception while downloading from " + url, e);
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							dialog.close();
-						}
-					});
-				}
-			}
-		};
-
-		downloadThread.start();
+		Application.openWebPage("https://augendiagnose-app.de/downloads/");
 	}
 
 	/**
@@ -152,7 +80,6 @@ public final class VersioningUtil {
 	 */
 	public static void checkForNewerVersion(final boolean fromMenu) {
 		VersionInfo latestVersion = getLatestVersionInfo();
-		boolean updateAutomatically = PreferenceUtil.getPreferenceBoolean(PreferenceUtil.KEY_UPDATE_AUTOMATICALLY);
 
 		if (latestVersion == null) {
 			return;
@@ -162,11 +89,6 @@ public final class VersioningUtil {
 		boolean requiresNewVersion =
 				latestVersion.getVersionNumber() > CURRENT_VERSION.getVersionNumber();
 
-		// In case of automatic updates, just do the update if existing.
-		if (requiresNewVersion && updateAutomatically) {
-			downloadUpdate(latestVersion);
-			return;
-		}
 
 		// Otherwise, differentiate between check on startup and check via menu.
 		if (fromMenu) {
@@ -251,35 +173,6 @@ public final class VersioningUtil {
 			return mVersionString + " (" + mVersionNumber + ")";
 		}
 
-		/**
-		 * Retrieve the download URL for this version of the application (exe file).
-		 *
-		 * @return The download URL.
-		 */
-		public String getExeDownloadUrl() {
-			StringBuffer result = new StringBuffer(DOWNLOAD_BASE_URL);
-			result.append("Augendiagnose-");
-			if (SystemUtil.is64Bit()) {
-				result.append("x64");
-			}
-			else {
-				result.append("x86");
-			}
-			result.append("-").append(getVersionString()).append(".exe");
-			return result.toString();
-		}
-
-		/**
-		 * Retrieve the download URL for this version of the application (jar file).
-		 *
-		 * @return The download URL.
-		 */
-		public String getJarDownloadUrl() {
-			StringBuffer result = new StringBuffer(DOWNLOAD_BASE_URL);
-			result.append("AugendiagnoseFX-");
-			result.append(getVersionString()).append(".jar");
-			return result.toString();
-		}
 	}
 
 }

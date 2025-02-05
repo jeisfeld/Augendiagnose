@@ -3,7 +3,6 @@ package de.eisfeldj.augendiagnosefx.util;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import de.eisfeldj.augendiagnosefx.Application;
 
@@ -11,11 +10,6 @@ import de.eisfeldj.augendiagnosefx.Application;
  * Utility class for interaction with operating system.
  */
 public final class SystemUtil {
-	/**
-	 * Waiting time in seconds before it is assumed that application has been successfully closed.
-	 */
-	private static final int WAITING_TIME = 1;
-
 	/**
 	 * Quote string required in cmd shell.
 	 */
@@ -26,29 +20,6 @@ public final class SystemUtil {
 	 */
 	private SystemUtil() {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Find out if application is running on 64bit java.
-	 *
-	 * @return true if 64bit
-	 */
-	public static boolean is64Bit() {
-		return "64".equals(System.getProperty("sun.arch.data.model"));
-	}
-
-	/**
-	 * Get the path of the jar file.
-	 *
-	 * @return The path of the jar file.
-	 */
-	public static File getJarPath() {
-		try {
-			return new File(Application.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-		}
-		catch (URISyntaxException e) {
-			return null;
-		}
 	}
 
 	/**
@@ -200,44 +171,6 @@ public final class SystemUtil {
 		catch (IOException e) {
 			Logger.error("Could not start application process " + command.toString());
 		}
-	}
-
-	/**
-	 * Move the jar file via Windows command, and then restart the application.
-	 *
-	 * @param sourcePath
-	 *            The source file
-	 * @param targetPath
-	 *            The target file
-	 */
-	public static void updateApplication(final String sourcePath, final String targetPath) {
-		String javaExecutable = getJavaExecutable();
-		String applicationExecutable = getApplicationExecutable();
-
-		if (javaExecutable != null) {
-			String command = QUOTE + javaExecutable + QUOTE + " -classpath \"" + getClasspath() + "\" -Xmx1024m "
-					+ Application.class.getCanonicalName();
-			if (System.getProperty("os.name").startsWith("Win")) {
-				runMultipleWindowsCommands(WAITING_TIME,
-						"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
-						command);
-			}
-			else {
-				runMultipleUnixCommands(WAITING_TIME,
-						"mv " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
-						command);
-			}
-		}
-		else if (applicationExecutable != null) {
-			runMultipleWindowsCommands(WAITING_TIME,
-					"move /Y " + QUOTE + sourcePath + QUOTE + ' ' + QUOTE + targetPath + QUOTE,
-					QUOTE + applicationExecutable + QUOTE);
-		}
-		else {
-			Logger.error("Did not find executable.");
-			return;
-		}
-
 	}
 
 	/**

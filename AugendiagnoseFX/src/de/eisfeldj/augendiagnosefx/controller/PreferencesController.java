@@ -31,7 +31,6 @@ import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_MAX_BITMAP_SIZ
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_OVERLAY_COLOR;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_SORT_BY_LAST_NAME;
 import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_THUMBNAIL_SIZE;
-import static de.eisfeldj.augendiagnosefx.util.PreferenceUtil.KEY_UPDATE_AUTOMATICALLY;
 
 /**
  * BaseController for the Preferences page.
@@ -93,12 +92,6 @@ public class PreferencesController extends DialogController implements Initializ
 	private CheckBox mCheckBoxSortByLastName;
 
 	/**
-	 * Checkbox for "update automatically" flag.
-	 */
-	@FXML
-	private CheckBox mCheckBoxUpdateAutomatically;
-
-	/**
 	 * Color picker for the default overlay color.
 	 */
 	@FXML
@@ -136,7 +129,6 @@ public class PreferencesController extends DialogController implements Initializ
 
 		mOldSortByLastName = PreferenceUtil.getPreferenceBoolean(KEY_SORT_BY_LAST_NAME);
 		mCheckBoxSortByLastName.setSelected(mOldSortByLastName);
-		mCheckBoxUpdateAutomatically.setSelected(PreferenceUtil.getPreferenceBoolean(KEY_UPDATE_AUTOMATICALLY));
 
 		// Fill language choice box from LANGUAGE_MAP
 		LANGUAGE_MAP.forEach((key, value) -> mChoiceLanguage.getItems().add(key, value));
@@ -168,7 +160,6 @@ public class PreferencesController extends DialogController implements Initializ
 		PreferenceUtil.setPreference(KEY_THUMBNAIL_SIZE, mChoiceThumbnailSize.getValue());
 		PreferenceUtil.setPreference(KEY_OVERLAY_COLOR, mColorPicker.getValue());
 		PreferenceUtil.setPreference(KEY_SORT_BY_LAST_NAME, mCheckBoxSortByLastName.isSelected());
-		PreferenceUtil.setPreference(KEY_UPDATE_AUTOMATICALLY, mCheckBoxUpdateAutomatically.isSelected());
 		PreferenceUtil.setPreference(KEY_LANGUAGE, languageStringToId(mChoiceLanguage.getValue()));
 
 		if (requiresRestartApplication()) {

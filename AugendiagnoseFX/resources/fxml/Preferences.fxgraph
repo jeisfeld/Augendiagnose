@@ -111,18 +111,6 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 			},
 
 			Label {
-				text : rstring "pref_title_update_automatically",
-				static columnIndex : 0,
-				static rowIndex : 6
-			},
-
-			CheckBox id mCheckBoxUpdateAutomatically {
-				static columnIndex : 1,
-				static rowIndex : 6,
-				static columnSpan : 2
-			},
-
-			Label {
 				text : rstring "pref_title_language",
 				static columnIndex : 0,
 				static rowIndex : 7
