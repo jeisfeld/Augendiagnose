@@ -35,7 +35,7 @@
 			<arg value="--name" />
 			<arg value="AugendiagnoseFX" />
 			<arg value="--app-version" />
-			<arg value="0.1.16" />
+			<arg value="0.1.17" />
 			<arg value="--input" />
 			<arg value="build/jar" />
 			<arg value="--main-jar" />

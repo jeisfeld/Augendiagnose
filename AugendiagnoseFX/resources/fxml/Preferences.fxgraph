@@ -67,7 +67,7 @@ component Settings controlledby PreferencesController resourcefile "../bundles/S
 				static rowIndex : 2,
 				static columnSpan : 2,
 				items : FXCollections createdby observableArrayList {
-					Integer(4096), Integer(2880), Integer(2048), Integer(1440), Integer(1024)
+					Integer(8192), Integer(5760), Integer(4096), Integer(2880), Integer(2048), Integer(1440), Integer(1024)
 				}
 			},
 

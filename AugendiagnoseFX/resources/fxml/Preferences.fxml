@@ -43,6 +43,8 @@
 		<ChoiceBox fx:id="mChoiceMaxBitmapSize" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"> 
 			<items>
 				<FXCollections fx:factory="observableArrayList"> 
+					<Integer fx:value="8192"/> 
+					<Integer fx:value="5760"/> 
 					<Integer fx:value="4096"/> 
 					<Integer fx:value="2880"/> 
 					<Integer fx:value="2048"/> 
