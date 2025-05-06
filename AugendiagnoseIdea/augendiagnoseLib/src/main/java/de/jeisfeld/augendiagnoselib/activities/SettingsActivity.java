@@ -16,6 +16,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.Application.AuthorizationLevel;
 import de.jeisfeld.augendiagnoselib.R;
@@ -66,6 +70,14 @@ public class SettingsActivity extends BasePreferenceActivity {
 	@Override
 	protected final void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+		ViewCompat.setOnApplyWindowInsetsListener(getWindow().getDecorView(), (view, insets) -> {
+			Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+			view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+			return WindowInsetsCompat.CONSUMED;
+		});
 
 		int prefType = getIntent().getIntExtra(STRING_EXTRA_PREF_TYPE, -1);
 

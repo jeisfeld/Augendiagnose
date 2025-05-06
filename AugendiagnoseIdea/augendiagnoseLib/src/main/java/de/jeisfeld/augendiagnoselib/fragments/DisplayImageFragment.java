@@ -40,7 +40,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import de.jeisfeld.augendiagnoselib.Application;
 import de.jeisfeld.augendiagnoselib.R;
@@ -149,6 +148,11 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * The button for showing the image comment.
 	 */
 	private Button mCommentButton;
+
+	/**
+	 * The button for navigating back.
+	 */
+	private Button mBackButton;
 
 	/**
 	 * The button for showing the image info.
@@ -332,6 +336,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		mSelectColorButton = getView().findViewById(R.id.buttonSelectColor);
 
 		mClarityButton = getView().findViewById(R.id.buttonClarity);
+		mBackButton = getView().findViewById(R.id.buttonBack);
 		mInfoButton = getView().findViewById(R.id.buttonInfo);
 		mCommentButton = getView().findViewById(R.id.buttonComment);
 		mSaveButton = getView().findViewById(R.id.buttonSave);
@@ -563,7 +568,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				public void onClick(final View v) {
 					switch (mOverlayStatus) {
 					case GUIDED:
-						DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_guided, R.string.key_tip_overlay_guided);
+						DialogUtil.displayTip(requireActivity(), R.string.message_tip_overlay_guided, R.string.key_tip_overlay_guided);
 						mOverlayStatus = OverlayStatus.GUIDE_IRIS;
 						mImageView.setVisibility(View.INVISIBLE);
 						mRotateImageButton.setVisibility(View.GONE);
@@ -613,7 +618,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 				@Override
 				public void onClick(final View v) {
 					mImageView.showFullResolutionSnapshot(false);
-					DialogUtil.displayTip(getActivity(), R.string.message_tip_clarity, R.string.key_tip_clarity);
+					DialogUtil.displayTip(requireActivity(), R.string.message_tip_clarity, R.string.key_tip_clarity);
 				}
 			});
 		}
@@ -621,36 +626,27 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			mClarityButton.setVisibility(View.GONE);
 		}
 
-		mInfoButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				DialogUtil.displayImageInfo(getActivity(), mImageView.getEyePhoto());
+		mBackButton.setOnClickListener(v -> {
+			requireActivity().onBackPressed();
+		});
+
+		mInfoButton.setOnClickListener(v -> {
+			DialogUtil.displayImageInfo(requireActivity(), mImageView.getEyePhoto());
+		});
+
+		mCommentButton.setOnClickListener(v -> {
+			if (mImageView.getMetadata() != null) {
+				((DisplayImageActivity) requireActivity()).startEditComment(DisplayImageFragment.this, mImageView.getMetadata().getComment());
+				DialogUtil.displayTip(requireActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
 			}
 		});
 
-		mCommentButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				if (mImageView.getMetadata() != null) {
-					((DisplayImageActivity) getActivity()).startEditComment(DisplayImageFragment.this, mImageView.getMetadata().getComment());
-					DialogUtil.displayTip(getActivity(), R.string.message_tip_editcomment, R.string.key_tip_editcomment);
-				}
-			}
-		});
+		mShareButton.setOnClickListener(this::showShareMenu);
 
-		mShareButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				showShareMenu(v);
-			}
-		});
-
-		mSaveButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				showSaveMenu(v);
-				DialogUtil.displayTip(getActivity(), R.string.message_tip_saveview, R.string.key_tip_saveview);
-			}
+		mSaveButton.setOnClickListener(v -> {
+			showSaveMenu(v);
+			assert getActivity() != null;
+			DialogUtil.displayTip(getActivity(), R.string.message_tip_saveview, R.string.key_tip_saveview);
 		});
 
 		mToolsButton.setOnClickListener(new OnClickListener() {
@@ -787,7 +783,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 		}
 
 		if (isChecked && !buttonGetsUnchecked) {
-			DialogUtil.displayTip(getActivity(), R.string.message_tip_overlay_buttons, R.string.key_tip_overlay_buttons);
+			DialogUtil.displayTip(requireActivity(), R.string.message_tip_overlay_buttons, R.string.key_tip_overlay_buttons);
 		}
 	}
 
@@ -800,7 +796,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 */
 	private boolean displayOverlaySelectionPopup(final int position, final boolean forNewButton) {
 		PopupMenu popupMenu;
-		View anchorView = isLandscape() ? getActivity().findViewById(R.id.anchorForContextMenu) : mToggleOverlayButtons[position];
+		View anchorView = isLandscape() ? requireActivity().findViewById(R.id.anchorForContextMenu) : mToggleOverlayButtons[position];
 
 		if (SystemUtil.isAtLeastVersion(Build.VERSION_CODES.KITKAT)) {
 			popupMenu = getPopupMenuKitkat(anchorView);
@@ -891,7 +887,6 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	 * @return The popup menu.
 	 */
 	@NonNull
-	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	private PopupMenu getPopupMenuKitkat(final View anchorView) {
 		return new PopupMenu(getActivity(), anchorView, Gravity.END);
 	}
@@ -1314,7 +1309,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 	private boolean hasAutoFullResolution() {
 		int fullResolutionFlag = PreferenceUtil.getSharedPreferenceIntString(R.string.key_full_resolution, null);
 
-		if (getActivity().getClass().equals(DisplayOneActivity.class)) {
+		if (requireActivity().getClass().equals(DisplayOneActivity.class)) {
 			return fullResolutionFlag > 0;
 		}
 		else {
@@ -1421,7 +1416,7 @@ public class DisplayImageFragment extends Fragment implements GuiElementUpdater,
 			break;
 		}
 
-		ImageSpan imageSpan = new ImageSpan(getActivity(), pupilButtonResource);
+		ImageSpan imageSpan = new ImageSpan(requireActivity(), pupilButtonResource);
 		SpannableString content = new SpannableString("X");
 		content.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mPupilButton.setText(content);

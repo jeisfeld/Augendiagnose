@@ -14,6 +14,11 @@
         android:enabled="false"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/buttonBack"
+            style="@style/ActionBarButtonPortrait"
+            android:drawableBottom="@drawable/ic_back" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -14,6 +14,11 @@
         android:enabled="false"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/buttonBack"
+            style="@style/ActionBarButtonLandscape"
+            android:drawableRight="@drawable/ic_back" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

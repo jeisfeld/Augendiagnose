@@ -1,18 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                tools:context=".activities.SelectTwoPicturesActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activities.SelectTwoPicturesActivity">
 
     <LinearLayout
         android:id="@+id/layoutSelectTwoButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
 
         <Button
@@ -22,7 +23,7 @@
             android:layout_weight="1"
             android:onClick="onImportFromGalleryClick"
             android:text="@string/button_import_from_gallery"
-            tools:ignore="ButtonStyle"/>
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonPreview"
@@ -31,7 +32,7 @@
             android:layout_weight="1"
             android:onClick="onPreviewClick"
             android:text="@string/button_preview"
-            tools:ignore="ButtonStyle"/>
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonSelect"
@@ -40,7 +41,7 @@
             android:layout_weight="1"
             android:onClick="onSelectClick"
             android:text="@string/button_select"
-            tools:ignore="ButtonStyle"/>
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <TextView
@@ -49,11 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="@string/message_dialog_no_photos_in_input_folder"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <GridView
         android:id="@+id/gridViewSelectTwoPictures"
@@ -66,6 +67,6 @@
         android:horizontalSpacing="0dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp"/>
+        android:verticalSpacing="0dp" />
 
 </RelativeLayout>
