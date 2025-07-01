@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto"
-    android:versionCode="61"
-    android:versionName="1.4.10">
+    android:versionCode="62"
+    android:versionName="1.4.11">
 
     <uses-feature
         android:name="android.hardware.camera"
