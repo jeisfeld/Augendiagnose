@@ -15,6 +15,8 @@ package de.jeisfeld.augendiagnoselib.components;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -116,20 +118,22 @@ public class VerticalSeekBar extends SeekBar {
 			return false;
 		}
 
+		int minValue = VERSION.SDK_INT >= VERSION_CODES.O ? getMin() : 0;
+
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
+			setProgressInternally(getMax() - (int) ((getMax() - minValue) * event.getY() / getHeight()), true);
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStartTrackingTouch(this);
 			}
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
+			setProgressInternally(getMax() - (int) ((getMax() - minValue) * event.getY() / getHeight()), true);
 			break;
 
 		case MotionEvent.ACTION_UP:
-			setProgressInternally(getMax() - (int) (getMax() * event.getY() / getHeight()), true);
+			setProgressInternally(getMax() - (int) ((getMax() - minValue) * event.getY() / getHeight()), true);
 			if (mOnSeekBarChangeListener != null) {
 				mOnSeekBarChangeListener.onStopTrackingTouch(this);
 			}
