@@ -269,12 +269,12 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		mIsPremium = false;
                 mBillingClient.queryProductDetailsAsync(
                                 QueryProductDetailsParams.newBuilder().setProductList(INAPP_PRODUCTS).build(),
-                                result -> GoogleBillingHelper.this.onProductDetailsResponse(result.getBillingResult(),
-                                                result.getProductDetailsList(), false, listener));
+                                (billingResult, productDetailsList) -> GoogleBillingHelper.this
+                                                .onProductDetailsResponse(billingResult, productDetailsList, false, listener));
                 mBillingClient.queryProductDetailsAsync(
                                 QueryProductDetailsParams.newBuilder().setProductList(SUBS_PRODUCTS).build(),
-                                result -> GoogleBillingHelper.this.onProductDetailsResponse(result.getBillingResult(),
-                                                result.getProductDetailsList(), true, listener));
+                                (billingResult, productDetailsList) -> GoogleBillingHelper.this
+                                                .onProductDetailsResponse(billingResult, productDetailsList, true, listener));
 	}
 
 	/**
