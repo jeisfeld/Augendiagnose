@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdk 35
-    buildToolsVersion = '34.0.0'
+    compileSdk 36
+    buildToolsVersion = '36.1.0'
 
     defaultConfig {
         minSdk 21
-        targetSdk 35
+        targetSdk 36
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_11
             targetCompatibility JavaVersion.VERSION_11
@@ -34,7 +34,7 @@ dependencies {
     api files('libs/annotations.jar')
     api files('libs/xmpcore.jar')
     implementation 'androidx.annotation:annotation:1.9.1'
-    implementation 'androidx.fragment:fragment:1.8.8'
+    implementation 'androidx.fragment:fragment:1.8.9'
     implementation 'androidx.exifinterface:exifinterface:1.4.1'
     implementation 'androidx.documentfile:documentfile:1.1.0'
     implementation 'com.android.billingclient:billing:7.1.1'
