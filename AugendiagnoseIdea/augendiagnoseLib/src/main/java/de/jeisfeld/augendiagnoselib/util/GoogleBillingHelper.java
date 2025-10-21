@@ -18,6 +18,7 @@ import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryProductDetailsParams.Product;
+import com.android.billingclient.api.QueryProductDetailsResult;
 import com.android.billingclient.api.QueryPurchasesParams;
 
 import java.util.ArrayList;
@@ -269,12 +270,18 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 		mIsPremium = false;
                 mBillingClient.queryProductDetailsAsync(
                                 QueryProductDetailsParams.newBuilder().setProductList(INAPP_PRODUCTS).build(),
-                                (billingResult, productDetailsList) -> GoogleBillingHelper.this
-                                                .onProductDetailsResponse(billingResult, productDetailsList, false, listener));
+                                (billingResult, productDetailsResult) -> GoogleBillingHelper.this.onProductDetailsResponse(
+                                                billingResult,
+                                                productDetailsResult == null ? new ArrayList<>()
+                                                                : productDetailsResult.getProductDetailsList(),
+                                                false, listener));
                 mBillingClient.queryProductDetailsAsync(
                                 QueryProductDetailsParams.newBuilder().setProductList(SUBS_PRODUCTS).build(),
-                                (billingResult, productDetailsList) -> GoogleBillingHelper.this
-                                                .onProductDetailsResponse(billingResult, productDetailsList, true, listener));
+                                (billingResult, productDetailsResult) -> GoogleBillingHelper.this.onProductDetailsResponse(
+                                                billingResult,
+                                                productDetailsResult == null ? new ArrayList<>()
+                                                                : productDetailsResult.getProductDetailsList(),
+                                                true, listener));
 	}
 
 	/**
