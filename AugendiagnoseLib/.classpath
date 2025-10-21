@@ -29,7 +29,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs-local/R.jar"/>
-	<classpathentry kind="lib" path="libs-local/billing-6.0.1.jar"/>
+	<classpathentry kind="lib" path="libs-local/billing-8.0.0.jar"/>
 	<classpathentry kind="lib" path="libs-local/exifinterface-1.3.7.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
