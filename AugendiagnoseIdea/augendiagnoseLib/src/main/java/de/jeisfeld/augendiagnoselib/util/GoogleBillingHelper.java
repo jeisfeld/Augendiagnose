@@ -11,6 +11,7 @@ import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingFlowParams.ProductDetailsParams;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.PendingPurchasesParams;
 import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesResponseListener;
@@ -131,7 +132,11 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			if (mInstance == null) {
 				mInstance = new GoogleBillingHelper();
 				mInstance.mContext = context;
-				mInstance.mBillingClient = BillingClient.newBuilder(context).setListener(mInstance).enablePendingPurchases().build();
+                                PendingPurchasesParams pendingPurchasesParams = PendingPurchasesParams.newBuilder()
+                                                .enableOneTimeProducts()
+                                                .build();
+                                mInstance.mBillingClient = BillingClient.newBuilder(context).setListener(mInstance)
+                                                .enablePendingPurchases(pendingPurchasesParams).build();
 			}
 		}
 		return mInstance;
@@ -262,12 +267,14 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 			mSubscriptionProducts = null;
 		}
 		mIsPremium = false;
-		mBillingClient.queryProductDetailsAsync(
-				QueryProductDetailsParams.newBuilder().setProductList(INAPP_PRODUCTS).build(),
-				(result, list) -> GoogleBillingHelper.this.onProductDetailsResponse(result, list, false, listener));
-		mBillingClient.queryProductDetailsAsync(
-				QueryProductDetailsParams.newBuilder().setProductList(SUBS_PRODUCTS).build(),
-				(result, list) -> GoogleBillingHelper.this.onProductDetailsResponse(result, list, true, listener));
+                mBillingClient.queryProductDetailsAsync(
+                                QueryProductDetailsParams.newBuilder().setProductList(INAPP_PRODUCTS).build(),
+                                result -> GoogleBillingHelper.this.onProductDetailsResponse(result.getBillingResult(),
+                                                result.getProductDetailsList(), false, listener));
+                mBillingClient.queryProductDetailsAsync(
+                                QueryProductDetailsParams.newBuilder().setProductList(SUBS_PRODUCTS).build(),
+                                result -> GoogleBillingHelper.this.onProductDetailsResponse(result.getBillingResult(),
+                                                result.getProductDetailsList(), true, listener));
 	}
 
 	/**
