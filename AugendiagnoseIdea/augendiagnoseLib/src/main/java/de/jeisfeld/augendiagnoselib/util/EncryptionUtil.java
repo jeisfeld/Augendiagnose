@@ -185,7 +185,7 @@ public final class EncryptionUtil {
 						Application.getResourceString(R.string.private_http_password).toCharArray());
 			}
 		});
-		String urlBase = "https://augendiagnose-app.de/appauth/";
+		String urlBase = "https://it-art.de/augendiagnose/appauth/";
 
 		new Thread(() -> {
 			Reader in = null;
