@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto"
-    android:versionCode="102"
-    android:versionName="1.4.11">
+    android:versionCode="103"
+    android:versionName="1.4.12">
 
     <application
         android:name="de.eisfeldj.augendiagnose.Application"
