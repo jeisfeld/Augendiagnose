@@ -77,6 +77,7 @@
         <item>1.4.10</item>
         <item>1.4.11</item>
         <item>1.4.12</item>
+        <item>1.4.13</item>
     </string-array>
     <string-array name="releasenotes_version_notes">
         <item>Initial version, based on Eye Diagnosis app, with largely improved camera flow.</item>
@@ -142,6 +143,7 @@
         <item>Updated for Android 15</item>
         <item>Updated for Android 16</item>
         <item>Updated for Android 17</item>
+        <item>Bugfixes</item>
     </string-array>
 
 </resources>
