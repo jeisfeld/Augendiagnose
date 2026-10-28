@@ -168,6 +168,10 @@ public final class GoogleBillingHelper implements PurchasesUpdatedListener {
 					else {
 						Log.i(TAG, "Google Billing Connection failed - " + billingResult.getDebugMessage());
 						mIsConnected = false;
+						// Continue authorization even when Play Billing is unavailable. Keep cached entitlements.
+						listener.onHasPremiumPack(
+								PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_pack)
+										|| PreferenceUtil.getSharedPreferenceBoolean(R.string.key_internal_has_premium_subscription));
 					}
 				}
 

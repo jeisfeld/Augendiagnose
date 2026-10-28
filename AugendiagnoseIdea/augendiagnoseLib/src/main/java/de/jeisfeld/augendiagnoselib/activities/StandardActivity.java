@@ -91,6 +91,16 @@ public abstract class StandardActivity extends BaseActivity {
 	 */
 	private boolean mIsCreationFailed = false;
 
+	/**
+	 * Whether authorization UI can currently be shown.
+	 */
+	private boolean mIsResumed = false;
+
+	/**
+	 * Trial expiry awaiting a resumed activity and fragment manager.
+	 */
+	private boolean mTrialDialogPending = false;
+
 	protected final boolean isCreationFailed() {
 		return mIsCreationFailed;
 	}
@@ -182,6 +192,29 @@ public abstract class StandardActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+	}
+
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		mIsResumed = true;
+		showPendingTrialDialog();
+	}
+
+	@Override
+	protected void onPause() {
+		mIsResumed = false;
+		super.onPause();
+	}
+
+	/**
+	 * Show trial expiry only after fragment state has been restored for a resumed activity.
+	 */
+	private void showPendingTrialDialog() {
+		if (mTrialDialogPending && mIsResumed && !isFinishing() && !isDestroyed()) {
+			mTrialDialogPending = false;
+			DialogUtil.displayAuthorizationError(this, R.string.message_dialog_trial_time);
+		}
 	}
 
 	/*
@@ -432,7 +465,10 @@ public abstract class StandardActivity extends BaseActivity {
 							restartActivity();
 						}
 						else if (userKeyStatus != UserKeyStatus.SUCCESS) {
-							DialogUtil.displayAuthorizationError(StandardActivity.this, R.string.message_dialog_trial_time);
+							runOnUiThread(() -> {
+								mTrialDialogPending = true;
+								showPendingTrialDialog();
+							});
 						}
 					});
 				}

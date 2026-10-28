@@ -189,9 +189,13 @@ public final class EncryptionUtil {
 
 		new Thread(() -> {
 			Reader in = null;
+			UserKeyStatus receivedStatus = UserKeyStatus.storedValue();
+			boolean statusChanged = false;
 			try {
 				URL url = new URL(urlBase);
 				URLConnection urlConnection = url.openConnection();
+				urlConnection.setConnectTimeout(10000); // MAGIC_NUMBER
+				urlConnection.setReadTimeout(10000); // MAGIC_NUMBER
 				urlConnection.setDoOutput(true);
 				((HttpsURLConnection) urlConnection).setRequestMethod("POST");
 				urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -212,9 +216,8 @@ public final class EncryptionUtil {
 					UserKeyStatus status = UserKeyStatus.valueOf(keyStatusString);
 					boolean isStatusChanged = status != UserKeyStatus.storedValue();
 					status.store();
-					if (listener != null) {
-						listener.onKeyStatusReceived(status, isStatusChanged);
-					}
+					receivedStatus = status;
+					statusChanged = isStatusChanged;
 					if (status == UserKeyStatus.BLOCKED && isStatusChanged) {
 						PreferenceUtil.setSharedPreferenceString(R.string.key_user_key, "");
 						activity.runOnUiThread(() -> {
@@ -233,6 +236,12 @@ public final class EncryptionUtil {
 				Log.e(Application.TAG, "Invalid Status", e);
 			}
 			finally {
+				// Complete authorization on failures too, retaining the last known key status.
+				if (listener != null) {
+					final UserKeyStatus status = receivedStatus;
+					final boolean isStatusChanged = statusChanged;
+					activity.runOnUiThread(() -> listener.onKeyStatusReceived(status, isStatusChanged));
+				}
 				if (in != null) {
 					try {
 						in.close();
